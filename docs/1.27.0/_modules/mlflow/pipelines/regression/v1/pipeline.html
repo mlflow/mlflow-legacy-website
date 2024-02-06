@@ -1,0 +1,846 @@
+
+  
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mlflow.pipelines.regression.v1.pipeline &mdash; MLflow 1.27.0 documentation</title>
+  
+   
+  <link rel="canonical" href="https://www.mlflow.org/docs/latest/_modules/mlflow/pipelines/regression/v1/pipeline.html">
+  
+  
+    <link rel="shortcut icon" href="../../../../../_static/favicon.ico"/>
+    
+
+    
+
+  
+    
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-WXWDBL');</script>
+      
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600" rel="stylesheet">
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/css/custom.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../../../../_static/css/algolia.css" type="text/css" />
+    
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="MLflow 1.27.0 documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  
+
+  
+  <nav class="wy-nav-top header" role="navigation" aria-label="top navigation">
+    <ul>
+  <li class="menu-toggle">
+    <i data-toggle="wy-nav-top" class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"></i>
+    <a href="../../../../../index.html" class="wy-nav-top-logo"
+      ><img src="../../../../../_static/MLflow-logo-final-black.png" alt="MLflow"
+    /></a>
+    <span class="version">1.27.0</span>
+  </li>
+</ul>
+  </nav>
+  <page>
+    
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side relative">
+      <div class="wy-side-scroll">
+  <div class="wy-side-nav-search">
+    
+
+    
+
+    
+<div role="search">
+  
+  <input id="algolia-search" type="text" name="q" placeholder="Search" />
+  
+</div>
+
+
+    
+  </div>
+
+  <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+    
+      <a href="../../../../../index.html" class="main-navigation-home"><img src="../../../../../_static/icons/nav-home.svg"> MLflow</a>
+    
+
+    
+      
+
+      
+        <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../tutorials-and-examples/index.html">Tutorials and Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../tracking.html">MLflow Tracking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../projects.html">MLflow Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../models.html">MLflow Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../model-registry.html">MLflow Model Registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../pipelines.html">MLflow Pipelines (experimental)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../plugins.html">MLflow Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../cli.html">Command-Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../search-syntax.html">Search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../python_api/index.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../R-api.html">R API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../java_api/index.html">Java API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../rest-api.html">REST API</a></li>
+</ul>
+
+      
+    
+  </div>
+
+  <div role="contentinfo">
+    
+
+    <p>
+      <a id='feedbacklink' href="https://github.com/mlflow/mlflow/blob/master/CONTRIBUTING.rst" target="_blank">Contribute</a>
+    </p>
+  </div>
+</div>
+    </nav>
+
+    <main class="wy-grid-for-nav">
+      <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+        <div class="wy-nav-content">
+          <div class="rst-content">
+            
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Documentation</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+        <li><a href="../../../../index.html">Module code</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+    
+      <li>mlflow.pipelines.regression.v1.pipeline</li>
+    
+    
+    <li class="wy-breadcrumbs-aside">
+      <a href="https://github.com/mlflow/mlflow/blob/master/docs/source/_modules/mlflow/pipelines/regression/v1/pipeline" class="fa fa-github"> Edit on GitHub</a>
+    </li>
+    
+  </ul>
+</div>
+            <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+              <div itemprop="articleBody">
+                
+  <h1>Source code for mlflow.pipelines.regression.v1.pipeline</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">.. _mlflow-regression-pipeline:</span>
+
+<span class="sd">The MLflow Regression Pipeline is an MLflow Pipeline for developing high-quality regression models.</span>
+<span class="sd">It is designed for developing models using scikit-learn and frameworks that integrate with</span>
+<span class="sd">scikit-learn, such as the ``XGBRegressor`` API from XGBoost. The corresponding pipeline</span>
+<span class="sd">template repository is available at https://github.com/mlflow/mlp-regression-template, and the</span>
+<span class="sd">:py:class:`RegressionPipeline API Documentation &lt;RegressionPipeline&gt;` provides instructions for</span>
+<span class="sd">executing the pipeline and inspecting its results.</span>
+
+<span class="sd">The pipeline contains the following sequential steps:</span>
+
+<span class="sd">**ingest** -&gt; **split** -&gt; **transform** -&gt; **train** -&gt; **evaluate** -&gt; **register**</span>
+
+<span class="sd">The pipeline steps are defined as follows:</span>
+
+<span class="sd">   - **ingest**</span>
+<span class="sd">      - The **ingest** step resolves the dataset specified by the |&#39;data&#39; section in pipeline.yaml|</span>
+<span class="sd">        and converts it to parquet format, leveraging the custom dataset parsing code defined in</span>
+<span class="sd">        |steps/ingest.py| if necessary. Subsequent steps convert this dataset into training,</span>
+<span class="sd">        validation, &amp; test sets and use them to develop a model.</span>
+
+<span class="sd">        .. note::</span>
+<span class="sd">            If you make changes to the dataset referenced by the **ingest** step (e.g. by adding</span>
+<span class="sd">            new records or columns), you must manually re-run the **ingest** step in order to</span>
+<span class="sd">            use the updated dataset in the pipeline. The **ingest** step does *not* automatically</span>
+<span class="sd">            detect changes in the dataset.</span>
+
+<span class="sd">   .. _mlflow-regression-pipeline-split-step:</span>
+
+<span class="sd">   - **split**</span>
+<span class="sd">      - The **split** step splits the ingested dataset produced by the **ingest** step into</span>
+<span class="sd">        a training dataset for model training, a validation dataset for model performance</span>
+<span class="sd">        evaluation  &amp; tuning, and a test dataset for model performance evaluation. The fraction</span>
+<span class="sd">        of records allocated to each dataset is defined by the ``split_ratios`` attribute of the</span>
+<span class="sd">        |&#39;split&#39; step definition in pipeline.yaml|. The **split** step also preprocesses the</span>
+<span class="sd">        datasets using logic defined in |steps/split.py|. Subsequent steps use these datasets</span>
+<span class="sd">        to develop a model and measure its performance.</span>
+
+<span class="sd">   - **transform**</span>
+<span class="sd">      - The **transform** step uses the training dataset created by **split** to fit</span>
+<span class="sd">        a transformer that performs the transformations defined in |steps/transform.py|. The</span>
+<span class="sd">        transformer is then applied to the training dataset and the validation dataset, creating</span>
+<span class="sd">        transformed datasets that are used by subsequent steps for estimator training and model</span>
+<span class="sd">        performance evaluation.</span>
+
+<span class="sd">   .. _mlflow-regression-pipeline-train-step:</span>
+
+<span class="sd">   - **train**</span>
+<span class="sd">      - The **train** step uses the transformed training dataset output from the **transform**</span>
+<span class="sd">        step to fit an estimator with the type and parameters defined in |steps/train.py|. The</span>
+<span class="sd">        estimator is then joined with the fitted transformer output from the **transform** step</span>
+<span class="sd">        to create a model pipeline. Finally, this model pipeline is evaluated against the</span>
+<span class="sd">        transformed training and validation datasets to compute performance metrics; custom</span>
+<span class="sd">        metrics are computed according to definitions in |steps/custom_metrics.py| and the</span>
+<span class="sd">        |&#39;metrics&#39; section of pipeline.yaml|. The model pipeline and its associated parameters,</span>
+<span class="sd">        performance metrics, and lineage information are logged to MLflow Tracking, producing</span>
+<span class="sd">        an MLflow Run.</span>
+
+<span class="sd">   - **evaluate**</span>
+<span class="sd">      - The **evaluate** step evaluates the model pipeline created by the **train** step on</span>
+<span class="sd">        the test dataset output from the **split** step, computing performance metrics and</span>
+<span class="sd">        model explanations. Performance metrics are compared against configured thresholds to</span>
+<span class="sd">        compute a ``model_validation_status``, which indicates whether or not a model is good</span>
+<span class="sd">        enough to be registered to the MLflow Model Registry by the subsequent **register**</span>
+<span class="sd">        step. Custom performance metrics are computed according to definitions in</span>
+<span class="sd">        |steps/custom_metrics.py| and the |&#39;metrics&#39; section of pipeline.yaml|. Model</span>
+<span class="sd">        performance thresholds are defined in the</span>
+<span class="sd">        |&#39;validation_criteria&#39; section of the &#39;evaluate&#39; step definition in pipeline.yaml|. Model</span>
+<span class="sd">        performance metrics and explanations are logged to the same MLflow Tracking Run used by</span>
+<span class="sd">        the **train** step.</span>
+
+<span class="sd">   - **register**</span>
+<span class="sd">      - The **register** step checks the ``model_validation_status`` output of the preceding</span>
+<span class="sd">        **evaluate** step and, if model validation was successful</span>
+<span class="sd">        (as indicated by the ``&#39;VALIDATED&#39;`` status), registers the model pipeline created by</span>
+<span class="sd">        the **train** step to the MLflow Model Registry. If the ``model_validation_status`` does</span>
+<span class="sd">        not indicate that the model passed validation checks (i.e. its value is ``&#39;REJECTED&#39;``),</span>
+<span class="sd">        the model pipeline is not registered to the MLflow Model Registry.</span>
+<span class="sd">        If the model pipeline is registered to the MLflow Model Registry, a</span>
+<span class="sd">        ``registered_model_version`` is produced containing the model name and the model version.</span>
+
+<span class="sd">            .. note::</span>
+<span class="sd">                The model validation status check can be disabled by specifying</span>
+<span class="sd">                ``allow_non_validated_model: true`` in the</span>
+<span class="sd">                |&#39;register&#39; step definition of pipeline.yaml|, in which case the model pipeline is</span>
+<span class="sd">                always registered with the MLflow Model Registry when the **register** step is</span>
+<span class="sd">                executed.</span>
+
+<span class="sd">.. |&#39;split&#39; step definition in pipeline.yaml| replace:: `&#39;split&#39; step definition in pipeline.yaml &lt;https://github.com/mlflow/mlp-regression-template/blob/35f6f32c7a89dc655fbcfcf731cc1da4685a8ebb/pipeline.yaml#L36-L40&gt;`__</span>
+<span class="sd">.. |&#39;register&#39; step definition of pipeline.yaml| replace:: `&#39;register&#39; step definition of pipeline.yaml &lt;https://github.com/mlflow/mlp-regression-template/blob/35f6f32c7a89dc655fbcfcf731cc1da4685a8ebb/pipeline.yaml#L57-L63&gt;`__</span>
+<span class="sd">.. |&#39;data&#39; section in pipeline.yaml| replace:: `&#39;data&#39; section in pipeline.yaml &lt;https://github.com/mlflow/mlp-regression-template/blob/35f6f32c7a89dc655fbcfcf731cc1da4685a8ebb/pipeline.yaml#L15-L32&gt;`__</span>
+<span class="sd">.. |&#39;metrics&#39; section of pipeline.yaml| replace:: `&#39;metrics&#39; section of pipeline.yaml &lt;https://github.com/mlflow/mlp-regression-template/blob/35f6f32c7a89dc655fbcfcf731cc1da4685a8ebb/pipeline.yaml#L64-L73&gt;`__</span>
+<span class="sd">.. |&#39;validation_criteria&#39; section of the &#39;evaluate&#39; step definition in pipeline.yaml| replace:: `&#39;validation_criteria&#39; section of the &#39;evaluate&#39; step definition in pipeline.yaml &lt;https://github.com/mlflow/mlp-regression-template/blob/35f6f32c7a89dc655fbcfcf731cc1da4685a8ebb/pipeline.yaml#L47-L56&gt;`__</span>
+<span class="sd">.. |steps/ingest.py| replace:: `steps/ingest.py &lt;https://github.com/mlflow/mlp-regression-template/blob/main/steps/ingest.py&gt;`__</span>
+<span class="sd">.. |steps/split.py| replace:: `steps/split.py &lt;https://github.com/mlflow/mlp-regression-template/blob/main/steps/split.py&gt;`__</span>
+<span class="sd">.. |steps/train.py| replace:: `steps/train.py &lt;https://github.com/mlflow/mlp-regression-template/blob/main/steps/train.py&gt;`__</span>
+<span class="sd">.. |steps/transform.py| replace:: `steps/transform.py &lt;https://github.com/mlflow/mlp-regression-template/blob/main/steps/transform.py&gt;`__</span>
+<span class="sd">.. |steps/custom_metrics.py| replace:: `steps/custom_metrics.py &lt;https://github.com/mlflow/mlp-regression-template/blob/main/steps/custom_metrics.py&gt;`__</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">import</span> <span class="nn">mlflow.pipelines.regression.v1.dag_help_strings</span> <span class="k">as</span> <span class="nn">dag_help_strings</span>
+<span class="kn">from</span> <span class="nn">mlflow.tracking.client</span> <span class="kn">import</span> <span class="n">MlflowClient</span>
+<span class="kn">from</span> <span class="nn">mlflow.pipelines.pipeline</span> <span class="kn">import</span> <span class="n">_BasePipeline</span>
+<span class="kn">from</span> <span class="nn">mlflow.pipelines.steps.ingest</span> <span class="kn">import</span> <span class="n">IngestStep</span>
+<span class="kn">from</span> <span class="nn">mlflow.pipelines.steps.split</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">SplitStep</span><span class="p">,</span>
+    <span class="n">_OUTPUT_TRAIN_FILE_NAME</span><span class="p">,</span>
+    <span class="n">_OUTPUT_VALIDATION_FILE_NAME</span><span class="p">,</span>
+    <span class="n">_OUTPUT_TEST_FILE_NAME</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">mlflow.pipelines.steps.transform</span> <span class="kn">import</span> <span class="n">TransformStep</span>
+<span class="kn">from</span> <span class="nn">mlflow.pipelines.steps.train</span> <span class="kn">import</span> <span class="n">TrainStep</span>
+<span class="kn">from</span> <span class="nn">mlflow.pipelines.steps.evaluate</span> <span class="kn">import</span> <span class="n">EvaluateStep</span>
+<span class="kn">from</span> <span class="nn">mlflow.pipelines.steps.register</span> <span class="kn">import</span> <span class="n">RegisterStep</span><span class="p">,</span> <span class="n">RegisteredModelVersionInfo</span>
+<span class="kn">from</span> <span class="nn">mlflow.pipelines.step</span> <span class="kn">import</span> <span class="n">BaseStep</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">mlflow.pipelines.utils</span> <span class="kn">import</span> <span class="n">get_pipeline_root_path</span>
+<span class="kn">from</span> <span class="nn">mlflow.pipelines.utils.execution</span> <span class="kn">import</span> <span class="n">get_or_create_base_execution_directory</span>
+<span class="kn">from</span> <span class="nn">mlflow.pipelines.utils.execution</span> <span class="kn">import</span> <span class="n">get_step_output_path</span>
+<span class="kn">from</span> <span class="nn">mlflow.exceptions</span> <span class="kn">import</span> <span class="n">MlflowException</span><span class="p">,</span> <span class="n">INVALID_PARAMETER_VALUE</span>
+<span class="kn">from</span> <span class="nn">mlflow.tracking._tracking_service.utils</span> <span class="kn">import</span> <span class="n">_use_tracking_uri</span>
+<span class="kn">from</span> <span class="nn">mlflow.utils.annotations</span> <span class="kn">import</span> <span class="n">experimental</span>
+
+<span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="RegressionPipeline"><a class="viewcode-back" href="../../../../../python_api/mlflow.pipelines.html#mlflow.pipelines.regression.v1.pipeline.RegressionPipeline">[docs]</a><span class="nd">@experimental</span>
+<span class="k">class</span> <span class="nc">RegressionPipeline</span><span class="p">(</span><span class="n">_BasePipeline</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A pipeline for developing high-quality regression models. The pipeline is designed for</span>
+<span class="sd">    developing models using scikit-learn and frameworks that integrate with scikit-learn,</span>
+<span class="sd">    such as the ``XGBRegressor`` API from XGBoost. The corresponding pipeline</span>
+<span class="sd">    template repository is available at https://github.com/mlflow/mlp-regression-template.</span>
+<span class="sd">    The pipeline contains the following sequential steps:</span>
+
+<span class="sd">    **ingest** -&gt; **split** -&gt; **transform** -&gt; **train** -&gt; **evaluate** -&gt; **register**</span>
+
+<span class="sd">    .. code-block:: python</span>
+<span class="sd">        :caption: Example</span>
+
+<span class="sd">        import os</span>
+<span class="sd">        from mlflow.pipelines import Pipeline</span>
+
+<span class="sd">        os.chdir(&quot;~/mlp-regression-template&quot;)</span>
+<span class="sd">        regression_pipeline = Pipeline(profile=&quot;local&quot;)</span>
+<span class="sd">        # Display a visual overview of the pipeline graph</span>
+<span class="sd">        regression_pipeline.inspect()</span>
+<span class="sd">        # Run the full pipeline</span>
+<span class="sd">        regression_pipeline.run()</span>
+<span class="sd">        # Display a summary of results from the &#39;train&#39; step, including the trained model</span>
+<span class="sd">        # and associated performance metrics computed from the training &amp; validation datasets</span>
+<span class="sd">        regression_pipeline.inspect(step=&quot;train&quot;)</span>
+<span class="sd">        # Display a summary of results from the &#39;evaluate&#39; step, including model explanations</span>
+<span class="sd">        # computed from the validation dataset and metrics computed from the test dataset</span>
+<span class="sd">        regression_pipeline.inspect(step=&quot;evaluate&quot;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_PIPELINE_STEPS</span> <span class="o">=</span> <span class="p">(</span><span class="n">IngestStep</span><span class="p">,</span> <span class="n">SplitStep</span><span class="p">,</span> <span class="n">TransformStep</span><span class="p">,</span> <span class="n">TrainStep</span><span class="p">,</span> <span class="n">EvaluateStep</span><span class="p">,</span> <span class="n">RegisterStep</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_step_classes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">BaseStep</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_PIPELINE_STEPS</span>
+
+    <span class="k">def</span> <span class="nf">_get_pipeline_dag_file</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">jinja2</span>
+
+        <span class="n">j2_env</span> <span class="o">=</span> <span class="n">jinja2</span><span class="o">.</span><span class="n">Environment</span><span class="p">(</span><span class="n">loader</span><span class="o">=</span><span class="n">jinja2</span><span class="o">.</span><span class="n">FileSystemLoader</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)))</span>
+        <span class="n">pipeline_dag_template</span> <span class="o">=</span> <span class="n">j2_env</span><span class="o">.</span><span class="n">get_template</span><span class="p">(</span><span class="s2">&quot;resources/pipeline_dag_template.html&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">render</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;pipeline_yaml_help&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;help_string_type&quot;</span><span class="p">:</span> <span class="s2">&quot;yaml&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;help_string&quot;</span><span class="p">:</span> <span class="n">dag_help_strings</span><span class="o">.</span><span class="n">PIPELINE_YAML</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;ingest_step_help&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;help_string&quot;</span><span class="p">:</span> <span class="n">dag_help_strings</span><span class="o">.</span><span class="n">INGEST_STEP</span><span class="p">,</span>
+                    <span class="s2">&quot;help_string_type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;ingest_user_code_help&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;help_string&quot;</span><span class="p">:</span> <span class="n">dag_help_strings</span><span class="o">.</span><span class="n">INGEST_USER_CODE</span><span class="p">,</span>
+                    <span class="s2">&quot;help_string_type&quot;</span><span class="p">:</span> <span class="s2">&quot;python&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;ingested_data_help&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;help_string&quot;</span><span class="p">:</span> <span class="n">dag_help_strings</span><span class="o">.</span><span class="n">INGESTED_DATA</span><span class="p">,</span>
+                    <span class="s2">&quot;help_string_type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;split_step_help&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;help_string&quot;</span><span class="p">:</span> <span class="n">dag_help_strings</span><span class="o">.</span><span class="n">SPLIT_STEP</span><span class="p">,</span>
+                    <span class="s2">&quot;help_string_type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;split_user_code_help&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;help_string&quot;</span><span class="p">:</span> <span class="n">dag_help_strings</span><span class="o">.</span><span class="n">SPLIT_USER_CODE</span><span class="p">,</span>
+                    <span class="s2">&quot;help_string_type&quot;</span><span class="p">:</span> <span class="s2">&quot;python&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;training_data_help&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;help_string&quot;</span><span class="p">:</span> <span class="n">dag_help_strings</span><span class="o">.</span><span class="n">TRAINING_DATA</span><span class="p">,</span>
+                    <span class="s2">&quot;help_string_type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;validation_data_help&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;help_string&quot;</span><span class="p">:</span> <span class="n">dag_help_strings</span><span class="o">.</span><span class="n">VALIDATION_DATA</span><span class="p">,</span>
+                    <span class="s2">&quot;help_string_type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;test_data_help&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;help_string&quot;</span><span class="p">:</span> <span class="n">dag_help_strings</span><span class="o">.</span><span class="n">TEST_DATA</span><span class="p">,</span>
+                    <span class="s2">&quot;help_string_type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;transform_step_help&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;help_string&quot;</span><span class="p">:</span> <span class="n">dag_help_strings</span><span class="o">.</span><span class="n">TRANSFORM_STEP</span><span class="p">,</span>
+                    <span class="s2">&quot;help_string_type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;transform_user_code_help&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;help_string&quot;</span><span class="p">:</span> <span class="n">dag_help_strings</span><span class="o">.</span><span class="n">TRANSFORM_USER_CODE</span><span class="p">,</span>
+                    <span class="s2">&quot;help_string_type&quot;</span><span class="p">:</span> <span class="s2">&quot;python&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;fitted_transformer_help&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;help_string&quot;</span><span class="p">:</span> <span class="n">dag_help_strings</span><span class="o">.</span><span class="n">FITTED_TRANSFORMER</span><span class="p">,</span>
+                    <span class="s2">&quot;help_string_type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;transformed_training_and_validation_data_help&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;help_string&quot;</span><span class="p">:</span> <span class="n">dag_help_strings</span><span class="o">.</span><span class="n">TRANSFORMED_TRAINING_AND_VALIDATION_DATA</span><span class="p">,</span>
+                    <span class="s2">&quot;help_string_type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;train_step_help&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;help_string&quot;</span><span class="p">:</span> <span class="n">dag_help_strings</span><span class="o">.</span><span class="n">TRAIN_STEP</span><span class="p">,</span>
+                    <span class="s2">&quot;help_string_type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;train_user_code_help&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;help_string&quot;</span><span class="p">:</span> <span class="n">dag_help_strings</span><span class="o">.</span><span class="n">TRAIN_USER_CODE</span><span class="p">,</span>
+                    <span class="s2">&quot;help_string_type&quot;</span><span class="p">:</span> <span class="s2">&quot;python&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;fitted_model_help&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;help_string&quot;</span><span class="p">:</span> <span class="n">dag_help_strings</span><span class="o">.</span><span class="n">FITTED_MODEL</span><span class="p">,</span>
+                    <span class="s2">&quot;help_string_type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;mlflow_run_help&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;help_string&quot;</span><span class="p">:</span> <span class="n">dag_help_strings</span><span class="o">.</span><span class="n">MLFLOW_RUN</span><span class="p">,</span>
+                    <span class="s2">&quot;help_string_type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;custom_metrics_user_code_help&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;help_string&quot;</span><span class="p">:</span> <span class="n">dag_help_strings</span><span class="o">.</span><span class="n">CUSTOM_METRICS_USER_CODE</span><span class="p">,</span>
+                    <span class="s2">&quot;help_string_type&quot;</span><span class="p">:</span> <span class="s2">&quot;python&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;evaluate_step_help&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;help_string&quot;</span><span class="p">:</span> <span class="n">dag_help_strings</span><span class="o">.</span><span class="n">EVALUATE_STEP</span><span class="p">,</span>
+                    <span class="s2">&quot;help_string_type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;model_validation_status_help&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;help_string&quot;</span><span class="p">:</span> <span class="n">dag_help_strings</span><span class="o">.</span><span class="n">MODEL_VALIDATION_STATUS</span><span class="p">,</span>
+                    <span class="s2">&quot;help_string_type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;register_step_help&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;help_string&quot;</span><span class="p">:</span> <span class="n">dag_help_strings</span><span class="o">.</span><span class="n">REGISTER_STEP</span><span class="p">,</span>
+                    <span class="s2">&quot;help_string_type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;registered_model_version_help&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;help_string&quot;</span><span class="p">:</span> <span class="n">dag_help_strings</span><span class="o">.</span><span class="n">REGISTERED_MODEL_VERSION</span><span class="p">,</span>
+                    <span class="s2">&quot;help_string_type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="n">pipeline_dag_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">get_or_create_base_execution_directory</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pipeline_root_path</span><span class="p">),</span> <span class="s2">&quot;pipeline_dag.html&quot;</span>
+        <span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">pipeline_dag_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">pipeline_dag_template</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">pipeline_dag_file</span>
+
+<div class="viewcode-block" id="RegressionPipeline.run"><a class="viewcode-back" href="../../../../../python_api/mlflow.pipelines.html#mlflow.pipelines.regression.v1.pipeline.RegressionPipeline.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Runs the full pipeline or a particular pipeline step, producing outputs and displaying a</span>
+<span class="sd">        summary of results upon completion. Step outputs are cached from previous executions, and</span>
+<span class="sd">        steps are only re-executed if configuration or code changes have been made to the step or</span>
+<span class="sd">        to any of its dependent steps (e.g. changes to the pipeline&#39;s ``pipeline.yaml`` file or</span>
+<span class="sd">        ``steps/ingest.py`` file) since the previous execution.</span>
+
+<span class="sd">        :param step: String name of the step to run within the regression pipeline. The step and</span>
+<span class="sd">                     its dependencies are executed sequentially. If a step is not specified, the</span>
+<span class="sd">                     entire pipeline is executed. Supported steps, in their order of execution, are:</span>
+
+<span class="sd">                     - ``&quot;ingest&quot;``: resolves the dataset specified by the ``data`` section in the</span>
+<span class="sd">                       pipeline&#39;s configuration file (``pipeline.yaml``) and converts it to parquet</span>
+<span class="sd">                       format.</span>
+
+<span class="sd">                     - ``&quot;split&quot;``: splits the ingested dataset produced by the **ingest** step into</span>
+<span class="sd">                       a training dataset for model training, a validation dataset for model</span>
+<span class="sd">                       performance evaluation &amp; tuning, and a test dataset for model performance</span>
+<span class="sd">                       evaluation.</span>
+
+<span class="sd">                     - ``&quot;transform&quot;``: uses the training dataset created by the **split** step to</span>
+<span class="sd">                       fit a transformer that performs the transformations defined in the</span>
+<span class="sd">                       pipeline&#39;s ``steps/transform.py`` file. Then, applies the transformer to the</span>
+<span class="sd">                       training dataset and the validation dataset, creating transformed datasets</span>
+<span class="sd">                       that are used by subsequent steps for estimator training and model</span>
+<span class="sd">                       performance evaluation.</span>
+
+<span class="sd">                     - ``&quot;train&quot;``: uses the transformed training dataset output from the</span>
+<span class="sd">                       **transform** step to fit an estimator with the type and parameters defined</span>
+<span class="sd">                       in in the pipeline&#39;s ``steps/train.py`` file. Then, joins the estimator with</span>
+<span class="sd">                       the fitted transformer output from the **transform** step to create a model</span>
+<span class="sd">                       pipeline. Finally, evaluates the model pipeline against the transformed</span>
+<span class="sd">                       training and validation datasets to compute performance metrics.</span>
+
+<span class="sd">                     - ``&quot;evaluate&quot;``: evaluates the model pipeline created by the **train** step</span>
+<span class="sd">                       on the validation and test dataset outputs from the **split** step, computing</span>
+<span class="sd">                       performance metrics and model explanations. Then, compares performance</span>
+<span class="sd">                       metrics against thresholds configured in the pipeline&#39;s ``pipeline.yaml``</span>
+<span class="sd">                       configuration file to compute a ``model_validation_status``, which indicates</span>
+<span class="sd">                       whether or not the model is good enough to be registered to the MLflow Model</span>
+<span class="sd">                       Registry by the subsequent **register** step.</span>
+
+<span class="sd">                     - ``&quot;register&quot;``: checks the ``model_validation_status`` output of the</span>
+<span class="sd">                       preceding **evaluate** step and, if model validation was successful (as</span>
+<span class="sd">                       indicated by the ``&#39;VALIDATED&#39;`` status), registers the model pipeline</span>
+<span class="sd">                       created by the **train** step to the MLflow Model Registry.</span>
+
+<span class="sd">        .. code-block:: python</span>
+<span class="sd">            :caption: Example</span>
+
+<span class="sd">            import os</span>
+<span class="sd">            from mlflow.pipelines import Pipeline</span>
+
+<span class="sd">            os.chdir(&quot;~/mlp-regression-template&quot;)</span>
+<span class="sd">            regression_pipeline = Pipeline(profile=&quot;local&quot;)</span>
+<span class="sd">            # Run the &#39;train&#39; step and preceding steps</span>
+<span class="sd">            regression_pipeline.run(step=&quot;train&quot;)</span>
+<span class="sd">            # Run the &#39;register&#39; step and preceding steps; the &#39;train&#39; step and all steps</span>
+<span class="sd">            # prior to &#39;train&#39; are not re-executed because their outputs are already cached</span>
+<span class="sd">            regression_pipeline.run(step=&quot;register&quot;)</span>
+<span class="sd">            # Run all pipeline steps; equivalent to running &#39;register&#39;; no steps are re-executed</span>
+<span class="sd">            # because the outputs of all steps are already cached</span>
+<span class="sd">            regression_pipeline.run()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RegressionPipeline.get_artifact"><a class="viewcode-back" href="../../../../../python_api/mlflow.pipelines.html#mlflow.pipelines.regression.v1.pipeline.RegressionPipeline.get_artifact">[docs]</a>    <span class="nd">@experimental</span>
+    <span class="k">def</span> <span class="nf">get_artifact</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">artifact_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads an artifact from the pipeline&#39;s outputs. Supported artifact names can be obtained by</span>
+<span class="sd">        examining the pipeline graph visualization displayed by</span>
+<span class="sd">        :py:func:`RegressionPipeline.inspect()`.</span>
+
+<span class="sd">        :param artifact_name: The string name of the artifact. Supported artifact values are:</span>
+
+<span class="sd">                         - ``&quot;ingested_data&quot;``: returns the ingested dataset created in the</span>
+<span class="sd">                           **ingest** step as a pandas DataFrame.</span>
+
+<span class="sd">                         - ``&quot;training_data&quot;``: returns the training dataset created in the</span>
+<span class="sd">                           **split** step as a pandas DataFrame.</span>
+
+<span class="sd">                         - ``&quot;validation_data&quot;``: returns the validation dataset created in the</span>
+<span class="sd">                           **split** step as a pandas DataFrame.</span>
+
+<span class="sd">                         - ``&quot;test_data&quot;``: returns the test dataset created in the **split** step</span>
+<span class="sd">                           as a pandas DataFrame.</span>
+
+<span class="sd">                         - ``&quot;transformed_training_data&quot;``: returns the transformed training dataset</span>
+<span class="sd">                           created in the **transform** step as a pandas DataFrame.</span>
+
+<span class="sd">                         - ``&quot;transformed_validation_data&quot;``: returns the transformed validation</span>
+<span class="sd">                           dataset created in the **transform** step as a pandas DataFrame.</span>
+
+<span class="sd">                         - ``&quot;model&quot;``: returns the MLflow Model pipeline created in the **train**</span>
+<span class="sd">                           step as a :py:class:`PyFuncModel &lt;mlflow.pyfunc.PyFuncModel&gt;` instance.</span>
+
+<span class="sd">                         - ``&quot;transformer&quot;``: returns the scikit-learn transformer created in the</span>
+<span class="sd">                           **transform** step.</span>
+
+<span class="sd">                         - ``&quot;run&quot;``: returns the</span>
+<span class="sd">                           :py:class:`MLflow Tracking Run &lt;mlflow.entities.Run&gt;` containing the</span>
+<span class="sd">                           model pipeline created in the **train** step and its associated</span>
+<span class="sd">                           parameters, as well as performance metrics and model explanations created</span>
+<span class="sd">                           during the **train** and **evaluate** steps.</span>
+
+<span class="sd">                         - ``&quot;registered_model_version``&quot;: returns the MLflow Model Registry</span>
+<span class="sd">                           :py:class:`ModelVersion &lt;mlflow.entities.model_registry.ModelVersion&gt;`</span>
+<span class="sd">                           created by the **register** step.</span>
+
+<span class="sd">        :return: An object representation of the artifact corresponding to the specified name,</span>
+<span class="sd">                 as described in the ``artifact_name`` parameter docstring. If the artifact is</span>
+<span class="sd">                 not present because its corresponding step has not been executed or its output</span>
+<span class="sd">                 cache has been cleaned, ``None`` is returned.</span>
+
+<span class="sd">        .. code-block:: python</span>
+<span class="sd">            :caption: Example</span>
+
+<span class="sd">            import os</span>
+<span class="sd">            import pandas as pd</span>
+<span class="sd">            from mlflow.pipelines import Pipeline</span>
+<span class="sd">            from mlflow.pyfunc import PyFuncModel</span>
+
+<span class="sd">            os.chdir(&quot;~/mlp-regression-template&quot;)</span>
+<span class="sd">            regression_pipeline = Pipeline(profile=&quot;local&quot;)</span>
+<span class="sd">            regression_pipeline.run()</span>
+<span class="sd">            train_df: pd.DataFrame = regression_pipeline.get_artifact(&quot;training_data&quot;)</span>
+<span class="sd">            trained_model: PyFuncModel = regression_pipeline.get_artifact(&quot;model&quot;)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">mlflow.pyfunc</span>
+
+        <span class="n">ingest_step</span><span class="p">,</span> <span class="n">split_step</span><span class="p">,</span> <span class="n">transform_step</span><span class="p">,</span> <span class="n">train_step</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">register_step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_steps</span>
+
+        <span class="n">ingest_output_dir</span> <span class="o">=</span> <span class="n">get_step_output_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pipeline_root_path</span><span class="p">,</span> <span class="n">ingest_step</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">split_output_dir</span> <span class="o">=</span> <span class="n">get_step_output_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pipeline_root_path</span><span class="p">,</span> <span class="n">split_step</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">transform_output_dir</span> <span class="o">=</span> <span class="n">get_step_output_path</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pipeline_root_path</span><span class="p">,</span> <span class="n">transform_step</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;&quot;</span>
+        <span class="p">)</span>
+        <span class="n">train_output_dir</span> <span class="o">=</span> <span class="n">get_step_output_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pipeline_root_path</span><span class="p">,</span> <span class="n">train_step</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">log_artifact_not_found_warning</span><span class="p">(</span><span class="n">artifact_name</span><span class="p">,</span> <span class="n">step_name</span><span class="p">):</span>
+            <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;The artifact with name &#39;</span><span class="si">{</span><span class="n">artifact_name</span><span class="si">}</span><span class="s2">&#39; was not found.&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot; Re-run the &#39;</span><span class="si">{</span><span class="n">step_name</span><span class="si">}</span><span class="s2">&#39; step to generate it.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">read_run_id</span><span class="p">():</span>
+            <span class="n">run_id_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">train_output_dir</span><span class="p">,</span> <span class="s2">&quot;run_id&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">run_id_file_path</span><span class="p">):</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">run_id_file_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">train_step_tracking_uri</span> <span class="o">=</span> <span class="n">train_step</span><span class="o">.</span><span class="n">tracking_config</span><span class="o">.</span><span class="n">tracking_uri</span>
+        <span class="n">pipeline_root_path</span> <span class="o">=</span> <span class="n">get_pipeline_root_path</span><span class="p">()</span>
+
+        <span class="k">def</span> <span class="nf">read_dataframe</span><span class="p">(</span><span class="n">artifact_name</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">step_name</span><span class="p">):</span>
+            <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+            <span class="n">data_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">data_path</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">data_path</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">log_artifact_not_found_warning</span><span class="p">(</span><span class="n">artifact_name</span><span class="p">,</span> <span class="n">step_name</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">artifact_name</span> <span class="o">==</span> <span class="s2">&quot;ingested_data&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">read_dataframe</span><span class="p">(</span>
+                <span class="s2">&quot;ingested_data&quot;</span><span class="p">,</span>
+                <span class="n">ingest_output_dir</span><span class="p">,</span>
+                <span class="n">IngestStep</span><span class="o">.</span><span class="n">_DATASET_OUTPUT_NAME</span><span class="p">,</span>
+                <span class="n">ingest_step</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">artifact_name</span> <span class="o">==</span> <span class="s2">&quot;training_data&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">read_dataframe</span><span class="p">(</span>
+                <span class="s2">&quot;training_data&quot;</span><span class="p">,</span> <span class="n">split_output_dir</span><span class="p">,</span> <span class="n">_OUTPUT_TRAIN_FILE_NAME</span><span class="p">,</span> <span class="n">split_step</span><span class="o">.</span><span class="n">name</span>
+            <span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">artifact_name</span> <span class="o">==</span> <span class="s2">&quot;validation_data&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">read_dataframe</span><span class="p">(</span>
+                <span class="s2">&quot;validation_data&quot;</span><span class="p">,</span> <span class="n">split_output_dir</span><span class="p">,</span> <span class="n">_OUTPUT_VALIDATION_FILE_NAME</span><span class="p">,</span> <span class="n">split_step</span><span class="o">.</span><span class="n">name</span>
+            <span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">artifact_name</span> <span class="o">==</span> <span class="s2">&quot;test_data&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">read_dataframe</span><span class="p">(</span>
+                <span class="s2">&quot;test_data&quot;</span><span class="p">,</span> <span class="n">split_output_dir</span><span class="p">,</span> <span class="n">_OUTPUT_TEST_FILE_NAME</span><span class="p">,</span> <span class="n">split_step</span><span class="o">.</span><span class="n">name</span>
+            <span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">artifact_name</span> <span class="o">==</span> <span class="s2">&quot;transformed_training_data&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">read_dataframe</span><span class="p">(</span>
+                <span class="s2">&quot;transformed_training_data&quot;</span><span class="p">,</span>
+                <span class="n">transform_output_dir</span><span class="p">,</span>
+                <span class="s2">&quot;transformed_training_data.parquet&quot;</span><span class="p">,</span>
+                <span class="n">transform_step</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">artifact_name</span> <span class="o">==</span> <span class="s2">&quot;transformed_validation_data&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">read_dataframe</span><span class="p">(</span>
+                <span class="s2">&quot;transformed_validation_data&quot;</span><span class="p">,</span>
+                <span class="n">transform_output_dir</span><span class="p">,</span>
+                <span class="s2">&quot;transformed_validation_data.parquet&quot;</span><span class="p">,</span>
+                <span class="n">transform_step</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">artifact_name</span> <span class="o">==</span> <span class="s2">&quot;model&quot;</span><span class="p">:</span>
+            <span class="n">run_id</span> <span class="o">=</span> <span class="n">read_run_id</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">run_id</span><span class="p">:</span>
+                <span class="k">with</span> <span class="n">_use_tracking_uri</span><span class="p">(</span><span class="n">train_step_tracking_uri</span><span class="p">,</span> <span class="n">pipeline_root_path</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">pyfunc</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;runs:/</span><span class="si">{</span><span class="n">run_id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">train_step</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">/model&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">log_artifact_not_found_warning</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="n">train_step</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">elif</span> <span class="n">artifact_name</span> <span class="o">==</span> <span class="s2">&quot;transformer&quot;</span><span class="p">:</span>
+            <span class="n">run_id</span> <span class="o">=</span> <span class="n">read_run_id</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">run_id</span><span class="p">:</span>
+                <span class="k">with</span> <span class="n">_use_tracking_uri</span><span class="p">(</span><span class="n">train_step_tracking_uri</span><span class="p">,</span> <span class="n">pipeline_root_path</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">sklearn</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;runs:/</span><span class="si">{</span><span class="n">run_id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">transform_step</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">/transformer&quot;</span>
+                    <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">log_artifact_not_found_warning</span><span class="p">(</span><span class="s2">&quot;transformer&quot;</span><span class="p">,</span> <span class="n">train_step</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">elif</span> <span class="n">artifact_name</span> <span class="o">==</span> <span class="s2">&quot;run&quot;</span><span class="p">:</span>
+            <span class="n">run_id</span> <span class="o">=</span> <span class="n">read_run_id</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">run_id</span><span class="p">:</span>
+                <span class="k">with</span> <span class="n">_use_tracking_uri</span><span class="p">(</span><span class="n">train_step_tracking_uri</span><span class="p">,</span> <span class="n">pipeline_root_path</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">get_run</span><span class="p">(</span><span class="n">run_id</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">log_artifact_not_found_warning</span><span class="p">(</span><span class="s2">&quot;mlflow run&quot;</span><span class="p">,</span> <span class="n">train_step</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">elif</span> <span class="n">artifact_name</span> <span class="o">==</span> <span class="s2">&quot;registered_model_version&quot;</span><span class="p">:</span>
+            <span class="n">register_output_dir</span> <span class="o">=</span> <span class="n">get_step_output_path</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_pipeline_root_path</span><span class="p">,</span> <span class="n">register_step</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;&quot;</span>
+            <span class="p">)</span>
+            <span class="n">registered_model_info_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="n">register_output_dir</span><span class="p">,</span> <span class="s2">&quot;registered_model_version.json&quot;</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">registered_model_info_path</span><span class="p">):</span>
+                <span class="n">registered_model_info</span> <span class="o">=</span> <span class="n">RegisteredModelVersionInfo</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span>
+                    <span class="n">path</span><span class="o">=</span><span class="n">registered_model_info_path</span>
+                <span class="p">)</span>
+                <span class="k">with</span> <span class="n">_use_tracking_uri</span><span class="p">(</span><span class="n">train_step_tracking_uri</span><span class="p">,</span> <span class="n">pipeline_root_path</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">get_model_version</span><span class="p">(</span>
+                        <span class="n">name</span><span class="o">=</span><span class="n">registered_model_info</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">registered_model_info</span><span class="o">.</span><span class="n">version</span>
+                    <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">log_artifact_not_found_warning</span><span class="p">(</span><span class="s2">&quot;registered_model_version&quot;</span><span class="p">,</span> <span class="n">register_step</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;The artifact with name &#39;</span><span class="si">{</span><span class="n">artifact_name</span><span class="si">}</span><span class="s2">&#39; is not supported.&quot;</span><span class="p">,</span>
+                <span class="n">error_code</span><span class="o">=</span><span class="n">INVALID_PARAMETER_VALUE</span><span class="p">,</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="RegressionPipeline.clean"><a class="viewcode-back" href="../../../../../python_api/mlflow.pipelines.html#mlflow.pipelines.regression.v1.pipeline.RegressionPipeline.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Removes all pipeline outputs from the cache, or removes the cached outputs of a particular</span>
+<span class="sd">        pipeline step if specified. After cached outputs are cleaned for a particular step, the</span>
+<span class="sd">        step will be re-executed in its entirety the next time it is run.</span>
+
+<span class="sd">        :param step: String name of the step to clean within the pipeline. If not specified,</span>
+<span class="sd">                     cached outputs are removed for all pipeline steps.</span>
+
+<span class="sd">        .. code-block:: python</span>
+<span class="sd">            :caption: Example</span>
+
+<span class="sd">            import os</span>
+<span class="sd">            from mlflow.pipelines import Pipeline</span>
+
+<span class="sd">            os.chdir(&quot;~/mlp-regression-template&quot;)</span>
+<span class="sd">            regression_pipeline = Pipeline(profile=&quot;local&quot;)</span>
+<span class="sd">            # Run the &#39;train&#39; step and preceding steps</span>
+<span class="sd">            regression_pipeline.run(step=&quot;train&quot;)</span>
+<span class="sd">            # Clean the cache of the &#39;transform&#39; step</span>
+<span class="sd">            regression_pipeline.clean(step=&quot;transform&quot;)</span>
+<span class="sd">            # Run the &#39;split&#39; step; outputs are still cached because &#39;split&#39; precedes</span>
+<span class="sd">            # &#39;transform&#39; &amp; &#39;train&#39;</span>
+<span class="sd">            regression_pipeline.run(step=&quot;split&quot;)</span>
+<span class="sd">            # Run the &#39;train&#39; step again; the &#39;transform&#39; and &#39;train&#39; steps are re-executed because:</span>
+<span class="sd">            # 1. the cache of the preceding &#39;transform&#39; step was cleaned and 2. &#39;train&#39; occurs after</span>
+<span class="sd">            # &#39;transform&#39;. The &#39;ingest&#39; and &#39;split&#39; steps are not re-executed because their outputs</span>
+<span class="sd">            # are still cached</span>
+<span class="sd">            regression_pipeline.run(step=&quot;train&quot;)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">clean</span><span class="p">(</span><span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RegressionPipeline.inspect"><a class="viewcode-back" href="../../../../../python_api/mlflow.pipelines.html#mlflow.pipelines.regression.v1.pipeline.RegressionPipeline.inspect">[docs]</a>    <span class="k">def</span> <span class="nf">inspect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Displays a visual overview of the pipeline graph, or displays a summary of results from</span>
+<span class="sd">        a particular pipeline step if specified. If the specified step has not been executed,</span>
+<span class="sd">        nothing is displayed.</span>
+
+<span class="sd">        :param step: String name of the pipeline step for which to display a results summary. If</span>
+<span class="sd">                     unspecified, a visual overview of the pipeline graph is displayed.</span>
+
+<span class="sd">        .. code-block:: python</span>
+<span class="sd">            :caption: Example</span>
+
+<span class="sd">            import os</span>
+<span class="sd">            from mlflow.pipelines import Pipeline</span>
+
+<span class="sd">            os.chdir(&quot;~/mlp-regression-template&quot;)</span>
+<span class="sd">            regression_pipeline = Pipeline(profile=&quot;local&quot;)</span>
+<span class="sd">            # Display a visual overview of the pipeline graph.</span>
+<span class="sd">            regression_pipeline.inspect()</span>
+<span class="sd">            # Run the &#39;train&#39; pipeline step</span>
+<span class="sd">            regression_pipeline.run(step=&quot;train&quot;)</span>
+<span class="sd">            # Display a summary of results from the preceding &#39;transform&#39; step</span>
+<span class="sd">            regression_pipeline.inspect(step=&quot;transform&quot;)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">inspect</span><span class="p">(</span><span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">)</span></div></div>
+</pre></div>
+
+              </div>
+            </div>
+            <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+      <p class="copyright">
+          &copy; MLflow Project, a Series of LF Projects, LLC. All rights reserved.
+      </p>
+
+  </div> 
+
+</footer>
+          </div>
+        </div>
+      </section>
+    </main>
+  </page>
+
+  
+
+
+  
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:'../../../../../',
+      VERSION:'1.27.0',
+      COLLAPSE_INDEX:false,
+      FILE_SUFFIX:'.html',
+      HAS_SOURCE:  true
+    };
+  </script>
+  <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+  <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../../../../_static/languagesections.js"></script>
+  
+
+  <script type="text/javascript" src="../../../../../_static/js/clipboard.min.js"></script>
+  <script type="text/javascript" src="../../../../../_static/js/jquery.waypoints.min.js"></script>
+
+  
+  
+  
+  <script type="text/javascript">var CLIPPY_SVG_PATH = "../../../../../_static/clippy.svg";</script>
+  <script type="text/javascript" src="../../../../../_static/js/custom.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+    jQuery(function () {
+      SphinxRtdTheme.StickyNav.enable();
+    });
+
+  </script>
+  
+ 
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-44077918-9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-44077918-9');
+</script>
+
+
+  
+    <!-- Algolia Search -->
+    <script type="text/javascript">
+      var algoliaConfigs = {
+        key: 'b6d79a1058f2b3c1ee03bf659ade5a4b',
+        index: 'mlflow',
+      };
+    </script>
+    <div id="algolia-wrapper"></div>
+    <script src="../../../../../_static/js/tether.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+  
+</body>
+</html>

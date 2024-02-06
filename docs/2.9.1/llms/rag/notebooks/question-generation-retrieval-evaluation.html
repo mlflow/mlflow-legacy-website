@@ -1,0 +1,1482 @@
+
+  
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Question Generation For Retrieval Evaluation &mdash; MLflow 2.9.1 documentation</title>
+  
+   
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="canonical" href="https://mlflow.org/docs/latest/llms/rag/notebooks/question-generation-retrieval-evaluation.html">
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    
+
+    
+
+  
+    
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer',"GTM-N6WMTTJ");</script>
+        <!-- End Google Tag Manager -->
+    
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600" rel="stylesheet">
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/cards.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/grids.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/mobile.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/simple-cards.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/tabs.css" type="text/css" />
+    
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="MLflow 2.9.1 documentation" href="../../../index.html"/>
+        <link rel="up" title="Question Generation for Retrieval Evaluation" href="index.html"/>
+        <link rel="next" title="Deploying Advanced LLMs with Custom PyFuncs in MLflow" href="/../../custom-pyfunc-for-llms/index.html"/>
+        <link rel="prev" title="Question Generation for Retrieval Evaluation" href="/index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+<script type="text/javascript" src="../../../_static/jquery.js"></script>
+<script type="text/javascript" src="../../../_static/underscore.js"></script>
+<script type="text/javascript" src="../../../_static/doctools.js"></script>
+<script type="text/javascript" src="../../../_static/languagesections.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/javascript" src="../../../None"></script>
+
+<body class="wy-body-for-nav" role="document">
+  
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6WMTTJ"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  
+  <nav class="wy-nav-top header" role="navigation" aria-label="top navigation">
+    <ul>
+  <li class="menu-toggle">
+    <i data-toggle="wy-nav-top" class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"></i>
+    <a href="../../../index.html" class="wy-nav-top-logo"
+      ><img src="../../../_static/MLflow-logo-final-black.png" alt="MLflow"
+    /></a>
+    <span class="version">2.9.1</span>
+  </li>
+</ul>
+  </nav>
+  <page>
+    
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side relative">
+      <div class="wy-side-scroll">
+  <div class="wy-side-nav-search">
+    
+
+    
+
+    
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+    
+  </div>
+
+  <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+    
+      <a href="../../../index.html" class="main-navigation-home"><img src="../../../_static/icons/nav-home.svg"> MLflow</a>
+    
+
+    
+      
+
+      
+        <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction/index.html">What is MLflow?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started/index.html">Getting Started with MLflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../new-features/index.html">New Features</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">LLMs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#id1">MLflow Deployments Server for LLMs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#id3">LLM Evaluation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#id4">Prompt Engineering UI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#native-mlflow-flavors-for-llms">Native MLflow Flavors for LLMs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#id5">LLM Tracking in MLflow</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html#tutorials-and-use-case-guides-for-llms-in-mlflow">Tutorials and Use Case Guides for LLMs in MLflow</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">Retrieval Augmented Generation (RAG)</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../index.html#benefits-of-rag">Benefits of RAG</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#understanding-the-power-of-rag">Understanding the Power of RAG</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../index.html#explore-the-tutorial">Explore the Tutorial</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../custom-pyfunc-for-llms/index.html">Deploying Advanced LLMs with Custom PyFuncs in MLflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../llm-evaluate/notebooks/index.html">LLM Evaluation Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../gateway/index.html">MLflow AI Gateway (Experimental)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../model-evaluation/index.html">Model Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../deep-learning/index.html">Deep Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../traditional-ml/index.html">Traditional ML</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../deployment/index.html">Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tracking.html">MLflow Tracking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../system-metrics/index.html">System Metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../projects.html">MLflow Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../models.html">MLflow Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../model-registry.html">MLflow Model Registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../recipes.html">MLflow Recipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../plugins.html">MLflow Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auth/index.html">MLflow Authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli.html">Command-Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../search-runs.html">Search Runs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../search-experiments.html">Search Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../python_api/index.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../R-api.html">R API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../java_api/index.html">Java API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rest-api.html">REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../docker.html">Official MLflow Docker Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../community-model-flavors.html">Community Model Flavors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials-and-examples/index.html">Tutorials and Examples</a></li>
+</ul>
+
+      
+    
+  </div>
+
+  <div role="contentinfo">
+    
+
+    <p>
+      <a id='feedbacklink' href="https://github.com/mlflow/mlflow/blob/master/CONTRIBUTING.md" target="_blank">Contribute</a>
+    </p>
+  </div>
+</div>
+    </nav>
+
+    <main class="wy-grid-for-nav">
+      <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+        <div class="wy-nav-content">
+          <div class="rst-content">
+            
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Documentation</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+        <li><a href="../../index.html">LLMs</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+        <li><a href="../index.html">Retrieval Augmented Generation (RAG)</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+        <li><a href="index.html">Question Generation for Retrieval Evaluation</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+    
+      <li>Question Generation For Retrieval Evaluation</li>
+    
+    
+    <!-- <li class="wy-breadcrumbs-aside">
+      <a href="https://github.com/mlflow/mlflow/blob/master/docs/source/llms/rag/notebooks/question-generation-retrieval-evaluation.ipynb" class="fa fa-github"> Edit on GitHub</a>
+    </li> -->
+    
+  </ul>
+</div>
+            <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+              <div itemprop="articleBody">
+                
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt .copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="section" id="Question-Generation-For-Retrieval-Evaluation">
+<h1>Question Generation For Retrieval Evaluation<a class="headerlink" href="#Question-Generation-For-Retrieval-Evaluation" title="Permalink to this headline"> </a></h1>
+<p>MLflow provides an advanced framework for constructing Retrieval-Augmented Generation (RAG) models. RAG is a cutting edge approach that combines the strengths of retrieval models (a model that chooses and ranks relevant chunks of a document based on the user’s question) and generative models. It effectively merges the capabilities of searching and generating text to provide responses that are contextually relevant and coherent, allowing the generated text to make reference to existing documents.
+RAG leverges the retriever to find context documents, and this novel approach has revolutionized various NLP tasks.</p>
+<p>Naturally, we want to be able to evaluate this retriever system for the RAG model to compare and judge its performance. To evaluate a retriever system, we would first need a test set of questions on the documents. These questions need to be diverse, relevant, and coherent. Manually generating questions may be challenging because it first requires you to understand the documents, and spend lots of time coming up with questions for them.</p>
+<p>We want to make this process simpler by utilizing an LLM to generate questions for this test set. This tutorial will walk through how to generate the questions and how to analyze the diversity and relevance of the questions.</p>
+<div class="section" id="Step-1:-Install-and-Load-Packages">
+<h2>Step 1: Install and Load Packages<a class="headerlink" href="#Step-1:-Install-and-Load-Packages" title="Permalink to this headline"> </a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">langchain.docstore.document</span> <span class="kn">import</span> <span class="n">Document</span>
+<span class="kn">from</span> <span class="nn">langchain.embeddings</span> <span class="kn">import</span> <span class="n">OpenAIEmbeddings</span>
+<span class="kn">from</span> <span class="nn">langchain.text_splitter</span> <span class="kn">import</span> <span class="n">CharacterTextSplitter</span>
+<span class="kn">from</span> <span class="nn">langchain.docstore.document</span> <span class="kn">import</span> <span class="n">Document</span>
+<span class="kn">import</span> <span class="nn">openai</span>
+
+<span class="c1"># For scraping</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+
+<span class="c1"># For data analysis and visualization</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
+<span class="kn">from</span> <span class="nn">sklearn.manifold</span> <span class="kn">import</span> <span class="n">TSNE</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">random</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<style scoped>
+  .ansiout {
+    display: block;
+    unicode-bidi: embed;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-all;
+    font-family: "Menlo", "Monaco", "Consolas", "Ubuntu Mono", "Source Code Pro", monospace;
+    font-size: 13px;
+    color: #555;
+    margin-left: 4px;
+    line-height: 19px;
+  }
+</style>
+<div class="ansiout"></div></div>
+</div>
+</div>
+<div class="section" id="Step-2:-Set-OpenAI-Key">
+<h2>Step 2: Set OpenAI Key<a class="headerlink" href="#Step-2:-Set-OpenAI-Key" title="Permalink to this headline"> </a></h2>
+<p>The question generation system can be done using any LLM. We chose to use OpenAI here, so we will need their API key.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">openai</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="s2">&quot;&lt;redacted&gt;&quot;</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&lt;redacted&gt;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<style scoped>
+  .ansiout {
+    display: block;
+    unicode-bidi: embed;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-all;
+    font-family: "Menlo", "Monaco", "Consolas", "Ubuntu Mono", "Source Code Pro", monospace;
+    font-size: 13px;
+    color: #555;
+    margin-left: 4px;
+    line-height: 19px;
+  }
+</style>
+<div class="ansiout"></div></div>
+</div>
+</div>
+<div class="section" id="Step-3:-Decide-on-chunk-size-and-number-of-questions-per-chunk">
+<h2>Step 3: Decide on chunk size and number of questions per chunk<a class="headerlink" href="#Step-3:-Decide-on-chunk-size-and-number-of-questions-per-chunk" title="Permalink to this headline"> </a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">CHUNK_SIZE</span> <span class="o">=</span> <span class="mi">1500</span>
+<span class="n">QUESTIONS_PER_CHUNK</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">NUM_DOCUMENTS</span> <span class="o">=</span> <span class="mi">40</span>  <span class="c1"># Number of scraped chunks to use</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<style scoped>
+  .ansiout {
+    display: block;
+    unicode-bidi: embed;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-all;
+    font-family: "Menlo", "Monaco", "Consolas", "Ubuntu Mono", "Source Code Pro", monospace;
+    font-size: 13px;
+    color: #555;
+    margin-left: 4px;
+    line-height: 19px;
+  }
+</style>
+<div class="ansiout"></div></div>
+</div>
+</div>
+<div class="section" id="Step-4:-Get-Document-Data">
+<h2>Step 4: Get Document Data<a class="headerlink" href="#Step-4:-Get-Document-Data" title="Permalink to this headline"> </a></h2>
+<p>We scrape the documents from the MLflow website to use to generate questions.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">page</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://mlflow.org/docs/latest/index.html&quot;</span><span class="p">)</span>
+<span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s2">&quot;html.parser&quot;</span><span class="p">)</span>
+
+<span class="n">mainLocation</span> <span class="o">=</span> <span class="s2">&quot;https://mlflow.org/docs/latest/&quot;</span>
+<span class="n">header</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;User-Agent&quot;</span><span class="p">:</span> <span class="s2">&quot;Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Accept-Language&quot;</span><span class="p">:</span> <span class="s2">&quot;en-US,en;q=0.8&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Connection&quot;</span><span class="p">:</span> <span class="s2">&quot;keep-alive&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">a_link</span> <span class="ow">in</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">):</span>
+    <span class="n">document_url</span> <span class="o">=</span> <span class="n">mainLocation</span> <span class="o">+</span> <span class="n">a_link</span><span class="p">[</span><span class="s2">&quot;href&quot;</span><span class="p">]</span>
+    <span class="n">page</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">document_url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">header</span><span class="p">)</span>
+    <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s2">&quot;html.parser&quot;</span><span class="p">)</span>
+    <span class="n">file_to_store</span> <span class="o">=</span> <span class="n">a_link</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;href&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;rst-content&quot;</span><span class="p">}):</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">file_to_store</span><span class="p">,</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;rst-content&quot;</span><span class="p">})</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)]</span>
+        <span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">])</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<style scoped>
+  .ansiout {
+    display: block;
+    unicode-bidi: embed;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-all;
+    font-family: "Menlo", "Monaco", "Consolas", "Ubuntu Mono", "Source Code Pro", monospace;
+    font-size: 13px;
+    color: #555;
+    margin-left: 4px;
+    line-height: 19px;
+  }
+</style>
+<div class="ansiout">/databricks/python/lib/python3.8/site-packages/bs4/builder/__init__.py:545: XMLParsedAsHTMLWarning: It looks like you&#39;re parsing an XML document using an HTML parser. If this really is an HTML document (maybe it&#39;s XHTML?), you can ignore or filter this warning. If it&#39;s XML, you should know that using an XML parser will be more reliable. To parse this document as XML, make sure you have the lxml package installed, and pass the keyword argument `features=&#34;xml&#34;` into the BeautifulSoup constructor.
+  warnings.warn(
+Out[38]: </div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>source</th>
+      <th>text</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>what-is-mlflow.html</td>
+      <td>Documentation  What is MLflow?       What i...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>quickstart.html</td>
+      <td>Documentation  Quickstart: Install MLflow, ...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>quickstart_mlops.html</td>
+      <td>Documentation  Quickstart: Compare runs, ch...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="Step-5:-Load-Document-Data">
+<h2>Step 5: Load Document Data<a class="headerlink" href="#Step-5:-Load-Document-Data" title="Permalink to this headline"> </a></h2>
+<p>We want to generate questions based on a set of documents. Here, we load the documents as Langchain Documents and utilize their embedding models. Through Langchain Documents, each document is broken down into a “chunk”, which is a snippet of the text.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">text_splitter</span> <span class="o">=</span> <span class="n">CharacterTextSplitter</span><span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="n">CHUNK_SIZE</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+<span class="n">documents</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">page</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">chunks</span> <span class="o">=</span> <span class="n">text_splitter</span><span class="o">.</span><span class="n">split_text</span><span class="p">(</span><span class="n">page</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">chunks</span><span class="p">:</span>
+        <span class="n">documents</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Document</span><span class="p">(</span><span class="n">page_content</span><span class="o">=</span><span class="n">chunk</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">documents</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<style scoped>
+  .ansiout {
+    display: block;
+    unicode-bidi: embed;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-all;
+    font-family: "Menlo", "Monaco", "Consolas", "Ubuntu Mono", "Source Code Pro", monospace;
+    font-size: 13px;
+    color: #555;
+    margin-left: 4px;
+    line-height: 19px;
+  }
+</style>
+<div class="ansiout">page_content=&#39;Documentation  What is MLflow?       What is MLflow?  MLflow is a versatile, expandable, open-source platform for managing workflows and artifacts across the machine learning lifecycle. It has built-in integrations with many popular ML libraries, but can be used with any library, algorithm, or deployment tool. It is designed to be extensible, so you can write plugins to support new workflows, libraries, and tools.    MLflow has five components:  MLflow Tracking: An API for logging parameters, code versions, metrics, model environment dependencies, and model artifacts when running your machine learning code. MLflow Tracking has a UI for reviewing and comparing runs and their results. This image from the MLflow Tracking UI shows a chart linking metrics (learning rate and momentum) to a loss metric:      MLflow Models: A model packaging format and suite of tools that let you easily deploy a trained model (from any ML library) for batch or real-time inference on platforms such as Docker, Apache Spark, Databricks, Azure ML and AWS SageMaker. This image shows MLflow Tracking UI’s view of a run’s detail and its MLflow model. You can see that the artifacts in the model directory include the model weights, files describing the model’s environment and dependencies, and sample code for loading the model and inferencing with it:      MLflow Model Registry: A centralized model store, set of APIs, and UI focused on the approval, quality assurance, and deployment of an MLflow Model.&#39; metadata={}
+</div></div>
+</div>
+</div>
+<div class="section" id="Step-6:-Generate-Questions">
+<h2>Step 6: Generate Questions<a class="headerlink" href="#Step-6:-Generate-Questions" title="Permalink to this headline"> </a></h2>
+<p>The goal here is to generate questions that are coherant and contextually relevant to their respective document chunk. You can use any LLM, but in this tutorial we chose to generate the list of questions with OpenAI GPT3.5. We also utilize prompt engineering to produce better quality questions, as we found it to be a simple and effective way to improve the responses. In particular, we found two changes to be helpful: - Better quality questions were produced if you ask the model for multiple
+questions per chunk rather than just one. This may be because it can ensure local diversity, better formatting, and have an implicit understanding that you are trying to get a list of questions. - We observed that some questions reference the document without explaining what it is referencing, hence we include this in the prompt explicitly to help with this.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">queries</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">documents</span><span class="p">[:</span><span class="n">NUM_DOCUMENTS</span><span class="p">]:</span>
+    <span class="n">chunk</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">page_content</span>
+    <span class="n">chunks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;gpt-3.5-turbo&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;messages&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">chunk</span><span class="si">}</span><span class="s2">.</span><span class="se">\n</span><span class="s2"> Please generate </span><span class="si">{</span><span class="n">QUESTIONS_PER_CHUNK</span><span class="si">}</span><span class="s2"> questions based on the above document. The questions should be diverse and ask for different aspects of the document. Don&#39;t give vague references to the document without description. Split each question with a newline&quot;</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">],</span>
+    <span class="p">}</span>
+
+    <span class="n">response</span> <span class="o">=</span> <span class="n">openai</span><span class="o">.</span><span class="n">ChatCompletion</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+    <span class="n">response_queries</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
+
+    <span class="n">question_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">response_queries</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">1</span><span class="p">:])</span>
+        <span class="n">question_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+
+    <span class="n">queries</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;chunk&quot;</span><span class="p">:</span> <span class="n">chunk</span><span class="p">,</span> <span class="s2">&quot;questions&quot;</span><span class="p">:</span> <span class="n">question_list</span><span class="p">})</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">queries</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<style scoped>
+  .ansiout {
+    display: block;
+    unicode-bidi: embed;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-all;
+    font-family: "Menlo", "Monaco", "Consolas", "Ubuntu Mono", "Source Code Pro", monospace;
+    font-size: 13px;
+    color: #555;
+    margin-left: 4px;
+    line-height: 19px;
+  }
+</style>
+<div class="ansiout">{&#39;chunk&#39;: &#39;Documentation  What is MLflow?       What is MLflow?  MLflow is a versatile, expandable, open-source platform for managing workflows and artifacts across the machine learning lifecycle. It has built-in integrations with many popular ML libraries, but can be used with any library, algorithm, or deployment tool. It is designed to be extensible, so you can write plugins to support new workflows, libraries, and tools.    MLflow has five components:  MLflow Tracking: An API for logging parameters, code versions, metrics, model environment dependencies, and model artifacts when running your machine learning code. MLflow Tracking has a UI for reviewing and comparing runs and their results. This image from the MLflow Tracking UI shows a chart linking metrics (learning rate and momentum) to a loss metric:      MLflow Models: A model packaging format and suite of tools that let you easily deploy a trained model (from any ML library) for batch or real-time inference on platforms such as Docker, Apache Spark, Databricks, Azure ML and AWS SageMaker. This image shows MLflow Tracking UI’s view of a run’s detail and its MLflow model. You can see that the artifacts in the model directory include the model weights, files describing the model’s environment and dependencies, and sample code for loading the model and inferencing with it:      MLflow Model Registry: A centralized model store, set of APIs, and UI focused on the approval, quality assurance, and deployment of an MLflow Model.&#39;, &#39;questions&#39;: [&#39;What is the purpose of MLflow Tracking and what are some of the information it logs?&#39;, &#39;How does MLflow Models help with deploying trained models and on what platforms can it be used?&#39;, &#39;Can MLflow be used with any ML library, algorithm, or deployment tool?&#39;, &#39;What are some key features of MLflow Model Registry and how does it assist with model deployment?&#39;, &#39;How does MLflow support extensibility and what can be achieved by writing plugins for it?&#39;]}
+</div></div>
+</div>
+</div>
+<div class="section" id="Quality-Analysis-of-Questions-Generated-(Optional)">
+<h2>Quality Analysis of Questions Generated (Optional)<a class="headerlink" href="#Quality-Analysis-of-Questions-Generated-(Optional)" title="Permalink to this headline"> </a></h2>
+<p>If you would like to compare quality of questions generated across different prompts, we can analyze the quality of questions manually and in aggregate. We want to evaluate questions along two dimensions - their diversity and relevance.</p>
+<p>Note: There isn’t a well-defined way to analyze the quality of generated questions, so this is just one approach you can take to gain insight into how diverse and relevant your generated questions are.</p>
+<div class="section" id="Evaluating-Diversity-of-Questions">
+<h3>Evaluating Diversity of Questions<a class="headerlink" href="#Evaluating-Diversity-of-Questions" title="Permalink to this headline"> </a></h3>
+<p>Diversity of questions is important because we want questions to cover the majority of the document content. In addition, we want to be able to evaluate the retriever with different forms of questioning. We want to be able to have harder questions and easier questions. All of these are not straightforward to analyze, and we decided to analyze its through question length and latent space embeddings.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get all the questions in a list</span>
+<span class="n">questions</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">query</span> <span class="ow">in</span> <span class="n">queries</span><span class="p">:</span>
+    <span class="n">questions</span> <span class="o">+=</span> <span class="n">query</span><span class="p">[</span><span class="s2">&quot;questions&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<style scoped>
+  .ansiout {
+    display: block;
+    unicode-bidi: embed;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-all;
+    font-family: "Menlo", "Monaco", "Consolas", "Ubuntu Mono", "Source Code Pro", monospace;
+    font-size: 13px;
+    color: #555;
+    margin-left: 4px;
+    line-height: 19px;
+  }
+</style>
+<div class="ansiout"></div></div>
+</div>
+<div class="section" id="Length">
+<h4>Length<a class="headerlink" href="#Length" title="Permalink to this headline"> </a></h4>
+<p>Length gives a sense of how diverse the questions are. Some questions may be wordy while others are straight to the point. It also allows us to identify problems with the question generated. For example, you may identify some questions to have a length of 0.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Length</span>
+<span class="n">question_len</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">questions</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">])</span>
+<span class="n">question_len</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Histogram of Question Lengths&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Question Length&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/llms_rag_notebooks_question-generation-retrieval-evaluation_17_0.png" class="no-scaled-link" src="../../../_images/llms_rag_notebooks_question-generation-retrieval-evaluation_17_0.png" style="width: 382px; height: 278px;" />
+</div>
+</div>
+<p>In addition to visual representation, we also want to look at more concrete percentile values.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculating percentile values</span>
+<span class="n">p10</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">question_len</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.10</span><span class="p">))</span>
+<span class="n">p90</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">question_len</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.90</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;p10-p90 range is&quot;</span><span class="p">,</span> <span class="n">p90</span> <span class="o">-</span> <span class="n">p10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<style scoped>
+  .ansiout {
+    display: block;
+    unicode-bidi: embed;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-all;
+    font-family: "Menlo", "Monaco", "Consolas", "Ubuntu Mono", "Source Code Pro", monospace;
+    font-size: 13px;
+    color: #555;
+    margin-left: 4px;
+    line-height: 19px;
+  }
+</style>
+<div class="ansiout">p10-p90 range is 61
+</div></div>
+</div>
+<p>We noticed that the short queries are all empty strings, and hence we need to filter for this.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">q</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">questions</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<style scoped>
+  .ansiout {
+    display: block;
+    unicode-bidi: embed;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-all;
+    font-family: "Menlo", "Monaco", "Consolas", "Ubuntu Mono", "Source Code Pro", monospace;
+    font-size: 13px;
+    color: #555;
+    margin-left: 4px;
+    line-height: 19px;
+  }
+</style>
+<div class="ansiout">Out[51]: [&#39;&#39;, &#39;&#39;, &#39;&#39;, &#39;&#39;]</div></div>
+</div>
+<p>There are also a couple queries that are longer than normal. However, these seem fine.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">q</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">questions</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">160</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<style scoped>
+  .ansiout {
+    display: block;
+    unicode-bidi: embed;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-all;
+    font-family: "Menlo", "Monaco", "Consolas", "Ubuntu Mono", "Source Code Pro", monospace;
+    font-size: 13px;
+    color: #555;
+    margin-left: 4px;
+    line-height: 19px;
+  }
+</style>
+<div class="ansiout">Out[52]: [&#39;What is the default backend and artifact store used in the MLflow tracking server? How can a user customize these stores by supplying arguments to the mlflow server command?&#39;,
+ &#39;How are MLflow entities and artifacts recorded in Scenario 2? Describe the interfaces used by the MLflow client to store artifacts and save MLflow entities to the SQLite database file.&#39;]</div></div>
+</div>
+</div>
+<div class="section" id="Latent-Space">
+<h4>Latent Space<a class="headerlink" href="#Latent-Space" title="Permalink to this headline"> </a></h4>
+<p>Latent space embeddings contain semantic information about the question. This can be used to evaluate the diversity and the difference between two questions semantically. To do so, we will need to map the high dimensional space to a lower dimensional space. We utilize PCA and TSNE to map the embeddings into a 2-dimensional space for visualization.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># post process to remove empty questions</span>
+<span class="n">questions_to_embed</span> <span class="o">=</span> <span class="p">[</span><span class="n">q</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">questions</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<style scoped>
+  .ansiout {
+    display: block;
+    unicode-bidi: embed;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-all;
+    font-family: "Menlo", "Monaco", "Consolas", "Ubuntu Mono", "Source Code Pro", monospace;
+    font-size: 13px;
+    color: #555;
+    margin-left: 4px;
+    line-height: 19px;
+  }
+</style>
+<div class="ansiout"></div></div>
+</div>
+<p>We append 5 benchmark queries to help visualize how diverse the questions are. The first four of these questions are semantically similar and all asking about MLflow, while the last is different and refers to spark and model registry.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">benchmark_questions</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;What is MLflow?&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;What is MLflow about?&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Tell me about MLflow Tracking&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;How does MLflow work?&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;How is spark used in model registry?&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">questions_to_embed</span> <span class="o">=</span> <span class="n">questions_to_embed</span> <span class="o">+</span> <span class="n">benchmark_questions</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<style scoped>
+  .ansiout {
+    display: block;
+    unicode-bidi: embed;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-all;
+    font-family: "Menlo", "Monaco", "Consolas", "Ubuntu Mono", "Source Code Pro", monospace;
+    font-size: 13px;
+    color: #555;
+    margin-left: 4px;
+    line-height: 19px;
+  }
+</style>
+<div class="ansiout"></div></div>
+</div>
+<p>We apply PCA to reduce the embedding dimensions to 50 before applying TSNE to reduce it to 2 dimensions, as recommended by sklearn due to the computational complexity of TSNE.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Apply embeddings</span>
+<span class="n">embeddings</span> <span class="o">=</span> <span class="n">OpenAIEmbeddings</span><span class="p">()</span>
+<span class="n">question_embeddings</span> <span class="o">=</span> <span class="n">embeddings</span><span class="o">.</span><span class="n">embed_documents</span><span class="p">(</span><span class="n">questions_to_embed</span><span class="p">)</span>
+<span class="c1"># PCA on embeddings to reduce to 50-dim</span>
+<span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">question_embeddings_50</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">question_embeddings</span><span class="p">)</span>
+<span class="c1"># TSNE on embeddings to reduce to 2-dim</span>
+<span class="n">tsne</span> <span class="o">=</span> <span class="n">TSNE</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">lower_dim_embeddings</span> <span class="o">=</span> <span class="n">tsne</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">question_embeddings_50</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<style scoped>
+  .ansiout {
+    display: block;
+    unicode-bidi: embed;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-all;
+    font-family: "Menlo", "Monaco", "Consolas", "Ubuntu Mono", "Source Code Pro", monospace;
+    font-size: 13px;
+    color: #555;
+    margin-left: 4px;
+    line-height: 19px;
+  }
+</style>
+<div class="ansiout"></div></div>
+</div>
+<p>Now that we have 2-dimensional embeddings representing the semantics of the question, we can visualize it with a scatter plot, differentiating the generated questions and the benchmark questions.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lower_dim_embeddings</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">benchmark_questions</span><span class="p">),</span> <span class="s2">&quot;generated&quot;</span><span class="p">),</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">benchmark_questions</span><span class="p">),</span> <span class="s2">&quot;benchmark&quot;</span><span class="p">),</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">lower_dim_embeddings</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">lower_dim_embeddings</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="n">labels</span><span class="p">}</span>
+<span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/llms_rag_notebooks_question-generation-retrieval-evaluation_31_0.png" class="no-scaled-link" src="../../../_images/llms_rag_notebooks_question-generation-retrieval-evaluation_31_0.png" style="width: 391px; height: 262px;" />
+</div>
+</div>
+<p>Observe that within the orange points on the scatter plot, there is one point that is further than the others. That is the unique benchmark question about Spark and Model Registry. This plot gives a sense of the diversity of the questions generated.</p>
+</div>
+</div>
+<div class="section" id="Evaluate-Document-Relevance">
+<h3>Evaluate Document Relevance<a class="headerlink" href="#Evaluate-Document-Relevance" title="Permalink to this headline"> </a></h3>
+<p>Another important axis to consider is how relevant the questions are to the document we provided. We want to understand whether the questions generated by the LLM is actually referring to our provided text, or whether it is hallucinating irrelevant questions. We will evaluate relevance by first manually checking certain questions against their document chunk. Then, we define a measure of relevance to analyze it quantitatively.</p>
+<div class="section" id="Manual-Checking-of-Document-Relevance">
+<h4>Manual Checking of Document Relevance<a class="headerlink" href="#Manual-Checking-of-Document-Relevance" title="Permalink to this headline"> </a></h4>
+<p>Manual qualitative check of whether the questions are relevant to the document.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">samples</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># num of chunks we want to observe</span>
+
+<span class="k">for</span> <span class="n">query</span> <span class="ow">in</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">queries</span><span class="p">,</span> <span class="n">samples</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Chunk:&quot;</span><span class="p">,</span> <span class="n">query</span><span class="p">[</span><span class="s2">&quot;chunk&quot;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">query</span><span class="p">[</span><span class="s2">&quot;questions&quot;</span><span class="p">]:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Question:&quot;</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>  <span class="c1"># delimiter</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<style scoped>
+  .ansiout {
+    display: block;
+    unicode-bidi: embed;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-all;
+    font-family: "Menlo", "Monaco", "Consolas", "Ubuntu Mono", "Source Code Pro", monospace;
+    font-size: 13px;
+    color: #555;
+    margin-left: 4px;
+    line-height: 19px;
+  }
+</style>
+<div class="ansiout">Chunk: represents a run and associates each hyperparameter evaluation run’s parameters to the evaluated error metric for the run.  The red graphs on this graph are runs that fared poorly. The lowest one is a baseline run with both lr and momentum set to 0.0. That baseline run has an RMSE of ~0.89. The other red lines show that high momentum can also lead to poor results with this problem and architecture. The graphs shading towards blue are runs that fared better. Hover your mouse over individual runs to see their details.   Register your best model  Choose the best run and register it as a model. In the Table view, choose the best run. In the Run Detail page, open the Artifacts section and select the Register Model button. In the Register Model dialog, enter a name for the model, such as wine-quality, and click Register. Now, your model is available for deployment. You can see it in the Models page of the MLflow UI. Open the page for the model you just registered. You can add a description for the model, add tags, and easily navigate back to the source run that generated this model. You can also transition the model to different stages. For example, you can transition the model to Staging to indicate that it is ready for testing. You can transition it to Production to indicate that it is ready for deployment. Transition the model to Staging by choosing the Stage dropdown:    Serve the model locally  MLflow allows you to easily serve models produced by any run or model version. You
+Question: What factors are indicated by the red graphs in the given graph and how do they affect the performance of the runs?
+Question: What is the significance of the baseline run with lr and momentum set to 0.0 in terms of error metric and performance?
+Question: How can high momentum affect the results of the problem and architecture being analyzed?
+Question: How can the best run be chosen and registered as a model in the MLflow UI?
+Question: How does MLflow enable the serving of models locally and what are the benefits of this functionality?
+--------------------------------------------------------------------------------
+Chunk: role authentication    Part 2c and d:    Retrieving artifacts from the configured backend store for a user request is done with the same authorized authentication that was configured at server start Artifacts are passed to the end user through the Tracking Server through the interface of the HttpArtifactRepository     Note When an experiment is created, the artifact storage location from the configuration of the tracking server is logged in the experiment’s metadata. When enabling proxied artifact storage, any existing experiments that were created while operating a tracking server in non-proxied mode will continue to use a non-proxied artifact location. In order to use proxied artifact logging, a new experiment must be created. If the intention of enabling a tracking server in -serve-artifacts mode is to eliminate the need for a client to have authentication to the underlying storage, new experiments should be created for use by clients so that the tracking server can handle authentication after this migration.   Warning The MLflow artifact proxied access service enables users to have an assumed role of access to all artifacts that are accessible to the Tracking Server. Administrators who are enabling this feature should ensure that the access level granted to the Tracking Server for artifact operations meets all security requirements prior to enabling the Tracking Server to operate in a proxied file handling role.    Scenario 6: MLflow Tracking Server used exclusively as
+Question: How does the MLflow Tracking Server retrieve artifacts from the configured backend store for a user request?
+Question: What interface is used by the Tracking Server to pass artifacts to the end user?
+Question: How is the artifact storage location logged in the experiment&#39;s metadata when an experiment is created?
+Question: Can existing experiments created while operating a non-proxied tracking server be used for proxied artifact logging?
+Question: What precaution should administrators take before enabling the MLflow artifact proxied access service?
+--------------------------------------------------------------------------------
+Chunk: models as files in a management system of their choice, and track which run a model came from. Researchers and Open Source Developers can publish code to GitHub in the MLflow Project format, making it easy for anyone to run their code using the mlflow run github.com/... command. ML Library Developers can output models in the MLflow Model format to have them automatically support deployment using MLflow’s built-in tools. In addition, deployment tool developers (for example, a cloud vendor building a serving platform) can automatically support a large variety of models.        Previous Next                © MLflow Project, a Series of LF Projects, LLC. All rights reserved.
+Question: What is the purpose of MLflow&#39;s Project format? How does it make it easier for others to run code?
+Question: How does MLflow support ML Library Developers in terms of model deployment?
+Question: How can deployment tool developers benefit from using MLflow?
+Question: Can you explain the role of MLflow in tracking the origin of a model run? How does it help researchers and developers?
+Question: Who holds the rights to MLflow Project?
+--------------------------------------------------------------------------------
+</div></div>
+</div>
+</div>
+<div class="section" id="Embeddings-Cosine-Similarity">
+<h4>Embeddings Cosine Similarity<a class="headerlink" href="#Embeddings-Cosine-Similarity" title="Permalink to this headline"> </a></h4>
+<p>The embedding of the chunk and query is placed in the same latent space, and the retriever model would extract similar chunk embeddings to a query embedding. Hence, relevance for the retriever is defined by the distance of embeddings in this latent space.</p>
+<p>Cosine similarity is a measure of vector similarity, and can be used to determine the distance of embeddings between the chunk and the query. It is a distance metric that approaches 1 when the question and chunk are similar, and becomes 0 when they are different.</p>
+<p>We can use the cosine similarity score directly to measure the relevancy. However, if we just have a cosine similarity score, it is not interpretable without something to compare it to. Hence, we define relative question relevance as:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\frac{cossim(chunk, question_q)}{\frac{1}{len(questions)-1}\sum_{i\ !=\ q}cossim(chunk, question_i)}\\where ``question_q`` is a question generated from the chunk.\end{aligned}\end{align} \]</div>
+<p>This relative question relevance can measure how much more relevant a question generated from the chunk is compared to a question generated by another chunk in this dataset. It would give a score of above 1 if the question generated from the chunk is more relevant and a score below if its not. We can then use this score to identify any irrelevant questions generated.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">embedded_queries</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">query</span> <span class="ow">in</span> <span class="n">queries</span><span class="p">:</span>
+    <span class="n">embedded_query</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;chunk&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">embeddings</span><span class="o">.</span><span class="n">embed_documents</span><span class="p">([</span><span class="n">query</span><span class="p">[</span><span class="s2">&quot;chunk&quot;</span><span class="p">]])),</span>
+        <span class="s2">&quot;questions&quot;</span><span class="p">:</span> <span class="n">embeddings</span><span class="o">.</span><span class="n">embed_documents</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">q</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">query</span><span class="p">[</span><span class="s2">&quot;questions&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="p">),</span>  <span class="c1"># embedding cant take empty strings</span>
+    <span class="p">}</span>
+    <span class="n">embedded_queries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">embedded_query</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<style scoped>
+  .ansiout {
+    display: block;
+    unicode-bidi: embed;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-all;
+    font-family: "Menlo", "Monaco", "Consolas", "Ubuntu Mono", "Source Code Pro", monospace;
+    font-size: 13px;
+    color: #555;
+    margin-left: 4px;
+    line-height: 19px;
+  }
+</style>
+<div class="ansiout"></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">cossim</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+
+
+<span class="n">question_relevance</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">query</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">embedded_queries</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">q_index</span><span class="p">,</span> <span class="n">question_emb</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">query</span><span class="p">[</span><span class="s2">&quot;questions&quot;</span><span class="p">]):</span>
+        <span class="c1"># generate cosine similarity for the chunk the question is generated from</span>
+        <span class="n">chunk_sim</span> <span class="o">=</span> <span class="n">cossim</span><span class="p">(</span><span class="n">question_emb</span><span class="p">,</span> <span class="n">query</span><span class="p">[</span><span class="s2">&quot;chunk&quot;</span><span class="p">])</span>
+
+        <span class="c1"># generate average cosine similarity between chunk and irrelevant questions</span>
+        <span class="n">avg_irrelevant_cossim</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">other_query</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">embedded_queries</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">j</span><span class="p">:</span>
+                <span class="c1"># supposedly irrelevant questions to the chunk.</span>
+                <span class="k">for</span> <span class="n">q_emb</span> <span class="ow">in</span> <span class="n">other_query</span><span class="p">[</span><span class="s2">&quot;questions&quot;</span><span class="p">]:</span>
+                    <span class="n">avg_irrelevant_cossim</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cossim</span><span class="p">(</span><span class="n">q_emb</span><span class="p">,</span> <span class="n">query</span><span class="p">[</span><span class="s2">&quot;chunk&quot;</span><span class="p">]))</span>
+        <span class="n">other_sim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">avg_irrelevant_cossim</span><span class="p">)</span>
+        <span class="n">question_relevance</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="n">queries</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s2">&quot;questions&quot;</span><span class="p">][</span><span class="n">q_index</span><span class="p">],</span>  <span class="c1"># text version of question</span>
+                <span class="s2">&quot;chunk&quot;</span><span class="p">:</span> <span class="n">queries</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s2">&quot;chunk&quot;</span><span class="p">],</span>  <span class="c1"># text version of chunk</span>
+                <span class="s2">&quot;score&quot;</span><span class="p">:</span> <span class="n">chunk_sim</span> <span class="o">/</span> <span class="n">other_sim</span><span class="p">,</span>  <span class="c1"># relative similarity score</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<style scoped>
+  .ansiout {
+    display: block;
+    unicode-bidi: embed;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-all;
+    font-family: "Menlo", "Monaco", "Consolas", "Ubuntu Mono", "Source Code Pro", monospace;
+    font-size: 13px;
+    color: #555;
+    margin-left: 4px;
+    line-height: 19px;
+  }
+</style>
+<div class="ansiout"></div></div>
+</div>
+<p>After we score each question by its relative relevancy, we can evaluate the generated questions as a whole.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># score above 1 means it is more relevant to its chunk than other chunks in the document (relative relevance). This shows that most chunks are relatively relevant.</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;score&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">question_relevance</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">40</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/llms_rag_notebooks_question-generation-retrieval-evaluation_40_0.png" class="no-scaled-link" src="../../../_images/llms_rag_notebooks_question-generation-retrieval-evaluation_40_0.png" style="width: 378px; height: 248px;" />
+</div>
+</div>
+<p>There are a couple scores that are less than 1, lets take a look at those.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">question_evaluation</span> <span class="ow">in</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">question_relevance</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;score&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Chunk:&quot;</span><span class="p">,</span> <span class="n">question_evaluation</span><span class="p">[</span><span class="s2">&quot;chunk&quot;</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Question:&quot;</span><span class="p">,</span> <span class="n">question_evaluation</span><span class="p">[</span><span class="s2">&quot;question&quot;</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Score:&quot;</span><span class="p">,</span> <span class="n">question_evaluation</span><span class="p">[</span><span class="s2">&quot;score&quot;</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>  <span class="c1"># delimiter</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<style scoped>
+  .ansiout {
+    display: block;
+    unicode-bidi: embed;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-all;
+    font-family: "Menlo", "Monaco", "Consolas", "Ubuntu Mono", "Source Code Pro", monospace;
+    font-size: 13px;
+    color: #555;
+    margin-left: 4px;
+    line-height: 19px;
+  }
+</style>
+<div class="ansiout">Chunk: log_artifacts  if __name__ == &#34;__main__&#34;:     # Log a parameter (key-value pair)     log_param(&#34;config_value&#34;, randint(0, 100))      # Log a dictionary of parameters     log_params({&#34;param1&#34;: randint(0, 100), &#34;param2&#34;: randint(0, 100)})      # Log a metric; metrics can be updated throughout the run     log_metric(&#34;accuracy&#34;, random() / 2.0)     log_metric(&#34;accuracy&#34;, random() + 0.1)     log_metric(&#34;accuracy&#34;, random() + 0.2)      # Log an artifact (output file)     if not os.path.exists(&#34;outputs&#34;):         os.makedirs(&#34;outputs&#34;)     with open(&#34;outputs/test.txt&#34;, &#34;w&#34;) as f:         f.write(&#34;hello world!&#34;)     log_artifacts(&#34;outputs&#34;)    If you are using a library that supports autologging, but wish to disable it, you may do so by calling mlflow.autolog(disable=True).  For more details on automatic logging, see Automatic Logging. For more details on the explicit logging API, see Logging functions.    View MLflow runs and experiments  Once you’ve run your code, you may view the results with MLflow’s tracking UI. To start the UI, run:  mlflow ui    And then navigate to http://localhost:5000 in your browser. You will see a page similar to:  You are in the Default experiment, which now contains the tracking data for your run. An experiment is a collection of related runs. The MLflow UI opens to the Table view. The main portion of the window shows a table of runs, with each row representing a single run. The columns show the run name, how long ago it was created, its running time,
+Question: What are the different types of logging functions mentioned in the document?
+Score: 0.9934432170633938
+--------------------------------------------------------------------------------
+Chunk: log_artifacts  if __name__ == &#34;__main__&#34;:     # Log a parameter (key-value pair)     log_param(&#34;config_value&#34;, randint(0, 100))      # Log a dictionary of parameters     log_params({&#34;param1&#34;: randint(0, 100), &#34;param2&#34;: randint(0, 100)})      # Log a metric; metrics can be updated throughout the run     log_metric(&#34;accuracy&#34;, random() / 2.0)     log_metric(&#34;accuracy&#34;, random() + 0.1)     log_metric(&#34;accuracy&#34;, random() + 0.2)      # Log an artifact (output file)     if not os.path.exists(&#34;outputs&#34;):         os.makedirs(&#34;outputs&#34;)     with open(&#34;outputs/test.txt&#34;, &#34;w&#34;) as f:         f.write(&#34;hello world!&#34;)     log_artifacts(&#34;outputs&#34;)    If you are using a library that supports autologging, but wish to disable it, you may do so by calling mlflow.autolog(disable=True).  For more details on automatic logging, see Automatic Logging. For more details on the explicit logging API, see Logging functions.    View MLflow runs and experiments  Once you’ve run your code, you may view the results with MLflow’s tracking UI. To start the UI, run:  mlflow ui    And then navigate to http://localhost:5000 in your browser. You will see a page similar to:  You are in the Default experiment, which now contains the tracking data for your run. An experiment is a collection of related runs. The MLflow UI opens to the Table view. The main portion of the window shows a table of runs, with each row representing a single run. The columns show the run name, how long ago it was created, its running time,
+Question: How can you disable autologging in a library that supports it?
+Score: 0.9771305469184358
+--------------------------------------------------------------------------------
+Chunk: print(predictions)    Note that while log_model saves environment-specifying files such as conda.yaml and requirements.txt, load_model does not automatically recreate that environment. To do so, you need to use your preferred method (conda, virtualenv, pip, etc.), using the artifacts saved by log_model. If you serve your model with mlflow models serve, MLflow will automatically recreate the environment. Those commands also accept an --env-manager option for even more control. (This is described in detail in Environment Management Tools. In the case of mlflow.pyfunc.spark_udf(), you can use the --env-manager flag to recreate the environment during Spark batch inference.) To learn more about loading models for specific runs, see Save and serve models.   Next steps   Quickstart: Compare runs, choose a model, and deploy it to a REST API MLflow tutorials and examples Use the MLflow Registry to store and share versioned models, see MLflow Model Registry Use MLflow Projects for packaging your code in a reproducible and reusable way, see MLflow Projects Use MLflow Recipes to create workflows for faster iterations and easier deployment, see MLflow Recipes MLflow concepts Java API R API         Previous Next                © MLflow Project, a Series of LF Projects, LLC. All rights reserved.
+Question: What are some next steps after reviewing the provided information in the document?
+Score: 0.9252835554379636
+--------------------------------------------------------------------------------
+Chunk: Documentation  Quickstart: Compare runs, choose a model, and deploy it to a REST API       Quickstart: Compare runs, choose a model, and deploy it to a REST API  In this quickstart, you will:  Run a hyperparameter sweep on a training script Compare the results of the runs in the MLflow UI Choose the best run and register it as a model Deploy the model to a REST API Build a container image suitable for deployment to a cloud platform  As an ML Engineer or MLOps professional, you can use MLflow to compare, share, and deploy the best models produced by the team. In this quickstart, you will use the MLflow Tracking UI to compare the results of a hyperparameter sweep, choose the best run, and register it as a model. Then, you will deploy the model to a REST API. Finally, you will create a Docker container image suitable for deployment to a cloud platform.   Set up   Install MLflow. See the MLflow Data Scientist quickstart for instructions Clone the MLflow git repo Run the tracking server: mlflow server    Run a hyperparameter sweep  Switch to the examples/hyperparam/ directory in the MLflow git repo. This example tries to optimize the RMSE metric of a Keras deep learning model on a wine quality dataset. It has two hyperparameters that it tries to optimize: learning-rate and momentum. This directory uses the MLflow Projects format and defines multiple entry points. You can review those by reading the MLProject file. The hyperopt entry point uses the Hyperopt library to run a
+Question: What is the purpose of creating a Docker container image in this quickstart?
+Score: 0.9833064300379587
+--------------------------------------------------------------------------------
+Chunk: represents a run and associates each hyperparameter evaluation run’s parameters to the evaluated error metric for the run.  The red graphs on this graph are runs that fared poorly. The lowest one is a baseline run with both lr and momentum set to 0.0. That baseline run has an RMSE of ~0.89. The other red lines show that high momentum can also lead to poor results with this problem and architecture. The graphs shading towards blue are runs that fared better. Hover your mouse over individual runs to see their details.   Register your best model  Choose the best run and register it as a model. In the Table view, choose the best run. In the Run Detail page, open the Artifacts section and select the Register Model button. In the Register Model dialog, enter a name for the model, such as wine-quality, and click Register. Now, your model is available for deployment. You can see it in the Models page of the MLflow UI. Open the page for the model you just registered. You can add a description for the model, add tags, and easily navigate back to the source run that generated this model. You can also transition the model to different stages. For example, you can transition the model to Staging to indicate that it is ready for testing. You can transition it to Production to indicate that it is ready for deployment. Transition the model to Staging by choosing the Stage dropdown:    Serve the model locally  MLflow allows you to easily serve models produced by any run or model version. You
+Question: How can high momentum affect the results of the problem and architecture being analyzed?
+Score: 0.993193186831948
+--------------------------------------------------------------------------------
+Chunk: one prediction of wine quality (on a scale of 3-8). The response is a JSON object with a predictions key that contains a list of predictions, one for each row of data. In this case, the response is: {&#34;predictions&#34;: [{&#34;0&#34;: 5.310967445373535}]}   The schema for input and output is available in the MLflow UI in the Artifacts | Model description. The schema is available because the train.py script used the mlflow.infer_signature method and passed the result to the mlflow.log_model method. Passing the signature to the log_model method is highly recommended, as it provides clear error messages if the input request is malformed.   Build a container image for your model  Most routes toward deployment will use a container to package your model, its dependencies, and relevant portions of the runtime environment. You can use MLflow to build a Docker image for your model. mlflow models build-docker --model-uri &#34;models:/wine-quality/1&#34; --name &#34;qs_mlops&#34;   This command builds a Docker image named qs_mlops that contains your model and its dependencies. The model-uri in this case specifies a version number (/1) rather than a lifecycle stage (/staging), but you can use whichever integrates best with your workflow. It will take several minutes to build the image. Once it completes, you can run the image to provide real-time inferencing locally, on-prem, on a bespoke Internet server, or cloud platform. You can run it locally with: docker run -p 5002:8080 qs_mlops   This Docker run command runs
+Question: Why is it recommended to pass the signature to the log_model method in the train.py script?
+Score: 0.9823021489741864
+--------------------------------------------------------------------------------
+Chunk: Artifacts  When you specify the location of an artifact in MLflow APIs, the syntax depends on whether you are invoking the Tracking, Models, or Projects API. For the Tracking API, you specify the artifact location using a (run ID, relative path) tuple. For the Models and Projects APIs, you specify the artifact location in the following ways:  /Users/me/path/to/local/model relative/path/to/local/model &lt;scheme&gt;/&lt;scheme-dependent-path&gt;. For example:  s3://my_bucket/path/to/model hdfs://&lt;host&gt;:&lt;port&gt;/&lt;path&gt; runs:/&lt;mlflow_run_id&gt;/run-relative/path/to/model models:/&lt;model_name&gt;/&lt;model_version&gt; models:/&lt;model_name&gt;/&lt;stage&gt; mlflow-artifacts:/path/to/model when running the tracking server in --serve-artifacts proxy mode.    For example: Tracking API mlflow.log_artifacts(&#34;&lt;mlflow_run_id&gt;&#34;, &#34;/path/to/artifact&#34;)   Models API mlflow.pytorch.log_model(     &#34;runs:/&lt;mlflow_run_id&gt;/run-relative/path/to/model&#34;, registered_model_name=&#34;mymodel&#34; )   mlflow.pytorch.load_model(&#34;models:/mymodel/1&#34;)     Scalability and Big Data  Data is the key to obtaining good results in machine learning, so MLflow is designed to scale to large data sets, large output files (for example, models), and large numbers of experiments. Specifically, MLflow supports scaling in four dimensions:  An individual MLflow run can execute on a distributed cluster, for example, using Apache Spark. You can launch runs on the distributed infrastructure of your choice and report results to a Tracking Server to compare them. MLflow
+Question: Can MLflow runs be executed on distributed clusters?
+Score: 0.9950455214678244
+--------------------------------------------------------------------------------
+Chunk: storage host:   Part 2a, b, and c:    The MLflow client uses RestStore to send a REST request to fetch the artifact store URI location from the Tracking Server The Tracking Server responds with an artifact store URI location (an S3 storage URI in this case) The MLflow client creates an instance of an S3ArtifactRepository, connects to the remote AWS host using the boto client libraries, and uploads the artifacts to the S3 bucket URI location    The FileStore, RestStore, and SQLAlchemyStore are concrete implementations of the abstract class AbstractStore, and the LocalArtifactRepository and S3ArtifactRepository are concrete implementations of the abstract class ArtifactRepository.   Scenario 5: MLflow Tracking Server enabled with proxied artifact storage access  MLflow’s Tracking Server supports utilizing the host as a proxy server for operations involving artifacts. Once configured with the appropriate access requirements, an administrator can start the tracking server to enable assumed-role operations involving the saving, loading, or listing of model artifacts, images, documents, and files. This eliminates the need to allow end users to have direct path access to a remote object store (e.g., s3, adls, gcs, hdfs) for artifact handling and eliminates the need for an end-user to provide access credentials to interact with an underlying object store.     Command to run the tracking server in this configuration  mlflow server \   --backend-store-uri
+Question: What are the concrete implementations of the abstract class AbstractStore?
+Score: 0.9877475767144712
+--------------------------------------------------------------------------------
+</div></div>
+</div>
+<p>Manual verification of these “irrelevant” questions demonstrate that they do refer to the chunk but are vague or doesn’t align with the main focus. Hence, we can choose to filter these as desired.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+              </div>
+            </div>
+            <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="index.html" class="btn btn-neutral" title="Question Generation for Retrieval Evaluation" accesskey="p"><span class="db-icon db-icon-chevron-left"></span> Previous</a>
+      
+      
+        <a href="../../custom-pyfunc-for-llms/index.html" class="btn btn-neutral" title="Deploying Advanced LLMs with Custom PyFuncs in MLflow" accesskey="n">Next <span class="db-icon db-icon-chevron-right"></span></a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+      <p class="copyright">
+          &copy; MLflow Project, a Series of LF Projects, LLC. All rights reserved.
+      </p>
+
+  </div> 
+
+</footer>
+          </div>
+        </div>
+      </section>
+    </main>
+  </page>
+
+  
+
+
+  
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:'../../../',
+      VERSION:'2.9.1',
+      COLLAPSE_INDEX:false,
+      FILE_SUFFIX:'.html',
+      LINK_SUFFIX: '.html',
+      HAS_SOURCE:  true
+    };
+  </script>
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/clipboard.min.js"></script>
+  <script type="text/javascript" src="../../../_static/js/jquery.waypoints.min.js"></script>
+
+  
+  
+  
+  <script type="text/javascript">var CLIPPY_SVG_PATH = "../../../_static/clippy.svg";</script>
+  <script type="text/javascript" src="../../../_static/js/custom.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+    jQuery(function () {
+      SphinxRtdTheme.StickyNav.enable();
+    });
+
+  </script>
+  
+
+  
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
+        // Get the code block designator class entries
+        const allHighlights = document.querySelectorAll('.highlight');
+        // Disable copyable links for notebook cell numbering and for cell outputs
+        const highlights = Array.from(allHighlights).filter(highlight => !highlight.closest('.highlight-none') && 
+            !highlight.closest('.nboutput'));
+    
+        highlights.forEach(function(highlight) {
+            const copyIcon = document.createElement('span');
+            copyIcon.classList.add('copy-icon');
+            copyIcon.innerHTML = '&#xf0ea;';
+
+            copyIcon.addEventListener('click', function() {
+                const code = highlight.querySelector('pre').textContent;
+                copyToClipboard(code);
+
+                // Flash effect on click
+                this.style.color = '#0194E2';
+                setTimeout(() => {
+                    this.style.color = ''; 
+                }, 100);
+
+                // Display "Code copied to clipboard" near the clicked icon
+                const message = document.createElement('span');
+                message.textContent = "Copied!";
+                message.classList.add('copy-message'); 
+
+                // Append the message to the icon
+                this.appendChild(message);
+
+                setTimeout(() => {
+                    this.removeChild(message);
+                }, 500);
+            });
+
+            highlight.appendChild(copyIcon);
+        });
+    });
+  </script>
+
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        // Force download for notebook-download-btn
+        const downloadButtons = document.querySelectorAll('.notebook-download-btn');
+        downloadButtons.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default behavior
+
+                // Fetch the raw content of the notebook from GitHub
+                fetch(button.href)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const url = window.URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.style.display = 'none';
+                        link.href = url;
+                        const filename = button.href.split('/').pop();
+                        link.download = filename; 
+
+                        document.body.appendChild(link);
+                        link.click();
+
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(link);
+                    })
+                    .catch(err => console.error('Error fetching the notebook:', err));
+            });
+        });
+    });
+</script> 
+</body>
+</html>

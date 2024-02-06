@@ -1,0 +1,1184 @@
+
+  
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mlflow.models.evaluation.base &mdash; MLflow 1.26.0 documentation</title>
+  
+   
+  <link rel="canonical" href="https://www.mlflow.org/docs/latest/_modules/mlflow/models/evaluation/base.html">
+  
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    
+
+    
+
+  
+    
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-WXWDBL');</script>
+      
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600" rel="stylesheet">
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/css/custom.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../../../_static/css/algolia.css" type="text/css" />
+    
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="MLflow 1.26.0 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  
+
+  
+  <nav class="wy-nav-top header" role="navigation" aria-label="top navigation">
+    <ul>
+  <li class="menu-toggle">
+    <i data-toggle="wy-nav-top" class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"></i>
+    <a href="../../../../index.html" class="wy-nav-top-logo"
+      ><img src="../../../../_static/MLflow-logo-final-black.png" alt="MLflow"
+    /></a>
+    <span class="version">1.26.0</span>
+  </li>
+</ul>
+  </nav>
+  <page>
+    
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side relative">
+      <div class="wy-side-scroll">
+  <div class="wy-side-nav-search">
+    
+
+    
+
+    
+<div role="search">
+  
+  <input id="algolia-search" type="text" name="q" placeholder="Search" />
+  
+</div>
+
+
+    
+  </div>
+
+  <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+    
+      <a href="../../../../index.html" class="main-navigation-home"><img src="../../../../_static/icons/nav-home.svg"> MLflow</a>
+    
+
+    
+      
+
+      
+        <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials-and-examples/index.html">Tutorials and Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tracking.html">MLflow Tracking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../projects.html">MLflow Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../models.html">MLflow Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../model-registry.html">MLflow Model Registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../plugins.html">MLflow Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cli.html">Command-Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../search-syntax.html">Search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../python_api/index.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../R-api.html">R API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../java_api/index.html">Java API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rest-api.html">REST API</a></li>
+</ul>
+
+      
+    
+  </div>
+
+  <div role="contentinfo">
+    
+
+    <p>
+      <a id='feedbacklink' href="https://github.com/mlflow/mlflow/blob/master/CONTRIBUTING.rst" target="_blank">Contribute</a>
+    </p>
+  </div>
+</div>
+    </nav>
+
+    <main class="wy-grid-for-nav">
+      <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+        <div class="wy-nav-content">
+          <div class="rst-content">
+            
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Documentation</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+        <li><a href="../../../index.html">Module code</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+    
+      <li>mlflow.models.evaluation.base</li>
+    
+    
+    <li class="wy-breadcrumbs-aside">
+      <a href="https://github.com/mlflow/mlflow/blob/master/docs/source/_modules/mlflow/models/evaluation/base" class="fa fa-github"> Edit on GitHub</a>
+    </li>
+    
+  </ul>
+</div>
+            <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+              <div itemprop="articleBody">
+                
+  <h1>Source code for mlflow.models.evaluation.base</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">import</span> <span class="nn">mlflow</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">contextmanager</span>
+<span class="kn">from</span> <span class="nn">mlflow.exceptions</span> <span class="kn">import</span> <span class="n">MlflowException</span>
+<span class="kn">from</span> <span class="nn">mlflow.utils.file_utils</span> <span class="kn">import</span> <span class="n">TempDir</span>
+<span class="kn">from</span> <span class="nn">mlflow.entities</span> <span class="kn">import</span> <span class="n">RunTag</span>
+<span class="kn">from</span> <span class="nn">mlflow.tracking.artifact_utils</span> <span class="kn">import</span> <span class="n">_download_artifact_from_uri</span>
+<span class="kn">from</span> <span class="nn">mlflow.utils</span> <span class="kn">import</span> <span class="n">_get_fully_qualified_class_name</span>
+<span class="kn">from</span> <span class="nn">mlflow.utils.class_utils</span> <span class="kn">import</span> <span class="n">_get_class_from_string</span>
+<span class="kn">from</span> <span class="nn">mlflow.utils.annotations</span> <span class="kn">import</span> <span class="n">experimental</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">urllib</span>
+<span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABCMeta</span><span class="p">,</span> <span class="n">abstractmethod</span>
+
+
+<span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="EvaluationArtifact"><a class="viewcode-back" href="../../../../python_api/mlflow.models.html#mlflow.EvaluationArtifact">[docs]</a><span class="k">class</span> <span class="nc">EvaluationArtifact</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A model evaluation artifact containing an artifact uri and content.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_uri</span> <span class="o">=</span> <span class="n">uri</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_content</span> <span class="o">=</span> <span class="n">content</span>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_load_content_from_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">local_artifact_path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Abstract interface to load the content from local artifact file path,</span>
+<span class="sd">        and return the loaded content.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">_load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">local_artifact_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        If ``local_artifact_path`` is ``None``, download artifact from the artifact uri.</span>
+<span class="sd">        Otherwise, load artifact content from the specified path. Assign the loaded content to</span>
+<span class="sd">        ``self._content``, and return the loaded content.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">local_artifact_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_content_from_file</span><span class="p">(</span><span class="n">local_artifact_path</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">TempDir</span><span class="p">()</span> <span class="k">as</span> <span class="n">temp_dir</span><span class="p">:</span>
+                <span class="n">temp_dir_path</span> <span class="o">=</span> <span class="n">temp_dir</span><span class="o">.</span><span class="n">path</span><span class="p">()</span>
+                <span class="n">_download_artifact_from_uri</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_uri</span><span class="p">,</span> <span class="n">temp_dir_path</span><span class="p">)</span>
+                <span class="n">local_artifact_file</span> <span class="o">=</span> <span class="n">temp_dir</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">temp_dir_path</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_content_from_file</span><span class="p">(</span><span class="n">local_artifact_file</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_content</span>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_artifact_path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Save artifact content into specified path.&quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The content of the artifact (representation varies)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_content</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_load</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_content</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">uri</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The URI of the artifact</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uri</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(uri=&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">uri</span><span class="si">}</span><span class="s2">&#39;)&quot;</span></div>
+
+
+<div class="viewcode-block" id="EvaluationResult"><a class="viewcode-back" href="../../../../python_api/mlflow.models.html#mlflow.EvaluationResult">[docs]</a><span class="k">class</span> <span class="nc">EvaluationResult</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents the model evaluation outputs of a `mlflow.evaluate()` API call, containing</span>
+<span class="sd">    both scalar metrics and output artifacts such as performance plots.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metrics</span><span class="p">,</span> <span class="n">artifacts</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_metrics</span> <span class="o">=</span> <span class="n">metrics</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_artifacts</span> <span class="o">=</span> <span class="n">artifacts</span>
+
+<div class="viewcode-block" id="EvaluationResult.load"><a class="viewcode-back" href="../../../../python_api/mlflow.models.html#mlflow.EvaluationResult.load">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Load the evaluation results from the specified local filesystem path&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;metrics.json&quot;</span><span class="p">),</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+            <span class="n">metrics</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;artifacts_metadata.json&quot;</span><span class="p">),</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+            <span class="n">artifacts_metadata</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
+
+        <span class="n">artifacts</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="n">artifacts_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;artifacts&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">artifact_name</span><span class="p">,</span> <span class="n">meta</span> <span class="ow">in</span> <span class="n">artifacts_metadata</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">uri</span> <span class="o">=</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;uri&quot;</span><span class="p">]</span>
+            <span class="n">ArtifactCls</span> <span class="o">=</span> <span class="n">_get_class_from_string</span><span class="p">(</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;class_name&quot;</span><span class="p">])</span>
+            <span class="n">artifact</span> <span class="o">=</span> <span class="n">ArtifactCls</span><span class="p">(</span><span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">)</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span><span class="o">.</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
+            <span class="n">artifact</span><span class="o">.</span><span class="n">_load</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">artifacts_dir</span><span class="p">,</span> <span class="n">filename</span><span class="p">))</span>
+            <span class="n">artifacts</span><span class="p">[</span><span class="n">artifact_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">artifact</span>
+
+        <span class="k">return</span> <span class="n">EvaluationResult</span><span class="p">(</span><span class="n">metrics</span><span class="o">=</span><span class="n">metrics</span><span class="p">,</span> <span class="n">artifacts</span><span class="o">=</span><span class="n">artifacts</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="EvaluationResult.save"><a class="viewcode-back" href="../../../../python_api/mlflow.models.html#mlflow.EvaluationResult.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write the evaluation results to the specified local filesystem path&quot;&quot;&quot;</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;metrics.json&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="p">,</span> <span class="n">fp</span><span class="p">)</span>
+
+        <span class="n">artifacts_metadata</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">artifact_name</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;uri&quot;</span><span class="p">:</span> <span class="n">artifact</span><span class="o">.</span><span class="n">uri</span><span class="p">,</span>
+                <span class="s2">&quot;class_name&quot;</span><span class="p">:</span> <span class="n">_get_fully_qualified_class_name</span><span class="p">(</span><span class="n">artifact</span><span class="p">),</span>
+            <span class="p">}</span>
+            <span class="k">for</span> <span class="n">artifact_name</span><span class="p">,</span> <span class="n">artifact</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">artifacts</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="p">}</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;artifacts_metadata.json&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">artifacts_metadata</span><span class="p">,</span> <span class="n">fp</span><span class="p">)</span>
+
+        <span class="n">artifacts_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;artifacts&quot;</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">artifacts_dir</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">artifact</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">artifacts</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">artifact</span><span class="o">.</span><span class="n">uri</span><span class="p">)</span><span class="o">.</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
+            <span class="n">artifact</span><span class="o">.</span><span class="n">_save</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">artifacts_dir</span><span class="p">,</span> <span class="n">filename</span><span class="p">))</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A dictionary mapping scalar metric names to scalar metric values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metrics</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">artifacts</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;mlflow.models.EvaluationArtifact&quot;</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A dictionary mapping standardized artifact names (e.g. &quot;roc_data&quot;) to</span>
+<span class="sd">        artifact content and location information</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_artifacts</span></div>
+
+
+<span class="n">_cached_mlflow_client</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<span class="k">def</span> <span class="nf">_hash_uint64_ndarray_as_bytes</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="c1"># see struct pack format string https://docs.python.org/3/library/struct.html#format-strings</span>
+    <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&gt;</span><span class="si">{</span><span class="n">array</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">Q&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">array</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_hash_ndarray_as_bytes</span><span class="p">(</span><span class="n">nd_array</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">pandas.util</span> <span class="kn">import</span> <span class="n">hash_array</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+    <span class="k">return</span> <span class="n">_hash_uint64_ndarray_as_bytes</span><span class="p">(</span>
+        <span class="n">hash_array</span><span class="p">(</span><span class="n">nd_array</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="s2">&quot;C&quot;</span><span class="p">))</span>
+    <span class="p">)</span> <span class="o">+</span> <span class="n">_hash_uint64_ndarray_as_bytes</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">nd_array</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;uint64&quot;</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">_hash_array_like_obj_as_bytes</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper method to convert pandas dataframe/numpy array/list into bytes for</span>
+<span class="sd">    MD5 calculation purpose.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">pandas.util</span> <span class="kn">import</span> <span class="n">hash_pandas_object</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+    <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+        <span class="c1"># add checking `&#39;pyspark&#39; in sys.modules` to avoid importing pyspark when user</span>
+        <span class="c1"># run code not related to pyspark.</span>
+        <span class="k">if</span> <span class="s2">&quot;pyspark&quot;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">pyspark.ml.linalg</span> <span class="kn">import</span> <span class="n">Vector</span> <span class="k">as</span> <span class="n">spark_vector_type</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">spark_vector_type</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">def</span> <span class="nf">_hash_array_like_element_as_bytes</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">spark_vector_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">spark_vector_type</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="n">_hash_ndarray_as_bytes</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">toArray</span><span class="p">())</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">_hash_ndarray_as_bytes</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">_hash_ndarray_as_bytes</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">v</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">applymap</span><span class="p">(</span><span class="n">_hash_array_like_element_as_bytes</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_hash_uint64_ndarray_as_bytes</span><span class="p">(</span><span class="n">hash_pandas_object</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_hash_ndarray_as_bytes</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_hash_ndarray_as_bytes</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unsupported data type.&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_gen_md5_for_arraylike_obj</span><span class="p">(</span><span class="n">md5_gen</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper method to generate MD5 hash array-like object, the MD5 will calculate over:</span>
+<span class="sd">     - array length</span>
+<span class="sd">     - first NUM_SAMPLE_ROWS_FOR_HASH rows content</span>
+<span class="sd">     - last NUM_SAMPLE_ROWS_FOR_HASH rows content</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+    <span class="n">len_bytes</span> <span class="o">=</span> <span class="n">_hash_uint64_ndarray_as_bytes</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;uint64&quot;</span><span class="p">))</span>
+    <span class="n">md5_gen</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">len_bytes</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">EvaluationDataset</span><span class="o">.</span><span class="n">NUM_SAMPLE_ROWS_FOR_HASH</span> <span class="o">*</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">md5_gen</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">_hash_array_like_obj_as_bytes</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">head_rows</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:</span> <span class="n">EvaluationDataset</span><span class="o">.</span><span class="n">NUM_SAMPLE_ROWS_FOR_HASH</span><span class="p">]</span>
+        <span class="n">tail_rows</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="n">EvaluationDataset</span><span class="o">.</span><span class="n">NUM_SAMPLE_ROWS_FOR_HASH</span> <span class="p">:]</span>
+        <span class="n">md5_gen</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">_hash_array_like_obj_as_bytes</span><span class="p">(</span><span class="n">head_rows</span><span class="p">))</span>
+        <span class="n">md5_gen</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">_hash_array_like_obj_as_bytes</span><span class="p">(</span><span class="n">tail_rows</span><span class="p">))</span>
+
+
+<span class="k">class</span> <span class="nc">EvaluationDataset</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An input dataset for model evaluation. This is intended for use with the</span>
+<span class="sd">    :py:func:`mlflow.models.evaluate()`</span>
+<span class="sd">    API.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">NUM_SAMPLE_ROWS_FOR_HASH</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">SPARK_DATAFRAME_LIMIT</span> <span class="o">=</span> <span class="mi">10000</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The values of the constructor arguments comes from the `evaluate` call.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+        <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s1">&#39;&quot;&#39;</span> <span class="ow">in</span> <span class="n">name</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Dataset name cannot include a double quote (&quot;) but got </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s1">&#39;&quot;&#39;</span> <span class="ow">in</span> <span class="n">path</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Dataset path cannot include a double quote (&quot;) but got </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_user_specified_name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_path</span> <span class="o">=</span> <span class="n">path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_hash</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_supported_dataframe_types</span> <span class="o">=</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_spark_df_type</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># add checking `&#39;pyspark&#39; in sys.modules` to avoid importing pyspark when user</span>
+            <span class="c1"># run code not related to pyspark.</span>
+            <span class="k">if</span> <span class="s2">&quot;pyspark&quot;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+                <span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">DataFrame</span> <span class="k">as</span> <span class="n">SparkDataFrame</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">_supported_dataframe_types</span> <span class="o">=</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">SparkDataFrame</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_spark_df_type</span> <span class="o">=</span> <span class="n">SparkDataFrame</span>
+        <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="k">if</span> <span class="n">feature_names</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">feature_names</span><span class="p">))</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">feature_names</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;`feature_names` argument must be a list containing unique feature names.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;If data is a numpy array or list of evaluation features, &quot;</span>
+                    <span class="s2">&quot;`targets` argument must be a numpy array or list of evaluation labels.&quot;</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;If the `data` argument is a numpy array, it must be a 2 dimension array &quot;</span>
+                    <span class="s2">&quot;and second dimension represent the number of features. If the `data` &quot;</span>
+                    <span class="s2">&quot;argument is a list, each of its element must be a feature array of &quot;</span>
+                    <span class="s2">&quot;numpy array or list and all element must has the same length.&quot;</span>
+                <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_features_data</span> <span class="o">=</span> <span class="n">data</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_labels_data</span> <span class="o">=</span> <span class="n">targets</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_data</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_labels_data</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;The input features example rows must be the same length with labels array.&quot;</span>
+                <span class="p">)</span>
+
+            <span class="n">num_features</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">feature_names</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">feature_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">feature_names</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">num_features</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">feature_names</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;feature name list must be the same length with feature data.&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_feature_names</span> <span class="o">=</span> <span class="n">feature_names</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_feature_names</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="sa">f</span><span class="s2">&quot;feature_</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">((</span><span class="n">math</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">num_features</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))))</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_features</span><span class="p">)</span>
+                <span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_supported_dataframe_types</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;If data is a Pandas DataFrame or Spark DataFrame, `targets` argument must &quot;</span>
+                    <span class="s2">&quot;be the name of the column which contains evaluation labels in the `data` &quot;</span>
+                    <span class="s2">&quot;dataframe.&quot;</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spark_df_type</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spark_df_type</span><span class="p">):</span>
+                <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="s2">&quot;Specified Spark DataFrame is too large for model evaluation. Only &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;the first </span><span class="si">{</span><span class="n">EvaluationDataset</span><span class="o">.</span><span class="n">SPARK_DATAFRAME_LIMIT</span><span class="si">}</span><span class="s2"> rows will be used.&quot;</span>
+                    <span class="s2">&quot;If you want evaluate on the whole spark dataframe, please manually call &quot;</span>
+                    <span class="s2">&quot;`spark_dataframe.toPandas()`.&quot;</span>
+                <span class="p">)</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="n">EvaluationDataset</span><span class="o">.</span><span class="n">SPARK_DATAFRAME_LIMIT</span><span class="p">)</span><span class="o">.</span><span class="n">toPandas</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_labels_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">targets</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">feature_names</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_features_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">feature_names</span><span class="p">)]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_feature_names</span> <span class="o">=</span> <span class="n">feature_names</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_features_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_feature_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_data</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;The data argument must be a numpy array, a list or a Pandas DataFrame, or &quot;</span>
+                <span class="s2">&quot;spark DataFrame if pyspark package installed.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># generate dataset hash</span>
+        <span class="n">md5_gen</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">()</span>
+        <span class="n">_gen_md5_for_arraylike_obj</span><span class="p">(</span><span class="n">md5_gen</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features_data</span><span class="p">)</span>
+        <span class="n">_gen_md5_for_arraylike_obj</span><span class="p">(</span><span class="n">md5_gen</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels_data</span><span class="p">)</span>
+        <span class="n">md5_gen</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_feature_names</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_hash</span> <span class="o">=</span> <span class="n">md5_gen</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">feature_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feature_names</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">features_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        return features data as a numpy array or a pandas DataFrame.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features_data</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">labels_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        return labels data as a numpy array</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels_data</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Dataset name, which is specified dataset name or the dataset hash if user don&#39;t specify</span>
+<span class="sd">        name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user_specified_name</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user_specified_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">hash</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Dataset path</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_path</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Dataset hash, includes hash on first 20 rows and last 20 rows.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hash</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return dataset metadata containing name, hash, and optional path.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="s2">&quot;hash&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">hash</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span>
+        <span class="k">return</span> <span class="n">metadata</span>
+
+    <span class="k">def</span> <span class="nf">_log_dataset_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">run_id</span><span class="p">,</span> <span class="n">model_uuid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Log dataset metadata as a tag &quot;mlflow.datasets&quot;, if the tag already exists, it will</span>
+<span class="sd">        append current dataset metadata into existing tag content.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">existing_dataset_metadata_str</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_run</span><span class="p">(</span><span class="n">run_id</span><span class="p">)</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s2">&quot;mlflow.datasets&quot;</span><span class="p">,</span> <span class="s2">&quot;[]&quot;</span>
+        <span class="p">)</span>
+        <span class="n">dataset_metadata_list</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">existing_dataset_metadata_str</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">metadata</span> <span class="ow">in</span> <span class="n">dataset_metadata_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;hash&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">hash</span>
+                <span class="ow">and</span> <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+                <span class="ow">and</span> <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;model&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">model_uuid</span>
+            <span class="p">):</span>
+                <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dataset_metadata_list</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_metadata</span><span class="p">,</span> <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="n">model_uuid</span><span class="p">})</span>
+
+        <span class="n">dataset_metadata_str</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">dataset_metadata_list</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;:&quot;</span><span class="p">))</span>
+        <span class="n">client</span><span class="o">.</span><span class="n">log_batch</span><span class="p">(</span>
+            <span class="n">run_id</span><span class="p">,</span>
+            <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="n">RunTag</span><span class="p">(</span><span class="s2">&quot;mlflow.datasets&quot;</span><span class="p">,</span> <span class="n">dataset_metadata_str</span><span class="p">)],</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hash</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">EvaluationDataset</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">is_features_data_equal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_data</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">_features_data</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">is_features_data_equal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features_data</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">_features_data</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">is_features_data_equal</span>
+            <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_labels_data</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">_labels_data</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">name</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">path</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feature_names</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_feature_names</span>
+        <span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">ModelEvaluator</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">can_evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">model_type</span><span class="p">,</span> <span class="n">evaluator_config</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param model_type: A string describing the model type (e.g., &quot;regressor&quot;, &quot;classifier&quot;, …).</span>
+<span class="sd">        :param evaluator_config: A dictionary of additional configurations for</span>
+<span class="sd">                                 the evaluator.</span>
+<span class="sd">        :param kwargs: For forwards compatibility, a placeholder for additional arguments</span>
+<span class="sd">                       that may be added to the evaluation interface in the future.</span>
+<span class="sd">        :return: True if the evaluator can evaluate the specified model on the</span>
+<span class="sd">                 specified dataset. False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">model_type</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">run_id</span><span class="p">,</span> <span class="n">evaluator_config</span><span class="p">,</span> <span class="n">custom_metrics</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The abstract API to log metrics and artifacts, and return evaluation results.</span>
+
+<span class="sd">        :param model: A pyfunc model instance.</span>
+<span class="sd">        :param model_type: A string describing the model type</span>
+<span class="sd">                           (e.g., ``&quot;regressor&quot;``, ``&quot;classifier&quot;``, …).</span>
+<span class="sd">        :param dataset: An instance of `mlflow.models.evaluation.base._EvaluationDataset`</span>
+<span class="sd">                        containing features and labels (optional) for model evaluation.</span>
+<span class="sd">        :param run_id: The ID of the MLflow Run to which to log results.</span>
+<span class="sd">        :param evaluator_config: A dictionary of additional configurations for</span>
+<span class="sd">                                 the evaluator.</span>
+<span class="sd">        :param custom_metrics: A list of callable custom metric functions.</span>
+<span class="sd">        :param kwargs: For forwards compatibility, a placeholder for additional arguments that</span>
+<span class="sd">                       may be added to the evaluation interface in the future.</span>
+<span class="sd">        :return: An :py:class:`mlflow.models.EvaluationResult` instance containing</span>
+<span class="sd">                 evaluation results.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="list_evaluators"><a class="viewcode-back" href="../../../../python_api/mlflow.models.html#mlflow.list_evaluators">[docs]</a><span class="k">def</span> <span class="nf">list_evaluators</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return a name list for all available Evaluators.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># import _model_evaluation_registry inside function to avoid circuit importing</span>
+    <span class="kn">from</span> <span class="nn">mlflow.models.evaluation.evaluator_registry</span> <span class="kn">import</span> <span class="n">_model_evaluation_registry</span>
+
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">_model_evaluation_registry</span><span class="o">.</span><span class="n">_registry</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
+
+
+<span class="nd">@contextmanager</span>
+<span class="k">def</span> <span class="nf">_start_run_or_reuse_active_run</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A manager context return:</span>
+<span class="sd">     - If there&#39;s an active run, return the active run id.</span>
+<span class="sd">     - otherwise start a mflow run with the specified run_id,</span>
+<span class="sd">       if specified run_id is None, start a new run.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">active_run</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">active_run</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">active_run</span><span class="p">:</span>
+        <span class="c1"># Note `mlflow.start_run` throws if `run_id` is not found.</span>
+        <span class="k">with</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">start_run</span><span class="p">()</span> <span class="k">as</span> <span class="n">run</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">run</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">run_id</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">active_run</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">run_id</span>
+
+
+<span class="k">def</span> <span class="nf">_normalize_evaluators_and_evaluator_config_args</span><span class="p">(</span>
+    <span class="n">evaluators</span><span class="p">,</span>
+    <span class="n">evaluator_config</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">mlflow.models.evaluation.evaluator_registry</span> <span class="kn">import</span> <span class="n">_model_evaluation_registry</span>
+
+    <span class="k">def</span> <span class="nf">check_nesting_config_dict</span><span class="p">(</span><span class="n">_evaluator_name_list</span><span class="p">,</span> <span class="n">_evaluator_name_to_conf_map</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_evaluator_name_to_conf_map</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span>
+            <span class="n">k</span> <span class="ow">in</span> <span class="n">_evaluator_name_list</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">_evaluator_name_to_conf_map</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">evaluators</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">evaluator_name_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">_model_evaluation_registry</span><span class="o">.</span><span class="n">_registry</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">evaluator_name_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Multiple registered evaluators are found </span><span class="si">{</span><span class="n">evaluator_name_list</span><span class="si">}</span><span class="s2"> and &quot;</span>
+                <span class="s2">&quot;they will all be used in evaluation if they support the specified model type. &quot;</span>
+                <span class="s2">&quot;If you want to evaluate with one evaluator, specify the `evaluator` argument &quot;</span>
+                <span class="s2">&quot;and optionally specify the `evaluator_config` argument.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">evaluator_config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">conf_dict_value_error</span> <span class="o">=</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;If `evaluators` argument is None, all available evaluators will be used. &quot;</span>
+                <span class="s2">&quot;If only the default evaluator is available, the `evaluator_config` argument is &quot;</span>
+                <span class="s2">&quot;interpreted as the config dictionary for the default evaluator. Otherwise, the &quot;</span>
+                <span class="s2">&quot;`evaluator_config` argument must be a dictionary mapping each evaluator&#39;s name &quot;</span>
+                <span class="s2">&quot;to its own evaluator config dictionary.&quot;</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">evaluator_name_list</span> <span class="o">==</span> <span class="p">[</span><span class="s2">&quot;default&quot;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">evaluator_config</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="n">conf_dict_value_error</span>
+                <span class="k">elif</span> <span class="s2">&quot;default&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">evaluator_config</span><span class="p">:</span>
+                    <span class="n">evaluator_name_to_conf_map</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="n">evaluator_config</span><span class="p">}</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">evaluator_name_to_conf_map</span> <span class="o">=</span> <span class="n">evaluator_config</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">check_nesting_config_dict</span><span class="p">(</span><span class="n">evaluator_name_list</span><span class="p">,</span> <span class="n">evaluator_config</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="n">conf_dict_value_error</span>
+                <span class="n">evaluator_name_to_conf_map</span> <span class="o">=</span> <span class="n">evaluator_config</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">evaluator_name_to_conf_map</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">evaluators</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">evaluator_config</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">evaluator_config</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;If `evaluators` argument is the name of an evaluator, evaluator_config must be &quot;</span>
+                <span class="s2">&quot;None or a dict containing config items for the evaluator.&quot;</span>
+            <span class="p">)</span>
+        <span class="n">evaluator_name_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">evaluators</span><span class="p">]</span>
+        <span class="n">evaluator_name_to_conf_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">evaluators</span><span class="p">:</span> <span class="n">evaluator_config</span><span class="p">}</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">evaluators</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">evaluator_config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">check_nesting_config_dict</span><span class="p">(</span><span class="n">evaluators</span><span class="p">,</span> <span class="n">evaluator_config</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;If `evaluators` argument is an evaluator name list, evaluator_config &quot;</span>
+                    <span class="s2">&quot;must be a dict contains mapping from evaluator name to individual &quot;</span>
+                    <span class="s2">&quot;evaluator config dict.&quot;</span>
+                <span class="p">)</span>
+        <span class="c1"># Use `OrderedDict.fromkeys` to deduplicate elements but keep elements order.</span>
+        <span class="n">evaluator_name_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">OrderedDict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">evaluators</span><span class="p">))</span>
+        <span class="n">evaluator_name_to_conf_map</span> <span class="o">=</span> <span class="n">evaluator_config</span> <span class="ow">or</span> <span class="p">{}</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;`evaluators` argument must be None, an evaluator name string, or a list of &quot;</span>
+            <span class="s2">&quot;evaluator names.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">evaluator_name_list</span><span class="p">,</span> <span class="n">evaluator_name_to_conf_map</span>
+
+
+<span class="n">_last_failed_evaluator</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<span class="k">def</span> <span class="nf">_get_last_failed_evaluator</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the evaluator name of the last failed evaluator when calling `evalaute`.</span>
+<span class="sd">    This can be used to check which evaluator fail when `evaluate` API fail.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_last_failed_evaluator</span>
+
+
+<span class="k">def</span> <span class="nf">_evaluate</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">model</span><span class="p">,</span>
+    <span class="n">model_type</span><span class="p">,</span>
+    <span class="n">dataset</span><span class="p">,</span>
+    <span class="n">run_id</span><span class="p">,</span>
+    <span class="n">evaluator_name_list</span><span class="p">,</span>
+    <span class="n">evaluator_name_to_conf_map</span><span class="p">,</span>
+    <span class="n">custom_metrics</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The public API &quot;evaluate&quot; will verify argument first, and then pass normalized arguments</span>
+<span class="sd">    to the _evaluate method.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># import _model_evaluation_registry and PyFuncModel inside function to avoid circuit importing</span>
+    <span class="kn">from</span> <span class="nn">mlflow.models.evaluation.evaluator_registry</span> <span class="kn">import</span> <span class="n">_model_evaluation_registry</span>
+
+    <span class="k">global</span> <span class="n">_last_failed_evaluator</span>
+    <span class="n">_last_failed_evaluator</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">client</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">tracking</span><span class="o">.</span><span class="n">MlflowClient</span><span class="p">()</span>
+    <span class="n">model_uuid</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">model_uuid</span>
+    <span class="n">dataset</span><span class="o">.</span><span class="n">_log_dataset_tag</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">run_id</span><span class="p">,</span> <span class="n">model_uuid</span><span class="p">)</span>
+
+    <span class="n">eval_results</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">evaluator_name</span> <span class="ow">in</span> <span class="n">evaluator_name_list</span><span class="p">:</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">evaluator_name_to_conf_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">evaluator_name</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">evaluator</span> <span class="o">=</span> <span class="n">_model_evaluation_registry</span><span class="o">.</span><span class="n">get_evaluator</span><span class="p">(</span><span class="n">evaluator_name</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">MlflowException</span><span class="p">:</span>
+            <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Evaluator &#39;</span><span class="si">{</span><span class="n">evaluator_name</span><span class="si">}</span><span class="s2">&#39; is not registered.&quot;</span><span class="p">)</span>
+            <span class="k">continue</span>
+
+        <span class="n">_last_failed_evaluator</span> <span class="o">=</span> <span class="n">evaluator_name</span>
+        <span class="k">if</span> <span class="n">evaluator</span><span class="o">.</span><span class="n">can_evaluate</span><span class="p">(</span><span class="n">model_type</span><span class="o">=</span><span class="n">model_type</span><span class="p">,</span> <span class="n">evaluator_config</span><span class="o">=</span><span class="n">config</span><span class="p">):</span>
+            <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Evaluating the model with the </span><span class="si">{</span><span class="n">evaluator_name</span><span class="si">}</span><span class="s2"> evaluator.&quot;</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">evaluator</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span>
+                <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                <span class="n">model_type</span><span class="o">=</span><span class="n">model_type</span><span class="p">,</span>
+                <span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span>
+                <span class="n">run_id</span><span class="o">=</span><span class="n">run_id</span><span class="p">,</span>
+                <span class="n">evaluator_config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
+                <span class="n">custom_metrics</span><span class="o">=</span><span class="n">custom_metrics</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">eval_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+    <span class="n">_last_failed_evaluator</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">eval_results</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;The model could not be evaluated by any of the registered evaluators, please &quot;</span>
+            <span class="s2">&quot;verify that the model type and other configs are set correctly.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="n">merged_eval_result</span> <span class="o">=</span> <span class="n">EvaluationResult</span><span class="p">(</span><span class="nb">dict</span><span class="p">(),</span> <span class="nb">dict</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">eval_result</span> <span class="ow">in</span> <span class="n">eval_results</span><span class="p">:</span>
+        <span class="n">merged_eval_result</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">eval_result</span><span class="o">.</span><span class="n">metrics</span><span class="p">)</span>
+        <span class="n">merged_eval_result</span><span class="o">.</span><span class="n">artifacts</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">eval_result</span><span class="o">.</span><span class="n">artifacts</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">merged_eval_result</span>
+
+
+<div class="viewcode-block" id="evaluate"><a class="viewcode-back" href="../../../../python_api/mlflow.models.html#mlflow.evaluate">[docs]</a><span class="nd">@experimental</span>
+<span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;mlflow.pyfunc.PyFuncModel&quot;</span><span class="p">],</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">targets</span><span class="p">,</span>
+    <span class="n">model_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">dataset_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">dataset_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">feature_names</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">evaluators</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">evaluator_config</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">custom_metrics</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Evaluate a PyFunc model on the specified dataset using one or more specified ``evaluators``, and</span>
+<span class="sd">    log resulting metrics &amp; artifacts to MLflow Tracking. For additional overview information, see</span>
+<span class="sd">    :ref:`the Model Evaluation documentation &lt;model-evaluation&gt;`.</span>
+
+<span class="sd">    Default Evaluator behavior:</span>
+<span class="sd">     - The default evaluator, which can be invoked with ``evaluators=&quot;default&quot;`` or</span>
+<span class="sd">       ``evaluators=None``, supports the ``&quot;regressor&quot;`` and ``&quot;classifier&quot;`` model types.</span>
+<span class="sd">       It generates a variety of model performance metrics, model performance plots, and</span>
+<span class="sd">       model explanations.</span>
+
+<span class="sd">     - For both the ``&quot;regressor&quot;`` and ``&quot;classifier&quot;`` model types, the default evaluator</span>
+<span class="sd">       generates model summary plots and feature importance plots using</span>
+<span class="sd">       `SHAP &lt;https://shap.readthedocs.io/en/latest/index.html&gt;`_.</span>
+
+<span class="sd">     - For regressor models, the default evaluator additionally logs:</span>
+<span class="sd">        - **metrics**: example_count, mean_absolute_error, mean_squared_error,</span>
+<span class="sd">          root_mean_squared_error, sum_on_label, mean_on_label, r2_score, max_error,</span>
+<span class="sd">          mean_absolute_percentage_error.</span>
+
+<span class="sd">     - For binary classifiers, the default evaluator additionally logs:</span>
+<span class="sd">        - **metrics**: true_negatives, false_positives, false_negatives, true_positives, recall,</span>
+<span class="sd">          precision, f1_score, accuracy, example_count, log_loss, roc_auc, precision_recall_auc.</span>
+<span class="sd">        - **artifacts**: lift curve plot, precision-recall plot, ROC plot.</span>
+
+<span class="sd">     - For multiclass classifiers, the default evaluator additionally logs:</span>
+<span class="sd">        - **metrics**: accuracy, example_count, f1_score_micro, f1_score_macro, log_loss</span>
+<span class="sd">        - **artifacts**: A CSV file for &quot;per_class_metrics&quot; (per-class metrics includes</span>
+<span class="sd">          true_negatives/false_positives/false_negatives/true_positives/recall/precision/roc_auc,</span>
+<span class="sd">          precision_recall_auc), precision-recall merged curves plot, ROC merged curves plot.</span>
+
+<span class="sd">     - The logged MLflow metric keys are constructed using the format:</span>
+<span class="sd">       ``{metric_name}_on_{dataset_name}``. Any preexisting metrics with the same name are</span>
+<span class="sd">       overwritten.</span>
+
+<span class="sd">     - The metrics/artifacts listed above are logged to the active MLflow run.</span>
+<span class="sd">       If no active run exists, a new MLflow run is created for logging these metrics and</span>
+<span class="sd">       artifacts.</span>
+
+<span class="sd">     - Additionally, information about the specified dataset - hash, name (if specified), path</span>
+<span class="sd">       (if specified), and the UUID of the model that evaluated it - is logged to the</span>
+<span class="sd">       ``mlflow.datasets`` tag.</span>
+
+<span class="sd">     - The available ``evaluator_config`` options for the default evaluator include:</span>
+<span class="sd">        - **log_model_explainability**: A boolean value specifying whether or not to log model</span>
+<span class="sd">          explainability insights, default value is True.</span>
+<span class="sd">        - **explainability_algorithm**: A string to specify the SHAP Explainer algorithm for model</span>
+<span class="sd">          explainability. Supported algorithm includes: &#39;exact&#39;, &#39;permutation&#39;, &#39;partition&#39;.</span>
+<span class="sd">          If not set, ``shap.Explainer`` is used with the &quot;auto&quot; algorithm, which chooses the best</span>
+<span class="sd">          Explainer based on the model.</span>
+<span class="sd">        - **explainability_nsamples**: The number of sample rows to use for computing model</span>
+<span class="sd">          explainability insights. Default value is 2000.</span>
+<span class="sd">        - **max_classes_for_multiclass_roc_pr**:</span>
+<span class="sd">          For multiclass classification tasks, the maximum number of classes for which to log</span>
+<span class="sd">          the per-class ROC curve and Precision-Recall curve. If the number of classes is</span>
+<span class="sd">          larger than the configured maximum, these curves are not logged.</span>
+
+<span class="sd">     - Limitations of evaluation dataset:</span>
+<span class="sd">        - For classification tasks, dataset labels are used to infer the total number of classes.</span>
+<span class="sd">        - For binary classification tasks, the negative label value must be 0 or -1 or False, and</span>
+<span class="sd">          the positive label value must be 1 or True.</span>
+
+<span class="sd">     - Limitations of metrics/artifacts computation:</span>
+<span class="sd">        - For classification tasks, some metric and artifact computations require the model to</span>
+<span class="sd">          output class probabilities. Currently, for scikit-learn models, the default evaluator</span>
+<span class="sd">          calls the ``predict_proba`` method on the underlying model to obtain probabilities. For</span>
+<span class="sd">          other model types, the default evaluator does not compute metrics/artifacts that require</span>
+<span class="sd">          probability outputs.</span>
+
+<span class="sd">     - Limitations of default evaluator logging model explainability insights:</span>
+<span class="sd">        - The ``shap.Explainer`` ``auto`` algorithm uses the ``Linear`` explainer for linear models</span>
+<span class="sd">          and the ``Tree`` explainer for tree models. Because SHAP&#39;s ``Linear`` and ``Tree``</span>
+<span class="sd">          explainers do not support multi-class classification, the default evaluator falls back to</span>
+<span class="sd">          using the ``Exact`` or ``Permutation`` explainers for multi-class classification tasks.</span>
+<span class="sd">        - Logging model explainability insights is not currently supported for PySpark models.</span>
+<span class="sd">        - The evaluation dataset label values must be numeric or boolean, all feature values</span>
+<span class="sd">          must be numeric, and each feature column must only contain scalar values.</span>
+
+<span class="sd">    :param model: A pyfunc model instance, or a URI referring to such a model.</span>
+
+<span class="sd">    :param data: One of the following:</span>
+
+<span class="sd">                 - A numpy array or list of evaluation features, excluding labels.</span>
+
+<span class="sd">                 - A Pandas DataFrame or Spark DataFrame, containing evaluation features and</span>
+<span class="sd">                   labels. If ``feature_names`` argument not specified, all columns are regarded</span>
+<span class="sd">                   as feature columns. Otherwise, only column names present in ``feature_names``</span>
+<span class="sd">                   are regarded as feature columns.</span>
+
+<span class="sd">    :param targets: If ``data`` is a numpy array or list, a numpy array or list of evaluation</span>
+<span class="sd">                    labels. If ``data`` is a DataFrame, the string name of a column from ``data``</span>
+<span class="sd">                    that contains evaluation labels.</span>
+
+<span class="sd">    :param model_type: A string describing the model type. The default evaluator</span>
+<span class="sd">                       supports ``&quot;regressor&quot;`` and ``&quot;classifier&quot;`` as model types.</span>
+
+<span class="sd">    :param dataset_name: (Optional) The name of the dataset, must not contain double quotes (``“``).</span>
+<span class="sd">                         The name is logged to the ``mlflow.datasets`` tag for lineage tracking</span>
+<span class="sd">                         purposes. If not specified, the dataset hash is used as the dataset name.</span>
+
+<span class="sd">    :param dataset_path: (Optional) The path where the data is stored. Must not contain double</span>
+<span class="sd">                         quotes (``“``). If specified, the path is logged to the ``mlflow.datasets``</span>
+<span class="sd">                         tag for lineage tracking purposes.</span>
+
+<span class="sd">    :param feature_names: (Optional) If the ``data`` argument is a feature data numpy array or list,</span>
+<span class="sd">                          ``feature_names`` is a list of the feature names for each feature. If</span>
+<span class="sd">                          ``None``, then the ``feature_names`` are generated using the format</span>
+<span class="sd">                          ``feature_{feature_index}``. If the ``data`` argument is a Pandas</span>
+<span class="sd">                          DataFrame or a Spark DataFrame, ``feature_names`` is a list of the names</span>
+<span class="sd">                          of the feature columns in the DataFrame. If ``None``, then all columns</span>
+<span class="sd">                          except the label column are regarded as feature columns.</span>
+
+<span class="sd">    :param evaluators: The name of the evaluator to use for model evaluation, or a list of</span>
+<span class="sd">                       evaluator names. If unspecified, all evaluators capable of evaluating the</span>
+<span class="sd">                       specified model on the specified dataset are used. The default evaluator</span>
+<span class="sd">                       can be referred to by the name ``&quot;default&quot;``. To see all available</span>
+<span class="sd">                       evaluators, call :py:func:`mlflow.models.list_evaluators`.</span>
+
+<span class="sd">    :param evaluator_config: A dictionary of additional configurations to supply to the evaluator.</span>
+<span class="sd">                             If multiple evaluators are specified, each configuration should be</span>
+<span class="sd">                             supplied as a nested dictionary whose key is the evaluator name.</span>
+
+<span class="sd">    :param custom_metrics: (Optional) A list of custom metric functions. A custom metric</span>
+<span class="sd">                           function is required to take in two parameters:</span>
+
+<span class="sd">                           - ``Union[pandas.Dataframe, pyspark.sql.DataFrame]``: The first being a</span>
+<span class="sd">                             Pandas or Spark DataFrame containing ``prediction`` and ``target``</span>
+<span class="sd">                             column. The ``prediction`` column contains the predictions made by</span>
+<span class="sd">                             the model. The ``target`` column contains the corresponding labels</span>
+<span class="sd">                             to the predictions made on that row.</span>
+<span class="sd">                           - ``Dict``: The second is a dictionary containing the metrics calculated</span>
+<span class="sd">                             by the default evaluator. The keys are the names of the metrics</span>
+<span class="sd">                             and the values are the scalar values of the metrics. Refer to the</span>
+<span class="sd">                             DefaultEvaluator behavior section for what metrics will be returned</span>
+<span class="sd">                             based on the type of model (i.e. classifier or regressor).</span>
+<span class="sd">                           - (Optional) ``str``: the path to a temporary directory that can be used</span>
+<span class="sd">                             by the custom metric function to temporarily store produced artifacts.</span>
+<span class="sd">                             The directory will be deleted after the artifacts are logged.</span>
+
+<span class="sd">                           A custom metric function can return in the following format:</span>
+
+<span class="sd">                           - ``Dict[AnyStr, Union[int, float, np.number]``: a singular dictionary of</span>
+<span class="sd">                             custom metrics, where the keys are the names of the metrics, and the</span>
+<span class="sd">                             values are the scalar values of the metrics.</span>
+<span class="sd">                           - ``Tuple[Dict[AnyStr, Union[int,float,np.number]], Dict[AnyStr,Any]]``:</span>
+<span class="sd">                             a tuple of a dict containing the custom metrics, and a dict of</span>
+<span class="sd">                             artifacts, where the keys are the names of the artifacts, and the</span>
+<span class="sd">                             values are objects representing the artifacts.</span>
+
+<span class="sd">                           Object types that artifacts can be represented as:</span>
+
+<span class="sd">                           - A string uri representing the file path to the artifact. MLflow will</span>
+<span class="sd">                             infer the type of the artifact based on the file extension.</span>
+<span class="sd">                           - A string representation of a JSON object. This will be saved as a</span>
+<span class="sd">                             .json artifact.</span>
+<span class="sd">                           - Pandas DataFrame. This will be resolved as a CSV artifact.</span>
+<span class="sd">                           - Numpy array. This will be saved as a .npy artifact.</span>
+<span class="sd">                           - Matplotlib Figure. This will be saved as an image artifact. Note that</span>
+<span class="sd">                             ``matplotlib.pyplot.savefig`` is called behind the scene with default</span>
+<span class="sd">                             configurations. To customize, either save the figure with the desired</span>
+<span class="sd">                             configurations and return its file path or define customizations</span>
+<span class="sd">                             through environment variables in ``matplotlib.rcParams``.</span>
+<span class="sd">                           - Other objects will be attempted to be pickled with the default</span>
+<span class="sd">                             protocol.</span>
+
+<span class="sd">                           .. code-block:: python</span>
+<span class="sd">                               :caption: Custom Metric Function Boilerplate</span>
+
+<span class="sd">                               def custom_metrics_boilerplate(eval_df, builtin_metrics):</span>
+<span class="sd">                                   # ...</span>
+<span class="sd">                                   metrics: Dict[AnyStr, Union[int, float, np.number]] = some_dict</span>
+<span class="sd">                                   artifacts: Dict[AnyStr, Any] = some_artifact_dict</span>
+<span class="sd">                                   # ...</span>
+<span class="sd">                                   if artifacts is not None:</span>
+<span class="sd">                                       return metrics, artifacts</span>
+<span class="sd">                                   return metrics</span>
+
+<span class="sd">                           .. code-block:: python</span>
+<span class="sd">                               :caption: Example usage of custom metrics</span>
+
+<span class="sd">                               def squared_diff_plus_one(eval_df, builtin_metrics):</span>
+<span class="sd">                                   return {</span>
+<span class="sd">                                       &quot;squared_diff_plus_one&quot;: (</span>
+<span class="sd">                                           np.sum(</span>
+<span class="sd">                                               np.abs(</span>
+<span class="sd">                                                   eval_df[&quot;prediction&quot;] - eval_df[&quot;target&quot;] + 1</span>
+<span class="sd">                                               ) ** 2</span>
+<span class="sd">                                           )</span>
+<span class="sd">                                       )</span>
+<span class="sd">                                   }</span>
+
+<span class="sd">                               def scatter_plot(eval_df, builtin_metrics, artifacts_dir):</span>
+<span class="sd">                                   import tempfile</span>
+<span class="sd">                                   plt.scatter(eval_df[&#39;prediction&#39;], eval_df[&#39;target&#39;])</span>
+<span class="sd">                                   plt.xlabel(&#39;Targets&#39;)</span>
+<span class="sd">                                   plt.ylabel(&#39;Predictions&#39;)</span>
+<span class="sd">                                   plt.title(&quot;Targets vs. Predictions&quot;)</span>
+<span class="sd">                                   plt.savefig(os.path.join(artifacts_dir, &quot;example.png&quot;))</span>
+<span class="sd">                                   return {}, {</span>
+<span class="sd">                                       &quot;pred_target_scatter&quot;: os.path.join(</span>
+<span class="sd">                                            artifacts_dir, &quot;example.png&quot;</span>
+<span class="sd">                                       )</span>
+<span class="sd">                                   }</span>
+
+<span class="sd">                               with mlflow.start_run():</span>
+<span class="sd">                                   mlflow.evaluate(</span>
+<span class="sd">                                       model,</span>
+<span class="sd">                                       data,</span>
+<span class="sd">                                       targets,</span>
+<span class="sd">                                       model_type,</span>
+<span class="sd">                                       dataset_name,</span>
+<span class="sd">                                       evaluators,</span>
+<span class="sd">                                       custom_metrics=[squared_diff_plus_one, scatter_plot],</span>
+<span class="sd">                                   )</span>
+
+<span class="sd">    :return: An :py:class:`mlflow.models.EvaluationResult` instance containing</span>
+<span class="sd">             evaluation results.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">mlflow.pyfunc</span> <span class="kn">import</span> <span class="n">PyFuncModel</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">pyfunc</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">PyFuncModel</span><span class="p">):</span>
+        <span class="k">pass</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;The model argument must be a string URI referring to an MLflow model or &quot;</span>
+            <span class="s2">&quot;an instance of `mlflow.pyfunc.PyFuncModel`.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="p">(</span>
+        <span class="n">evaluator_name_list</span><span class="p">,</span>
+        <span class="n">evaluator_name_to_conf_map</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">=</span> <span class="n">_normalize_evaluators_and_evaluator_config_args</span><span class="p">(</span><span class="n">evaluators</span><span class="p">,</span> <span class="n">evaluator_config</span><span class="p">)</span>
+
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">EvaluationDataset</span><span class="p">(</span>
+        <span class="n">data</span><span class="p">,</span>
+        <span class="n">targets</span><span class="o">=</span><span class="n">targets</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">dataset_name</span><span class="p">,</span>
+        <span class="n">path</span><span class="o">=</span><span class="n">dataset_path</span><span class="p">,</span>
+        <span class="n">feature_names</span><span class="o">=</span><span class="n">feature_names</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">_start_run_or_reuse_active_run</span><span class="p">()</span> <span class="k">as</span> <span class="n">run_id</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_evaluate</span><span class="p">(</span>
+            <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+            <span class="n">model_type</span><span class="o">=</span><span class="n">model_type</span><span class="p">,</span>
+            <span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span>
+            <span class="n">run_id</span><span class="o">=</span><span class="n">run_id</span><span class="p">,</span>
+            <span class="n">evaluator_name_list</span><span class="o">=</span><span class="n">evaluator_name_list</span><span class="p">,</span>
+            <span class="n">evaluator_name_to_conf_map</span><span class="o">=</span><span class="n">evaluator_name_to_conf_map</span><span class="p">,</span>
+            <span class="n">custom_metrics</span><span class="o">=</span><span class="n">custom_metrics</span><span class="p">,</span>
+        <span class="p">)</span></div>
+</pre></div>
+
+              </div>
+            </div>
+            <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+      <p class="copyright">
+          &copy; MLflow Project, a Series of LF Projects, LLC. All rights reserved.
+      </p>
+
+  </div> 
+
+</footer>
+          </div>
+        </div>
+      </section>
+    </main>
+  </page>
+
+  
+
+
+  
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:'../../../../',
+      VERSION:'1.26.0',
+      COLLAPSE_INDEX:false,
+      FILE_SUFFIX:'.html',
+      HAS_SOURCE:  true
+    };
+  </script>
+  <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+  <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../../../_static/languagesections.js"></script>
+  
+
+  <script type="text/javascript" src="../../../../_static/js/clipboard.min.js"></script>
+  <script type="text/javascript" src="../../../../_static/js/jquery.waypoints.min.js"></script>
+
+  
+  
+  
+  <script type="text/javascript">var CLIPPY_SVG_PATH = "../../../../_static/clippy.svg";</script>
+  <script type="text/javascript" src="../../../../_static/js/custom.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+    jQuery(function () {
+      SphinxRtdTheme.StickyNav.enable();
+    });
+
+  </script>
+  
+ 
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-44077918-9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-44077918-9');
+</script>
+
+
+  
+    <!-- Algolia Search -->
+    <script type="text/javascript">
+      var algoliaConfigs = {
+        key: 'b6d79a1058f2b3c1ee03bf659ade5a4b',
+        index: 'mlflow',
+      };
+    </script>
+    <div id="algolia-wrapper"></div>
+    <script src="../../../../_static/js/tether.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+  
+</body>
+</html>

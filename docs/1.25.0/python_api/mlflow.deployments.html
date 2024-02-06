@@ -1,0 +1,539 @@
+
+  
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mlflow.deployments &mdash; MLflow 1.25.0 documentation</title>
+  
+   
+  <link rel="canonical" href="https://www.mlflow.org/docs/latest/python_api/mlflow.deployments.html">
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    
+
+    
+
+  
+    
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-WXWDBL');</script>
+      
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600" rel="stylesheet">
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../_static/css/algolia.css" type="text/css" />
+    
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="MLflow 1.25.0 documentation" href="../index.html"/>
+        <link rel="up" title="Python API" href="index.html"/>
+        <link rel="next" title="mlflow.diviner" href="/mlflow.diviner.html"/>
+        <link rel="prev" title="mlflow.catboost" href="/mlflow.catboost.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  
+
+  
+  <nav class="wy-nav-top header" role="navigation" aria-label="top navigation">
+    <ul>
+  <li class="menu-toggle">
+    <i data-toggle="wy-nav-top" class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"></i>
+    <a href="../index.html" class="wy-nav-top-logo"
+      ><img src="../_static/MLflow-logo-final-black.png" alt="MLflow"
+    /></a>
+    <span class="version">1.25.0</span>
+  </li>
+</ul>
+  </nav>
+  <page>
+    
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side relative">
+      <div class="wy-side-scroll">
+  <div class="wy-side-nav-search">
+    
+
+    
+
+    
+<div role="search">
+  
+  <input id="algolia-search" type="text" name="q" placeholder="Search" />
+  
+</div>
+
+
+    
+  </div>
+
+  <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+    
+      <a href="../index.html" class="main-navigation-home"><img src="../_static/icons/nav-home.svg"> MLflow</a>
+    
+
+    
+      
+
+      
+        <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials-and-examples/index.html">Tutorials and Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tracking.html">MLflow Tracking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../projects.html">MLflow Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models.html">MLflow Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model-registry.html">MLflow Model Registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugins.html">MLflow Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">Command-Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../search-syntax.html">Search</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Python API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="mlflow.html">mlflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.artifacts.html">mlflow.artifacts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.azureml.html">mlflow.azureml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.catboost.html">mlflow.catboost</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">mlflow.deployments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.diviner.html">mlflow.diviner</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.entities.html">mlflow.entities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.fastai.html">mlflow.fastai</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.gluon.html">mlflow.gluon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.h2o.html">mlflow.h2o</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.keras.html">mlflow.keras</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.lightgbm.html">mlflow.lightgbm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.mleap.html">mlflow.mleap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.models.html">mlflow.models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.onnx.html">mlflow.onnx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.paddle.html">mlflow.paddle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.pmdarima.html">mlflow.pmdarima</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.projects.html">mlflow.projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.prophet.html">mlflow.prophet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.pyfunc.html">mlflow.pyfunc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.pyspark.ml.html">mlflow.pyspark.ml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.pytorch.html">mlflow.pytorch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.sagemaker.html">mlflow.sagemaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.shap.html">mlflow.shap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.sklearn.html">mlflow.sklearn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.spacy.html">mlflow.spacy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.spark.html">mlflow.spark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.statsmodels.html">mlflow.statsmodels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.tensorflow.html">mlflow.tensorflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.tracking.html">mlflow.tracking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.types.html">mlflow.types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.xgboost.html">mlflow.xgboost</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../R-api.html">R API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../java_api/index.html">Java API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rest-api.html">REST API</a></li>
+</ul>
+
+      
+    
+  </div>
+
+  <div role="contentinfo">
+    
+
+    <p>
+      <a id='feedbacklink' href="https://github.com/mlflow/mlflow/blob/master/CONTRIBUTING.rst" target="_blank">Contribute</a>
+    </p>
+  </div>
+</div>
+    </nav>
+
+    <main class="wy-grid-for-nav">
+      <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+        <div class="wy-nav-content">
+          <div class="rst-content">
+            
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Documentation</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+        <li><a href="index.html">Python API</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+    
+      <li>mlflow.deployments</li>
+    
+    
+    <li class="wy-breadcrumbs-aside">
+      <a href="https://github.com/mlflow/mlflow/blob/master/docs/source/python_api/mlflow.deployments.rst" class="fa fa-github"> Edit on GitHub</a>
+    </li>
+    
+  </ul>
+</div>
+            <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+              <div itemprop="articleBody">
+                
+  <div class="section" id="module-mlflow.deployments">
+<span id="mlflow-deployments"></span><h1>mlflow.deployments<a class="headerlink" href="#module-mlflow.deployments" title="Permalink to this headline"> </a></h1>
+<p>Exposes functionality for deploying MLflow models to custom serving tools.</p>
+<p>Note: model deployment to AWS Sagemaker and AzureML can currently be performed via the
+<a class="reference internal" href="mlflow.sagemaker.html#module-mlflow.sagemaker" title="mlflow.sagemaker"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mlflow.sagemaker</span></code></a> and <a class="reference internal" href="mlflow.azureml.html#module-mlflow.azureml" title="mlflow.azureml"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mlflow.azureml</span></code></a> modules, respectively.</p>
+<p>MLflow does not currently provide built-in support for any other deployment targets, but support
+for custom targets can be installed via third-party plugins. See a list of known plugins
+<a class="reference external" href="https://mlflow.org/docs/latest/plugins.html#deployment-plugins">here</a>.</p>
+<p>This page largely focuses on the user-facing deployment APIs. For instructions on implementing
+your own plugin for deployment to a custom serving tool, see
+<a class="reference external" href="http://mlflow.org/docs/latest/plugins.html#writing-your-own-mlflow-plugins">plugin docs</a>.</p>
+<dl class="py class">
+<dt id="mlflow.deployments.BaseDeploymentClient">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mlflow.deployments.</span></code><code class="sig-name descname"><span class="pre">BaseDeploymentClient</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_uri</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient" title="Permalink to this definition"> </a></dt>
+<dd><p>Base class exposing Python model deployment APIs.</p>
+<p>Plugin implementors should define target-specific deployment logic via a subclass of
+<code class="docutils literal notranslate"><span class="pre">BaseDeploymentClient</span></code> within the plugin module, and customize method docstrings with
+target-specific information.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Subclasses should raise <a class="reference internal" href="exceptions/mlflow.exceptions.html#mlflow.exceptions.MlflowException" title="mlflow.exceptions.MlflowException"><code class="xref py py-class docutils literal notranslate"><span class="pre">mlflow.exceptions.MlflowException</span></code></a> in error cases (e.g.
+on failure to deploy a model).</p>
+</div>
+<dl class="py method">
+<dt id="mlflow.deployments.BaseDeploymentClient.create_deployment">
+<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">create_deployment</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flavor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient.create_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient.create_deployment" title="Permalink to this definition"> </a></dt>
+<dd><p>Deploy a model to the specified target. By default, this method should block until
+deployment completes (i.e. until it’s possible to perform inference with the deployment).
+In the case of conflicts (e.g. if it’s not possible to create the specified deployment
+without due to conflict with an existing deployment), raises a
+<a class="reference internal" href="exceptions/mlflow.exceptions.html#mlflow.exceptions.MlflowException" title="mlflow.exceptions.MlflowException"><code class="xref py py-class docutils literal notranslate"><span class="pre">mlflow.exceptions.MlflowException</span></code></a>. See target-specific plugin documentation
+for additional detail on support for asynchronous deployment and other configuration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – Unique name to use for deployment. If another deployment exists with the same
+name, raises a
+<a class="reference internal" href="exceptions/mlflow.exceptions.html#mlflow.exceptions.MlflowException" title="mlflow.exceptions.MlflowException"><code class="xref py py-class docutils literal notranslate"><span class="pre">mlflow.exceptions.MlflowException</span></code></a></p></li>
+<li><p><strong>model_uri</strong> – URI of model to deploy</p></li>
+<li><p><strong>flavor</strong> – (optional) Model flavor to deploy. If unspecified, a default flavor
+will be chosen.</p></li>
+<li><p><strong>config</strong> – (optional) Dict containing updated target-specific configuration for the
+deployment</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dict corresponding to created deployment, which must contain the ‘name’ key.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mlflow.deployments.BaseDeploymentClient.delete_deployment">
+<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">delete_deployment</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient.delete_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient.delete_deployment" title="Permalink to this definition"> </a></dt>
+<dd><p>Delete the deployment with name <code class="docutils literal notranslate"><span class="pre">name</span></code> from the specified target. Deletion should be
+idempotent (i.e. deletion should not fail if retried on a non-existent deployment).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – Name of deployment to delete</p></li>
+<li><p><strong>config</strong> – (optional) dict containing updated target-specific configuration for the
+deployment</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mlflow.deployments.BaseDeploymentClient.explain">
+<code class="sig-name descname"><span class="pre">explain</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient.explain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient.explain" title="Permalink to this definition"> </a></dt>
+<dd><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Experimental: This method may change or be removed in a future release without warning.</p>
+</div>
+<p>Generate explanations of model predictions on the specified input pandas Dataframe
+<code class="docutils literal notranslate"><span class="pre">df</span></code> for the deployed model. Explanation output formats vary by deployment target,
+and can include details like feature importance for understanding/debugging predictions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>deployment_name</strong> – Name of deployment to predict against</p></li>
+<li><p><strong>df</strong> – Pandas DataFrame to use for explaining feature importance in model prediction</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A JSON-able object (pandas dataframe, numpy array, dictionary), or
+an exception if the implementation is not available in deployment target’s class</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mlflow.deployments.BaseDeploymentClient.get_deployment">
+<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">get_deployment</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient.get_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient.get_deployment" title="Permalink to this definition"> </a></dt>
+<dd><p>Returns a dictionary describing the specified deployment, throwing a
+<a class="reference internal" href="exceptions/mlflow.exceptions.html#mlflow.exceptions.MlflowException" title="mlflow.exceptions.MlflowException"><code class="xref py py-class docutils literal notranslate"><span class="pre">mlflow.exceptions.MlflowException</span></code></a> if no deployment exists with the provided
+ID.
+The dict is guaranteed to contain an ‘name’ key containing the deployment name.
+The other fields of the returned dictionary and their types may vary across
+deployment targets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> – ID of deployment to fetch</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mlflow.deployments.BaseDeploymentClient.list_deployments">
+<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">list_deployments</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient.list_deployments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient.list_deployments" title="Permalink to this definition"> </a></dt>
+<dd><p>List deployments. This method is expected to return an unpaginated list of all
+deployments (an alternative would be to return a dict with a ‘deployments’ field
+containing the actual deployments, with plugins able to specify other fields, e.g.
+a next_page_token field, in the returned dictionary for pagination, and to accept
+a <cite>pagination_args</cite> argument to this method for passing pagination-related args).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A list of dicts corresponding to deployments. Each dict is guaranteed to
+contain a ‘name’ key containing the deployment name. The other fields of
+the returned dictionary and their types may vary across deployment targets.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mlflow.deployments.BaseDeploymentClient.predict">
+<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">predict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient.predict" title="Permalink to this definition"> </a></dt>
+<dd><p>Compute predictions on the pandas DataFrame <code class="docutils literal notranslate"><span class="pre">df</span></code> using the specified deployment.
+Note that the input/output types of this method matches that of <cite>mlflow pyfunc predict</cite>
+(we accept a pandas DataFrame as input and return either a pandas DataFrame,
+pandas Series, or numpy array as output).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>deployment_name</strong> – Name of deployment to predict against</p></li>
+<li><p><strong>df</strong> – Pandas DataFrame to use for inference</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A pandas DataFrame, pandas Series, or numpy array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mlflow.deployments.BaseDeploymentClient.update_deployment">
+<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">update_deployment</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_uri</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flavor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient.update_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient.update_deployment" title="Permalink to this definition"> </a></dt>
+<dd><p>Update the deployment with the specified name. You can update the URI of the model, the
+flavor of the deployed model (in which case the model URI must also be specified), and/or
+any target-specific attributes of the deployment (via <cite>config</cite>). By default, this method
+should block until deployment completes (i.e. until it’s possible to perform inference
+with the updated deployment). See target-specific plugin documentation for additional
+detail on support for asynchronous deployment and other configuration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – Unique name of deployment to update</p></li>
+<li><p><strong>model_uri</strong> – URI of a new model to deploy.</p></li>
+<li><p><strong>flavor</strong> – (optional) new model flavor to use for deployment. If provided,
+<code class="docutils literal notranslate"><span class="pre">model_uri</span></code> must also be specified. If <code class="docutils literal notranslate"><span class="pre">flavor</span></code> is unspecified but
+<code class="docutils literal notranslate"><span class="pre">model_uri</span></code> is specified, a default flavor will be chosen and the
+deployment will be updated using that flavor.</p></li>
+<li><p><strong>config</strong> – (optional) dict containing updated target-specific configuration for the
+deployment</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="mlflow.deployments.get_deploy_client">
+<code class="sig-prename descclassname"><span class="pre">mlflow.deployments.</span></code><code class="sig-name descname"><span class="pre">get_deploy_client</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_uri</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/interface.html#get_deploy_client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.get_deploy_client" title="Permalink to this definition"> </a></dt>
+<dd><p>Returns a subclass of <a class="reference internal" href="#mlflow.deployments.BaseDeploymentClient" title="mlflow.deployments.BaseDeploymentClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">mlflow.deployments.BaseDeploymentClient</span></code></a> exposing standard
+APIs for deploying models to the specified target. See available deployment APIs
+by calling <code class="docutils literal notranslate"><span class="pre">help()</span></code> on the returned object or viewing docs for
+<a class="reference internal" href="#mlflow.deployments.BaseDeploymentClient" title="mlflow.deployments.BaseDeploymentClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">mlflow.deployments.BaseDeploymentClient</span></code></a>. You can also run
+<code class="docutils literal notranslate"><span class="pre">mlflow</span> <span class="pre">deployments</span> <span class="pre">help</span> <span class="pre">-t</span> <span class="pre">&lt;target-uri&gt;</span></code> via the CLI for more details on target-specific
+configuration options.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>target_uri</strong> – URI of target to deploy to.</p>
+</dd>
+</dl>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id1" title="Permalink to this code"> </a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s1">&#39;redisai&#39;</span><span class="p">)</span>
+<span class="c1"># Deploy the model stored at artifact path &#39;myModel&#39; under run with ID &#39;someRunId&#39;. The</span>
+<span class="c1"># model artifacts are fetched from the current tracking server and then used for deployment.</span>
+<span class="n">client</span><span class="o">.</span><span class="n">create_deployment</span><span class="p">(</span><span class="s2">&quot;spamDetector&quot;</span><span class="p">,</span> <span class="s2">&quot;runs:/someRunId/myModel&quot;</span><span class="p">)</span>
+<span class="c1"># Load a CSV of emails and score it against our deployment</span>
+<span class="n">emails_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;...&quot;</span><span class="p">)</span>
+<span class="n">prediction_df</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">predict_deployment</span><span class="p">(</span><span class="s2">&quot;spamDetector&quot;</span><span class="p">,</span> <span class="n">emails_df</span><span class="p">)</span>
+<span class="c1"># List all deployments, get details of our particular deployment</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">list_deployments</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">get_deployment</span><span class="p">(</span><span class="s2">&quot;spamDetector&quot;</span><span class="p">))</span>
+<span class="c1"># Update our deployment to serve a different model</span>
+<span class="n">client</span><span class="o">.</span><span class="n">update_deployment</span><span class="p">(</span><span class="s2">&quot;spamDetector&quot;</span><span class="p">,</span> <span class="s2">&quot;runs:/anotherRunId/myModel&quot;</span><span class="p">)</span>
+<span class="c1"># Delete our deployment</span>
+<span class="n">client</span><span class="o">.</span><span class="n">delete_deployment</span><span class="p">(</span><span class="s2">&quot;spamDetector&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="mlflow.deployments.run_local">
+<code class="sig-prename descclassname"><span class="pre">mlflow.deployments.</span></code><code class="sig-name descname"><span class="pre">run_local</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flavor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/interface.html#run_local"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.run_local" title="Permalink to this definition"> </a></dt>
+<dd><p>Deploys the specified model locally, for testing. Note that models deployed locally cannot
+be managed by other deployment APIs (e.g. <code class="docutils literal notranslate"><span class="pre">update_deployment</span></code>, <code class="docutils literal notranslate"><span class="pre">delete_deployment</span></code>, etc).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target</strong> – Target to deploy to.</p></li>
+<li><p><strong>name</strong> – Name to use for deployment</p></li>
+<li><p><strong>model_uri</strong> – URI of model to deploy</p></li>
+<li><p><strong>flavor</strong> – (optional) Model flavor to deploy. If unspecified, a default flavor
+will be chosen.</p></li>
+<li><p><strong>config</strong> – (optional) Dict containing updated target-specific configuration for
+the deployment</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+              </div>
+            </div>
+            <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="mlflow.catboost.html" class="btn btn-neutral" title="mlflow.catboost" accesskey="p"><span class="db-icon db-icon-chevron-left"></span> Previous</a>
+      
+      
+        <a href="mlflow.diviner.html" class="btn btn-neutral" title="mlflow.diviner" accesskey="n">Next <span class="db-icon db-icon-chevron-right"></span></a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+      <p class="copyright">
+          &copy; MLflow Project, a Series of LF Projects, LLC. All rights reserved.
+      </p>
+
+  </div> 
+
+</footer>
+          </div>
+        </div>
+      </section>
+    </main>
+  </page>
+
+  
+
+
+  
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:'../',
+      VERSION:'1.25.0',
+      COLLAPSE_INDEX:false,
+      FILE_SUFFIX:'.html',
+      HAS_SOURCE:  true
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/underscore.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/languagesections.js"></script>
+  
+
+  <script type="text/javascript" src="../_static/js/clipboard.min.js"></script>
+  <script type="text/javascript" src="../_static/js/jquery.waypoints.min.js"></script>
+
+  
+  
+  
+  <script type="text/javascript">var CLIPPY_SVG_PATH = "../_static/clippy.svg";</script>
+  <script type="text/javascript" src="../_static/js/custom.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+    jQuery(function () {
+      SphinxRtdTheme.StickyNav.enable();
+    });
+
+  </script>
+  
+ 
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-44077918-9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-44077918-9');
+</script>
+
+
+  
+    <!-- Algolia Search -->
+    <script type="text/javascript">
+      var algoliaConfigs = {
+        key: 'b6d79a1058f2b3c1ee03bf659ade5a4b',
+        index: 'mlflow',
+      };
+    </script>
+    <div id="algolia-wrapper"></div>
+    <script src="../_static/js/tether.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+  
+</body>
+</html>

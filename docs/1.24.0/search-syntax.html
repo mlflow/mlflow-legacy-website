@@ -1,0 +1,484 @@
+
+  
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Search &mdash; MLflow 1.24.0 documentation</title>
+  
+   
+  <link rel="canonical" href="https://www.mlflow.org/docs/latest/search-syntax.html">
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    
+
+    
+
+  
+    
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-WXWDBL');</script>
+      
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600" rel="stylesheet">
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+    
+    <link rel="stylesheet" href="_static/css/algolia.css" type="text/css" />
+    
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="MLflow 1.24.0 documentation" href="index.html"/>
+        <link rel="next" title="Python API" href="/python_api/index.html"/>
+        <link rel="prev" title="Command-Line Interface" href="/cli.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  
+
+  
+  <nav class="wy-nav-top header" role="navigation" aria-label="top navigation">
+    <ul>
+  <li class="menu-toggle">
+    <i data-toggle="wy-nav-top" class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"></i>
+    <a href="index.html" class="wy-nav-top-logo"
+      ><img src="_static/MLflow-logo-final-black.png" alt="MLflow"
+    /></a>
+    <span class="version">1.24.0</span>
+  </li>
+</ul>
+  </nav>
+  <page>
+    
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side relative">
+      <div class="wy-side-scroll">
+  <div class="wy-side-nav-search">
+    
+
+    
+
+    
+<div role="search">
+  
+  <input id="algolia-search" type="text" name="q" placeholder="Search" />
+  
+</div>
+
+
+    
+  </div>
+
+  <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+    
+      <a href="index.html" class="main-navigation-home"><img src="_static/icons/nav-home.svg"> MLflow</a>
+    
+
+    
+      
+
+      
+        <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials-and-examples/index.html">Tutorials and Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tracking.html">MLflow Tracking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="projects.html">MLflow Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">MLflow Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model-registry.html">MLflow Model Registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugins.html">MLflow Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command-Line Interface</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Search</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#syntax">Syntax</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#example-expressions">Example Expressions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#identifier">Identifier</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#entity-names-containing-special-characters">Entity Names Containing Special Characters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#entity-names-starting-with-a-number">Entity Names Starting with a Number</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#run-attributes">Run Attributes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mlflow-tags">MLflow Tags</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#comparator">Comparator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#constant">Constant</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#programmatically-searching-runs">Programmatically Searching Runs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#python">Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#r">R</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#java">Java</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python_api/index.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="R-api.html">R API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="java_api/index.html">Java API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rest-api.html">REST API</a></li>
+</ul>
+
+      
+    
+  </div>
+
+  <div role="contentinfo">
+    
+
+    <p>
+      <a id='feedbacklink' href="https://github.com/mlflow/mlflow/blob/master/CONTRIBUTING.rst" target="_blank">Contribute</a>
+    </p>
+  </div>
+</div>
+    </nav>
+
+    <main class="wy-grid-for-nav">
+      <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+        <div class="wy-nav-content">
+          <div class="rst-content">
+            
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Documentation</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+    
+      <li>Search</li>
+    
+    
+    <li class="wy-breadcrumbs-aside">
+      <a href="https://github.com/mlflow/mlflow/blob/master/docs/source/search-syntax.rst" class="fa fa-github"> Edit on GitHub</a>
+    </li>
+    
+  </ul>
+</div>
+            <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+              <div itemprop="articleBody">
+                
+  <div class="section" id="search">
+<span id="search-syntax"></span><h1>Search<a class="headerlink" href="#search" title="Permalink to this headline"> </a></h1>
+<p>The MLflow UI and API support searching runs within a single experiment or a group of experiments
+using a search filter API. This API is a simplified version of the SQL <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> clause.</p>
+<div class="contents local topic" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#syntax" id="id2">Syntax</a></p>
+<ul>
+<li><p><a class="reference internal" href="#example-expressions" id="id3">Example Expressions</a></p></li>
+<li><p><a class="reference internal" href="#identifier" id="id4">Identifier</a></p>
+<ul>
+<li><p><a class="reference internal" href="#entity-names-containing-special-characters" id="id5">Entity Names Containing Special Characters</a></p></li>
+<li><p><a class="reference internal" href="#entity-names-starting-with-a-number" id="id6">Entity Names Starting with a Number</a></p></li>
+<li><p><a class="reference internal" href="#run-attributes" id="id7">Run Attributes</a></p></li>
+<li><p><a class="reference internal" href="#mlflow-tags" id="id8">MLflow Tags</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#comparator" id="id9">Comparator</a></p></li>
+<li><p><a class="reference internal" href="#constant" id="id10">Constant</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#programmatically-searching-runs" id="id11">Programmatically Searching Runs</a></p>
+<ul>
+<li><p><a class="reference internal" href="#python" id="id12">Python</a></p></li>
+<li><p><a class="reference internal" href="#r" id="id13">R</a></p></li>
+<li><p><a class="reference internal" href="#java" id="id14">Java</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="syntax">
+<h2><a class="toc-backref" href="#id2">Syntax</a><a class="headerlink" href="#syntax" title="Permalink to this headline"> </a></h2>
+<p>A search filter is one or more expressions joined by the <code class="docutils literal notranslate"><span class="pre">AND</span></code> keyword.
+The syntax does not support <code class="docutils literal notranslate"><span class="pre">OR</span></code>. Each expression has three parts: an identifier on
+the left-hand side (LHS), a comparator, and constant on the right-hand side (RHS).</p>
+<div class="section" id="example-expressions">
+<h3><a class="toc-backref" href="#id3">Example Expressions</a><a class="headerlink" href="#example-expressions" title="Permalink to this headline"> </a></h3>
+<ul>
+<li><p>Search for the subset of runs with logged accuracy metric greater than 0.92.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">metrics</span><span class="p">.</span><span class="n">accuracy</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span><span class="mi">92</span><span class="w"></span>
+</pre></div>
+</div>
+</li>
+<li><p>Search for runs created using a Logistic Regression model, a learning rate (lambda) of 0.001, and recorded error metric under 0.05.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">params</span><span class="p">.</span><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;LogisticRegression&quot;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">params</span><span class="p">.</span><span class="n">lambda</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;0.001&quot;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">metrics</span><span class="p">.</span><span class="n">error</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span><span class="mi">05</span><span class="w"></span>
+</pre></div>
+</div>
+</li>
+<li><p>Search for all failed runs.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">attributes</span><span class="p">.</span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;FAILED&quot;</span><span class="w"></span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="identifier">
+<h3><a class="toc-backref" href="#id4">Identifier</a><a class="headerlink" href="#identifier" title="Permalink to this headline"> </a></h3>
+<p>Required in the LHS of a search expression. Signifies an entity to compare against.</p>
+<p>An identifier has two parts separated by a period: the type of the entity and the name of the entity. The type of the entity is <code class="docutils literal notranslate"><span class="pre">metrics</span></code>, <code class="docutils literal notranslate"><span class="pre">params</span></code>, <code class="docutils literal notranslate"><span class="pre">attributes</span></code>, or <code class="docutils literal notranslate"><span class="pre">tags</span></code>. The entity name can contain alphanumeric characters and special characters.</p>
+<p>This section describes supported entity names and how to specify such names in search expressions.</p>
+<div class="contents local topic" id="in-this-section">
+<p class="topic-title">In this section:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#entity-names-containing-special-characters" id="id15">Entity Names Containing Special Characters</a></p></li>
+<li><p><a class="reference internal" href="#entity-names-starting-with-a-number" id="id16">Entity Names Starting with a Number</a></p></li>
+<li><p><a class="reference internal" href="#run-attributes" id="id17">Run Attributes</a></p></li>
+<li><p><a class="reference internal" href="#mlflow-tags" id="id18">MLflow Tags</a></p></li>
+</ul>
+</div>
+<div class="section" id="entity-names-containing-special-characters">
+<h4><a class="toc-backref" href="#id15">Entity Names Containing Special Characters</a><a class="headerlink" href="#entity-names-containing-special-characters" title="Permalink to this headline"> </a></h4>
+<p>When a metric, parameter, or tag name contains a special character like hyphen, space, period, and so on,
+enclose the entity name in double quotes or backticks.</p>
+<p class="rubric">Examples</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">params</span><span class="p">.</span><span class="ss">&quot;model-type&quot;</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">metrics</span><span class="p">.</span><span class="o">`</span><span class="n">error</span><span class="w"> </span><span class="n">rate</span><span class="o">`</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="entity-names-starting-with-a-number">
+<h4><a class="toc-backref" href="#id16">Entity Names Starting with a Number</a><a class="headerlink" href="#entity-names-starting-with-a-number" title="Permalink to this headline"> </a></h4>
+<p>Unlike SQL syntax for column names, MLflow allows logging metrics, parameters, and tags names
+that have a leading number. If an entity name contains a leading number, enclose the entity name in double quotes. For example:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">metrics</span><span class="p">.</span><span class="ss">&quot;2019-04-02 error rate&quot;</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="run-attributes">
+<h4><a class="toc-backref" href="#id17">Run Attributes</a><a class="headerlink" href="#run-attributes" title="Permalink to this headline"> </a></h4>
+<p>You can search using two run attributes contained in <a class="reference internal" href="python_api/mlflow.entities.html#mlflow.entities.RunInfo" title="mlflow.entities.RunInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">mlflow.entities.RunInfo</span></code></a>: <code class="docutils literal notranslate"><span class="pre">status</span></code> and <code class="docutils literal notranslate"><span class="pre">artifact_uri</span></code>. Both attributes have string values. Other fields in <code class="docutils literal notranslate"><span class="pre">mlflow.entities.RunInfo</span></code> are not searchable.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>The experiment ID is implicitly selected by the search API.</p></li>
+<li><p>A run’s <code class="docutils literal notranslate"><span class="pre">lifecycle_stage</span></code> attribute is not allowed because it is already encoded as a part of the API’s <code class="docutils literal notranslate"><span class="pre">run_view_type</span></code> field. To search for runs using <code class="docutils literal notranslate"><span class="pre">run_id</span></code>, it is more efficient to use <code class="docutils literal notranslate"><span class="pre">get_run</span></code> APIs.</p></li>
+</ul>
+</div>
+<p class="rubric">Example</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">attributes</span><span class="p">.</span><span class="n">artifact_uri</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mlflow-tags">
+<span id="id1"></span><h4><a class="toc-backref" href="#id18">MLflow Tags</a><a class="headerlink" href="#mlflow-tags" title="Permalink to this headline"> </a></h4>
+<p>You can search for MLflow tags by enclosing the tag name in double quotes or backticks. For example, to search for the name of an MLflow run, specify <code class="docutils literal notranslate"><span class="pre">tags.&quot;mlflow.runName&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">tags.`mlflow.runName`</span></code>.</p>
+<p class="rubric">Examples</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">tags</span><span class="p">.</span><span class="ss">&quot;mlflow.runName&quot;</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">tags</span><span class="p">.</span><span class="o">`</span><span class="n">mlflow</span><span class="p">.</span><span class="n">parentRunId</span><span class="o">`</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="comparator">
+<h3><a class="toc-backref" href="#id9">Comparator</a><a class="headerlink" href="#comparator" title="Permalink to this headline"> </a></h3>
+<p>There are two classes of comparators: numeric and string.</p>
+<ul class="simple">
+<li><p>Numeric comparators (<code class="docutils literal notranslate"><span class="pre">metrics</span></code>): <code class="docutils literal notranslate"><span class="pre">=</span></code>, <code class="docutils literal notranslate"><span class="pre">!=</span></code>, <code class="docutils literal notranslate"><span class="pre">&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&lt;=</span></code>.</p></li>
+<li><p>String comparators (<code class="docutils literal notranslate"><span class="pre">params</span></code>, <code class="docutils literal notranslate"><span class="pre">tags</span></code>, and <code class="docutils literal notranslate"><span class="pre">attributes</span></code>): <code class="docutils literal notranslate"><span class="pre">=</span></code>, <code class="docutils literal notranslate"><span class="pre">!=</span></code>, <code class="docutils literal notranslate"><span class="pre">LIKE</span></code> and <code class="docutils literal notranslate"><span class="pre">ILIKE</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="constant">
+<h3><a class="toc-backref" href="#id10">Constant</a><a class="headerlink" href="#constant" title="Permalink to this headline"> </a></h3>
+<p>The search syntax requires the RHS of the expression to be a constant. The type of the constant
+depends on LHS.</p>
+<ul class="simple">
+<li><p>If LHS is a metric, the RHS must be an integer or float number.</p></li>
+<li><p>If LHS is a parameter or tag, the RHS must be a string constant enclosed in single or double quotes.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="programmatically-searching-runs">
+<h2><a class="toc-backref" href="#id11">Programmatically Searching Runs</a><a class="headerlink" href="#programmatically-searching-runs" title="Permalink to this headline"> </a></h2>
+<p>The MLflow UI supports searching runs contained within the current experiment. To search runs across
+multiple experiments, use one of the client APIs.</p>
+<div class="section" id="python">
+<h3><a class="toc-backref" href="#id12">Python</a><a class="headerlink" href="#python" title="Permalink to this headline"> </a></h3>
+<p>Use the <a class="reference internal" href="python_api/mlflow.tracking.html#mlflow.tracking.MlflowClient.search_runs" title="mlflow.tracking.MlflowClient.search_runs"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.tracking.MlflowClient.search_runs()</span></code></a> or <a class="reference internal" href="python_api/mlflow.html#mlflow.search_runs" title="mlflow.search_runs"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.search_runs()</span></code></a> API to
+search programmatically. You can specify the list of columns to order by
+(for example, “metrics.rmse”) in the <code class="docutils literal notranslate"><span class="pre">order_by</span></code> column. The column can contain an
+optional <code class="docutils literal notranslate"><span class="pre">DESC</span></code> or <code class="docutils literal notranslate"><span class="pre">ASC</span></code> value; the default is <code class="docutils literal notranslate"><span class="pre">ASC</span></code>. The default ordering is to sort by
+<code class="docutils literal notranslate"><span class="pre">start_time</span> <span class="pre">DESC</span></code>, then <code class="docutils literal notranslate"><span class="pre">run_id</span></code>.</p>
+<p>For example, if you’d like to identify the best <cite>active</cite> run from experiment ID 0 by accuracy, use:</p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.tracking.client</span> <span class="kn">import</span> <span class="n">MlflowClient</span>
+<span class="kn">from</span> <span class="nn">mlflow.entities</span> <span class="kn">import</span> <span class="n">ViewType</span>
+
+<span class="n">run</span> <span class="o">=</span> <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">search_runs</span><span class="p">(</span>
+  <span class="n">experiment_ids</span><span class="o">=</span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+  <span class="n">filter_string</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+  <span class="n">run_view_type</span><span class="o">=</span><span class="n">ViewType</span><span class="o">.</span><span class="n">ACTIVE_ONLY</span><span class="p">,</span>
+  <span class="n">max_results</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+  <span class="n">order_by</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;metrics.accuracy DESC&quot;</span><span class="p">]</span>
+<span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>To get all active runs from experiments IDs 3, 4, and 17 that used a CNN model
+with 10 layers and had a prediction accuracy of 94.5% or higher, use:</p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.tracking.client</span> <span class="kn">import</span> <span class="n">MlflowClient</span>
+<span class="kn">from</span> <span class="nn">mlflow.entities</span> <span class="kn">import</span> <span class="n">ViewType</span>
+
+<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;params.model = &#39;CNN&#39; and params.layers = &#39;10&#39; and metrics.`prediction accuracy` &gt;= 0.945&quot;</span>
+<span class="n">runs</span> <span class="o">=</span> <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">search_runs</span><span class="p">(</span><span class="n">experiment_ids</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;4&quot;</span><span class="p">,</span> <span class="s2">&quot;17&quot;</span><span class="p">],</span> <span class="n">filter_string</span><span class="o">=</span><span class="n">query</span><span class="p">,</span> <span class="n">run_view_type</span><span class="o">=</span><span class="n">ViewType</span><span class="o">.</span><span class="n">ACTIVE_ONLY</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To search all known experiments for any MLflow runs created using the Inception model architecture:</p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.tracking.client</span> <span class="kn">import</span> <span class="n">MlflowClient</span>
+<span class="kn">from</span> <span class="nn">mlflow.entities</span> <span class="kn">import</span> <span class="n">ViewType</span>
+
+<span class="n">all_experiments</span> <span class="o">=</span> <span class="p">[</span><span class="n">exp</span><span class="o">.</span><span class="n">experiment_id</span> <span class="k">for</span> <span class="n">exp</span> <span class="ow">in</span> <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">list_experiments</span><span class="p">()]</span>
+<span class="n">runs</span> <span class="o">=</span> <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">search_runs</span><span class="p">(</span><span class="n">experiment_ids</span><span class="o">=</span><span class="n">all_experiments</span><span class="p">,</span> <span class="n">filter_string</span><span class="o">=</span><span class="s2">&quot;params.model = &#39;Inception&#39;&quot;</span><span class="p">,</span> <span class="n">run_view_type</span><span class="o">=</span><span class="n">ViewType</span><span class="o">.</span><span class="n">ALL</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="r">
+<h3><a class="toc-backref" href="#id13">R</a><a class="headerlink" href="#r" title="Permalink to this headline"> </a></h3>
+<p>The R API is similar to the Python API.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">mlflow</span><span class="p">)</span>
+<span class="nf">mlflow_search_runs</span><span class="p">(</span>
+  <span class="n">filter</span> <span class="o">=</span> <span class="s">&quot;metrics.rmse &lt; 0.9 and tags.production = &#39;true&#39;&quot;</span><span class="p">,</span>
+  <span class="n">experiment_ids</span> <span class="o">=</span> <span class="nf">as.character</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">),</span>
+  <span class="n">order_by</span> <span class="o">=</span> <span class="s">&quot;params.lr DESC&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="java">
+<h3><a class="toc-backref" href="#id14">Java</a><a class="headerlink" href="#java" title="Permalink to this headline"> </a></h3>
+<p>The Java API is similar to Python API.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">List</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">&gt;</span> <span class="n">experimentIds</span> <span class="o">=</span> <span class="n">Arrays</span><span class="p">.</span><span class="na">asList</span><span class="p">(</span><span class="s">&quot;1&quot;</span><span class="p">,</span> <span class="s">&quot;2&quot;</span><span class="p">,</span> <span class="s">&quot;4&quot;</span><span class="p">,</span> <span class="s">&quot;8&quot;</span><span class="p">);</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">RunInfo</span><span class="o">&gt;</span> <span class="n">searchResult</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="na">searchRuns</span><span class="p">(</span><span class="n">experimentIds</span><span class="p">,</span> <span class="s">&quot;metrics.accuracy_score &lt; 99.90&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+              </div>
+            </div>
+            <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="cli.html" class="btn btn-neutral" title="Command-Line Interface" accesskey="p"><span class="db-icon db-icon-chevron-left"></span> Previous</a>
+      
+      
+        <a href="python_api/index.html" class="btn btn-neutral" title="Python API" accesskey="n">Next <span class="db-icon db-icon-chevron-right"></span></a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+      <p class="copyright">
+          &copy; MLflow Project, a Series of LF Projects, LLC. All rights reserved.
+      </p>
+
+  </div> 
+
+</footer>
+          </div>
+        </div>
+      </section>
+    </main>
+  </page>
+
+  
+
+
+  
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:'./',
+      VERSION:'1.24.0',
+      COLLAPSE_INDEX:false,
+      FILE_SUFFIX:'.html',
+      HAS_SOURCE:  true
+    };
+  </script>
+  <script type="text/javascript" src="_static/jquery.js"></script>
+  <script type="text/javascript" src="_static/underscore.js"></script>
+  <script type="text/javascript" src="_static/doctools.js"></script>
+  <script type="text/javascript" src="_static/languagesections.js"></script>
+  
+
+  <script type="text/javascript" src="_static/js/clipboard.min.js"></script>
+  <script type="text/javascript" src="_static/js/jquery.waypoints.min.js"></script>
+
+  
+  
+  
+  <script type="text/javascript">var CLIPPY_SVG_PATH = "_static/clippy.svg";</script>
+  <script type="text/javascript" src="_static/js/custom.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+    jQuery(function () {
+      SphinxRtdTheme.StickyNav.enable();
+    });
+
+  </script>
+  
+ 
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-44077918-9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-44077918-9');
+</script>
+
+
+  
+    <!-- Algolia Search -->
+    <script type="text/javascript">
+      var algoliaConfigs = {
+        key: 'b6d79a1058f2b3c1ee03bf659ade5a4b',
+        index: 'mlflow',
+      };
+    </script>
+    <div id="algolia-wrapper"></div>
+    <script src="_static/js/tether.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+  
+</body>
+</html>

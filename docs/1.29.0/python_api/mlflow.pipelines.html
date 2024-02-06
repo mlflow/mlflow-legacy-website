@@ -1,0 +1,758 @@
+
+  
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mlflow.pipelines &mdash; MLflow 1.29.0 documentation</title>
+  
+   
+  <link rel="canonical" href="https://www.mlflow.org/docs/latest/python_api/mlflow.pipelines.html">
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    
+
+    
+
+  
+    
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer',"GTM-N6WMTTJ");</script>
+        <!-- End Google Tag Manager -->
+    
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600" rel="stylesheet">
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../_static/css/algolia.css" type="text/css" />
+    
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="MLflow 1.29.0 documentation" href="../index.html"/>
+        <link rel="up" title="Python API" href="index.html"/>
+        <link rel="next" title="mlflow.pmdarima" href="/mlflow.pmdarima.html"/>
+        <link rel="prev" title="mlflow.paddle" href="/mlflow.paddle.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6WMTTJ"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  
+  <nav class="wy-nav-top header" role="navigation" aria-label="top navigation">
+    <ul>
+  <li class="menu-toggle">
+    <i data-toggle="wy-nav-top" class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"></i>
+    <a href="../index.html" class="wy-nav-top-logo"
+      ><img src="../_static/MLflow-logo-final-black.png" alt="MLflow"
+    /></a>
+    <span class="version">1.29.0</span>
+  </li>
+</ul>
+  </nav>
+  <page>
+    
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side relative">
+      <div class="wy-side-scroll">
+  <div class="wy-side-nav-search">
+    
+
+    
+
+    
+<div role="search">
+  
+  <input id="algolia-search" type="text" name="q" placeholder="Search" />
+  
+</div>
+
+
+    
+  </div>
+
+  <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+    
+      <a href="../index.html" class="main-navigation-home"><img src="../_static/icons/nav-home.svg"> MLflow</a>
+    
+
+    
+      
+
+      
+        <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials-and-examples/index.html">Tutorials and Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tracking.html">MLflow Tracking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../projects.html">MLflow Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models.html">MLflow Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model-registry.html">MLflow Model Registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipelines.html">MLflow Pipelines (experimental)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugins.html">MLflow Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">Command-Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../search-runs.html">Search Runs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../search-experiments.html">Search Experiments</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Python API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="mlflow.html">mlflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.artifacts.html">mlflow.artifacts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.azureml.html">mlflow.azureml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.catboost.html">mlflow.catboost</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.client.html">mlflow.client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.deployments.html">mlflow.deployments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.diviner.html">mlflow.diviner</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.entities.html">mlflow.entities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.environment_variables.html">mlflow.environment_variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.fastai.html">mlflow.fastai</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.gluon.html">mlflow.gluon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.h2o.html">mlflow.h2o</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.keras.html">mlflow.keras</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.lightgbm.html">mlflow.lightgbm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.mleap.html">mlflow.mleap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.models.html">mlflow.models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.onnx.html">mlflow.onnx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.paddle.html">mlflow.paddle</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">mlflow.pipelines</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-mlflow.pipelines.regression.v1.pipeline">Regression Pipeline</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.pmdarima.html">mlflow.pmdarima</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.projects.html">mlflow.projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.prophet.html">mlflow.prophet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.pyfunc.html">mlflow.pyfunc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.pyspark.ml.html">mlflow.pyspark.ml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.pytorch.html">mlflow.pytorch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.sagemaker.html">mlflow.sagemaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.shap.html">mlflow.shap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.sklearn.html">mlflow.sklearn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.spacy.html">mlflow.spacy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.spark.html">mlflow.spark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.statsmodels.html">mlflow.statsmodels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.tensorflow.html">mlflow.tensorflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.types.html">mlflow.types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.xgboost.html">mlflow.xgboost</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../R-api.html">R API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../java_api/index.html">Java API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rest-api.html">REST API</a></li>
+</ul>
+
+      
+    
+  </div>
+
+  <div role="contentinfo">
+    
+
+    <p>
+      <a id='feedbacklink' href="https://github.com/mlflow/mlflow/blob/master/CONTRIBUTING.md" target="_blank">Contribute</a>
+    </p>
+  </div>
+</div>
+    </nav>
+
+    <main class="wy-grid-for-nav">
+      <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+        <div class="wy-nav-content">
+          <div class="rst-content">
+            
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Documentation</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+        <li><a href="index.html">Python API</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+    
+      <li>mlflow.pipelines</li>
+    
+    
+    <li class="wy-breadcrumbs-aside">
+      <a href="https://github.com/mlflow/mlflow/blob/master/docs/source/python_api/mlflow.pipelines.rst" class="fa fa-github"> Edit on GitHub</a>
+    </li>
+    
+  </ul>
+</div>
+            <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+              <div itemprop="articleBody">
+                
+  <div class="section" id="module-mlflow.pipelines">
+<span id="mlflow-pipelines"></span><span id="pipelines-apis"></span><h1>mlflow.pipelines<a class="headerlink" href="#module-mlflow.pipelines" title="Permalink to this headline"> </a></h1>
+<p>MLflow Pipelines is an opinionated framework for structuring MLOps workflows that simplifies and
+standardizes machine learning application development and productionization. MLflow Pipelines
+makes it easy for data scientists to follow best practices for creating production-ready ML
+deliverables, allowing them to focus on developing excellent models. MLflow Pipelines also enables
+ML engineers and DevOps teams to seamlessly deploy these models to production and incorporate them
+into applications.</p>
+<p>MLflow Pipelines provides production-quality <a class="reference internal" href="../pipelines.html#pipeline-templates"><span class="std std-ref">Pipeline Templates</span></a> for
+common ML problem types, such as regression &amp; classification, and MLOps tasks, such as batch
+scoring. Pipelines are structured as git repositories with YAML-based configuration files and
+Python code, offering developers a declarative approach to ML application development that reduces
+boilerplate.</p>
+<p>MLflow Pipelines also implements a cache-aware executor for pipeline steps, ensuring that steps
+are only executed when associated
+<a class="reference internal" href="../pipelines.html#pipeline-repositories-key-concept"><span class="std std-ref">code or configurations</span></a> have changed. This enables
+data scientists, ML engineers, and DevOps teams to iterate very quickly within their domains of
+expertise. MLflow offers <a class="reference internal" href="#mlflow.pipelines.regression.v1.pipeline.RegressionPipeline.run" title="mlflow.pipelines.regression.v1.pipeline.RegressionPipeline.run"><code class="xref py py-func docutils literal notranslate"><span class="pre">run()</span></code></a> APIs for executing pipelines, as well as an
+<a class="reference internal" href="../cli.html#cli"><span class="std std-ref">mlflow pipelines run</span></a> CLI.</p>
+<p>For more information, see the <a class="reference internal" href="../pipelines.html#pipelines"><span class="std std-ref">MLflow Pipelines Overview</span></a>.</p>
+<dl class="py class">
+<dt id="mlflow.pipelines.Pipeline">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mlflow.pipelines.</span></code><code class="sig-name descname"><span class="pre">Pipeline</span></code><a class="reference internal" href="../_modules/mlflow/pipelines/pipeline.html#Pipeline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.pipelines.Pipeline" title="Permalink to this definition"> </a></dt>
+<dd><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Experimental: This class may change or be removed in a future release without warning.</p>
+</div>
+<p>A factory class that creates an instance of a pipeline for a particular ML problem
+(e.g. regression, classification) or MLOps task (e.g. batch scoring) based on the current
+working directory and supplied configuration.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id1" title="Permalink to this code"> </a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">mlflow.pipelines</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">&quot;~/mlp-regression-template&quot;</span><span class="p">)</span>
+<span class="n">regression_pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">profile</span><span class="o">=</span><span class="s2">&quot;local&quot;</span><span class="p">)</span>
+<span class="n">regression_pipeline</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">step</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<dl class="py method">
+<dt id="mlflow.pipelines.Pipeline.__new__">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">__new__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#mlflow.pipelines.regression.v1.pipeline.RegressionPipeline" title="mlflow.pipelines.regression.v1.pipeline.RegressionPipeline"><span class="pre">mlflow.pipelines.regression.v1.pipeline.RegressionPipeline</span></a><a class="reference internal" href="../_modules/mlflow/pipelines/pipeline.html#Pipeline.__new__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.pipelines.Pipeline.__new__" title="Permalink to this definition"> </a></dt>
+<dd><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Experimental: This method may change or be removed in a future release without warning.</p>
+</div>
+<p>Creates an instance of an MLflow Pipeline for a particular ML problem or MLOps task based
+on the current working directory and supplied configuration. The current working directory
+must be the root directory of an MLflow Pipeline repository or a subdirectory of an
+MLflow Pipeline repository.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>profile</strong> – The name of the profile to use for configuring the problem-specific or
+task-specific pipeline. Profiles customize the configuration of
+one or more pipeline steps, and pipeline executions with different profiles
+often produce different results.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A pipeline for a particular ML problem or MLOps task. For example, an instance of
+<a class="reference internal" href="#mlflow.pipelines.regression.v1.pipeline.RegressionPipeline" title="mlflow.pipelines.regression.v1.pipeline.RegressionPipeline"><code class="xref py py-class docutils literal notranslate"><span class="pre">RegressionPipeline</span></code></a>
+for regression problems.</p>
+</dd>
+</dl>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id2" title="Permalink to this code"> </a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">mlflow.pipelines</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">&quot;~/mlp-regression-template&quot;</span><span class="p">)</span>
+<span class="n">regression_pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">profile</span><span class="o">=</span><span class="s2">&quot;local&quot;</span><span class="p">)</span>
+<span class="n">regression_pipeline</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">step</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="module-mlflow.pipelines.regression.v1.pipeline">
+<span id="regression-pipeline"></span><h2>Regression Pipeline<a class="headerlink" href="#module-mlflow.pipelines.regression.v1.pipeline" title="Permalink to this headline"> </a></h2>
+<p id="mlflow-regression-pipeline">The MLflow Regression Pipeline is an MLflow Pipeline for developing high-quality regression models.
+It is designed for developing models using scikit-learn and frameworks that integrate with
+scikit-learn, such as the <code class="docutils literal notranslate"><span class="pre">XGBRegressor</span></code> API from XGBoost. The corresponding pipeline
+template repository is available at <a class="reference external" href="https://github.com/mlflow/mlp-regression-template">https://github.com/mlflow/mlp-regression-template</a>, and the
+<a class="reference internal" href="#mlflow.pipelines.regression.v1.pipeline.RegressionPipeline" title="mlflow.pipelines.regression.v1.pipeline.RegressionPipeline"><code class="xref py py-class docutils literal notranslate"><span class="pre">RegressionPipeline</span> <span class="pre">API</span> <span class="pre">Documentation</span></code></a> provides instructions for
+executing the pipeline and inspecting its results.</p>
+<p>The training pipeline contains the following sequential steps:</p>
+<p><strong>ingest</strong> -&gt; <strong>split</strong> -&gt; <strong>transform</strong> -&gt; <strong>train</strong> -&gt; <strong>evaluate</strong> -&gt; <strong>register</strong></p>
+<p>The batch scoring pipeline contains the following sequential steps:</p>
+<p><strong>ingest</strong> -&gt; <strong>predict</strong></p>
+<p>The pipeline steps are defined as follows:</p>
+<blockquote>
+<div><ul>
+<li><dl>
+<dt><strong>ingest</strong></dt><dd><ul>
+<li><p>The <strong>ingest</strong> step resolves the dataset specified by the <a class="reference external" href="https://github.com/mlflow/mlp-regression-template/blob/35f6f32c7a89dc655fbcfcf731cc1da4685a8ebb/pipeline.yaml#L15-L32">‘data’ section in pipeline.yaml</a>
+and converts it to parquet format, leveraging the custom dataset parsing code defined in
+<a class="reference external" href="https://github.com/mlflow/mlp-regression-template/blob/main/steps/ingest.py">steps/ingest.py</a> if necessary. Subsequent steps convert this dataset into training,
+validation, &amp; test sets and use them to develop a model.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you make changes to the dataset referenced by the <strong>ingest</strong> step (e.g. by adding
+new records or columns), you must manually re-run the <strong>ingest</strong> step in order to
+use the updated dataset in the pipeline. The <strong>ingest</strong> step does <em>not</em> automatically
+detect changes in the dataset.</p>
+</div>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<ul class="simple" id="mlflow-regression-pipeline-split-step">
+<li><dl class="simple">
+<dt><strong>split</strong></dt><dd><ul>
+<li><p>The <strong>split</strong> step splits the ingested dataset produced by the <strong>ingest</strong> step into
+a training dataset for model training, a validation dataset for model performance
+evaluation  &amp; tuning, and a test dataset for model performance evaluation. The fraction
+of records allocated to each dataset is defined by the <code class="docutils literal notranslate"><span class="pre">split_ratios</span></code> attribute of the
+<a class="reference external" href="https://github.com/mlflow/mlp-regression-template/blob/35f6f32c7a89dc655fbcfcf731cc1da4685a8ebb/pipeline.yaml#L36-L40">‘split’ step definition in pipeline.yaml</a>. The <strong>split</strong> step also preprocesses the
+datasets using logic defined in <a class="reference external" href="https://github.com/mlflow/mlp-regression-template/blob/main/steps/split.py">steps/split.py</a>. Subsequent steps use these datasets
+to develop a model and measure its performance.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>transform</strong></dt><dd><ul>
+<li><p>The <strong>transform</strong> step uses the training dataset created by <strong>split</strong> to fit
+a transformer that performs the transformations defined in <a class="reference external" href="https://github.com/mlflow/mlp-regression-template/blob/main/steps/transform.py">steps/transform.py</a>. The
+transformer is then applied to the training dataset and the validation dataset, creating
+transformed datasets that are used by subsequent steps for estimator training and model
+performance evaluation.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<ul id="mlflow-regression-pipeline-train-step">
+<li><dl class="simple">
+<dt><strong>train</strong></dt><dd><ul class="simple">
+<li><p>The <strong>train</strong> step uses the transformed training dataset output from the <strong>transform</strong>
+step to fit an estimator with the type and parameters defined in <a class="reference external" href="https://github.com/mlflow/mlp-regression-template/blob/main/steps/train.py">steps/train.py</a>. The
+estimator is then joined with the fitted transformer output from the <strong>transform</strong> step
+to create a model pipeline. Finally, this model pipeline is evaluated against the
+transformed training and validation datasets to compute performance metrics; custom
+metrics are computed according to definitions in <a class="reference external" href="https://github.com/mlflow/mlp-regression-template/blob/main/steps/custom_metrics.py">steps/custom_metrics.py</a> and the
+<a class="reference external" href="https://github.com/mlflow/mlp-regression-template/blob/35f6f32c7a89dc655fbcfcf731cc1da4685a8ebb/pipeline.yaml#L64-L73">‘metrics’ section of pipeline.yaml</a>. The model pipeline and its associated parameters,
+performance metrics, and lineage information are logged to MLflow Tracking, producing
+an MLflow Run.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>evaluate</strong></dt><dd><ul class="simple">
+<li><p>The <strong>evaluate</strong> step evaluates the model pipeline created by the <strong>train</strong> step on
+the test dataset output from the <strong>split</strong> step, computing performance metrics and
+model explanations. Performance metrics are compared against configured thresholds to
+compute a <code class="docutils literal notranslate"><span class="pre">model_validation_status</span></code>, which indicates whether or not a model is good
+enough to be registered to the MLflow Model Registry by the subsequent <strong>register</strong>
+step. Custom performance metrics are computed according to definitions in
+<a class="reference external" href="https://github.com/mlflow/mlp-regression-template/blob/main/steps/custom_metrics.py">steps/custom_metrics.py</a> and the <a class="reference external" href="https://github.com/mlflow/mlp-regression-template/blob/35f6f32c7a89dc655fbcfcf731cc1da4685a8ebb/pipeline.yaml#L64-L73">‘metrics’ section of pipeline.yaml</a>. Model
+performance thresholds are defined in the
+<a class="reference external" href="https://github.com/mlflow/mlp-regression-template/blob/35f6f32c7a89dc655fbcfcf731cc1da4685a8ebb/pipeline.yaml#L47-L56">‘validation_criteria’ section of the ‘evaluate’ step definition in pipeline.yaml</a>. Model
+performance metrics and explanations are logged to the same MLflow Tracking Run used by
+the <strong>train</strong> step.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt><strong>register</strong></dt><dd><ul>
+<li><p>The <strong>register</strong> step checks the <code class="docutils literal notranslate"><span class="pre">model_validation_status</span></code> output of the preceding
+<strong>evaluate</strong> step and, if model validation was successful
+(as indicated by the <code class="docutils literal notranslate"><span class="pre">'VALIDATED'</span></code> status), registers the model pipeline created by
+the <strong>train</strong> step to the MLflow Model Registry. If the <code class="docutils literal notranslate"><span class="pre">model_validation_status</span></code> does
+not indicate that the model passed validation checks (i.e. its value is <code class="docutils literal notranslate"><span class="pre">'REJECTED'</span></code>),
+the model pipeline is not registered to the MLflow Model Registry.
+If the model pipeline is registered to the MLflow Model Registry, a
+<code class="docutils literal notranslate"><span class="pre">registered_model_version</span></code> is produced containing the model name and the model version.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The model validation status check can be disabled by specifying
+<code class="docutils literal notranslate"><span class="pre">allow_non_validated_model:</span> <span class="pre">true</span></code> in the
+<a class="reference external" href="https://github.com/mlflow/mlp-regression-template/blob/35f6f32c7a89dc655fbcfcf731cc1da4685a8ebb/pipeline.yaml#L57-L63">‘register’ step definition of pipeline.yaml</a>, in which case the model pipeline is
+always registered with the MLflow Model Registry when the <strong>register</strong> step is
+executed.</p>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>predict</strong>
+- The <strong>predict</strong> step</p></li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<dl class="py class">
+<dt id="mlflow.pipelines.regression.v1.pipeline.RegressionPipeline">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mlflow.pipelines.regression.v1.pipeline.</span></code><code class="sig-name descname"><span class="pre">RegressionPipeline</span></code><a class="reference internal" href="../_modules/mlflow/pipelines/regression/v1/pipeline.html#RegressionPipeline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.pipelines.regression.v1.pipeline.RegressionPipeline" title="Permalink to this definition"> </a></dt>
+<dd><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Experimental: This class may change or be removed in a future release without warning.</p>
+</div>
+<p>A pipeline for developing high-quality regression models. The pipeline is designed for
+developing models using scikit-learn and frameworks that integrate with scikit-learn,
+such as the <code class="docutils literal notranslate"><span class="pre">XGBRegressor</span></code> API from XGBoost. The corresponding pipeline
+template repository is available at <a class="reference external" href="https://github.com/mlflow/mlp-regression-template">https://github.com/mlflow/mlp-regression-template</a>.
+The training pipeline contains the following sequential steps:</p>
+<p><strong>ingest</strong> -&gt; <strong>split</strong> -&gt; <strong>transform</strong> -&gt; <strong>train</strong> -&gt; <strong>evaluate</strong> -&gt; <strong>register</strong></p>
+<p>while the batch scoring pipeline contains this set of sequential steps:</p>
+<p><strong>ingest_scoring</strong> -&gt; <strong>predict</strong></p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id3" title="Permalink to this code"> </a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">mlflow.pipelines</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">&quot;~/mlp-regression-template&quot;</span><span class="p">)</span>
+<span class="n">regression_pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">profile</span><span class="o">=</span><span class="s2">&quot;local&quot;</span><span class="p">)</span>
+<span class="c1"># Display a visual overview of the pipeline graph</span>
+<span class="n">regression_pipeline</span><span class="o">.</span><span class="n">inspect</span><span class="p">()</span>
+<span class="c1"># Run the full pipeline</span>
+<span class="n">regression_pipeline</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="c1"># Display a summary of results from the &#39;train&#39; step, including the trained model</span>
+<span class="c1"># and associated performance metrics computed from the training &amp; validation datasets</span>
+<span class="n">regression_pipeline</span><span class="o">.</span><span class="n">inspect</span><span class="p">(</span><span class="n">step</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">)</span>
+<span class="c1"># Display a summary of results from the &#39;evaluate&#39; step, including model explanations</span>
+<span class="c1"># computed from the validation dataset and metrics computed from the test dataset</span>
+<span class="n">regression_pipeline</span><span class="o">.</span><span class="n">inspect</span><span class="p">(</span><span class="n">step</span><span class="o">=</span><span class="s2">&quot;evaluate&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<dl class="py method">
+<dt id="mlflow.pipelines.regression.v1.pipeline.RegressionPipeline.clean">
+<code class="sig-name descname"><span class="pre">clean</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../_modules/mlflow/pipelines/regression/v1/pipeline.html#RegressionPipeline.clean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.pipelines.regression.v1.pipeline.RegressionPipeline.clean" title="Permalink to this definition"> </a></dt>
+<dd><p>Removes all pipeline outputs from the cache, or removes the cached outputs of a particular
+pipeline step if specified. After cached outputs are cleaned for a particular step, the
+step will be re-executed in its entirety the next time it is run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>step</strong> – String name of the step to clean within the pipeline. If not specified,
+cached outputs are removed for all pipeline steps.</p>
+</dd>
+</dl>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id4" title="Permalink to this code"> </a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">mlflow.pipelines</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">&quot;~/mlp-regression-template&quot;</span><span class="p">)</span>
+<span class="n">regression_pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">profile</span><span class="o">=</span><span class="s2">&quot;local&quot;</span><span class="p">)</span>
+<span class="c1"># Run the &#39;train&#39; step and preceding steps</span>
+<span class="n">regression_pipeline</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">step</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">)</span>
+<span class="c1"># Clean the cache of the &#39;transform&#39; step</span>
+<span class="n">regression_pipeline</span><span class="o">.</span><span class="n">clean</span><span class="p">(</span><span class="n">step</span><span class="o">=</span><span class="s2">&quot;transform&quot;</span><span class="p">)</span>
+<span class="c1"># Run the &#39;split&#39; step; outputs are still cached because &#39;split&#39; precedes</span>
+<span class="c1"># &#39;transform&#39; &amp; &#39;train&#39;</span>
+<span class="n">regression_pipeline</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">step</span><span class="o">=</span><span class="s2">&quot;split&quot;</span><span class="p">)</span>
+<span class="c1"># Run the &#39;train&#39; step again; the &#39;transform&#39; and &#39;train&#39; steps are re-executed because:</span>
+<span class="c1"># 1. the cache of the preceding &#39;transform&#39; step was cleaned and 2. &#39;train&#39; occurs after</span>
+<span class="c1"># &#39;transform&#39;. The &#39;ingest&#39; and &#39;split&#39; steps are not re-executed because their outputs</span>
+<span class="c1"># are still cached</span>
+<span class="n">regression_pipeline</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">step</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mlflow.pipelines.regression.v1.pipeline.RegressionPipeline.get_artifact">
+<code class="sig-name descname"><span class="pre">get_artifact</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artifact_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../_modules/mlflow/pipelines/regression/v1/pipeline.html#RegressionPipeline.get_artifact"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.pipelines.regression.v1.pipeline.RegressionPipeline.get_artifact" title="Permalink to this definition"> </a></dt>
+<dd><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Experimental: This method may change or be removed in a future release without warning.</p>
+</div>
+<p>Reads an artifact from the pipeline’s outputs. Supported artifact names can be obtained by
+examining the pipeline graph visualization displayed by
+<a class="reference internal" href="#mlflow.pipelines.regression.v1.pipeline.RegressionPipeline.inspect" title="mlflow.pipelines.regression.v1.pipeline.RegressionPipeline.inspect"><code class="xref py py-func docutils literal notranslate"><span class="pre">RegressionPipeline.inspect()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>artifact_name</strong> – <p>The string name of the artifact. Supported artifact values are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;ingested_data&quot;</span></code>: returns the ingested dataset created in the
+<strong>ingest</strong> step as a pandas DataFrame.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;training_data&quot;</span></code>: returns the training dataset created in the
+<strong>split</strong> step as a pandas DataFrame.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;validation_data&quot;</span></code>: returns the validation dataset created in the
+<strong>split</strong> step as a pandas DataFrame.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;test_data&quot;</span></code>: returns the test dataset created in the <strong>split</strong> step
+as a pandas DataFrame.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;ingested_scoring_data&quot;</span></code>: returns the scoring dataset created in the
+<strong>ingest_scoring</strong> step as a pandas DataFrame.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;transformed_training_data&quot;</span></code>: returns the transformed training dataset
+created in the <strong>transform</strong> step as a pandas DataFrame.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;transformed_validation_data&quot;</span></code>: returns the transformed validation
+dataset created in the <strong>transform</strong> step as a pandas DataFrame.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;model&quot;</span></code>: returns the MLflow Model pipeline created in the <strong>train</strong>
+step as a <a class="reference internal" href="mlflow.pyfunc.html#mlflow.pyfunc.PyFuncModel" title="mlflow.pyfunc.PyFuncModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">PyFuncModel</span></code></a> instance.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;transformer&quot;</span></code>: returns the scikit-learn transformer created in the
+<strong>transform</strong> step.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;run&quot;</span></code>: returns the
+<a class="reference internal" href="mlflow.entities.html#mlflow.entities.Run" title="mlflow.entities.Run"><code class="xref py py-class docutils literal notranslate"><span class="pre">MLflow</span> <span class="pre">Tracking</span> <span class="pre">Run</span></code></a> containing the
+model pipeline created in the <strong>train</strong> step and its associated
+parameters, as well as performance metrics and model explanations created
+during the <strong>train</strong> and <strong>evaluate</strong> steps.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;registered_model_version</span></code>”: returns the MLflow Model Registry
+<a class="reference internal" href="mlflow.entities.html#mlflow.entities.model_registry.ModelVersion" title="mlflow.entities.model_registry.ModelVersion"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModelVersion</span></code></a>
+created by the <strong>register</strong> step.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;scored_data&quot;</span></code>: returns the scored dataset created in the
+<strong>predict</strong> step as a pandas DataFrame.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An object representation of the artifact corresponding to the specified name,
+as described in the <code class="docutils literal notranslate"><span class="pre">artifact_name</span></code> parameter docstring. If the artifact is
+not present because its corresponding step has not been executed or its output
+cache has been cleaned, <code class="docutils literal notranslate"><span class="pre">None</span></code> is returned.</p>
+</dd>
+</dl>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id5" title="Permalink to this code"> </a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">mlflow.pipelines</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span> <span class="nn">mlflow.pyfunc</span> <span class="kn">import</span> <span class="n">PyFuncModel</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">&quot;~/mlp-regression-template&quot;</span><span class="p">)</span>
+<span class="n">regression_pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">profile</span><span class="o">=</span><span class="s2">&quot;local&quot;</span><span class="p">)</span>
+<span class="n">regression_pipeline</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">train_df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">regression_pipeline</span><span class="o">.</span><span class="n">get_artifact</span><span class="p">(</span><span class="s2">&quot;training_data&quot;</span><span class="p">)</span>
+<span class="n">trained_model</span><span class="p">:</span> <span class="n">PyFuncModel</span> <span class="o">=</span> <span class="n">regression_pipeline</span><span class="o">.</span><span class="n">get_artifact</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mlflow.pipelines.regression.v1.pipeline.RegressionPipeline.inspect">
+<code class="sig-name descname"><span class="pre">inspect</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../_modules/mlflow/pipelines/regression/v1/pipeline.html#RegressionPipeline.inspect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.pipelines.regression.v1.pipeline.RegressionPipeline.inspect" title="Permalink to this definition"> </a></dt>
+<dd><p>Displays a visual overview of the pipeline graph, or displays a summary of results from
+a particular pipeline step if specified. If the specified step has not been executed,
+nothing is displayed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>step</strong> – String name of the pipeline step for which to display a results summary. If
+unspecified, a visual overview of the pipeline graph is displayed.</p>
+</dd>
+</dl>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id6" title="Permalink to this code"> </a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">mlflow.pipelines</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">&quot;~/mlp-regression-template&quot;</span><span class="p">)</span>
+<span class="n">regression_pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">profile</span><span class="o">=</span><span class="s2">&quot;local&quot;</span><span class="p">)</span>
+<span class="c1"># Display a visual overview of the pipeline graph.</span>
+<span class="n">regression_pipeline</span><span class="o">.</span><span class="n">inspect</span><span class="p">()</span>
+<span class="c1"># Run the &#39;train&#39; pipeline step</span>
+<span class="n">regression_pipeline</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">step</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">)</span>
+<span class="c1"># Display a summary of results from the preceding &#39;transform&#39; step</span>
+<span class="n">regression_pipeline</span><span class="o">.</span><span class="n">inspect</span><span class="p">(</span><span class="n">step</span><span class="o">=</span><span class="s2">&quot;transform&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mlflow.pipelines.regression.v1.pipeline.RegressionPipeline.run">
+<code class="sig-name descname"><span class="pre">run</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../_modules/mlflow/pipelines/regression/v1/pipeline.html#RegressionPipeline.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.pipelines.regression.v1.pipeline.RegressionPipeline.run" title="Permalink to this definition"> </a></dt>
+<dd><p>Runs the full pipeline or a particular pipeline step, producing outputs and displaying a
+summary of results upon completion. Step outputs are cached from previous executions, and
+steps are only re-executed if configuration or code changes have been made to the step or
+to any of its dependent steps (e.g. changes to the pipeline’s <code class="docutils literal notranslate"><span class="pre">pipeline.yaml</span></code> file or
+<code class="docutils literal notranslate"><span class="pre">steps/ingest.py</span></code> file) since the previous execution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>step</strong> – <p>String name of the step to run within the regression pipeline. The step and
+its dependencies are executed sequentially. If a step is not specified, the
+entire pipeline is executed. Supported steps, in their order of execution, are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;ingest&quot;</span></code>: resolves the dataset specified by the <code class="docutils literal notranslate"><span class="pre">data/training</span></code> section
+in the pipeline’s configuration file (<code class="docutils literal notranslate"><span class="pre">pipeline.yaml</span></code>) and converts it to
+parquet format.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;ingest_scoring&quot;</span></code>: resolves the dataset specified by the <code class="docutils literal notranslate"><span class="pre">data/scoring</span></code>
+section in the pipeline’s configuration file (<code class="docutils literal notranslate"><span class="pre">pipeline.yaml</span></code>) and converts
+it to parquet format.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;split&quot;</span></code>: splits the ingested dataset produced by the <strong>ingest</strong> step into
+a training dataset for model training, a validation dataset for model
+performance evaluation &amp; tuning, and a test dataset for model performance
+evaluation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;transform&quot;</span></code>: uses the training dataset created by the <strong>split</strong> step to
+fit a transformer that performs the transformations defined in the
+pipeline’s <code class="docutils literal notranslate"><span class="pre">steps/transform.py</span></code> file. Then, applies the transformer to the
+training dataset and the validation dataset, creating transformed datasets
+that are used by subsequent steps for estimator training and model
+performance evaluation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;train&quot;</span></code>: uses the transformed training dataset output from the
+<strong>transform</strong> step to fit an estimator with the type and parameters defined
+in in the pipeline’s <code class="docutils literal notranslate"><span class="pre">steps/train.py</span></code> file. Then, joins the estimator with
+the fitted transformer output from the <strong>transform</strong> step to create a model
+pipeline. Finally, evaluates the model pipeline against the transformed
+training and validation datasets to compute performance metrics.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;evaluate&quot;</span></code>: evaluates the model pipeline created by the <strong>train</strong> step
+on the validation and test dataset outputs from the <strong>split</strong> step, computing
+performance metrics and model explanations. Then, compares performance
+metrics against thresholds configured in the pipeline’s <code class="docutils literal notranslate"><span class="pre">pipeline.yaml</span></code>
+configuration file to compute a <code class="docutils literal notranslate"><span class="pre">model_validation_status</span></code>, which indicates
+whether or not the model is good enough to be registered to the MLflow Model
+Registry by the subsequent <strong>register</strong> step.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;register&quot;</span></code>: checks the <code class="docutils literal notranslate"><span class="pre">model_validation_status</span></code> output of the
+preceding <strong>evaluate</strong> step and, if model validation was successful (as
+indicated by the <code class="docutils literal notranslate"><span class="pre">'VALIDATED'</span></code> status), registers the model pipeline
+created by the <strong>train</strong> step to the MLflow Model Registry.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;predict&quot;</span></code>: uses the ingested dataset for scoring created by the
+<strong>ingest_scoring</strong> step and applies the specified model to the dataset.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id7" title="Permalink to this code"> </a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">mlflow.pipelines</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">&quot;~/mlp-regression-template&quot;</span><span class="p">)</span>
+<span class="n">regression_pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">profile</span><span class="o">=</span><span class="s2">&quot;local&quot;</span><span class="p">)</span>
+<span class="c1"># Run the &#39;train&#39; step and preceding steps</span>
+<span class="n">regression_pipeline</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">step</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">)</span>
+<span class="c1"># Run the &#39;register&#39; step and preceding steps; the &#39;train&#39; step and all steps</span>
+<span class="c1"># prior to &#39;train&#39; are not re-executed because their outputs are already cached</span>
+<span class="n">regression_pipeline</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">step</span><span class="o">=</span><span class="s2">&quot;register&quot;</span><span class="p">)</span>
+<span class="c1"># Run all pipeline steps; equivalent to running &#39;register&#39;; no steps are re-executed</span>
+<span class="c1"># because the outputs of all steps are already cached</span>
+<span class="n">regression_pipeline</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+              </div>
+            </div>
+            <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="mlflow.paddle.html" class="btn btn-neutral" title="mlflow.paddle" accesskey="p"><span class="db-icon db-icon-chevron-left"></span> Previous</a>
+      
+      
+        <a href="mlflow.pmdarima.html" class="btn btn-neutral" title="mlflow.pmdarima" accesskey="n">Next <span class="db-icon db-icon-chevron-right"></span></a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+      <p class="copyright">
+          &copy; MLflow Project, a Series of LF Projects, LLC. All rights reserved.
+      </p>
+
+  </div> 
+
+</footer>
+          </div>
+        </div>
+      </section>
+    </main>
+  </page>
+
+  
+
+
+  
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:'../',
+      VERSION:'1.29.0',
+      COLLAPSE_INDEX:false,
+      FILE_SUFFIX:'.html',
+      HAS_SOURCE:  true
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/underscore.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/languagesections.js"></script>
+  
+
+  <script type="text/javascript" src="../_static/js/clipboard.min.js"></script>
+  <script type="text/javascript" src="../_static/js/jquery.waypoints.min.js"></script>
+
+  
+  
+  
+  <script type="text/javascript">var CLIPPY_SVG_PATH = "../_static/clippy.svg";</script>
+  <script type="text/javascript" src="../_static/js/custom.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+    jQuery(function () {
+      SphinxRtdTheme.StickyNav.enable();
+    });
+
+  </script>
+   
+
+  
+    <!-- Algolia Search -->
+    <script type="text/javascript">
+      var algoliaConfigs = {
+        key: 'b6d79a1058f2b3c1ee03bf659ade5a4b',
+        index: 'mlflow',
+      };
+    </script>
+    <div id="algolia-wrapper"></div>
+    <script src="../_static/js/tether.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+  
+</body>
+</html>

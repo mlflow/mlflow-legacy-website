@@ -1,0 +1,499 @@
+
+  
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mlflow.azureml &mdash; MLflow 1.30.0 documentation</title>
+  
+   
+  <link rel="canonical" href="https://www.mlflow.org/docs/latest/python_api/mlflow.azureml.html">
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    
+
+    
+
+  
+    
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer',"GTM-N6WMTTJ");</script>
+        <!-- End Google Tag Manager -->
+    
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600" rel="stylesheet">
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../_static/css/algolia.css" type="text/css" />
+    
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="MLflow 1.30.0 documentation" href="../index.html"/>
+        <link rel="up" title="Python API" href="index.html"/>
+        <link rel="next" title="mlflow.catboost" href="/mlflow.catboost.html"/>
+        <link rel="prev" title="mlflow.artifacts" href="/mlflow.artifacts.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6WMTTJ"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  
+  <nav class="wy-nav-top header" role="navigation" aria-label="top navigation">
+    <ul>
+  <li class="menu-toggle">
+    <i data-toggle="wy-nav-top" class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"></i>
+    <a href="../index.html" class="wy-nav-top-logo"
+      ><img src="../_static/MLflow-logo-final-black.png" alt="MLflow"
+    /></a>
+    <span class="version">1.30.0</span>
+  </li>
+</ul>
+  </nav>
+  <page>
+    
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side relative">
+      <div class="wy-side-scroll">
+  <div class="wy-side-nav-search">
+    
+
+    
+
+    
+<div role="search">
+  
+  <input id="algolia-search" type="text" name="q" placeholder="Search" />
+  
+</div>
+
+
+    
+  </div>
+
+  <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+    
+      <a href="../index.html" class="main-navigation-home"><img src="../_static/icons/nav-home.svg"> MLflow</a>
+    
+
+    
+      
+
+      
+        <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials-and-examples/index.html">Tutorials and Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tracking.html">MLflow Tracking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../projects.html">MLflow Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models.html">MLflow Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model-registry.html">MLflow Model Registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipelines.html">MLflow Pipelines (experimental)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugins.html">MLflow Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">Command-Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../search-runs.html">Search Runs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../search-experiments.html">Search Experiments</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Python API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="mlflow.html">mlflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.artifacts.html">mlflow.artifacts</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">mlflow.azureml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.catboost.html">mlflow.catboost</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.client.html">mlflow.client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.deployments.html">mlflow.deployments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.diviner.html">mlflow.diviner</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.entities.html">mlflow.entities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.environment_variables.html">mlflow.environment_variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.fastai.html">mlflow.fastai</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.gluon.html">mlflow.gluon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.h2o.html">mlflow.h2o</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.keras.html">mlflow.keras</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.lightgbm.html">mlflow.lightgbm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.mleap.html">mlflow.mleap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.models.html">mlflow.models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.onnx.html">mlflow.onnx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.paddle.html">mlflow.paddle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.pipelines.html">mlflow.pipelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.pmdarima.html">mlflow.pmdarima</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.projects.html">mlflow.projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.prophet.html">mlflow.prophet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.pyfunc.html">mlflow.pyfunc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.pyspark.ml.html">mlflow.pyspark.ml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.pytorch.html">mlflow.pytorch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.sagemaker.html">mlflow.sagemaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.shap.html">mlflow.shap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.sklearn.html">mlflow.sklearn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.spacy.html">mlflow.spacy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.spark.html">mlflow.spark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.statsmodels.html">mlflow.statsmodels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.tensorflow.html">mlflow.tensorflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.types.html">mlflow.types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.xgboost.html">mlflow.xgboost</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#log-levels">Log Levels</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../R-api.html">R API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../java_api/index.html">Java API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rest-api.html">REST API</a></li>
+</ul>
+
+      
+    
+  </div>
+
+  <div role="contentinfo">
+    
+
+    <p>
+      <a id='feedbacklink' href="https://github.com/mlflow/mlflow/blob/master/CONTRIBUTING.md" target="_blank">Contribute</a>
+    </p>
+  </div>
+</div>
+    </nav>
+
+    <main class="wy-grid-for-nav">
+      <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+        <div class="wy-nav-content">
+          <div class="rst-content">
+            
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Documentation</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+        <li><a href="index.html">Python API</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+    
+      <li>mlflow.azureml</li>
+    
+    
+    <li class="wy-breadcrumbs-aside">
+      <a href="https://github.com/mlflow/mlflow/blob/master/docs/source/python_api/mlflow.azureml.rst" class="fa fa-github"> Edit on GitHub</a>
+    </li>
+    
+  </ul>
+</div>
+            <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+              <div itemprop="articleBody">
+                
+  <div class="section" id="module-mlflow.azureml">
+<span id="mlflow-azureml"></span><h1>mlflow.azureml<a class="headerlink" href="#module-mlflow.azureml" title="Permalink to this headline"> </a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">mlflow.azureml</span></code> module provides an API for deploying MLflow models to Azure
+Machine Learning.</p>
+<dl class="py function">
+<dt id="mlflow.azureml.build_image">
+<code class="sig-prename descclassname"><span class="pre">mlflow.azureml.</span></code><code class="sig-name descname"><span class="pre">build_image</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workspace</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mlflow_home</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">synchronous</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/azureml.html#build_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.azureml.build_image" title="Permalink to this definition"> </a></dt>
+<dd><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code class="docutils literal notranslate"><span class="pre">mlflow.azureml.build_image</span></code> is deprecated since 1.19.0. This method will be removed in a future release. Use <code class="docutils literal notranslate"><span class="pre">the</span> <span class="pre">azureml</span> <span class="pre">deployment</span> <span class="pre">plugin,</span> <span class="pre">https://aka.ms/aml-mlflow-deploy</span></code> instead.</p>
+</div>
+<p>Register an MLflow model with Azure ML and build an Azure ML ContainerImage for deployment.
+The resulting image can be deployed as a web service to Azure Container Instances (ACI) or
+Azure Kubernetes Service (AKS).</p>
+<p>The resulting Azure ML ContainerImage will contain a webserver that processes model queries.
+For information about the input data formats accepted by this webserver, see the
+<a class="reference internal" href="../models.html#azureml-deployment"><span class="std std-ref">MLflow deployment tools documentation</span></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_uri</strong> – <p>The location, in URI format, of the MLflow model used to build the Azure
+ML deployment image. For example:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">/Users/me/path/to/local/model</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">relative/path/to/local/model</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">s3://my_bucket/path/to/model</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">runs:/&lt;mlflow_run_id&gt;/run-relative/path/to/model</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">models:/&lt;model_name&gt;/&lt;model_version&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">models:/&lt;model_name&gt;/&lt;stage&gt;</span></code></p></li>
+</ul>
+<p>For more information about supported URI schemes, see
+<a class="reference external" href="https://www.mlflow.org/docs/latest/concepts.html#artifact-locations">Referencing Artifacts</a>.</p>
+</p></li>
+<li><p><strong>image_name</strong> – The name to assign the Azure Container Image that will be created. If
+unspecified, a unique image name will be generated.</p></li>
+<li><p><strong>model_name</strong> – The name to assign the Azure Model will be created. If unspecified,
+a unique model name will be generated.</p></li>
+<li><p><strong>workspace</strong> – The AzureML workspace in which to build the image. This is a
+<cite>azureml.core.Workspace</cite> object.</p></li>
+<li><p><strong>mlflow_home</strong> – Path to a local copy of the MLflow GitHub repository. If specified, the
+image will install MLflow from this directory. Otherwise, it will install
+MLflow from pip.</p></li>
+<li><p><strong>description</strong> – A string description to associate with the Azure Container Image and the
+Azure Model that will be created. For more information, see
+<a class="reference external" href="https://docs.microsoft.com/en-us/python/api/azureml-core/azureml.core.image.container.containerimageconfig?view=azure-ml-py">https://docs.microsoft.com/en-us/python/api/azureml-core/azureml.core.image.container.containerimageconfig?view=azure-ml-py</a> and
+<a class="reference external" href="https://docs.microsoft.com/en-us/python/api/azureml-core/azureml.core.model.model?view=azure-ml-py#register">https://docs.microsoft.com/en-us/python/api/azureml-core/azureml.core.model.model?view=azure-ml-py#register</a>.</p></li>
+<li><p><strong>tags</strong> – <p>A collection of tags, represented as a dictionary of string key-value pairs, to
+associate with the Azure Container Image and the Azure Model that will be created.
+These tags are added to a set of default tags that include the model uri,
+and more. For more information, see
+<a class="reference external" href="https://docs.microsoft.com/en-us/python/api/azureml-core/azureml.core.image.container.containerimageconfig?view-azure-ml-py">https://docs.microsoft.com/en-us/python/api/azureml-core/azureml.core.image.container.containerimageconfig?view-azure-ml-py</a> and
+<a class="reference external" href="https://docs.microsoft.com/en-us/python/api/azureml-core/azureml.core.model.model?view=azure-ml-py#register">https://docs.microsoft.com/en-us/python/api/azureml-core/azureml.core.model.model?view=azure-ml-py#register</a>.</p>
+</p></li>
+<li><p><strong>synchronous</strong> – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, this method blocks until the image creation procedure
+terminates before returning. If <code class="docutils literal notranslate"><span class="pre">False</span></code>, the method returns immediately,
+but the returned image will not be available until the asynchronous
+creation process completes. Use the
+<code class="docutils literal notranslate"><span class="pre">azureml.core.Image.wait_for_creation()</span></code> function to wait for the creation
+process to complete.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A tuple containing the following elements in order:
+- An <code class="docutils literal notranslate"><span class="pre">azureml.core.image.ContainerImage</span></code> object containing metadata for the new image.
+- An <code class="docutils literal notranslate"><span class="pre">azureml.core.model.Model</span></code> object containing metadata for the new model.</p>
+</dd>
+</dl>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id4" title="Permalink to this code"> </a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mlflow.azureml</span>
+<span class="kn">from</span> <span class="nn">azureml.core</span> <span class="kn">import</span> <span class="n">Workspace</span>
+<span class="kn">from</span> <span class="nn">azureml.core.webservice</span> <span class="kn">import</span> <span class="n">AciWebservice</span><span class="p">,</span> <span class="n">Webservice</span>
+
+<span class="c1"># Load or create an Azure ML Workspace</span>
+<span class="n">workspace_name</span> <span class="o">=</span> <span class="s2">&quot;&lt;Name of your Azure ML workspace&gt;&quot;</span>
+<span class="n">subscription_id</span> <span class="o">=</span> <span class="s2">&quot;&lt;Your Azure subscription ID&gt;&quot;</span>
+<span class="n">resource_group</span> <span class="o">=</span> <span class="s2">&quot;&lt;Name of the Azure resource group in which to create Azure ML resources&gt;&quot;</span>
+<span class="n">location</span> <span class="o">=</span> <span class="s2">&quot;&lt;Name of the Azure location (region) in which to create Azure ML resources&gt;&quot;</span>
+<span class="n">azure_workspace</span> <span class="o">=</span> <span class="n">Workspace</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">workspace_name</span><span class="p">,</span>
+                                   <span class="n">subscription_id</span><span class="o">=</span><span class="n">subscription_id</span><span class="p">,</span>
+                                   <span class="n">resource_group</span><span class="o">=</span><span class="n">resource_group</span><span class="p">,</span>
+                                   <span class="n">location</span><span class="o">=</span><span class="n">location</span><span class="p">,</span>
+                                   <span class="n">create_resource_group</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                   <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Build an Azure ML Container Image for an MLflow model</span>
+<span class="n">azure_image</span><span class="p">,</span> <span class="n">azure_model</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">azureml</span><span class="o">.</span><span class="n">build_image</span><span class="p">(</span><span class="n">model_uri</span><span class="o">=</span><span class="s2">&quot;&lt;model_uri&gt;&quot;</span><span class="p">,</span>
+                                                      <span class="n">workspace</span><span class="o">=</span><span class="n">azure_workspace</span><span class="p">,</span>
+                                                      <span class="n">synchronous</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># If your image build failed, you can access build logs at the following URI:</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Access the following URI for build logs: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">azure_image</span><span class="o">.</span><span class="n">image_build_log_uri</span><span class="p">))</span>
+
+<span class="c1"># Deploy the image to Azure Container Instances (ACI) for real-time serving</span>
+<span class="n">webservice_deployment_config</span> <span class="o">=</span> <span class="n">AciWebservice</span><span class="o">.</span><span class="n">deploy_configuration</span><span class="p">()</span>
+<span class="n">webservice</span> <span class="o">=</span> <span class="n">Webservice</span><span class="o">.</span><span class="n">deploy_from_image</span><span class="p">(</span>
+                    <span class="n">image</span><span class="o">=</span><span class="n">azure_image</span><span class="p">,</span> <span class="n">workspace</span><span class="o">=</span><span class="n">azure_workspace</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;&lt;deployment-name&gt;&quot;</span><span class="p">)</span>
+<span class="n">webservice</span><span class="o">.</span><span class="n">wait_for_deployment</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="mlflow.azureml.deploy">
+<code class="sig-prename descclassname"><span class="pre">mlflow.azureml.</span></code><code class="sig-name descname"><span class="pre">deploy</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workspace</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mlflow_home</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">synchronous</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/azureml.html#deploy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.azureml.deploy" title="Permalink to this definition"> </a></dt>
+<dd><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code class="docutils literal notranslate"><span class="pre">mlflow.azureml.deploy</span></code> is deprecated since 1.19.0. This method will be removed in a future release. Use <code class="docutils literal notranslate"><span class="pre">the</span> <span class="pre">azureml</span> <span class="pre">deployment</span> <span class="pre">plugin,</span> <span class="pre">https://aka.ms/aml-mlflow-deploy</span></code> instead.</p>
+</div>
+<p>Register an MLflow model with Azure ML and deploy a websevice to Azure Container Instances (ACI)
+or Azure Kubernetes Service (AKS).</p>
+<p>The deployed service will contain a webserver that processes model queries.
+For information about the input data formats accepted by this webserver, see the
+<a class="reference internal" href="../models.html#azureml-deployment"><span class="std std-ref">MLflow deployment tools documentation</span></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_uri</strong> – <p>The location, in URI format, of the MLflow model used to build the Azure
+ML deployment image. For example:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">/Users/me/path/to/local/model</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">relative/path/to/local/model</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">s3://my_bucket/path/to/model</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">runs:/&lt;mlflow_run_id&gt;/run-relative/path/to/model</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">models:/&lt;model_name&gt;/&lt;model_version&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">models:/&lt;model_name&gt;/&lt;stage&gt;</span></code></p></li>
+</ul>
+<p>For more information about supported URI schemes, see
+<a class="reference external" href="https://www.mlflow.org/docs/latest/concepts.html#artifact-locations">Referencing Artifacts</a>.</p>
+</p></li>
+<li><p><strong>workspace</strong> – The AzureML workspace in which to deploy the service. This is a
+<cite>azureml.core.Workspace</cite> object.</p></li>
+<li><p><strong>deployment_config</strong> – The configuration for the Azure web service. This configuration
+allows you to specify the resources the webservice will use and
+the compute cluster it will be deployed in. If unspecified, the web
+service will be deployed into a Azure Container Instance. This is a
+<cite>azureml.core.DeploymentConfig</cite> object. For more information, see
+<a class="reference external" href="https://docs.microsoft.com/python/api/azureml-core/azureml.core.webservice.aks.aksservicedeploymentconfiguration">https://docs.microsoft.com/python/api/azureml-core/azureml.core.webservice.aks.aksservicedeploymentconfiguration</a> and
+<a class="reference external" href="https://docs.microsoft.com/en-us/python/api/azureml-core/azureml.core.webservice.aci.aciservicedeploymentconfiguration">https://docs.microsoft.com/en-us/python/api/azureml-core/azureml.core.webservice.aci.aciservicedeploymentconfiguration</a></p></li>
+<li><p><strong>service_name</strong> – The name to assign the Azure Machine learning webservice that will be
+created. If unspecified, a unique name will be generated.</p></li>
+<li><p><strong>model_name</strong> – The name to assign the Azure Model will be created. If unspecified,
+a unique model name will be generated. Only used if the model is not
+already registered with Azure.</p></li>
+<li><p><strong>tags</strong> – A collection of tags, represented as a dictionary of string key-value pairs, to
+associate with the Azure Model and Deployment that will be created.
+These tags are added to a set of default tags that include the model uri,
+and more. For more information, see
+<a class="reference external" href="https://docs.microsoft.com/en-us/python/api/azureml-core/azureml.core.model(class)?view=azure-ml-py">https://docs.microsoft.com/en-us/python/api/azureml-core/azureml.core.model(class)?view=azure-ml-py</a>.</p></li>
+<li><p><strong>mlflow_home</strong> – Path to a local copy of the MLflow GitHub repository. If specified, the
+image will install MLflow from this directory. Otherwise, it will install
+MLflow from pip.</p></li>
+<li><p><strong>synchronous</strong> – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, this method blocks until the image creation procedure
+terminates before returning. If <code class="docutils literal notranslate"><span class="pre">False</span></code>, the method returns immediately,
+but the returned image will not be available until the asynchronous
+creation process completes. Use the
+<code class="docutils literal notranslate"><span class="pre">azureml.core.Webservice.wait_for_deployment()</span></code> function to wait
+for the deployment process to complete.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A tuple containing the following elements in order:
+- An <code class="docutils literal notranslate"><span class="pre">azureml.core.webservice.Webservice</span></code> object containing metadata for the
+new service.
+- An <code class="docutils literal notranslate"><span class="pre">azureml.core.model.Model</span></code> object containing metadata for the new model.</p>
+</dd>
+</dl>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id5" title="Permalink to this code"> </a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mlflow.azureml</span>
+<span class="kn">from</span> <span class="nn">azureml.core</span> <span class="kn">import</span> <span class="n">Workspace</span>
+<span class="kn">from</span> <span class="nn">azureml.core.webservice</span> <span class="kn">import</span> <span class="n">AciWebservice</span><span class="p">,</span> <span class="n">Webservice</span>
+
+<span class="c1"># Load or create an Azure ML Workspace</span>
+<span class="n">workspace_name</span> <span class="o">=</span> <span class="s2">&quot;&lt;Name of your Azure ML workspace&gt;&quot;</span>
+<span class="n">subscription_id</span> <span class="o">=</span> <span class="s2">&quot;&lt;Your Azure subscription ID&gt;&quot;</span>
+<span class="n">resource_group</span> <span class="o">=</span> <span class="s2">&quot;&lt;Name of the Azure resource group in which to create Azure ML resources&gt;&quot;</span>
+<span class="n">location</span> <span class="o">=</span> <span class="s2">&quot;&lt;Name of the Azure location (region) in which to create Azure ML resources&gt;&quot;</span>
+<span class="n">azure_workspace</span> <span class="o">=</span> <span class="n">Workspace</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">workspace_name</span><span class="p">,</span>
+                                   <span class="n">subscription_id</span><span class="o">=</span><span class="n">subscription_id</span><span class="p">,</span>
+                                   <span class="n">resource_group</span><span class="o">=</span><span class="n">resource_group</span><span class="p">,</span>
+                                   <span class="n">location</span><span class="o">=</span><span class="n">location</span><span class="p">,</span>
+                                   <span class="n">create_resource_group</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                   <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Create an Azure Container Instance webservice for an MLflow model</span>
+<span class="n">azure_service</span><span class="p">,</span> <span class="n">azure_model</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">azureml</span><span class="o">.</span><span class="n">deploy</span><span class="p">(</span><span class="n">model_uri</span><span class="o">=</span><span class="s2">&quot;&lt;model_uri&gt;&quot;</span><span class="p">,</span>
+                                                   <span class="n">service_name</span><span class="o">=</span><span class="s2">&quot;&lt;deployment-name&gt;&quot;</span><span class="p">,</span>
+                                                   <span class="n">workspace</span><span class="o">=</span><span class="n">azure_workspace</span><span class="p">,</span>
+                                                   <span class="n">synchronous</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+</div>
+
+
+              </div>
+            </div>
+            <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="mlflow.artifacts.html" class="btn btn-neutral" title="mlflow.artifacts" accesskey="p"><span class="db-icon db-icon-chevron-left"></span> Previous</a>
+      
+      
+        <a href="mlflow.catboost.html" class="btn btn-neutral" title="mlflow.catboost" accesskey="n">Next <span class="db-icon db-icon-chevron-right"></span></a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+      <p class="copyright">
+          &copy; MLflow Project, a Series of LF Projects, LLC. All rights reserved.
+      </p>
+
+  </div> 
+
+</footer>
+          </div>
+        </div>
+      </section>
+    </main>
+  </page>
+
+  
+
+
+  
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:'../',
+      VERSION:'1.30.0',
+      COLLAPSE_INDEX:false,
+      FILE_SUFFIX:'.html',
+      HAS_SOURCE:  true
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/underscore.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/languagesections.js"></script>
+  
+
+  <script type="text/javascript" src="../_static/js/clipboard.min.js"></script>
+  <script type="text/javascript" src="../_static/js/jquery.waypoints.min.js"></script>
+
+  
+  
+  
+  <script type="text/javascript">var CLIPPY_SVG_PATH = "../_static/clippy.svg";</script>
+  <script type="text/javascript" src="../_static/js/custom.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+    jQuery(function () {
+      SphinxRtdTheme.StickyNav.enable();
+    });
+
+  </script>
+   
+
+  
+    <!-- Algolia Search -->
+    <script type="text/javascript">
+      var algoliaConfigs = {
+        key: 'b6d79a1058f2b3c1ee03bf659ade5a4b',
+        index: 'mlflow',
+      };
+    </script>
+    <div id="algolia-wrapper"></div>
+    <script src="../_static/js/tether.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+  
+</body>
+</html>
