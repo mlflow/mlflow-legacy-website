@@ -1256,12 +1256,15 @@ You should probably TRAIN this model on a down-stream task to be able to use it 
 <h3>Logging the Model in MLflow<a class="headerlink" href="#Logging-the-Model-in-MLflow" title="Permalink to this headline"> </a></h3>
 <ul class="simple">
 <li><p><strong>Using mlflow.transformers.log_model</strong>: We log our fine-tuned model using this function. It’s specially designed for logging models from the Transformers library, making the process streamlined and efficient.</p></li>
-<li><p><strong>Specifying Model Information</strong>: We provide several pieces of information to the logging function:</p></li>
+<li><p><strong>Specifying Model Information</strong>: We provide several pieces of information to the logging function:</p>
+<ul>
 <li><p><strong>transformers_model</strong>: The fine-tuned model pipeline.</p></li>
 <li><p><strong>artifact_path</strong>: The path where the model artifacts will be stored.</p></li>
 <li><p><strong>signature</strong>: The inferred signature of the model, which includes input and output schemas.</p></li>
 <li><p><strong>input_example</strong>: Sample inputs to give users an idea of what input the model expects.</p></li>
 <li><p><strong>model_config</strong>: The configuration parameters of the model.</p></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="section" id="Importance-of-Model-Logging">

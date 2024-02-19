@@ -990,8 +990,8 @@ data information.</p>
 </div>
 </div>
 </div>
-<div class="section" id="Visualizing-Demand-on-Weekends-vs.-Weekdays-with-Box-Plots">
-<h1>Visualizing Demand on Weekends vs. Weekdays with Box Plots<a class="headerlink" href="#Visualizing-Demand-on-Weekends-vs.-Weekdays-with-Box-Plots" title="Permalink to this headline"> </a></h1>
+<div class="section" id="Visualizing-Demand-on-Weekends-vs. Weekdays-with-Box-Plots">
+<h1>Visualizing Demand on Weekends vs. Weekdays with Box Plots<a class="headerlink" href="#Visualizing-Demand-on-Weekends-vs. Weekdays-with-Box-Plots" title="Permalink to this headline"> </a></h1>
 <p>In this section, we’re utilizing box plots to visualize the distribution of demand on weekends versus weekdays. This visualization assists in understanding the variability and central tendency of demand based on the day of the week.</p>
 <div class="section" id="id3">
 <h2>Why is this Important?<a class="headerlink" href="#id3" title="Permalink to this headline"> </a></h2>
@@ -1107,8 +1107,8 @@ data information.</p>
 </div>
 </div>
 </div>
-<div class="section" id="Visualizing-Demand-Density:-Weekday-vs.-Weekend">
-<h1>Visualizing Demand Density: Weekday vs. Weekend<a class="headerlink" href="#Visualizing-Demand-Density:-Weekday-vs.-Weekend" title="Permalink to this headline"> </a></h1>
+<div class="section" id="Visualizing-Demand-Density:-Weekday-vs. Weekend">
+<h1>Visualizing Demand Density: Weekday vs. Weekend<a class="headerlink" href="#Visualizing-Demand-Density:-Weekday-vs. Weekend" title="Permalink to this headline"> </a></h1>
 <p>This visualization allows us to observe the distribution of <code class="docutils literal notranslate"><span class="pre">demand</span></code> separately for weekdays and weekends.</p>
 <div class="section" id="id8">
 <h2>Why is this Important?<a class="headerlink" href="#id8" title="Permalink to this headline"> </a></h2>
@@ -1409,54 +1409,49 @@ data information.</p>
 <div class="section" id="Detailed-Structure-of-the-Code:">
 <h2>Detailed Structure of the Code:<a class="headerlink" href="#Detailed-Structure-of-the-Code:" title="Permalink to this headline"> </a></h2>
 <ol class="arabic simple">
-<li><p><strong>Setting up MLflow</strong>:</p></li>
-</ol>
+<li><p><strong>Setting up MLflow</strong>:</p>
 <ul class="simple">
 <li><p>The tracking URI for MLflow is defined.</p></li>
 <li><p>An experiment named “Visualizations Demo” is set up, under which all runs and logs will be stored.</p></li>
 </ul>
-<ol class="arabic simple" start="2">
-<li><p><strong>Data Preparation</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Data Preparation</strong>:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are defined as features and target variables, respectively.</p></li>
 <li><p>The dataset is split into training and testing sets to ensure the model’s performance is evaluated on unseen data.</p></li>
 </ul>
-<ol class="arabic simple" start="3">
-<li><p><strong>Initial Plot Generation</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Initial Plot Generation</strong>:</p>
 <ul class="simple">
 <li><p>Initial plots including time series, box plot, scatter plot, and density plot are generated.</p></li>
 <li><p>These plots offer a preliminary insight into the data and its characteristics.</p></li>
 </ul>
-<ol class="arabic simple" start="4">
-<li><p><strong>Model Definition and Training</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Model Definition and Training</strong>:</p>
 <ul class="simple">
 <li><p>A Ridge regression model is defined with an <code class="docutils literal notranslate"><span class="pre">alpha</span></code> of 1.0.</p></li>
 <li><p>The model is trained on the training data, learning the relationships and patterns in the data.</p></li>
 </ul>
-<ol class="arabic simple" start="5">
-<li><p><strong>Prediction and Error Calculation</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Prediction and Error Calculation</strong>:</p>
 <ul class="simple">
 <li><p>The trained model is used to make predictions on the test data.</p></li>
 <li><p>Various error metrics including MSE, RMSE, MAE, R2, MSLE, and MedAE are calculated to evaluate the model’s performance.</p></li>
 </ul>
-<ol class="arabic simple" start="6">
-<li><p><strong>Additional Plot Generation</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Additional Plot Generation</strong>:</p>
 <ul class="simple">
 <li><p>Additional plots including residuals plot, coefficients plot, prediction error plot, and QQ plot are generated.</p></li>
 <li><p>These plots offer further insight into the model’s performance, residuals behavior, and the distribution of errors.</p></li>
 </ul>
-<ol class="arabic simple" start="7">
-<li><p><strong>Logging to MLflow</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Logging to MLflow</strong>:</p>
 <ul class="simple">
 <li><p>The trained model, calculated metrics, defined parameter (<code class="docutils literal notranslate"><span class="pre">alpha</span></code>), and all the generated plots are logged to MLflow.</p></li>
 <li><p>This logging ensures that all information and visualizations related to the model are stored in a centralized, accessible location.</p></li>
 </ul>
+</li>
+</ol>
 </div>
 <div class="section" id="Conclusion:">
 <h2>Conclusion:<a class="headerlink" href="#Conclusion:" title="Permalink to this headline"> </a></h2>

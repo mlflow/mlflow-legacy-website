@@ -595,15 +595,14 @@ You may be able to resolve this warning by setting `model_config[&#39;protected_
 <h3>Breakdown of the Template Instruction<a class="headerlink" href="#Breakdown-of-the-Template-Instruction" title="Permalink to this headline"> </a></h3>
 <ul class="simple">
 <li><p><strong>Sous Chef Roleplay</strong>: The prompt places the language model in the role of a sous chef, emphasizing meticulous preparation.</p></li>
-<li><p><strong>Task Outline</strong>:</p></li>
-</ul>
+<li><p><strong>Task Outline</strong>:</p>
 <ol class="arabic simple">
 <li><p><strong>List the Ingredients</strong>: Instructs the model to itemize all necessary ingredients for a given dish.</p></li>
 <li><p><strong>Preparation Techniques</strong>: Asks the model to describe necessary techniques for ingredient preparation, such as cutting and processing.</p></li>
 <li><p><strong>Ingredient Staging</strong>: Requires the model to provide detailed staging instructions for each ingredient, considering the sequence and timing of use.</p></li>
 <li><p><strong>Cooking Implements Preparation</strong>: Guides the model to list and prepare all cooking tools required for the dish’s preparation phase.</p></li>
 </ol>
-<ul class="simple">
+</li>
 <li><p><strong>Scope Limitation</strong>: The template is explicitly designed to stop at the preparation stage, avoiding the actual cooking process. It focuses on setting up everything needed for the chef to begin cooking.</p></li>
 <li><p><strong>Dynamic Inputs</strong>: The template is adaptable to different recipes and customer counts, as indicated by placeholders <code class="docutils literal notranslate"><span class="pre">{recipe}</span></code> and <code class="docutils literal notranslate"><span class="pre">{customer_count}</span></code>.</p></li>
 </ul>
@@ -812,8 +811,8 @@ Cooking Implements Preparation:
 <h3>Additional Prediction with the Loaded Model<a class="headerlink" href="#Additional-Prediction-with-the-Loaded-Model" title="Permalink to this headline"> </a></h3>
 <p>The model processes the input for “Okonomiyaki” and outputs detailed preparation steps. This includes listing the ingredients, explaining the preparation techniques, guiding ingredient staging, and detailing the required cooking implements, showcasing the model’s capability to handle diverse recipes with precision.</p>
 </div>
-<div class="section" id="What-We've-Learned">
-<h3>What We’ve Learned<a class="headerlink" href="#What-We've-Learned" title="Permalink to this headline"> </a></h3>
+<div class="section" id="What-We’ve-Learned">
+<h3>What We’ve Learned<a class="headerlink" href="#What-We’ve-Learned" title="Permalink to this headline"> </a></h3>
 <ul class="simple">
 <li><p><strong>Model Versatility</strong>: The tutorial highlighted the LangChain framework for assembling component parts of a basic LLM application, chaining a specific instructional prompt to a Completions-style LLM.</p></li>
 <li><p><strong>MLflow’s Role in Model Management</strong>: The integration of LangChain with MLflow demonstrated effective model lifecycle management, from creation and logging to prediction execution.</p></li>
@@ -824,8 +823,8 @@ Cooking Implements Preparation:
 <h2>Closing Thoughts<a class="headerlink" href="#Closing-Thoughts" title="Permalink to this headline"> </a></h2>
 <p>This tutorial offered an insightful journey through creating, managing, and utilizing a LangChain model with MLflow for culinary preparation. It showcased the practical applications and adaptability of LangChain in complex scenarios. We hope this experience has provided valuable knowledge and encourages you to further explore and innovate using LangChain and MLflow in your projects. Happy coding!</p>
 </div>
-<div class="section" id="What's-next?">
-<h2>What’s next?<a class="headerlink" href="#What's-next?" title="Permalink to this headline"> </a></h2>
+<div class="section" id="What’s-next?">
+<h2>What’s next?<a class="headerlink" href="#What’s-next?" title="Permalink to this headline"> </a></h2>
 <p>To continue learning about the capabilities of MLflow and LangChain in more complex examples, we encourage you to continue your learning with <a class="reference external" href="https://www.mlflow.org/docs/latest/llms/langchain/index.html#advanced-tutorials">the additional LangChain tutorials</a>.</p>
 </div>
 </div>

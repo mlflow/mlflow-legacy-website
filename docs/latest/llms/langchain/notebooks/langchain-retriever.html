@@ -481,9 +481,7 @@ div.rendered_html tbody tr:hover {
 <blockquote>
 <div><p>NOTE: In this tutorial, we’ll be using GPT-3.5 as our base language model. It’s important to note that the results obtained from a RAG system will differ from those obtained by interfacing directly with GPT models. RAG’s unique approach of combining external data retrieval with language model generation creates more nuanced and contextually rich responses.</p>
 </div></blockquote>
-<div style="text-align: center;"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;img src=&quot;https://i.imgur.com/uwo1PCj.png&quot; style=&quot;width: 70%;&quot; /&gt;
-</pre></div>
-</div>
+<div style="text-align: center;"><p><img alt="a070deae168b40cc8cab5f7c29f99cfc" src="https://i.imgur.com/uwo1PCj.png" /></p>
 </div></div>
 </div>
 <div class="section" id="Learning-Outcomes">
@@ -504,11 +502,12 @@ numerous other vector database solutions that can perform similar functionality;
 <div class="section" id="Installing-Requirements">
 <h3>Installing Requirements<a class="headerlink" href="#Installing-Requirements" title="Permalink to this headline"> </a></h3>
 <p>Before proceeding with the tutorial, ensure that you have FAISS and <a class="reference external" href="https://pypi.org/project/beautifulsoup4/">Beautiful Soup</a> installed via <code class="docutils literal notranslate"><span class="pre">pip</span></code>.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>    pip install beautifulsoup4 faiss-cpu
-
-NOTE: If you&#39;d like to run this using your GPU, you can install ``faiss-gpu`` instead.
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pip install beautifulsoup4 faiss-cpu
 </pre></div>
 </div>
+<blockquote>
+<div><p>NOTE: If you’d like to run this using your GPU, you can install <code class="docutils literal notranslate"><span class="pre">faiss-gpu</span></code> instead.</p>
+</div></blockquote>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -586,21 +585,21 @@ NOTE: If you&#39;d like to run this using your GPU, you can install ``faiss-gpu`
 <h2>Document Fetching and FAISS Database Creation<a class="headerlink" href="#Document-Fetching-and-FAISS-Database-Creation" title="Permalink to this headline"> </a></h2>
 <p>In this next part, we focus on two key processes:</p>
 <ol class="arabic simple">
-<li><p><strong>Document Fetching</strong>:</p></li>
-</ol>
+<li><p><strong>Document Fetching</strong>:</p>
 <ul class="simple">
 <li><p>We use <code class="docutils literal notranslate"><span class="pre">fetch_and_save_documents</span></code> to retrieve documents from specified URLs.</p></li>
 <li><p>This function takes a list of URLs and a file path as inputs.</p></li>
 <li><p>Each document fetched from the URLs is appended to a single file at the given path.</p></li>
 </ul>
-<ol class="arabic simple" start="2">
-<li><p><strong>FAISS Database Creation</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>FAISS Database Creation</strong>:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">create_faiss_database</span></code> is responsible for creating a FAISS database from the documents saved in the previous step.</p></li>
 <li><p>The function leverages <code class="docutils literal notranslate"><span class="pre">TextLoader</span></code> to load the text, <code class="docutils literal notranslate"><span class="pre">CharacterTextSplitter</span></code> for document splitting, and <code class="docutils literal notranslate"><span class="pre">OpenAIEmbeddings</span></code> for generating embeddings.</p></li>
 <li><p>The resulting FAISS database, which facilitates efficient similarity searches, is saved to a specified directory and returned for further use.</p></li>
 </ul>
+</li>
+</ol>
 <p>These functions streamline the process of gathering relevant documents and setting up a FAISS database, essential for implementing advanced Retrieval-Augmented Generation (RAG) applications in MLflow. By modularizing these steps, we ensure code reusability and maintainability.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
@@ -657,31 +656,29 @@ NOTE: If you&#39;d like to run this using your GPU, you can install ``faiss-gpu`
 <h2>Setting Up the Working Environment and FAISS Database<a class="headerlink" href="#Setting-Up-the-Working-Environment-and-FAISS-Database" title="Permalink to this headline"> </a></h2>
 <p>This section of the tutorial deals with the setup for our Retrieval-Augmented Generation (RAG) application. We’ll establish the working environment and create the necessary FAISS database:</p>
 <ol class="arabic simple">
-<li><p><strong>Temporary Directory Creation</strong>:</p></li>
-</ol>
+<li><p><strong>Temporary Directory Creation</strong>:</p>
 <ul class="simple">
 <li><p>A temporary directory is created using <code class="docutils literal notranslate"><span class="pre">tempfile.mkdtemp()</span></code>. This directory serves as a workspace for storing our documents and the FAISS database.</p></li>
 </ul>
-<ol class="arabic simple" start="2">
-<li><p><strong>Document Path and FAISS Index Directory</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Document Path and FAISS Index Directory</strong>:</p>
 <ul class="simple">
 <li><p>Paths for storing the fetched documents and FAISS database are defined within this temporary directory.</p></li>
 </ul>
-<ol class="arabic simple" start="3">
-<li><p><strong>Document Fetching</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Document Fetching</strong>:</p>
 <ul class="simple">
 <li><p>We have a list of URLs (<code class="docutils literal notranslate"><span class="pre">url_listings</span></code>) containing the documents we need to fetch.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">fetch_and_save_documents</span></code> function is used to retrieve and save the documents from these URLs into a single file located at <code class="docutils literal notranslate"><span class="pre">doc_path</span></code>.</p></li>
 </ul>
-<ol class="arabic simple" start="4">
-<li><p><strong>FAISS Database Creation</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>FAISS Database Creation</strong>:</p>
 <ul class="simple">
 <li><p>The <code class="docutils literal notranslate"><span class="pre">create_faiss_database</span></code> function is then called to create a FAISS database from the saved documents, using the default <code class="docutils literal notranslate"><span class="pre">chunk_size</span></code> and <code class="docutils literal notranslate"><span class="pre">chunk_overlap</span></code> values.</p></li>
 <li><p>This database (<code class="docutils literal notranslate"><span class="pre">vector_db</span></code>) is crucial for the RAG process, as it enables efficient similarity searches on the loaded documents.</p></li>
 </ul>
+</li>
+</ol>
 <p>By the end of this process, we have all documents consolidated in a single location and a FAISS database ready to be used for retrieval purposes in our MLflow-enabled RAG application.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
@@ -708,27 +705,26 @@ NOTE: If you&#39;d like to run this using your GPU, you can install ``faiss-gpu`
 <h2>Establishing RetrievalQA Chain and Logging with MLflow<a class="headerlink" href="#Establishing-RetrievalQA-Chain-and-Logging-with-MLflow" title="Permalink to this headline"> </a></h2>
 <p>In this final setup phase, we focus on creating the RetrievalQA chain and integrating it with MLflow:</p>
 <ol class="arabic simple">
-<li><p><strong>Initializing the RetrievalQA Chain</strong>:</p></li>
-</ol>
+<li><p><strong>Initializing the RetrievalQA Chain</strong>:</p>
 <ul class="simple">
 <li><p>The <code class="docutils literal notranslate"><span class="pre">RetrievalQA</span></code> chain is initialized using the OpenAI language model (<code class="docutils literal notranslate"><span class="pre">llm</span></code>) and the retriever from our previously created FAISS database (<code class="docutils literal notranslate"><span class="pre">vector_db.as_retriever()</span></code>).</p></li>
 <li><p>This chain will use the OpenAI model for generating responses and the FAISS retriever for document-based information retrieval.</p></li>
 </ul>
-<ol class="arabic simple" start="2">
-<li><p><strong>Loader Function for Retrieval</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Loader Function for Retrieval</strong>:</p>
 <ul class="simple">
 <li><p>A <code class="docutils literal notranslate"><span class="pre">load_retriever</span></code> function is defined to load the retriever from the FAISS database saved in the specified directory.</p></li>
 <li><p>This function is crucial for reloading the retriever when the model is used later.</p></li>
 </ul>
-<ol class="arabic simple" start="3">
-<li><p><strong>Logging the Model with MLflow</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Logging the Model with MLflow</strong>:</p>
 <ul class="simple">
 <li><p>The RetrievalQA chain is logged using <code class="docutils literal notranslate"><span class="pre">mlflow.langchain.log_model</span></code>.</p></li>
 <li><p>This process includes specifying the <code class="docutils literal notranslate"><span class="pre">artifact_path</span></code>, the <code class="docutils literal notranslate"><span class="pre">loader_fn</span></code> for the retriever, and the <code class="docutils literal notranslate"><span class="pre">persist_dir</span></code> where the FAISS database is stored.</p></li>
 <li><p>Logging the model with MLflow ensures it is tracked and can be easily retrieved for future use.</p></li>
 </ul>
+</li>
+</ol>
 <p>Through these steps, we successfully integrate a complex RAG application with MLflow, showcasing its capability to handle advanced NLP tasks.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
@@ -806,8 +802,8 @@ NOTE: If you&#39;d like to run this using your GPU, you can install ``faiss-gpu`
 </div>
 </div>
 </div>
-<div class="section" id="Let's-make-sure-that-this-thing-works">
-<h2>Let’s make sure that this thing works<a class="headerlink" href="#Let's-make-sure-that-this-thing-works" title="Permalink to this headline"> </a></h2>
+<div class="section" id="Let’s-make-sure-that-this-thing-works">
+<h2>Let’s make sure that this thing works<a class="headerlink" href="#Let’s-make-sure-that-this-thing-works" title="Permalink to this headline"> </a></h2>
 <p>Let’s try out our Retriever model by sending it a fairly simple but purposefully vague question.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
@@ -870,27 +866,26 @@ trespassers and removed therefrom.
 <div class="section" id="Understanding-the-Response-Dynamics:">
 <h3>Understanding the Response Dynamics:<a class="headerlink" href="#Understanding-the-Response-Dynamics:" title="Permalink to this headline"> </a></h3>
 <ol class="arabic simple">
-<li><p><strong>Combining Document Data with LLM Context</strong>:</p></li>
-</ol>
+<li><p><strong>Combining Document Data with LLM Context</strong>:</p>
 <ul class="simple">
 <li><p>The query about bridle-paths isn’t directly answered in the act establishing Yellowstone.</p></li>
 <li><p>The model uses its language understanding capabilities to provide a definition of a bridle-path.</p></li>
 <li><p>It then merges this information with the context it retrieves from the FAISS database about the act, particularly regarding the construction of roads and bridle-paths in the park.</p></li>
 </ul>
-<ol class="arabic simple" start="2">
-<li><p><strong>Enhanced Contextual Understanding</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Enhanced Contextual Understanding</strong>:</p>
 <ul class="simple">
 <li><p>The RetrievalQA model demonstrates an ability to supplement direct information from the database with additional context through its language model.</p></li>
 <li><p>This approach provides a more comprehensive answer that aligns with the user’s query, showing a blend of document-specific data and general knowledge.</p></li>
 </ul>
-<ol class="arabic simple" start="3">
-<li><p><strong>Why This Is Notable</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Why This Is Notable</strong>:</p>
 <ul class="simple">
 <li><p>Unlike a standard LLM response, the RetrievalQA model doesn’t solely rely on its training data for general responses.</p></li>
 <li><p>It effectively integrates specific document information with broader contextual understanding, offering a more nuanced answer.</p></li>
 </ul>
+</li>
+</ol>
 </div>
 <div class="section" id="id1">
 <h3>Key Takeaway:<a class="headerlink" href="#id1" title="Permalink to this headline"> </a></h3>
@@ -933,28 +928,27 @@ the Secretary of the Interior has approved it.
 <li><p><strong>The Response</strong>: The model, with a straight face, responds, “No, you cannot buy Yellowstone from the Federal Government to set up a buffalo-themed day spa.”</p></li>
 </ul>
 </div>
-<div class="section" id="A-Peek-into-the-Model's-Thought-Process:">
-<h3>A Peek into the Model’s Thought Process:<a class="headerlink" href="#A-Peek-into-the-Model's-Thought-Process:" title="Permalink to this headline"> </a></h3>
+<div class="section" id="A-Peek-into-the-Model’s-Thought-Process:">
+<h3>A Peek into the Model’s Thought Process:<a class="headerlink" href="#A-Peek-into-the-Model’s-Thought-Process:" title="Permalink to this headline"> </a></h3>
 <ol class="arabic simple">
-<li><p><strong>Direct and No-Nonsense Response</strong>:</p></li>
-</ol>
+<li><p><strong>Direct and No-Nonsense Response</strong>:</p>
 <ul class="simple">
 <li><p>Despite the query’s comedic undertone, the model gives a direct and clear-cut response. It’s like the model is saying, “Nice try, but no, you can’t do that.”</p></li>
 <li><p>This highlights the model’s ability to remain factual, even when faced with a question that’s clearly more humorous than serious.</p></li>
 </ul>
-<ol class="arabic simple" start="2">
-<li><p><strong>Understanding Legal Boundaries</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Understanding Legal Boundaries</strong>:</p>
 <ul class="simple">
 <li><p>The response respects the legal and regulatory sanctity of national parks. It seems our model takes the protection of national treasures like Yellowstone pretty seriously!</p></li>
 <li><p>The model’s training on legal and general knowledge assists in delivering a response that’s accurate, albeit the question being a facetious one.</p></li>
 </ul>
-<ol class="arabic simple" start="3">
-<li><p><strong>Contrast with Traditional LLM Responses</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Contrast with Traditional LLM Responses</strong>:</p>
 <ul class="simple">
 <li><p>A traditional LLM might have given a more generic answer. In contrast, our model, equipped with context-specific data, promptly debunks the whimsical idea of buying a national park for a spa.</p></li>
 </ul>
+</li>
+</ol>
 </div>
 <div class="section" id="A-Dash-of-Humor-in-Learning:">
 <h3>A Dash of Humor in Learning:<a class="headerlink" href="#A-Dash-of-Humor-in-Learning:" title="Permalink to this headline"> </a></h3>
@@ -1002,22 +996,22 @@ the exclusive control of the Secretary of the Interior.
 <li><p><strong>The Response</strong>: “No, you cannot lease a small parcel of land from the Federal Government for a small buffalo-themed day spa for visitors to the park…”</p></li>
 </ul>
 </div>
-<div class="section" id="Insights-into-the-Model's-Response:">
-<h3>Insights into the Model’s Response:<a class="headerlink" href="#Insights-into-the-Model's-Response:" title="Permalink to this headline"> </a></h3>
+<div class="section" id="Insights-into-the-Model’s-Response:">
+<h3>Insights into the Model’s Response:<a class="headerlink" href="#Insights-into-the-Model’s-Response:" title="Permalink to this headline"> </a></h3>
 <ol class="arabic simple">
-<li><p><strong>Factual and Unwavering</strong>:</p></li>
-</ol>
+<li><p><strong>Factual and Unwavering</strong>:</p>
 <ul class="simple">
 <li><p>Despite the continued outlandish line of questioning, our model remains as cool as a cucumber. It patiently explains the limitations and actual purposes of leasing land in Yellowstone.</p></li>
 <li><p>The response cites Section 2 of the act, adding legal precision to its rebuttal.</p></li>
 </ul>
-<ol class="arabic simple" start="2">
-<li><p><strong>A Lawyer’s Patience Tested?</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>A Lawyer’s Patience Tested?</strong>:</p>
 <ul class="simple">
 <li><p>Imagine if this question was posed to an actual lawyer. By now, they might be rubbing their temples! But our model is unfazed and continues to provide factual answers.</p></li>
 <li><p>This showcases the model’s ability to handle repetitive and unusual queries without losing its ‘cool’.</p></li>
 </ul>
+</li>
+</ol>
 <p>In conclusion, while our model firmly closes the door on the buffalo-themed day spa dreams, it does so with informative grace, demonstrating its ability to stay on course no matter how imaginative the queries get.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
@@ -1122,8 +1116,8 @@ Secretary of the Interior.
 </div>
 </div>
 </div>
-<div class="section" id="Evaluating-the-RetrievalQA-Model's-Legal-Context-Integration">
-<h2>Evaluating the RetrievalQA Model’s Legal Context Integration<a class="headerlink" href="#Evaluating-the-RetrievalQA-Model's-Legal-Context-Integration" title="Permalink to this headline"> </a></h2>
+<div class="section" id="Evaluating-the-RetrievalQA-Model’s-Legal-Context-Integration">
+<h2>Evaluating the RetrievalQA Model’s Legal Context Integration<a class="headerlink" href="#Evaluating-the-RetrievalQA-Model’s-Legal-Context-Integration" title="Permalink to this headline"> </a></h2>
 <p>This section of the tutorial showcases the RetrievalQA model’s sophisticated ability to integrate and interpret context from multiple legal documents. The model is challenged with a query that requires synthesizing information from distinct sources. This test is particularly interesting for its demonstration of the model’s proficiency in:</p>
 <ol class="arabic simple">
 <li><p><strong>Contextual Integration</strong>: The model adeptly pulls in relevant legal details from different documents, illustrating its capacity to navigate through multiple sources of information.</p></li>
@@ -1180,8 +1174,8 @@ commerce against unlawful restraints and monopolies.
 </ol>
 <p>In summary, our journey through this tutorial has not only equipped us with the knowledge to develop and deploy RAG applications effectively but also opened our eyes to the vast possibilities that lie ahead in the realm of advanced NLP, all made more attainable through MLflow.</p>
 </div>
-<div class="section" id="What's-next?">
-<h2>What’s next?<a class="headerlink" href="#What's-next?" title="Permalink to this headline"> </a></h2>
+<div class="section" id="What’s-next?">
+<h2>What’s next?<a class="headerlink" href="#What’s-next?" title="Permalink to this headline"> </a></h2>
 <p>If you’d like to learn more about how MLflow and LangChain integrate, see the other <a class="reference external" href="https://www.mlflow.org/docs/latest/llms/langchain/index.html#advanced-tutorials">advanced tutorials for MLflow’s LangChain flavor</a>.</p>
 </div>
 </div>

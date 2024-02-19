@@ -597,20 +597,20 @@ more information on setting the tracking server uri and configuring access to ei
 <h2>Defining the Instruction Set for the AI Model<a class="headerlink" href="#Defining-the-Instruction-Set-for-the-AI-Model" title="Permalink to this headline"> </a></h2>
 <p>In this part of the tutorial, we define a specific set of instructions to guide the behavior of our AI model. This is achieved through the <code class="docutils literal notranslate"><span class="pre">instruction</span></code> array, which outlines the roles and expected interactions between the system (AI model) and the user. Here’s a breakdown of its components:</p>
 <ol class="arabic simple">
-<li><p><strong>System Role</strong>: The first element of the array defines the role of the AI model as a ‘system’. It describes the model as a ‘helpful expert Software Engineer’ whose purpose is to assist in code analysis and provide educational support. The AI model is expected to:</p></li>
-</ol>
+<li><p><strong>System Role</strong>: The first element of the array defines the role of the AI model as a ‘system’. It describes the model as a ‘helpful expert Software Engineer’ whose purpose is to assist in code analysis and provide educational support. The AI model is expected to:</p>
 <ul class="simple">
 <li><p>Offer clear explanations of the code’s intent.</p></li>
 <li><p>Assess the code’s correctness and readability.</p></li>
 <li><p>Suggest improvements while focusing on simplicity, maintainability, and adherence to best coding practices.</p></li>
 </ul>
-<ol class="arabic simple" start="2">
-<li><p><strong>User Role</strong>: The second element represents the ‘user’ role. This part is where the user (in this case, the person learning from the tutorial) interacts with the AI model by submitting code for review. The user is expected to:</p></li>
-</ol>
+</li>
+<li><p><strong>User Role</strong>: The second element represents the ‘user’ role. This part is where the user (in this case, the person learning from the tutorial) interacts with the AI model by submitting code for review. The user is expected to:</p>
 <ul class="simple">
 <li><p>Provide code snippets for evaluation.</p></li>
 <li><p>Seek feedback and suggestions for code improvement from the AI model.</p></li>
 </ul>
+</li>
+</ol>
 <p>This instruction set is crucial for creating an interactive learning experience. It guides the AI model in providing targeted, constructive feedback, making it an invaluable tool for understanding coding practices and enhancing coding skills.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
@@ -638,24 +638,25 @@ more information on setting the tracking server uri and configuring access to ei
 <h2>Defining and Utilizing the Model Signature in MLflow<a class="headerlink" href="#Defining-and-Utilizing-the-Model-Signature-in-MLflow" title="Permalink to this headline"> </a></h2>
 <p>In this part of the tutorial, we define a <code class="docutils literal notranslate"><span class="pre">ModelSignature</span></code> for our OpenAI model, which is a crucial step in both saving the base model and later in our custom Python Model implementation. Here’s an overview of the process:</p>
 <ol class="arabic simple">
-<li><p><strong>Model Signature Definition</strong>:</p></li>
-</ol>
-<ul>
+<li><p><strong>Model Signature Definition</strong>:</p>
+<ul class="simple">
 <li><p>We create a <code class="docutils literal notranslate"><span class="pre">ModelSignature</span></code> object that specifies the input, output, and parameters of our model.</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">inputs</span></code> and <code class="docutils literal notranslate"><span class="pre">outputs</span></code> are defined as schemas with a single string column, indicating that our model will be processing string type data.</p></li>
-<li><p>The <code class="docutils literal notranslate"><span class="pre">params</span></code> schema includes two parameters: <code class="docutils literal notranslate"><span class="pre">max_tokens</span></code> and <code class="docutils literal notranslate"><span class="pre">temperature</span></code>, each with a default value and data type defined.</p>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">params</span></code> schema includes two parameters: <code class="docutils literal notranslate"><span class="pre">max_tokens</span></code> and <code class="docutils literal notranslate"><span class="pre">temperature</span></code>, each with a default value and data type defined.</p></li>
+</ul>
+</li>
+</ol>
 <blockquote>
 <div><p><strong>Note</strong> We’re explicitly defining the model signature here for purposes of demonstration. The schema will be automatically inferred if you do not specify one and will be set based on the <code class="docutils literal notranslate"><span class="pre">task</span></code> that is defined when logging or saving the model.</p>
 </div></blockquote>
-</li>
-</ul>
 <ol class="arabic simple" start="2">
-<li><p><strong>Logging the Base OpenAI Model</strong>:</p></li>
-</ol>
+<li><p><strong>Logging the Base OpenAI Model</strong>:</p>
 <ul class="simple">
 <li><p>Using <code class="docutils literal notranslate"><span class="pre">mlflow.openai.log_model</span></code>, we log the base OpenAI model (<code class="docutils literal notranslate"><span class="pre">gpt-4</span></code>) along with the <code class="docutils literal notranslate"><span class="pre">instruction</span></code> set we defined earlier.</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">signature</span></code> we defined is also passed in this step, ensuring that the model is saved with the correct specifications for inputs, outputs, and parameters.</p></li>
 </ul>
+</li>
+</ol>
 <p>This dual-purpose signature is vital as it ensures consistency in how the model processes data both in its base form and when it’s later wrapped in a custom Python Model. This approach streamlines the workflow and maintains uniformity across different stages of model implementation and deployment.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
@@ -695,31 +696,30 @@ more information on setting the tracking server uri and configuring access to ei
 <h2>Enhancing User Experience with Custom Pyfunc Implementation<a class="headerlink" href="#Enhancing-User-Experience-with-Custom-Pyfunc-Implementation" title="Permalink to this headline"> </a></h2>
 <p>In this section, we introduce a custom Python Model, <code class="docutils literal notranslate"><span class="pre">CodeHelper</span></code>, which significantly improves the user experience when interacting with the OpenAI model in an interactive development environment like Jupyter Notebook. The <code class="docutils literal notranslate"><span class="pre">CodeHelper</span></code> class is designed to format the output from the OpenAI model, making it more readable and visually appealing, similar to a chat interface. Here’s how it works:</p>
 <ol class="arabic simple">
-<li><p><strong>Initialization and Model Loading</strong>:</p></li>
-</ol>
+<li><p><strong>Initialization and Model Loading</strong>:</p>
 <ul class="simple">
 <li><p>The <code class="docutils literal notranslate"><span class="pre">CodeHelper</span></code> class inherits from <code class="docutils literal notranslate"><span class="pre">PythonModel</span></code>.</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">load_context</span></code> method is used to load the OpenAI model, which is saved as <code class="docutils literal notranslate"><span class="pre">self.model</span></code>. This model is loaded from the <code class="docutils literal notranslate"><span class="pre">context.artifacts</span></code>, ensuring that the appropriate model is used for predictions.</p></li>
 </ul>
-<ol class="arabic simple" start="2">
-<li><p><strong>Response Formatting</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Response Formatting</strong>:</p>
 <ul class="simple">
 <li><p>The <code class="docutils literal notranslate"><span class="pre">_format_response</span></code> method is crucial for enhancing the output format.</p></li>
 <li><p>It processes each item in the response, handling text and code blocks differently.</p></li>
 <li><p>Text lines outside of code blocks are wrapped to a width of 80 characters for better readability.</p></li>
-<li><p>Lines within code blocks (marked by <code class="docutils literal notranslate"><span class="pre">```</span></code>) are not wrapped, preserving the code structure.</p></li>
+<li><p>Lines within code blocks (marked by <code class="docutils literal notranslate"><span class="pre">`</span></code>``) are not wrapped, preserving the code structure.</p></li>
 <li><p>This formatting creates an output that resembles a chat interface, making the interaction more intuitive and user-friendly.</p></li>
 </ul>
-<ol class="arabic simple" start="3">
-<li><p><strong>Making Predictions</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Making Predictions</strong>:</p>
 <ul class="simple">
 <li><p>The <code class="docutils literal notranslate"><span class="pre">predict</span></code> method is where the model’s prediction occurs.</p></li>
 <li><p>It calls the loaded OpenAI model to get the raw response for the given input.</p></li>
 <li><p>The raw response is then passed to the <code class="docutils literal notranslate"><span class="pre">_format_response</span></code> method for formatting.</p></li>
 <li><p>The formatted response is returned, providing a clear and easy-to-read output.</p></li>
 </ul>
+</li>
+</ol>
 <p>By implementing this custom <code class="docutils literal notranslate"><span class="pre">pyfunc</span></code>, we enhance the user’s interaction with the AI code helper. It not only makes the output easier to understand but also presents it in a familiar format, akin to messaging, which is especially beneficial in interactive coding environments.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
@@ -771,14 +771,12 @@ more information on setting the tracking server uri and configuring access to ei
 <h2>Saving the Custom Python Model with MLflow<a class="headerlink" href="#Saving-the-Custom-Python-Model-with-MLflow" title="Permalink to this headline"> </a></h2>
 <p>This part of the tutorial demonstrates how to save the custom Python model, <code class="docutils literal notranslate"><span class="pre">CodeHelper</span></code>, using MLflow. The process involves specifying the model’s location and additional information to ensure it is properly stored and can be retrieved for future use. Here’s an overview:</p>
 <ol class="arabic simple">
-<li><p><strong>Defining Artifacts</strong>:</p></li>
-</ol>
+<li><p><strong>Defining Artifacts</strong>:</p>
 <ul class="simple">
 <li><p>An <code class="docutils literal notranslate"><span class="pre">artifacts</span></code> dictionary is created with a key <code class="docutils literal notranslate"><span class="pre">&quot;model_path&quot;</span></code> pointing to the location of the base OpenAI model. This step is important to link our custom model with the necessary base model files. We retrieve the location of the logged openai model from earlier by accessing the <code class="docutils literal notranslate"><span class="pre">model_uri</span></code> property from the return of the <code class="docutils literal notranslate"><span class="pre">log_model()</span></code> function.</p></li>
 </ul>
-<ol class="arabic simple" start="2">
-<li><p><strong>Saving the Model</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Saving the Model</strong>:</p>
 <ul class="simple">
 <li><p>The <code class="docutils literal notranslate"><span class="pre">mlflow.pyfunc.save_model</span></code> function is used to save the <code class="docutils literal notranslate"><span class="pre">CodeHelper</span></code> model.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">path</span></code>: Specifies the location (<code class="docutils literal notranslate"><span class="pre">final_model_path</span></code>) where the model will be saved.</p></li>
@@ -787,6 +785,8 @@ more information on setting the tracking server uri and configuring access to ei
 <li><p><code class="docutils literal notranslate"><span class="pre">signature</span></code>: The previously defined <code class="docutils literal notranslate"><span class="pre">ModelSignature</span></code> is passed, ensuring consistency in how the model processes data.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">artifacts</span></code>: The <code class="docutils literal notranslate"><span class="pre">artifacts</span></code> dictionary is included to associate the base OpenAI model with our custom model.</p></li>
 </ul>
+</li>
+</ol>
 <p>This step is crucial for encapsulating the entire functionality of our <code class="docutils literal notranslate"><span class="pre">CodeHelper</span></code> model in a format that MLflow can manage and track. It allows for easy deployment and versioning of the model, facilitating its use in various applications and environments.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
@@ -1032,26 +1032,25 @@ when called, enhancing the contextual information when paired with the automated
 <h2>First Usage Trial: The <code class="docutils literal notranslate"><span class="pre">summing_function</span></code> with <code class="docutils literal notranslate"><span class="pre">code_inspector</span></code><a class="headerlink" href="#First-Usage-Trial:-The-summing_function-with-code_inspector" title="Permalink to this headline"> </a></h2>
 <p>We apply the <code class="docutils literal notranslate"><span class="pre">code_inspector</span></code> decorator to a function named <code class="docutils literal notranslate"><span class="pre">summing_function</span></code>. This function is designed to calculate the sum of sums for a given range. Here’s an insight into its functionality and the enhancement brought by <code class="docutils literal notranslate"><span class="pre">code_inspector</span></code>:</p>
 <ol class="arabic simple">
-<li><p><strong>Function Overview</strong>:</p></li>
-</ol>
+<li><p><strong>Function Overview</strong>:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">summing_function</span></code> calculates the cumulative sum of numbers up to <code class="docutils literal notranslate"><span class="pre">n</span></code>. It does so by iterating over a range and summing the intermediate sums at each step.</p></li>
 <li><p>A dictionary, <code class="docutils literal notranslate"><span class="pre">intermediate_sums</span></code>, is used to store these sums, which are then aggregated to find the final sum.</p></li>
 </ul>
-<ol class="arabic simple" start="2">
-<li><p><strong>Using ``code_inspector``</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Using ``code_inspector``</strong>:</p>
 <ul class="simple">
 <li><p>The function is decorated with <code class="docutils literal notranslate"><span class="pre">code_inspector(loaded_helper)</span></code>. This means that each time <code class="docutils literal notranslate"><span class="pre">summing_function</span></code> is called, the MLflow model loaded as <code class="docutils literal notranslate"><span class="pre">loaded_helper</span></code> analyzes its code.</p></li>
 <li><p>The decorator provides real-time feedback on the code, assessing aspects like quality, efficiency, and best practices.</p></li>
 </ul>
-<ol class="arabic simple" start="3">
-<li><p><strong>Educational Benefit</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Educational Benefit</strong>:</p>
 <ul class="simple">
 <li><p>This setup is ideal for learning, allowing users to receive instant, actionable feedback on their code.</p></li>
 <li><p>It offers a practical way to understand the logic behind the function and learn coding optimizations and improvements.</p></li>
 </ul>
+</li>
+</ol>
 <p>By integrating <code class="docutils literal notranslate"><span class="pre">code_inspector</span></code> with <code class="docutils literal notranslate"><span class="pre">summing_function</span></code>, the tutorial demonstrates an interactive approach to enhancing coding skills, with immediate feedback aiding in understanding and improvement.</p>
 <p>Before proceeding to see the response from GPT-4, can you identify all of the issues in this code (there are more than a few)?</p>
 <div class="nbinput nblast docutils container">
@@ -1081,38 +1080,35 @@ when called, enhancing the contextual information when paired with the automated
 <h2>Execution and Analysis of <code class="docutils literal notranslate"><span class="pre">summing_function(1000)</span></code><a class="headerlink" href="#Execution-and-Analysis-of-summing_function(1000)" title="Permalink to this headline"> </a></h2>
 <p>When we execute <code class="docutils literal notranslate"><span class="pre">summing_function(1000)</span></code>, several key processes take place, utilizing our custom MLflow model through the <code class="docutils literal notranslate"><span class="pre">code_inspector</span></code> decorator. Here’s what happens:</p>
 <ol class="arabic simple">
-<li><p><strong>Decorator Activation</strong>:</p></li>
-</ol>
+<li><p><strong>Decorator Activation</strong>:</p>
 <ul class="simple">
 <li><p>On calling <code class="docutils literal notranslate"><span class="pre">summing_function(1000)</span></code>, the <code class="docutils literal notranslate"><span class="pre">code_inspector</span></code> decorator is the first to activate. This decorator is designed to use the <code class="docutils literal notranslate"><span class="pre">loaded_helper</span></code> model to analyze the decorated function.</p></li>
 </ul>
-<ol class="arabic simple" start="2">
-<li><p><strong>Model Analyzes the Function Code</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Model Analyzes the Function Code</strong>:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">code_inspector</span></code> retrieves the source code of <code class="docutils literal notranslate"><span class="pre">summing_function</span></code> using the <code class="docutils literal notranslate"><span class="pre">inspect</span></code> module.</p></li>
 <li><p>This source code is then passed to the <code class="docutils literal notranslate"><span class="pre">loaded_helper</span></code> model, which performs an analysis based on its training and provided instructions. The model predicts feedback on code quality, efficiency, and best practices.</p></li>
 </ul>
-<ol class="arabic simple" start="3">
-<li><p><strong>Feedback Presentation</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Feedback Presentation</strong>:</p>
 <ul class="simple">
 <li><p>The feedback generated by the model is printed out. This feedback might include suggestions for code optimization, identification of potential errors, or general advice on coding practices.</p></li>
 <li><p>This step provides an educational insight into the code quality before the function executes its logic.</p></li>
 </ul>
-<ol class="arabic simple" start="4">
-<li><p><strong>Function Execution</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Function Execution</strong>:</p>
 <ul class="simple">
 <li><p>After the feedback is displayed, the <code class="docutils literal notranslate"><span class="pre">summing_function</span></code> proceeds to execute with the input <code class="docutils literal notranslate"><span class="pre">1000</span></code>.</p></li>
 <li><p>The function calculates the cumulative sum of numbers up to 1000, but due to its inefficient implementation, this process may be slower and more resource-intensive than necessary.</p></li>
 </ul>
-<ol class="arabic simple" start="5">
-<li><p><strong>Return of Result</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Return of Result</strong>:</p>
 <ul class="simple">
 <li><p>The function returns the final computed sum, which is the result of the summing logic implemented within it.</p></li>
 </ul>
+</li>
+</ol>
 <p>This demonstration highlights how the <code class="docutils literal notranslate"><span class="pre">code_inspector</span></code> decorator, combined with our custom MLflow model, provides a unique, real-time code analysis and feedback mechanism, enhancing the learning and development experience in an interactive environment.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
@@ -1271,12 +1267,13 @@ instead of a lambda function.
 <li><p><strong>Pattern Matching Inaccuracy</strong>: The regular expression pattern <code class="docutils literal notranslate"><span class="pre">&quot;(\d{3})-\d{3}-\d{4}&quot;</span></code>, while formatted for typical phone numbers, can result in errors if a phone number does not appear in the string.</p></li>
 <li><p><strong>Lack of Error Handling</strong>: Directly accessing the first element in <code class="docutils literal notranslate"><span class="pre">phone_numbers</span></code> without checking if the list is empty can lead to an <code class="docutils literal notranslate"><span class="pre">IndexError</span></code>.</p></li>
 <li><p><strong>Import Statement Position</strong>: The <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">re</span></code> statement is inside the function, which is unconventional. Imports are typically placed at the top of a script for clarity.</p></li>
-<li><p><strong>Analysis and Exception Handling</strong>:</p></li>
-</ol>
+<li><p><strong>Analysis and Exception Handling</strong>:</p>
 <ul class="simple">
 <li><p>Due to how we crafted our custom MLflow model in <code class="docutils literal notranslate"><span class="pre">code_inspector</span></code>, the function’s issues will be analyzed and feedback will be returned before the function’s logic is executed.</p></li>
 <li><p>After this analysis, the execution of the function will likely result in an exception (due to the typographical error), demonstrating the importance of careful code review and testing.</p></li>
 </ul>
+</li>
+</ol>
 <p>The <code class="docutils literal notranslate"><span class="pre">code_inspector</span></code> model’s review will highlight these coding missteps, emphasizing the value of proper syntax, pattern accuracy, and error handling in Python programming.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
@@ -1402,45 +1399,41 @@ for the sake of this example.
 <h2>Conclusion: Harnessing the Power of MLflow in AI-Assisted Development<a class="headerlink" href="#Conclusion:-Harnessing-the-Power-of-MLflow-in-AI-Assisted-Development" title="Permalink to this headline"> </a></h2>
 <p>As we conclude this tutorial, we have traversed through the integration of OpenAI’s language models with the robust capabilities of MLflow, creating a powerful toolkit for AI-assisted software development. Here’s a recap of our journey and the key takeaways:</p>
 <ol class="arabic simple">
-<li><p><strong>Integrating OpenAI with MLflow</strong>:</p></li>
-</ol>
+<li><p><strong>Integrating OpenAI with MLflow</strong>:</p>
 <ul class="simple">
 <li><p>We explored how to seamlessly integrate OpenAI’s advanced language models within the MLflow framework. This integration highlighted the potential of combining AI intelligence with robust model management.</p></li>
 </ul>
-<ol class="arabic simple" start="2">
-<li><p><strong>Implementing a Custom Python Model</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Implementing a Custom Python Model</strong>:</p>
 <ul class="simple">
 <li><p>Our journey included creating a custom <code class="docutils literal notranslate"><span class="pre">CodeHelper</span></code> model, which showcased MLflow’s flexibility in handling custom Python functions. This model significantly enhanced the user experience by formatting AI responses into a more readable format.</p></li>
 </ul>
-<ol class="arabic simple" start="3">
-<li><p><strong>Real-Time Code Analysis and Feedback</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Real-Time Code Analysis and Feedback</strong>:</p>
 <ul class="simple">
 <li><p>By employing the <code class="docutils literal notranslate"><span class="pre">code_inspector</span></code> decorator, we demonstrated MLflow’s utility in providing real-time, insightful feedback on code quality and efficiency, fostering a learning environment that guides towards best coding practices.</p></li>
 </ul>
-<ol class="arabic simple" start="4">
-<li><p><strong>Handling Complex Code Analysis</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Handling Complex Code Analysis</strong>:</p>
 <ul class="simple">
 <li><p>The tutorial presented complex code examples, revealing how MLflow, combined with OpenAI, can handle intricate code analysis, offering suggestions and identifying potential issues.</p></li>
 </ul>
-<ol class="arabic simple" start="5">
-<li><p><strong>Learning from Interactive Feedback</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Learning from Interactive Feedback</strong>:</p>
 <ul class="simple">
 <li><p>The interactive feedback loop, enabled by our MLflow model, illustrated a practical approach to learning and improving coding skills, making this toolset particularly valuable for educational and development purposes.</p></li>
 </ul>
-<ol class="arabic simple" start="6">
-<li><p><strong>Flexibility and Scalability of MLflow</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Flexibility and Scalability of MLflow</strong>:</p>
 <ul class="simple">
 <li><p>Throughout the tutorial, MLflow’s flexibility and scalability were evident. Whether it’s managing simple Python functions or integrating state-of-the-art AI models, MLflow proved to be an invaluable asset in streamlining the model management process.</p></li>
 </ul>
+</li>
+</ol>
 <p>In summary, this tutorial not only provided insights into effective coding practices but also underscored the versatility of MLflow in enhancing AI-assisted software development. It stands as a testament to how machine learning tools and models can be innovatively applied to improve code quality, efficiency, and the overall development experience.</p>
 </div>
-<div class="section" id="What's-Next?">
-<h2>What’s Next?<a class="headerlink" href="#What's-Next?" title="Permalink to this headline"> </a></h2>
+<div class="section" id="What’s-Next?">
+<h2>What’s Next?<a class="headerlink" href="#What’s-Next?" title="Permalink to this headline"> </a></h2>
 <p>To continue your learning journey, see the additional <a class="reference external" href="https://www.mlflow.org/docs/latest/llms/openai/index.html#advanced-tutorials">advanced tutorials for MLflow’s OpenAI flavor</a>.</p>
 </div>
 </div>
