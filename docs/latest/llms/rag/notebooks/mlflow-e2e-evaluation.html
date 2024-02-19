@@ -479,53 +479,47 @@ div.rendered_html tbody tr:hover {
 <div class="section" id="What-You-Will-Learn:">
 <h2>What You Will Learn:<a class="headerlink" href="#What-You-Will-Learn:" title="Permalink to this headline"> </a></h2>
 <ol class="arabic simple">
-<li><p><strong>Setting Up the Environment</strong>:</p></li>
-</ol>
+<li><p><strong>Setting Up the Environment</strong>:</p>
 <ul class="simple">
 <li><p>Learn how to set up your development environment with all the necessary tools and libraries, including MLflow, OpenAI, ChromaDB, LangChain, and more. This section ensures you have everything you need to start working with RAG systems.</p></li>
 </ul>
-<ol class="arabic simple" start="2">
-<li><p><strong>Understanding RAG Systems</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Understanding RAG Systems</strong>:</p>
 <ul class="simple">
 <li><p>Delve into the concept of Retrieval-Augmented Generation and its significance in modern AI applications. Understand how RAG systems leverage both retrieval and generation capabilities to provide accurate and contextually relevant responses.</p></li>
 </ul>
-<ol class="arabic simple" start="3">
-<li><p><strong>Securely Managing API Keys with Databricks Secrets</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Securely Managing API Keys with Databricks Secrets</strong>:</p>
 <ul class="simple">
 <li><p>Explore the best practices for securely managing API keys using Databricks Secrets. This part is crucial for ensuring the security and integrity of your application.</p></li>
 </ul>
-<ol class="arabic simple" start="4">
-<li><p><strong>Deploying and Testing RAG Systems with MLflow</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Deploying and Testing RAG Systems with MLflow</strong>:</p>
 <ul class="simple">
 <li><p>Learn how to create, deploy, and test RAG systems using MLflow. This includes setting up endpoints, deploying models, and querying them to see their responses in action.</p></li>
 </ul>
-<ol class="arabic simple" start="5">
-<li><p><strong>Evaluating Performance with MLflow</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Evaluating Performance with MLflow</strong>:</p>
 <ul class="simple">
 <li><p>Dive into evaluating the RAG systems using MLflow’s evaluation tools. Understand how to use metrics like relevance and latency to assess the performance of your RAG system.</p></li>
 </ul>
-<ol class="arabic simple" start="6">
-<li><p><strong>Experimenting with Chunking Strategies</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Experimenting with Chunking Strategies</strong>:</p>
 <ul class="simple">
 <li><p>Experiment with different text chunking strategies to optimize the performance of RAG systems. Understand how the size of text chunks affects retrieval accuracy and system responsiveness.</p></li>
 </ul>
-<ol class="arabic simple" start="7">
-<li><p><strong>Creating and Using Evaluation Datasets</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Creating and Using Evaluation Datasets</strong>:</p>
 <ul class="simple">
 <li><p>Learn how to create and utilize evaluation datasets (Golden Datasets) to effectively assess the performance of your RAG system.</p></li>
 </ul>
-<ol class="arabic simple" start="8">
-<li><p><strong>Combining Retrieval and Generation for Question Answering</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Combining Retrieval and Generation for Question Answering</strong>:</p>
 <ul class="simple">
 <li><p>Gain insights into how retrieval and generation components work together in a RAG system to answer questions based on a given context or documentation.</p></li>
 </ul>
+</li>
+</ol>
 <p>By the end of this tutorial, you will have a thorough understanding of how to evaluate and optimize RAG systems using MLflow. You will be equipped with the knowledge to deploy, test, and refine RAG systems, making them suitable for various practical applications. This tutorial is your stepping stone into the world of advanced AI model evaluation and deployment.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
@@ -1020,32 +1014,30 @@ div.rendered_html tbody tr:hover {
 <div class="section" id="Key-Steps-in-the-Evaluation:">
 <h3>Key Steps in the Evaluation:<a class="headerlink" href="#Key-Steps-in-the-Evaluation:" title="Permalink to this headline"> </a></h3>
 <ol class="arabic simple">
-<li><p><strong>Setting the Deployment Target</strong>:</p></li>
-</ol>
+<li><p><strong>Setting the Deployment Target</strong>:</p>
 <ul class="simple">
 <li><p>The deployment target is set to Databricks, enabling us to retrieve all endpoints in the Databricks Workspace. This is essential for accessing our deployed models.</p></li>
 </ul>
-<ol class="arabic simple" start="2">
-<li><p><strong>Relevance Metric Setup</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Relevance Metric Setup</strong>:</p>
 <ul class="simple">
 <li><p>We initialize the <code class="docutils literal notranslate"><span class="pre">relevance</span></code> metric using a model hosted on Databricks. This metric assesses how relevant the answers generated by our RAG system are in response to the input questions.</p></li>
 </ul>
-<ol class="arabic simple" start="3">
-<li><p><strong>Running the Evaluation</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Running the Evaluation</strong>:</p>
 <ul class="simple">
 <li><p>An MLflow run is initiated, and <code class="docutils literal notranslate"><span class="pre">mlflow.evaluate()</span></code> is called to evaluate our RAG model against the prepared evaluation dataset.</p></li>
 <li><p>The model is evaluated as a “question-answering” system using default evaluators.</p></li>
 <li><p>Additional metrics, including the <code class="docutils literal notranslate"><span class="pre">relevance_metric</span></code> and <code class="docutils literal notranslate"><span class="pre">latency</span></code>, are specified. These metrics provide insights into the relevance of the answers and the response time of the model.</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">evaluator_config</span></code> maps the input questions and context, ensuring the correct evaluation of the RAG system.</p></li>
 </ul>
-<ol class="arabic simple" start="4">
-<li><p><strong>Results and Metrics Display</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Results and Metrics Display</strong>:</p>
 <ul class="simple">
 <li><p>The results of the evaluation, including key metrics, are displayed in a table format, providing a clear and structured view of the model’s performance based on relevance and latency.</p></li>
 </ul>
+</li>
+</ol>
 <p>This comprehensive evaluation step is vital for understanding the effectiveness and efficiency of our RAG system. By assessing both the relevance of the answers and the latency of the responses, we gain a holistic view of the model’s performance, guiding any further optimization or deployment decisions.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:

@@ -567,21 +567,21 @@ div.rendered_html tbody tr:hover {
 <p>This section of the tutorial introduces functions designed to extract and prepare text from webpages, a crucial step before applying embedding models for analysis.</p>
 <div class="section" id="Overview-of-Functions">
 <h3>Overview of Functions<a class="headerlink" href="#Overview-of-Functions" title="Permalink to this headline"> </a></h3>
-<ol class="arabic simple">
-<li><p><strong>insert_space_after_tags</strong>:</p></li>
-</ol>
+<ol class="arabic">
+<li><p><strong>insert_space_after_tags</strong>:</p>
 <ul class="simple">
 <li><p>Adds a space after specific HTML tags in a BeautifulSoup object for better text readability.</p></li>
 </ul>
-<ol class="arabic simple" start="2">
-<li><p><strong>extract_text_from_url</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>extract_text_from_url</strong>:</p>
 <ul>
 <li><p>Extracts text from a specified webpage section using its URL and a target ID. Filters and organizes the text from tags like ,</p>
 <li><p>, and</p>
 <p><p>, excluding certain irrelevant sections.</p>
 </li>
 </ul>
+</li>
+</ol>
 <p>These functions are integral to preprocessing web content, ensuring that the text fed into the embedding model is clean, relevant, and well-structured.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
@@ -648,21 +648,21 @@ div.rendered_html tbody tr:hover {
 <div class="section" id="Function-Overviews">
 <h3>Function Overviews<a class="headerlink" href="#Function-Overviews" title="Permalink to this headline"> </a></h3>
 <ol class="arabic simple">
-<li><p><strong>cosine_similarity</strong>:</p></li>
-</ol>
+<li><p><strong>cosine_similarity</strong>:</p>
 <ul class="simple">
 <li><p><strong>Purpose</strong>: Calculates the cosine similarity between two embedding vectors.</p></li>
 <li><p><strong>How It Works</strong>: This function computes similarity by finding the cosine of the angle between the two vectors, a common method for assessing how similar two documents are in terms of their content.</p></li>
 <li><p><strong>Relevance</strong>: Very useful in NLP, especially for tasks like document retrieval and clustering, where the goal is to find documents with similar content.</p></li>
 </ul>
-<ol class="arabic simple" start="2">
-<li><p><strong>euclidean_distances</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>euclidean_distances</strong>:</p>
 <ul class="simple">
 <li><p><strong>Purpose</strong>: Computes the Euclidean distance between two embedding vectors.</p></li>
 <li><p><strong>Functionality</strong>: Similar to <code class="docutils literal notranslate"><span class="pre">cosine_similarity</span></code> this function calculates the Euclidean distance, which is the “straight line” distance between the two points in the embedding space. This measure is useful for understanding how different two documents are.</p></li>
 <li><p><strong>Relevance within NLP</strong>: Offers a more intuitive physical distance metric, useful for tasks like document classification and anomaly detection.</p></li>
 </ul>
+</li>
+</ol>
 <p>These functions are crucial for analyzing and comparing the outputs of embedding models, providing insights into the relationships between different text data in terms of similarity and distinction.</p>
 </div>
 </div>
@@ -674,9 +674,12 @@ div.rendered_html tbody tr:hover {
 <ul class="simple">
 <li><p><strong>Function Name</strong>: <code class="docutils literal notranslate"><span class="pre">compare_pages</span></code></p></li>
 <li><p><strong>Purpose</strong>: Compares two webpages and returns a similarity score based on their content.</p></li>
-<li><p><strong>Parameters</strong>:</p></li>
+<li><p><strong>Parameters</strong>:</p>
+<ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">url1</span></code> and <code class="docutils literal notranslate"><span class="pre">url2</span></code>: URLs of the webpages to be compared.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">id1</span></code> and <code class="docutils literal notranslate"><span class="pre">id2</span></code>: Target IDs for the main text content divs on each page.</p></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="section" id="How-It-Works">
@@ -730,9 +733,12 @@ div.rendered_html tbody tr:hover {
 <div class="section" id="Process-Overview">
 <h3>Process Overview<a class="headerlink" href="#Process-Overview" title="Permalink to this headline"> </a></h3>
 <ul class="simple">
-<li><p><strong>Target Webpages</strong>:</p></li>
+<li><p><strong>Target Webpages</strong>:</p>
+<ul>
 <li><p>The main LLMs page: <a class="reference external" href="https://www.mlflow.org/docs/2.8.1/llms/index.html">LLMs page for MLflow 2.8.1 release</a></p></li>
 <li><p>The LLM Evaluation page: <a class="reference external" href="https://www.mlflow.org/docs/2.8.1/llms/llm-evaluate/index.html">LLM Evaluation for MLflow 2.8.1</a></p></li>
+</ul>
+</li>
 <li><p><strong>Content IDs</strong>: We use ‘llms’ for the main LLMs page and ‘mlflow-llm-evaluate’ for the LLM Evaluation page to target specific content sections.</p></li>
 <li><p><strong>Comparison Execution</strong>: The <code class="docutils literal notranslate"><span class="pre">compare_pages</span></code> function is called with these URLs and content IDs to perform the analysis.</p></li>
 </ul>
@@ -740,9 +746,12 @@ div.rendered_html tbody tr:hover {
 <div class="section" id="Results">
 <h3>Results<a class="headerlink" href="#Results" title="Permalink to this headline"> </a></h3>
 <ul class="simple">
-<li><p><strong>Cosine Similarity and Euclidean Distance</strong>: The function returns two key metrics:</p></li>
+<li><p><strong>Cosine Similarity and Euclidean Distance</strong>: The function returns two key metrics:</p>
+<ul>
 <li><p>Cosine Similarity: Measures the cosine of the angle between the embedding vectors of the two pages. A higher value indicates greater similarity.</p></li>
 <li><p>Euclidean Distance: Represents the ‘straight-line’ distance between the two points in the embedding space, with lower values indicating closer similarity.</p></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="section" id="Interpretation">
@@ -787,9 +796,12 @@ The cosine similarity between the LLMs page and the LLM Evaluation page is: [[0.
 <div class="section" id="Analysis-Execution">
 <h3>Analysis Execution<a class="headerlink" href="#Analysis-Execution" title="Permalink to this headline"> </a></h3>
 <ul class="simple">
-<li><p><strong>Pages Compared</strong>:</p></li>
+<li><p><strong>Pages Compared</strong>:</p>
+<ul>
 <li><p>LLMs page: <a class="reference external" href="https://www.mlflow.org/docs/2.8.1/llms/index.html">LLMs page for MLflow 2.8.1 release</a></p></li>
 <li><p>Plugins page: <a class="reference external" href="https://www.mlflow.org/docs/2.8.1/plugins.html">Plugins page for MLflow 2.8.1 release</a></p></li>
+</ul>
+</li>
 <li><p><strong>IDs Used</strong>: ‘llms’ for the LLMs page and ‘mflow-plugins’ for the Plugins page.</p></li>
 <li><p><strong>Function</strong>: <code class="docutils literal notranslate"><span class="pre">compare_pages</span></code> is utilized for the comparison.</p></li>
 </ul>
@@ -836,35 +848,32 @@ The cosine similarity between the LLMs page and the MLflow Projects page is: [[0
 <div class="section" id="Key-Takeaways">
 <h3>Key Takeaways<a class="headerlink" href="#Key-Takeaways" title="Permalink to this headline"> </a></h3>
 <ol class="arabic simple">
-<li><p><strong>Integrating OpenAI Models in MLflow</strong>:</p></li>
-</ol>
+<li><p><strong>Integrating OpenAI Models in MLflow</strong>:</p>
 <ul class="simple">
 <li><p>We learned how to log and load OpenAI’s “text-embedding-ada-002” model within MLflow, an essential step for utilizing these embeddings in machine learning workflows.</p></li>
 </ul>
-<ol class="arabic simple" start="2">
-<li><p><strong>Text Extraction and Preprocessing</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Text Extraction and Preprocessing</strong>:</p>
 <ul class="simple">
 <li><p>The tutorial introduced methods for extracting and preprocessing text from webpages, ensuring the data is clean and structured for embedding analysis.</p></li>
 </ul>
-<ol class="arabic simple" start="3">
-<li><p><strong>Calculating Similarity and Distance</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Calculating Similarity and Distance</strong>:</p>
 <ul class="simple">
 <li><p>We delved into functions for measuring cosine similarity and Euclidean distance between document embeddings, vital for comparing textual content.</p></li>
 </ul>
-<ol class="arabic simple" start="4">
-<li><p><strong>Real-World Application: Webpage Content Comparison</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Real-World Application: Webpage Content Comparison</strong>:</p>
 <ul class="simple">
 <li><p>Practical application of these concepts was demonstrated through the comparison of different MLflow documentation pages. We analyzed the similarity and differences in their content using the embeddings generated by the OpenAI model.</p></li>
 </ul>
-<ol class="arabic simple" start="5">
-<li><p><strong>Interpreting Results</strong>:</p></li>
-</ol>
+</li>
+<li><p><strong>Interpreting Results</strong>:</p>
 <ul class="simple">
 <li><p>The tutorial provided insights into interpreting the results of similarity and distance metrics, highlighting their relevance in understanding content relationships.</p></li>
 </ul>
+</li>
+</ol>
 </div>
 <div class="section" id="id2">
 <h3>Conclusion<a class="headerlink" href="#id2" title="Permalink to this headline"> </a></h3>
@@ -872,8 +881,8 @@ The cosine similarity between the LLMs page and the MLflow Projects page is: [[0
 <p>We hope this guide has been informative and instrumental in advancing your understanding and application of OpenAI embeddings within the MLflow framework.</p>
 </div>
 </div>
-<div class="section" id="What's-Next?">
-<h2>What’s Next?<a class="headerlink" href="#What's-Next?" title="Permalink to this headline"> </a></h2>
+<div class="section" id="What’s-Next?">
+<h2>What’s Next?<a class="headerlink" href="#What’s-Next?" title="Permalink to this headline"> </a></h2>
 <p>To continue your learning journey, see the additional <a class="reference external" href="https://www.mlflow.org/docs/latest/llms/openai/index.html#advanced-tutorials">advanced tutorials for MLflow’s OpenAI flavor</a>.</p>
 </div>
 </div>

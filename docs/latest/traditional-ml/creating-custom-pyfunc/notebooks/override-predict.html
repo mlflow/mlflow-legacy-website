@@ -472,8 +472,8 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<div class="section" id="Customizing-a-Model's-predict-method">
-<h1>Customizing a Model’s predict method<a class="headerlink" href="#Customizing-a-Model's-predict-method" title="Permalink to this headline"> </a></h1>
+<div class="section" id="Customizing-a-Model’s-predict-method">
+<h1>Customizing a Model’s predict method<a class="headerlink" href="#Customizing-a-Model’s-predict-method" title="Permalink to this headline"> </a></h1>
 <p>In this tutorial, we will explore the process of customizing the predict method of a model in the context of MLflow’s PyFunc flavor. This is particularly useful when you want to have more flexibility in how your model behaves after you’ve deployed it using MLflow.</p>
 <p>To illustrate this, we’ll use the famous Iris dataset and build a basic Logistic Regression model with scikit-learn.</p>
 <div class="nbinput nblast docutils container">
@@ -677,8 +677,7 @@ AttributeError:<span class="w"> </span><span class="s1">&#39;PyFuncModel&#39;</s
 <li><p>custom loading of an artifact</p></li>
 </ul>
 <p>A key thing to note is the use of joblib for serialization. While pickle has been historically used for serializing scikit-learn models, joblib is now recommended as it provides better performance and support, especially for large numpy arrays.</p>
-<p>We’ll be using <code class="docutils literal notranslate"><span class="pre">joblib</span></code> and it’s <code class="docutils literal notranslate"><span class="pre">dump</span></code> and <code class="docutils literal notranslate"><span class="pre">load</span></code> APIs to handle loading of our model object into our custom pyfunc implementation. This process of using the load_context method to handle loading files when instantiating the pyfunc object is particularly useful for models that have very large or numerous artifact dependencies (such as LLMs) and can help to dramatically lessen the total memory footprint of a pyfunc that is being loaded in a distributed system (such as Apache Spark or
-Ray).</p>
+<p>We’ll be using <code class="docutils literal notranslate"><span class="pre">joblib</span></code> and it’s <code class="docutils literal notranslate"><span class="pre">dump</span></code> and <code class="docutils literal notranslate"><span class="pre">load</span></code> APIs to handle loading of our model object into our custom pyfunc implementation. This process of using the load_context method to handle loading files when instantiating the pyfunc object is particularly useful for models that have very large or numerous artifact dependencies (such as LLMs) and can help to dramatically lessen the total memory footprint of a pyfunc that is being loaded in a distributed system (such as Apache Spark or Ray).</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>

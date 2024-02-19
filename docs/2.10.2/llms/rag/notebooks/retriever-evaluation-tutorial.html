@@ -1211,24 +1211,36 @@ div.rendered_html tbody tr:hover {
 <h4>Empty retrieved document IDs<a class="headerlink" href="#Empty-retrieved-document-IDs" title="Permalink to this headline"> </a></h4>
 <p>When no relevant docs are retrieved:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">mlflow.metrics.precision_at_k(k)</span></code> is defined as:</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mlflow.metrics.precision_at_k(k)</span></code> is defined as:</p>
+<ul>
 <li><p>0 if the ground-truth doc IDs is non-empty</p></li>
 <li><p>1 if the ground-truth doc IDs is also empty</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">mlflow.metrics.ndcg_at_k(k)</span></code> is defined as:</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mlflow.metrics.ndcg_at_k(k)</span></code> is defined as:</p>
+<ul>
 <li><p>0 if the ground-truth doc IDs is non-empty</p></li>
 <li><p>1 if the ground-truth doc IDs is also empty</p></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="section" id="Empty-ground-truth-document-IDs">
 <h4>Empty ground-truth document IDs<a class="headerlink" href="#Empty-ground-truth-document-IDs" title="Permalink to this headline"> </a></h4>
 <p>When no ground-truth document IDs are provided:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">mlflow.metrics.recall_at_k(k)</span></code> is defined as:</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mlflow.metrics.recall_at_k(k)</span></code> is defined as:</p>
+<ul>
 <li><p>0 if the retrieved doc IDs is non-empty</p></li>
 <li><p>1 if the retrieved doc IDs is also empty</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">mlflow.metrics.ndcg_at_k(k)</span></code> is defined as:</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mlflow.metrics.ndcg_at_k(k)</span></code> is defined as:</p>
+<ul>
 <li><p>0 if the retrieved doc IDs is non-empty</p></li>
 <li><p>1 if the retrieved doc IDs is also empty</p></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="section" id="Duplicate-retreived-document-IDs">
