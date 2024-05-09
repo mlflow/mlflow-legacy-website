@@ -233,7 +233,7 @@
 
 <span class="kn">import</span> <span class="nn">mlflow</span>
 <span class="kn">from</span> <span class="nn">mlflow</span> <span class="kn">import</span> <span class="n">pyfunc</span>
-<span class="kn">from</span> <span class="nn">mlflow.environment_variables</span> <span class="kn">import</span> <span class="n">_MLFLOW_TESTING</span>
+<span class="kn">from</span> <span class="nn">mlflow.environment_variables</span> <span class="kn">import</span> <span class="n">_MLFLOW_TESTING</span><span class="p">,</span> <span class="n">MLFLOW_ENABLE_TRACE_IN_SERVING</span>
 <span class="kn">from</span> <span class="nn">mlflow.exceptions</span> <span class="kn">import</span> <span class="n">MlflowException</span>
 <span class="kn">from</span> <span class="nn">mlflow.langchain._langchain_autolog</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">_update_langchain_model_config</span><span class="p">,</span>
@@ -263,15 +263,17 @@
 <span class="kn">from</span> <span class="nn">mlflow.models.resources</span> <span class="kn">import</span> <span class="n">_ResourceBuilder</span>
 <span class="kn">from</span> <span class="nn">mlflow.models.signature</span> <span class="kn">import</span> <span class="n">_infer_signature_from_input_example</span>
 <span class="kn">from</span> <span class="nn">mlflow.models.utils</span> <span class="kn">import</span> <span class="n">_convert_llm_input_data</span><span class="p">,</span> <span class="n">_save_example</span>
+<span class="kn">from</span> <span class="nn">mlflow.pyfunc.context</span> <span class="kn">import</span> <span class="n">get_prediction_context</span>
 <span class="kn">from</span> <span class="nn">mlflow.tracking._model_registry</span> <span class="kn">import</span> <span class="n">DEFAULT_AWAIT_MAX_SLEEP_SECONDS</span>
 <span class="kn">from</span> <span class="nn">mlflow.tracking.artifact_utils</span> <span class="kn">import</span> <span class="n">_download_artifact_from_uri</span>
 <span class="kn">from</span> <span class="nn">mlflow.types.schema</span> <span class="kn">import</span> <span class="n">ColSpec</span><span class="p">,</span> <span class="n">DataType</span><span class="p">,</span> <span class="n">Schema</span>
-<span class="kn">from</span> <span class="nn">mlflow.utils.annotations</span> <span class="kn">import</span> <span class="n">deprecated</span><span class="p">,</span> <span class="n">experimental</span>
+<span class="kn">from</span> <span class="nn">mlflow.utils.annotations</span> <span class="kn">import</span> <span class="n">experimental</span>
 <span class="kn">from</span> <span class="nn">mlflow.utils.autologging_utils</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">autologging_integration</span><span class="p">,</span>
     <span class="n">autologging_is_disabled</span><span class="p">,</span>
     <span class="n">safe_patch</span><span class="p">,</span>
 <span class="p">)</span>
+<span class="kn">from</span> <span class="nn">mlflow.utils.databricks_utils</span> <span class="kn">import</span> <span class="n">is_in_databricks_model_serving_environment</span>
 <span class="kn">from</span> <span class="nn">mlflow.utils.docstring_utils</span> <span class="kn">import</span> <span class="n">LOG_MODEL_PARAM_DOCS</span><span class="p">,</span> <span class="n">format_docstring</span>
 <span class="kn">from</span> <span class="nn">mlflow.utils.environment</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">_CONDA_ENV_FILE_NAME</span><span class="p">,</span>
@@ -392,10 +394,7 @@
 <span class="sd">        input_example: {{ input_example }}</span>
 <span class="sd">        pip_requirements: {{ pip_requirements }}</span>
 <span class="sd">        extra_pip_requirements: {{ extra_pip_requirements }}</span>
-<span class="sd">        metadata: Custom metadata dictionary passed to the model and stored in the MLmodel file.</span>
-
-<span class="sd">            .. Note:: Experimental: This parameter may change or be removed in a future</span>
-<span class="sd">                release without warning.</span>
+<span class="sd">        metadata: {{ metadata }}</span>
 <span class="sd">        loader_fn: A function that&#39;s required for models containing objects that aren&#39;t natively</span>
 <span class="sd">            serialized by LangChain.</span>
 <span class="sd">            This function takes a string `persist_dir` as an argument and returns the</span>
@@ -698,10 +697,7 @@
 <span class="sd">            Specify 0 or None to skip waiting.</span>
 <span class="sd">        pip_requirements: {{ pip_requirements }}</span>
 <span class="sd">        extra_pip_requirements: {{ extra_pip_requirements }}</span>
-<span class="sd">        metadata: Custom metadata dictionary passed to the model and stored in the MLmodel file.</span>
-
-<span class="sd">            .. Note:: Experimental: This parameter may change or be removed in a future</span>
-<span class="sd">                release without warning.</span>
+<span class="sd">        metadata: {{ metadata }}</span>
 <span class="sd">        loader_fn: A function that&#39;s required for models containing objects that aren&#39;t natively</span>
 <span class="sd">            serialized by LangChain.</span>
 <span class="sd">            This function takes a string `persist_dir` as an argument and returns the</span>
@@ -845,17 +841,27 @@
 <span class="sd">            data: Model input data.</span>
 <span class="sd">            params: Additional parameters to pass to the model for inference.</span>
 
-<span class="sd">                .. Note:: Experimental: This parameter may change or be removed in a future</span>
-<span class="sd">                    release without warning.</span>
-
 <span class="sd">        Returns:</span>
 <span class="sd">            Model predictions.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">mlflow.langchain.api_request_parallel_processor</span> <span class="kn">import</span> <span class="n">process_api_requests</span>
+        <span class="c1"># TODO: We don&#39;t automatically turn tracing on in OSS model serving, because we haven&#39;t</span>
+        <span class="c1"># implemented storage option for traces in OSS model serving (counterpart to the</span>
+        <span class="c1"># Inference Table in Databricks model serving).</span>
+        <span class="k">if</span> <span class="n">is_in_databricks_model_serving_environment</span><span class="p">()</span> <span class="ow">and</span> <span class="n">MLFLOW_ENABLE_TRACE_IN_SERVING</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
+            <span class="kn">from</span> <span class="nn">mlflow.langchain.langchain_tracer</span> <span class="kn">import</span> <span class="n">MlflowLangchainTracer</span>
 
-        <span class="n">messages</span><span class="p">,</span> <span class="n">return_first_element</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_predict_messages</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-        <span class="n">results</span> <span class="o">=</span> <span class="n">process_api_requests</span><span class="p">(</span><span class="n">lc_model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lc_model</span><span class="p">,</span> <span class="n">requests</span><span class="o">=</span><span class="n">messages</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">return_first_element</span> <span class="k">else</span> <span class="n">results</span>
+            <span class="n">callbacks</span> <span class="o">=</span> <span class="p">[</span><span class="n">MlflowLangchainTracer</span><span class="p">()]</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">context</span> <span class="o">:=</span> <span class="n">get_prediction_context</span><span class="p">())</span> <span class="ow">and</span> <span class="n">context</span><span class="o">.</span><span class="n">is_evaluate</span><span class="p">:</span>
+            <span class="c1"># NB: We enable traces automatically for the model evaluation. Note that we have to</span>
+            <span class="c1">#   manually pass the context instance to callback, because LangChain callback may be</span>
+            <span class="c1">#   invoked asynchronously and it doesn&#39;t correctly propagate the thread-local context.</span>
+            <span class="kn">from</span> <span class="nn">mlflow.langchain.langchain_tracer</span> <span class="kn">import</span> <span class="n">MlflowLangchainTracer</span>
+
+            <span class="n">callbacks</span> <span class="o">=</span> <span class="p">[</span><span class="n">MlflowLangchainTracer</span><span class="p">(</span><span class="n">prediction_context</span><span class="o">=</span><span class="n">context</span><span class="p">)]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">callbacks</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_predict_with_callbacks</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">callback_handlers</span><span class="o">=</span><span class="n">callbacks</span><span class="p">)</span>
 
     <span class="nd">@experimental</span>
     <span class="k">def</span> <span class="nf">_predict_with_callbacks</span><span class="p">(</span>
@@ -869,9 +875,6 @@
 <span class="sd">        Args:</span>
 <span class="sd">            data: Model input data.</span>
 <span class="sd">            params: Additional parameters to pass to the model for inference.</span>
-
-<span class="sd">                .. Note:: Experimental: This parameter may change or be removed in a future</span>
-<span class="sd">                    release without warning.</span>
 <span class="sd">            callback_handlers: Callback handlers to pass to LangChain.</span>
 <span class="sd">            convert_chat_responses: If true, forcibly convert response to chat model</span>
 <span class="sd">                response format.</span>
@@ -938,9 +941,6 @@
 <span class="sd">            data: Model input data, only single input is allowed.</span>
 <span class="sd">            params: Additional parameters to pass to the model for inference.</span>
 
-<span class="sd">                .. Note:: Experimental: This parameter may change or be removed in a future</span>
-<span class="sd">                    release without warning.</span>
-
 <span class="sd">        Returns:</span>
 <span class="sd">            An iterator of model prediction chunks.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -965,9 +965,6 @@
 <span class="sd">        Args:</span>
 <span class="sd">            data: Model input data, only single input is allowed.</span>
 <span class="sd">            params: Additional parameters to pass to the model for inference.</span>
-
-<span class="sd">                .. Note:: Experimental: This parameter may change or be removed in a future</span>
-<span class="sd">                    release without warning.</span>
 <span class="sd">            callback_handlers: Callback handlers to pass to LangChain.</span>
 <span class="sd">            convert_chat_responses: If true, forcibly convert response to chat model</span>
 <span class="sd">                response format.</span>
@@ -1004,9 +1001,6 @@
 <span class="sd">        Args:</span>
 <span class="sd">            data: Model input data.</span>
 <span class="sd">            params: Additional parameters to pass to the model for inference.</span>
-
-<span class="sd">                .. Note:: Experimental: This parameter may change or be removed in a future</span>
-<span class="sd">                    release without warning.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Model predictions.</span>
@@ -1186,13 +1180,6 @@
     <span class="p">)</span>
 
 
-<span class="c1"># TODO: We are keeping this method even though it is private because</span>
-<span class="c1"># rag studio is explicitly monkey patching it. Will remove soon.</span>
-<span class="nd">@deprecated</span><span class="p">(</span><span class="n">alternative</span><span class="o">=</span><span class="s2">&quot;mlflow.langchain._load_model_code_path&quot;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">_load_code_model</span><span class="p">(</span><span class="n">config_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-    <span class="k">pass</span>
-
-
 <div class="viewcode-block" id="autolog"><a class="viewcode-back" href="../../python_api/mlflow.langchain.html#mlflow.langchain.autolog">[docs]</a><span class="nd">@experimental</span>
 <span class="nd">@autologging_integration</span><span class="p">(</span><span class="n">FLAVOR_NAME</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">autolog</span><span class="p">(</span>
@@ -1200,7 +1187,11 @@
     <span class="n">log_model_signatures</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">log_models</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">log_datasets</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">log_inputs_outputs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="c1"># TODO: log_inputs_outputs was originally defaulted to True in the production version of</span>
+    <span class="c1"># the LangChain autologging, as it is a common use case to log input/output table for</span>
+    <span class="c1"># evaluation. Once tracing is fully launched, this should be supported by the tracer</span>
+    <span class="c1"># but we should design it to be compatible with the existing UJ.</span>
+    <span class="n">log_inputs_outputs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">disable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">exclusive</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">disable_for_unsupported_versions</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -1233,7 +1224,7 @@
 <span class="sd">        log_inputs_outputs: If ``True``, inference data and results are combined into a single</span>
 <span class="sd">            pandas DataFrame and logged to MLflow Tracking as an artifact.</span>
 <span class="sd">            If ``False``, inference data and results are not logged.</span>
-<span class="sd">            Default to ``True``.</span>
+<span class="sd">            Default to ``False``.</span>
 <span class="sd">        disable: If ``True``, disables the Langchain autologging integration. If ``False``,</span>
 <span class="sd">            enables the Langchain autologging integration.</span>
 <span class="sd">        exclusive: If ``True``, autologged content is not logged to user-created fluent runs.</span>
@@ -1265,6 +1256,20 @@
                 <span class="bp">cls</span><span class="p">,</span>
                 <span class="s2">&quot;invoke&quot;</span><span class="p">,</span>
                 <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">patched_inference</span><span class="p">,</span> <span class="s2">&quot;invoke&quot;</span><span class="p">),</span>
+            <span class="p">)</span>
+
+            <span class="n">safe_patch</span><span class="p">(</span>
+                <span class="n">FLAVOR_NAME</span><span class="p">,</span>
+                <span class="bp">cls</span><span class="p">,</span>
+                <span class="s2">&quot;batch&quot;</span><span class="p">,</span>
+                <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">patched_inference</span><span class="p">,</span> <span class="s2">&quot;batch&quot;</span><span class="p">),</span>
+            <span class="p">)</span>
+
+            <span class="n">safe_patch</span><span class="p">(</span>
+                <span class="n">FLAVOR_NAME</span><span class="p">,</span>
+                <span class="bp">cls</span><span class="p">,</span>
+                <span class="s2">&quot;stream&quot;</span><span class="p">,</span>
+                <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">patched_inference</span><span class="p">,</span> <span class="s2">&quot;stream&quot;</span><span class="p">),</span>
             <span class="p">)</span>
 
         <span class="k">for</span> <span class="bp">cls</span> <span class="ow">in</span> <span class="p">[</span><span class="n">AgentExecutor</span><span class="p">,</span> <span class="n">Chain</span><span class="p">]:</span>

@@ -652,10 +652,7 @@
 <span class="sd">        pip_requirements: {{ pip_requirements }}</span>
 <span class="sd">        extra_pip_requirements: {{ extra_pip_requirements }}</span>
 <span class="sd">        conda_env: {{ conda_env }}</span>
-<span class="sd">        metadata: Custom metadata dictionary passed to the model and stored in the MLmodel file.</span>
-
-<span class="sd">            .. Note:: Experimental: This parameter may change or be removed in a future</span>
-<span class="sd">                                    release without warning.</span>
+<span class="sd">        metadata: {{ metadata }}</span>
 <span class="sd">        example_no_conversion: {{ example_no_conversion }}</span>
 <span class="sd">        prompt_template: {{ prompt_template }}</span>
 <span class="sd">        save_pretrained: {{ save_pretrained }}</span>
@@ -1115,10 +1112,7 @@
 <span class="sd">        pip_requirements: {{ pip_requirements }}</span>
 <span class="sd">        extra_pip_requirements: {{ extra_pip_requirements }}</span>
 <span class="sd">        conda_env: {{ conda_env }}</span>
-<span class="sd">        metadata: Custom metadata dictionary passed to the model and stored in the MLmodel file.</span>
-
-<span class="sd">            .. Note:: Experimental: This parameter may change or be removed in a future</span>
-<span class="sd">                                    release without warning.</span>
+<span class="sd">        metadata: {{ metadata }}</span>
 <span class="sd">        example_no_conversion: {{ example_no_conversion }}</span>
 <span class="sd">        prompt_template: {{ prompt_template }}</span>
 <span class="sd">        save_pretrained: {{ save_pretrained }}</span>
@@ -1846,9 +1840,6 @@
 <span class="sd">        Args:</span>
 <span class="sd">            data: Model input data.</span>
 <span class="sd">            params: Additional parameters to pass to the model for inference.</span>
-
-<span class="sd">                .. Note:: Experimental: This parameter may change or be removed in a future</span>
-<span class="sd">                                        release without warning.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Model predictions.</span>

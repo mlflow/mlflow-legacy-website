@@ -59,7 +59,7 @@
     <link rel="top" title="MLflow 2.12.2 documentation" href="../index.html"/>
         <link rel="up" title="Python API" href="index.html"/>
         <link rel="next" title="mlflow.types" href="/mlflow.types.html"/>
-        <link rel="prev" title="mlflow.tensorflow" href="/mlflow.tensorflow.html"/> 
+        <link rel="prev" title="mlflow.tracing" href="/mlflow.tracing.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -186,6 +186,7 @@
 <li class="toctree-l2"><a class="reference internal" href="mlflow.statsmodels.html">mlflow.statsmodels</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.system_metrics.html">mlflow.system_metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.tensorflow.html">mlflow.tensorflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.tracing.html">mlflow.tracing</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">mlflow.transformers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.types.html">mlflow.types</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.utils.html">mlflow.utils</a></li>
@@ -660,13 +661,7 @@ The following is an <em>example</em> dictionary representation of a conda enviro
 </pre></div>
 </div>
 </p></li>
-<li><p><strong>metadata</strong> – <p>Custom metadata dictionary passed to the model and stored in the MLmodel file.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Experimental: This parameter may change or be removed in a future
-release without warning.</p>
-</div>
-</p></li>
+<li><p><strong>metadata</strong> – Custom metadata dictionary passed to the model and stored in the MLmodel file.</p></li>
 <li><p><strong>example_no_conversion</strong> – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, the input example will not be converted to a Pandas DataFrame
 format when saving. This is useful when the model expects a non-DataFrame input and the
 input example could be passed directly to the model. Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code> for backwards
@@ -1006,13 +1001,7 @@ The following is an <em>example</em> dictionary representation of a conda enviro
 </pre></div>
 </div>
 </p></li>
-<li><p><strong>metadata</strong> – <p>Custom metadata dictionary passed to the model and stored in the MLmodel file.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Experimental: This parameter may change or be removed in a future
-release without warning.</p>
-</div>
-</p></li>
+<li><p><strong>metadata</strong> – Custom metadata dictionary passed to the model and stored in the MLmodel file.</p></li>
 <li><p><strong>example_no_conversion</strong> – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, the input example will not be converted to a Pandas DataFrame
 format when saving. This is useful when the model expects a non-DataFrame input and the
 input example could be passed directly to the model. Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code> for backwards
@@ -1074,7 +1063,7 @@ its commit hash are logged instead.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="mlflow.tensorflow.html" class="btn btn-neutral" title="mlflow.tensorflow" accesskey="p"><span class="db-icon db-icon-chevron-left"></span> Previous</a>
+        <a href="mlflow.tracing.html" class="btn btn-neutral" title="mlflow.tracing" accesskey="p"><span class="db-icon db-icon-chevron-left"></span> Previous</a>
       
       
         <a href="mlflow.types.html" class="btn btn-neutral" title="mlflow.types" accesskey="n">Next <span class="db-icon db-icon-chevron-right"></span></a>

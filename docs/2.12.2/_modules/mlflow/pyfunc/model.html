@@ -322,9 +322,6 @@
 <span class="sd">                     can use to perform inference.</span>
 <span class="sd">            model_input: A pyfunc-compatible input for the model to evaluate.</span>
 <span class="sd">            params: Additional parameters to pass to the model for inference.</span>
-
-<span class="sd">                     .. Note:: Experimental: This parameter may change or be removed in a future</span>
-<span class="sd">                                 release without warning.</span>
 <span class="sd">        &quot;&quot;&quot;</span></div>
 
 <div class="viewcode-block" id="PythonModel.predict_stream"><a class="viewcode-back" href="../../../python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel.predict_stream">[docs]</a>    <span class="k">def</span> <span class="nf">predict_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">model_input</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
@@ -367,9 +364,6 @@
 <span class="sd">                can use to perform inference.</span>
 <span class="sd">            model_input: A pyfunc-compatible input for the model to evaluate.</span>
 <span class="sd">            params: Additional parameters to pass to the model for inference.</span>
-
-<span class="sd">                .. Note:: Experimental: This parameter may change or be removed in a future</span>
-<span class="sd">                    release without warning.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Model predictions.</span>
@@ -761,9 +755,6 @@
 <span class="sd">        Args:</span>
 <span class="sd">            model_input: Model input data as one of dict, str, bool, bytes, float, int, str type.</span>
 <span class="sd">            params: Additional parameters to pass to the model for inference.</span>
-
-<span class="sd">                .. Note:: Experimental: This parameter may change or be removed in a future</span>
-<span class="sd">                    release without warning.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Model predictions as an iterator of chunks. The chunks in the iterator must be type of</span>

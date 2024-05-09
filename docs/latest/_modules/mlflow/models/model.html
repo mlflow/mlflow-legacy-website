@@ -211,6 +211,7 @@
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pformat</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">NamedTuple</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urlparse</span>
 
 <span class="kn">import</span> <span class="nn">yaml</span>
 
@@ -218,7 +219,7 @@
 <span class="kn">from</span> <span class="nn">mlflow.artifacts</span> <span class="kn">import</span> <span class="n">download_artifacts</span>
 <span class="kn">from</span> <span class="nn">mlflow.exceptions</span> <span class="kn">import</span> <span class="n">MlflowException</span>
 <span class="kn">from</span> <span class="nn">mlflow.models.resources</span> <span class="kn">import</span> <span class="n">Resource</span><span class="p">,</span> <span class="n">ResourceType</span><span class="p">,</span> <span class="n">_ResourceBuilder</span>
-<span class="kn">from</span> <span class="nn">mlflow.protos.databricks_pb2</span> <span class="kn">import</span> <span class="n">INVALID_PARAMETER_VALUE</span>
+<span class="kn">from</span> <span class="nn">mlflow.protos.databricks_pb2</span> <span class="kn">import</span> <span class="n">INVALID_PARAMETER_VALUE</span><span class="p">,</span> <span class="n">RESOURCE_DOES_NOT_EXIST</span>
 <span class="kn">from</span> <span class="nn">mlflow.store.artifact.models_artifact_repo</span> <span class="kn">import</span> <span class="n">ModelsArtifactRepository</span>
 <span class="kn">from</span> <span class="nn">mlflow.store.artifact.runs_artifact_repo</span> <span class="kn">import</span> <span class="n">RunsArtifactRepository</span>
 <span class="kn">from</span> <span class="nn">mlflow.tracking._model_registry</span> <span class="kn">import</span> <span class="n">DEFAULT_AWAIT_MAX_SLEEP_SECONDS</span>
@@ -784,6 +785,14 @@
 <span class="sd">            # Load the Model object from a remote model directory</span>
 <span class="sd">            model2 = Model.load(&quot;s3://mybucket/path/to/my/model&quot;)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Check if the path is a local directory and not remote</span>
+        <span class="n">path_scheme</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">))</span><span class="o">.</span><span class="n">scheme</span>
+        <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">path_scheme</span> <span class="ow">or</span> <span class="n">path_scheme</span> <span class="o">==</span> <span class="s2">&quot;file&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;Could not find an &quot;</span><span class="si">{</span><span class="n">MLMODEL_FILE_NAME</span><span class="si">}</span><span class="s1">&quot; configuration file at &quot;</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">,</span>
+                <span class="n">RESOURCE_DOES_NOT_EXIST</span><span class="p">,</span>
+            <span class="p">)</span>
+
         <span class="n">path</span> <span class="o">=</span> <span class="n">download_artifacts</span><span class="p">(</span><span class="n">artifact_uri</span><span class="o">=</span><span class="n">path</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
             <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">MLMODEL_FILE_NAME</span><span class="p">)</span>

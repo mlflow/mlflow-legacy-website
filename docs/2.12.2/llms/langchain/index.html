@@ -424,6 +424,24 @@ environment has <cite>pydantic</cite> installed with at least version 2.</p>
 </li>
 </ul>
 </div>
+<div class="section" id="how-does-mlflow-langchain-autologging-interact-with-callbacks">
+<h3>How does MLflow langchain autologging interact with callbacks?<a class="headerlink" href="#how-does-mlflow-langchain-autologging-interact-with-callbacks" title="Permalink to this headline"> </a></h3>
+<ul>
+<li><p><strong>Model inference with default callbacks</strong>:</p>
+<blockquote>
+<div><p>If you invoke a langchain model with <cite>invoke</cite>, <cite>__call__</cite>, <cite>batch</cite>, <cite>stream</cite> or <cite>get_relevant_documents</cite> (for BaseRetriever) functions directly, MLflow autologging will inject
+a callback into the inference call to collect metrics and artifacts that can be generated from the call chain.</p>
+</div></blockquote>
+</li>
+<li><p><strong>Model inference with user-specified callbacks</strong>:</p>
+<blockquote>
+<div><p>If your inference call already includes callbacks in the config, e.g. <cite>model.invoke(input, config=RunnableConfig(callbacks=customer_callbacks))</cite>, then MLflow autologging
+still preserves your callbacks and appends a callback after them. <a class="reference external" href="https://api.python.langchain.com/en/latest/runnables/langchain_core.runnables.config.RunnableConfig.html#langchain_core.runnables.config.RunnableConfig">RunnableConfig callbacks parameter</a>
+supports both <cite>BaseCallbackManager</cite> or <cite>List[BaseCallbackHandler]</cite>, in either case MLflow autologging appends a callback to collect metrics and artifacts.</p>
+</div></blockquote>
+</li>
+</ul>
+</div>
 </div>
 </div>
 

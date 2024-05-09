@@ -1341,7 +1341,7 @@
         <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Missing required properties: </span><span class="si">{</span><span class="n">missing_props</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">invalid_props</span> <span class="o">:=</span> <span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="o">-</span> <span class="n">properties</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
         <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
-            <span class="s2">&quot;Invalid properties not defined in the schema found: &quot;</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">invalid_props</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Invalid properties not defined in the schema found: </span><span class="si">{</span><span class="n">invalid_props</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="p">)</span>
     <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="k">try</span><span class="p">:</span>
