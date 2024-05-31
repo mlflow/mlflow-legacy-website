@@ -288,8 +288,6 @@ fetch('/docs/versions.json')
       )
       .reverse();
 
-
-
     var seenMinorVersions = [];
     var latestMicroVersions = [];
     versions.forEach(function (version) {
