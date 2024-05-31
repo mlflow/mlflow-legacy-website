@@ -288,8 +288,7 @@ fetch('/docs/versions.json')
       )
       .reverse();
 
-    // Drop versions older than 1.20.2
-    versions = versions.slice(0, versions.indexOf('1.20.2') + 1);
+
 
     var seenMinorVersions = [];
     var latestMicroVersions = [];
