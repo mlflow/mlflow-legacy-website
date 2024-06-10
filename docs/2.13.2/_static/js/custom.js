@@ -169,31 +169,10 @@ $(window).scroll(function() {
     }
 });
 
-fetch('https://pypi.org/pypi/mlflow/json')
+fetch('/docs/versions.json')
   .then((response) => response.json())
   .then((data) => {
-    var versions = Object.keys(data.releases)
-      // Drop dev/pre/rc/post versions and versions older than 1.0
-      .filter(function (version) {
-        return /^[1-9]+(\.\d+){0,3}$/.test(version);
-      })
-      // Sort versions
-      // https://stackoverflow.com/a/40201629
-      .map((a) =>
-        a
-          .split('.')
-          .map((n) => +n + 100000)
-          .join('.'),
-      )
-      .sort()
-      .map((a) =>
-        a
-          .split('.')
-          .map((n) => +n - 100000)
-          .join('.'),
-      )
-      .reverse();
-
+    var versions =  data.versions.reverse()
     var seenMinorVersions = [];
     var latestMicroVersions = [];
     versions.forEach(function (version) {
