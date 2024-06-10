@@ -172,24 +172,7 @@ $(window).scroll(function() {
 fetch('/docs/versions.json')
   .then((response) => response.json())
   .then((data) => {
-    var versions =  data.versions
-      // Sort versions
-      // https://stackoverflow.com/a/40201629
-      .map((a) =>
-        a
-          .split('.')
-          .map((n) => +n + 100000)
-          .join('.'),
-      )
-      .sort()
-      .map((a) =>
-        a
-          .split('.')
-          .map((n) => +n - 100000)
-          .join('.'),
-      )
-      .reverse();
-
+    var versions =  data.versions.reverse()
     var seenMinorVersions = [];
     var latestMicroVersions = [];
     versions.forEach(function (version) {
