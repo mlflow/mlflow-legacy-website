@@ -240,12 +240,6 @@
 <p>MLflow Tracing support is available with the <strong>MLflow 2.14.0</strong> release. Versions of MLflow prior to this release
 do not contain the full set of features that are required for trace logging support.</p>
 </div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>If you are using MLflow tracing from within Databricks, MLflow <strong>2.13.2 and above</strong> contain the required dependencies to utilize tracing functionality
-within Databricks. Additionally, it is not recommended to install release candidates of MLflow on Databricks except for compatibility testing.
-Other Databricks service integrations with MLflow may not function correctly if you do install an RC build of MLflow.</p>
-</div>
 <div class="section" id="langchain-automatic-tracing">
 <h2>LangChain Automatic Tracing<a class="headerlink" href="#langchain-automatic-tracing" title="Permalink to this headline"> </a></h2>
 <p>The easiest way to get started with MLflow Tracing is to leverage the built-in capabilities with MLflow’s LangChain integration. As part of the
