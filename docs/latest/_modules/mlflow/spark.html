@@ -55,7 +55,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="MLflow 2.17.3.dev0 documentation" href="../../index.html"/>
+    <link rel="top" title="MLflow 2.17.2 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -87,7 +87,7 @@
     <a href="../../index.html" class="wy-nav-top-logo"
       ><img src="../../_static/MLflow-logo-final-black.png" alt="MLflow"
     /></a>
-    <span class="version">2.17.3.dev0</span>
+    <span class="version">2.17.2</span>
   </li>
 </ul>
   </nav>
@@ -228,7 +228,7 @@
 <span class="kn">import</span> <span class="nn">posixpath</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">import</span> <span class="nn">yaml</span>
 <span class="kn">from</span> <span class="nn">packaging.version</span> <span class="kn">import</span> <span class="n">Version</span>
@@ -348,7 +348,7 @@
 <div class="viewcode-block" id="log_model"><a class="viewcode-back" href="../../python_api/mlflow.spark.html#mlflow.spark.log_model">[docs]</a><span class="nd">@format_docstring</span><span class="p">(</span><span class="n">LOG_MODEL_PARAM_DOCS</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">package_name</span><span class="o">=</span><span class="s2">&quot;pyspark&quot;</span><span class="p">))</span>
 <span class="k">def</span> <span class="nf">log_model</span><span class="p">(</span>
     <span class="n">spark_model</span><span class="p">,</span>
-    <span class="n">artifact_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">artifact_path</span><span class="p">,</span>
     <span class="n">conda_env</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">code_paths</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">dfs_tmpdir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -360,12 +360,6 @@
     <span class="n">pip_requirements</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">extra_pip_requirements</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">model_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">step</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="n">model_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Log a Spark MLlib model as an MLflow artifact for the current run. This uses the</span>
@@ -377,8 +371,7 @@
 <span class="sd">        spark_model: Spark model to be saved - MLflow can only save descendants of</span>
 <span class="sd">            pyspark.ml.Model or pyspark.ml.Transformer which implement</span>
 <span class="sd">            MLReadable and MLWritable.</span>
-
-<span class="sd">        artifact_path: Deprecated. Use `name` instead.</span>
+<span class="sd">        artifact_path: Run relative artifact path.</span>
 <span class="sd">        conda_env: {{ conda_env }}</span>
 <span class="sd">        code_paths: {{ code_paths }}</span>
 <span class="sd">        dfs_tmpdir: Temporary directory path on Distributed (Hadoop) File System (DFS) or local</span>
@@ -457,12 +450,6 @@
 <span class="sd">        pip_requirements: {{ pip_requirements }}</span>
 <span class="sd">        extra_pip_requirements: {{ extra_pip_requirements }}</span>
 <span class="sd">        metadata: {{ metadata }}</span>
-<span class="sd">        name: {{ name }}</span>
-<span class="sd">        params: {{ params }}</span>
-<span class="sd">        tags: {{ tags }}</span>
-<span class="sd">        model_type: {{ model_type }}</span>
-<span class="sd">        step: {{ step }}</span>
-<span class="sd">        model_id: {{ model_id }}</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        A :py:class:`ModelInfo &lt;mlflow.models.model.ModelInfo&gt;` instance that contains the</span>
@@ -497,7 +484,6 @@
     <span class="k">if</span> <span class="n">_is_spark_connect_model</span><span class="p">(</span><span class="n">spark_model</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">Model</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
             <span class="n">artifact_path</span><span class="o">=</span><span class="n">artifact_path</span><span class="p">,</span>
-            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
             <span class="n">flavor</span><span class="o">=</span><span class="n">mlflow</span><span class="o">.</span><span class="n">spark</span><span class="p">,</span>
             <span class="n">spark_model</span><span class="o">=</span><span class="n">spark_model</span><span class="p">,</span>
             <span class="n">conda_env</span><span class="o">=</span><span class="n">conda_env</span><span class="p">,</span>
@@ -510,11 +496,6 @@
             <span class="n">pip_requirements</span><span class="o">=</span><span class="n">pip_requirements</span><span class="p">,</span>
             <span class="n">extra_pip_requirements</span><span class="o">=</span><span class="n">extra_pip_requirements</span><span class="p">,</span>
             <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">,</span>
-            <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
-            <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">,</span>
-            <span class="n">model_type</span><span class="o">=</span><span class="n">model_type</span><span class="p">,</span>
-            <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">,</span>
-            <span class="n">model_id</span><span class="o">=</span><span class="n">model_id</span><span class="p">,</span>
         <span class="p">)</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spark_model</span><span class="p">,</span> <span class="n">PipelineModel</span><span class="p">):</span>
@@ -523,8 +504,10 @@
     <span class="n">run_root_artifact_uri</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">get_artifact_uri</span><span class="p">()</span>
     <span class="n">remote_model_path</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">if</span> <span class="n">_should_use_mlflowdbfs</span><span class="p">(</span><span class="n">run_root_artifact_uri</span><span class="p">):</span>
-        <span class="n">remote_model_path</span> <span class="o">=</span> <span class="n">append_to_uri_path</span><span class="p">(</span><span class="n">run_root_artifact_uri</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">_SPARK_MODEL_PATH_SUB</span><span class="p">)</span>
-        <span class="n">mlflowdbfs_path</span> <span class="o">=</span> <span class="n">_mlflowdbfs_path</span><span class="p">(</span><span class="n">run_id</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="n">remote_model_path</span> <span class="o">=</span> <span class="n">append_to_uri_path</span><span class="p">(</span>
+            <span class="n">run_root_artifact_uri</span><span class="p">,</span> <span class="n">artifact_path</span><span class="p">,</span> <span class="n">_SPARK_MODEL_PATH_SUB</span>
+        <span class="p">)</span>
+        <span class="n">mlflowdbfs_path</span> <span class="o">=</span> <span class="n">_mlflowdbfs_path</span><span class="p">(</span><span class="n">run_id</span><span class="p">,</span> <span class="n">artifact_path</span><span class="p">)</span>
         <span class="k">with</span> <span class="n">databricks_utils</span><span class="o">.</span><span class="n">MlflowCredentialContext</span><span class="p">(</span>
             <span class="n">get_databricks_profile_uri_from_artifact_uri</span><span class="p">(</span><span class="n">run_root_artifact_uri</span><span class="p">)</span>
         <span class="p">):</span>
@@ -541,11 +524,10 @@
     <span class="c1"># artifact repo via Spark. If this fails, we defer to Model.log().</span>
     <span class="k">elif</span> <span class="n">is_local_uri</span><span class="p">(</span><span class="n">run_root_artifact_uri</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">_maybe_save_model</span><span class="p">(</span>
         <span class="n">spark_model</span><span class="p">,</span>
-        <span class="n">append_to_uri_path</span><span class="p">(</span><span class="n">run_root_artifact_uri</span><span class="p">,</span> <span class="n">name</span><span class="p">),</span>
+        <span class="n">append_to_uri_path</span><span class="p">(</span><span class="n">run_root_artifact_uri</span><span class="p">,</span> <span class="n">artifact_path</span><span class="p">),</span>
     <span class="p">):</span>
         <span class="k">return</span> <span class="n">Model</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
             <span class="n">artifact_path</span><span class="o">=</span><span class="n">artifact_path</span><span class="p">,</span>
-            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
             <span class="n">flavor</span><span class="o">=</span><span class="n">mlflow</span><span class="o">.</span><span class="n">spark</span><span class="p">,</span>
             <span class="n">spark_model</span><span class="o">=</span><span class="n">spark_model</span><span class="p">,</span>
             <span class="n">conda_env</span><span class="o">=</span><span class="n">conda_env</span><span class="p">,</span>
@@ -559,23 +541,9 @@
             <span class="n">pip_requirements</span><span class="o">=</span><span class="n">pip_requirements</span><span class="p">,</span>
             <span class="n">extra_pip_requirements</span><span class="o">=</span><span class="n">extra_pip_requirements</span><span class="p">,</span>
             <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">,</span>
-            <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
-            <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">,</span>
-            <span class="n">model_type</span><span class="o">=</span><span class="n">model_type</span><span class="p">,</span>
-            <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">,</span>
-            <span class="n">model_id</span><span class="o">=</span><span class="n">model_id</span><span class="p">,</span>
         <span class="p">)</span>
     <span class="c1"># Otherwise, override the default model log behavior and save model directly to artifact repo</span>
-    <span class="n">client</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">tracking</span><span class="o">.</span><span class="n">MlflowClient</span><span class="p">()</span>
-    <span class="n">logged_model</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_logged_model</span><span class="p">(</span>
-        <span class="n">experiment_id</span><span class="o">=</span><span class="n">mlflow</span><span class="o">.</span><span class="n">tracking</span><span class="o">.</span><span class="n">fluent</span><span class="o">.</span><span class="n">_get_experiment_id</span><span class="p">(),</span>
-        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
-        <span class="n">run_id</span><span class="o">=</span><span class="n">run</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">run_id</span> <span class="k">if</span> <span class="p">(</span><span class="n">run</span> <span class="o">:=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">active_run</span><span class="p">())</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">model_type</span><span class="o">=</span><span class="n">model_type</span><span class="p">,</span>
-        <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
-        <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="n">mlflow_model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">artifact_path</span><span class="o">=</span><span class="n">logged_model</span><span class="o">.</span><span class="n">artifact_location</span><span class="p">,</span> <span class="n">run_id</span><span class="o">=</span><span class="n">run_id</span><span class="p">)</span>
+    <span class="n">mlflow_model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">artifact_path</span><span class="o">=</span><span class="n">artifact_path</span><span class="p">,</span> <span class="n">run_id</span><span class="o">=</span><span class="n">run_id</span><span class="p">)</span>
     <span class="k">with</span> <span class="n">TempDir</span><span class="p">()</span> <span class="k">as</span> <span class="n">tmp</span><span class="p">:</span>
         <span class="n">tmp_model_metadata_dir</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">.</span><span class="n">path</span><span class="p">()</span>
         <span class="n">_save_model_metadata</span><span class="p">(</span>
@@ -591,11 +559,11 @@
             <span class="n">extra_pip_requirements</span><span class="o">=</span><span class="n">extra_pip_requirements</span><span class="p">,</span>
             <span class="n">remote_model_path</span><span class="o">=</span><span class="n">remote_model_path</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="n">mlflow</span><span class="o">.</span><span class="n">tracking</span><span class="o">.</span><span class="n">fluent</span><span class="o">.</span><span class="n">log_artifacts</span><span class="p">(</span><span class="n">tmp_model_metadata_dir</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="n">mlflow</span><span class="o">.</span><span class="n">tracking</span><span class="o">.</span><span class="n">fluent</span><span class="o">.</span><span class="n">log_artifacts</span><span class="p">(</span><span class="n">tmp_model_metadata_dir</span><span class="p">,</span> <span class="n">artifact_path</span><span class="p">)</span>
         <span class="n">mlflow</span><span class="o">.</span><span class="n">tracking</span><span class="o">.</span><span class="n">fluent</span><span class="o">.</span><span class="n">_record_logged_model</span><span class="p">(</span><span class="n">mlflow_model</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">registered_model_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">mlflow</span><span class="o">.</span><span class="n">register_model</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;models:/</span><span class="si">{</span><span class="n">logged_model</span><span class="o">.</span><span class="n">model_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">&quot;runs:/</span><span class="si">{</span><span class="n">run_id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">artifact_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
                 <span class="n">registered_model_name</span><span class="p">,</span>
                 <span class="n">await_registration_for</span><span class="p">,</span>
             <span class="p">)</span>
@@ -1264,7 +1232,7 @@
     <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">pandas_df</span><span class="p">,</span>
-        <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate predictions given input data in a pandas DataFrame.</span>
@@ -1359,8 +1327,6 @@
 <span class="sd">    For any unexpected issues with autologging, check Spark driver and executor logs in addition</span>
 <span class="sd">    to stderr &amp; stdout generated from your MLflow code - datasource information is pulled from</span>
 <span class="sd">    Spark, so logs relevant to debugging may show up amongst the Spark logs.</span>
-
-<span class="sd">    .. Note:: Spark datasource autologging only supports logging to MLflow runs in a single thread</span>
 
 <span class="sd">    .. code-block:: python</span>
 <span class="sd">        :caption: Example</span>
@@ -1488,7 +1454,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../',
-      VERSION:'2.17.3.dev0',
+      VERSION:'2.17.2',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

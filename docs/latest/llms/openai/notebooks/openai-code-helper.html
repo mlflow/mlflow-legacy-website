@@ -55,7 +55,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 2.17.3.dev0 documentation" href="../../../index.html"/>
+    <link rel="top" title="MLflow 2.17.2 documentation" href="../../../index.html"/>
         <link rel="up" title="MLflow OpenAI Flavor" href="../index.html"/>
         <link rel="next" title="Advanced Tutorial: Embeddings Support with OpenAI in MLflow" href="/openai-embeddings-generation.html"/>
         <link rel="prev" title="Introduction: Advancing Communication with GPT-4 and MLflow" href="/openai-chat-completions.html"/> 
@@ -90,7 +90,7 @@
     <a href="../../../index.html" class="wy-nav-top-logo"
       ><img src="../../../_static/MLflow-logo-final-black.png" alt="MLflow"
     /></a>
-    <span class="version">2.17.3.dev0</span>
+    <span class="version">2.17.2</span>
   </li>
 </ul>
   </nav>
@@ -151,7 +151,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../../sentence-transformers/index.html">MLflow Sentence-Transformers Flavor</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../langchain/index.html">MLflow LangChain Flavor</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../llama-index/index.html">MLflow LlamaIndex Flavor</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../dspy/index.html">MLflow DSPy Flavor</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../index.html#explore-the-native-llm-flavors">Explore the Native LLM Flavors</a></li>
 </ul>
 </li>
@@ -1287,12 +1286,11 @@ instead of a lambda function.
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
-
-
-<span class="nd">@code_inspector</span><span class="p">(</span><span class="n">loaded_helper</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@code_inspector</span><span class="p">(</span><span class="n">loaded_helper</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">find_phone_numbers</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
     <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;(\d</span><span class="si">{3}</span><span class="s2">)-\d</span><span class="si">{3}</span><span class="s2">-\d</span><span class="si">{4}</span><span class="s2">&quot;</span>
+
+    <span class="kn">import</span> <span class="nn">re</span>
 
     <span class="n">compiled_pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">complie</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
 
@@ -1485,7 +1483,7 @@ for the sake of this example.
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'2.17.3.dev0',
+      VERSION:'2.17.2',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

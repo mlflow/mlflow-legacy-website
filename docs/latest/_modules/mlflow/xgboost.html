@@ -55,7 +55,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="MLflow 2.17.3.dev0 documentation" href="../../index.html"/>
+    <link rel="top" title="MLflow 2.17.2 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -87,7 +87,7 @@
     <a href="../../index.html" class="wy-nav-top-logo"
       ><img src="../../_static/MLflow-logo-final-black.png" alt="MLflow"
     /></a>
-    <span class="version">2.17.3.dev0</span>
+    <span class="version">2.17.2</span>
   </li>
 </ul>
   </nav>
@@ -229,7 +229,7 @@
 <span class="kn">import</span> <span class="nn">tempfile</span>
 <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">import</span> <span class="nn">yaml</span>
 <span class="kn">from</span> <span class="nn">packaging.version</span> <span class="kn">import</span> <span class="n">Version</span>
@@ -428,7 +428,7 @@
 <div class="viewcode-block" id="log_model"><a class="viewcode-back" href="../../python_api/mlflow.xgboost.html#mlflow.xgboost.log_model">[docs]</a><span class="nd">@format_docstring</span><span class="p">(</span><span class="n">LOG_MODEL_PARAM_DOCS</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">package_name</span><span class="o">=</span><span class="n">FLAVOR_NAME</span><span class="p">))</span>
 <span class="k">def</span> <span class="nf">log_model</span><span class="p">(</span>
     <span class="n">xgb_model</span><span class="p">,</span>
-    <span class="n">artifact_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">artifact_path</span><span class="p">,</span>
     <span class="n">conda_env</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">code_paths</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">registered_model_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -439,12 +439,6 @@
     <span class="n">extra_pip_requirements</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">model_format</span><span class="o">=</span><span class="s2">&quot;xgb&quot;</span><span class="p">,</span>
     <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">model_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">step</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="n">model_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Log an XGBoost model as an MLflow artifact for the current run.</span>
@@ -452,7 +446,7 @@
 <span class="sd">    Args:</span>
 <span class="sd">        xgb_model: XGBoost model (an instance of `xgboost.Booster`_ or models that implement the</span>
 <span class="sd">            `scikit-learn API`_) to be saved.</span>
-<span class="sd">        artifact_path: Deprecated. Use `name` instead.</span>
+<span class="sd">        artifact_path: Run-relative artifact path.</span>
 <span class="sd">        conda_env: {{ conda_env }}</span>
 <span class="sd">        code_paths: {{ code_paths }}</span>
 <span class="sd">        registered_model_name: If given, create a model version under</span>
@@ -467,12 +461,6 @@
 <span class="sd">        extra_pip_requirements: {{ extra_pip_requirements }}</span>
 <span class="sd">        model_format: File format in which the model is to be saved.</span>
 <span class="sd">        metadata: {{ metadata }}</span>
-<span class="sd">        name: {{ name }}</span>
-<span class="sd">        params: {{ params }}</span>
-<span class="sd">        tags: {{ tags }}</span>
-<span class="sd">        model_type: {{ model_type }}</span>
-<span class="sd">        step: {{ step }}</span>
-<span class="sd">        model_id: {{ model_id }}</span>
 <span class="sd">        kwargs: kwargs to pass to `xgboost.Booster.save_model`_ method.</span>
 
 <span class="sd">    Returns</span>
@@ -481,7 +469,6 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">Model</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
         <span class="n">artifact_path</span><span class="o">=</span><span class="n">artifact_path</span><span class="p">,</span>
-        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
         <span class="n">flavor</span><span class="o">=</span><span class="n">mlflow</span><span class="o">.</span><span class="n">xgboost</span><span class="p">,</span>
         <span class="n">registered_model_name</span><span class="o">=</span><span class="n">registered_model_name</span><span class="p">,</span>
         <span class="n">xgb_model</span><span class="o">=</span><span class="n">xgb_model</span><span class="p">,</span>
@@ -494,11 +481,6 @@
         <span class="n">pip_requirements</span><span class="o">=</span><span class="n">pip_requirements</span><span class="p">,</span>
         <span class="n">extra_pip_requirements</span><span class="o">=</span><span class="n">extra_pip_requirements</span><span class="p">,</span>
         <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">,</span>
-        <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
-        <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">,</span>
-        <span class="n">model_type</span><span class="o">=</span><span class="n">model_type</span><span class="p">,</span>
-        <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">,</span>
-        <span class="n">model_id</span><span class="o">=</span><span class="n">model_id</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">)</span></div>
 
@@ -575,7 +557,7 @@
     <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">dataframe</span><span class="p">,</span>
-        <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
@@ -898,13 +880,12 @@
         <span class="n">dtrain</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dtrain&quot;</span><span class="p">)</span>
 
         <span class="c1"># Whether to automatically log the training dataset as a dataset artifact.</span>
-        <span class="n">dataset</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">_log_datasets</span> <span class="ow">and</span> <span class="n">dtrain</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">context_tags</span> <span class="o">=</span> <span class="n">context_registry</span><span class="o">.</span><span class="n">resolve_tags</span><span class="p">()</span>
                 <span class="n">source</span> <span class="o">=</span> <span class="n">CodeDatasetSource</span><span class="p">(</span><span class="n">context_tags</span><span class="p">)</span>
 
-                <span class="n">dataset</span> <span class="o">=</span> <span class="n">_log_xgboost_dataset</span><span class="p">(</span><span class="n">dtrain</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="n">autologging_client</span><span class="p">)</span>
+                <span class="n">_log_xgboost_dataset</span><span class="p">(</span><span class="n">dtrain</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="n">autologging_client</span><span class="p">)</span>
                 <span class="n">evals</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;evals&quot;</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">evals</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">evals</span><span class="p">:</span>
@@ -930,48 +911,6 @@
             <span class="c1"># training model</span>
             <span class="n">model</span> <span class="o">=</span> <span class="n">original</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-            <span class="c1"># dtrain must exist as the original train function already ran successfully</span>
-            <span class="c1"># it is possible that the dataset was constructed before the patched</span>
-            <span class="c1">#   constructor was applied, so we cannot assume the input_example_info exists</span>
-            <span class="n">input_example_info</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">dtrain</span><span class="p">,</span> <span class="s2">&quot;input_example_info&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-
-            <span class="k">def</span> <span class="nf">get_input_example</span><span class="p">():</span>
-                <span class="k">if</span> <span class="n">input_example_info</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">ENSURE_AUTOLOGGING_ENABLED_TEXT</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">input_example_info</span><span class="o">.</span><span class="n">error_msg</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">input_example_info</span><span class="o">.</span><span class="n">error_msg</span><span class="p">)</span>
-                <span class="k">return</span> <span class="n">input_example_info</span><span class="o">.</span><span class="n">input_example</span>
-
-            <span class="k">def</span> <span class="nf">infer_model_signature</span><span class="p">(</span><span class="n">input_example</span><span class="p">):</span>
-                <span class="n">model_output</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">xgboost</span><span class="o">.</span><span class="n">DMatrix</span><span class="p">(</span><span class="n">input_example</span><span class="p">))</span>
-                <span class="k">return</span> <span class="n">infer_signature</span><span class="p">(</span><span class="n">input_example</span><span class="p">,</span> <span class="n">model_output</span><span class="p">)</span>
-
-            <span class="c1"># Only log the model if the autolog() param log_models is set to True.</span>
-            <span class="n">model_id</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="k">if</span> <span class="n">_log_models</span><span class="p">:</span>
-                <span class="c1"># Will only resolve `input_example` and `signature` if `log_models` is `True`.</span>
-                <span class="n">input_example</span><span class="p">,</span> <span class="n">signature</span> <span class="o">=</span> <span class="n">resolve_input_example_and_signature</span><span class="p">(</span>
-                    <span class="n">get_input_example</span><span class="p">,</span>
-                    <span class="n">infer_model_signature</span><span class="p">,</span>
-                    <span class="n">log_input_examples</span><span class="p">,</span>
-                    <span class="n">log_model_signatures</span><span class="p">,</span>
-                    <span class="n">_logger</span><span class="p">,</span>
-                <span class="p">)</span>
-
-                <span class="n">registered_model_name</span> <span class="o">=</span> <span class="n">get_autologging_config</span><span class="p">(</span>
-                    <span class="n">FLAVOR_NAME</span><span class="p">,</span> <span class="s2">&quot;registered_model_name&quot;</span><span class="p">,</span> <span class="kc">None</span>
-                <span class="p">)</span>
-                <span class="n">logged_model</span> <span class="o">=</span> <span class="n">log_model</span><span class="p">(</span>
-                    <span class="n">model</span><span class="p">,</span>
-                    <span class="s2">&quot;model&quot;</span><span class="p">,</span>
-                    <span class="n">signature</span><span class="o">=</span><span class="n">signature</span><span class="p">,</span>
-                    <span class="n">input_example</span><span class="o">=</span><span class="n">input_example</span><span class="p">,</span>
-                    <span class="n">registered_model_name</span><span class="o">=</span><span class="n">registered_model_name</span><span class="p">,</span>
-                    <span class="n">model_format</span><span class="o">=</span><span class="n">model_format</span><span class="p">,</span>
-                    <span class="n">params</span><span class="o">=</span><span class="n">params_to_log_for_fn</span><span class="p">,</span>
-                <span class="p">)</span>
-                <span class="n">model_id</span> <span class="o">=</span> <span class="n">logged_model</span><span class="o">.</span><span class="n">model_id</span>
-
             <span class="c1"># If early_stopping_rounds is present, logging metrics at the best iteration</span>
             <span class="c1"># as extra metrics with the max step + 1.</span>
             <span class="n">early_stopping_index</span> <span class="o">=</span> <span class="n">all_arg_names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;early_stopping_rounds&quot;</span><span class="p">)</span>
@@ -986,15 +925,11 @@
                         <span class="s2">&quot;stopped_iteration&quot;</span><span class="p">:</span> <span class="n">extra_step</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
                         <span class="s2">&quot;best_iteration&quot;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">best_iteration</span><span class="p">,</span>
                     <span class="p">},</span>
-                    <span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span>
-                    <span class="n">model_id</span><span class="o">=</span><span class="n">model_id</span><span class="p">,</span>
                 <span class="p">)</span>
                 <span class="n">autologging_client</span><span class="o">.</span><span class="n">log_metrics</span><span class="p">(</span>
                     <span class="n">run_id</span><span class="o">=</span><span class="n">mlflow</span><span class="o">.</span><span class="n">active_run</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">run_id</span><span class="p">,</span>
                     <span class="n">metrics</span><span class="o">=</span><span class="n">eval_results</span><span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">best_iteration</span><span class="p">],</span>
                     <span class="n">step</span><span class="o">=</span><span class="n">extra_step</span><span class="p">,</span>
-                    <span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span>
-                    <span class="n">model_id</span><span class="o">=</span><span class="n">model_id</span><span class="p">,</span>
                 <span class="p">)</span>
                 <span class="n">early_stopping_logging_operations</span> <span class="o">=</span> <span class="n">autologging_client</span><span class="o">.</span><span class="n">flush</span><span class="p">(</span><span class="n">synchronous</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
@@ -1017,6 +952,45 @@
                     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                         <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">imp</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
                     <span class="n">mlflow</span><span class="o">.</span><span class="n">log_artifact</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+
+        <span class="c1"># dtrain must exist as the original train function already ran successfully</span>
+        <span class="c1"># it is possible that the dataset was constructed before the patched</span>
+        <span class="c1">#   constructor was applied, so we cannot assume the input_example_info exists</span>
+        <span class="n">input_example_info</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">dtrain</span><span class="p">,</span> <span class="s2">&quot;input_example_info&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">get_input_example</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">input_example_info</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">ENSURE_AUTOLOGGING_ENABLED_TEXT</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">input_example_info</span><span class="o">.</span><span class="n">error_msg</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">input_example_info</span><span class="o">.</span><span class="n">error_msg</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">input_example_info</span><span class="o">.</span><span class="n">input_example</span>
+
+        <span class="k">def</span> <span class="nf">infer_model_signature</span><span class="p">(</span><span class="n">input_example</span><span class="p">):</span>
+            <span class="n">model_output</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">xgboost</span><span class="o">.</span><span class="n">DMatrix</span><span class="p">(</span><span class="n">input_example</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">infer_signature</span><span class="p">(</span><span class="n">input_example</span><span class="p">,</span> <span class="n">model_output</span><span class="p">)</span>
+
+        <span class="c1"># Only log the model if the autolog() param log_models is set to True.</span>
+        <span class="k">if</span> <span class="n">_log_models</span><span class="p">:</span>
+            <span class="c1"># Will only resolve `input_example` and `signature` if `log_models` is `True`.</span>
+            <span class="n">input_example</span><span class="p">,</span> <span class="n">signature</span> <span class="o">=</span> <span class="n">resolve_input_example_and_signature</span><span class="p">(</span>
+                <span class="n">get_input_example</span><span class="p">,</span>
+                <span class="n">infer_model_signature</span><span class="p">,</span>
+                <span class="n">log_input_examples</span><span class="p">,</span>
+                <span class="n">log_model_signatures</span><span class="p">,</span>
+                <span class="n">_logger</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="n">registered_model_name</span> <span class="o">=</span> <span class="n">get_autologging_config</span><span class="p">(</span>
+                <span class="n">FLAVOR_NAME</span><span class="p">,</span> <span class="s2">&quot;registered_model_name&quot;</span><span class="p">,</span> <span class="kc">None</span>
+            <span class="p">)</span>
+            <span class="n">log_model</span><span class="p">(</span>
+                <span class="n">model</span><span class="p">,</span>
+                <span class="n">artifact_path</span><span class="o">=</span><span class="s2">&quot;model&quot;</span><span class="p">,</span>
+                <span class="n">signature</span><span class="o">=</span><span class="n">signature</span><span class="p">,</span>
+                <span class="n">input_example</span><span class="o">=</span><span class="n">input_example</span><span class="p">,</span>
+                <span class="n">registered_model_name</span><span class="o">=</span><span class="n">registered_model_name</span><span class="p">,</span>
+                <span class="n">model_format</span><span class="o">=</span><span class="n">model_format</span><span class="p">,</span>
+            <span class="p">)</span>
 
         <span class="n">param_logging_operations</span><span class="o">.</span><span class="n">await_completion</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">early_stopping</span><span class="p">:</span>
@@ -1099,7 +1073,6 @@
         <span class="n">autologging_client</span><span class="o">.</span><span class="n">log_inputs</span><span class="p">(</span>
             <span class="n">run_id</span><span class="o">=</span><span class="n">mlflow</span><span class="o">.</span><span class="n">active_run</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">run_id</span><span class="p">,</span> <span class="n">datasets</span><span class="o">=</span><span class="p">[</span><span class="n">dataset_input</span><span class="p">]</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="n">dataset</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
             <span class="s2">&quot;Unable to log dataset information to MLflow Tracking.&quot;</span>
@@ -1135,7 +1108,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../',
-      VERSION:'2.17.3.dev0',
+      VERSION:'2.17.2',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

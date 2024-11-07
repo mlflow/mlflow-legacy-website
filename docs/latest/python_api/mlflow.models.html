@@ -55,7 +55,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MLflow 2.17.3.dev0 documentation" href="../index.html"/>
+    <link rel="top" title="MLflow 2.17.2 documentation" href="../index.html"/>
         <link rel="up" title="Python API" href="index.html"/>
         <link rel="next" title="mlflow.onnx" href="/mlflow.onnx.html"/>
         <link rel="prev" title="mlflow.mleap" href="/mlflow.mleap.html"/> 
@@ -88,7 +88,7 @@
     <a href="../index.html" class="wy-nav-top-logo"
       ><img src="../_static/MLflow-logo-final-black.png" alt="MLflow"
     /></a>
-    <span class="version">2.17.3.dev0</span>
+    <span class="version">2.17.2</span>
   </li>
 </ul>
   </nav>
@@ -156,7 +156,6 @@
 <li class="toctree-l2"><a class="reference internal" href="mlflow.data.html">mlflow.data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.deployments.html">mlflow.deployments</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.diviner.html">mlflow.diviner</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mlflow.dspy.html">mlflow.dspy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.entities.html">mlflow.entities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.environment_variables.html">mlflow.environment_variables</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.fastai.html">mlflow.fastai</a></li>
@@ -362,7 +361,7 @@ are persisted so that we can deserialize the same metric object later.</p></li>
 
 <dl class="py class">
 <dt id="mlflow.models.EvaluationResult">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mlflow.models.</span></code><code class="sig-name descname"><span class="pre">EvaluationResult</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artifacts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/models/evaluation/base.html#EvaluationResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.EvaluationResult" title="Permalink to this definition"> </a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mlflow.models.</span></code><code class="sig-name descname"><span class="pre">EvaluationResult</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artifacts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baseline_model_metrics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/models/evaluation/base.html#EvaluationResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.EvaluationResult" title="Permalink to this definition"> </a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Represents the model evaluation outputs of a <cite>mlflow.evaluate()</cite> API call, containing
 both scalar metrics and output artifacts such as performance plots.</p>
@@ -371,6 +370,12 @@ both scalar metrics and output artifacts such as performance plots.</p>
 <em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">artifacts</span></code><a class="headerlink" href="#mlflow.models.EvaluationResult.artifacts" title="Permalink to this definition"> </a></dt>
 <dd><p>A dictionary mapping standardized artifact names (e.g. “roc_data”) to
 artifact content and location information</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mlflow.models.EvaluationResult.baseline_model_metrics">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">baseline_model_metrics</span></code><a class="headerlink" href="#mlflow.models.EvaluationResult.baseline_model_metrics" title="Permalink to this definition"> </a></dt>
+<dd><p>A dictionary mapping scalar metric names to scalar metric values for the baseline model</p>
 </dd></dl>
 
 <dl class="py method">
@@ -585,24 +590,19 @@ baseline model.</p>
 
 <dl class="py class">
 <dt id="mlflow.models.Model">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mlflow.models.</span></code><code class="sig-name descname"><span class="pre">Model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">artifact_path=None</span></em>, <em class="sig-param"><span class="pre">run_id=None</span></em>, <em class="sig-param"><span class="pre">utc_time_created=None</span></em>, <em class="sig-param"><span class="pre">flavors=None</span></em>, <em class="sig-param"><span class="pre">signature=None</span></em>, <em class="sig-param"><span class="pre">saved_input_example_info:</span> <span class="pre">Optional[dict]</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">model_uuid:</span> <span class="pre">Optional[Union[str</span></em>, <em class="sig-param"><span class="pre">Callable]]</span> <span class="pre">=</span> <span class="pre">&lt;function</span> <span class="pre">Model.&lt;lambda&gt;&gt;</span></em>, <em class="sig-param"><span class="pre">mlflow_version:</span> <span class="pre">Optional[str]</span> <span class="pre">=</span> <span class="pre">'2.17.3.dev0'</span></em>, <em class="sig-param"><span class="pre">metadata:</span> <span class="pre">Optional[dict]</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">model_size_bytes:</span> <span class="pre">Optional[int]</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">resources:</span> <span class="pre">Optional[Union[str</span></em>, <em class="sig-param"><span class="pre">list]]</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">env_vars:</span> <span class="pre">Optional[list]</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">model_id:</span> <span class="pre">Optional[str]</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">**kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/models/model.html#Model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.Model" title="Permalink to this definition"> </a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mlflow.models.</span></code><code class="sig-name descname"><span class="pre">Model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">artifact_path=None</span></em>, <em class="sig-param"><span class="pre">run_id=None</span></em>, <em class="sig-param"><span class="pre">utc_time_created=None</span></em>, <em class="sig-param"><span class="pre">flavors=None</span></em>, <em class="sig-param"><span class="pre">signature=None</span></em>, <em class="sig-param"><span class="pre">saved_input_example_info:</span> <span class="pre">Optional[Dict[str</span></em>, <em class="sig-param"><span class="pre">Any]]</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">model_uuid:</span> <span class="pre">Optional[Union[str</span></em>, <em class="sig-param"><span class="pre">Callable]]</span> <span class="pre">=</span> <span class="pre">&lt;function</span> <span class="pre">Model.&lt;lambda&gt;&gt;</span></em>, <em class="sig-param"><span class="pre">mlflow_version:</span> <span class="pre">Optional[str]</span> <span class="pre">=</span> <span class="pre">'2.17.2'</span></em>, <em class="sig-param"><span class="pre">metadata:</span> <span class="pre">Optional[Dict[str</span></em>, <em class="sig-param"><span class="pre">Any]]</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">model_size_bytes:</span> <span class="pre">Optional[int]</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">resources:</span> <span class="pre">Optional[Union[str</span></em>, <em class="sig-param"><span class="pre">List[mlflow.models.resources.Resource]]]</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">**kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/models/model.html#Model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.Model" title="Permalink to this definition"> </a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>An MLflow Model that can support multiple model flavors. Provides APIs for implementing
 new Model flavors.</p>
 <dl class="py method">
 <dt id="mlflow.models.Model.add_flavor">
-<code class="sig-name descname"><span class="pre">add_flavor</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">mlflow.models.model.Model</span><a class="reference internal" href="../_modules/mlflow/models/model.html#Model.add_flavor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.Model.add_flavor" title="Permalink to this definition"> </a></dt>
+<code class="sig-name descname"><span class="pre">add_flavor</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/models/model.html#Model.add_flavor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.Model.add_flavor" title="Permalink to this definition"> </a></dt>
 <dd><p>Add an entry for how to serve the model in a given format.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.models.Model.env_vars">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">env_vars</span></code><a class="headerlink" href="#mlflow.models.Model.env_vars" title="Permalink to this definition"> </a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
 <dt id="mlflow.models.Model.from_dict">
-<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">from_dict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_dict</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">mlflow.models.model.Model</span><a class="reference internal" href="../_modules/mlflow/models/model.html#Model.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.Model.from_dict" title="Permalink to this definition"> </a></dt>
+<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">from_dict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/models/model.html#Model.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.Model.from_dict" title="Permalink to this definition"> </a></dt>
 <dd><p>Load a model from its YAML representation.</p>
 </dd></dl>
 
@@ -614,7 +614,7 @@ new Model flavors.</p>
 
 <dl class="py method">
 <dt id="mlflow.models.Model.get_model_info">
-<code class="sig-name descname"><span class="pre">get_model_info</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logged_model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="mlflow.entities.html#mlflow.entities.LoggedModel" title="mlflow.entities.LoggedModel"><span class="pre">LoggedModel</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#mlflow.models.model.ModelInfo" title="mlflow.models.model.ModelInfo"><span class="pre">mlflow.models.model.ModelInfo</span></a><a class="reference internal" href="../_modules/mlflow/models/model.html#Model.get_model_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.Model.get_model_info" title="Permalink to this definition"> </a></dt>
+<code class="sig-name descname"><span class="pre">get_model_info</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/models/model.html#Model.get_model_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.Model.get_model_info" title="Permalink to this definition"> </a></dt>
 <dd><p>Create a <a class="reference internal" href="#mlflow.models.model.ModelInfo" title="mlflow.models.model.ModelInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModelInfo</span></code></a> instance that contains the
 model metadata.</p>
 </dd></dl>
@@ -634,7 +634,7 @@ definition.</p>
 
 <dl class="py method">
 <dt id="mlflow.models.Model.get_serving_input">
-<code class="sig-name descname"><span class="pre">get_serving_input</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../_modules/mlflow/models/model.html#Model.get_serving_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.Model.get_serving_input" title="Permalink to this definition"> </a></dt>
+<code class="sig-name descname"><span class="pre">get_serving_input</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/models/model.html#Model.get_serving_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.Model.get_serving_input" title="Permalink to this definition"> </a></dt>
 <dd><p>Load serving input example from a model directory. Returns None if there is no serving input
 example.</p>
 <dl class="field-list simple">
@@ -649,12 +649,12 @@ example.</p>
 
 <dl class="py method">
 <dt id="mlflow.models.Model.get_tags_dict">
-<code class="sig-name descname"><span class="pre">get_tags_dict</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">dict</span><a class="reference internal" href="../_modules/mlflow/models/model.html#Model.get_tags_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.Model.get_tags_dict" title="Permalink to this definition"> </a></dt>
+<code class="sig-name descname"><span class="pre">get_tags_dict</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/models/model.html#Model.get_tags_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.Model.get_tags_dict" title="Permalink to this definition"> </a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="mlflow.models.Model.load">
-<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">load</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">mlflow.models.model.Model</span><a class="reference internal" href="../_modules/mlflow/models/model.html#Model.load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.Model.load" title="Permalink to this definition"> </a></dt>
+<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">load</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/models/model.html#Model.load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.Model.load" title="Permalink to this definition"> </a></dt>
 <dd><p>Load a model from its YAML representation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -682,7 +682,7 @@ the MLmodel YAML file representation.</p>
 
 <dl class="py method">
 <dt id="mlflow.models.Model.load_input_example">
-<code class="sig-name descname"><span class="pre">load_input_example</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../_modules/mlflow/models/model.html#Model.load_input_example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.Model.load_input_example" title="Permalink to this definition"> </a></dt>
+<code class="sig-name descname"><span class="pre">load_input_example</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/models/model.html#Model.load_input_example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.Model.load_input_example" title="Permalink to this definition"> </a></dt>
 <dd><p>Load the input example saved along a model. Returns None if there is no example metadata
 (i.e. the model was saved without example). Raises FileNotFoundError if there is model
 metadata but the example file is missing.</p>
@@ -714,33 +714,27 @@ the input_example.</p>
 
 <dl class="py method">
 <dt id="mlflow.models.Model.log">
-<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">log</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artifact_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flavor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">registered_model_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">await_registration_for</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resources</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#mlflow.models.model.ModelInfo" title="mlflow.models.model.ModelInfo"><span class="pre">mlflow.models.model.ModelInfo</span></a><a class="reference internal" href="../_modules/mlflow/models/model.html#Model.log"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.Model.log" title="Permalink to this definition"> </a></dt>
+<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">log</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artifact_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flavor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">registered_model_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">await_registration_for</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resources</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/models/model.html#Model.log"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.Model.log" title="Permalink to this definition"> </a></dt>
 <dd><p>Log model using supplied flavor module. If no run is active, this method will create a new
 active run.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>artifact_path</strong> – Deprecated. Use <cite>name</cite> instead.</p></li>
-<li><p><strong>name</strong> – The name of the model.</p></li>
+<li><p><strong>artifact_path</strong> – Run relative path identifying the model.</p></li>
 <li><p><strong>flavor</strong> – Flavor module to save the model with. The module must have
 the <code class="docutils literal notranslate"><span class="pre">save_model</span></code> function that will persist the model as a valid
 MLflow model.</p></li>
 <li><p><strong>registered_model_name</strong> – If given, create a model version under
 <code class="docutils literal notranslate"><span class="pre">registered_model_name</span></code>, also creating a registered model if
 one with the given name does not exist.</p></li>
+<li><p><strong>signature</strong> – {{ signature }}</p></li>
+<li><p><strong>input_example</strong> – {{ input_example }}</p></li>
 <li><p><strong>await_registration_for</strong> – Number of seconds to wait for the model version to finish
 being created and is in <code class="docutils literal notranslate"><span class="pre">READY</span></code> status. By default, the
 function waits for five minutes. Specify 0 or None to skip
 waiting.</p></li>
 <li><p><strong>metadata</strong> – {{ metadata }}</p></li>
-<li><p><strong>run_id</strong> – The run ID to associate with this model. If not provided, a new run will be
-started.</p></li>
 <li><p><strong>resources</strong> – {{ resources }}</p></li>
-<li><p><strong>model_type</strong> – {{ model_type }}</p></li>
-<li><p><strong>params</strong> – {{ params }}</p></li>
-<li><p><strong>tags</strong> – {{ tags }}</p></li>
-<li><p><strong>step</strong> – {{ step }}</p></li>
-<li><p><strong>model_id</strong> – {{ model_id }}</p></li>
 <li><p><strong>kwargs</strong> – Extra args passed to the model flavor.</p></li>
 </ul>
 </dd>
@@ -845,7 +839,7 @@ metadata of the logged model.</p>
 
 <dl class="py method">
 <dt id="mlflow.models.Model.save">
-<code class="sig-name descname"><span class="pre">save</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../_modules/mlflow/models/model.html#Model.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.Model.save" title="Permalink to this definition"> </a></dt>
+<code class="sig-name descname"><span class="pre">save</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/models/model.html#Model.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.Model.save" title="Permalink to this definition"> </a></dt>
 <dd><p>Write the model as a local YAML file.</p>
 </dd></dl>
 
@@ -878,19 +872,19 @@ signature definition.</p>
 
 <dl class="py method">
 <dt id="mlflow.models.Model.to_dict">
-<code class="sig-name descname"><span class="pre">to_dict</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">dict</span><a class="reference internal" href="../_modules/mlflow/models/model.html#Model.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.Model.to_dict" title="Permalink to this definition"> </a></dt>
+<code class="sig-name descname"><span class="pre">to_dict</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/models/model.html#Model.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.Model.to_dict" title="Permalink to this definition"> </a></dt>
 <dd><p>Serialize the model to a dictionary.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="mlflow.models.Model.to_json">
-<code class="sig-name descname"><span class="pre">to_json</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="reference internal" href="../_modules/mlflow/models/model.html#Model.to_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.Model.to_json" title="Permalink to this definition"> </a></dt>
+<code class="sig-name descname"><span class="pre">to_json</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/models/model.html#Model.to_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.Model.to_json" title="Permalink to this definition"> </a></dt>
 <dd><p>Write the model as json.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="mlflow.models.Model.to_yaml">
-<code class="sig-name descname"><span class="pre">to_yaml</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="reference internal" href="../_modules/mlflow/models/model.html#Model.to_yaml"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.Model.to_yaml" title="Permalink to this definition"> </a></dt>
+<code class="sig-name descname"><span class="pre">to_yaml</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/models/model.html#Model.to_yaml"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.Model.to_yaml" title="Permalink to this definition"> </a></dt>
 <dd><p>Write the model as yaml string.</p>
 </dd></dl>
 
@@ -898,92 +892,14 @@ signature definition.</p>
 
 <dl class="py class">
 <dt id="mlflow.models.ModelConfig">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mlflow.models.</span></code><code class="sig-name descname"><span class="pre">ModelConfig</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">development_config</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/models/model_config.html#ModelConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.ModelConfig" title="Permalink to this definition"> </a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mlflow.models.</span></code><code class="sig-name descname"><span class="pre">ModelConfig</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">development_config</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/models/model_config.html#ModelConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.ModelConfig" title="Permalink to this definition"> </a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>ModelConfig used in code to read a YAML configuration file or a dictionary.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>development_config</strong> – Path to the YAML configuration file or a dictionary containing the
-configuration. If the configuration is not provided, an error is raised</p>
-</dd>
-</dl>
-<div class="literal-block-wrapper docutils container" id="id20">
-<div class="code-block-caption"><span class="caption-text">Example usage in model code</span><a class="headerlink" href="#id20" title="Permalink to this code"> </a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.models</span> <span class="kn">import</span> <span class="n">ModelConfig</span>
-
-<span class="c1"># Load the configuration from a dictionary</span>
-<span class="n">config</span> <span class="o">=</span> <span class="n">ModelConfig</span><span class="p">(</span><span class="n">development_config</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;key1&quot;</span><span class="p">:</span> <span class="s2">&quot;value1&quot;</span><span class="p">})</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;key1&quot;</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="literal-block-wrapper docutils container" id="id21">
-<div class="code-block-caption"><span class="caption-text">yaml file for model configuration</span><a class="headerlink" href="#id21" title="Permalink to this code"> </a></div>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">key1</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">value1</span>
-<span class="nt">another_key</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">value2</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">value3</span>
-</pre></div>
-</div>
-</div>
-<div class="literal-block-wrapper docutils container" id="id22">
-<div class="code-block-caption"><span class="caption-text">Example yaml usage in model code</span><a class="headerlink" href="#id22" title="Permalink to this code"> </a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.models</span> <span class="kn">import</span> <span class="n">ModelConfig</span>
-
-<span class="c1"># Load the configuration from a file</span>
-<span class="n">config</span> <span class="o">=</span> <span class="n">ModelConfig</span><span class="p">(</span><span class="n">development_config</span><span class="o">=</span><span class="s2">&quot;config.yaml&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;key1&quot;</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<p>When invoking the ModelConfig locally in a model file, development_config can be passed in
-which would be used as configuration for the model.</p>
-<div class="literal-block-wrapper docutils container" id="id23">
-<div class="code-block-caption"><span class="caption-text">Example to use ModelConfig when logging model as code: agent.py</span><a class="headerlink" href="#id23" title="Permalink to this code"> </a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mlflow</span>
-<span class="kn">from</span> <span class="nn">mlflow.models</span> <span class="kn">import</span> <span class="n">ModelConfig</span>
-
-<span class="n">config</span> <span class="o">=</span> <span class="n">ModelConfig</span><span class="p">(</span><span class="n">development_config</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;key1&quot;</span><span class="p">:</span> <span class="s2">&quot;value1&quot;</span><span class="p">})</span>
-
-
-<span class="k">class</span> <span class="nc">TestModel</span><span class="p">(</span><span class="n">mlflow</span><span class="o">.</span><span class="n">pyfunc</span><span class="o">.</span><span class="n">PythonModel</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">model_input</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;key1&quot;</span><span class="p">)</span>
-
-
-<span class="n">mlflow</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">set_model</span><span class="p">(</span><span class="n">TestModel</span><span class="p">())</span>
-</pre></div>
-</div>
-</div>
-<p>But this development_config configuration file will be overridden when logging a model.
-When no model_config is passed in while logging the model, an error will be raised when
-trying to load the model using ModelConfig.
-Note: development_config is not used when logging the model.</p>
-<div class="literal-block-wrapper docutils container" id="id24">
-<div class="code-block-caption"><span class="caption-text">Example to use agent.py to log the model: deploy.py</span><a class="headerlink" href="#id24" title="Permalink to this code"> </a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model_config</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;key1&quot;</span><span class="p">:</span> <span class="s2">&quot;value2&quot;</span><span class="p">}</span>
-<span class="k">with</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">start_run</span><span class="p">():</span>
-    <span class="n">model_info</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">pyfunc</span><span class="o">.</span><span class="n">log_model</span><span class="p">(</span>
-        <span class="n">artifact_path</span><span class="o">=</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="n">python_model</span><span class="o">=</span><span class="s2">&quot;agent.py&quot;</span><span class="p">,</span> <span class="n">model_config</span><span class="o">=</span><span class="n">model_config</span>
-    <span class="p">)</span>
-
-<span class="n">loaded_model</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">pyfunc</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">model_info</span><span class="o">.</span><span class="n">model_uri</span><span class="p">)</span>
-
-<span class="c1"># This will print &quot;value2&quot; as the model_config passed in while logging the model</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">loaded_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="kc">None</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
+<p>ModelConfig used in code to read a YAML configuration file, and this configuration file can be
+overridden when logging a model.</p>
 <dl class="py method">
 <dt id="mlflow.models.ModelConfig.get">
 <code class="sig-name descname"><span class="pre">get</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/models/model_config.html#ModelConfig.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.ModelConfig.get" title="Permalink to this definition"> </a></dt>
 <dd><p>Gets the value of a top-level parameter in the configuration.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="mlflow.models.ModelConfig.to_dict">
-<code class="sig-name descname"><span class="pre">to_dict</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/models/model_config.html#ModelConfig.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.ModelConfig.to_dict" title="Permalink to this definition"> </a></dt>
-<dd><p>Returns the configuration as a dictionary.</p>
 </dd></dl>
 
 </dd></dl>
@@ -999,7 +915,7 @@ passing an input and output <a class="reference internal" href="mlflow.types.htm
 <a class="reference internal" href="mlflow.types.html#mlflow.types.ParamSchema" title="mlflow.types.ParamSchema"><code class="xref py py-class docutils literal notranslate"><span class="pre">ParamSchema</span></code></a>.</p>
 <dl class="py method">
 <dt id="mlflow.models.ModelSignature.from_dict">
-<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">from_dict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signature_dict</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/models/signature.html#ModelSignature.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.ModelSignature.from_dict" title="Permalink to this definition"> </a></dt>
+<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">from_dict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signature_dict</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/models/signature.html#ModelSignature.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.ModelSignature.from_dict" title="Permalink to this definition"> </a></dt>
 <dd><p>Deserialize from dictionary representation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1017,7 +933,7 @@ Expected dictionary format:
 
 <dl class="py method">
 <dt id="mlflow.models.ModelSignature.to_dict">
-<code class="sig-name descname"><span class="pre">to_dict</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">dict</span><a class="reference internal" href="../_modules/mlflow/models/signature.html#ModelSignature.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.ModelSignature.to_dict" title="Permalink to this definition"> </a></dt>
+<code class="sig-name descname"><span class="pre">to_dict</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../_modules/mlflow/models/signature.html#ModelSignature.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.ModelSignature.to_dict" title="Permalink to this definition"> </a></dt>
 <dd><p>Serialize into a ‘jsonable’ dictionary.</p>
 <p>Input and output schema are represented as json strings. This is so that the
 representation is compact when embedded in an MLmodel yaml file.</p>
@@ -1032,7 +948,7 @@ representation is compact when embedded in an MLmodel yaml file.</p>
 
 <dl class="py class">
 <dt id="mlflow.models.Resource">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mlflow.models.</span></code><code class="sig-name descname"><span class="pre">Resource</span></code><a class="reference internal" href="../_modules/mlflow/models/resources.html#Resource"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.Resource" title="Permalink to this definition"> </a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mlflow.models.</span></code><code class="sig-name descname"><span class="pre">Resource</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">mlflow.models.resources.ResourceType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_uri</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/models/resources.html#Resource"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.Resource" title="Permalink to this definition"> </a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
 <p>Base class for defining the resources needed to serve a model.</p>
 <dl class="field-list simple">
@@ -1045,16 +961,15 @@ representation is compact when embedded in an MLmodel yaml file.</p>
 </dl>
 <dl class="py method">
 <dt id="mlflow.models.Resource.from_dict">
-<em class="property"><span class="pre">abstract</span> <span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">from_dict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/models/resources.html#Resource.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.Resource.from_dict" title="Permalink to this definition"> </a></dt>
+<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">from_dict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/models/resources.html#Resource.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.Resource.from_dict" title="Permalink to this definition"> </a></dt>
 <dd><p>Convert the dictionary to a Resource.
 Subclasses must implement this method.</p>
 </dd></dl>
 
-<dl class="py method">
+<dl class="py attribute">
 <dt id="mlflow.models.Resource.target_uri">
-<em class="property"><span class="pre">abstract</span> <span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">target_uri</span></code><a class="headerlink" href="#mlflow.models.Resource.target_uri" title="Permalink to this definition"> </a></dt>
-<dd><p>The target URI where the resource is hosted (must be defined by subclasses).</p>
-</dd></dl>
+<code class="sig-name descname"><span class="pre">target_uri</span></code><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.models.Resource.target_uri" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt id="mlflow.models.Resource.to_dict">
@@ -1063,11 +978,10 @@ Subclasses must implement this method.</p>
 Subclasses must implement this method.</p>
 </dd></dl>
 
-<dl class="py method">
+<dl class="py attribute">
 <dt id="mlflow.models.Resource.type">
-<em class="property"><span class="pre">abstract</span> <span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">type</span></code><a class="headerlink" href="#mlflow.models.Resource.type" title="Permalink to this definition"> </a></dt>
-<dd><p>The resource type (must be defined by subclasses).</p>
-</dd></dl>
+<code class="sig-name descname"><span class="pre">type</span></code><em class="property"><span class="pre">:</span> <span class="pre">mlflow.models.resources.ResourceType</span></em><a class="headerlink" href="#mlflow.models.Resource.type" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -1147,8 +1061,8 @@ new version is logged to the existing model in the Model Registry.</p></li>
 <p>The libraries are only compatible with the platform on which they are added. Cross platform
 libraries are not supported.</p>
 </div>
-<div class="literal-block-wrapper docutils container" id="id25">
-<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id25" title="Permalink to this code"> </a></div>
+<div class="literal-block-wrapper docutils container" id="id20">
+<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id20" title="Permalink to this code"> </a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create and log a model to the Model Registry</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
@@ -1227,19 +1141,19 @@ you can disable it via the DISABLE_NGINX environment variable:</p>
 an ‘s3://’ URI). For more information about supported remote URIs for model artifacts,
 see https://mlflow.org/docs/latest/tracking.html#artifact-stores”</p></li>
 <li><p><strong>name</strong> – Name of the Docker image to build. Defaults to ‘mlflow-pyfunc’.</p></li>
-<li><p><strong>env_manager</strong> – If specified, create an environment for MLmodel using the specified environment
-manager. The following values are supported: (1) virtualenv (default): use virtualenv
-and pyenv for Python version management (2) conda: use conda (3) local: use the local
-environment without creating a new one.</p></li>
-<li><p><strong>mlflow_home</strong> – Path to local clone of MLflow project. Use for development only.</p></li>
 <li><p><strong>install_java</strong> – If specified, install Java in the image. Default is False in order to
 reduce both the image size and the build time. Model flavors requiring Java will enable
 this setting automatically, such as the Spark flavor. (This argument is only available
 in MLflow 2.10.1 and later. In earlier versions, Java is always installed to the image.)</p></li>
+<li><p><strong>enable_mlserver</strong> – If specified, the image will be built with the Seldon MLserver as backend.</p></li>
+<li><p><strong>env_manager</strong> – If specified, create an environment for MLmodel using the specified environment
+manager. The following values are supported: (1) virtualenv (default): use virtualenv
+and pyenv for Python version management (2) conda: use conda (3) local: use the local
+environment without creating a new one.</p></li>
 <li><p><strong>install_mlflow</strong> – If specified and there is a conda or virtualenv environment to be activated
 mlflow will be installed into the environment after it has been activated.
 The version of installed mlflow will be the same as the one used to invoke this command.</p></li>
-<li><p><strong>enable_mlserver</strong> – If specified, the image will be built with the Seldon MLserver as backend.</p></li>
+<li><p><strong>mlflow_home</strong> – Path to local clone of MLflow project. Use for development only.</p></li>
 <li><p><strong>base_image</strong> – Base image for the Docker image. If not specified, the default image is either
 UBUNTU_BASE_IMAGE = “ubuntu:20.04” or PYTHON_SLIM_BASE_IMAGE = “python:{version}-slim”
 Note: If custom image is used, there are no guarantees that the image will work. You
@@ -1367,7 +1281,7 @@ of the model in tabular format.</p></li>
 (e.g. mean accuracy for a classifier) computed by <cite>model.score</cite> method.</p></li>
 <li><p>The metrics/artifacts listed above are logged to the active MLflow run.
 If no active run exists, a new MLflow run is created for logging these metrics and
-artifacts.</p></li>
+artifacts. Note that no metrics/artifacts are logged for the <code class="docutils literal notranslate"><span class="pre">baseline_model</span></code>.</p></li>
 <li><p>Additionally, information about the specified dataset - hash, name (if specified), path
 (if specified), and the UUID of the model that evaluated it - is logged to the
 <code class="docutils literal notranslate"><span class="pre">mlflow.datasets</span></code> tag.</p></li>
@@ -1522,6 +1436,40 @@ should be specified via the <code class="docutils literal notranslate"><span cla
 </li>
 </ul>
 </p></li>
+<li><p><strong>targets</strong> – If <code class="docutils literal notranslate"><span class="pre">data</span></code> is a numpy array or list, a numpy array or list of evaluation
+labels. If <code class="docutils literal notranslate"><span class="pre">data</span></code> is a DataFrame, the string name of a column from <code class="docutils literal notranslate"><span class="pre">data</span></code>
+that contains evaluation labels. Required for classifier and regressor models,
+but optional for question-answering, text-summarization, and text models. If
+<code class="docutils literal notranslate"><span class="pre">data</span></code> is a <a class="reference internal" href="mlflow.data.html#mlflow.data.dataset.Dataset" title="mlflow.data.dataset.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">mlflow.data.dataset.Dataset</span></code></a> that defines targets,
+then <code class="docutils literal notranslate"><span class="pre">targets</span></code> is optional.</p></li>
+<li><p><strong>predictions</strong> – <p>Optional. The name of the column that contains model outputs.</p>
+<ul>
+<li><p>When <code class="docutils literal notranslate"><span class="pre">model</span></code> is specified and outputs multiple columns, <code class="docutils literal notranslate"><span class="pre">predictions</span></code> can be used
+to specify the name of the column that will be used to store model outputs for
+evaluation.</p></li>
+<li><p>When <code class="docutils literal notranslate"><span class="pre">model</span></code> is not specified and <code class="docutils literal notranslate"><span class="pre">data</span></code> is a pandas dataframe,
+<code class="docutils literal notranslate"><span class="pre">predictions</span></code> can be used to specify the name of the column in <code class="docutils literal notranslate"><span class="pre">data</span></code> that
+contains model outputs.</p></li>
+</ul>
+<div class="literal-block-wrapper docutils container" id="id21">
+<div class="code-block-caption"><span class="caption-text">Example usage of predictions</span><a class="headerlink" href="#id21" title="Permalink to this code"> </a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Evaluate a model that outputs multiple columns</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;foo&quot;</span><span class="p">]})</span>
+
+
+<span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="n">inputs</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;answer&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;bar&quot;</span><span class="p">],</span> <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;baz&quot;</span><span class="p">]})</span>
+
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">predictions</span><span class="o">=</span><span class="s2">&quot;answer&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+
+<span class="c1"># Evaluate a static dataset</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;foo&quot;</span><span class="p">],</span> <span class="s2">&quot;answer&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;bar&quot;</span><span class="p">],</span> <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;baz&quot;</span><span class="p">]})</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">predictions</span><span class="o">=</span><span class="s2">&quot;answer&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</p></li>
 <li><p><strong>model_type</strong> – <p>(Optional) A string describing the model type. The default evaluator
 supports the following model types:</p>
 <ul>
@@ -1541,49 +1489,9 @@ metrics to compute via the <code class="docutils literal notranslate"><span clas
 future release.</p>
 </div>
 </p></li>
-<li><p><strong>targets</strong> – If <code class="docutils literal notranslate"><span class="pre">data</span></code> is a numpy array or list, a numpy array or list of evaluation
-labels. If <code class="docutils literal notranslate"><span class="pre">data</span></code> is a DataFrame, the string name of a column from <code class="docutils literal notranslate"><span class="pre">data</span></code>
-that contains evaluation labels. Required for classifier and regressor models,
-but optional for question-answering, text-summarization, and text models. If
-<code class="docutils literal notranslate"><span class="pre">data</span></code> is a <a class="reference internal" href="mlflow.data.html#mlflow.data.dataset.Dataset" title="mlflow.data.dataset.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">mlflow.data.dataset.Dataset</span></code></a> that defines targets,
-then <code class="docutils literal notranslate"><span class="pre">targets</span></code> is optional.</p></li>
-<li><p><strong>predictions</strong> – <p>Optional. The name of the column that contains model outputs.</p>
-<ul>
-<li><p>When <code class="docutils literal notranslate"><span class="pre">model</span></code> is specified and outputs multiple columns, <code class="docutils literal notranslate"><span class="pre">predictions</span></code> can be used
-to specify the name of the column that will be used to store model outputs for
-evaluation.</p></li>
-<li><p>When <code class="docutils literal notranslate"><span class="pre">model</span></code> is not specified and <code class="docutils literal notranslate"><span class="pre">data</span></code> is a pandas dataframe,
-<code class="docutils literal notranslate"><span class="pre">predictions</span></code> can be used to specify the name of the column in <code class="docutils literal notranslate"><span class="pre">data</span></code> that
-contains model outputs.</p></li>
-</ul>
-<div class="literal-block-wrapper docutils container" id="id26">
-<div class="code-block-caption"><span class="caption-text">Example usage of predictions</span><a class="headerlink" href="#id26" title="Permalink to this code"> </a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Evaluate a model that outputs multiple columns</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;foo&quot;</span><span class="p">]})</span>
-
-
-<span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="n">inputs</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;answer&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;bar&quot;</span><span class="p">],</span> <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;baz&quot;</span><span class="p">]})</span>
-
-
-<span class="n">results</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
-    <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
-    <span class="n">predictions</span><span class="o">=</span><span class="s2">&quot;answer&quot;</span><span class="p">,</span>
-    <span class="c1"># other arguments if needed</span>
-<span class="p">)</span>
-
-<span class="c1"># Evaluate a static dataset</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;foo&quot;</span><span class="p">],</span> <span class="s2">&quot;answer&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;bar&quot;</span><span class="p">],</span> <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;baz&quot;</span><span class="p">]})</span>
-<span class="n">results</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span>
-    <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
-    <span class="n">predictions</span><span class="o">=</span><span class="s2">&quot;answer&quot;</span><span class="p">,</span>
-    <span class="c1"># other arguments if needed</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</p></li>
+<li><p><strong>inference_params</strong> – (Optional) A dictionary of inference parameters to be passed to the model
+when making predictions, such as <code class="docutils literal notranslate"><span class="pre">{&quot;max_tokens&quot;:</span> <span class="pre">100}</span></code>. This is only used when
+the <code class="docutils literal notranslate"><span class="pre">model</span></code> is an MLflow Deployments endpoint URI e.g. <code class="docutils literal notranslate"><span class="pre">&quot;endpoints:/my-chat&quot;</span></code></p></li>
 <li><p><strong>dataset_path</strong> – (Optional) The path where the data is stored. Must not contain double
 quotes (<code class="docutils literal notranslate"><span class="pre">“</span></code>). If specified, the path is logged to the <code class="docutils literal notranslate"><span class="pre">mlflow.datasets</span></code>
 tag for lineage tracking purposes.</p></li>
@@ -1603,14 +1511,13 @@ evaluators, call <a class="reference internal" href="#mlflow.models.list_evaluat
 <li><p><strong>evaluator_config</strong> – A dictionary of additional configurations to supply to the evaluator.
 If multiple evaluators are specified, each configuration should be
 supplied as a nested dictionary whose key is the evaluator name.</p></li>
-<li><p><strong>custom_metrics</strong> – Deprecated. Use <code class="docutils literal notranslate"><span class="pre">extra_metrics</span></code> instead.</p></li>
 <li><p><strong>extra_metrics</strong> – <p>(Optional) A list of <a class="reference internal" href="#mlflow.models.EvaluationMetric" title="mlflow.models.EvaluationMetric"><code class="xref py py-class docutils literal notranslate"><span class="pre">EvaluationMetric</span></code></a>
 objects.  These metrics are computed in addition to the default metrics associated with
 pre-defined <cite>model_type</cite>, and setting <cite>model_type=None</cite> will only compute the metrics
 specified in <cite>extra_metrics</cite>. See the <cite>mlflow.metrics</cite> module for more information about
 the builtin metrics and how to define extra metrics.</p>
-<div class="literal-block-wrapper docutils container" id="id27">
-<div class="code-block-caption"><span class="caption-text">Example usage of extra metrics</span><a class="headerlink" href="#id27" title="Permalink to this code"> </a></div>
+<div class="literal-block-wrapper docutils container" id="id22">
+<div class="code-block-caption"><span class="caption-text">Example usage of extra metrics</span><a class="headerlink" href="#id22" title="Permalink to this code"> </a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mlflow</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
@@ -1676,8 +1583,8 @@ its file path or define customizations through environment variables in
 <li><p>Other objects will be attempted to be pickled with the default protocol.</p></li>
 </ul>
 </div></blockquote>
-<div class="literal-block-wrapper docutils container" id="id28">
-<div class="code-block-caption"><span class="caption-text">Example usage of custom artifacts</span><a class="headerlink" href="#id28" title="Permalink to this code"> </a></div>
+<div class="literal-block-wrapper docutils container" id="id23">
+<div class="code-block-caption"><span class="caption-text">Example usage of custom artifacts</span><a class="headerlink" href="#id23" title="Permalink to this code"> </a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mlflow</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
@@ -1701,12 +1608,48 @@ its file path or define customizations through environment variables in
 </div>
 </div>
 </p></li>
-<li><p><strong>validation_thresholds</strong> – DEPRECATED. Please use <a class="reference internal" href="mlflow.html#mlflow.validate_evaluation_results" title="mlflow.validate_evaluation_results"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.validate_evaluation_results()</span></code></a>
-API instead for running model validation against baseline.</p></li>
-<li><p><strong>baseline_model</strong> – DEPRECATED. Please use <a class="reference internal" href="mlflow.html#mlflow.validate_evaluation_results" title="mlflow.validate_evaluation_results"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.validate_evaluation_results()</span></code></a>
-API instead for running model validation against baseline.</p></li>
-<li><p><strong>env_manager</strong> – <p>Specify an environment manager to load the candidate <code class="docutils literal notranslate"><span class="pre">model</span></code> in
-isolated Python environments and restore their
+<li><p><strong>validation_thresholds</strong> – <p>(Optional) A dictionary of metric name to
+<a class="reference internal" href="#mlflow.models.MetricThreshold" title="mlflow.models.MetricThreshold"><code class="xref py py-class docutils literal notranslate"><span class="pre">mlflow.models.MetricThreshold</span></code></a> used for model validation. Each metric name
+must either be the name of a builtin metric or the name of a metric defined in the
+<code class="docutils literal notranslate"><span class="pre">extra_metrics</span></code> parameter.</p>
+<div class="literal-block-wrapper docutils container" id="id24">
+<div class="code-block-caption"><span class="caption-text">Example of Model Validation</span><a class="headerlink" href="#id24" title="Permalink to this code"> </a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.models</span> <span class="kn">import</span> <span class="n">MetricThreshold</span>
+
+<span class="n">thresholds</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;accuracy_score&quot;</span><span class="p">:</span> <span class="n">MetricThreshold</span><span class="p">(</span>
+        <span class="c1"># accuracy should be &gt;=0.8</span>
+        <span class="n">threshold</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+        <span class="c1"># accuracy should be at least 5 percent greater than baseline model accuracy</span>
+        <span class="n">min_absolute_change</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+        <span class="c1"># accuracy should be at least 0.05 greater than baseline model accuracy</span>
+        <span class="n">min_relative_change</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+        <span class="n">greater_is_better</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">),</span>
+<span class="p">}</span>
+
+<span class="k">with</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">start_run</span><span class="p">():</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span>
+        <span class="n">model</span><span class="o">=</span><span class="n">your_candidate_model</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">,</span>
+        <span class="n">targets</span><span class="p">,</span>
+        <span class="n">model_type</span><span class="p">,</span>
+        <span class="n">dataset_name</span><span class="p">,</span>
+        <span class="n">evaluators</span><span class="p">,</span>
+        <span class="n">validation_thresholds</span><span class="o">=</span><span class="n">thresholds</span><span class="p">,</span>
+        <span class="n">baseline_model</span><span class="o">=</span><span class="n">your_baseline_model</span><span class="p">,</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>See <a class="reference internal" href="../models.html#model-validation"><span class="std std-ref">the Model Validation documentation</span></a>
+for more details.</p>
+</p></li>
+<li><p><strong>baseline_model</strong> – (Optional) A string URI referring to an MLflow model with the pyfunc
+flavor. If specified, the candidate <code class="docutils literal notranslate"><span class="pre">model</span></code> is compared to this
+baseline for model validation purposes.</p></li>
+<li><p><strong>env_manager</strong> – <p>Specify an environment manager to load the candidate <code class="docutils literal notranslate"><span class="pre">model</span></code> and
+<code class="docutils literal notranslate"><span class="pre">baseline_model</span></code> in isolated Python environments and restore their
 dependencies. Default value is <code class="docutils literal notranslate"><span class="pre">local</span></code>, and the following values are
 supported:</p>
 <ul>
@@ -1723,16 +1666,14 @@ errors or invalid predictions.</p></li>
 the model’s pyfunc flavor to know which keys are supported for your
 specific model. If not indicated, the default model configuration
 from the model is used (if any).</p></li>
-<li><p><strong>baseline_config</strong> – DEPRECATED. Please use <a class="reference internal" href="mlflow.html#mlflow.validate_evaluation_results" title="mlflow.validate_evaluation_results"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.validate_evaluation_results()</span></code></a>
-API instead for running model validation against baseline.</p></li>
-<li><p><strong>inference_params</strong> – (Optional) A dictionary of inference parameters to be passed to the model
-when making predictions, such as <code class="docutils literal notranslate"><span class="pre">{&quot;max_tokens&quot;:</span> <span class="pre">100}</span></code>. This is only used when
-the <code class="docutils literal notranslate"><span class="pre">model</span></code> is an MLflow Deployments endpoint URI e.g. <code class="docutils literal notranslate"><span class="pre">&quot;endpoints:/my-chat&quot;</span></code></p></li>
+<li><p><strong>baseline_config</strong> – the model configuration to use for loading the baseline
+model. If not indicated, the default model configuration
+from the baseline model is used (if any).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>An <a class="reference internal" href="#mlflow.models.EvaluationResult" title="mlflow.models.EvaluationResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">mlflow.models.EvaluationResult</span></code></a> instance containing
-metrics of evaluating the model with the given dataset.</p>
+metrics of candidate model and baseline model, and artifacts of candidate model.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1762,8 +1703,8 @@ metrics of evaluating the model with the given dataset.</p>
 metadata of the logged model.</p>
 </dd>
 </dl>
-<div class="literal-block-wrapper docutils container" id="id29">
-<div class="code-block-caption"><span class="caption-text">Example usage of get_model_info</span><a class="headerlink" href="#id29" title="Permalink to this code"> </a></div>
+<div class="literal-block-wrapper docutils container" id="id25">
+<div class="code-block-caption"><span class="caption-text">Example usage of get_model_info</span><a class="headerlink" href="#id25" title="Permalink to this code"> </a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mlflow.models</span>
 <span class="kn">import</span> <span class="nn">mlflow.sklearn</span>
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestRegressor</span>
@@ -1812,7 +1753,7 @@ Default to None.</p></li>
 
 <dl class="py function">
 <dt id="mlflow.models.infer_signature">
-<code class="sig-prename descclassname"><span class="pre">mlflow.models.</span></code><code class="sig-name descname"><span class="pre">infer_signature</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_input</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Any</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_output</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">MlflowInferableDataset</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">mlflow.models.signature.ModelSignature</span><a class="reference internal" href="../_modules/mlflow/models/signature.html#infer_signature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.infer_signature" title="Permalink to this definition"> </a></dt>
+<code class="sig-prename descclassname"><span class="pre">mlflow.models.</span></code><code class="sig-name descname"><span class="pre">infer_signature</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_input</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Any</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_output</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">MlflowInferableDataset</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">mlflow.models.signature.ModelSignature</span><a class="reference internal" href="../_modules/mlflow/models/signature.html#infer_signature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.infer_signature" title="Permalink to this definition"> </a></dt>
 <dd><p>Infer an MLflow model signature from the training data (input), model predictions (output)
 and parameters (for inference).</p>
 <p>The signature represents model input and output as data frames with (optionally) named columns
@@ -2031,7 +1972,7 @@ register a new model version with the updated model.</p>
 
 <dl class="py function">
 <dt id="mlflow.models.set_model">
-<code class="sig-prename descclassname"><span class="pre">mlflow.models.</span></code><code class="sig-name descname"><span class="pre">set_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../_modules/mlflow/models/model.html#set_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.set_model" title="Permalink to this definition"> </a></dt>
+<code class="sig-prename descclassname"><span class="pre">mlflow.models.</span></code><code class="sig-name descname"><span class="pre">set_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/models/model.html#set_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.set_model" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Experimental: This function may change or be removed in a future release without warning.</p>
@@ -2053,7 +1994,7 @@ to be logged.</p>
 
 <dl class="py function">
 <dt id="mlflow.models.set_retriever_schema">
-<code class="sig-prename descclassname"><span class="pre">mlflow.models.</span></code><code class="sig-name descname"><span class="pre">set_retriever_schema</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">primary_key</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_column</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doc_uri</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other_columns</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'retriever'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/models/dependencies_schemas.html#set_retriever_schema"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.set_retriever_schema" title="Permalink to this definition"> </a></dt>
+<code class="sig-prename descclassname"><span class="pre">mlflow.models.</span></code><code class="sig-name descname"><span class="pre">set_retriever_schema</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">primary_key</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_column</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doc_uri</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other_columns</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'retriever'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/models/dependencies_schemas.html#set_retriever_schema"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.set_retriever_schema" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Experimental: This function may change or be removed in a future release without warning.</p>
@@ -2074,8 +2015,8 @@ that need to be retrieved during trace logging.</p></li>
 </ul>
 </dd>
 </dl>
-<div class="literal-block-wrapper docutils container" id="id30">
-<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id30" title="Permalink to this code"> </a></div>
+<div class="literal-block-wrapper docutils container" id="id26">
+<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id26" title="Permalink to this code"> </a></div>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.models</span> <span class="kn">import</span> <span class="n">set_retriever_schema</span>
 
 <span class="n">set_retriever_schema</span><span class="p">(</span>
@@ -2122,8 +2063,8 @@ information about setting signatures on model versions, see
 </ul>
 </dd>
 </dl>
-<div class="literal-block-wrapper docutils container" id="id31">
-<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id31" title="Permalink to this code"> </a></div>
+<div class="literal-block-wrapper docutils container" id="id27">
+<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id27" title="Permalink to this code"> </a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mlflow</span>
 <span class="kn">from</span> <span class="nn">mlflow.models</span> <span class="kn">import</span> <span class="n">set_signature</span><span class="p">,</span> <span class="n">infer_signature</span>
 
@@ -2147,7 +2088,7 @@ information about setting signatures on model versions, see
 
 <dl class="py function">
 <dt id="mlflow.models.update_model_requirements">
-<code class="sig-prename descclassname"><span class="pre">mlflow.models.</span></code><code class="sig-name descname"><span class="pre">update_model_requirements</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_uri</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">operation</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">add</span><span class="p"><span class="pre">,</span> </span><span class="pre">remove</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requirement_list</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../_modules/mlflow/models/model.html#update_model_requirements"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.update_model_requirements" title="Permalink to this definition"> </a></dt>
+<code class="sig-prename descclassname"><span class="pre">mlflow.models.</span></code><code class="sig-name descname"><span class="pre">update_model_requirements</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_uri</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">operation</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">add</span><span class="p"><span class="pre">,</span> </span><span class="pre">remove</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requirement_list</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../_modules/mlflow/models/model.html#update_model_requirements"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.update_model_requirements" title="Permalink to this definition"> </a></dt>
 <dd><p>Add or remove requirements from a model’s conda.yaml and requirements.txt files.</p>
 <p>The process involves downloading these two files from the model artifacts
 (if they’re non-local), updating them with the specified requirements,
@@ -2209,8 +2150,8 @@ For example: [“numpy==1.20.3”, “pandas&gt;=1.3.3”]</p></li>
 <dd class="field-even"><p><a class="reference internal" href="exceptions/mlflow.exceptions.html#mlflow.exceptions.MlflowException" title="mlflow.exceptions.MlflowException"><strong>mlflow.exceptions.MlflowException</strong></a> – when the input data does not match the schema.</p>
 </dd>
 </dl>
-<div class="literal-block-wrapper docutils container" id="id32">
-<div class="code-block-caption"><span class="caption-text">Example usage of validate_schema</span><a class="headerlink" href="#id32" title="Permalink to this code"> </a></div>
+<div class="literal-block-wrapper docutils container" id="id28">
+<div class="code-block-caption"><span class="caption-text">Example usage of validate_schema</span><a class="headerlink" href="#id28" title="Permalink to this code"> </a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mlflow.models</span>
 
 <span class="c1"># Suppose you&#39;ve already got a model_uri</span>
@@ -2226,7 +2167,7 @@ For example: [“numpy==1.20.3”, “pandas&gt;=1.3.3”]</p></li>
 
 <dl class="py function">
 <dt id="mlflow.models.validate_serving_input">
-<code class="sig-prename descclassname"><span class="pre">mlflow.models.</span></code><code class="sig-name descname"><span class="pre">validate_serving_input</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_uri</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">serving_input</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/models/utils.html#validate_serving_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.validate_serving_input" title="Permalink to this definition"> </a></dt>
+<code class="sig-prename descclassname"><span class="pre">mlflow.models.</span></code><code class="sig-name descname"><span class="pre">validate_serving_input</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_uri</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">serving_input</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/models/utils.html#validate_serving_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.validate_serving_input" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Experimental: This function may change or be removed in a future release without warning.</p>
@@ -2248,7 +2189,7 @@ prior to serving the model.</p>
 
 <dl class="py class">
 <dt id="mlflow.models.model.ModelInfo">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mlflow.models.model.</span></code><code class="sig-name descname"><span class="pre">ModelInfo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artifact_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flavors</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_uri</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_uuid</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saved_input_example_info</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signature</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">utc_time_created</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mlflow_version</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signature_dict</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">registered_model_version</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env_vars</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logged_model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="mlflow.entities.html#mlflow.entities.LoggedModel" title="mlflow.entities.LoggedModel"><span class="pre">LoggedModel</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/models/model.html#ModelInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.model.ModelInfo" title="Permalink to this definition"> </a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mlflow.models.model.</span></code><code class="sig-name descname"><span class="pre">ModelInfo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artifact_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flavors</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_uri</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_uuid</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saved_input_example_info</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signature</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">utc_time_created</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mlflow_version</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signature_dict</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">registered_model_version</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/models/model.html#ModelInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.models.model.ModelInfo" title="Permalink to this definition"> </a></dt>
 <dd><p>The metadata of a logged MLflow Model.</p>
 <dl class="py method">
 <dt id="mlflow.models.model.ModelInfo.artifact_path">
@@ -2260,31 +2201,6 @@ prior to serving the model.</p>
 </dd>
 <dt class="field-even">Type</dt>
 <dd class="field-even"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="mlflow.models.model.ModelInfo.creation_timestamp">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">creation_timestamp</span></code><a class="headerlink" href="#mlflow.models.model.ModelInfo.creation_timestamp" title="Permalink to this definition"> </a></dt>
-<dd><p>Returns the creation timestamp of the logged model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Getter</dt>
-<dd class="field-odd"><p>the creation timestamp of the logged model</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="mlflow.models.model.ModelInfo.env_vars">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">env_vars</span></code><a class="headerlink" href="#mlflow.models.model.ModelInfo.env_vars" title="Permalink to this definition"> </a></dt>
-<dd><p>Environment variables used during the model logging process.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Getter</dt>
-<dd class="field-odd"><p>Gets the environment variables used during the model logging process.</p>
-</dd>
-<dt class="field-even">Type</dt>
-<dd class="field-even"><p>Optional[List[str]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2303,8 +2219,8 @@ serving of the model</p>
 <dd class="field-even"><p>Dict[str, str]</p>
 </dd>
 </dl>
-<div class="literal-block-wrapper docutils container" id="id33">
-<div class="code-block-caption"><span class="caption-text">Example flavor mapping for a scikit-learn logged model</span><a class="headerlink" href="#id33" title="Permalink to this code"> </a></div>
+<div class="literal-block-wrapper docutils container" id="id29">
+<div class="code-block-caption"><span class="caption-text">Example flavor mapping for a scikit-learn logged model</span><a class="headerlink" href="#id29" title="Permalink to this code"> </a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
     <span class="s2">&quot;python_function&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s2">&quot;model_path&quot;</span><span class="p">:</span> <span class="s2">&quot;model.pkl&quot;</span><span class="p">,</span>
@@ -2335,8 +2251,8 @@ serving of the model</p>
 <dd class="field-even"><p>Optional[Dict[str, Any]]</p>
 </dd>
 </dl>
-<div class="literal-block-wrapper docutils container" id="id34">
-<div class="code-block-caption"><span class="caption-text">Example usage of Model Metadata</span><a class="headerlink" href="#id34" title="Permalink to this code"> </a></div>
+<div class="literal-block-wrapper docutils container" id="id30">
+<div class="code-block-caption"><span class="caption-text">Example usage of Model Metadata</span><a class="headerlink" href="#id30" title="Permalink to this code"> </a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create and log a model with metadata to the Model Registry</span>
 
 <span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
@@ -2377,17 +2293,6 @@ serving of the model</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.models.model.ModelInfo.metrics">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">metrics</span></code><a class="headerlink" href="#mlflow.models.model.ModelInfo.metrics" title="Permalink to this definition"> </a></dt>
-<dd><p>Returns the metrics of the logged model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Getter</dt>
-<dd class="field-odd"><p>Retrieves the metrics of the logged model</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt id="mlflow.models.model.ModelInfo.mlflow_version">
 <em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">mlflow_version</span></code><a class="headerlink" href="#mlflow.models.model.ModelInfo.mlflow_version" title="Permalink to this definition"> </a></dt>
 <dd><p>Version of MLflow used to log the model</p>
@@ -2397,17 +2302,6 @@ serving of the model</p>
 </dd>
 <dt class="field-even">Type</dt>
 <dd class="field-even"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="mlflow.models.model.ModelInfo.model_id">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">model_id</span></code><a class="headerlink" href="#mlflow.models.model.ModelInfo.model_id" title="Permalink to this definition"> </a></dt>
-<dd><p>The model ID of the logged model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Getter</dt>
-<dd class="field-odd"><p>Gets the model ID of the logged model</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2438,23 +2332,6 @@ e.g., <code class="docutils literal notranslate"><span class="pre">'39ca11813cfc
 </dd>
 <dt class="field-even">Type</dt>
 <dd class="field-even"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="mlflow.models.model.ModelInfo.name">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">name</span></code><a class="headerlink" href="#mlflow.models.model.ModelInfo.name" title="Permalink to this definition"> </a></dt>
-<dd><p>Returns the name of the logged model.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="mlflow.models.model.ModelInfo.params">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">params</span></code><a class="headerlink" href="#mlflow.models.model.ModelInfo.params" title="Permalink to this definition"> </a></dt>
-<dd><p>Returns the parameters of the logged model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Getter</dt>
-<dd class="field-odd"><p>Retrieves the parameters of the logged model</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2537,17 +2414,6 @@ model input and output.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.models.model.ModelInfo.tags">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">tags</span></code><a class="headerlink" href="#mlflow.models.model.ModelInfo.tags" title="Permalink to this definition"> </a></dt>
-<dd><p>Returns the tags of the logged model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Getter</dt>
-<dd class="field-odd"><p>Retrieves the tags of the logged model</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt id="mlflow.models.model.ModelInfo.utc_time_created">
 <em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">utc_time_created</span></code><a class="headerlink" href="#mlflow.models.model.ModelInfo.utc_time_created" title="Permalink to this definition"> </a></dt>
 <dd><p>The UTC time that the logged model is created, e.g., <code class="docutils literal notranslate"><span class="pre">'2022-01-12</span> <span class="pre">05:17:31.634689'</span></code>.</p>
@@ -2603,7 +2469,7 @@ model input and output.</p>
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../',
-      VERSION:'2.17.3.dev0',
+      VERSION:'2.17.2',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

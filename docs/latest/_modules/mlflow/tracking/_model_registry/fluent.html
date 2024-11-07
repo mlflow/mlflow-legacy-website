@@ -55,7 +55,7 @@
         <link rel="index" title="Index"
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="MLflow 2.17.3.dev0 documentation" href="../../../../index.html"/>
+    <link rel="top" title="MLflow 2.17.2 documentation" href="../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../index.html"/> 
 
   
@@ -87,7 +87,7 @@
     <a href="../../../../index.html" class="wy-nav-top-logo"
       ><img src="../../../../_static/MLflow-logo-final-black.png" alt="MLflow"
     /></a>
-    <span class="version">2.17.3.dev0</span>
+    <span class="version">2.17.2</span>
   </li>
 </ul>
   </nav>
@@ -202,13 +202,12 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.tracking._model_registry.fluent</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">from</span> <span class="nn">mlflow.entities.model_registry</span> <span class="kn">import</span> <span class="n">ModelVersion</span><span class="p">,</span> <span class="n">RegisteredModel</span>
 <span class="kn">from</span> <span class="nn">mlflow.exceptions</span> <span class="kn">import</span> <span class="n">MlflowException</span>
 <span class="kn">from</span> <span class="nn">mlflow.protos.databricks_pb2</span> <span class="kn">import</span> <span class="n">ALREADY_EXISTS</span><span class="p">,</span> <span class="n">RESOURCE_ALREADY_EXISTS</span><span class="p">,</span> <span class="n">ErrorCode</span>
 <span class="kn">from</span> <span class="nn">mlflow.store.artifact.runs_artifact_repo</span> <span class="kn">import</span> <span class="n">RunsArtifactRepository</span>
-<span class="kn">from</span> <span class="nn">mlflow.store.artifact.utils.models</span> <span class="kn">import</span> <span class="n">_parse_model_uri</span>
 <span class="kn">from</span> <span class="nn">mlflow.store.model_registry</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">SEARCH_MODEL_VERSION_MAX_RESULTS_DEFAULT</span><span class="p">,</span>
     <span class="n">SEARCH_REGISTERED_MODEL_MAX_RESULTS_DEFAULT</span><span class="p">,</span>
@@ -224,7 +223,7 @@
     <span class="n">name</span><span class="p">,</span>
     <span class="n">await_registration_for</span><span class="o">=</span><span class="n">DEFAULT_AWAIT_MAX_SLEEP_SECONDS</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModelVersion</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new model version in model registry for the model files specified by ``model_uri``.</span>
 
@@ -280,10 +279,7 @@
 <span class="sd">        Version: 1</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">_register_model</span><span class="p">(</span>
-        <span class="n">model_uri</span><span class="o">=</span><span class="n">model_uri</span><span class="p">,</span>
-        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
-        <span class="n">await_registration_for</span><span class="o">=</span><span class="n">await_registration_for</span><span class="p">,</span>
-        <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">,</span>
+        <span class="n">model_uri</span><span class="o">=</span><span class="n">model_uri</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">await_registration_for</span><span class="o">=</span><span class="n">await_registration_for</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="n">tags</span>
     <span class="p">)</span></div>
 
 
@@ -292,7 +288,7 @@
     <span class="n">name</span><span class="p">,</span>
     <span class="n">await_registration_for</span><span class="o">=</span><span class="n">DEFAULT_AWAIT_MAX_SLEEP_SECONDS</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">local_model_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModelVersion</span><span class="p">:</span>
     <span class="n">client</span> <span class="o">=</span> <span class="n">MlflowClient</span><span class="p">()</span>
@@ -316,7 +312,6 @@
         <span class="n">source</span> <span class="o">=</span> <span class="n">RunsArtifactRepository</span><span class="o">.</span><span class="n">get_underlying_uri</span><span class="p">(</span><span class="n">model_uri</span><span class="p">)</span>
         <span class="p">(</span><span class="n">run_id</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">RunsArtifactRepository</span><span class="o">.</span><span class="n">parse_runs_uri</span><span class="p">(</span><span class="n">model_uri</span><span class="p">)</span>
 
-    <span class="n">parsed_model_uri</span> <span class="o">=</span> <span class="n">_parse_model_uri</span><span class="p">(</span><span class="n">model_uri</span><span class="p">)</span>
     <span class="n">create_version_response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">_create_model_version</span><span class="p">(</span>
         <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
         <span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">,</span>
@@ -324,7 +319,6 @@
         <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">,</span>
         <span class="n">await_creation_for</span><span class="o">=</span><span class="n">await_registration_for</span><span class="p">,</span>
         <span class="n">local_model_path</span><span class="o">=</span><span class="n">local_model_path</span><span class="p">,</span>
-        <span class="n">model_id</span><span class="o">=</span><span class="n">parsed_model_uri</span><span class="o">.</span><span class="n">model_id</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">eprint</span><span class="p">(</span>
         <span class="sa">f</span><span class="s2">&quot;Created version &#39;</span><span class="si">{</span><span class="n">create_version_response</span><span class="o">.</span><span class="n">version</span><span class="si">}</span><span class="s2">&#39; of model &quot;</span>
@@ -336,13 +330,11 @@
 <div class="viewcode-block" id="search_registered_models"><a class="viewcode-back" href="../../../../python_api/mlflow.html#mlflow.search_registered_models">[docs]</a><span class="k">def</span> <span class="nf">search_registered_models</span><span class="p">(</span>
     <span class="n">max_results</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">filter_string</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">order_by</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">RegisteredModel</span><span class="p">]:</span>
+    <span class="n">order_by</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">RegisteredModel</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Search for registered models that satisfy the filter criteria.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        max_results: If passed, specifies the maximum number of models desired. If not</span>
-<span class="sd">            passed, all models will be returned.</span>
 <span class="sd">        filter_string: Filter query string (e.g., &quot;name = &#39;a_model_name&#39; and tag.key = &#39;value1&#39;&quot;),</span>
 <span class="sd">            defaults to searching for all registered models. The following identifiers, comparators,</span>
 <span class="sd">            and logical operators are supported.</span>
@@ -361,6 +353,8 @@
 <span class="sd">            Logical operators</span>
 <span class="sd">              - &quot;AND&quot;: Combines two sub-queries and returns True if both of them are True.</span>
 
+<span class="sd">        max_results: If passed, specifies the maximum number of models desired. If not</span>
+<span class="sd">            passed, all models will be returned.</span>
 <span class="sd">        order_by: List of column names with ASC|DESC annotation, to be used for ordering</span>
 <span class="sd">            matching search results.</span>
 
@@ -441,8 +435,8 @@
 <div class="viewcode-block" id="search_model_versions"><a class="viewcode-back" href="../../../../python_api/mlflow.html#mlflow.search_model_versions">[docs]</a><span class="k">def</span> <span class="nf">search_model_versions</span><span class="p">(</span>
     <span class="n">max_results</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">filter_string</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">order_by</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">ModelVersion</span><span class="p">]:</span>
+    <span class="n">order_by</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ModelVersion</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Search for model versions that satisfy the filter criteria.</span>
 
 <span class="sd">    .. warning:</span>
@@ -450,8 +444,6 @@
 <span class="sd">        The model version search results may not have aliases populated for performance reasons.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        max_results: If passed, specifies the maximum number of models desired. If not</span>
-<span class="sd">            passed, all models will be returned.</span>
 <span class="sd">        filter_string: Filter query string</span>
 <span class="sd">            (e.g., ``&quot;name = &#39;a_model_name&#39; and tag.key = &#39;value1&#39;&quot;``),</span>
 <span class="sd">            defaults to searching for all model versions. The following identifiers, comparators,</span>
@@ -474,6 +466,8 @@
 <span class="sd">            Logical operators</span>
 <span class="sd">              - ``AND``: Combines two sub-queries and returns True if both of them are True.</span>
 
+<span class="sd">        max_results: If passed, specifies the maximum number of models desired. If not</span>
+<span class="sd">            passed, all models will be returned.</span>
 <span class="sd">        order_by: List of column names with ASC|DESC annotation, to be used for ordering</span>
 <span class="sd">            matching search results.</span>
 
@@ -563,7 +557,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../../',
-      VERSION:'2.17.3.dev0',
+      VERSION:'2.17.2',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

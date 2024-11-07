@@ -55,7 +55,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="MLflow 2.17.3.dev0 documentation" href="../../index.html"/>
+    <link rel="top" title="MLflow 2.17.2 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -87,7 +87,7 @@
     <a href="../../index.html" class="wy-nav-top-logo"
       ><img src="../../_static/MLflow-logo-final-black.png" alt="MLflow"
     /></a>
-    <span class="version">2.17.3.dev0</span>
+    <span class="version">2.17.2</span>
   </li>
 </ul>
   </nav>
@@ -602,26 +602,22 @@
 
 <span class="kn">import</span> <span class="nn">collections</span>
 <span class="kn">import</span> <span class="nn">functools</span>
-<span class="kn">import</span> <span class="nn">hashlib</span>
 <span class="kn">import</span> <span class="nn">importlib</span>
 <span class="kn">import</span> <span class="nn">inspect</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">import</span> <span class="nn">signal</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">tempfile</span>
 <span class="kn">import</span> <span class="nn">threading</span>
-<span class="kn">import</span> <span class="nn">uuid</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">contextmanager</span>
 <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">lru_cache</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
-<span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urlparse</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span>
@@ -634,7 +630,6 @@
 <span class="kn">from</span> <span class="nn">mlflow.environment_variables</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">_MLFLOW_IN_CAPTURE_MODULE_PROCESS</span><span class="p">,</span>
     <span class="n">_MLFLOW_TESTING</span><span class="p">,</span>
-    <span class="n">MLFLOW_MODEL_ENV_DOWNLOADING_TEMP_DIR</span><span class="p">,</span>
     <span class="n">MLFLOW_SCORING_SERVER_REQUEST_TIMEOUT</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">mlflow.exceptions</span> <span class="kn">import</span> <span class="n">MlflowException</span>
@@ -680,11 +675,6 @@
     <span class="n">Notebook</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">mlflow.pyfunc.context</span> <span class="kn">import</span> <span class="n">Context</span><span class="p">,</span> <span class="n">set_prediction_context</span>
-<span class="kn">from</span> <span class="nn">mlflow.pyfunc.dbconnect_artifact_cache</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">DBConnectArtifactCache</span><span class="p">,</span>
-    <span class="n">archive_directory</span><span class="p">,</span>
-    <span class="n">extract_archive_to_dir</span><span class="p">,</span>
-<span class="p">)</span>
 <span class="kn">from</span> <span class="nn">mlflow.pyfunc.model</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">ChatModel</span><span class="p">,</span>
     <span class="n">PythonModel</span><span class="p">,</span>
@@ -694,7 +684,6 @@
     <span class="n">get_default_conda_env</span><span class="p">,</span>  <span class="c1"># noqa: F401</span>
     <span class="n">get_default_pip_requirements</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">mlflow.store.artifact.utils.models</span> <span class="kn">import</span> <span class="n">_parse_model_id_if_present</span>
 <span class="kn">from</span> <span class="nn">mlflow.tracing.provider</span> <span class="kn">import</span> <span class="n">trace_disabled</span>
 <span class="kn">from</span> <span class="nn">mlflow.tracing.utils</span> <span class="kn">import</span> <span class="n">_try_get_prediction_context</span>
 <span class="kn">from</span> <span class="nn">mlflow.tracking._model_registry</span> <span class="kn">import</span> <span class="n">DEFAULT_AWAIT_MAX_SLEEP_SECONDS</span>
@@ -714,16 +703,12 @@
     <span class="n">databricks_utils</span><span class="p">,</span>
     <span class="n">find_free_port</span><span class="p">,</span>
     <span class="n">get_major_minor_py_version</span><span class="p">,</span>
+    <span class="n">insecure_hash</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">mlflow.utils</span> <span class="kn">import</span> <span class="n">env_manager</span> <span class="k">as</span> <span class="n">_EnvManager</span>
 <span class="kn">from</span> <span class="nn">mlflow.utils._spark_utils</span> <span class="kn">import</span> <span class="n">modified_environ</span>
 <span class="kn">from</span> <span class="nn">mlflow.utils.annotations</span> <span class="kn">import</span> <span class="n">deprecated</span><span class="p">,</span> <span class="n">developer_stable</span><span class="p">,</span> <span class="n">experimental</span>
-<span class="kn">from</span> <span class="nn">mlflow.utils.databricks_utils</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">get_dbconnect_udf_sandbox_info</span><span class="p">,</span>
-    <span class="n">is_databricks_connect</span><span class="p">,</span>
-    <span class="n">is_in_databricks_runtime</span><span class="p">,</span>
-    <span class="n">is_in_databricks_shared_cluster_runtime</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">mlflow.utils.databricks_utils</span> <span class="kn">import</span> <span class="n">is_in_databricks_runtime</span>
 <span class="kn">from</span> <span class="nn">mlflow.utils.docstring_utils</span> <span class="kn">import</span> <span class="n">LOG_MODEL_PARAM_DOCS</span><span class="p">,</span> <span class="n">format_docstring</span>
 <span class="kn">from</span> <span class="nn">mlflow.utils.environment</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">_CONDA_ENV_FILE_NAME</span><span class="p">,</span>
@@ -758,8 +743,6 @@
     <span class="n">_parse_requirements</span><span class="p">,</span>
     <span class="n">warn_dependency_requirement_mismatches</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">mlflow.utils.spark_utils</span> <span class="kn">import</span> <span class="n">is_spark_connect_mode</span>
-<span class="kn">from</span> <span class="nn">mlflow.utils.virtualenv</span> <span class="kn">import</span> <span class="n">_get_python_env</span><span class="p">,</span> <span class="n">_get_virtualenv_name</span>
 
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">DataFrame</span> <span class="k">as</span> <span class="n">SparkDataFrame</span>
@@ -790,7 +773,7 @@
 <span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="add_to_model"><a class="viewcode-back" href="../../python_api/mlflow.pyfunc.html#mlflow.pyfunc.add_to_model">[docs]</a><span class="k">def</span> <span class="nf">add_to_model</span><span class="p">(</span>
+<div class="viewcode-block" id="add_to_model"><a class="viewcode-back" href="../../python_api/mlflow.pyfunc.html#mlflow.pyfunc.add_to_model">[docs]</a><span class="k">def</span> <span class="nf">add_to_model</span><span class="p">(</span>  <span class="c1"># noqa: D417</span>
     <span class="n">model</span><span class="p">,</span>
     <span class="n">loader_module</span><span class="p">,</span>
     <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -819,15 +802,14 @@
 <span class="sd">        code: Path to the code dependencies.</span>
 <span class="sd">        conda_env: Conda environment.</span>
 <span class="sd">        python_env: Python environment.</span>
-<span class="sd">        model_config: The model configuration to apply to the model. This configuration</span>
-<span class="sd">            is available during model loading.</span>
-
-<span class="sd">            .. Note:: Experimental: This parameter may change or be removed in a future</span>
-<span class="sd">                release without warning.</span>
-
-<span class="sd">        model_code_path: Path to the model code.</span>
+<span class="sd">        req: pip requirements file.</span>
 <span class="sd">        kwargs: Additional key-value pairs to include in the ``pyfunc`` flavor specification.</span>
 <span class="sd">                Values must be YAML-serializable.</span>
+<span class="sd">        model_config: The model configuration to apply to the model. This configuration</span>
+<span class="sd">                      is available during model loading.</span>
+
+<span class="sd">                      .. Note:: Experimental: This parameter may change or be removed in a future</span>
+<span class="sd">                                              release without warning.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        Updated model configuration.</span>
@@ -925,7 +907,6 @@
         <span class="n">model_impl</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
         <span class="n">predict_fn</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;predict&quot;</span><span class="p">,</span>
         <span class="n">predict_stream_fn</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">model_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model_impl</span><span class="p">,</span> <span class="n">predict_fn</span><span class="p">):</span>
             <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Model implementation is missing required </span><span class="si">{</span><span class="n">predict_fn</span><span class="si">}</span><span class="s2"> method.&quot;</span><span class="p">)</span>
@@ -942,7 +923,6 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_predict_stream_fn</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">model_impl</span><span class="p">,</span> <span class="n">predict_stream_fn</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_predict_stream_fn</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_model_id</span> <span class="o">=</span> <span class="n">model_id</span>
 
     <span class="nd">@property</span>
     <span class="nd">@developer_stable</span>
@@ -953,16 +933,6 @@
 <span class="sd">        NOTE: This is a stable developer API.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__model_impl</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">model_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The model ID of the model.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            The model ID of the model.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_id</span>
 
     <span class="k">def</span> <span class="nf">_update_dependencies_schemas_in_prediction_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">Context</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_meta</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_meta</span><span class="o">.</span><span class="n">metadata</span><span class="p">:</span>
@@ -983,12 +953,12 @@
         <span class="k">with</span> <span class="n">set_prediction_context</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
             <span class="k">yield</span> <span class="n">context</span>
 
-<div class="viewcode-block" id="PyFuncModel.predict"><a class="viewcode-back" href="../../python_api/mlflow.pyfunc.html#mlflow.pyfunc.PyFuncModel.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">PyFuncInput</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PyFuncOutput</span><span class="p">:</span>
+<div class="viewcode-block" id="PyFuncModel.predict"><a class="viewcode-back" href="../../python_api/mlflow.pyfunc.html#mlflow.pyfunc.PyFuncModel.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">PyFuncInput</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PyFuncOutput</span><span class="p">:</span>
         <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_try_get_or_generate_prediction_context</span><span class="p">()</span> <span class="k">as</span> <span class="n">context</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_update_dependencies_schemas_in_prediction_context</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_predict</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">PyFuncInput</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PyFuncOutput</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">PyFuncInput</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PyFuncOutput</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates model predictions.</span>
 
@@ -1030,14 +1000,14 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_predict_fn</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
 <div class="viewcode-block" id="PyFuncModel.predict_stream"><a class="viewcode-back" href="../../python_api/mlflow.pyfunc.html#mlflow.pyfunc.PyFuncModel.predict_stream">[docs]</a>    <span class="k">def</span> <span class="nf">predict_stream</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">PyFuncLLMSingleInput</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">PyFuncLLMSingleInput</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">PyFuncLLMOutputChunk</span><span class="p">]:</span>
         <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_try_get_or_generate_prediction_context</span><span class="p">()</span> <span class="k">as</span> <span class="n">context</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_update_dependencies_schemas_in_prediction_context</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_predict_stream</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_predict_stream</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">PyFuncLLMSingleInput</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">PyFuncLLMSingleInput</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">PyFuncLLMOutputChunk</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates streaming model predictions. Only LLM suports this method.</span>
@@ -1198,7 +1168,7 @@
     <span class="n">model_uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">suppress_warnings</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">dst_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">model_config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">model_config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PyFuncModel</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Load a model stored in Python function format.</span>
@@ -1223,11 +1193,9 @@
 <span class="sd">        dst_path: The local filesystem path to which to download the model artifact.</span>
 <span class="sd">            This directory must already exist. If unspecified, a local output</span>
 <span class="sd">            path will be created.</span>
-<span class="sd">        model_config: The model configuration to apply to the model. The configuration will</span>
-<span class="sd">            be available as the ``model_config`` property of the ``context`` parameter</span>
-<span class="sd">            in :func:`PythonModel.load_context() &lt;mlflow.pyfunc.PythonModel.load_context&gt;`</span>
-<span class="sd">            and :func:`PythonModel.predict() &lt;mlflow.pyfunc.PythonModel.predict&gt;`.</span>
-<span class="sd">            The configuration can be passed as a file path, or a dict with string keys.</span>
+<span class="sd">        model_config: The model configuration to apply to the model. This configuration</span>
+<span class="sd">            is available during model loading. The configuration can be passed as a file path,</span>
+<span class="sd">            or a dict with string keys.</span>
 
 <span class="sd">            .. Note:: Experimental: This parameter may change or be removed in a future</span>
 <span class="sd">                release without warning.</span>
@@ -1314,7 +1282,6 @@
         <span class="n">model_impl</span><span class="o">=</span><span class="n">model_impl</span><span class="p">,</span>
         <span class="n">predict_fn</span><span class="o">=</span><span class="n">predict_fn</span><span class="p">,</span>
         <span class="n">predict_stream_fn</span><span class="o">=</span><span class="n">predict_stream_fn</span><span class="p">,</span>
-        <span class="n">model_id</span><span class="o">=</span><span class="n">_parse_model_id_if_present</span><span class="p">(</span><span class="n">model_uri</span><span class="p">),</span>
     <span class="p">)</span></div>
 
 
@@ -1361,7 +1328,7 @@
 
 
 <span class="k">def</span> <span class="nf">_load_model_or_server</span><span class="p">(</span>
-    <span class="n">model_uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">env_manager</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model_config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">model_uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">env_manager</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model_config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Load a model with env restoration. If a non-local ``env_manager`` is specified, prepare an</span>
@@ -1415,11 +1382,10 @@
             <span class="n">synchronous</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
             <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
             <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">STDOUT</span><span class="p">,</span>
-            <span class="n">model_config</span><span class="o">=</span><span class="n">model_config</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">client</span> <span class="o">=</span> <span class="n">ScoringServerClient</span><span class="p">(</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="n">server_port</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">scoring_server_proc</span> <span class="o">=</span> <span class="n">pyfunc_backend</span><span class="o">.</span><span class="n">serve_stdin</span><span class="p">(</span><span class="n">local_path</span><span class="p">,</span> <span class="n">model_config</span><span class="o">=</span><span class="n">model_config</span><span class="p">)</span>
+        <span class="n">scoring_server_proc</span> <span class="o">=</span> <span class="n">pyfunc_backend</span><span class="o">.</span><span class="n">serve_stdin</span><span class="p">(</span><span class="n">local_path</span><span class="p">)</span>
         <span class="n">client</span> <span class="o">=</span> <span class="n">StdinScoringServerClient</span><span class="p">(</span><span class="n">scoring_server_proc</span><span class="p">)</span>
 
     <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Scoring server process started at PID: </span><span class="si">{</span><span class="n">scoring_server_proc</span><span class="o">.</span><span class="n">pid</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -1822,7 +1788,7 @@
 
 
 <span class="k">def</span> <span class="nf">_convert_struct_values</span><span class="p">(</span>
-    <span class="n">result</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+    <span class="n">result</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
     <span class="n">result_type</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -1886,6 +1852,14 @@
     <span class="k">return</span> <span class="n">result_dict</span>
 
 
+<span class="k">def</span> <span class="nf">_is_spark_connect</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">pyspark.sql.utils</span> <span class="kn">import</span> <span class="n">is_remote</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="n">is_remote</span><span class="p">()</span>
+
+
 <span class="c1"># This location is used to prebuild python environment in Databricks runtime.</span>
 <span class="c1"># The location for prebuilding env should be located under /local_disk0</span>
 <span class="c1"># because the python env will be uploaded to NFS and mounted to Serverless UDF sandbox,</span>
@@ -1893,219 +1867,13 @@
 <span class="n">_PREBUILD_ENV_ROOT_LOCATION</span> <span class="o">=</span> <span class="s2">&quot;/tmp&quot;</span>
 
 
-<span class="k">def</span> <span class="nf">_gen_prebuilt_env_archive_name</span><span class="p">(</span><span class="n">spark</span><span class="p">,</span> <span class="n">local_model_path</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generate prebuilt env archive file name.</span>
-<span class="sd">    The format is:</span>
-<span class="sd">    &#39;mlflow-{sha of python env config and dependencies}-{runtime version}-{platform machine}&#39;</span>
-<span class="sd">    Note: The runtime version and platform machine information are included in the</span>
-<span class="sd">     archive name because the prebuilt env might not be compatible across different</span>
-<span class="sd">     runtime versions or platform machines.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">python_env</span> <span class="o">=</span> <span class="n">_get_python_env</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">local_model_path</span><span class="p">))</span>
-    <span class="n">env_name</span> <span class="o">=</span> <span class="n">_get_virtualenv_name</span><span class="p">(</span><span class="n">python_env</span><span class="p">,</span> <span class="n">local_model_path</span><span class="p">)</span>
-    <span class="n">dbconnect_udf_sandbox_info</span> <span class="o">=</span> <span class="n">get_dbconnect_udf_sandbox_info</span><span class="p">(</span><span class="n">spark</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">env_name</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">dbconnect_udf_sandbox_info</span><span class="o">.</span><span class="n">image_version</span><span class="si">}</span><span class="s2">-&quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dbconnect_udf_sandbox_info</span><span class="o">.</span><span class="n">platform_machine</span><span class="si">}</span><span class="s2">&quot;</span>
-    <span class="p">)</span>
-
-
-<span class="k">def</span> <span class="nf">_verify_prebuilt_env</span><span class="p">(</span><span class="n">spark</span><span class="p">,</span> <span class="n">local_model_path</span><span class="p">,</span> <span class="n">env_archive_path</span><span class="p">):</span>
-    <span class="c1"># Use `[:-7]` to truncate &quot;.tar.gz&quot; in the end</span>
-    <span class="n">archive_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">env_archive_path</span><span class="p">)[:</span><span class="o">-</span><span class="mi">7</span><span class="p">]</span>
-    <span class="n">prebuilt_env_sha</span><span class="p">,</span> <span class="n">prebuilt_runtime_version</span><span class="p">,</span> <span class="n">prebuilt_platform_machine</span> <span class="o">=</span> <span class="n">archive_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)[</span>
-        <span class="o">-</span><span class="mi">3</span><span class="p">:</span>
-    <span class="p">]</span>
-
-    <span class="n">python_env</span> <span class="o">=</span> <span class="n">_get_python_env</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">local_model_path</span><span class="p">))</span>
-    <span class="n">env_sha</span> <span class="o">=</span> <span class="n">_get_virtualenv_name</span><span class="p">(</span><span class="n">python_env</span><span class="p">,</span> <span class="n">local_model_path</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">dbconnect_udf_sandbox_info</span> <span class="o">=</span> <span class="n">get_dbconnect_udf_sandbox_info</span><span class="p">(</span><span class="n">spark</span><span class="p">)</span>
-    <span class="n">runtime_version</span> <span class="o">=</span> <span class="n">dbconnect_udf_sandbox_info</span><span class="o">.</span><span class="n">image_version</span>
-    <span class="n">platform_machine</span> <span class="o">=</span> <span class="n">dbconnect_udf_sandbox_info</span><span class="o">.</span><span class="n">platform_machine</span>
-
-    <span class="k">if</span> <span class="n">prebuilt_env_sha</span> <span class="o">!=</span> <span class="n">env_sha</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;The prebuilt env &#39;</span><span class="si">{</span><span class="n">env_archive_path</span><span class="si">}</span><span class="s2">&#39; does not match the model required environment.&quot;</span>
-        <span class="p">)</span>
-    <span class="k">if</span> <span class="n">prebuilt_runtime_version</span> <span class="o">!=</span> <span class="n">runtime_version</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;The prebuilt env &#39;</span><span class="si">{</span><span class="n">env_archive_path</span><span class="si">}</span><span class="s2">&#39; runtime version &#39;</span><span class="si">{</span><span class="n">prebuilt_runtime_version</span><span class="si">}</span><span class="s2">&#39; &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;does not match UDF sandbox runtime version </span><span class="si">{</span><span class="n">runtime_version</span><span class="si">}</span><span class="s2">.&quot;</span>
-        <span class="p">)</span>
-    <span class="k">if</span> <span class="n">prebuilt_platform_machine</span> <span class="o">!=</span> <span class="n">platform_machine</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;The prebuilt env &#39;</span><span class="si">{</span><span class="n">env_archive_path</span><span class="si">}</span><span class="s2">&#39; platform machine &#39;</span><span class="si">{</span><span class="n">prebuilt_platform_machine</span><span class="si">}</span><span class="s2">&#39; &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;does not match UDF sandbox platform machine </span><span class="si">{</span><span class="n">platform_machine</span><span class="si">}</span><span class="s2">.&quot;</span>
-        <span class="p">)</span>
-
-
-<span class="k">def</span> <span class="nf">_prebuild_env_internal</span><span class="p">(</span><span class="n">local_model_path</span><span class="p">,</span> <span class="n">archive_name</span><span class="p">,</span> <span class="n">save_path</span><span class="p">):</span>
-    <span class="n">env_root_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_PREBUILD_ENV_ROOT_LOCATION</span><span class="p">,</span> <span class="n">archive_name</span><span class="p">)</span>
-    <span class="n">archive_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="n">archive_name</span> <span class="o">+</span> <span class="s2">&quot;.tar.gz&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">env_root_dir</span><span class="p">):</span>
-        <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">env_root_dir</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">archive_path</span><span class="p">):</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">archive_path</span><span class="p">)</span>
-
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">pyfunc_backend</span> <span class="o">=</span> <span class="n">get_flavor_backend</span><span class="p">(</span>
-            <span class="n">local_model_path</span><span class="p">,</span>
-            <span class="n">env_manager</span><span class="o">=</span><span class="s2">&quot;virtualenv&quot;</span><span class="p">,</span>
-            <span class="n">install_mlflow</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-            <span class="n">create_env_root_dir</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-            <span class="n">env_root_dir</span><span class="o">=</span><span class="n">env_root_dir</span><span class="p">,</span>
-        <span class="p">)</span>
-
-        <span class="n">pyfunc_backend</span><span class="o">.</span><span class="n">prepare_env</span><span class="p">(</span><span class="n">model_uri</span><span class="o">=</span><span class="n">local_model_path</span><span class="p">,</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-        <span class="c1"># exclude pip cache from the archive file.</span>
-        <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">env_root_dir</span><span class="p">,</span> <span class="s2">&quot;pip_cache_pkgs&quot;</span><span class="p">))</span>
-
-        <span class="k">return</span> <span class="n">archive_directory</span><span class="p">(</span><span class="n">env_root_dir</span><span class="p">,</span> <span class="n">archive_path</span><span class="p">)</span>
-    <span class="k">finally</span><span class="p">:</span>
-        <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">env_root_dir</span><span class="p">,</span> <span class="n">ignore_errors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-
-<span class="k">def</span> <span class="nf">_download_prebuilt_env_if_needed</span><span class="p">(</span><span class="n">prebuilt_env_uri</span><span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">mlflow.utils.file_utils</span> <span class="kn">import</span> <span class="n">get_or_create_tmp_dir</span>
-
-    <span class="n">parsed_url</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">prebuilt_env_uri</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">parsed_url</span><span class="o">.</span><span class="n">scheme</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="ow">or</span> <span class="n">parsed_url</span><span class="o">.</span><span class="n">scheme</span> <span class="o">==</span> <span class="s2">&quot;file&quot;</span><span class="p">:</span>
-        <span class="c1"># local path</span>
-        <span class="k">return</span> <span class="n">parsed_url</span><span class="o">.</span><span class="n">path</span>
-    <span class="k">if</span> <span class="n">parsed_url</span><span class="o">.</span><span class="n">scheme</span> <span class="o">==</span> <span class="s2">&quot;dbfs&quot;</span><span class="p">:</span>
-        <span class="n">tmp_dir</span> <span class="o">=</span> <span class="n">MLFLOW_MODEL_ENV_DOWNLOADING_TEMP_DIR</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="ow">or</span> <span class="n">get_or_create_tmp_dir</span><span class="p">()</span>
-        <span class="n">model_env_uc_path</span> <span class="o">=</span> <span class="n">parsed_url</span><span class="o">.</span><span class="n">path</span>
-
-        <span class="c1"># download file from DBFS.</span>
-        <span class="n">local_model_env_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">model_env_uc_path</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">local_model_env_path</span><span class="p">):</span>
-            <span class="c1"># file is already downloaded.</span>
-            <span class="k">return</span> <span class="n">local_model_env_path</span>
-
-        <span class="k">try</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">databricks.sdk</span> <span class="kn">import</span> <span class="n">WorkspaceClient</span>
-
-            <span class="n">ws</span> <span class="o">=</span> <span class="n">WorkspaceClient</span><span class="p">()</span>
-            <span class="c1"># Download model env file from UC volume.</span>
-            <span class="k">with</span> <span class="p">(</span>
-                <span class="n">ws</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">model_env_uc_path</span><span class="p">)</span><span class="o">.</span><span class="n">contents</span> <span class="k">as</span> <span class="n">rf</span><span class="p">,</span>
-                <span class="nb">open</span><span class="p">(</span><span class="n">local_model_env_path</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">wf</span><span class="p">,</span>
-            <span class="p">):</span>
-                <span class="k">while</span> <span class="n">chunk</span> <span class="o">:=</span> <span class="n">rf</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4096</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">):</span>
-                    <span class="n">wf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">local_model_env_path</span>
-        <span class="k">except</span> <span class="p">(</span><span class="ne">Exception</span><span class="p">,</span> <span class="ne">KeyboardInterrupt</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">local_model_env_path</span><span class="p">):</span>
-                <span class="c1"># clean the partially saved file if downloading fails.</span>
-                <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">local_model_env_path</span><span class="p">)</span>
-            <span class="k">raise</span>
-
-    <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;Unsupported prebuilt env file path &#39;</span><span class="si">{</span><span class="n">prebuilt_env_uri</span><span class="si">}</span><span class="s2">&#39;, &quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;invalid scheme: &#39;</span><span class="si">{</span><span class="n">parsed_url</span><span class="o">.</span><span class="n">scheme</span><span class="si">}</span><span class="s2">&#39;.&quot;</span>
-    <span class="p">)</span>
-
-
-<div class="viewcode-block" id="build_model_env"><a class="viewcode-back" href="../../python_api/mlflow.pyfunc.html#mlflow.pyfunc.build_model_env">[docs]</a><span class="k">def</span> <span class="nf">build_model_env</span><span class="p">(</span><span class="n">model_uri</span><span class="p">,</span> <span class="n">save_path</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Prebuild model python environment and generate an archive file saved to provided</span>
-<span class="sd">    `save_path`.</span>
-
-<span class="sd">    Typical usages:</span>
-<span class="sd">     - Pre-build a model&#39;s environment in Databricks Runtime and then download the prebuilt</span>
-<span class="sd">       python environment archive file. This pre-built environment archive can then be used</span>
-<span class="sd">       in `mlflow.pyfunc.spark_udf` for remote inference execution when using Databricks Connect</span>
-<span class="sd">       to remotely connect to a Databricks environment for code execution.</span>
-
-<span class="sd">    .. note::</span>
-<span class="sd">        The `build_model_env` API is intended to only work when executed within Databricks runtime,</span>
-<span class="sd">        serving the purpose of capturing the required execution environment that is needed for</span>
-<span class="sd">        remote code execution when using DBConnect. The environment archive is designed to be used</span>
-<span class="sd">        when performing remote execution using `mlflow.pyfunc.spark_udf` in</span>
-<span class="sd">        Databricks runtime or Databricks Connect client and has no other purpose.</span>
-<span class="sd">        The prebuilt env archive file cannot be used across different Databricks runtime</span>
-<span class="sd">        versions or different platform machines. As such, if you connect to a different cluster</span>
-<span class="sd">        that is running a different runtime version on Databricks, you will need to execute this</span>
-<span class="sd">        API in a notebook and retrieve the generated archive to your local machine. Each</span>
-<span class="sd">        environment snapshot is unique to the the model, the runtime version of your remote</span>
-<span class="sd">        Databricks cluster, and the specification of the udf execution environment.</span>
-<span class="sd">        When using the prebuilt env in `mlflow.pyfunc.spark_udf`, MLflow will verify</span>
-<span class="sd">        whether the spark UDF sandbox environment matches the prebuilt env requirements and will</span>
-<span class="sd">        raise Exceptions if there are compatibility issues. If these occur, simply re-run this API</span>
-<span class="sd">        in the cluster that you are attempting to attach to.</span>
-
-<span class="sd">    .. code-block:: python</span>
-<span class="sd">        :caption: Example</span>
-
-<span class="sd">        from mlflow.pyfunc import build_model_env</span>
-
-<span class="sd">        # Create a python environment archive file at the path `prebuilt_env_uri`</span>
-<span class="sd">        prebuilt_env_uri = build_model_env(f&quot;runs:/{run_id}/model&quot;, &quot;/path/to/save_directory&quot;)</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        model_uri: URI to the model that is used to build the python environment.</span>
-<span class="sd">        save_path: The directory path that is used to save the prebuilt model environment</span>
-<span class="sd">            archive file path.</span>
-<span class="sd">            The path can be either local directory path or</span>
-<span class="sd">            mounted DBFS path such as &#39;/dbfs/...&#39; or</span>
-<span class="sd">            mounted UC volume path such as &#39;/Volumes/...&#39;.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        Return the path of an archive file containing the python environment data.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">from</span> <span class="nn">mlflow.utils._spark_utils</span> <span class="kn">import</span> <span class="n">_get_active_spark_session</span>
-
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_in_databricks_runtime</span><span class="p">():</span>
-        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;&#39;build_model_env&#39; only support running in Databricks runtime.&quot;</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">save_path</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The saving path &#39;</span><span class="si">{</span><span class="n">save_path</span><span class="si">}</span><span class="s2">&#39; must be a directory.&quot;</span><span class="p">)</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-    <span class="n">local_model_path</span> <span class="o">=</span> <span class="n">_download_artifact_from_uri</span><span class="p">(</span>
-        <span class="n">artifact_uri</span><span class="o">=</span><span class="n">model_uri</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="n">_create_model_downloading_tmp_dir</span><span class="p">(</span><span class="n">should_use_nfs</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="p">)</span>
-    <span class="n">archive_name</span> <span class="o">=</span> <span class="n">_gen_prebuilt_env_archive_name</span><span class="p">(</span><span class="n">_get_active_spark_session</span><span class="p">(),</span> <span class="n">local_model_path</span><span class="p">)</span>
-    <span class="n">dest_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="n">archive_name</span> <span class="o">+</span> <span class="s2">&quot;.tar.gz&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dest_path</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-            <span class="s2">&quot;A pre-built model python environment already exists &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;in &#39;</span><span class="si">{</span><span class="n">dest_path</span><span class="si">}</span><span class="s2">&#39;. To rebuild it, please remove &quot;</span>
-            <span class="s2">&quot;the existing one first.&quot;</span>
-        <span class="p">)</span>
-
-    <span class="c1"># Archive the environment directory as a `tar.gz` format archive file,</span>
-    <span class="c1"># and then move the archive file to the destination directory.</span>
-    <span class="c1"># Note:</span>
-    <span class="c1"># - all symlink files in the input directory are kept as it is in the</span>
-    <span class="c1">#  archive file.</span>
-    <span class="c1"># - the destination directory could be UC-volume fuse mounted directory</span>
-    <span class="c1">#  which only supports limited filesystem operations, so to ensure it works,</span>
-    <span class="c1">#  we generate the archive file under /tmp and then move it into the</span>
-    <span class="c1">#  destination directory.</span>
-    <span class="n">tmp_archive_path</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">tmp_archive_path</span> <span class="o">=</span> <span class="n">_prebuild_env_internal</span><span class="p">(</span>
-            <span class="n">local_model_path</span><span class="p">,</span> <span class="n">archive_name</span><span class="p">,</span> <span class="n">_PREBUILD_ENV_ROOT_LOCATION</span>
-        <span class="p">)</span>
-        <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">tmp_archive_path</span><span class="p">,</span> <span class="n">save_path</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">dest_path</span>
-    <span class="k">finally</span><span class="p">:</span>
-        <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">local_model_path</span><span class="p">,</span> <span class="n">ignore_errors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">tmp_archive_path</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">tmp_archive_path</span><span class="p">):</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">tmp_archive_path</span><span class="p">)</span></div>
-
-
 <div class="viewcode-block" id="spark_udf"><a class="viewcode-back" href="../../python_api/mlflow.pyfunc.html#mlflow.pyfunc.spark_udf">[docs]</a><span class="k">def</span> <span class="nf">spark_udf</span><span class="p">(</span>
     <span class="n">spark</span><span class="p">,</span>
     <span class="n">model_uri</span><span class="p">,</span>
     <span class="n">result_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">env_manager</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">extra_env</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">prebuilt_env_uri</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">model_config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">env_manager</span><span class="o">=</span><span class="n">_EnvManager</span><span class="o">.</span><span class="n">LOCAL</span><span class="p">,</span>
+    <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">extra_env</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A Spark UDF that can be used to invoke the Python function formatted model.</span>
@@ -2131,23 +1899,8 @@
 <span class="sd">    converted to string. If the result type is not an array type, the left most column with</span>
 <span class="sd">    matching type is returned.</span>
 
-<span class="sd">    .. note::</span>
-<span class="sd">        Inputs of type ``pyspark.sql.types.DateType`` are not supported on earlier versions of</span>
-<span class="sd">        Spark (2.4 and below).</span>
-
-<span class="sd">    .. note::</span>
-<span class="sd">        When using Databricks Connect to connect to a remote Databricks cluster,</span>
-<span class="sd">        the Databricks cluster must use runtime version &gt;= 16, and when &#39;spark_udf&#39;</span>
-<span class="sd">        param &#39;env_manager&#39; is set as &#39;virtualenv&#39;, the &#39;prebuilt_env_uri&#39; param is</span>
-<span class="sd">        required to be specified.</span>
-
-<span class="sd">    .. note::</span>
-<span class="sd">        Please be aware that when operating in Databricks Serverless,</span>
-<span class="sd">        spark tasks run within the confines of the Databricks Serverless UDF sandbox.</span>
-<span class="sd">        This environment has a total capacity limit of 1GB, combining both available</span>
-<span class="sd">        memory and local disk capacity. Furthermore, there are no GPU devices available</span>
-<span class="sd">        in this setup. Therefore, any deep-learning models that contain large weights</span>
-<span class="sd">        or require a GPU are not suitable for deployment on Databricks Serverless.</span>
+<span class="sd">    NOTE: Inputs of type ``pyspark.sql.types.DateType`` are not supported on earlier versions of</span>
+<span class="sd">    Spark (2.4 and below).</span>
 
 <span class="sd">    .. code-block:: python</span>
 <span class="sd">        :caption: Example</span>
@@ -2216,8 +1969,8 @@
 <span class="sd">        env_manager: The environment manager to use in order to create the python environment</span>
 <span class="sd">            for model inference. Note that environment is only restored in the context</span>
 <span class="sd">            of the PySpark UDF; the software environment outside of the UDF is</span>
-<span class="sd">            unaffected. If `prebuilt_env_uri` parameter is not set, the default value</span>
-<span class="sd">            is ``local``, and the following values are supported:</span>
+<span class="sd">            unaffected. Default value is ``local``, and the following values are</span>
+<span class="sd">            supported:</span>
 
 <span class="sd">            - ``virtualenv``: Use virtualenv to restore the python environment that</span>
 <span class="sd">              was used to train the model.</span>
@@ -2227,28 +1980,9 @@
 <span class="sd">              may differ from the environment used to train the model and may lead to</span>
 <span class="sd">              errors or invalid predictions.</span>
 
-<span class="sd">            If the `prebuilt_env_uri` parameter is set, `env_manager` parameter should not</span>
-<span class="sd">            be set.</span>
-
 <span class="sd">        params: Additional parameters to pass to the model for inference.</span>
 
 <span class="sd">        extra_env: Extra environment variables to pass to the UDF executors.</span>
-
-<span class="sd">        prebuilt_env_uri: The path of the prebuilt env archive file created by</span>
-<span class="sd">            `mlflow.pyfunc.build_model_env` API.</span>
-<span class="sd">            This parameter can only be used in Databricks Serverless notebook REPL,</span>
-<span class="sd">            Databricks Shared cluster notebook REPL, and Databricks Connect client</span>
-<span class="sd">            environment.</span>
-<span class="sd">            The path can be either local file path or DBFS path such as</span>
-<span class="sd">            &#39;dbfs:/Volumes/...&#39;, in this case, MLflow automatically downloads it</span>
-<span class="sd">            to local temporary directory, &quot;MLFLOW_MODEL_ENV_DOWNLOADING_TEMP_DIR&quot;</span>
-<span class="sd">            environmental variable can be set to specify the temporary directory</span>
-<span class="sd">            to use.</span>
-
-<span class="sd">            If this parameter is set, `env_manger` parameter must not be set.</span>
-
-<span class="sd">        model_config: The model configuration to set when loading the model.</span>
-<span class="sd">            See &#39;model_config&#39; argument in `mlflow.pyfunc.load_model` API for details.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        Spark UDF that applies the model&#39;s ``predict`` method to the data and returns a</span>
@@ -2272,20 +2006,11 @@
     <span class="kn">from</span> <span class="nn">mlflow.pyfunc.spark_model_cache</span> <span class="kn">import</span> <span class="n">SparkModelCache</span>
     <span class="kn">from</span> <span class="nn">mlflow.utils._spark_utils</span> <span class="kn">import</span> <span class="n">_SparkDirectoryDistributor</span>
 
-    <span class="n">is_spark_connect</span> <span class="o">=</span> <span class="n">is_spark_connect_mode</span><span class="p">()</span>
+    <span class="n">is_spark_connect</span> <span class="o">=</span> <span class="n">_is_spark_connect</span><span class="p">()</span>
     <span class="c1"># Used in test to force install local version of mlflow when starting a model server</span>
     <span class="n">mlflow_home</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;MLFLOW_HOME&quot;</span><span class="p">)</span>
     <span class="n">openai_env_vars</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">openai</span><span class="o">.</span><span class="n">_OpenAIEnvVar</span><span class="o">.</span><span class="n">read_environ</span><span class="p">()</span>
     <span class="n">mlflow_testing</span> <span class="o">=</span> <span class="n">_MLFLOW_TESTING</span><span class="o">.</span><span class="n">get_raw</span><span class="p">()</span>
-
-    <span class="k">if</span> <span class="n">prebuilt_env_uri</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">env_manager</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
-                <span class="s2">&quot;If &#39;prebuilt_env_uri&#39; parameter is set, &#39;env_manager&#39; parameter can&#39;t be set.&quot;</span>
-            <span class="p">)</span>
-        <span class="n">env_manager</span> <span class="o">=</span> <span class="n">_EnvManager</span><span class="o">.</span><span class="n">VIRTUALENV</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">env_manager</span> <span class="o">=</span> <span class="n">env_manager</span> <span class="ow">or</span> <span class="n">_EnvManager</span><span class="o">.</span><span class="n">LOCAL</span>
 
     <span class="n">_EnvManager</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">env_manager</span><span class="p">)</span>
 
@@ -2296,47 +2021,10 @@
         <span class="c1"># this case all executors and driver share the same filesystem</span>
         <span class="n">is_spark_in_local_mode</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;spark.master&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;local&quot;</span><span class="p">)</span>
 
-    <span class="n">is_dbconnect_mode</span> <span class="o">=</span> <span class="n">is_databricks_connect</span><span class="p">(</span><span class="n">spark</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">prebuilt_env_uri</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">is_dbconnect_mode</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-            <span class="s2">&quot;&#39;prebuilt_env&#39; parameter can only be used in Databricks Serverless &quot;</span>
-            <span class="s2">&quot;notebook REPL, atabricks Shared cluster notebook REPL, and Databricks Connect client &quot;</span>
-            <span class="s2">&quot;environment.&quot;</span>
-        <span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">prebuilt_env_uri</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">is_dbconnect_mode</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">is_in_databricks_runtime</span><span class="p">():</span>
-        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-            <span class="s2">&quot;&#39;prebuilt_env_uri&#39; param is required if using Databricks Connect to connect &quot;</span>
-            <span class="s2">&quot;to Databricks cluster from your own machine.&quot;</span>
-        <span class="p">)</span>
-
-    <span class="c1"># Databricks connect can use `spark.addArtifact` to upload artifact to NFS.</span>
-    <span class="c1"># But for Databricks shared cluster runtime, it can directly write to NFS, so exclude it</span>
-    <span class="c1"># Note for Databricks Serverles runtime (notebook REPL), it runs on Servereless VM that</span>
-    <span class="c1"># can&#39;t access NFS, so it needs to use `spark.addArtifact`.</span>
-    <span class="n">use_dbconnect_artifact</span> <span class="o">=</span> <span class="n">is_dbconnect_mode</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">is_in_databricks_shared_cluster_runtime</span><span class="p">()</span>
-
-    <span class="k">if</span> <span class="n">use_dbconnect_artifact</span><span class="p">:</span>
-        <span class="n">udf_sandbox_info</span> <span class="o">=</span> <span class="n">get_dbconnect_udf_sandbox_info</span><span class="p">(</span><span class="n">spark</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">Version</span><span class="p">(</span><span class="n">udf_sandbox_info</span><span class="o">.</span><span class="n">mlflow_version</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">Version</span><span class="p">(</span><span class="s2">&quot;2.19.0&quot;</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
-                <span class="s2">&quot;Using &#39;mlflow.pyfunc.spark_udf&#39; in Databricks Serverless or in remote &quot;</span>
-                <span class="s2">&quot;Databricks Connect requires UDF sandbox image installed with MLflow &quot;</span>
-                <span class="s2">&quot;of version &gt;= 2.19.&quot;</span>
-            <span class="p">)</span>
-        <span class="c1"># `udf_sandbox_info.runtime_version` format is like &#39;&lt;major_version&gt;.&lt;minor_version&gt;&#39;.</span>
-        <span class="c1"># It&#39;s safe to apply `Version`.</span>
-        <span class="k">if</span> <span class="n">Version</span><span class="p">(</span><span class="n">udf_sandbox_info</span><span class="o">.</span><span class="n">runtime_version</span><span class="p">)</span><span class="o">.</span><span class="n">major</span> <span class="o">&lt;</span> <span class="mi">16</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
-                <span class="s2">&quot;Using &#39;mlflow.pyfunc.spark_udf&#39; in Databricks Serverless or in remote &quot;</span>
-                <span class="s2">&quot;Databricks Connect requires Databricks runtime version &gt;= 16.0.&quot;</span>
-            <span class="p">)</span>
-
     <span class="n">nfs_root_dir</span> <span class="o">=</span> <span class="n">get_nfs_cache_root_dir</span><span class="p">()</span>
     <span class="n">should_use_nfs</span> <span class="o">=</span> <span class="n">nfs_root_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-
     <span class="n">should_use_spark_to_broadcast_file</span> <span class="o">=</span> <span class="ow">not</span> <span class="p">(</span>
-        <span class="n">is_spark_in_local_mode</span> <span class="ow">or</span> <span class="n">should_use_nfs</span> <span class="ow">or</span> <span class="n">is_spark_connect</span> <span class="ow">or</span> <span class="n">use_dbconnect_artifact</span>
+        <span class="n">is_spark_in_local_mode</span> <span class="ow">or</span> <span class="n">should_use_nfs</span> <span class="ow">or</span> <span class="n">is_spark_connect</span>
     <span class="p">)</span>
 
     <span class="c1"># For spark connect mode,</span>
@@ -2347,27 +2035,18 @@
 
     <span class="k">if</span> <span class="p">(</span>
         <span class="n">is_spark_connect</span>
-        <span class="ow">and</span> <span class="ow">not</span> <span class="n">is_dbconnect_mode</span>
         <span class="ow">and</span> <span class="n">env_manager</span> <span class="ow">in</span> <span class="p">(</span><span class="n">_EnvManager</span><span class="o">.</span><span class="n">VIRTUALENV</span><span class="p">,</span> <span class="n">_EnvManager</span><span class="o">.</span><span class="n">CONDA</span><span class="p">)</span>
+        <span class="ow">and</span> <span class="ow">not</span> <span class="n">should_spark_connect_use_nfs</span>
     <span class="p">):</span>
         <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Environment manager </span><span class="si">{</span><span class="n">env_manager</span><span class="si">!r}</span><span class="s2"> is not supported in Spark Connect &quot;</span>
-            <span class="s2">&quot;client environment if it connects to non-Databricks Spark cluster.&quot;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;Environment manager </span><span class="si">{</span><span class="n">env_manager</span><span class="si">!r}</span><span class="s2"> is not supported in Spark connect mode &quot;</span>
+            <span class="s2">&quot;when either non-Databricks environment is in use or NFS is unavailable.&quot;</span><span class="p">,</span>
         <span class="p">)</span>
 
     <span class="n">local_model_path</span> <span class="o">=</span> <span class="n">_download_artifact_from_uri</span><span class="p">(</span>
         <span class="n">artifact_uri</span><span class="o">=</span><span class="n">model_uri</span><span class="p">,</span>
         <span class="n">output_path</span><span class="o">=</span><span class="n">_create_model_downloading_tmp_dir</span><span class="p">(</span><span class="n">should_use_nfs</span><span class="p">),</span>
     <span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">prebuilt_env_uri</span><span class="p">:</span>
-        <span class="n">prebuilt_env_uri</span> <span class="o">=</span> <span class="n">_download_prebuilt_env_if_needed</span><span class="p">(</span><span class="n">prebuilt_env_uri</span><span class="p">)</span>
-        <span class="n">_verify_prebuilt_env</span><span class="p">(</span><span class="n">spark</span><span class="p">,</span> <span class="n">local_model_path</span><span class="p">,</span> <span class="n">prebuilt_env_uri</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">use_dbconnect_artifact</span> <span class="ow">and</span> <span class="n">env_manager</span> <span class="o">==</span> <span class="n">_EnvManager</span><span class="o">.</span><span class="n">CONDA</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
-            <span class="s2">&quot;Databricks connect mode or Databricks Serverless python REPL doesn&#39;t &quot;</span>
-            <span class="s2">&quot;support env_manager &#39;conda&#39;.&quot;</span>
-        <span class="p">)</span>
 
     <span class="k">if</span> <span class="n">env_manager</span> <span class="o">==</span> <span class="n">_EnvManager</span><span class="o">.</span><span class="n">LOCAL</span><span class="p">:</span>
         <span class="c1"># Assume spark executor python environment is the same with spark driver side.</span>
@@ -2395,72 +2074,26 @@
                 <span class="s2">&quot;limitations with handling SIGKILL signals, these MLflow Model server child &quot;</span>
                 <span class="s2">&quot;processes cannot be cleaned up if the Spark Job is canceled.&quot;</span>
             <span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">prebuilt_env_uri</span><span class="p">:</span>
-        <span class="n">env_cache_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">prebuilt_env_uri</span><span class="p">)[:</span><span class="o">-</span><span class="mi">7</span><span class="p">]</span>
-    <span class="k">elif</span> <span class="n">use_dbconnect_artifact</span><span class="p">:</span>
-        <span class="n">env_cache_key</span> <span class="o">=</span> <span class="n">_gen_prebuilt_env_archive_name</span><span class="p">(</span><span class="n">spark</span><span class="p">,</span> <span class="n">local_model_path</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">env_cache_key</span> <span class="o">=</span> <span class="kc">None</span>
-
-    <span class="k">if</span> <span class="n">use_dbconnect_artifact</span> <span class="ow">or</span> <span class="n">prebuilt_env_uri</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">prebuilt_env_root_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_PREBUILD_ENV_ROOT_LOCATION</span><span class="p">,</span> <span class="n">env_cache_key</span><span class="p">)</span>
-        <span class="n">pyfunc_backend_env_root_config</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;create_env_root_dir&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-            <span class="s2">&quot;env_root_dir&quot;</span><span class="p">:</span> <span class="n">prebuilt_env_root_dir</span><span class="p">,</span>
-        <span class="p">}</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">pyfunc_backend_env_root_config</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;create_env_root_dir&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
     <span class="n">pyfunc_backend</span> <span class="o">=</span> <span class="n">get_flavor_backend</span><span class="p">(</span>
         <span class="n">local_model_path</span><span class="p">,</span>
         <span class="n">env_manager</span><span class="o">=</span><span class="n">env_manager</span><span class="p">,</span>
         <span class="n">install_mlflow</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;MLFLOW_HOME&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">pyfunc_backend_env_root_config</span><span class="p">,</span>
+        <span class="n">create_env_root_dir</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">dbconnect_artifact_cache</span> <span class="o">=</span> <span class="n">DBConnectArtifactCache</span><span class="o">.</span><span class="n">get_or_create</span><span class="p">(</span><span class="n">spark</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">use_dbconnect_artifact</span><span class="p">:</span>
-        <span class="c1"># Upload model artifacts and python environment to NFS as DBConncet artifacts.</span>
-        <span class="k">if</span> <span class="n">env_manager</span> <span class="o">==</span> <span class="n">_EnvManager</span><span class="o">.</span><span class="n">VIRTUALENV</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">dbconnect_artifact_cache</span><span class="o">.</span><span class="n">has_cache_key</span><span class="p">(</span><span class="n">env_cache_key</span><span class="p">):</span>
-                <span class="k">if</span> <span class="n">prebuilt_env_uri</span><span class="p">:</span>
-                    <span class="n">env_archive_path</span> <span class="o">=</span> <span class="n">prebuilt_env_uri</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">env_archive_path</span> <span class="o">=</span> <span class="n">_prebuild_env_internal</span><span class="p">(</span>
-                        <span class="n">local_model_path</span><span class="p">,</span> <span class="n">env_cache_key</span><span class="p">,</span> <span class="n">get_or_create_tmp_dir</span><span class="p">()</span>
-                    <span class="p">)</span>
-                <span class="n">dbconnect_artifact_cache</span><span class="o">.</span><span class="n">add_artifact_archive</span><span class="p">(</span><span class="n">env_cache_key</span><span class="p">,</span> <span class="n">env_archive_path</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">dbconnect_artifact_cache</span><span class="o">.</span><span class="n">has_cache_key</span><span class="p">(</span><span class="n">model_uri</span><span class="p">):</span>
-            <span class="n">model_archive_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">local_model_path</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;model-</span><span class="si">{</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span><span class="si">}</span><span class="s2">.tar.gz&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">should_use_spark_to_broadcast_file</span><span class="p">:</span>
+        <span class="c1"># Prepare restored environment in driver side if possible.</span>
+        <span class="c1"># Note: In databricks runtime, because databricks notebook cell output cannot capture</span>
+        <span class="c1"># child process output, so that set capture_output to be True so that when `conda prepare</span>
+        <span class="c1"># env` command failed, the exception message will include command stdout/stderr output.</span>
+        <span class="c1"># Otherwise user have to check cluster driver log to find command stdout/stderr output.</span>
+        <span class="c1"># In non-databricks runtime, set capture_output to be False, because the benefit of</span>
+        <span class="c1"># &quot;capture_output=False&quot; is the output will be printed immediately, otherwise you have</span>
+        <span class="c1"># to wait conda command fail and suddenly get all output printed (included in error</span>
+        <span class="c1"># message).</span>
+        <span class="k">if</span> <span class="n">env_manager</span> <span class="o">!=</span> <span class="n">_EnvManager</span><span class="o">.</span><span class="n">LOCAL</span><span class="p">:</span>
+            <span class="n">pyfunc_backend</span><span class="o">.</span><span class="n">prepare_env</span><span class="p">(</span>
+                <span class="n">model_uri</span><span class="o">=</span><span class="n">local_model_path</span><span class="p">,</span> <span class="n">capture_output</span><span class="o">=</span><span class="n">is_in_databricks_runtime</span><span class="p">()</span>
             <span class="p">)</span>
-            <span class="n">archive_directory</span><span class="p">(</span><span class="n">local_model_path</span><span class="p">,</span> <span class="n">model_archive_path</span><span class="p">)</span>
-            <span class="n">dbconnect_artifact_cache</span><span class="o">.</span><span class="n">add_artifact_archive</span><span class="p">(</span><span class="n">model_uri</span><span class="p">,</span> <span class="n">model_archive_path</span><span class="p">)</span>
-
-    <span class="k">elif</span> <span class="ow">not</span> <span class="n">should_use_spark_to_broadcast_file</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">prebuilt_env_uri</span><span class="p">:</span>
-            <span class="c1"># Extract prebuilt env archive file to NFS directory.</span>
-            <span class="n">prebuilt_env_nfs_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-                <span class="n">get_or_create_nfs_tmp_dir</span><span class="p">(),</span> <span class="s2">&quot;prebuilt_env&quot;</span><span class="p">,</span> <span class="n">env_cache_key</span>
-            <span class="p">)</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">prebuilt_env_nfs_dir</span><span class="p">):</span>
-                <span class="n">extract_archive_to_dir</span><span class="p">(</span><span class="n">prebuilt_env_uri</span><span class="p">,</span> <span class="n">prebuilt_env_nfs_dir</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># Prepare restored environment in driver side if possible.</span>
-            <span class="c1"># Note: In databricks runtime, because databricks notebook cell output cannot capture</span>
-            <span class="c1"># child process output, so that set capture_output to be True so that when `conda</span>
-            <span class="c1"># prepare env` command failed, the exception message will include command stdout/stderr</span>
-            <span class="c1"># output. Otherwise user have to check cluster driver log to find command stdout/stderr</span>
-            <span class="c1"># output.</span>
-            <span class="c1"># In non-databricks runtime, set capture_output to be False, because the benefit of</span>
-            <span class="c1"># &quot;capture_output=False&quot; is the output will be printed immediately, otherwise you have</span>
-            <span class="c1"># to wait conda command fail and suddenly get all output printed (included in error</span>
-            <span class="c1"># message).</span>
-            <span class="k">if</span> <span class="n">env_manager</span> <span class="o">!=</span> <span class="n">_EnvManager</span><span class="o">.</span><span class="n">LOCAL</span><span class="p">:</span>
-                <span class="n">pyfunc_backend</span><span class="o">.</span><span class="n">prepare_env</span><span class="p">(</span>
-                    <span class="n">model_uri</span><span class="o">=</span><span class="n">local_model_path</span><span class="p">,</span> <span class="n">capture_output</span><span class="o">=</span><span class="n">is_in_databricks_runtime</span><span class="p">()</span>
-                <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="c1"># Broadcast local model directory to remote worker if needed.</span>
         <span class="n">archive_path</span> <span class="o">=</span> <span class="n">SparkModelCache</span><span class="o">.</span><span class="n">add_local_model</span><span class="p">(</span><span class="n">spark</span><span class="p">,</span> <span class="n">local_model_path</span><span class="p">)</span>
@@ -2595,7 +2228,7 @@
 
     <span class="nd">@pandas_udf</span><span class="p">(</span><span class="n">result_type</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">udf</span><span class="p">(</span>
-        <span class="n">iterator</span><span class="p">:</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">pandas</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">],</span> <span class="o">...</span><span class="p">]],</span>  <span class="c1"># noqa: UP006</span>
+        <span class="n">iterator</span><span class="p">:</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">pandas</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">],</span> <span class="o">...</span><span class="p">]],</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">result_type_hint</span><span class="p">]:</span>
         <span class="c1"># importing here to prevent circular import</span>
         <span class="kn">from</span> <span class="nn">mlflow.pyfunc.scoring_server.client</span> <span class="kn">import</span> <span class="p">(</span>
@@ -2623,25 +2256,7 @@
             <span class="n">mlflow</span><span class="o">.</span><span class="n">set_tracking_uri</span><span class="p">(</span><span class="n">tracking_uri</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="n">env_manager</span> <span class="o">!=</span> <span class="n">_EnvManager</span><span class="o">.</span><span class="n">LOCAL</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">use_dbconnect_artifact</span><span class="p">:</span>
-                    <span class="n">local_model_path_on_executor</span> <span class="o">=</span> <span class="p">(</span>
-                        <span class="n">dbconnect_artifact_cache</span><span class="o">.</span><span class="n">get_unpacked_artifact_dir</span><span class="p">(</span><span class="n">model_uri</span><span class="p">)</span>
-                    <span class="p">)</span>
-                    <span class="n">env_src_dir</span> <span class="o">=</span> <span class="n">dbconnect_artifact_cache</span><span class="o">.</span><span class="n">get_unpacked_artifact_dir</span><span class="p">(</span><span class="n">env_cache_key</span><span class="p">)</span>
-
-                    <span class="c1"># Create symlink if it does not exist</span>
-                    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">prebuilt_env_root_dir</span><span class="p">):</span>
-                        <span class="n">os</span><span class="o">.</span><span class="n">symlink</span><span class="p">(</span><span class="n">env_src_dir</span><span class="p">,</span> <span class="n">prebuilt_env_root_dir</span><span class="p">)</span>
-                <span class="k">elif</span> <span class="n">prebuilt_env_uri</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="c1"># prebuilt env is extracted to `prebuilt_env_nfs_dir` directory,</span>
-                    <span class="c1"># and model is downloaded to `local_model_path` which points to an NFS</span>
-                    <span class="c1"># directory too.</span>
-                    <span class="n">local_model_path_on_executor</span> <span class="o">=</span> <span class="kc">None</span>
-
-                    <span class="c1"># Create symlink if it does not exist</span>
-                    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">prebuilt_env_root_dir</span><span class="p">):</span>
-                        <span class="n">os</span><span class="o">.</span><span class="n">symlink</span><span class="p">(</span><span class="n">prebuilt_env_nfs_dir</span><span class="p">,</span> <span class="n">prebuilt_env_root_dir</span><span class="p">)</span>
-                <span class="k">elif</span> <span class="n">should_use_spark_to_broadcast_file</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">should_use_spark_to_broadcast_file</span><span class="p">:</span>
                     <span class="n">local_model_path_on_executor</span> <span class="o">=</span> <span class="n">_SparkDirectoryDistributor</span><span class="o">.</span><span class="n">get_or_extract</span><span class="p">(</span>
                         <span class="n">archive_path</span>
                     <span class="p">)</span>
@@ -2672,7 +2287,6 @@
                         <span class="n">synchronous</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                         <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
                         <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">STDOUT</span><span class="p">,</span>
-                        <span class="n">model_config</span><span class="o">=</span><span class="n">model_config</span><span class="p">,</span>
                     <span class="p">)</span>
 
                     <span class="n">client</span> <span class="o">=</span> <span class="n">ScoringServerClient</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">server_port</span><span class="p">)</span>
@@ -2681,7 +2295,6 @@
                         <span class="n">model_uri</span><span class="o">=</span><span class="n">local_model_path_on_executor</span> <span class="ow">or</span> <span class="n">local_model_path</span><span class="p">,</span>
                         <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
                         <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">STDOUT</span><span class="p">,</span>
-                        <span class="n">model_config</span><span class="o">=</span><span class="n">model_config</span><span class="p">,</span>
                     <span class="p">)</span>
                     <span class="n">client</span> <span class="o">=</span> <span class="n">StdinScoringServerClient</span><span class="p">(</span><span class="n">scoring_server_proc</span><span class="p">)</span>
 
@@ -2727,31 +2340,23 @@
                     <span class="k">return</span> <span class="n">client</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">pdf</span><span class="p">)</span><span class="o">.</span><span class="n">get_predictions</span><span class="p">()</span>
 
             <span class="k">elif</span> <span class="n">env_manager</span> <span class="o">==</span> <span class="n">_EnvManager</span><span class="o">.</span><span class="n">LOCAL</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">use_dbconnect_artifact</span><span class="p">:</span>
-                    <span class="n">model_path</span> <span class="o">=</span> <span class="n">dbconnect_artifact_cache</span><span class="o">.</span><span class="n">get_unpacked_artifact_dir</span><span class="p">(</span><span class="n">model_uri</span><span class="p">)</span>
-                <span class="k">elif</span> <span class="n">is_spark_connect</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">should_spark_connect_use_nfs</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">is_spark_connect</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">should_spark_connect_use_nfs</span><span class="p">:</span>
                     <span class="n">model_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
                         <span class="n">tempfile</span><span class="o">.</span><span class="n">gettempdir</span><span class="p">(),</span>
                         <span class="s2">&quot;mlflow&quot;</span><span class="p">,</span>
-                        <span class="n">hashlib</span><span class="o">.</span><span class="n">sha1</span><span class="p">(</span><span class="n">model_uri</span><span class="o">.</span><span class="n">encode</span><span class="p">(),</span> <span class="n">usedforsecurity</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">(),</span>
+                        <span class="n">insecure_hash</span><span class="o">.</span><span class="n">sha1</span><span class="p">(</span><span class="n">model_uri</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">(),</span>
                         <span class="c1"># Use pid to avoid conflict when multiple spark UDF tasks</span>
                         <span class="nb">str</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()),</span>
                     <span class="p">)</span>
                     <span class="k">try</span><span class="p">:</span>
-                        <span class="n">loaded_model</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">pyfunc</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span>
-                            <span class="n">model_path</span><span class="p">,</span> <span class="n">model_config</span><span class="o">=</span><span class="n">model_config</span>
-                        <span class="p">)</span>
+                        <span class="n">loaded_model</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">pyfunc</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span>
                     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                         <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">model_path</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-                        <span class="n">loaded_model</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">pyfunc</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span>
-                            <span class="n">model_uri</span><span class="p">,</span> <span class="n">dst_path</span><span class="o">=</span><span class="n">model_path</span><span class="p">,</span> <span class="n">model_config</span><span class="o">=</span><span class="n">model_config</span>
-                        <span class="p">)</span>
+                        <span class="n">loaded_model</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">pyfunc</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">model_uri</span><span class="p">,</span> <span class="n">dst_path</span><span class="o">=</span><span class="n">model_path</span><span class="p">)</span>
                 <span class="k">elif</span> <span class="n">should_use_spark_to_broadcast_file</span><span class="p">:</span>
                     <span class="n">loaded_model</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">SparkModelCache</span><span class="o">.</span><span class="n">get_or_load</span><span class="p">(</span><span class="n">archive_path</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">loaded_model</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">pyfunc</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span>
-                        <span class="n">local_model_path</span><span class="p">,</span> <span class="n">model_config</span><span class="o">=</span><span class="n">model_config</span>
-                    <span class="p">)</span>
+                    <span class="n">loaded_model</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">pyfunc</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">local_model_path</span><span class="p">)</span>
 
                 <span class="k">def</span> <span class="nf">batch_predict_fn</span><span class="p">(</span><span class="n">pdf</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
                     <span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">loaded_model</span><span class="o">.</span><span class="n">predict</span><span class="p">)</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;params&quot;</span><span class="p">):</span>
@@ -2853,7 +2458,7 @@
     <span class="n">model_config</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">example_no_conversion</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">streamable</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">resources</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">Resource</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">resources</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Resource</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -3015,23 +2620,20 @@
 <span class="sd">        pip_requirements: {{ pip_requirements }}</span>
 <span class="sd">        extra_pip_requirements: {{ extra_pip_requirements }}</span>
 <span class="sd">        metadata: {{ metadata }}</span>
-<span class="sd">        model_config: The model configuration to apply to the model. The configuration will</span>
-<span class="sd">            be available as the ``model_config`` property of the ``context`` parameter</span>
-<span class="sd">            in :func:`PythonModel.load_context() &lt;mlflow.pyfunc.PythonModel.load_context&gt;`</span>
-<span class="sd">            and :func:`PythonModel.predict() &lt;mlflow.pyfunc.PythonModel.predict&gt;`.</span>
-<span class="sd">            The configuration can be passed as a file path, or a dict with string keys.</span>
+<span class="sd">        model_config: The model configuration to apply to the model. This configuration</span>
+<span class="sd">            is available during model loading.</span>
 
 <span class="sd">            .. Note:: Experimental: This parameter may change or be removed in a future</span>
 <span class="sd">                                    release without warning.</span>
 <span class="sd">        example_no_conversion: {{ example_no_conversion }}</span>
-<span class="sd">        streamable: A boolean value indicating if the model supports streaming prediction,</span>
-<span class="sd">                    If None, MLflow will try to inspect if the model supports streaming</span>
-<span class="sd">                    by checking if `predict_stream` method exists. Default None.</span>
 <span class="sd">        resources: A list of model resources or a resources.yaml file containing a list of</span>
 <span class="sd">                    resources required to serve the model.</span>
 
 <span class="sd">            .. Note:: Experimental: This parameter may change or be removed in a future</span>
 <span class="sd">                                    release without warning.</span>
+<span class="sd">        streamable: A boolean value indicating if the model supports streaming prediction,</span>
+<span class="sd">                    If None, MLflow will try to inspect if the model supports streaming</span>
+<span class="sd">                    by checking if `predict_stream` method exists. Default None.</span>
 <span class="sd">        kwargs: Extra keyword arguments.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">_validate_env_arguments</span><span class="p">(</span><span class="n">conda_env</span><span class="p">,</span> <span class="n">pip_requirements</span><span class="p">,</span> <span class="n">extra_pip_requirements</span><span class="p">)</span>
@@ -3250,7 +2852,7 @@
 <div class="viewcode-block" id="log_model"><a class="viewcode-back" href="../../python_api/mlflow.pyfunc.html#mlflow.pyfunc.log_model">[docs]</a><span class="nd">@format_docstring</span><span class="p">(</span><span class="n">LOG_MODEL_PARAM_DOCS</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">package_name</span><span class="o">=</span><span class="s2">&quot;scikit-learn&quot;</span><span class="p">))</span>
 <span class="nd">@trace_disabled</span>  <span class="c1"># Suppress traces for internal predict calls while logging model</span>
 <span class="k">def</span> <span class="nf">log_model</span><span class="p">(</span>
-    <span class="n">artifact_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">artifact_path</span><span class="p">,</span>
     <span class="n">loader_module</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">data_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">code_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># deprecated</span>
@@ -3269,13 +2871,7 @@
     <span class="n">model_config</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">example_no_conversion</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">streamable</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">resources</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">Resource</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">model_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">step</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="n">model_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">resources</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Resource</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Log a Pyfunc model with custom inference logic and optional data dependencies as an MLflow</span>
@@ -3288,7 +2884,7 @@
 <span class="sd">    and the parameters for the first workflow: ``python_model``, ``artifacts`` together.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        artifact_path: Deprecated. Use `name` instead.</span>
+<span class="sd">        artifact_path: The run-relative artifact path to which to log the Python model.</span>
 <span class="sd">        loader_module: The name of the Python module that is used to load the model</span>
 <span class="sd">            from ``data_path``. This module must define a method with the prototype</span>
 <span class="sd">            ``_load_pyfunc(data_path)``. If not ``None``, this module and its</span>
@@ -3453,30 +3049,22 @@
 <span class="sd">        extra_pip_requirements: {{ extra_pip_requirements }}</span>
 <span class="sd">        metadata: {{ metadata }}</span>
 
-<span class="sd">        model_config: The model configuration to apply to the model. The configuration will</span>
-<span class="sd">            be available as the ``model_config`` property of the ``context`` parameter</span>
-<span class="sd">            in :func:`PythonModel.load_context() &lt;mlflow.pyfunc.PythonModel.load_context&gt;`</span>
-<span class="sd">            and :func:`PythonModel.predict() &lt;mlflow.pyfunc.PythonModel.predict&gt;`.</span>
-<span class="sd">            The configuration can be passed as a file path, or a dict with string keys.</span>
+<span class="sd">        model_config: The model configuration to apply to the model. This configuration</span>
+<span class="sd">            is available during model loading.</span>
 
 <span class="sd">            .. Note:: Experimental: This parameter may change or be removed in a future</span>
 <span class="sd">                                    release without warning.</span>
 <span class="sd">        example_no_conversion: {{ example_no_conversion }}</span>
-<span class="sd">        streamable: A boolean value indicating if the model supports streaming prediction,</span>
-<span class="sd">                    If None, MLflow will try to inspect if the model supports streaming</span>
-<span class="sd">                    by checking if `predict_stream` method exists. Default None.</span>
 <span class="sd">        resources: A list of model resources or a resources.yaml file containing a list of</span>
 <span class="sd">                    resources required to serve the model.</span>
 
 <span class="sd">            .. Note:: Experimental: This parameter may change or be removed in a future</span>
 <span class="sd">                                    release without warning.</span>
 
-<span class="sd">        name: {{ name }}</span>
-<span class="sd">        params: {{ params }}</span>
-<span class="sd">        tags: {{ tags }}</span>
-<span class="sd">        model_type: {{ model_type }}</span>
-<span class="sd">        step: {{ step }}</span>
-<span class="sd">        model_id: {{ model_id }}</span>
+
+<span class="sd">        streamable: A boolean value indicating if the model supports streaming prediction,</span>
+<span class="sd">                    If None, MLflow will try to inspect if the model supports streaming</span>
+<span class="sd">                    by checking if `predict_stream` method exists. Default None.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        A :py:class:`ModelInfo &lt;mlflow.models.model.ModelInfo&gt;` instance that contains the</span>
@@ -3484,7 +3072,6 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">Model</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
         <span class="n">artifact_path</span><span class="o">=</span><span class="n">artifact_path</span><span class="p">,</span>
-        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
         <span class="n">flavor</span><span class="o">=</span><span class="n">mlflow</span><span class="o">.</span><span class="n">pyfunc</span><span class="p">,</span>
         <span class="n">loader_module</span><span class="o">=</span><span class="n">loader_module</span><span class="p">,</span>
         <span class="n">data_path</span><span class="o">=</span><span class="n">data_path</span><span class="p">,</span>
@@ -3505,11 +3092,6 @@
         <span class="n">streamable</span><span class="o">=</span><span class="n">streamable</span><span class="p">,</span>
         <span class="n">resources</span><span class="o">=</span><span class="n">resources</span><span class="p">,</span>
         <span class="n">infer_code_paths</span><span class="o">=</span><span class="n">infer_code_paths</span><span class="p">,</span>
-        <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
-        <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">,</span>
-        <span class="n">model_type</span><span class="o">=</span><span class="n">model_type</span><span class="p">,</span>
-        <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">,</span>
-        <span class="n">model_id</span><span class="o">=</span><span class="n">model_id</span><span class="p">,</span>
     <span class="p">)</span></div>
 
 
@@ -3643,7 +3225,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../',
-      VERSION:'2.17.3.dev0',
+      VERSION:'2.17.2',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',
