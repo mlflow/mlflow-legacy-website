@@ -720,6 +720,11 @@ of a ragged array, such as <code class="docutils literal notranslate"><span clas
 <p>Including a signature with your model in MLflow is straightforward. Simply provide a <a class="reference internal" href="#input-example"><span class="std std-ref">model input example</span></a> when making a
 call to either the log_model or save_model functions, such as with <a class="reference internal" href="../python_api/mlflow.sklearn.html#mlflow.sklearn.log_model" title="mlflow.sklearn.log_model"><code class="xref py py-func docutils literal notranslate"><span class="pre">sklearn.log_model()</span></code></a>. MLflow will then
 automatically infer the model’s signature based on this input example and the model’s predicted output for the given example.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Starting MLflow 2.20.0, model signature is automatically inferred when logging a PythonModel with type hints. Check
+<a class="reference external" href="./python_model.html#type-hint-usage-in-pythonmodel">PythonModel with type hints guidance</a> for more details.</p>
+</div>
 <p>Alternatively, you can explicitly attach a signature object to your model. This is done by passing a <a class="reference internal" href="../python_api/mlflow.models.html#mlflow.models.ModelSignature" title="mlflow.models.ModelSignature"><code class="xref py py-class docutils literal notranslate"><span class="pre">signature</span> <span class="pre">object</span></code></a>
 to your log_model or save_model function. You can manually create a model signature object or use the <a class="reference internal" href="../python_api/mlflow.models.html#mlflow.models.infer_signature" title="mlflow.models.infer_signature"><code class="xref py py-func docutils literal notranslate"><span class="pre">infer_signature</span></code></a>
 function to generate it from datasets with valid model inputs (for instance, a training dataset minus the target column), valid model outputs (such as
