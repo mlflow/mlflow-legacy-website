@@ -16,8 +16,8 @@
 <link rel="search" type="application/opensearchdescription+xml" title="MLflow" href="/docs/latest/opensearch.xml">
 
 <script src="/docs/latest/js/runllm.js" defer="defer"></script><link rel="stylesheet" href="/docs/latest/assets/css/styles.907c4d58.css">
-<script src="/docs/latest/assets/js/runtime~main.5b7df4f9.js" defer="defer"></script>
-<script src="/docs/latest/assets/js/main.7644ea4b.js" defer="defer"></script>
+<script src="/docs/latest/assets/js/runtime~main.ac8022d7.js" defer="defer"></script>
+<script src="/docs/latest/assets/js/main.f1485f80.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6WMTTJ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -31,7 +31,7 @@ how to track your PyTorch experiments and log your PyTorch models to MLflow.</p>
 <p>Unlike other deep learning flavors, MLflow does not have an autologging integration with PyTorch because
 native PyTorch requires writing custom training loops. If you want to use autologging with PyTorch, please
 use <a href="https://lightning.ai" target="_blank" rel="noopener noreferrer">Lightning</a> to train your models. When Lightning is being used, you can turned
-on autologging by calling <a href="/docs/latest/api_reference/python_api/mlflow.tensorflow.html#mlflow.tensorflow.autolog" target="_blank"><code>mlflow.tensorflow.autolog<!-- -->()</code></a> or <a href="/docs/latest/api_reference/python_api/mlflow.html#mlflow.autolog" target="_blank"><code>mlflow.autolog<!-- -->()</code></a>. For more
+on autologging by calling <a href="/docs/latest/api_reference/python_api/mlflow.pytorch.html#mlflow.pytorch.autolog" target="_blank"><code>mlflow.pytorch.autolog<!-- -->()</code></a> or <a href="/docs/latest/api_reference/python_api/mlflow.html#mlflow.autolog" target="_blank"><code>mlflow.autolog<!-- -->()</code></a>. For more
 details, please refer to the MLflow Lightning Developer Guide.</p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="manually-logging-pytorch-experiments">Manually Logging PyTorch Experiments<a href="#manually-logging-pytorch-experiments" class="hash-link" aria-label="Direct link to Manually Logging PyTorch Experiments" title="Direct link to Manually Logging PyTorch Experiments">​</a></h3>
 <p>To log your PyTorch experiments, you can insert MLflow logging into your PyTorch training loop, which relies
