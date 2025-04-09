@@ -381,6 +381,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#modeloutput">ModelOutput</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#modelparam">ModelParam</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#modelversion">ModelVersion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modelversiondeploymentjobstate">ModelVersionDeploymentJobState</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#modelversiontag">ModelVersionTag</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#param">Param</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#registeredmodel">RegisteredModel</a></li>
@@ -392,8 +393,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#runinputs">RunInputs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#runoutputs">RunOutputs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#runtag">RunTag</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#deploymentjobrunstate">DeploymentJobRunState</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#modelversionstatus">ModelVersionStatus</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#runstatus">RunStatus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#state">State</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#viewtype">ViewType</a></li>
 </ul>
 </li>
@@ -2088,9 +2091,9 @@ be removed in a future MLflow version.</p></td>
 <span id="id33"></span><h3>Request Structure<a class="headerlink" href="#mlflowcreateregisteredmodel" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 13%" />
-<col style="width: 44%" />
-<col style="width: 43%" />
+<col style="width: 18%" />
+<col style="width: 42%" />
+<col style="width: 41%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Field Name</p></th>
@@ -2111,6 +2114,10 @@ This field is required.</p></td>
 <tr class="row-even"><td><p>description</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
 <td><p>Optional description for registered model.</p></td>
+</tr>
+<tr class="row-odd"><td><p>deployment_job_id</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
+<td><p>Deployment job id for this model.</p></td>
 </tr>
 </tbody>
 </table>
@@ -2295,9 +2302,9 @@ This field is required.</p></td>
 <span id="id39"></span><h3>Request Structure<a class="headerlink" href="#mlflowupdateregisteredmodel" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 14%" />
-<col style="width: 13%" />
-<col style="width: 73%" />
+<col style="width: 19%" />
+<col style="width: 12%" />
+<col style="width: 69%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Field Name</p></th>
@@ -2314,6 +2321,10 @@ This field is required.</p></td>
 <tr class="row-odd"><td><p>description</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
 <td><p>If provided, updates the description for this <code class="docutils literal notranslate"><span class="pre">registered_model</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p>deployment_job_id</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
+<td><p>Deployment job id for this model.</p></td>
 </tr>
 </tbody>
 </table>
@@ -3826,8 +3837,8 @@ This field is required.</p></td>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 13%" />
-<col style="width: 24%" />
-<col style="width: 63%" />
+<col style="width: 25%" />
+<col style="width: 62%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Field Name</p></th>
@@ -3905,6 +3916,48 @@ only for model versions whose source run is from a tracking server that is diffe
 <tr class="row-even"><td><p>model_metrics</p></td>
 <td><p>An array of <a class="reference internal" href="#mlflowmodelmetric"><span class="std std-ref">ModelMetric</span></a></p></td>
 <td><p>Optional metrics for the model.</p></td>
+</tr>
+<tr class="row-odd"><td><p>deployment_job_state</p></td>
+<td><p><a class="reference internal" href="#mlflowmodelversiondeploymentjobstate"><span class="std std-ref">ModelVersionDeploymentJobState</span></a></p></td>
+<td><p>Deployment job state for this model version.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="modelversiondeploymentjobstate">
+<span id="mlflowmodelversiondeploymentjobstate"></span><h3>ModelVersionDeploymentJobState<a class="headerlink" href="#modelversiondeploymentjobstate" title="Permalink to this headline"> </a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 67%" />
+<col style="width: 13%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>job_id</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>run_id</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>job_state</p></td>
+<td><p><a class="reference internal" href="#mlflowdeploymentjobconnectionstate"><span class="std std-ref">State</span></a></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>run_state</p></td>
+<td><p><a class="reference internal" href="#mlflowmodelversiondeploymentjobstatedeploymentjobrunstate"><span class="std std-ref">DeploymentJobRunState</span></a></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>current_task_name</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -4011,6 +4064,14 @@ Only contains models with current <code class="docutils literal notranslate"><sp
 <tr class="row-odd"><td><p>aliases</p></td>
 <td><p>An array of <a class="reference internal" href="#mlflowregisteredmodelalias"><span class="std std-ref">RegisteredModelAlias</span></a></p></td>
 <td><p>Aliases pointing to model versions associated with this <code class="docutils literal notranslate"><span class="pre">registered_model</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p>deployment_job_id</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
+<td><p>Deployment job id for this model.</p></td>
+</tr>
+<tr class="row-odd"><td><p>deployment_job_state</p></td>
+<td><p><a class="reference internal" href="#mlflowdeploymentjobconnectionstate"><span class="std std-ref">State</span></a></p></td>
+<td><p>Deployment job state for this model.</p></td>
 </tr>
 </tbody>
 </table>
@@ -4277,6 +4338,40 @@ If not set, the local <code class="docutils literal notranslate"><span class="pr
 </tbody>
 </table>
 </div>
+<div class="section" id="deploymentjobrunstate">
+<span id="mlflowmodelversiondeploymentjobstatedeploymentjobrunstate"></span><h3>DeploymentJobRunState<a class="headerlink" href="#deploymentjobrunstate" title="Permalink to this headline"> </a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 75%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>DEPLOYMENT_JOB_RUN_STATE_UNSPECIFIED</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>NO_VALID_DEPLOYMENT_JOB_FOUND</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>RUNNING</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>SUCCEEDED</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>FAILED</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>PENDING</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
 <div class="section" id="modelversionstatus">
 <span id="mlflowmodelversionstatus"></span><h3>ModelVersionStatus<a class="headerlink" href="#modelversionstatus" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
@@ -4330,6 +4425,37 @@ If not set, the local <code class="docutils literal notranslate"><span class="pr
 </tr>
 <tr class="row-even"><td><p>KILLED</p></td>
 <td><p>Run killed by user.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="state">
+<span id="mlflowdeploymentjobconnectionstate"></span><h3>State<a class="headerlink" href="#state" title="Permalink to this headline"> </a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 35%" />
+<col style="width: 65%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>DEPLOYMENT_JOB_CONNECTION_STATE_UNSPECIFIED</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>NOT_SET_UP</p></td>
+<td><p>default state</p></td>
+</tr>
+<tr class="row-even"><td><p>CONNECTED</p></td>
+<td><p>connected job: job exists, owner has ACLs, and required job parameters are present</p></td>
+</tr>
+<tr class="row-odd"><td><p>NOT_FOUND</p></td>
+<td><p>job was deleted OR owner had job ACLs removed</p></td>
+</tr>
+<tr class="row-even"><td><p>REQUIRED_PARAMETERS_CHANGED</p></td>
+<td><p>required job parameters were changed</p></td>
 </tr>
 </tbody>
 </table>
