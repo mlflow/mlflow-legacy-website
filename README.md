@@ -3,7 +3,7 @@
 This is the legacy repository for the website of the MLflow project. The main website contents are already migrated to [a new website](https://github.com/mlflow/mlflow-website/) powered by [Docusaurus](https://docusaurus.io/), and this repository only stores old resources not migrated there, mainly documentation build artifacts.
 
 # Preview
-Run `python -m http.server` in `docs` directory to preview documentation pages.
+Run `python -m http.server` in the repository root to preview documentation pages.
 
 # Updating the MLflow Docs
 **PLEASE DO NOT OPEN A PR TO THIS REPOSITORY FOR UPDATING DOCUMENTATION**.
