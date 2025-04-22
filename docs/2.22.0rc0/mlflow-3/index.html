@@ -16,8 +16,8 @@
 <link rel="search" type="application/opensearchdescription+xml" title="MLflow" href="/docs/2.22.0rc0/opensearch.xml">
 
 <script src="/docs/2.22.0rc0/js/runllm.js" defer="defer"></script><link rel="stylesheet" href="/docs/2.22.0rc0/assets/css/styles.907c4d58.css">
-<script src="/docs/2.22.0rc0/assets/js/runtime~main.a22bbdf0.js" defer="defer"></script>
-<script src="/docs/2.22.0rc0/assets/js/main.bb78e1e4.js" defer="defer"></script>
+<script src="/docs/2.22.0rc0/assets/js/runtime~main.24459eed.js" defer="defer"></script>
+<script src="/docs/2.22.0rc0/assets/js/main.204d4513.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6WMTTJ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -33,17 +33,17 @@ With MLflow 3.0, it&#x27;s now easier than ever to:</p>
 <li>Select the best models, agents, and generative AI applications for production with an <strong>enhanced performance comparison experience</strong> powered by MLflow&#x27;s tracing and evaluation capabilities.</li>
 </ul>
 <p>MLflow 3.0&#x27;s enhanced model tracking helps you manage and evaluate different model, agent, and generative AI application configurations in your experiments.
-Improved comparison workflows with the new <a href="/docs/2.22.0rc0/api_reference/python_api/mlflow.entities.html#mlflow.entities.LoggedModel" target="_blank">LoggedModel</a> enable you to quickly identify the best candidates for production,
+Improved comparison workflows with the new <a href="https://mlflow.org/docs/3.0.0rc0/api_reference/python_api/mlflow.entities.html#mlflow.entities.LoggedModel" target="_blank" rel="noopener noreferrer">LoggedModel</a> enable you to quickly identify the best candidates for production,
 and MLflow tracing provides rich observability everywhere that your models, agents, and generative AI applications are deployed.</p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="enhanced-model-tracking">Enhanced Model Tracking<a href="#enhanced-model-tracking" class="hash-link" aria-label="Direct link to Enhanced Model Tracking" title="Direct link to Enhanced Model Tracking">​</a></h2>
 <p>In MLflow 3.0, we introduce a refined architecture along with revamped APIs and UI, tailored to enhance generative AI and deep learning workflows.
 With GenAI agents, there are multiple rounds of offline evaluation via batch jobs and interactive queries from human beta testers.
 In deep learning, training often generates multiple model checkpoints, where the best candidates are further evaluated before production deployment.</p>
-<p>We are introducing a new first-class object, the <a href="/docs/2.22.0rc0/api_reference/python_api/mlflow.entities.html#mlflow.entities.LoggedModel" target="_blank">LoggedModel</a> entity, into MLflow Tracking to streamline these processes. As you define and evaluate your GenAI agents in code,
+<p>We are introducing a new first-class object, the <a href="https://mlflow.org/docs/3.0.0rc0/api_reference/python_api/mlflow.entities.html#mlflow.entities.LoggedModel" target="_blank" rel="noopener noreferrer">LoggedModel</a> entity, into MLflow Tracking to streamline these processes. As you define and evaluate your GenAI agents in code,
 or your deep learning jobs create and evaluate models, they will be automatically stored as MLflow Logged Models in your MLflow Experiment.</p>
-<p>When developing a new version of a GenAI agent or application, you can group all of the traces and metrics from interactive queries and automated evaluation jobs using MLflow&#x27;s <a href="/docs/2.22.0rc0/api_reference/python_api/mlflow.entities.html#mlflow.entities.LoggedModel" target="_blank">LoggedModel</a> API.
+<p>When developing a new version of a GenAI agent or application, you can group all of the traces and metrics from interactive queries and automated evaluation jobs using MLflow&#x27;s <a href="https://mlflow.org/docs/3.0.0rc0/api_reference/python_api/mlflow.entities.html#mlflow.entities.LoggedModel" target="_blank" rel="noopener noreferrer">LoggedModel</a> API.
 This enables rich, comprehensive comparisons across versions.
-Similarly, every deep learning checkpoint is stored as a <a href="/docs/2.22.0rc0/api_reference/python_api/mlflow.entities.html#mlflow.entities.LoggedModel" target="_blank">LoggedModel</a> with its own metrics and parameters, simplifying the process of identifying the best checkpoint for deployment or continued training.</p>
+Similarly, every deep learning checkpoint is stored as a <a href="https://mlflow.org/docs/3.0.0rc0/api_reference/python_api/mlflow.entities.html#mlflow.entities.LoggedModel" target="_blank" rel="noopener noreferrer">LoggedModel</a> with its own metrics and parameters, simplifying the process of identifying the best checkpoint for deployment or continued training.</p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="quickstart">Quickstart<a href="#quickstart" class="hash-link" aria-label="Direct link to Quickstart" title="Direct link to Quickstart">​</a></h3>
 <p>Prerequisites:
 Run the following command to install MLflow 3.0 and OpenAI packages.</p>
