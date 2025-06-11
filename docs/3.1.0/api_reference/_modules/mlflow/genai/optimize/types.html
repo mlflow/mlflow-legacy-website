@@ -78,6 +78,7 @@
   <script src="../../../../_static/js/modernizr.min.js"></script>
 
 </head>
+<script type="text/javascript" src="../../../../_static/documentation_options.js"></script>
 <script type="text/javascript" src="../../../../_static/jquery.js"></script>
 <script type="text/javascript" src="../../../../_static/underscore.js"></script>
 <script type="text/javascript" src="../../../../_static/doctools.js"></script>
@@ -238,20 +239,20 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.genai.optimize.types</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">multiprocessing</span>
-<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">multiprocessing</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">from</span> <span class="nn">mlflow.entities</span> <span class="kn">import</span> <span class="n">Feedback</span>
-<span class="kn">from</span> <span class="nn">mlflow.entities.model_registry</span> <span class="kn">import</span> <span class="n">Prompt</span>
-<span class="kn">from</span> <span class="nn">mlflow.utils.annotations</span> <span class="kn">import</span> <span class="n">experimental</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities</span><span class="w"> </span><span class="kn">import</span> <span class="n">Feedback</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.model_registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">Prompt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">experimental</span>
 
 <span class="n">OBJECTIVE_FN</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">Feedback</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">Feedback</span><span class="p">]]]],</span> <span class="nb">float</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="PromptOptimizationResult"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.optimize.PromptOptimizationResult">[docs]</a><span class="nd">@experimental</span>
 <span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">PromptOptimizationResult</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">PromptOptimizationResult</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Result of the :py:func:`mlflow.genai.optimize_prompt()` API.</span>
 
@@ -264,7 +265,7 @@
 
 <div class="viewcode-block" id="LLMParams"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.optimize.LLMParams">[docs]</a><span class="nd">@experimental</span>
 <span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">LLMParams</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">LLMParams</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Parameters for configuring a LLM Model.</span>
 
@@ -285,7 +286,7 @@
 
 <div class="viewcode-block" id="OptimizerConfig"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.optimize.OptimizerConfig">[docs]</a><span class="nd">@experimental</span>
 <span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">OptimizerConfig</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">OptimizerConfig</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Configuration for prompt optimization.</span>
 

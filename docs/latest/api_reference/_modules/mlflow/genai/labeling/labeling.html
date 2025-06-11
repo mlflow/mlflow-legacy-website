@@ -78,6 +78,7 @@
   <script src="../../../../_static/js/modernizr.min.js"></script>
 
 </head>
+<script type="text/javascript" src="../../../../_static/documentation_options.js"></script>
 <script type="text/javascript" src="../../../../_static/jquery.js"></script>
 <script type="text/javascript" src="../../../../_static/underscore.js"></script>
 <script type="text/javascript" src="../../../../_static/doctools.js"></script>
@@ -240,25 +241,25 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.genai.labeling.labeling</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">from</span> <span class="nn">mlflow.entities</span> <span class="kn">import</span> <span class="n">Trace</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities</span><span class="w"> </span><span class="kn">import</span> <span class="n">Trace</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-    <span class="kn">from</span> <span class="nn">databricks.agents.review_app</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">databricks.agents.review_app</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
         <span class="n">LabelingSession</span> <span class="k">as</span> <span class="n">_LabelingSession</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="kn">from</span> <span class="nn">databricks.agents.review_app</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">databricks.agents.review_app</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
         <span class="n">LabelSchema</span> <span class="k">as</span> <span class="n">_LabelSchema</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="kn">from</span> <span class="nn">databricks.agents.review_app</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">databricks.agents.review_app</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
         <span class="n">ReviewApp</span> <span class="k">as</span> <span class="n">_ReviewApp</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="kn">from</span> <span class="nn">databricks.agents.review_app.labeling</span> <span class="kn">import</span> <span class="n">Agent</span> <span class="k">as</span> <span class="n">_Agent</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">databricks.agents.review_app.labeling</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agent</span> <span class="k">as</span> <span class="n">_Agent</span>
 
 
-<div class="viewcode-block" id="Agent"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.Agent">[docs]</a><span class="k">class</span> <span class="nc">Agent</span><span class="p">:</span>
+<div class="viewcode-block" id="Agent"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.Agent">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">Agent</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;The agent configuration, used for generating responses in the review app.</span>
 
 <span class="sd">    .. note::</span>
@@ -266,21 +267,21 @@
 <span class="sd">        `pip install mlflow[databricks]` to use it.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="s2">&quot;_Agent&quot;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="s2">&quot;_Agent&quot;</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_agent</span> <span class="o">=</span> <span class="n">agent</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">agent_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">agent_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The name of the agent.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_agent</span><span class="o">.</span><span class="n">agent_name</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">model_serving_endpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">model_serving_endpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The model serving endpoint used by the agent.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_agent</span><span class="o">.</span><span class="n">model_serving_endpoint</span></div>
 
 
-<div class="viewcode-block" id="LabelingSession"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.LabelingSession">[docs]</a><span class="k">class</span> <span class="nc">LabelingSession</span><span class="p">:</span>
+<div class="viewcode-block" id="LabelingSession"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.LabelingSession">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">LabelingSession</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A session for labeling items in the review app.</span>
 
 <span class="sd">    .. note::</span>
@@ -288,65 +289,65 @@
 <span class="sd">        `pip install mlflow[databricks]` to use it.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">:</span> <span class="s2">&quot;_LabelingSession&quot;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">:</span> <span class="s2">&quot;_LabelingSession&quot;</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="o">=</span> <span class="n">session</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The name of the labeling session.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">name</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">assigned_users</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">assigned_users</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The users assigned to label items in the session.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">assigned_users</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">agent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">agent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The agent used to generate responses for the items in the session.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">agent</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">label_schemas</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">label_schemas</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The label schemas used in the session.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">label_schemas</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">labeling_session_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">labeling_session_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The unique identifier of the labeling session.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">labeling_session_id</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">mlflow_run_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mlflow_run_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The MLflow run ID associated with the session.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">mlflow_run_id</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">review_app_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">review_app_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The review app ID associated with the session.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">review_app_id</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">experiment_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">experiment_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The experiment ID associated with the session.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">experiment_id</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">url</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">url</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The URL of the labeling session in the review app.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">url</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">enable_multi_turn_chat</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">enable_multi_turn_chat</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Whether multi-turn chat is enabled for the session.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">enable_multi_turn_chat</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">custom_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">custom_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Custom inputs used in the session.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">custom_inputs</span>
 
-<div class="viewcode-block" id="LabelingSession.add_dataset"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.LabelingSession.add_dataset">[docs]</a>    <span class="k">def</span> <span class="nf">add_dataset</span><span class="p">(</span>
+<div class="viewcode-block" id="LabelingSession.add_dataset"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.LabelingSession.add_dataset">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">add_dataset</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">record_ids</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;LabelingSession&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a dataset to the labeling session.</span>
@@ -365,7 +366,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">LabelingSession</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">add_dataset</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">,</span> <span class="n">record_ids</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="LabelingSession.add_traces"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.LabelingSession.add_traces">[docs]</a>    <span class="k">def</span> <span class="nf">add_traces</span><span class="p">(</span>
+<div class="viewcode-block" id="LabelingSession.add_traces"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.LabelingSession.add_traces">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">add_traces</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">traces</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Iterable</span><span class="p">[</span><span class="n">Trace</span><span class="p">],</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="s2">&quot;pd.DataFrame&quot;</span><span class="p">],</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;LabelingSession&quot;</span><span class="p">:</span>
@@ -387,7 +388,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">LabelingSession</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">add_traces</span><span class="p">(</span><span class="n">traces</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="LabelingSession.sync"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.LabelingSession.sync">[docs]</a>    <span class="k">def</span> <span class="nf">sync</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">to_dataset</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="LabelingSession.sync"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.LabelingSession.sync">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">sync</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">to_dataset</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Sync the traces and expectations from the labeling session to a dataset.</span>
 
 <span class="sd">        .. note::</span>
@@ -399,7 +400,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">sync_expectations</span><span class="p">(</span><span class="n">to_dataset</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="LabelingSession.set_assigned_users"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.LabelingSession.set_assigned_users">[docs]</a>    <span class="k">def</span> <span class="nf">set_assigned_users</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">assigned_users</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;LabelingSession&quot;</span><span class="p">:</span>
+<div class="viewcode-block" id="LabelingSession.set_assigned_users"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.LabelingSession.set_assigned_users">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">set_assigned_users</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">assigned_users</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;LabelingSession&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the assigned users for the labeling session.</span>
 
 <span class="sd">        .. note::</span>
@@ -415,7 +416,7 @@
         <span class="k">return</span> <span class="n">LabelingSession</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">set_assigned_users</span><span class="p">(</span><span class="n">assigned_users</span><span class="p">))</span></div></div>
 
 
-<div class="viewcode-block" id="ReviewApp"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.ReviewApp">[docs]</a><span class="k">class</span> <span class="nc">ReviewApp</span><span class="p">:</span>
+<div class="viewcode-block" id="ReviewApp"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.ReviewApp">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ReviewApp</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A review app is used to collect feedback from stakeholders for a given experiment.</span>
 
 <span class="sd">    .. note::</span>
@@ -423,35 +424,35 @@
 <span class="sd">        `pip install mlflow[databricks]` to use it.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">:</span> <span class="s2">&quot;_ReviewApp&quot;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">:</span> <span class="s2">&quot;_ReviewApp&quot;</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_app</span> <span class="o">=</span> <span class="n">app</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">review_app_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">review_app_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The ID of the review app.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">review_app_id</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">experiment_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">experiment_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The ID of the experiment.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">experiment_id</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">url</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">url</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The URL of the review app for stakeholders to provide feedback.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">url</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">agents</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Agent</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">agents</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Agent</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The agents to be used to generate responses.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">Agent</span><span class="p">(</span><span class="n">agent</span><span class="p">)</span> <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">agents</span><span class="p">]</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">label_schemas</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="s2">&quot;_LabelSchema&quot;</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">label_schemas</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="s2">&quot;_LabelSchema&quot;</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The label schemas to be used in the review app.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">label_schemas</span>
 
-<div class="viewcode-block" id="ReviewApp.add_agent"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.ReviewApp.add_agent">[docs]</a>    <span class="k">def</span> <span class="nf">add_agent</span><span class="p">(</span>
+<div class="viewcode-block" id="ReviewApp.add_agent"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.ReviewApp.add_agent">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">add_agent</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">agent_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model_serving_endpoint</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ReviewApp&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add an agent to the review app to be used to generate responses.</span>
@@ -476,7 +477,7 @@
             <span class="p">)</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="ReviewApp.remove_agent"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.ReviewApp.remove_agent">[docs]</a>    <span class="k">def</span> <span class="nf">remove_agent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ReviewApp&quot;</span><span class="p">:</span>
+<div class="viewcode-block" id="ReviewApp.remove_agent"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.ReviewApp.remove_agent">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">remove_agent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ReviewApp&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove an agent from the review app.</span>
 
 <span class="sd">        .. note::</span>

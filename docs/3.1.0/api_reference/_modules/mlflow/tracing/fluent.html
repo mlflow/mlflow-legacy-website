@@ -78,6 +78,7 @@
   <script src="../../../_static/js/modernizr.min.js"></script>
 
 </head>
+<script type="text/javascript" src="../../../_static/documentation_options.js"></script>
 <script type="text/javascript" src="../../../_static/jquery.js"></script>
 <script type="text/javascript" src="../../../_static/underscore.js"></script>
 <script type="text/javascript" src="../../../_static/doctools.js"></script>
@@ -238,38 +239,38 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.tracing.fluent</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">import</span> <span class="nn">contextlib</span>
-<span class="kn">import</span> <span class="nn">functools</span>
-<span class="kn">import</span> <span class="nn">importlib</span>
-<span class="kn">import</span> <span class="nn">inspect</span>
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">contextvars</span> <span class="kn">import</span> <span class="n">ContextVar</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">contextlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">functools</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">contextvars</span><span class="w"> </span><span class="kn">import</span> <span class="n">ContextVar</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">from</span> <span class="nn">cachetools</span> <span class="kn">import</span> <span class="n">TTLCache</span>
-<span class="kn">from</span> <span class="nn">opentelemetry</span> <span class="kn">import</span> <span class="n">trace</span> <span class="k">as</span> <span class="n">trace_api</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cachetools</span><span class="w"> </span><span class="kn">import</span> <span class="n">TTLCache</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">opentelemetry</span><span class="w"> </span><span class="kn">import</span> <span class="n">trace</span> <span class="k">as</span> <span class="n">trace_api</span>
 
-<span class="kn">from</span> <span class="nn">mlflow.entities</span> <span class="kn">import</span> <span class="n">NoOpSpan</span><span class="p">,</span> <span class="n">SpanType</span><span class="p">,</span> <span class="n">Trace</span>
-<span class="kn">from</span> <span class="nn">mlflow.entities.span</span> <span class="kn">import</span> <span class="n">NO_OP_SPAN_TRACE_ID</span><span class="p">,</span> <span class="n">LiveSpan</span><span class="p">,</span> <span class="n">create_mlflow_span</span>
-<span class="kn">from</span> <span class="nn">mlflow.entities.span_event</span> <span class="kn">import</span> <span class="n">SpanEvent</span>
-<span class="kn">from</span> <span class="nn">mlflow.entities.span_status</span> <span class="kn">import</span> <span class="n">SpanStatusCode</span>
-<span class="kn">from</span> <span class="nn">mlflow.entities.trace_state</span> <span class="kn">import</span> <span class="n">TraceState</span>
-<span class="kn">from</span> <span class="nn">mlflow.entities.trace_status</span> <span class="kn">import</span> <span class="n">TraceStatus</span>
-<span class="kn">from</span> <span class="nn">mlflow.exceptions</span> <span class="kn">import</span> <span class="n">MlflowException</span>
-<span class="kn">from</span> <span class="nn">mlflow.store.tracking</span> <span class="kn">import</span> <span class="n">SEARCH_TRACES_DEFAULT_MAX_RESULTS</span>
-<span class="kn">from</span> <span class="nn">mlflow.tracing</span> <span class="kn">import</span> <span class="n">provider</span>
-<span class="kn">from</span> <span class="nn">mlflow.tracing.client</span> <span class="kn">import</span> <span class="n">TracingClient</span>
-<span class="kn">from</span> <span class="nn">mlflow.tracing.constant</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities</span><span class="w"> </span><span class="kn">import</span> <span class="n">NoOpSpan</span><span class="p">,</span> <span class="n">SpanType</span><span class="p">,</span> <span class="n">Trace</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.span</span><span class="w"> </span><span class="kn">import</span> <span class="n">NO_OP_SPAN_TRACE_ID</span><span class="p">,</span> <span class="n">LiveSpan</span><span class="p">,</span> <span class="n">create_mlflow_span</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.span_event</span><span class="w"> </span><span class="kn">import</span> <span class="n">SpanEvent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.span_status</span><span class="w"> </span><span class="kn">import</span> <span class="n">SpanStatusCode</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.trace_state</span><span class="w"> </span><span class="kn">import</span> <span class="n">TraceState</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.trace_status</span><span class="w"> </span><span class="kn">import</span> <span class="n">TraceStatus</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.store.tracking</span><span class="w"> </span><span class="kn">import</span> <span class="n">SEARCH_TRACES_DEFAULT_MAX_RESULTS</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing</span><span class="w"> </span><span class="kn">import</span> <span class="n">provider</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">TracingClient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.constant</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">STREAM_CHUNK_EVENT_NAME_FORMAT</span><span class="p">,</span>
     <span class="n">STREAM_CHUNK_EVENT_VALUE_KEY</span><span class="p">,</span>
     <span class="n">SpanAttributeKey</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">mlflow.tracing.provider</span> <span class="kn">import</span> <span class="n">is_tracing_enabled</span><span class="p">,</span> <span class="n">safe_set_span_in_context</span>
-<span class="kn">from</span> <span class="nn">mlflow.tracing.trace_manager</span> <span class="kn">import</span> <span class="n">InMemoryTraceManager</span>
-<span class="kn">from</span> <span class="nn">mlflow.tracing.utils</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.provider</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_tracing_enabled</span><span class="p">,</span> <span class="n">safe_set_span_in_context</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.trace_manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">InMemoryTraceManager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">SPANS_COLUMN_NAME</span><span class="p">,</span>
     <span class="n">TraceJSONEncoder</span><span class="p">,</span>
     <span class="n">capture_function_input_args</span><span class="p">,</span>
@@ -278,15 +279,15 @@
     <span class="n">get_otel_attribute</span><span class="p">,</span>
     <span class="n">set_chat_attributes_special_case</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">mlflow.tracing.utils.search</span> <span class="kn">import</span> <span class="n">extract_span_inputs_outputs</span><span class="p">,</span> <span class="n">traces_to_df</span>
-<span class="kn">from</span> <span class="nn">mlflow.tracing.utils.warning</span> <span class="kn">import</span> <span class="n">request_id_backward_compatible</span>
-<span class="kn">from</span> <span class="nn">mlflow.utils</span> <span class="kn">import</span> <span class="n">get_results_from_paginated_fn</span>
-<span class="kn">from</span> <span class="nn">mlflow.utils.annotations</span> <span class="kn">import</span> <span class="n">experimental</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.utils.search</span><span class="w"> </span><span class="kn">import</span> <span class="n">extract_span_inputs_outputs</span><span class="p">,</span> <span class="n">traces_to_df</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.utils.warning</span><span class="w"> </span><span class="kn">import</span> <span class="n">request_id_backward_compatible</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_results_from_paginated_fn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">experimental</span>
 
 <span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">pandas</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span>
 
 
 <span class="n">_LAST_ACTIVE_TRACE_ID_GLOBAL</span> <span class="o">=</span> <span class="kc">None</span>
@@ -298,7 +299,7 @@
 <span class="n">_EVAL_REQUEST_ID_TO_TRACE_ID</span> <span class="o">=</span> <span class="n">TTLCache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">ttl</span><span class="o">=</span><span class="mi">3600</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="trace"><a class="viewcode-back" href="../../../python_api/mlflow.html#mlflow.trace">[docs]</a><span class="k">def</span> <span class="nf">trace</span><span class="p">(</span>
+<div class="viewcode-block" id="trace"><a class="viewcode-back" href="../../../python_api/mlflow.html#mlflow.trace">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">trace</span><span class="p">(</span>
     <span class="n">func</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">span_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">SpanType</span><span class="o">.</span><span class="n">UNKNOWN</span><span class="p">,</span>
@@ -400,7 +401,7 @@
 <span class="sd">            single value to be set as the span output.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">decorator</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
         <span class="c1"># Check if the function is a classmethod or staticmethod</span>
         <span class="n">is_classmethod</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="nb">classmethod</span><span class="p">)</span>
         <span class="n">is_staticmethod</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="nb">staticmethod</span><span class="p">)</span>
@@ -435,17 +436,17 @@
     <span class="k">return</span> <span class="n">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">)</span> <span class="k">if</span> <span class="n">func</span> <span class="k">else</span> <span class="n">decorator</span></div>
 
 
-<span class="k">def</span> <span class="nf">_wrap_function</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_wrap_function</span><span class="p">(</span>
     <span class="n">fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
     <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">span_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">SpanType</span><span class="o">.</span><span class="n">UNKNOWN</span><span class="p">,</span>
     <span class="n">attributes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
-    <span class="k">class</span> <span class="nc">_WrappingContext</span><span class="p">:</span>
+    <span class="k">class</span><span class="w"> </span><span class="nc">_WrappingContext</span><span class="p">:</span>
         <span class="c1"># define the wrapping logic as a coroutine to avoid code duplication</span>
         <span class="c1"># between sync and async cases</span>
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">_wrapping_logic</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">_wrapping_logic</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
             <span class="n">span_name</span> <span class="o">=</span> <span class="n">name</span> <span class="ow">or</span> <span class="n">fn</span><span class="o">.</span><span class="vm">__name__</span>
 
             <span class="k">with</span> <span class="n">start_span</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">span_name</span><span class="p">,</span> <span class="n">span_type</span><span class="o">=</span><span class="n">span_type</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="n">attributes</span><span class="p">)</span> <span class="k">as</span> <span class="n">span</span><span class="p">:</span>
@@ -463,14 +464,14 @@
                     <span class="c1"># Swallow `GeneratorExit` raised when the generator is closed</span>
                     <span class="k">pass</span>
 
-        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">coro</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wrapping_logic</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
 
-        <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coro</span><span class="p">)</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">coro</span>
 
-        <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
             <span class="c1"># Since the function call occurs outside the coroutine,</span>
             <span class="c1"># if an exception occurs, we need to throw it back in, so that</span>
             <span class="c1"># we return control to the coro (in particular, so that the __exit__&#39;s</span>
@@ -481,19 +482,19 @@
 
     <span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">iscoroutinefunction</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
 
-        <span class="k">async</span> <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
             <span class="k">with</span> <span class="n">_WrappingContext</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span> <span class="k">as</span> <span class="n">wrapping_coro</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">wrapping_coro</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="k">await</span> <span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
 
-        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
             <span class="k">with</span> <span class="n">_WrappingContext</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span> <span class="k">as</span> <span class="n">wrapping_coro</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">wrapping_coro</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
 
     <span class="k">return</span> <span class="n">_wrap_function_safe</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">wrapper</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_wrap_generator</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_wrap_generator</span><span class="p">(</span>
     <span class="n">fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
     <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">span_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">SpanType</span><span class="o">.</span><span class="n">UNKNOWN</span><span class="p">,</span>
@@ -527,7 +528,7 @@
 <span class="sd">    even worse, leak span context and pollute subsequent traces.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">_start_stream_span</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_start_stream_span</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">start_span_no_context</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="n">name</span> <span class="ow">or</span> <span class="n">fn</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
@@ -540,7 +541,7 @@
             <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to start stream span: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">NoOpSpan</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_end_stream_span</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_end_stream_span</span><span class="p">(</span>
         <span class="n">span</span><span class="p">:</span> <span class="n">LiveSpan</span><span class="p">,</span>
         <span class="n">inputs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">outputs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -561,7 +562,7 @@
         <span class="n">set_chat_attributes_special_case</span><span class="p">(</span><span class="n">span</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">)</span>
         <span class="n">span</span><span class="o">.</span><span class="n">end</span><span class="p">(</span><span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_record_chunk_event</span><span class="p">(</span><span class="n">span</span><span class="p">:</span> <span class="n">LiveSpan</span><span class="p">,</span> <span class="n">chunk</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">chunk_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_record_chunk_event</span><span class="p">(</span><span class="n">span</span><span class="p">:</span> <span class="n">LiveSpan</span><span class="p">,</span> <span class="n">chunk</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">chunk_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">event</span> <span class="o">=</span> <span class="n">SpanEvent</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="n">STREAM_CHUNK_EVENT_NAME_FORMAT</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">chunk_index</span><span class="p">),</span>
@@ -574,7 +575,7 @@
 
     <span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isgeneratorfunction</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
 
-        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
             <span class="n">inputs</span> <span class="o">=</span> <span class="n">capture_function_input_args</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
             <span class="n">span</span> <span class="o">=</span> <span class="n">_start_stream_span</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">inputs</span><span class="p">)</span>
             <span class="n">generator</span> <span class="o">=</span> <span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -599,7 +600,7 @@
             <span class="n">_end_stream_span</span><span class="p">(</span><span class="n">span</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">output_reducer</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
 
-        <span class="k">async</span> <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
             <span class="n">inputs</span> <span class="o">=</span> <span class="n">capture_function_input_args</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
             <span class="n">span</span> <span class="o">=</span> <span class="n">_start_stream_span</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">inputs</span><span class="p">)</span>
             <span class="n">generator</span> <span class="o">=</span> <span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -625,7 +626,7 @@
     <span class="k">return</span> <span class="n">_wrap_function_safe</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">wrapper</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_wrap_function_safe</span><span class="p">(</span><span class="n">fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">wrapper</span><span class="p">:</span> <span class="n">Callable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_wrap_function_safe</span><span class="p">(</span><span class="n">fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">wrapper</span><span class="p">:</span> <span class="n">Callable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
     <span class="n">wrapped</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">fn</span><span class="p">)(</span><span class="n">wrapper</span><span class="p">)</span>
     <span class="c1"># Update the signature of the wrapper to match the signature of the original (safely)</span>
     <span class="k">try</span><span class="p">:</span>
@@ -636,7 +637,7 @@
 
 
 <div class="viewcode-block" id="start_span"><a class="viewcode-back" href="../../../python_api/mlflow.html#mlflow.start_span">[docs]</a><span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
-<span class="k">def</span> <span class="nf">start_span</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">start_span</span><span class="p">(</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;span&quot;</span><span class="p">,</span>
     <span class="n">span_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">SpanType</span><span class="o">.</span><span class="n">UNKNOWN</span><span class="p">,</span>
     <span class="n">attributes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -723,7 +724,7 @@
             <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to end span </span><span class="si">{</span><span class="n">mlflow_span</span><span class="o">.</span><span class="n">span_id</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="start_span_no_context"><a class="viewcode-back" href="../../../python_api/mlflow.html#mlflow.start_span_no_context">[docs]</a><span class="k">def</span> <span class="nf">start_span_no_context</span><span class="p">(</span>
+<div class="viewcode-block" id="start_span_no_context"><a class="viewcode-back" href="../../../python_api/mlflow.html#mlflow.start_span_no_context">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">start_span_no_context</span><span class="p">(</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">span_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">SpanType</span><span class="o">.</span><span class="n">UNKNOWN</span><span class="p">,</span>
     <span class="n">parent_span</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LiveSpan</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -827,7 +828,7 @@
 
 
 <div class="viewcode-block" id="get_trace"><a class="viewcode-back" href="../../../python_api/mlflow.html#mlflow.get_trace">[docs]</a><span class="nd">@request_id_backward_compatible</span>
-<span class="k">def</span> <span class="nf">get_trace</span><span class="p">(</span><span class="n">trace_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Trace</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_trace</span><span class="p">(</span><span class="n">trace_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Trace</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get a trace by the given request ID if it exists.</span>
 
@@ -869,7 +870,7 @@
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="search_traces"><a class="viewcode-back" href="../../../python_api/mlflow.html#mlflow.search_traces">[docs]</a><span class="k">def</span> <span class="nf">search_traces</span><span class="p">(</span>
+<div class="viewcode-block" id="search_traces"><a class="viewcode-back" href="../../../python_api/mlflow.html#mlflow.search_traces">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">search_traces</span><span class="p">(</span>
     <span class="n">experiment_ids</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">filter_string</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">max_results</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -999,12 +1000,12 @@
 <span class="sd">        mlflow.search_traces(run_id=run.info.run_id, return_type=&quot;list&quot;)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">from</span> <span class="nn">mlflow.tracking.fluent</span> <span class="kn">import</span> <span class="n">_get_experiment_id</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracking.fluent</span><span class="w"> </span><span class="kn">import</span> <span class="n">_get_experiment_id</span>
 
     <span class="c1"># Default to &quot;pandas&quot; only if the pandas library is installed</span>
     <span class="k">if</span> <span class="n">return_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="kn">import</span> <span class="nn">pandas</span>  <span class="c1"># noqa: F401</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span>  <span class="c1"># noqa: F401</span>
 
             <span class="n">return_type</span> <span class="o">=</span> <span class="s2">&quot;pandas&quot;</span>
         <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
@@ -1037,7 +1038,7 @@
                 <span class="s2">&quot;or specify the list of experiment IDs in the `experiment_ids` parameter.&quot;</span>
             <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">pagination_wrapper_func</span><span class="p">(</span><span class="n">number_to_get</span><span class="p">,</span> <span class="n">next_page_token</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pagination_wrapper_func</span><span class="p">(</span><span class="n">number_to_get</span><span class="p">,</span> <span class="n">next_page_token</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">TracingClient</span><span class="p">()</span><span class="o">.</span><span class="n">search_traces</span><span class="p">(</span>
             <span class="n">experiment_ids</span><span class="o">=</span><span class="n">experiment_ids</span><span class="p">,</span>
             <span class="n">run_id</span><span class="o">=</span><span class="n">run_id</span><span class="p">,</span>
@@ -1068,7 +1069,7 @@
     <span class="k">return</span> <span class="n">results</span></div>
 
 
-<div class="viewcode-block" id="get_current_active_span"><a class="viewcode-back" href="../../../python_api/mlflow.html#mlflow.get_current_active_span">[docs]</a><span class="k">def</span> <span class="nf">get_current_active_span</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LiveSpan</span><span class="p">]:</span>
+<div class="viewcode-block" id="get_current_active_span"><a class="viewcode-back" href="../../../python_api/mlflow.html#mlflow.get_current_active_span">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">get_current_active_span</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LiveSpan</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get the current active span in the global context.</span>
 
@@ -1108,7 +1109,7 @@
     <span class="k">return</span> <span class="n">trace_manager</span><span class="o">.</span><span class="n">get_span_from_id</span><span class="p">(</span><span class="n">request_id</span><span class="p">,</span> <span class="n">encode_span_id</span><span class="p">(</span><span class="n">otel_span</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">span_id</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="get_active_trace_id"><a class="viewcode-back" href="../../../python_api/mlflow.html#mlflow.get_active_trace_id">[docs]</a><span class="k">def</span> <span class="nf">get_active_trace_id</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<div class="viewcode-block" id="get_active_trace_id"><a class="viewcode-back" href="../../../python_api/mlflow.html#mlflow.get_active_trace_id">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">get_active_trace_id</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get the active trace ID in the current process.</span>
 
@@ -1139,7 +1140,7 @@
     <span class="k">return</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="get_last_active_trace_id"><a class="viewcode-back" href="../../../python_api/mlflow.html#mlflow.get_last_active_trace_id">[docs]</a><span class="k">def</span> <span class="nf">get_last_active_trace_id</span><span class="p">(</span><span class="n">thread_local</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<div class="viewcode-block" id="get_last_active_trace_id"><a class="viewcode-back" href="../../../python_api/mlflow.html#mlflow.get_last_active_trace_id">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">get_last_active_trace_id</span><span class="p">(</span><span class="n">thread_local</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get the **LAST** active trace in the same process if exists.</span>
 
@@ -1183,14 +1184,14 @@
     <span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">_set_last_active_trace_id</span><span class="p">(</span><span class="n">trace_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_set_last_active_trace_id</span><span class="p">(</span><span class="n">trace_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Internal function to set the last active trace ID.&quot;&quot;&quot;</span>
     <span class="k">global</span> <span class="n">_LAST_ACTIVE_TRACE_ID_GLOBAL</span>
     <span class="n">_LAST_ACTIVE_TRACE_ID_GLOBAL</span> <span class="o">=</span> <span class="n">trace_id</span>
     <span class="n">_LAST_ACTIVE_TRACE_ID_THREAD_LOCAL</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">trace_id</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="update_current_trace"><a class="viewcode-back" href="../../../python_api/mlflow.html#mlflow.update_current_trace">[docs]</a><span class="k">def</span> <span class="nf">update_current_trace</span><span class="p">(</span>
+<div class="viewcode-block" id="update_current_trace"><a class="viewcode-back" href="../../../python_api/mlflow.html#mlflow.update_current_trace">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">update_current_trace</span><span class="p">(</span>
     <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">metadata</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">client_request_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -1303,7 +1304,7 @@
         <span class="p">)</span>
         <span class="k">return</span>
 
-    <span class="k">def</span> <span class="nf">_warn_non_string_values</span><span class="p">(</span><span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">field_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_warn_non_string_values</span><span class="p">(</span><span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">field_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="n">non_string_items</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">str</span><span class="p">)}</span>
         <span class="k">if</span> <span class="n">non_string_items</span><span class="p">:</span>
             <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
@@ -1338,7 +1339,7 @@
             <span class="n">trace</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">response_preview</span> <span class="o">=</span> <span class="n">response_preview</span>
         <span class="k">if</span> <span class="n">state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
 
-            <span class="k">def</span> <span class="nf">_invalid_state_error</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+            <span class="k">def</span><span class="w"> </span><span class="nf">_invalid_state_error</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
                 <span class="k">return</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
                     <span class="sa">f</span><span class="s2">&quot;State must be either &#39;OK&#39; or &#39;ERROR&#39;, but got &#39;</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&#39;.&quot;</span>
                 <span class="p">)</span>
@@ -1355,7 +1356,7 @@
 
 
 <div class="viewcode-block" id="set_trace_tag"><a class="viewcode-back" href="../../../python_api/mlflow.html#mlflow.set_trace_tag">[docs]</a><span class="nd">@request_id_backward_compatible</span>
-<span class="k">def</span> <span class="nf">set_trace_tag</span><span class="p">(</span><span class="n">trace_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">set_trace_tag</span><span class="p">(</span><span class="n">trace_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Set a tag on the trace with the given trace ID.</span>
 
@@ -1382,7 +1383,7 @@
 
 
 <div class="viewcode-block" id="delete_trace_tag"><a class="viewcode-back" href="../../../python_api/mlflow.html#mlflow.delete_trace_tag">[docs]</a><span class="nd">@request_id_backward_compatible</span>
-<span class="k">def</span> <span class="nf">delete_trace_tag</span><span class="p">(</span><span class="n">trace_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">delete_trace_tag</span><span class="p">(</span><span class="n">trace_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Delete a tag on the trace with the given trace ID.</span>
 
@@ -1408,7 +1409,7 @@
 
 
 <div class="viewcode-block" id="add_trace"><a class="viewcode-back" href="../../../python_api/mlflow.html#mlflow.add_trace">[docs]</a><span class="nd">@experimental</span>
-<span class="k">def</span> <span class="nf">add_trace</span><span class="p">(</span><span class="n">trace</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Trace</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span> <span class="n">target</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LiveSpan</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_trace</span><span class="p">(</span><span class="n">trace</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Trace</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span> <span class="n">target</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LiveSpan</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Add a completed trace object into another trace.</span>
 
@@ -1525,7 +1526,7 @@
 
 
 <div class="viewcode-block" id="log_trace"><a class="viewcode-back" href="../../../python_api/mlflow.html#mlflow.log_trace">[docs]</a><span class="nd">@experimental</span>
-<span class="k">def</span> <span class="nf">log_trace</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">log_trace</span><span class="p">(</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Task&quot;</span><span class="p">,</span>
     <span class="n">request</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">response</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -1601,7 +1602,7 @@
     <span class="k">return</span> <span class="n">span</span><span class="o">.</span><span class="n">trace_id</span></div>
 
 
-<span class="k">def</span> <span class="nf">_merge_trace</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_merge_trace</span><span class="p">(</span>
     <span class="n">trace</span><span class="p">:</span> <span class="n">Trace</span><span class="p">,</span>
     <span class="n">target_trace_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">target_parent_span_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>

@@ -78,6 +78,7 @@
   <script src="../../../_static/js/modernizr.min.js"></script>
 
 </head>
+<script type="text/javascript" src="../../../_static/documentation_options.js"></script>
 <script type="text/javascript" src="../../../_static/jquery.js"></script>
 <script type="text/javascript" src="../../../_static/underscore.js"></script>
 <script type="text/javascript" src="../../../_static/doctools.js"></script>
@@ -238,30 +239,30 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.entities.run_outputs</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
 
-<span class="kn">from</span> <span class="nn">mlflow.entities._mlflow_object</span> <span class="kn">import</span> <span class="n">_MlflowObject</span>
-<span class="kn">from</span> <span class="nn">mlflow.entities.logged_model_output</span> <span class="kn">import</span> <span class="n">LoggedModelOutput</span>
-<span class="kn">from</span> <span class="nn">mlflow.protos.service_pb2</span> <span class="kn">import</span> <span class="n">RunOutputs</span> <span class="k">as</span> <span class="n">ProtoRunOutputs</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities._mlflow_object</span><span class="w"> </span><span class="kn">import</span> <span class="n">_MlflowObject</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.logged_model_output</span><span class="w"> </span><span class="kn">import</span> <span class="n">LoggedModelOutput</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.protos.service_pb2</span><span class="w"> </span><span class="kn">import</span> <span class="n">RunOutputs</span> <span class="k">as</span> <span class="n">ProtoRunOutputs</span>
 
 
-<div class="viewcode-block" id="RunOutputs"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.RunOutputs">[docs]</a><span class="k">class</span> <span class="nc">RunOutputs</span><span class="p">(</span><span class="n">_MlflowObject</span><span class="p">):</span>
+<div class="viewcode-block" id="RunOutputs"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.RunOutputs">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">RunOutputs</span><span class="p">(</span><span class="n">_MlflowObject</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;RunOutputs object.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_outputs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">LoggedModelOutput</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_outputs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">LoggedModelOutput</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_model_outputs</span> <span class="o">=</span> <span class="n">model_outputs</span>
 
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">_MlflowObject</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">_MlflowObject</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="vm">__dict__</span>
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">model_outputs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">LoggedModelOutput</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">model_outputs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">LoggedModelOutput</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Array of model outputs.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_outputs</span>
 
-<div class="viewcode-block" id="RunOutputs.to_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.RunOutputs.to_proto">[docs]</a>    <span class="k">def</span> <span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="RunOutputs.to_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.RunOutputs.to_proto">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">run_outputs</span> <span class="o">=</span> <span class="n">ProtoRunOutputs</span><span class="p">()</span>
         <span class="n">run_outputs</span><span class="o">.</span><span class="n">model_outputs</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
             <span class="p">[</span><span class="n">model_output</span><span class="o">.</span><span class="n">to_proto</span><span class="p">()</span> <span class="k">for</span> <span class="n">model_output</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_outputs</span><span class="p">]</span>
@@ -269,13 +270,13 @@
 
         <span class="k">return</span> <span class="n">run_outputs</span></div>
 
-<div class="viewcode-block" id="RunOutputs.to_dictionary"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.RunOutputs.to_dictionary">[docs]</a>    <span class="k">def</span> <span class="nf">to_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<div class="viewcode-block" id="RunOutputs.to_dictionary"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.RunOutputs.to_dictionary">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
         <span class="k">return</span> <span class="p">{</span>
             <span class="s2">&quot;model_outputs&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_outputs</span><span class="p">,</span>
         <span class="p">}</span></div>
 
 <div class="viewcode-block" id="RunOutputs.from_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.RunOutputs.from_proto">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">):</span>
         <span class="n">model_outputs</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">LoggedModelOutput</span><span class="o">.</span><span class="n">from_proto</span><span class="p">(</span><span class="n">model_output</span><span class="p">)</span> <span class="k">for</span> <span class="n">model_output</span> <span class="ow">in</span> <span class="n">proto</span><span class="o">.</span><span class="n">model_outputs</span>
         <span class="p">]</span>

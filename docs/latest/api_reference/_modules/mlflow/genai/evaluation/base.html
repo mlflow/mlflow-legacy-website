@@ -78,6 +78,7 @@
   <script src="../../../../_static/js/modernizr.min.js"></script>
 
 </head>
+<script type="text/javascript" src="../../../../_static/documentation_options.js"></script>
 <script type="text/javascript" src="../../../../_static/jquery.js"></script>
 <script type="text/javascript" src="../../../../_static/underscore.js"></script>
 <script type="text/javascript" src="../../../../_static/doctools.js"></script>
@@ -238,47 +239,47 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.genai.evaluation.base</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Optional</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Optional</span>
 
-<span class="kn">import</span> <span class="nn">mlflow</span>
-<span class="kn">from</span> <span class="nn">mlflow.exceptions</span> <span class="kn">import</span> <span class="n">MlflowException</span>
-<span class="kn">from</span> <span class="nn">mlflow.genai.datasets</span> <span class="kn">import</span> <span class="n">EvaluationDataset</span>
-<span class="kn">from</span> <span class="nn">mlflow.genai.evaluation.utils</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">mlflow</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">EvaluationDataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.evaluation.utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">_convert_scorer_to_legacy_metric</span><span class="p">,</span>
     <span class="n">_convert_to_legacy_eval_set</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">mlflow.genai.scorers</span> <span class="kn">import</span> <span class="n">Scorer</span>
-<span class="kn">from</span> <span class="nn">mlflow.genai.scorers.builtin_scorers</span> <span class="kn">import</span> <span class="n">GENAI_CONFIG_NAME</span><span class="p">,</span> <span class="n">BuiltInScorer</span>
-<span class="kn">from</span> <span class="nn">mlflow.genai.scorers.validation</span> <span class="kn">import</span> <span class="n">valid_data_for_builtin_scorers</span><span class="p">,</span> <span class="n">validate_scorers</span>
-<span class="kn">from</span> <span class="nn">mlflow.genai.utils.trace_utils</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.scorers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Scorer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.scorers.builtin_scorers</span><span class="w"> </span><span class="kn">import</span> <span class="n">GENAI_CONFIG_NAME</span><span class="p">,</span> <span class="n">BuiltInScorer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.scorers.validation</span><span class="w"> </span><span class="kn">import</span> <span class="n">valid_data_for_builtin_scorers</span><span class="p">,</span> <span class="n">validate_scorers</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.utils.trace_utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">clean_up_extra_traces</span><span class="p">,</span>
     <span class="n">convert_predict_fn</span><span class="p">,</span>
     <span class="n">copy_model_serving_trace_to_eval_run</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">mlflow.models.evaluation.base</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.models.evaluation.base</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">EvaluationResult</span><span class="p">,</span>
     <span class="n">_is_model_deployment_endpoint_uri</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">mlflow.tracing.constant</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.constant</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">DATABRICKS_OPTIONS_KEY</span><span class="p">,</span>
     <span class="n">DATABRICKS_OUTPUT_KEY</span><span class="p">,</span>
     <span class="n">RETURN_TRACE_OPTION_KEY</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">mlflow.utils.annotations</span> <span class="kn">import</span> <span class="n">experimental</span>
-<span class="kn">from</span> <span class="nn">mlflow.utils.uri</span> <span class="kn">import</span> <span class="n">is_databricks_uri</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">experimental</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.uri</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_databricks_uri</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">genai.evaluation.utils</span> <span class="kn">import</span> <span class="n">EvaluationDatasetTypes</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">genai.evaluation.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">EvaluationDatasetTypes</span>
 
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="evaluate"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.evaluate">[docs]</a><span class="nd">@experimental</span>
-<span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span>
     <span class="n">data</span><span class="p">:</span> <span class="s2">&quot;EvaluationDatasetTypes&quot;</span><span class="p">,</span>
     <span class="n">scorers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Scorer</span><span class="p">],</span>
     <span class="n">predict_fn</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -464,7 +465,7 @@
 <span class="sd">        environments.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="kn">import</span> <span class="nn">databricks.agents</span>  <span class="c1"># noqa: F401</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">databricks.agents</span>  <span class="c1"># noqa: F401</span>
     <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
             <span class="s2">&quot;The `databricks-agents` package is required to use mlflow.genai.evaluate() &quot;</span>
@@ -535,7 +536,7 @@
 
 
 <div class="viewcode-block" id="to_predict_fn"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.to_predict_fn">[docs]</a><span class="nd">@experimental</span>
-<span class="k">def</span> <span class="nf">to_predict_fn</span><span class="p">(</span><span class="n">endpoint_uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">to_predict_fn</span><span class="p">(</span><span class="n">endpoint_uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert an endpoint URI to a predict function.</span>
 
@@ -593,8 +594,8 @@
             <span class="sa">f</span><span class="s2">&quot;deployment endpoint URI.&quot;</span>
         <span class="p">)</span>
 
-    <span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
-    <span class="kn">from</span> <span class="nn">mlflow.metrics.genai.model_utils</span> <span class="kn">import</span> <span class="n">_parse_model_uri</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.metrics.genai.model_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">_parse_model_uri</span>
 
     <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;databricks&quot;</span><span class="p">)</span>
     <span class="n">_</span><span class="p">,</span> <span class="n">endpoint</span> <span class="o">=</span> <span class="n">_parse_model_uri</span><span class="p">(</span><span class="n">endpoint_uri</span><span class="p">)</span>
@@ -609,7 +610,7 @@
     <span class="c1"># NB: Wrap the function to show better docstring and change signature to `model_inputs`</span>
     <span class="c1">#   to unnamed keyword arguments. This is necessary because we pass input samples as</span>
     <span class="c1">#   keyword arguments to the predict function.</span>
-    <span class="k">def</span> <span class="nf">predict_fn</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">predict_fn</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">start_time_ms</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time_ns</span><span class="p">()</span> <span class="o">/</span> <span class="mf">1e6</span><span class="p">)</span>
         <span class="c1"># Inject `{&quot;databricks_options&quot;: {&quot;return_trace&quot;: True}}` to the input payload</span>
         <span class="c1"># to return the trace in the response.</span>

@@ -78,6 +78,7 @@
   <script src="../../../_static/js/modernizr.min.js"></script>
 
 </head>
+<script type="text/javascript" src="../../../_static/documentation_options.js"></script>
 <script type="text/javascript" src="../../../_static/jquery.js"></script>
 <script type="text/javascript" src="../../../_static/underscore.js"></script>
 <script type="text/javascript" src="../../../_static/doctools.js"></script>
@@ -246,9 +247,9 @@
 <span class="sd">&lt;https://api-docs.databricks.com/python/databricks-agents/latest/databricks_agent_eval.html#review-app&gt;</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
 
-<span class="kn">from</span> <span class="nn">mlflow.genai.labeling.labeling</span> <span class="kn">import</span> <span class="n">Agent</span><span class="p">,</span> <span class="n">LabelingSession</span><span class="p">,</span> <span class="n">ReviewApp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.labeling.labeling</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agent</span><span class="p">,</span> <span class="n">LabelingSession</span><span class="p">,</span> <span class="n">ReviewApp</span>
 
 <span class="n">_ERROR_MSG</span> <span class="o">=</span> <span class="p">(</span>
     <span class="s2">&quot;The `databricks-agents` package is required to use `mlflow.genai.labeling`. &quot;</span>
@@ -256,7 +257,7 @@
 <span class="p">)</span>
 
 
-<div class="viewcode-block" id="get_review_app"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.get_review_app">[docs]</a><span class="k">def</span> <span class="nf">get_review_app</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ReviewApp&quot;</span><span class="p">:</span>
+<div class="viewcode-block" id="get_review_app"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.get_review_app">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">get_review_app</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ReviewApp&quot;</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Gets or creates (if it doesn&#39;t exist) the review app for the given experiment ID.</span>
 
 <span class="sd">    .. note::</span>
@@ -271,14 +272,14 @@
 <span class="sd">        ReviewApp: The review app.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="kn">from</span> <span class="nn">databricks.agents.review_app</span> <span class="kn">import</span> <span class="n">get_review_app</span> <span class="k">as</span> <span class="n">_get_review_app</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">databricks.agents.review_app</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_review_app</span> <span class="k">as</span> <span class="n">_get_review_app</span>
     <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="n">_ERROR_MSG</span><span class="p">)</span> <span class="kn">from</span> <span class="kc">None</span>
+        <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="n">_ERROR_MSG</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="kc">None</span>
 
     <span class="k">return</span> <span class="n">ReviewApp</span><span class="p">(</span><span class="n">_get_review_app</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="create_labeling_session"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.create_labeling_session">[docs]</a><span class="k">def</span> <span class="nf">create_labeling_session</span><span class="p">(</span>
+<div class="viewcode-block" id="create_labeling_session"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.create_labeling_session">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">create_labeling_session</span><span class="p">(</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">assigned_users</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[],</span>  <span class="c1"># noqa: B006</span>
@@ -305,9 +306,9 @@
 <span class="sd">        LabelingSession: The created labeling session.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="kn">from</span> <span class="nn">databricks.agents.review_app</span> <span class="kn">import</span> <span class="n">get_review_app</span> <span class="k">as</span> <span class="n">_get_review_app</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">databricks.agents.review_app</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_review_app</span> <span class="k">as</span> <span class="n">_get_review_app</span>
     <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="n">_ERROR_MSG</span><span class="p">)</span> <span class="kn">from</span> <span class="kc">None</span>
+        <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="n">_ERROR_MSG</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="kc">None</span>
 
     <span class="k">return</span> <span class="n">LabelingSession</span><span class="p">(</span>
         <span class="n">_get_review_app</span><span class="p">()</span><span class="o">.</span><span class="n">create_labeling_session</span><span class="p">(</span>
@@ -321,7 +322,7 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="get_labeling_sessions"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.get_labeling_sessions">[docs]</a><span class="k">def</span> <span class="nf">get_labeling_sessions</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">LabelingSession</span><span class="p">]:</span>
+<div class="viewcode-block" id="get_labeling_sessions"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.get_labeling_sessions">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">get_labeling_sessions</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">LabelingSession</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get all labeling sessions from the review app.</span>
 
 <span class="sd">    .. note::</span>
@@ -332,14 +333,14 @@
 <span class="sd">        list[LabelingSession]: The list of labeling sessions.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="kn">from</span> <span class="nn">databricks.agents.review_app</span> <span class="kn">import</span> <span class="n">get_review_app</span> <span class="k">as</span> <span class="n">_get_review_app</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">databricks.agents.review_app</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_review_app</span> <span class="k">as</span> <span class="n">_get_review_app</span>
     <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="n">_ERROR_MSG</span><span class="p">)</span> <span class="kn">from</span> <span class="kc">None</span>
+        <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="n">_ERROR_MSG</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="kc">None</span>
 
     <span class="k">return</span> <span class="p">[</span><span class="n">LabelingSession</span><span class="p">(</span><span class="n">session</span><span class="p">)</span> <span class="k">for</span> <span class="n">session</span> <span class="ow">in</span> <span class="n">_get_review_app</span><span class="p">()</span><span class="o">.</span><span class="n">get_labeling_sessions</span><span class="p">()]</span></div>
 
 
-<div class="viewcode-block" id="get_labeling_session"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.get_labeling_session">[docs]</a><span class="k">def</span> <span class="nf">get_labeling_session</span><span class="p">(</span><span class="n">run_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LabelingSession</span><span class="p">:</span>
+<div class="viewcode-block" id="get_labeling_session"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.get_labeling_session">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">get_labeling_session</span><span class="p">(</span><span class="n">run_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LabelingSession</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get a labeling session from the review app.</span>
 
 <span class="sd">    .. note::</span>
@@ -366,7 +367,7 @@
     <span class="k">return</span> <span class="n">LabelingSession</span><span class="p">(</span><span class="n">labeling_session</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="delete_labeling_session"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.delete_labeling_session">[docs]</a><span class="k">def</span> <span class="nf">delete_labeling_session</span><span class="p">(</span><span class="n">labeling_session</span><span class="p">:</span> <span class="n">LabelingSession</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ReviewApp&quot;</span><span class="p">:</span>
+<div class="viewcode-block" id="delete_labeling_session"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.delete_labeling_session">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">delete_labeling_session</span><span class="p">(</span><span class="n">labeling_session</span><span class="p">:</span> <span class="n">LabelingSession</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ReviewApp&quot;</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Delete a labeling session from the review app.</span>
 
 <span class="sd">    .. note::</span>
@@ -380,9 +381,9 @@
 <span class="sd">        ReviewApp: The review app.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="kn">from</span> <span class="nn">databricks.agents.review_app</span> <span class="kn">import</span> <span class="n">get_review_app</span> <span class="k">as</span> <span class="n">_get_review_app</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">databricks.agents.review_app</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_review_app</span> <span class="k">as</span> <span class="n">_get_review_app</span>
     <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="n">_ERROR_MSG</span><span class="p">)</span> <span class="kn">from</span> <span class="kc">None</span>
+        <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="n">_ERROR_MSG</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="kc">None</span>
 
     <span class="k">return</span> <span class="n">ReviewApp</span><span class="p">(</span><span class="n">_get_review_app</span><span class="p">()</span><span class="o">.</span><span class="n">delete_labeling_session</span><span class="p">(</span><span class="n">labeling_session</span><span class="o">.</span><span class="n">_session</span><span class="p">))</span></div>
 

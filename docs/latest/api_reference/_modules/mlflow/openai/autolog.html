@@ -78,6 +78,7 @@
   <script src="../../../_static/js/modernizr.min.js"></script>
 
 </head>
+<script type="text/javascript" src="../../../_static/documentation_options.js"></script>
 <script type="text/javascript" src="../../../_static/jquery.js"></script>
 <script type="text/javascript" src="../../../_static/underscore.js"></script>
 <script type="text/javascript" src="../../../_static/doctools.js"></script>
@@ -238,43 +239,43 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.openai.autolog</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">functools</span>
-<span class="kn">import</span> <span class="nn">importlib.metadata</span>
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">AsyncIterator</span><span class="p">,</span> <span class="n">Iterator</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">functools</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">importlib.metadata</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">AsyncIterator</span><span class="p">,</span> <span class="n">Iterator</span>
 
-<span class="kn">from</span> <span class="nn">packaging.version</span> <span class="kn">import</span> <span class="n">Version</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">packaging.version</span><span class="w"> </span><span class="kn">import</span> <span class="n">Version</span>
 
-<span class="kn">import</span> <span class="nn">mlflow</span>
-<span class="kn">from</span> <span class="nn">mlflow.entities</span> <span class="kn">import</span> <span class="n">SpanType</span>
-<span class="kn">from</span> <span class="nn">mlflow.entities.span</span> <span class="kn">import</span> <span class="n">LiveSpan</span>
-<span class="kn">from</span> <span class="nn">mlflow.entities.span_event</span> <span class="kn">import</span> <span class="n">SpanEvent</span>
-<span class="kn">from</span> <span class="nn">mlflow.entities.span_status</span> <span class="kn">import</span> <span class="n">SpanStatusCode</span>
-<span class="kn">from</span> <span class="nn">mlflow.exceptions</span> <span class="kn">import</span> <span class="n">MlflowException</span>
-<span class="kn">from</span> <span class="nn">mlflow.openai.constant</span> <span class="kn">import</span> <span class="n">FLAVOR_NAME</span>
-<span class="kn">from</span> <span class="nn">mlflow.openai.utils.chat_schema</span> <span class="kn">import</span> <span class="n">set_span_chat_attributes</span>
-<span class="kn">from</span> <span class="nn">mlflow.tracing.constant</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">mlflow</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities</span><span class="w"> </span><span class="kn">import</span> <span class="n">SpanType</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.span</span><span class="w"> </span><span class="kn">import</span> <span class="n">LiveSpan</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.span_event</span><span class="w"> </span><span class="kn">import</span> <span class="n">SpanEvent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.span_status</span><span class="w"> </span><span class="kn">import</span> <span class="n">SpanStatusCode</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.openai.constant</span><span class="w"> </span><span class="kn">import</span> <span class="n">FLAVOR_NAME</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.openai.utils.chat_schema</span><span class="w"> </span><span class="kn">import</span> <span class="n">set_span_chat_attributes</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.constant</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">STREAM_CHUNK_EVENT_NAME_FORMAT</span><span class="p">,</span>
     <span class="n">STREAM_CHUNK_EVENT_VALUE_KEY</span><span class="p">,</span>
     <span class="n">SpanAttributeKey</span><span class="p">,</span>
     <span class="n">TokenUsageKey</span><span class="p">,</span>
     <span class="n">TraceMetadataKey</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">mlflow.tracing.fluent</span> <span class="kn">import</span> <span class="n">start_span_no_context</span>
-<span class="kn">from</span> <span class="nn">mlflow.tracing.trace_manager</span> <span class="kn">import</span> <span class="n">InMemoryTraceManager</span>
-<span class="kn">from</span> <span class="nn">mlflow.tracing.utils</span> <span class="kn">import</span> <span class="n">TraceJSONEncoder</span>
-<span class="kn">from</span> <span class="nn">mlflow.utils.annotations</span> <span class="kn">import</span> <span class="n">experimental</span>
-<span class="kn">from</span> <span class="nn">mlflow.utils.autologging_utils</span> <span class="kn">import</span> <span class="n">autologging_integration</span>
-<span class="kn">from</span> <span class="nn">mlflow.utils.autologging_utils.config</span> <span class="kn">import</span> <span class="n">AutoLoggingConfig</span>
-<span class="kn">from</span> <span class="nn">mlflow.utils.autologging_utils.safety</span> <span class="kn">import</span> <span class="n">safe_patch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.fluent</span><span class="w"> </span><span class="kn">import</span> <span class="n">start_span_no_context</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.trace_manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">InMemoryTraceManager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">TraceJSONEncoder</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">experimental</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.autologging_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">autologging_integration</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.autologging_utils.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoLoggingConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.autologging_utils.safety</span><span class="w"> </span><span class="kn">import</span> <span class="n">safe_patch</span>
 
 <span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="autolog"><a class="viewcode-back" href="../../../python_api/mlflow.openai.html#mlflow.openai.autolog">[docs]</a><span class="nd">@experimental</span>
-<span class="k">def</span> <span class="nf">autolog</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">autolog</span><span class="p">(</span>
     <span class="n">disable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">exclusive</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">disable_for_unsupported_versions</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -317,7 +318,7 @@
     <span class="c1"># Tracing OpenAI Agent SDK. This has to be done outside the function annotated with</span>
     <span class="c1"># `@autologging_integration` because the function is not executed when `disable=True`.</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="kn">from</span> <span class="nn">mlflow.openai._agent_tracer</span> <span class="kn">import</span> <span class="p">(</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.openai._agent_tracer</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
             <span class="n">add_mlflow_trace_processor</span><span class="p">,</span>
             <span class="n">remove_mlflow_trace_processor</span><span class="p">,</span>
         <span class="p">)</span>
@@ -339,17 +340,17 @@
 <span class="c1"># executed when disable=True is passed. This prevents us from removing our callback and patching</span>
 <span class="c1"># when autologging is turned off.</span>
 <span class="nd">@autologging_integration</span><span class="p">(</span><span class="n">FLAVOR_NAME</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">_autolog</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_autolog</span><span class="p">(</span>
     <span class="n">disable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">exclusive</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">disable_for_unsupported_versions</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">silent</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">log_traces</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">openai.resources.chat.completions</span> <span class="kn">import</span> <span class="n">AsyncCompletions</span> <span class="k">as</span> <span class="n">AsyncChatCompletions</span>
-    <span class="kn">from</span> <span class="nn">openai.resources.chat.completions</span> <span class="kn">import</span> <span class="n">Completions</span> <span class="k">as</span> <span class="n">ChatCompletions</span>
-    <span class="kn">from</span> <span class="nn">openai.resources.completions</span> <span class="kn">import</span> <span class="n">AsyncCompletions</span><span class="p">,</span> <span class="n">Completions</span>
-    <span class="kn">from</span> <span class="nn">openai.resources.embeddings</span> <span class="kn">import</span> <span class="n">AsyncEmbeddings</span><span class="p">,</span> <span class="n">Embeddings</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">openai.resources.chat.completions</span><span class="w"> </span><span class="kn">import</span> <span class="n">AsyncCompletions</span> <span class="k">as</span> <span class="n">AsyncChatCompletions</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">openai.resources.chat.completions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Completions</span> <span class="k">as</span> <span class="n">ChatCompletions</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">openai.resources.completions</span><span class="w"> </span><span class="kn">import</span> <span class="n">AsyncCompletions</span><span class="p">,</span> <span class="n">Completions</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">openai.resources.embeddings</span><span class="w"> </span><span class="kn">import</span> <span class="n">AsyncEmbeddings</span><span class="p">,</span> <span class="n">Embeddings</span>
 
     <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="p">(</span><span class="n">ChatCompletions</span><span class="p">,</span> <span class="n">Completions</span><span class="p">,</span> <span class="n">Embeddings</span><span class="p">):</span>
         <span class="n">safe_patch</span><span class="p">(</span><span class="n">FLAVOR_NAME</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="s2">&quot;create&quot;</span><span class="p">,</span> <span class="n">patched_call</span><span class="p">)</span>
@@ -358,7 +359,7 @@
         <span class="n">safe_patch</span><span class="p">(</span><span class="n">FLAVOR_NAME</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="s2">&quot;create&quot;</span><span class="p">,</span> <span class="n">async_patched_call</span><span class="p">)</span>
 
     <span class="k">try</span><span class="p">:</span>
-        <span class="kn">from</span> <span class="nn">openai.resources.beta.chat.completions</span> <span class="kn">import</span> <span class="n">AsyncCompletions</span><span class="p">,</span> <span class="n">Completions</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">openai.resources.beta.chat.completions</span><span class="w"> </span><span class="kn">import</span> <span class="n">AsyncCompletions</span><span class="p">,</span> <span class="n">Completions</span>
     <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
         <span class="k">pass</span>
     <span class="k">else</span><span class="p">:</span>
@@ -366,7 +367,7 @@
         <span class="n">safe_patch</span><span class="p">(</span><span class="n">FLAVOR_NAME</span><span class="p">,</span> <span class="n">AsyncCompletions</span><span class="p">,</span> <span class="s2">&quot;parse&quot;</span><span class="p">,</span> <span class="n">async_patched_call</span><span class="p">)</span>
 
     <span class="k">try</span><span class="p">:</span>
-        <span class="kn">from</span> <span class="nn">openai.resources.responses</span> <span class="kn">import</span> <span class="n">AsyncResponses</span><span class="p">,</span> <span class="n">Responses</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">openai.resources.responses</span><span class="w"> </span><span class="kn">import</span> <span class="n">AsyncResponses</span><span class="p">,</span> <span class="n">Responses</span>
     <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
         <span class="k">pass</span>
     <span class="k">else</span><span class="p">:</span>
@@ -375,7 +376,7 @@
 
     <span class="c1"># Patch Swarm agent to generate traces</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="kn">from</span> <span class="nn">swarm</span> <span class="kn">import</span> <span class="n">Swarm</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">swarm</span><span class="w"> </span><span class="kn">import</span> <span class="n">Swarm</span>
 
         <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
             <span class="s2">&quot;Autologging for OpenAI Swarm is deprecated and will be removed in a future release. &quot;</span>
@@ -403,11 +404,11 @@
         <span class="k">pass</span>
 
 
-<span class="k">def</span> <span class="nf">_get_span_type</span><span class="p">(</span><span class="n">task</span><span class="p">:</span> <span class="nb">type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">openai.resources.chat.completions</span> <span class="kn">import</span> <span class="n">AsyncCompletions</span> <span class="k">as</span> <span class="n">AsyncChatCompletions</span>
-    <span class="kn">from</span> <span class="nn">openai.resources.chat.completions</span> <span class="kn">import</span> <span class="n">Completions</span> <span class="k">as</span> <span class="n">ChatCompletions</span>
-    <span class="kn">from</span> <span class="nn">openai.resources.completions</span> <span class="kn">import</span> <span class="n">AsyncCompletions</span><span class="p">,</span> <span class="n">Completions</span>
-    <span class="kn">from</span> <span class="nn">openai.resources.embeddings</span> <span class="kn">import</span> <span class="n">AsyncEmbeddings</span><span class="p">,</span> <span class="n">Embeddings</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_span_type</span><span class="p">(</span><span class="n">task</span><span class="p">:</span> <span class="nb">type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">openai.resources.chat.completions</span><span class="w"> </span><span class="kn">import</span> <span class="n">AsyncCompletions</span> <span class="k">as</span> <span class="n">AsyncChatCompletions</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">openai.resources.chat.completions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Completions</span> <span class="k">as</span> <span class="n">ChatCompletions</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">openai.resources.completions</span><span class="w"> </span><span class="kn">import</span> <span class="n">AsyncCompletions</span><span class="p">,</span> <span class="n">Completions</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">openai.resources.embeddings</span><span class="w"> </span><span class="kn">import</span> <span class="n">AsyncEmbeddings</span><span class="p">,</span> <span class="n">Embeddings</span>
 
     <span class="n">span_type_mapping</span> <span class="o">=</span> <span class="p">{</span>
         <span class="n">ChatCompletions</span><span class="p">:</span> <span class="n">SpanType</span><span class="o">.</span><span class="n">CHAT_MODEL</span><span class="p">,</span>
@@ -420,10 +421,10 @@
 
     <span class="k">try</span><span class="p">:</span>
         <span class="c1"># Only available in openai&gt;=1.40.0</span>
-        <span class="kn">from</span> <span class="nn">openai.resources.beta.chat.completions</span> <span class="kn">import</span> <span class="p">(</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">openai.resources.beta.chat.completions</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
             <span class="n">AsyncCompletions</span> <span class="k">as</span> <span class="n">BetaAsyncChatCompletions</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="kn">from</span> <span class="nn">openai.resources.beta.chat.completions</span> <span class="kn">import</span> <span class="n">Completions</span> <span class="k">as</span> <span class="n">BetaChatCompletions</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">openai.resources.beta.chat.completions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Completions</span> <span class="k">as</span> <span class="n">BetaChatCompletions</span>
 
         <span class="n">span_type_mapping</span><span class="p">[</span><span class="n">BetaChatCompletions</span><span class="p">]</span> <span class="o">=</span> <span class="n">SpanType</span><span class="o">.</span><span class="n">CHAT_MODEL</span>
         <span class="n">span_type_mapping</span><span class="p">[</span><span class="n">BetaAsyncChatCompletions</span><span class="p">]</span> <span class="o">=</span> <span class="n">SpanType</span><span class="o">.</span><span class="n">CHAT_MODEL</span>
@@ -432,7 +433,7 @@
 
     <span class="k">try</span><span class="p">:</span>
         <span class="c1"># Responses API only available in openai&gt;=1.66.0</span>
-        <span class="kn">from</span> <span class="nn">openai.resources.responses</span> <span class="kn">import</span> <span class="n">AsyncResponses</span><span class="p">,</span> <span class="n">Responses</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">openai.resources.responses</span><span class="w"> </span><span class="kn">import</span> <span class="n">AsyncResponses</span><span class="p">,</span> <span class="n">Responses</span>
 
         <span class="n">span_type_mapping</span><span class="p">[</span><span class="n">Responses</span><span class="p">]</span> <span class="o">=</span> <span class="n">SpanType</span><span class="o">.</span><span class="n">CHAT_MODEL</span>
         <span class="n">span_type_mapping</span><span class="p">[</span><span class="n">AsyncResponses</span><span class="p">]</span> <span class="o">=</span> <span class="n">SpanType</span><span class="o">.</span><span class="n">CHAT_MODEL</span>
@@ -442,14 +443,14 @@
     <span class="k">return</span> <span class="n">span_type_mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">SpanType</span><span class="o">.</span><span class="n">UNKNOWN</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_try_parse_raw_response</span><span class="p">(</span><span class="n">response</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_try_parse_raw_response</span><span class="p">(</span><span class="n">response</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    As documented at https://github.com/openai/openai-python/tree/52357cff50bee57ef442e94d78a0de38b4173fc2?tab=readme-ov-file#accessing-raw-response-data-eg-headers,</span>
 <span class="sd">    a `LegacyAPIResponse` (https://github.com/openai/openai-python/blob/52357cff50bee57ef442e94d78a0de38b4173fc2/src/openai/_legacy_response.py#L45)</span>
 <span class="sd">    object is returned when the `create` method is invoked with `with_raw_response`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="kn">from</span> <span class="nn">openai._legacy_response</span> <span class="kn">import</span> <span class="n">LegacyAPIResponse</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">openai._legacy_response</span><span class="w"> </span><span class="kn">import</span> <span class="n">LegacyAPIResponse</span>
     <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
         <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Failed to import `LegacyAPIResponse` from `openai._legacy_response`&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">response</span>
@@ -464,7 +465,7 @@
     <span class="k">return</span> <span class="n">response</span>
 
 
-<span class="k">def</span> <span class="nf">patched_call</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">patched_call</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="n">config</span> <span class="o">=</span> <span class="n">AutoLoggingConfig</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">flavor_name</span><span class="o">=</span><span class="n">mlflow</span><span class="o">.</span><span class="n">openai</span><span class="o">.</span><span class="n">FLAVOR_NAME</span><span class="p">)</span>
     <span class="n">active_run</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">active_run</span><span class="p">()</span>
     <span class="n">run_id</span> <span class="o">=</span> <span class="n">active_run</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">run_id</span> <span class="k">if</span> <span class="n">active_run</span> <span class="k">else</span> <span class="kc">None</span>
@@ -486,7 +487,7 @@
     <span class="k">return</span> <span class="n">raw_result</span>
 
 
-<span class="k">async</span> <span class="k">def</span> <span class="nf">async_patched_call</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">async_patched_call</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="n">config</span> <span class="o">=</span> <span class="n">AutoLoggingConfig</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">flavor_name</span><span class="o">=</span><span class="n">mlflow</span><span class="o">.</span><span class="n">openai</span><span class="o">.</span><span class="n">FLAVOR_NAME</span><span class="p">)</span>
     <span class="n">active_run</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">active_run</span><span class="p">()</span>
     <span class="n">run_id</span> <span class="o">=</span> <span class="n">active_run</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">run_id</span> <span class="k">if</span> <span class="n">active_run</span> <span class="k">else</span> <span class="kc">None</span>
@@ -508,7 +509,7 @@
     <span class="k">return</span> <span class="n">raw_result</span>
 
 
-<span class="k">def</span> <span class="nf">_start_span</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_start_span</span><span class="p">(</span>
     <span class="n">instance</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
     <span class="n">inputs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
     <span class="n">run_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -534,15 +535,15 @@
     <span class="k">return</span> <span class="n">span</span>
 
 
-<span class="k">def</span> <span class="nf">_end_span_on_success</span><span class="p">(</span><span class="n">span</span><span class="p">:</span> <span class="n">LiveSpan</span><span class="p">,</span> <span class="n">inputs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">raw_result</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">openai</span> <span class="kn">import</span> <span class="n">AsyncStream</span><span class="p">,</span> <span class="n">Stream</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_end_span_on_success</span><span class="p">(</span><span class="n">span</span><span class="p">:</span> <span class="n">LiveSpan</span><span class="p">,</span> <span class="n">inputs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">raw_result</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">AsyncStream</span><span class="p">,</span> <span class="n">Stream</span>
 
     <span class="n">result</span> <span class="o">=</span> <span class="n">_try_parse_raw_response</span><span class="p">(</span><span class="n">raw_result</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">Stream</span><span class="p">):</span>
         <span class="c1"># If the output is a stream, we add a hook to store the intermediate chunks</span>
         <span class="c1"># and then log the outputs as a single artifact when the stream ends</span>
-        <span class="k">def</span> <span class="nf">_stream_output_logging_hook</span><span class="p">(</span><span class="n">stream</span><span class="p">:</span> <span class="n">Iterator</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">:</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">_stream_output_logging_hook</span><span class="p">(</span><span class="n">stream</span><span class="p">:</span> <span class="n">Iterator</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">:</span>
             <span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">stream</span><span class="p">):</span>
                 <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_process_chunk</span><span class="p">(</span><span class="n">span</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">chunk</span><span class="p">))</span>
@@ -552,7 +553,7 @@
         <span class="n">result</span><span class="o">.</span><span class="n">_iterator</span> <span class="o">=</span> <span class="n">_stream_output_logging_hook</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">_iterator</span><span class="p">)</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">AsyncStream</span><span class="p">):</span>
 
-        <span class="k">async</span> <span class="k">def</span> <span class="nf">_stream_output_logging_hook</span><span class="p">(</span><span class="n">stream</span><span class="p">:</span> <span class="n">AsyncIterator</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">:</span>
+        <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_stream_output_logging_hook</span><span class="p">(</span><span class="n">stream</span><span class="p">:</span> <span class="n">AsyncIterator</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">:</span>
             <span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">async</span> <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">stream</span><span class="p">:</span>
                 <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_process_chunk</span><span class="p">(</span><span class="n">span</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">output</span><span class="p">),</span> <span class="n">chunk</span><span class="p">))</span>
@@ -568,7 +569,7 @@
             <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Encountered unexpected error when ending trace: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_process_last_chunk</span><span class="p">(</span><span class="n">span</span><span class="p">:</span> <span class="n">LiveSpan</span><span class="p">,</span> <span class="n">chunk</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">inputs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">output</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_process_last_chunk</span><span class="p">(</span><span class="n">span</span><span class="p">:</span> <span class="n">LiveSpan</span><span class="p">,</span> <span class="n">chunk</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">inputs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">output</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]):</span>
     <span class="k">if</span> <span class="n">_is_responses_final_event</span><span class="p">(</span><span class="n">chunk</span><span class="p">):</span>
         <span class="n">output</span> <span class="o">=</span> <span class="n">chunk</span><span class="o">.</span><span class="n">response</span>
     <span class="k">else</span><span class="p">:</span>
@@ -586,16 +587,16 @@
     <span class="n">_end_span_on_success</span><span class="p">(</span><span class="n">span</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_is_responses_final_event</span><span class="p">(</span><span class="n">chunk</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_is_responses_final_event</span><span class="p">(</span><span class="n">chunk</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="kn">from</span> <span class="nn">openai.types.responses</span> <span class="kn">import</span> <span class="n">ResponseCompletedEvent</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">openai.types.responses</span><span class="w"> </span><span class="kn">import</span> <span class="n">ResponseCompletedEvent</span>
 
         <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span> <span class="n">ResponseCompletedEvent</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">False</span>
 
 
-<span class="k">def</span> <span class="nf">_end_span_on_exception</span><span class="p">(</span><span class="n">span</span><span class="p">:</span> <span class="n">LiveSpan</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span> <span class="ne">Exception</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_end_span_on_exception</span><span class="p">(</span><span class="n">span</span><span class="p">:</span> <span class="n">LiveSpan</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span> <span class="ne">Exception</span><span class="p">):</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">span</span><span class="o">.</span><span class="n">add_event</span><span class="p">(</span><span class="n">SpanEvent</span><span class="o">.</span><span class="n">from_exception</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
         <span class="n">span</span><span class="o">.</span><span class="n">end</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">SpanStatusCode</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
@@ -603,10 +604,10 @@
         <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Encountered unexpected error when ending trace: </span><span class="si">{</span><span class="n">inner_e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_process_chunk</span><span class="p">(</span><span class="n">span</span><span class="p">:</span> <span class="n">LiveSpan</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">chunk</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_process_chunk</span><span class="p">(</span><span class="n">span</span><span class="p">:</span> <span class="n">LiveSpan</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">chunk</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse the chunk and log it as a span event in the trace.&quot;&quot;&quot;</span>
-    <span class="kn">from</span> <span class="nn">openai.types.chat.chat_completion_chunk</span> <span class="kn">import</span> <span class="n">ChatCompletionChunk</span>
-    <span class="kn">from</span> <span class="nn">openai.types.completion</span> <span class="kn">import</span> <span class="n">Completion</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">openai.types.chat.chat_completion_chunk</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatCompletionChunk</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">openai.types.completion</span><span class="w"> </span><span class="kn">import</span> <span class="n">Completion</span>
 
     <span class="c1"># `chunk.choices` can be empty: https://github.com/mlflow/mlflow/issues/13361</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span> <span class="n">Completion</span><span class="p">)</span> <span class="ow">and</span> <span class="n">chunk</span><span class="o">.</span><span class="n">choices</span><span class="p">:</span>
@@ -627,7 +628,7 @@
     <span class="k">return</span> <span class="n">parsed</span>
 
 
-<span class="k">def</span> <span class="nf">patched_agent_get_chat_completion</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">patched_agent_get_chat_completion</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Patch the `get_chat_completion` method of the ChatCompletion object.</span>
 <span class="sd">    OpenAI autolog already handles the raw completion request, but tracing</span>
@@ -641,10 +642,10 @@
     <span class="c1"># within get_chat_completion() hook.</span>
     <span class="c1"># We cannot patch functions during the agent&#39;s initialization because the</span>
     <span class="c1"># agent&#39;s functions can be modified after the agent is created.</span>
-    <span class="k">def</span> <span class="nf">function_wrapper</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">function_wrapper</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
         <span class="k">if</span> <span class="s2">&quot;context_variables&quot;</span> <span class="ow">in</span> <span class="n">fn</span><span class="o">.</span><span class="vm">__code__</span><span class="o">.</span><span class="n">co_varnames</span><span class="p">:</span>
 
-            <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
                 <span class="c1"># NB: Swarm uses `func.__code__.co_varnames` to inspect if the provided</span>
                 <span class="c1"># tool function includes &#39;context_variables&#39; parameter in the signature</span>
                 <span class="c1"># and ingest the global context variables if so. Wrapping the function</span>
@@ -659,7 +660,7 @@
                 <span class="p">)(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
 
-            <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
                 <span class="k">return</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span>
                     <span class="n">fn</span><span class="p">,</span>
                     <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">agent</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">fn</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
@@ -681,7 +682,7 @@
     <span class="k">return</span> <span class="n">traced_fn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">patched_swarm_run</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">patched_swarm_run</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Patched version of `run` method of the Swarm object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>

@@ -78,6 +78,7 @@
   <script src="../../../_static/js/modernizr.min.js"></script>
 
 </head>
+<script type="text/javascript" src="../../../_static/documentation_options.js"></script>
 <script type="text/javascript" src="../../../_static/jquery.js"></script>
 <script type="text/javascript" src="../../../_static/underscore.js"></script>
 <script type="text/javascript" src="../../../_static/doctools.js"></script>
@@ -238,13 +239,13 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.entities.logged_model_status</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
 
-<span class="kn">from</span> <span class="nn">mlflow.exceptions</span> <span class="kn">import</span> <span class="n">MlflowException</span>
-<span class="kn">from</span> <span class="nn">mlflow.protos</span> <span class="kn">import</span> <span class="n">service_pb2</span> <span class="k">as</span> <span class="n">pb2</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.protos</span><span class="w"> </span><span class="kn">import</span> <span class="n">service_pb2</span> <span class="k">as</span> <span class="n">pb2</span>
 
 
-<div class="viewcode-block" id="LoggedModelStatus"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.LoggedModelStatus">[docs]</a><span class="k">class</span> <span class="nc">LoggedModelStatus</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<div class="viewcode-block" id="LoggedModelStatus"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.LoggedModelStatus">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">LoggedModelStatus</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Enum for status of an :py:class:`mlflow.entities.LoggedModel`.&quot;&quot;&quot;</span>
 
     <span class="n">UNSPECIFIED</span> <span class="o">=</span> <span class="s2">&quot;UNSPECIFIED&quot;</span>
@@ -252,18 +253,18 @@
     <span class="n">READY</span> <span class="o">=</span> <span class="s2">&quot;READY&quot;</span>
     <span class="n">FAILED</span> <span class="o">=</span> <span class="s2">&quot;FAILED&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
 
 <div class="viewcode-block" id="LoggedModelStatus.is_finalized"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.LoggedModelStatus.is_finalized">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">is_finalized</span><span class="p">(</span><span class="n">status</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_finalized</span><span class="p">(</span><span class="n">status</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Determines whether or not a LoggedModelStatus is a finalized status.</span>
 <span class="sd">        A finalized status indicates that no further status updates will occur.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">status</span> <span class="ow">in</span> <span class="p">[</span><span class="n">LoggedModelStatus</span><span class="o">.</span><span class="n">READY</span><span class="p">,</span> <span class="n">LoggedModelStatus</span><span class="o">.</span><span class="n">FAILED</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="LoggedModelStatus.to_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.LoggedModelStatus.to_proto">[docs]</a>    <span class="k">def</span> <span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="LoggedModelStatus.to_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.LoggedModelStatus.to_proto">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">LoggedModelStatus</span><span class="o">.</span><span class="n">UNSPECIFIED</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">pb2</span><span class="o">.</span><span class="n">LoggedModelStatus</span><span class="o">.</span><span class="n">LOGGED_MODEL_STATUS_UNSPECIFIED</span>
         <span class="k">elif</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">LoggedModelStatus</span><span class="o">.</span><span class="n">PENDING</span><span class="p">:</span>
@@ -276,7 +277,7 @@
         <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown model status: </span><span class="si">{</span><span class="bp">self</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="LoggedModelStatus.from_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.LoggedModelStatus.from_proto">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">proto</span> <span class="o">==</span> <span class="n">pb2</span><span class="o">.</span><span class="n">LoggedModelStatus</span><span class="o">.</span><span class="n">LOGGED_MODEL_STATUS_UNSPECIFIED</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">LoggedModelStatus</span><span class="o">.</span><span class="n">UNSPECIFIED</span>
         <span class="k">elif</span> <span class="n">proto</span> <span class="o">==</span> <span class="n">pb2</span><span class="o">.</span><span class="n">LoggedModelStatus</span><span class="o">.</span><span class="n">LOGGED_MODEL_PENDING</span><span class="p">:</span>
@@ -289,7 +290,7 @@
         <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown model status: </span><span class="si">{</span><span class="n">proto</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="LoggedModelStatus.from_int"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.LoggedModelStatus.from_int">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_int</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">status_int</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;LoggedModelStatus&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_int</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">status_int</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;LoggedModelStatus&quot;</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">status_int</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">UNSPECIFIED</span>
         <span class="k">elif</span> <span class="n">status_int</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
@@ -301,7 +302,7 @@
 
         <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown model status: </span><span class="si">{</span><span class="n">status_int</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="LoggedModelStatus.to_int"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.LoggedModelStatus.to_int">[docs]</a>    <span class="k">def</span> <span class="nf">to_int</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<div class="viewcode-block" id="LoggedModelStatus.to_int"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.LoggedModelStatus.to_int">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_int</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="k">if</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">LoggedModelStatus</span><span class="o">.</span><span class="n">UNSPECIFIED</span><span class="p">:</span>
             <span class="k">return</span> <span class="mi">0</span>
         <span class="k">elif</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">LoggedModelStatus</span><span class="o">.</span><span class="n">PENDING</span><span class="p">:</span>

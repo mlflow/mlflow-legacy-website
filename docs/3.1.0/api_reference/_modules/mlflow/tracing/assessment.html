@@ -78,6 +78,7 @@
   <script src="../../../_static/js/modernizr.min.js"></script>
 
 </head>
+<script type="text/javascript" src="../../../_static/documentation_options.js"></script>
 <script type="text/javascript" src="../../../_static/jquery.js"></script>
 <script type="text/javascript" src="../../../_static/underscore.js"></script>
 <script type="text/javascript" src="../../../_static/doctools.js"></script>
@@ -238,9 +239,9 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.tracing.assessment</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">from</span> <span class="nn">mlflow.entities.assessment</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.assessment</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">DEFAULT_FEEDBACK_NAME</span><span class="p">,</span>
     <span class="n">Assessment</span><span class="p">,</span>
     <span class="n">AssessmentError</span><span class="p">,</span>
@@ -248,14 +249,14 @@
     <span class="n">Feedback</span><span class="p">,</span>
     <span class="n">FeedbackValueType</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">mlflow.entities.assessment_source</span> <span class="kn">import</span> <span class="n">AssessmentSource</span>
-<span class="kn">from</span> <span class="nn">mlflow.exceptions</span> <span class="kn">import</span> <span class="n">MlflowException</span>
-<span class="kn">from</span> <span class="nn">mlflow.tracing.client</span> <span class="kn">import</span> <span class="n">TracingClient</span>
-<span class="kn">from</span> <span class="nn">mlflow.utils.annotations</span> <span class="kn">import</span> <span class="n">experimental</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.assessment_source</span><span class="w"> </span><span class="kn">import</span> <span class="n">AssessmentSource</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">TracingClient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">experimental</span>
 
 
 <div class="viewcode-block" id="get_assessment"><a class="viewcode-back" href="../../../python_api/mlflow.html#mlflow.get_assessment">[docs]</a><span class="nd">@experimental</span>
-<span class="k">def</span> <span class="nf">get_assessment</span><span class="p">(</span><span class="n">trace_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">assessment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Assessment</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_assessment</span><span class="p">(</span><span class="n">trace_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">assessment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Assessment</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    .. important::</span>
 
@@ -274,7 +275,7 @@
 
 
 <div class="viewcode-block" id="log_assessment"><a class="viewcode-back" href="../../../python_api/mlflow.html#mlflow.log_assessment">[docs]</a><span class="nd">@experimental</span>
-<span class="k">def</span> <span class="nf">log_assessment</span><span class="p">(</span><span class="n">trace_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">assessment</span><span class="p">:</span> <span class="n">Assessment</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Assessment</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">log_assessment</span><span class="p">(</span><span class="n">trace_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">assessment</span><span class="p">:</span> <span class="n">Assessment</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Assessment</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    .. important::</span>
 
@@ -378,7 +379,7 @@
 
 
 <span class="nd">@experimental</span>
-<span class="k">def</span> <span class="nf">log_expectation</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">log_expectation</span><span class="p">(</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">trace_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -419,7 +420,7 @@
 
 
 <div class="viewcode-block" id="update_assessment"><a class="viewcode-back" href="../../../python_api/mlflow.html#mlflow.update_assessment">[docs]</a><span class="nd">@experimental</span>
-<span class="k">def</span> <span class="nf">update_assessment</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">update_assessment</span><span class="p">(</span>
     <span class="n">trace_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">assessment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">assessment</span><span class="p">:</span> <span class="n">Assessment</span><span class="p">,</span>
@@ -471,7 +472,7 @@
 
 
 <div class="viewcode-block" id="delete_assessment"><a class="viewcode-back" href="../../../python_api/mlflow.html#mlflow.delete_assessment">[docs]</a><span class="nd">@experimental</span>
-<span class="k">def</span> <span class="nf">delete_assessment</span><span class="p">(</span><span class="n">trace_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">assessment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">delete_assessment</span><span class="p">(</span><span class="n">trace_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">assessment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    .. important::</span>
 
@@ -487,7 +488,7 @@
 
 
 <span class="nd">@experimental</span>
-<span class="k">def</span> <span class="nf">log_feedback</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">log_feedback</span><span class="p">(</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">trace_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_FEEDBACK_NAME</span><span class="p">,</span>
@@ -544,7 +545,7 @@
 
 
 <div class="viewcode-block" id="override_feedback"><a class="viewcode-back" href="../../../python_api/mlflow.html#mlflow.override_feedback">[docs]</a><span class="nd">@experimental</span>
-<span class="k">def</span> <span class="nf">override_feedback</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">override_feedback</span><span class="p">(</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">trace_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">assessment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>

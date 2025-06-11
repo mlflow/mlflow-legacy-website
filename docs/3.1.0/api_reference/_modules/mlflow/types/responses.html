@@ -78,6 +78,7 @@
   <script src="../../../_static/js/modernizr.min.js"></script>
 
 </head>
+<script type="text/javascript" src="../../../_static/documentation_options.js"></script>
 <script type="text/javascript" src="../../../_static/jquery.js"></script>
 <script type="text/javascript" src="../../../_static/underscore.js"></script>
 <script type="text/javascript" src="../../../_static/doctools.js"></script>
@@ -238,21 +239,21 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.types.responses</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">mlflow.utils.pydantic_utils</span> <span class="kn">import</span> <span class="n">IS_PYDANTIC_V2_OR_NEWER</span><span class="p">,</span> <span class="n">model_validator</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.pydantic_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">IS_PYDANTIC_V2_OR_NEWER</span><span class="p">,</span> <span class="n">model_validator</span>
 
 <span class="k">if</span> <span class="ow">not</span> <span class="n">IS_PYDANTIC_V2_OR_NEWER</span><span class="p">:</span>
     <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
         <span class="s2">&quot;mlflow.types.responses is not supported in Pydantic v1. &quot;</span>
         <span class="s2">&quot;Please upgrade to Pydantic v2 or newer.&quot;</span>
     <span class="p">)</span>
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">ConfigDict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConfigDict</span>
 
-<span class="kn">from</span> <span class="nn">mlflow.types.agent</span> <span class="kn">import</span> <span class="n">ChatContext</span>
-<span class="kn">from</span> <span class="nn">mlflow.types.chat</span> <span class="kn">import</span> <span class="n">BaseModel</span>
-<span class="kn">from</span> <span class="nn">mlflow.types.responses_helpers</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.types.agent</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatContext</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.types.chat</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.types.responses_helpers</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">BaseRequestPayload</span><span class="p">,</span>
     <span class="n">Message</span><span class="p">,</span>
     <span class="n">OutputItem</span><span class="p">,</span>
@@ -270,14 +271,14 @@
     <span class="s2">&quot;ResponsesAgentStreamEvent&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 
-<span class="kn">from</span> <span class="nn">mlflow.types.schema</span> <span class="kn">import</span> <span class="n">Schema</span>
-<span class="kn">from</span> <span class="nn">mlflow.types.type_hints</span> <span class="kn">import</span> <span class="n">_infer_schema_from_type_hint</span>
-<span class="kn">from</span> <span class="nn">mlflow.utils.autologging_utils.logging_and_warnings</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.types.schema</span><span class="w"> </span><span class="kn">import</span> <span class="n">Schema</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.types.type_hints</span><span class="w"> </span><span class="kn">import</span> <span class="n">_infer_schema_from_type_hint</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.autologging_utils.logging_and_warnings</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">MlflowEventsAndWarningsBehaviorGlobally</span><span class="p">,</span>
 <span class="p">)</span>
 
 
-<div class="viewcode-block" id="ResponsesAgentRequest"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses.ResponsesAgentRequest">[docs]</a><span class="k">class</span> <span class="nc">ResponsesAgentRequest</span><span class="p">(</span><span class="n">BaseRequestPayload</span><span class="p">):</span>
+<div class="viewcode-block" id="ResponsesAgentRequest"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses.ResponsesAgentRequest">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ResponsesAgentRequest</span><span class="p">(</span><span class="n">BaseRequestPayload</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Request object for ResponsesAgent.</span>
 
 <span class="sd">    Args:</span>
@@ -296,7 +297,7 @@
     <span class="n">context</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ChatContext</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="ResponsesAgentResponse"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses.ResponsesAgentResponse">[docs]</a><span class="k">class</span> <span class="nc">ResponsesAgentResponse</span><span class="p">(</span><span class="n">Response</span><span class="p">):</span>
+<div class="viewcode-block" id="ResponsesAgentResponse"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses.ResponsesAgentResponse">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ResponsesAgentResponse</span><span class="p">(</span><span class="n">Response</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Response object for ResponsesAgent.</span>
 
 <span class="sd">    Args:</span>
@@ -312,7 +313,7 @@
     <span class="n">custom_outputs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="ResponsesAgentStreamEvent"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses.ResponsesAgentStreamEvent">[docs]</a><span class="k">class</span> <span class="nc">ResponsesAgentStreamEvent</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="ResponsesAgentStreamEvent"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses.ResponsesAgentStreamEvent">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ResponsesAgentStreamEvent</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Stream event for ResponsesAgent.</span>
 <span class="sd">    See examples at https://mlflow.org/docs/latest/llms/responses-agent-intro/#streaming-agent-output</span>
 
@@ -328,7 +329,7 @@
     <span class="n">custom_outputs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">check_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ResponsesAgentStreamEvent&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ResponsesAgentStreamEvent&quot;</span><span class="p">:</span>
         <span class="nb">type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span>
         <span class="k">if</span> <span class="nb">type</span> <span class="o">==</span> <span class="s2">&quot;response.output_item.done&quot;</span><span class="p">:</span>
             <span class="n">ResponseOutputItemDoneEvent</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">model_dump_compat</span><span class="p">())</span>
