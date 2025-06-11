@@ -78,6 +78,7 @@
   <script src="../../_static/js/modernizr.min.js"></script>
 
 </head>
+<script type="text/javascript" src="../../_static/documentation_options.js"></script>
 <script type="text/javascript" src="../../_static/jquery.js"></script>
 <script type="text/javascript" src="../../_static/underscore.js"></script>
 <script type="text/javascript" src="../../_static/doctools.js"></script>
@@ -242,16 +243,16 @@
 <span class="sd">The ``mlflow.groq`` module provides an API for logging and loading Groq models.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">mlflow.groq._groq_autolog</span> <span class="kn">import</span> <span class="n">patched_call</span>
-<span class="kn">from</span> <span class="nn">mlflow.utils.annotations</span> <span class="kn">import</span> <span class="n">experimental</span>
-<span class="kn">from</span> <span class="nn">mlflow.utils.autologging_utils</span> <span class="kn">import</span> <span class="n">autologging_integration</span><span class="p">,</span> <span class="n">safe_patch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.groq._groq_autolog</span><span class="w"> </span><span class="kn">import</span> <span class="n">patched_call</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">experimental</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.autologging_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">autologging_integration</span><span class="p">,</span> <span class="n">safe_patch</span>
 
 <span class="n">FLAVOR_NAME</span> <span class="o">=</span> <span class="s2">&quot;groq&quot;</span>
 
 
 <div class="viewcode-block" id="autolog"><a class="viewcode-back" href="../../python_api/mlflow.groq.html#mlflow.groq.autolog">[docs]</a><span class="nd">@experimental</span>
 <span class="nd">@autologging_integration</span><span class="p">(</span><span class="n">FLAVOR_NAME</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">autolog</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">autolog</span><span class="p">(</span>
     <span class="n">log_traces</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">disable</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">silent</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -268,10 +269,10 @@
 <span class="sd">            autologging. If ``False``, show all events and warnings.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="kn">from</span> <span class="nn">groq.resources.audio.transcriptions</span> <span class="kn">import</span> <span class="n">Transcriptions</span>
-    <span class="kn">from</span> <span class="nn">groq.resources.audio.translations</span> <span class="kn">import</span> <span class="n">Translations</span>
-    <span class="kn">from</span> <span class="nn">groq.resources.chat.completions</span> <span class="kn">import</span> <span class="n">Completions</span> <span class="k">as</span> <span class="n">ChatCompletions</span>
-    <span class="kn">from</span> <span class="nn">groq.resources.embeddings</span> <span class="kn">import</span> <span class="n">Embeddings</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">groq.resources.audio.transcriptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Transcriptions</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">groq.resources.audio.translations</span><span class="w"> </span><span class="kn">import</span> <span class="n">Translations</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">groq.resources.chat.completions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Completions</span> <span class="k">as</span> <span class="n">ChatCompletions</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">groq.resources.embeddings</span><span class="w"> </span><span class="kn">import</span> <span class="n">Embeddings</span>
 
     <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="p">(</span><span class="n">ChatCompletions</span><span class="p">,</span> <span class="n">Translations</span><span class="p">,</span> <span class="n">Transcriptions</span><span class="p">,</span> <span class="n">Embeddings</span><span class="p">):</span>
         <span class="n">safe_patch</span><span class="p">(</span>

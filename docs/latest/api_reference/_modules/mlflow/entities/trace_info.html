@@ -78,6 +78,7 @@
   <script src="../../../_static/js/modernizr.min.js"></script>
 
 </head>
+<script type="text/javascript" src="../../../_static/documentation_options.js"></script>
 <script type="text/javascript" src="../../../_static/jquery.js"></script>
 <script type="text/javascript" src="../../../_static/underscore.js"></script>
 <script type="text/javascript" src="../../../_static/doctools.js"></script>
@@ -238,25 +239,25 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.entities.trace_info</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
 
-<span class="kn">from</span> <span class="nn">google.protobuf.duration_pb2</span> <span class="kn">import</span> <span class="n">Duration</span>
-<span class="kn">from</span> <span class="nn">google.protobuf.json_format</span> <span class="kn">import</span> <span class="n">MessageToDict</span>
-<span class="kn">from</span> <span class="nn">google.protobuf.timestamp_pb2</span> <span class="kn">import</span> <span class="n">Timestamp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">google.protobuf.duration_pb2</span><span class="w"> </span><span class="kn">import</span> <span class="n">Duration</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">google.protobuf.json_format</span><span class="w"> </span><span class="kn">import</span> <span class="n">MessageToDict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">google.protobuf.timestamp_pb2</span><span class="w"> </span><span class="kn">import</span> <span class="n">Timestamp</span>
 
-<span class="kn">from</span> <span class="nn">mlflow.entities._mlflow_object</span> <span class="kn">import</span> <span class="n">_MlflowObject</span>
-<span class="kn">from</span> <span class="nn">mlflow.entities.assessment</span> <span class="kn">import</span> <span class="n">Assessment</span>
-<span class="kn">from</span> <span class="nn">mlflow.entities.trace_location</span> <span class="kn">import</span> <span class="n">TraceLocation</span>
-<span class="kn">from</span> <span class="nn">mlflow.entities.trace_state</span> <span class="kn">import</span> <span class="n">TraceState</span>
-<span class="kn">from</span> <span class="nn">mlflow.entities.trace_status</span> <span class="kn">import</span> <span class="n">TraceStatus</span>
-<span class="kn">from</span> <span class="nn">mlflow.protos.service_pb2</span> <span class="kn">import</span> <span class="n">TraceInfoV3</span> <span class="k">as</span> <span class="n">ProtoTraceInfoV3</span>
-<span class="kn">from</span> <span class="nn">mlflow.tracing.constant</span> <span class="kn">import</span> <span class="n">TRACE_SCHEMA_VERSION</span><span class="p">,</span> <span class="n">TRACE_SCHEMA_VERSION_KEY</span><span class="p">,</span> <span class="n">TraceMetadataKey</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities._mlflow_object</span><span class="w"> </span><span class="kn">import</span> <span class="n">_MlflowObject</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.assessment</span><span class="w"> </span><span class="kn">import</span> <span class="n">Assessment</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.trace_location</span><span class="w"> </span><span class="kn">import</span> <span class="n">TraceLocation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.trace_state</span><span class="w"> </span><span class="kn">import</span> <span class="n">TraceState</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.trace_status</span><span class="w"> </span><span class="kn">import</span> <span class="n">TraceStatus</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.protos.service_pb2</span><span class="w"> </span><span class="kn">import</span> <span class="n">TraceInfoV3</span> <span class="k">as</span> <span class="n">ProtoTraceInfoV3</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.constant</span><span class="w"> </span><span class="kn">import</span> <span class="n">TRACE_SCHEMA_VERSION</span><span class="p">,</span> <span class="n">TRACE_SCHEMA_VERSION_KEY</span><span class="p">,</span> <span class="n">TraceMetadataKey</span>
 
 
 <div class="viewcode-block" id="TraceInfo"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.TraceInfo">[docs]</a><span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">TraceInfo</span><span class="p">(</span><span class="n">_MlflowObject</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TraceInfo</span><span class="p">(</span><span class="n">_MlflowObject</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Metadata about a trace, such as its ID, location, timestamp, etc.</span>
 
 <span class="sd">    Args:</span>
@@ -294,7 +295,7 @@
     <span class="n">tags</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
     <span class="n">assessments</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Assessment</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
 
-<div class="viewcode-block" id="TraceInfo.to_dict"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.TraceInfo.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<div class="viewcode-block" id="TraceInfo.to_dict"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.TraceInfo.to_dict">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert the TraceInfoV3 object to a dictionary.&quot;&quot;&quot;</span>
         <span class="n">res</span> <span class="o">=</span> <span class="n">MessageToDict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_proto</span><span class="p">(),</span> <span class="n">preserving_proto_field_name</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">execution_duration</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -303,10 +304,10 @@
         <span class="k">return</span> <span class="n">res</span></div>
 
 <div class="viewcode-block" id="TraceInfo.from_dict"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.TraceInfo.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;TraceInfo&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;TraceInfo&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a TraceInfoV3 object from a dictionary.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="s2">&quot;request_id&quot;</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">mlflow.entities.trace_info_v2</span> <span class="kn">import</span> <span class="n">TraceInfoV2</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.trace_info_v2</span><span class="w"> </span><span class="kn">import</span> <span class="n">TraceInfoV2</span>
 
             <span class="k">return</span> <span class="n">TraceInfoV2</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="o">.</span><span class="n">to_v3</span><span class="p">()</span>
 
@@ -330,8 +331,8 @@
 
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">d</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TraceInfo.to_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.TraceInfo.to_proto">[docs]</a>    <span class="k">def</span> <span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="kn">from</span> <span class="nn">mlflow.entities.trace_info_v2</span> <span class="kn">import</span> <span class="n">_truncate_request_metadata</span><span class="p">,</span> <span class="n">_truncate_tags</span>
+<div class="viewcode-block" id="TraceInfo.to_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.TraceInfo.to_proto">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.trace_info_v2</span><span class="w"> </span><span class="kn">import</span> <span class="n">_truncate_request_metadata</span><span class="p">,</span> <span class="n">_truncate_tags</span>
 
         <span class="n">request_time</span> <span class="o">=</span> <span class="n">Timestamp</span><span class="p">()</span>
         <span class="n">request_time</span><span class="o">.</span><span class="n">FromMilliseconds</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request_time</span><span class="p">)</span>
@@ -355,7 +356,7 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="TraceInfo.from_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.TraceInfo.from_proto">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TraceInfo&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TraceInfo&quot;</span><span class="p">:</span>
         <span class="n">trace_metadata</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">proto</span><span class="o">.</span><span class="n">trace_metadata</span><span class="p">)</span>
         <span class="c1"># NB: MLflow automatically converts trace metadata and spans to V3 format, even if the</span>
         <span class="c1"># trace was originally created in V2 format with an earlier version of MLflow. Accordingly,</span>
@@ -384,12 +385,12 @@
 
     <span class="c1"># Aliases for backward compatibility with V2 format</span>
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">request_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">request_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Deprecated. Use `trace_id` instead.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">trace_id</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">experiment_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">experiment_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        An MLflow experiment ID associated with the trace, if the trace is stored</span>
 <span class="sd">        in MLflow tracking server. Otherwise, None.</span>
@@ -400,41 +401,41 @@
         <span class="p">)</span>
 
     <span class="nd">@experiment_id</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">experiment_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">experiment_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">trace_location</span><span class="o">.</span><span class="n">mlflow_experiment</span><span class="o">.</span><span class="n">experiment_id</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">request_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">request_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Deprecated. Use `trace_metadata` instead.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">trace_metadata</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">timestamp_ms</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">timestamp_ms</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request_time</span>
 
     <span class="nd">@timestamp_ms</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">timestamp_ms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">timestamp_ms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">request_time</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">execution_time_ms</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">execution_time_ms</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">execution_duration</span>
 
     <span class="nd">@execution_time_ms</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">execution_time_ms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">execution_time_ms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">execution_duration</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TraceStatus</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TraceStatus</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Deprecated. Use `state` instead.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">TraceStatus</span><span class="o">.</span><span class="n">from_state</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
 
     <span class="nd">@status</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">TraceStatus</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">TraceStatus</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">to_state</span><span class="p">()</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">token_usage</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">token_usage</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the aggregated token usage for the trace.</span>
 

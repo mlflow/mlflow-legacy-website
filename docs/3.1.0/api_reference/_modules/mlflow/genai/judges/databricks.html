@@ -78,6 +78,7 @@
   <script src="../../../../_static/js/modernizr.min.js"></script>
 
 </head>
+<script type="text/javascript" src="../../../../_static/documentation_options.js"></script>
 <script type="text/javascript" src="../../../../_static/jquery.js"></script>
 <script type="text/javascript" src="../../../../_static/underscore.js"></script>
 <script type="text/javascript" src="../../../../_static/doctools.js"></script>
@@ -238,18 +239,18 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.genai.judges.databricks</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">wraps</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">from</span> <span class="nn">mlflow.entities.assessment</span> <span class="kn">import</span> <span class="n">Feedback</span>
-<span class="kn">from</span> <span class="nn">mlflow.genai.utils.enum_utils</span> <span class="kn">import</span> <span class="n">StrEnum</span>
-<span class="kn">from</span> <span class="nn">mlflow.utils.annotations</span> <span class="kn">import</span> <span class="n">experimental</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.assessment</span><span class="w"> </span><span class="kn">import</span> <span class="n">Feedback</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.utils.enum_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">StrEnum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">experimental</span>
 
 <span class="c1"># NB: User-facing name for the is_context_relevant assessment.</span>
 <span class="n">_IS_CONTEXT_RELEVANT_ASSESSMENT_NAME</span> <span class="o">=</span> <span class="s2">&quot;relevance_to_context&quot;</span>
 
 
-<div class="viewcode-block" id="CategoricalRating"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.judges.CategoricalRating">[docs]</a><span class="k">class</span> <span class="nc">CategoricalRating</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+<div class="viewcode-block" id="CategoricalRating"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.judges.CategoricalRating">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">CategoricalRating</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A categorical rating for an assessment.</span>
 
@@ -270,7 +271,7 @@
     <span class="n">UNKNOWN</span> <span class="o">=</span> <span class="s2">&quot;unknown&quot;</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">_missing_</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_missing_</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="bp">cls</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">member</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
@@ -278,7 +279,7 @@
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">UNKNOWN</span></div>
 
 
-<span class="k">def</span> <span class="nf">_sanitize_feedback</span><span class="p">(</span><span class="n">feedback</span><span class="p">:</span> <span class="n">Feedback</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Feedback</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_sanitize_feedback</span><span class="p">(</span><span class="n">feedback</span><span class="p">:</span> <span class="n">Feedback</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Feedback</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Sanitize the feedback object from the databricks judges.</span>
 
 <span class="sd">    The judge returns a CategoricalRating class defined in the databricks-agents package.</span>
@@ -294,13 +295,13 @@
     <span class="k">return</span> <span class="n">feedback</span>
 
 
-<span class="k">def</span> <span class="nf">requires_databricks_agents</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">requires_databricks_agents</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Decorator to check if the `databricks-agents` package is installed.&quot;&quot;&quot;</span>
 
     <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="kn">import</span> <span class="nn">databricks.agents.evals.judges</span>  <span class="c1"># noqa: F401</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">databricks.agents.evals.judges</span>  <span class="c1"># noqa: F401</span>
 
         <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
@@ -315,7 +316,7 @@
 
 
 <div class="viewcode-block" id="is_context_relevant"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.judges.is_context_relevant">[docs]</a><span class="nd">@requires_databricks_agents</span>
-<span class="k">def</span> <span class="nf">is_context_relevant</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Feedback</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_context_relevant</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Feedback</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    LLM judge determines whether the given context is relevant to the input request.</span>
 
@@ -351,7 +352,7 @@
 <span class="sd">            print(feedback.value)  # &quot;no&quot;</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">from</span> <span class="nn">databricks.agents.evals.judges</span> <span class="kn">import</span> <span class="n">relevance_to_query</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">databricks.agents.evals.judges</span><span class="w"> </span><span class="kn">import</span> <span class="n">relevance_to_query</span>
 
     <span class="k">return</span> <span class="n">_sanitize_feedback</span><span class="p">(</span>
         <span class="n">relevance_to_query</span><span class="p">(</span>
@@ -365,7 +366,7 @@
 
 
 <div class="viewcode-block" id="is_context_sufficient"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.judges.is_context_sufficient">[docs]</a><span class="nd">@requires_databricks_agents</span>
-<span class="k">def</span> <span class="nf">is_context_sufficient</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_context_sufficient</span><span class="p">(</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">request</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">context</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
@@ -406,7 +407,7 @@
 <span class="sd">            )</span>
 <span class="sd">            print(feedback.value)  # &quot;yes&quot;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">from</span> <span class="nn">databricks.agents.evals.judges</span> <span class="kn">import</span> <span class="n">context_sufficiency</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">databricks.agents.evals.judges</span><span class="w"> </span><span class="kn">import</span> <span class="n">context_sufficiency</span>
 
     <span class="k">return</span> <span class="n">_sanitize_feedback</span><span class="p">(</span>
         <span class="n">context_sufficiency</span><span class="p">(</span>
@@ -420,7 +421,7 @@
 
 
 <div class="viewcode-block" id="is_correct"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.judges.is_correct">[docs]</a><span class="nd">@requires_databricks_agents</span>
-<span class="k">def</span> <span class="nf">is_correct</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_correct</span><span class="p">(</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">request</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">response</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -442,7 +443,7 @@
 <span class="sd">        A :py:class:`mlflow.entities.assessment.Feedback~` object with a &quot;yes&quot; or &quot;no&quot;</span>
 <span class="sd">        value indicating whether the response is correct for the request.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">from</span> <span class="nn">databricks.agents.evals.judges</span> <span class="kn">import</span> <span class="n">correctness</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">databricks.agents.evals.judges</span><span class="w"> </span><span class="kn">import</span> <span class="n">correctness</span>
 
     <span class="k">return</span> <span class="n">_sanitize_feedback</span><span class="p">(</span>
         <span class="n">correctness</span><span class="p">(</span>
@@ -456,7 +457,7 @@
 
 
 <div class="viewcode-block" id="is_grounded"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.judges.is_grounded">[docs]</a><span class="nd">@requires_databricks_agents</span>
-<span class="k">def</span> <span class="nf">is_grounded</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_grounded</span><span class="p">(</span>
     <span class="o">*</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Feedback</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -491,7 +492,7 @@
 <span class="sd">            )</span>
 <span class="sd">            print(feedback.value)  # &quot;yes&quot;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">from</span> <span class="nn">databricks.agents.evals.judges</span> <span class="kn">import</span> <span class="n">groundedness</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">databricks.agents.evals.judges</span><span class="w"> </span><span class="kn">import</span> <span class="n">groundedness</span>
 
     <span class="k">return</span> <span class="n">_sanitize_feedback</span><span class="p">(</span>
         <span class="n">groundedness</span><span class="p">(</span>
@@ -504,7 +505,7 @@
 
 
 <div class="viewcode-block" id="is_safe"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.judges.is_safe">[docs]</a><span class="nd">@requires_databricks_agents</span>
-<span class="k">def</span> <span class="nf">is_safe</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Feedback</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_safe</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Feedback</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    LLM judge determines whether the given response is safe.</span>
 
@@ -525,13 +526,13 @@
 <span class="sd">            feedback = is_safe(content=&quot;I am a happy person.&quot;)</span>
 <span class="sd">            print(feedback.value)  # &quot;yes&quot;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">from</span> <span class="nn">databricks.agents.evals.judges</span> <span class="kn">import</span> <span class="n">safety</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">databricks.agents.evals.judges</span><span class="w"> </span><span class="kn">import</span> <span class="n">safety</span>
 
     <span class="k">return</span> <span class="n">_sanitize_feedback</span><span class="p">(</span><span class="n">safety</span><span class="p">(</span><span class="n">response</span><span class="o">=</span><span class="n">content</span><span class="p">,</span> <span class="n">assessment_name</span><span class="o">=</span><span class="n">name</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="meets_guidelines"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.judges.meets_guidelines">[docs]</a><span class="nd">@requires_databricks_agents</span>
-<span class="k">def</span> <span class="nf">meets_guidelines</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">meets_guidelines</span><span class="p">(</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">guidelines</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
     <span class="n">context</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
@@ -572,7 +573,7 @@
 <span class="sd">            )</span>
 <span class="sd">            print(feedback.value)  # &quot;no&quot;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">from</span> <span class="nn">databricks.agents.evals.judges</span> <span class="kn">import</span> <span class="n">guideline_adherence</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">databricks.agents.evals.judges</span><span class="w"> </span><span class="kn">import</span> <span class="n">guideline_adherence</span>
 
     <span class="c1"># Ensure guidelines is a list, as the underlying databricks judge only accepts lists</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">guidelines</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -589,7 +590,7 @@
 
 <div class="viewcode-block" id="custom_prompt_judge"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.judges.custom_prompt_judge">[docs]</a><span class="nd">@experimental</span>
 <span class="nd">@requires_databricks_agents</span>
-<span class="k">def</span> <span class="nf">custom_prompt_judge</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">custom_prompt_judge</span><span class="p">(</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">prompt_template</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -635,7 +636,7 @@
 <span class="sd">        A callable that takes keyword arguments mapping to the template variables</span>
 <span class="sd">        and returns an mlflow :py:class`mlflow.entities.Feedback~`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">from</span> <span class="nn">databricks.agents.evals.judges</span> <span class="kn">import</span> <span class="n">custom_prompt_judge</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">databricks.agents.evals.judges</span><span class="w"> </span><span class="kn">import</span> <span class="n">custom_prompt_judge</span>
 
     <span class="k">return</span> <span class="n">custom_prompt_judge</span><span class="p">(</span>
         <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>

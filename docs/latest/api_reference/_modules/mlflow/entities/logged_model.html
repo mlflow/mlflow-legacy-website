@@ -78,6 +78,7 @@
   <script src="../../../_static/js/modernizr.min.js"></script>
 
 </head>
+<script type="text/javascript" src="../../../_static/documentation_options.js"></script>
 <script type="text/javascript" src="../../../_static/jquery.js"></script>
 <script type="text/javascript" src="../../../_static/underscore.js"></script>
 <script type="text/javascript" src="../../../_static/doctools.js"></script>
@@ -238,22 +239,22 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.entities.logged_model</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">import</span> <span class="nn">mlflow.protos.service_pb2</span> <span class="k">as</span> <span class="nn">pb2</span>
-<span class="kn">from</span> <span class="nn">mlflow.entities._mlflow_object</span> <span class="kn">import</span> <span class="n">_MlflowObject</span>
-<span class="kn">from</span> <span class="nn">mlflow.entities.logged_model_parameter</span> <span class="kn">import</span> <span class="n">LoggedModelParameter</span>
-<span class="kn">from</span> <span class="nn">mlflow.entities.logged_model_status</span> <span class="kn">import</span> <span class="n">LoggedModelStatus</span>
-<span class="kn">from</span> <span class="nn">mlflow.entities.logged_model_tag</span> <span class="kn">import</span> <span class="n">LoggedModelTag</span>
-<span class="kn">from</span> <span class="nn">mlflow.entities.metric</span> <span class="kn">import</span> <span class="n">Metric</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">mlflow.protos.service_pb2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pb2</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities._mlflow_object</span><span class="w"> </span><span class="kn">import</span> <span class="n">_MlflowObject</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.logged_model_parameter</span><span class="w"> </span><span class="kn">import</span> <span class="n">LoggedModelParameter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.logged_model_status</span><span class="w"> </span><span class="kn">import</span> <span class="n">LoggedModelStatus</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.logged_model_tag</span><span class="w"> </span><span class="kn">import</span> <span class="n">LoggedModelTag</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.metric</span><span class="w"> </span><span class="kn">import</span> <span class="n">Metric</span>
 
 
-<div class="viewcode-block" id="LoggedModel"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.LoggedModel">[docs]</a><span class="k">class</span> <span class="nc">LoggedModel</span><span class="p">(</span><span class="n">_MlflowObject</span><span class="p">):</span>
+<div class="viewcode-block" id="LoggedModel"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.LoggedModel">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">LoggedModel</span><span class="p">(</span><span class="n">_MlflowObject</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    MLflow entity representing a Model logged to an MLflow Experiment.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">model_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -293,7 +294,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_metrics</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Metric</span><span class="p">]]</span> <span class="o">=</span> <span class="n">metrics</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_model_uri</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;models:/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model_id</span><span class="si">}</span><span class="s2">&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="s2">&quot;LoggedModel(</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="n">v</span><span class="si">!r}</span><span class="s2">&quot;</span>
@@ -311,125 +312,125 @@
         <span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">experiment_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">experiment_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;String. Experiment ID associated with this Model.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_experiment_id</span>
 
     <span class="nd">@experiment_id</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">experiment_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_experiment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">experiment_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_experiment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_experiment_id</span> <span class="o">=</span> <span class="n">new_experiment_id</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">model_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">model_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;String. Unique ID for this Model.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_id</span>
 
     <span class="nd">@model_id</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">model_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_model_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">model_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_model_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_model_id</span> <span class="o">=</span> <span class="n">new_model_id</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;String. Name for this Model.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
 
     <span class="nd">@name</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">new_name</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">artifact_location</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">artifact_location</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;String. Location of the model artifacts.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_artifact_location</span>
 
     <span class="nd">@artifact_location</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">artifact_location</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_artifact_location</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">artifact_location</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_artifact_location</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_artifact_location</span> <span class="o">=</span> <span class="n">new_artifact_location</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">creation_timestamp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">creation_timestamp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Integer. Model creation timestamp (milliseconds since the Unix epoch).&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_creation_time</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">last_updated_timestamp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">last_updated_timestamp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Integer. Timestamp of last update for this Model (milliseconds since the Unix</span>
 <span class="sd">        epoch).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_updated_timestamp</span>
 
     <span class="nd">@last_updated_timestamp</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">last_updated_timestamp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">updated_timestamp</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">last_updated_timestamp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">updated_timestamp</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_last_updated_timestamp</span> <span class="o">=</span> <span class="n">updated_timestamp</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">model_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">model_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;String. Type of the model.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_type</span>
 
     <span class="nd">@model_type</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">model_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_model_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">model_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_model_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_model_type</span> <span class="o">=</span> <span class="n">new_model_type</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">source_run_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">source_run_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;String. MLflow run ID that generated this model.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_source_run_id</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LoggedModelStatus</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LoggedModelStatus</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;String. Current status of this Model.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_status</span>
 
     <span class="nd">@status</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">updated_status</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">updated_status</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_status</span> <span class="o">=</span> <span class="n">updated_status</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">status_message</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">status_message</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;String. Descriptive message for error status conditions.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_status_message</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">tags</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">tags</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Dictionary of tag key (string) -&gt; tag value for this Model.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tags</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">params</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">params</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Model parameters.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_params</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Metric</span><span class="p">]]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Metric</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;List of metrics associated with this Model.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metrics</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">model_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">model_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;URI of the model.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_uri</span>
 
     <span class="nd">@metrics</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_metrics</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Metric</span><span class="p">]]):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_metrics</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Metric</span><span class="p">]]):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_metrics</span> <span class="o">=</span> <span class="n">new_metrics</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">_properties</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_properties</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
         <span class="c1"># aggregate with base class properties since cls.__dict__ does not do it automatically</span>
         <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">_get_properties_helper</span><span class="p">())</span>
 
-    <span class="k">def</span> <span class="nf">_add_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_add_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_tags</span><span class="p">[</span><span class="n">tag</span><span class="o">.</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">tag</span><span class="o">.</span><span class="n">value</span>
 
-<div class="viewcode-block" id="LoggedModel.to_dictionary"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.LoggedModel.to_dictionary">[docs]</a>    <span class="k">def</span> <span class="nf">to_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<div class="viewcode-block" id="LoggedModel.to_dictionary"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.LoggedModel.to_dictionary">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
         <span class="n">model_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">model_dict</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">to_int</span><span class="p">()</span>
         <span class="c1"># Remove the model_uri field from the dictionary since it is a derived field</span>
         <span class="k">del</span> <span class="n">model_dict</span><span class="p">[</span><span class="s2">&quot;model_uri&quot;</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">model_dict</span></div>
 
-<div class="viewcode-block" id="LoggedModel.to_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.LoggedModel.to_proto">[docs]</a>    <span class="k">def</span> <span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="LoggedModel.to_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.LoggedModel.to_proto">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">pb2</span><span class="o">.</span><span class="n">LoggedModel</span><span class="p">(</span>
             <span class="n">info</span><span class="o">=</span><span class="n">pb2</span><span class="o">.</span><span class="n">LoggedModelInfo</span><span class="p">(</span>
                 <span class="n">experiment_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">experiment_id</span><span class="p">,</span>
@@ -450,7 +451,7 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="LoggedModel.from_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.LoggedModel.from_proto">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
             <span class="n">experiment_id</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">experiment_id</span><span class="p">,</span>
             <span class="n">model_id</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">model_id</span><span class="p">,</span>

@@ -78,6 +78,7 @@
   <script src="../../../../_static/js/modernizr.min.js"></script>
 
 </head>
+<script type="text/javascript" src="../../../../_static/documentation_options.js"></script>
 <script type="text/javascript" src="../../../../_static/jquery.js"></script>
 <script type="text/javascript" src="../../../../_static/underscore.js"></script>
 <script type="text/javascript" src="../../../../_static/doctools.js"></script>
@@ -238,20 +239,20 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.genai.scorers.base</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">functools</span>
-<span class="kn">import</span> <span class="nn">inspect</span>
-<span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">asdict</span><span class="p">,</span> <span class="n">dataclass</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">functools</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">asdict</span><span class="p">,</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">PrivateAttr</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">PrivateAttr</span>
 
-<span class="kn">import</span> <span class="nn">mlflow</span>
-<span class="kn">from</span> <span class="nn">mlflow.entities</span> <span class="kn">import</span> <span class="n">Assessment</span><span class="p">,</span> <span class="n">Feedback</span>
-<span class="kn">from</span> <span class="nn">mlflow.entities.assessment</span> <span class="kn">import</span> <span class="n">DEFAULT_FEEDBACK_NAME</span>
-<span class="kn">from</span> <span class="nn">mlflow.entities.trace</span> <span class="kn">import</span> <span class="n">Trace</span>
-<span class="kn">from</span> <span class="nn">mlflow.exceptions</span> <span class="kn">import</span> <span class="n">MlflowException</span>
-<span class="kn">from</span> <span class="nn">mlflow.utils.annotations</span> <span class="kn">import</span> <span class="n">experimental</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">mlflow</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities</span><span class="w"> </span><span class="kn">import</span> <span class="n">Assessment</span><span class="p">,</span> <span class="n">Feedback</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.assessment</span><span class="w"> </span><span class="kn">import</span> <span class="n">DEFAULT_FEEDBACK_NAME</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.trace</span><span class="w"> </span><span class="kn">import</span> <span class="n">Trace</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">experimental</span>
 
 <span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -260,7 +261,7 @@
 
 
 <span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">SerializedScorer</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SerializedScorer</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Dataclass defining the serialization schema for Scorer objects.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -284,11 +285,11 @@
 
 
 <div class="viewcode-block" id="Scorer"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.Scorer">[docs]</a><span class="nd">@experimental</span>
-<span class="k">class</span> <span class="nc">Scorer</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Scorer</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">aggregations</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="Scorer.model_dump"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.Scorer.model_dump">[docs]</a>    <span class="k">def</span> <span class="nf">model_dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<div class="viewcode-block" id="Scorer.model_dump"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.Scorer.model_dump">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">model_dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Override model_dump to include source code.&quot;&quot;&quot;</span>
         <span class="c1"># Create serialized scorer with core fields</span>
         <span class="n">serialized</span> <span class="o">=</span> <span class="n">SerializedScorer</span><span class="p">(</span>
@@ -319,9 +320,9 @@
 
         <span class="k">return</span> <span class="n">asdict</span><span class="p">(</span><span class="n">serialized</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_extract_source_code_info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_source_code_info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Extract source code information for the original decorated function.&quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">mlflow.genai.scorers.scorer_utils</span> <span class="kn">import</span> <span class="n">extract_function_body</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.scorers.scorer_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">extract_function_body</span>
 
         <span class="n">result</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;call_source&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;call_signature&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;original_func_name&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
 
@@ -336,7 +337,7 @@
         <span class="k">return</span> <span class="n">result</span>
 
 <div class="viewcode-block" id="Scorer.model_validate"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.Scorer.model_validate">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">model_validate</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Scorer&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">model_validate</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Scorer&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Override model_validate to reconstruct scorer from source code.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
             <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
@@ -362,7 +363,7 @@
 
         <span class="k">if</span> <span class="n">serialized</span><span class="o">.</span><span class="n">builtin_scorer_class</span><span class="p">:</span>
             <span class="c1"># Import here to avoid circular imports</span>
-            <span class="kn">from</span> <span class="nn">mlflow.genai.scorers.builtin_scorers</span> <span class="kn">import</span> <span class="n">BuiltInScorer</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.scorers.builtin_scorers</span><span class="w"> </span><span class="kn">import</span> <span class="n">BuiltInScorer</span>
 
             <span class="k">return</span> <span class="n">BuiltInScorer</span><span class="o">.</span><span class="n">model_validate</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
 
@@ -383,9 +384,9 @@
             <span class="p">)</span></div>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">_reconstruct_decorator_scorer</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">serialized</span><span class="p">:</span> <span class="n">SerializedScorer</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Scorer&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_reconstruct_decorator_scorer</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">serialized</span><span class="p">:</span> <span class="n">SerializedScorer</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Scorer&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Reconstruct a decorator scorer from serialized data.&quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">mlflow.genai.scorers.scorer_utils</span> <span class="kn">import</span> <span class="n">recreate_function</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.scorers.scorer_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">recreate_function</span>
 
         <span class="c1"># Recreate the original function from source code</span>
         <span class="n">recreated_func</span> <span class="o">=</span> <span class="n">recreate_function</span><span class="p">(</span>
@@ -407,8 +408,8 @@
         <span class="c1"># long as `@scorer` is a stable API.</span>
         <span class="k">return</span> <span class="n">scorer</span><span class="p">(</span><span class="n">recreated_func</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">serialized</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">aggregations</span><span class="o">=</span><span class="n">serialized</span><span class="o">.</span><span class="n">aggregations</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Scorer.run"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.Scorer.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">expectations</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">trace</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="kn">from</span> <span class="nn">mlflow.evaluation</span> <span class="kn">import</span> <span class="n">Assessment</span> <span class="k">as</span> <span class="n">LegacyAssessment</span>
+<div class="viewcode-block" id="Scorer.run"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.Scorer.run">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">expectations</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">trace</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.evaluation</span><span class="w"> </span><span class="kn">import</span> <span class="n">Assessment</span> <span class="k">as</span> <span class="n">LegacyAssessment</span>
 
         <span class="n">merged</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;inputs&quot;</span><span class="p">:</span> <span class="n">inputs</span><span class="p">,</span>
@@ -460,7 +461,7 @@
 
         <span class="k">return</span> <span class="n">result</span></div>
 
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">inputs</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -558,7 +559,7 @@
 
 
 <div class="viewcode-block" id="scorer"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.scorer">[docs]</a><span class="nd">@experimental</span>
-<span class="k">def</span> <span class="nf">scorer</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">scorer</span><span class="p">(</span>
     <span class="n">func</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -697,11 +698,11 @@
     <span class="k">if</span> <span class="n">func</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">scorer</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">aggregations</span><span class="o">=</span><span class="n">aggregations</span><span class="p">)</span>
 
-    <span class="k">class</span> <span class="nc">CustomScorer</span><span class="p">(</span><span class="n">Scorer</span><span class="p">):</span>
+    <span class="k">class</span><span class="w"> </span><span class="nc">CustomScorer</span><span class="p">(</span><span class="n">Scorer</span><span class="p">):</span>
         <span class="c1"># Store reference to the original function</span>
         <span class="n">_original_func</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="n">PrivateAttr</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
-        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">data</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">data</span><span class="p">):</span>
             <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">)</span>
             <span class="c1"># Set the original function reference</span>
             <span class="c1"># Use object.__setattr__ to bypass Pydantic&#39;s attribute handling for private attributes</span>
@@ -709,7 +710,7 @@
             <span class="c1"># ignored or fail in this context</span>
             <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_original_func&quot;</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span>
 
-        <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="c1"># Update the __call__ method&#39;s signature to match the original function</span>

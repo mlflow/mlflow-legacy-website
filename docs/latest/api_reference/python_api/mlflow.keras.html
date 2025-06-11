@@ -80,6 +80,7 @@
   <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
+<script type="text/javascript" src="../_static/documentation_options.js"></script>
 <script type="text/javascript" src="../_static/jquery.js"></script>
 <script type="text/javascript" src="../_static/underscore.js"></script>
 <script type="text/javascript" src="../_static/doctools.js"></script>
@@ -304,19 +305,115 @@
 <span id="mlflow-keras"></span><h1>mlflow.keras<a class="headerlink" href="#module-mlflow.keras.autolog" title="Permalink to this headline"> </a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Autologging is known to be compatible with the following package versions: <code class="docutils literal notranslate"><span class="pre">3.0.2</span></code> &lt;= <code class="docutils literal notranslate"><span class="pre">keras</span></code> &lt;= <code class="docutils literal notranslate"><span class="pre">3.10.0</span></code>. Autologging may not succeed when used with package versions outside of this range.</p>
+<p>Autologging is known to be compatible with the following package versions: <code class="docutils literal notranslate"><span class="pre">2.12.1</span></code> &lt;= <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code> &lt;= <code class="docutils literal notranslate"><span class="pre">2.19.0</span></code>. Autologging may not succeed when used with package versions outside of this range.</p>
 </div>
-<p>Enable autologging for Keras.</p>
-<p>This method configures the autologging for Keras workflow. Only Keras &gt; 3 is supported. For
-usage of lower Keras version (also known as tf-keras), please refer to <cite>mlflow.tensorflow</cite>
-flavor. At a high level, calling this <cite>mlflow.keras.autolog()</cite> function will replace
-<cite>keras.Model.fit</cite> method with the custom <cite>fit</cite> method provided by MLflow, which logs
-metrics/params/info/model to MLflow at the corresponding time.</p>
-<p>Autologging is compatible with all backends supported by Keras, including Tensorflow, PyTorch
-and JAX.</p>
-<p>Please note that autologging works only when you are using <cite>model.fit()</cite> for training. If you
-are writing a custom training loop, then you need to use manual logging.</p>
+<p>Enables autologging for <code class="docutils literal notranslate"><span class="pre">tf.keras</span></code>.
+Note that only <code class="docutils literal notranslate"><span class="pre">tensorflow&gt;=2.3</span></code> are supported.
+As an example, try running the
+<a class="reference external" href="https://github.com/mlflow/mlflow/blob/master/examples/keras/train.py">Keras/TensorFlow example</a>.</p>
+<p>For each TensorFlow module, autologging captures the following information:</p>
+<dl>
+<dt><strong>tf.keras</strong></dt><dd><ul class="simple">
+<li><p><strong>Metrics</strong> and <strong>Parameters</strong></p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>Training and validation loss.</p></li>
+<li><p>User-specified metrics.</p></li>
+<li><p>Optimizer config, e.g., learning_rate, momentum, etc.</p></li>
+<li><p>Training configs, e.g., epochs, batch_size, etc.</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p><strong>Artifacts</strong></p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>Model summary on training start.</p></li>
+<li><p>Saved Keras model in <a class="reference external" href="https://mlflow.org/docs/latest/models.html">MLflow Model</a> format.</p></li>
+<li><p>TensorBoard logs on training end.</p></li>
+</ul>
+</div></blockquote>
+</dd>
+<dt><strong>tf.keras.callbacks.EarlyStopping</strong></dt><dd><ul class="simple">
+<li><p><strong>Metrics</strong> and <strong>Parameters</strong></p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>Metrics from the <code class="docutils literal notranslate"><span class="pre">EarlyStopping</span></code> callbacks: <code class="docutils literal notranslate"><span class="pre">stopped_epoch</span></code>, <code class="docutils literal notranslate"><span class="pre">restored_epoch</span></code>,
+<code class="docutils literal notranslate"><span class="pre">restore_best_weight</span></code>, etc</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fit()</span></code> or <code class="docutils literal notranslate"><span class="pre">fit_generator()</span></code> parameters associated with <code class="docutils literal notranslate"><span class="pre">EarlyStopping</span></code>:
+<code class="docutils literal notranslate"><span class="pre">min_delta</span></code>, <code class="docutils literal notranslate"><span class="pre">patience</span></code>, <code class="docutils literal notranslate"><span class="pre">baseline</span></code>, <code class="docutils literal notranslate"><span class="pre">restore_best_weights</span></code>, etc</p></li>
+</ul>
+</div></blockquote>
+</dd>
+</dl>
+<p>Refer to the autologging tracking documentation for more
+information on <a class="reference external" href="https://www.mlflow.org/docs/latest/tracking.html#tensorflow-and-keras-experimental">TensorFlow workflows</a>.</p>
+<p>Note that autologging cannot be used together with explicit MLflow callback, i.e.,
+<cite>mlflow.tensorflow.MlflowCallback</cite>, because it will cause the same metrics to be logged twice.
+If you want to include <cite>mlflow.tensorflow.MlflowCallback</cite> in the callback list, please turn off
+autologging by calling <cite>mlflow.tensorflow.autolog(disable=True)</cite>.</p>
 <dl class="field-list simple">
+<dt class="field-odd">param log_models</dt>
+<dd class="field-odd"><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code>, trained models are logged as MLflow model artifacts.
+If <code class="docutils literal notranslate"><span class="pre">False</span></code>, trained models are not logged.</p>
+</dd>
+<dt class="field-even">param log_datasets</dt>
+<dd class="field-even"><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code>, dataset information is logged to MLflow Tracking.
+If <code class="docutils literal notranslate"><span class="pre">False</span></code>, dataset information is not logged.</p>
+</dd>
+<dt class="field-odd">param disable</dt>
+<dd class="field-odd"><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code>, disables the TensorFlow autologging integration. If <code class="docutils literal notranslate"><span class="pre">False</span></code>,
+enables the TensorFlow integration autologging integration.</p>
+</dd>
+<dt class="field-even">param exclusive</dt>
+<dd class="field-even"><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code>, autologged content is not logged to user-created fluent runs.
+If <code class="docutils literal notranslate"><span class="pre">False</span></code>, autologged content is logged to the active fluent run,
+which may be user-created.</p>
+</dd>
+<dt class="field-odd">param disable_for_unsupported_versions</dt>
+<dd class="field-odd"><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code>, disable autologging for versions of
+tensorflow that have not been tested against this version of the MLflow
+client or are incompatible.</p>
+</dd>
+<dt class="field-even">param silent</dt>
+<dd class="field-even"><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code>, suppress all event logs and warnings from MLflow during TensorFlow
+autologging. If <code class="docutils literal notranslate"><span class="pre">False</span></code>, show all events and warnings during TensorFlow
+autologging.</p>
+</dd>
+<dt class="field-odd">param registered_model_name</dt>
+<dd class="field-odd"><p>If given, each time a model is trained, it is registered as a
+new model version of the registered model with this name.
+The registered model is created if it does not already exist.</p>
+</dd>
+<dt class="field-even">param log_input_examples</dt>
+<dd class="field-even"><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code>, input examples from training datasets are collected and
+logged along with tf/keras model artifacts during training. If
+<code class="docutils literal notranslate"><span class="pre">False</span></code>, input examples are not logged.</p>
+</dd>
+<dt class="field-odd">param log_model_signatures</dt>
+<dd class="field-odd"><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code>,
+<a class="reference internal" href="mlflow.models.html#mlflow.models.ModelSignature" title="mlflow.models.ModelSignature"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModelSignatures</span></code></a>
+describing model inputs and outputs are collected and logged along
+with tf/keras model artifacts during training. If <code class="docutils literal notranslate"><span class="pre">False</span></code>,
+signatures are not logged. Note that logging TensorFlow models
+with signatures changes their pyfunc inference behavior when
+Pandas DataFrames are passed to <code class="docutils literal notranslate"><span class="pre">predict()</span></code>.
+When a signature is present, an <code class="docutils literal notranslate"><span class="pre">np.ndarray</span></code>
+(for single-output models) or a mapping from
+<code class="docutils literal notranslate"><span class="pre">str</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">np.ndarray</span></code> (for multi-output models) is returned;
+when a signature is not present, a Pandas DataFrame is returned.</p>
+</dd>
+<dt class="field-even">param saved_model_kwargs</dt>
+<dd class="field-even"><p>a dict of kwargs to pass to <code class="docutils literal notranslate"><span class="pre">tensorflow.saved_model.save</span></code> method.</p>
+</dd>
+<dt class="field-odd">param keras_model_kwargs</dt>
+<dd class="field-odd"><p>a dict of kwargs to pass to <code class="docutils literal notranslate"><span class="pre">keras_model.save</span></code> method.</p>
+</dd>
+<dt class="field-even">param extra_tags</dt>
+<dd class="field-even"><p>A dictionary of extra tags to set on each managed run created by autologging.</p>
+</dd>
 <dt class="field-odd">param log_every_epoch</dt>
 <dd class="field-odd"><p>If True, training metrics will be logged at the end of each epoch.</p>
 </dd>
@@ -324,86 +421,42 @@ are writing a custom training loop, then you need to use manual logging.</p>
 <dd class="field-even"><p>If set, training metrics will be logged every <cite>n</cite> training steps.
 <cite>log_every_n_steps</cite> must be <cite>None</cite> when <cite>log_every_epoch=True</cite>.</p>
 </dd>
-<dt class="field-odd">param log_models</dt>
-<dd class="field-odd"><p>If True, the Keras model will be logged to MLflow at the end of <cite>model.fit()</cite>.</p>
+<dt class="field-odd">param checkpoint</dt>
+<dd class="field-odd"><p>Enable automatic model checkpointing.</p>
 </dd>
-<dt class="field-even">param log_model_signatures</dt>
-<dd class="field-even"><p>If True, model signature will be automatically captured and logged.</p>
+<dt class="field-even">param checkpoint_monitor</dt>
+<dd class="field-even"><p>In automatic model checkpointing, the metric name to monitor if
+you set <cite>model_checkpoint_save_best_only</cite> to True.</p>
 </dd>
-<dt class="field-odd">param save_exported_model</dt>
-<dd class="field-odd"><p>If True, model will be saved as the exported format (compiled graph),
-which is suitable for serving and deployment. If False, model will be saved in <cite>.keras</cite>
-format, which contains model architecture and weights.</p>
+<dt class="field-odd">param checkpoint_mode</dt>
+<dd class="field-odd"><p>one of {“min”, “max”}. In automatic model checkpointing,
+if save_best_only=True, the decision to overwrite the current save file is made based on
+either the maximization or the minimization of the monitored quantity.</p>
 </dd>
-<dt class="field-even">param log_datasets</dt>
-<dd class="field-even"><p>If True, the dataset metadata will be logged to MLflow.</p>
+<dt class="field-even">param checkpoint_save_best_only</dt>
+<dd class="field-even"><p>If True, automatic model checkpointing only saves when
+the model is considered the “best” model according to the quantity
+monitored and previous checkpoint model is overwritten.</p>
 </dd>
-<dt class="field-odd">param log_input_examples</dt>
-<dd class="field-odd"><p>If True, input examples will be logged.</p>
+<dt class="field-odd">param checkpoint_save_weights_only</dt>
+<dd class="field-odd"><p>In automatic model checkpointing, if True, then
+only the model’s weights will be saved. Otherwise, the optimizer states,
+lr-scheduler states, etc are added in the checkpoint too.</p>
 </dd>
-<dt class="field-even">param disable</dt>
-<dd class="field-even"><p>If <cite>True</cite>, disables the Keras autologging.</p>
-</dd>
-<dt class="field-odd">param exclusive</dt>
-<dd class="field-odd"><p>If <cite>True</cite>, autologged content is not logged to user-created fluent runs. If
-<cite>False</cite>, autologged content is logged to the active fluent run, which may be
-user-created.  disable_for_unsupported_versions: If <cite>True</cite>, disable autologging for
-incompatible Keras versions.</p>
-</dd>
-<dt class="field-even">param disable_for_unsupported_versions</dt>
-<dd class="field-even"><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code>, disable autologging for versions of keras
-that have not been tested against this version of the MLflow client or are
-incompatible.</p>
-</dd>
-<dt class="field-odd">param silent</dt>
-<dd class="field-odd"><p>If <cite>True</cite>, suppress all event logs and warnings from MLflow during Keras
-autologging.  If <cite>True</cite>, show all events and warnings during Keras autologging.</p>
-</dd>
-<dt class="field-even">param registered_model_name</dt>
-<dd class="field-even"><p>If set, each time a model is trained, it is registered as a new model
-version of the registered model with this name. The registered model is created if it
-does not already exist.</p>
-</dd>
-<dt class="field-odd">param save_model_kwargs</dt>
-<dd class="field-odd"><p>Extra kwargs passed to <cite>keras.Model.save()</cite>.</p>
-</dd>
-<dt class="field-even">param extra_tags</dt>
-<dd class="field-even"><p>A dictionary of extra tags to set on each managed run created by autologging.</p>
+<dt class="field-even">param checkpoint_save_freq</dt>
+<dd class="field-even"><p><cite>“epoch”</cite> or integer. When using <cite>“epoch”</cite>, the callback
+saves the model after each epoch. When using integer, the callback
+saves the model at end of this many batches. Note that if the saving isn’t aligned to
+epochs, the monitored metric may potentially be less reliable (it
+could reflect as little as 1 batch, since the metrics get reset
+every epoch). Defaults to <cite>“epoch”</cite>.</p>
 </dd>
 </dl>
-<div class="literal-block-wrapper docutils container" id="id2">
-<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id2" title="Permalink to this code"> </a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">keras</span>
-<span class="kn">import</span> <span class="nn">mlflow</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-
-<span class="n">mlflow</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">autolog</span><span class="p">()</span>
-
-<span class="c1"># Prepare data for a 2-class classification.</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">([</span><span class="mi">8</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
-<span class="n">label</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
-    <span class="p">[</span>
-        <span class="n">keras</span><span class="o">.</span><span class="n">Input</span><span class="p">([</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">3</span><span class="p">]),</span>
-        <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Flatten</span><span class="p">(),</span>
-        <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
-    <span class="p">]</span>
-<span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
-    <span class="n">loss</span><span class="o">=</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">SparseCategoricalCrossentropy</span><span class="p">(</span><span class="n">from_logits</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-    <span class="n">optimizer</span><span class="o">=</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">0.001</span><span class="p">),</span>
-    <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="n">keras</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">SparseCategoricalAccuracy</span><span class="p">()],</span>
-<span class="p">)</span>
-<span class="k">with</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">start_run</span><span class="p">()</span> <span class="k">as</span> <span class="n">run</span><span class="p">:</span>
-    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
 <span class="target" id="module-mlflow.keras.callback"></span><p>Keras 3 callback to log information to MLflow.</p>
 <dl class="py class">
-<dt id="mlflow.keras.callback.MlflowCallback">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mlflow.keras.callback.</span></code><code class="sig-name descname"><span class="pre">MlflowCallback</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_every_epoch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_every_n_steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/keras/callback.html#MlflowCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.keras.callback.MlflowCallback" title="Permalink to this definition"> </a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">keras.src.callbacks.callback.Callback</span></code></p>
+<dt class="sig sig-object py" id="mlflow.keras.callback.MlflowCallback">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.keras.callback.</span></span><span class="sig-name descname"><span class="pre">MlflowCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_every_epoch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_every_n_steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/keras/callback.html#MlflowCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.keras.callback.MlflowCallback" title="Permalink to this definition"> </a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">keras.callbacks.Callback</span></code></p>
 <p>Callback for logging Keras metrics/params/model/… to MLflow.</p>
 <p>This callback logs model metadata at training begins, and logs training metrics every epoch or
 every n steps (defined by the user) to MLflow.</p>
@@ -417,11 +470,11 @@ log metrics every epoch. Must be <cite>None</cite> if <cite>log_every_epoch=True
 </ul>
 </dd>
 </dl>
-<div class="literal-block-wrapper docutils container" id="id3">
-<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id3" title="Permalink to this code"> </a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">keras</span>
-<span class="kn">import</span> <span class="nn">mlflow</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id2" title="Permalink to this code"> </a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">keras</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">mlflow</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="c1"># Prepare data for a 2-class classification.</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">([</span><span class="mi">8</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
@@ -450,26 +503,26 @@ log metrics every epoch. Must be <cite>None</cite> if <cite>log_every_epoch=True
 </div>
 </div>
 <dl class="py method">
-<dt id="mlflow.keras.callback.MlflowCallback.on_batch_end">
-<code class="sig-name descname"><span class="pre">on_batch_end</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/keras/callback.html#MlflowCallback.on_batch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.keras.callback.MlflowCallback.on_batch_end" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.keras.callback.MlflowCallback.on_batch_end">
+<span class="sig-name descname"><span class="pre">on_batch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/keras/callback.html#MlflowCallback.on_batch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.keras.callback.MlflowCallback.on_batch_end" title="Permalink to this definition"> </a></dt>
 <dd><p>Log metrics at the end of each batch with user specified frequency.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.keras.callback.MlflowCallback.on_epoch_end">
-<code class="sig-name descname"><span class="pre">on_epoch_end</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/keras/callback.html#MlflowCallback.on_epoch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.keras.callback.MlflowCallback.on_epoch_end" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.keras.callback.MlflowCallback.on_epoch_end">
+<span class="sig-name descname"><span class="pre">on_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/keras/callback.html#MlflowCallback.on_epoch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.keras.callback.MlflowCallback.on_epoch_end" title="Permalink to this definition"> </a></dt>
 <dd><p>Log metrics at the end of each epoch.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.keras.callback.MlflowCallback.on_test_end">
-<code class="sig-name descname"><span class="pre">on_test_end</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/keras/callback.html#MlflowCallback.on_test_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.keras.callback.MlflowCallback.on_test_end" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.keras.callback.MlflowCallback.on_test_end">
+<span class="sig-name descname"><span class="pre">on_test_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/keras/callback.html#MlflowCallback.on_test_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.keras.callback.MlflowCallback.on_test_end" title="Permalink to this definition"> </a></dt>
 <dd><p>Log validation metrics at validation end.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.keras.callback.MlflowCallback.on_train_begin">
-<code class="sig-name descname"><span class="pre">on_train_begin</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/keras/callback.html#MlflowCallback.on_train_begin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.keras.callback.MlflowCallback.on_train_begin" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.keras.callback.MlflowCallback.on_train_begin">
+<span class="sig-name descname"><span class="pre">on_train_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/keras/callback.html#MlflowCallback.on_train_begin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.keras.callback.MlflowCallback.on_train_begin" title="Permalink to this definition"> </a></dt>
 <dd><p>Log model architecture and optimizer configuration when training begins.</p>
 </dd></dl>
 
@@ -477,30 +530,30 @@ log metrics every epoch. Must be <cite>None</cite> if <cite>log_every_epoch=True
 
 <span class="target" id="module-mlflow.keras.load"></span><p>Functions for loading Keras models saved with MLflow.</p>
 <dl class="py class">
-<dt id="mlflow.keras.load.KerasModelWrapper">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mlflow.keras.load.</span></code><code class="sig-name descname"><span class="pre">KerasModelWrapper</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signature</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_exported_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/keras/load.html#KerasModelWrapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.keras.load.KerasModelWrapper" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.keras.load.KerasModelWrapper">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.keras.load.</span></span><span class="sig-name descname"><span class="pre">KerasModelWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signature</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_exported_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/keras/load.html#KerasModelWrapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.keras.load.KerasModelWrapper" title="Permalink to this definition"> </a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
-<dt id="mlflow.keras.load.KerasModelWrapper.get_model_call_method">
-<code class="sig-name descname"><span class="pre">get_model_call_method</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/keras/load.html#KerasModelWrapper.get_model_call_method"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.keras.load.KerasModelWrapper.get_model_call_method" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.keras.load.KerasModelWrapper.get_model_call_method">
+<span class="sig-name descname"><span class="pre">get_model_call_method</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/keras/load.html#KerasModelWrapper.get_model_call_method"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.keras.load.KerasModelWrapper.get_model_call_method" title="Permalink to this definition"> </a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.keras.load.KerasModelWrapper.get_raw_model">
-<code class="sig-name descname"><span class="pre">get_raw_model</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/keras/load.html#KerasModelWrapper.get_raw_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.keras.load.KerasModelWrapper.get_raw_model" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.keras.load.KerasModelWrapper.get_raw_model">
+<span class="sig-name descname"><span class="pre">get_raw_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/keras/load.html#KerasModelWrapper.get_raw_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.keras.load.KerasModelWrapper.get_raw_model" title="Permalink to this definition"> </a></dt>
 <dd><p>Returns the underlying model.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.keras.load.KerasModelWrapper.predict">
-<code class="sig-name descname"><span class="pre">predict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/keras/load.html#KerasModelWrapper.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.keras.load.KerasModelWrapper.predict" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.keras.load.KerasModelWrapper.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/keras/load.html#KerasModelWrapper.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.keras.load.KerasModelWrapper.predict" title="Permalink to this definition"> </a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
-<dt id="mlflow.keras.load.load_model">
-<code class="sig-prename descclassname"><span class="pre">mlflow.keras.load.</span></code><code class="sig-name descname"><span class="pre">load_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_objects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_model_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/keras/load.html#load_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.keras.load.load_model" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.keras.load.load_model">
+<span class="sig-prename descclassname"><span class="pre">mlflow.keras.load.</span></span><span class="sig-name descname"><span class="pre">load_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_objects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_model_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/keras/load.html#load_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.keras.load.load_model" title="Permalink to this definition"> </a></dt>
 <dd><p>Load Keras model from MLflow.</p>
 <p>This method loads a saved Keras model from MLflow, and returns a Keras model instance.</p>
 <dl class="field-list simple">
@@ -526,11 +579,11 @@ model artifact. If unspecified, a local output path will be created.</p></li>
 </ul>
 </dd>
 </dl>
-<div class="literal-block-wrapper docutils container" id="id4">
-<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id4" title="Permalink to this code"> </a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">keras</span>
-<span class="kn">import</span> <span class="nn">mlflow</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id3" title="Permalink to this code"> </a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">keras</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">mlflow</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
     <span class="p">[</span>
@@ -563,8 +616,8 @@ model artifact. If unspecified, a local output path will be created.</p></li>
 
 <span class="target" id="module-mlflow.keras.save"></span><p>Functions for saving Keras models to MLflow.</p>
 <dl class="py function">
-<dt id="mlflow.keras.save.get_default_conda_env">
-<code class="sig-prename descclassname"><span class="pre">mlflow.keras.save.</span></code><code class="sig-name descname"><span class="pre">get_default_conda_env</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/keras/save.html#get_default_conda_env"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.keras.save.get_default_conda_env" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.keras.save.get_default_conda_env">
+<span class="sig-prename descclassname"><span class="pre">mlflow.keras.save.</span></span><span class="sig-name descname"><span class="pre">get_default_conda_env</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/keras/save.html#get_default_conda_env"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.keras.save.get_default_conda_env" title="Permalink to this definition"> </a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The default Conda environment for MLflow Models produced by calls to <cite>save_model()</cite> and
@@ -574,8 +627,8 @@ model artifact. If unspecified, a local output path will be created.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="mlflow.keras.save.get_default_pip_requirements">
-<code class="sig-prename descclassname"><span class="pre">mlflow.keras.save.</span></code><code class="sig-name descname"><span class="pre">get_default_pip_requirements</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/keras/save.html#get_default_pip_requirements"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.keras.save.get_default_pip_requirements" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.keras.save.get_default_pip_requirements">
+<span class="sig-prename descclassname"><span class="pre">mlflow.keras.save.</span></span><span class="sig-name descname"><span class="pre">get_default_pip_requirements</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/keras/save.html#get_default_pip_requirements"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.keras.save.get_default_pip_requirements" title="Permalink to this definition"> </a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>A list of default pip requirements for MLflow Models produced by Keras flavor. Calls to
@@ -586,8 +639,8 @@ requirements.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="mlflow.keras.save.log_model">
-<code class="sig-prename descclassname"><span class="pre">mlflow.keras.save.</span></code><code class="sig-name descname"><span class="pre">log_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artifact_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_exported_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conda_env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signature</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">mlflow.models.signature.ModelSignature</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_example</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">dict</span><span class="p"><span class="pre">,</span> </span><span class="pre">list</span><span class="p"><span class="pre">,</span> </span><span class="pre">csr_matrix</span><span class="p"><span class="pre">,</span> </span><span class="pre">csc_matrix</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">bytes</span><span class="p"><span class="pre">,</span> </span><span class="pre">tuple</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">registered_model_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">await_registration_for</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pip_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_pip_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_model_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/keras/save.html#log_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.keras.save.log_model" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.keras.save.log_model">
+<span class="sig-prename descclassname"><span class="pre">mlflow.keras.save.</span></span><span class="sig-name descname"><span class="pre">log_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artifact_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_exported_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conda_env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signature</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="mlflow.models.html#mlflow.models.ModelSignature" title="mlflow.models.signature.ModelSignature"><span class="pre">mlflow.models.signature.ModelSignature</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_example</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">dict</span><span class="p"><span class="pre">,</span> </span><span class="pre">list</span><span class="p"><span class="pre">,</span> </span><span class="pre">csr_matrix</span><span class="p"><span class="pre">,</span> </span><span class="pre">csc_matrix</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">bytes</span><span class="p"><span class="pre">,</span> </span><span class="pre">tuple</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">registered_model_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">await_registration_for</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pip_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_pip_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_model_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">typing.Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">typing.Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/keras/save.html#log_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.keras.save.log_model" title="Permalink to this definition"> </a></dt>
 <dd><p>Log a Keras model along with metadata to MLflow.</p>
 <p>This method saves a Keras model along with metadata such as model signature and conda
 environments to MLflow.</p>
@@ -633,7 +686,7 @@ To manually infer a model signature, call
 with valid model inputs, such as a training dataset with the target column
 omitted, and valid model outputs, like model predictions made on the training
 dataset, for example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.models</span> <span class="kn">import</span> <span class="n">infer_signature</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">infer_signature</span>
 
 <span class="n">train</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop_column</span><span class="p">(</span><span class="s2">&quot;target_label&quot;</span><span class="p">)</span>
 <span class="n">predictions</span> <span class="o">=</span> <span class="o">...</span>  <span class="c1"># compute model predictions</span>
@@ -698,10 +751,10 @@ file.</p></li>
 </ul>
 </dd>
 </dl>
-<div class="literal-block-wrapper docutils container" id="id5">
-<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id5" title="Permalink to this code"> </a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">keras</span>
-<span class="kn">import</span> <span class="nn">mlflow</span>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id4" title="Permalink to this code"> </a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">keras</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">mlflow</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
     <span class="p">[</span>
@@ -718,8 +771,8 @@ file.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="mlflow.keras.save.save_model">
-<code class="sig-prename descclassname"><span class="pre">mlflow.keras.save.</span></code><code class="sig-name descname"><span class="pre">save_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_exported_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conda_env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mlflow_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signature</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">mlflow.models.signature.ModelSignature</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_example</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">dict</span><span class="p"><span class="pre">,</span> </span><span class="pre">list</span><span class="p"><span class="pre">,</span> </span><span class="pre">csr_matrix</span><span class="p"><span class="pre">,</span> </span><span class="pre">csc_matrix</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">bytes</span><span class="p"><span class="pre">,</span> </span><span class="pre">tuple</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pip_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_pip_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_model_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/keras/save.html#save_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.keras.save.save_model" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.keras.save.save_model">
+<span class="sig-prename descclassname"><span class="pre">mlflow.keras.save.</span></span><span class="sig-name descname"><span class="pre">save_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_exported_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conda_env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mlflow_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signature</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="mlflow.models.html#mlflow.models.ModelSignature" title="mlflow.models.signature.ModelSignature"><span class="pre">mlflow.models.signature.ModelSignature</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_example</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">dict</span><span class="p"><span class="pre">,</span> </span><span class="pre">list</span><span class="p"><span class="pre">,</span> </span><span class="pre">csr_matrix</span><span class="p"><span class="pre">,</span> </span><span class="pre">csc_matrix</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">bytes</span><span class="p"><span class="pre">,</span> </span><span class="pre">tuple</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pip_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_pip_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_model_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/keras/save.html#save_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.keras.save.save_model" title="Permalink to this definition"> </a></dt>
 <dd><p>Save a Keras model along with metadata.</p>
 <p>This method saves a Keras model along with metadata such as model signature and conda
 environments to local file system. This method is called inside <cite>mlflow.keras.log_model()</cite>.</p>
@@ -768,7 +821,7 @@ To manually infer a model signature, call
 with valid model inputs, such as a training dataset with the target column
 omitted, and valid model outputs, like model predictions made on the training
 dataset, for example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.models</span> <span class="kn">import</span> <span class="n">infer_signature</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">infer_signature</span>
 
 <span class="n">train</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop_column</span><span class="p">(</span><span class="s2">&quot;target_label&quot;</span><span class="p">)</span>
 <span class="n">predictions</span> <span class="o">=</span> <span class="o">...</span>  <span class="c1"># compute model predictions</span>
@@ -818,10 +871,10 @@ method.</p></li>
 </ul>
 </dd>
 </dl>
-<div class="literal-block-wrapper docutils container" id="id6">
-<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id6" title="Permalink to this code"> </a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">keras</span>
-<span class="kn">import</span> <span class="nn">mlflow</span>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id5" title="Permalink to this code"> </a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">keras</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">mlflow</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
     <span class="p">[</span>

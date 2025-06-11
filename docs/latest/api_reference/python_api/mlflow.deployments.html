@@ -80,6 +80,7 @@
   <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
+<script type="text/javascript" src="../_static/documentation_options.js"></script>
 <script type="text/javascript" src="../_static/jquery.js"></script>
 <script type="text/javascript" src="../_static/underscore.js"></script>
 <script type="text/javascript" src="../_static/doctools.js"></script>
@@ -313,8 +314,8 @@ for custom targets can be installed via third-party plugins. See a list of known
 your own plugin for deployment to a custom serving tool, see
 <a class="reference external" href="http://mlflow.org/docs/latest/plugins.html#writing-your-own-mlflow-plugins">plugin docs</a>.</p>
 <dl class="py class">
-<dt id="mlflow.deployments.BaseDeploymentClient">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mlflow.deployments.</span></code><code class="sig-name descname"><span class="pre">BaseDeploymentClient</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_uri</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.BaseDeploymentClient">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.deployments.</span></span><span class="sig-name descname"><span class="pre">BaseDeploymentClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_uri</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient" title="Permalink to this definition"> </a></dt>
 <dd><p>Base class exposing Python model deployment APIs.</p>
 <p>Plugin implementors should define target-specific deployment logic via a subclass of
 <code class="docutils literal notranslate"><span class="pre">BaseDeploymentClient</span></code> within the plugin module, and customize method docstrings with
@@ -325,8 +326,8 @@ target-specific information.</p>
 on failure to deploy a model).</p>
 </div>
 <dl class="py method">
-<dt id="mlflow.deployments.BaseDeploymentClient.create_deployment">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">create_deployment</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flavor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient.create_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient.create_deployment" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.BaseDeploymentClient.create_deployment">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">create_deployment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flavor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient.create_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient.create_deployment" title="Permalink to this definition"> </a></dt>
 <dd><p>Deploy a model to the specified target. By default, this method should block until
 deployment completes (i.e. until it’s possible to perform inference with the deployment).
 In the case of conflicts (e.g. if it’s not possible to create the specified deployment
@@ -355,8 +356,8 @@ by all targets</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.BaseDeploymentClient.create_endpoint">
-<code class="sig-name descname"><span class="pre">create_endpoint</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient.create_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient.create_endpoint" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.BaseDeploymentClient.create_endpoint">
+<span class="sig-name descname"><span class="pre">create_endpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient.create_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient.create_endpoint" title="Permalink to this definition"> </a></dt>
 <dd><p>Create an endpoint with the specified target. By default, this method should block until
 creation completes (i.e. until it’s possible to create a deployment within the endpoint).
 In the case of conflicts (e.g. if it’s not possible to create the specified endpoint
@@ -380,8 +381,8 @@ endpoint.</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.BaseDeploymentClient.delete_deployment">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">delete_deployment</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient.delete_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient.delete_deployment" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.BaseDeploymentClient.delete_deployment">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">delete_deployment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient.delete_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient.delete_deployment" title="Permalink to this definition"> </a></dt>
 <dd><p>Delete the deployment with name <code class="docutils literal notranslate"><span class="pre">name</span></code> from the specified target.</p>
 <p>Deletion should be idempotent (i.e. deletion should not fail if retried on a non-existent
 deployment).</p>
@@ -402,8 +403,8 @@ supported by all targets</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.BaseDeploymentClient.delete_endpoint">
-<code class="sig-name descname"><span class="pre">delete_endpoint</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient.delete_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient.delete_endpoint" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.BaseDeploymentClient.delete_endpoint">
+<span class="sig-name descname"><span class="pre">delete_endpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient.delete_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient.delete_endpoint" title="Permalink to this definition"> </a></dt>
 <dd><p>Delete the endpoint from the specified target. Deletion should be idempotent (i.e. deletion
 should not fail if retried on a non-existent deployment).</p>
 <dl class="field-list simple">
@@ -417,8 +418,8 @@ should not fail if retried on a non-existent deployment).</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.BaseDeploymentClient.explain">
-<code class="sig-name descname"><span class="pre">explain</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient.explain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient.explain" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.BaseDeploymentClient.explain">
+<span class="sig-name descname"><span class="pre">explain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient.explain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient.explain" title="Permalink to this definition"> </a></dt>
 <dd><p>Generate explanations of model predictions on the specified input pandas Dataframe
 <code class="docutils literal notranslate"><span class="pre">df</span></code> for the deployed model. Explanation output formats vary by deployment target,
 and can include details like feature importance for understanding/debugging predictions.</p>
@@ -438,8 +439,8 @@ an exception if the implementation is not available in deployment target’s cla
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.BaseDeploymentClient.get_deployment">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">get_deployment</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient.get_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient.get_deployment" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.BaseDeploymentClient.get_deployment">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">get_deployment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient.get_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient.get_deployment" title="Permalink to this definition"> </a></dt>
 <dd><p>Returns a dictionary describing the specified deployment, throwing either a
 <a class="reference internal" href="exceptions/mlflow.exceptions.html#mlflow.exceptions.MlflowException" title="mlflow.exceptions.MlflowException"><code class="xref py py-class docutils literal notranslate"><span class="pre">mlflow.exceptions.MlflowException</span></code></a> or an <cite>HTTPError</cite> for remote
 deployments if no deployment exists with the provided ID.
@@ -463,8 +464,8 @@ the returned dictionary and their types may vary across targets.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.BaseDeploymentClient.get_endpoint">
-<code class="sig-name descname"><span class="pre">get_endpoint</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient.get_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient.get_endpoint" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.BaseDeploymentClient.get_endpoint">
+<span class="sig-name descname"><span class="pre">get_endpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient.get_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient.get_endpoint" title="Permalink to this definition"> </a></dt>
 <dd><p>Returns a dictionary describing the specified endpoint, throwing a
 py:class:<cite>mlflow.exception.MlflowException</cite> or an <cite>HTTPError</cite> for remote
 deployments if no endpoint exists with the provided
@@ -484,8 +485,8 @@ the returned dictionary and their types may vary across targets.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.BaseDeploymentClient.list_deployments">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">list_deployments</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient.list_deployments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient.list_deployments" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.BaseDeploymentClient.list_deployments">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">list_deployments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient.list_deployments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient.list_deployments" title="Permalink to this definition"> </a></dt>
 <dd><p>List deployments.</p>
 <p>This method is expected to return an unpaginated list of all
 deployments (an alternative would be to return a dict with a ‘deployments’ field
@@ -506,8 +507,8 @@ the returned dictionary and their types may vary across deployment targets.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.BaseDeploymentClient.list_endpoints">
-<code class="sig-name descname"><span class="pre">list_endpoints</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient.list_endpoints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient.list_endpoints" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.BaseDeploymentClient.list_endpoints">
+<span class="sig-name descname"><span class="pre">list_endpoints</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient.list_endpoints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient.list_endpoints" title="Permalink to this definition"> </a></dt>
 <dd><p>List endpoints in the specified target. This method is expected to return an
 unpaginated list of all endpoints (an alternative would be to return a dict with
 an ‘endpoints’ field containing the actual endpoints, with plugins able to specify
@@ -524,8 +525,8 @@ the returned dictionary and their types may vary across targets.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.BaseDeploymentClient.predict">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">predict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient.predict" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.BaseDeploymentClient.predict">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient.predict" title="Permalink to this definition"> </a></dt>
 <dd><p>Compute predictions on inputs using the specified deployment or model endpoint.</p>
 <p>Note that the input/output types of this method match those of <cite>mlflow pyfunc predict</cite>.</p>
 <dl class="field-list simple">
@@ -545,8 +546,8 @@ predictions and associated Model Server response metadata.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.BaseDeploymentClient.predict_stream">
-<code class="sig-name descname"><span class="pre">predict_stream</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient.predict_stream"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient.predict_stream" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.BaseDeploymentClient.predict_stream">
+<span class="sig-name descname"><span class="pre">predict_stream</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient.predict_stream"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient.predict_stream" title="Permalink to this definition"> </a></dt>
 <dd><p>Submit a query to a configured provider endpoint, and get streaming response</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -563,8 +564,8 @@ predictions and associated Model Server response metadata.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.BaseDeploymentClient.update_deployment">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">update_deployment</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_uri</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flavor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient.update_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient.update_deployment" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.BaseDeploymentClient.update_deployment">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">update_deployment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_uri</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flavor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient.update_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient.update_deployment" title="Permalink to this definition"> </a></dt>
 <dd><p>Update the deployment with the specified name. You can update the URI of the model, the
 flavor of the deployed model (in which case the model URI must also be specified), and/or
 any target-specific attributes of the deployment (via <cite>config</cite>). By default, this method
@@ -593,8 +594,8 @@ supported by all targets.</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.BaseDeploymentClient.update_endpoint">
-<code class="sig-name descname"><span class="pre">update_endpoint</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient.update_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient.update_endpoint" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.BaseDeploymentClient.update_endpoint">
+<span class="sig-name descname"><span class="pre">update_endpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/base.html#BaseDeploymentClient.update_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.BaseDeploymentClient.update_endpoint" title="Permalink to this definition"> </a></dt>
 <dd><p>Update the endpoint with the specified name. You can update any target-specific attributes
 of the endpoint (via <cite>config</cite>). By default, this method should block until the update
 completes (i.e. until it’s possible to create a deployment within the endpoint). See
@@ -617,8 +618,8 @@ endpoint</p></li>
 </dd></dl>
 
 <dl class="py class">
-<dt id="mlflow.deployments.DatabricksDeploymentClient">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mlflow.deployments.</span></code><code class="sig-name descname"><span class="pre">DatabricksDeploymentClient</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_uri</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.DatabricksDeploymentClient">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.deployments.</span></span><span class="sig-name descname"><span class="pre">DatabricksDeploymentClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_uri</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient" title="Permalink to this definition"> </a></dt>
 <dd><p>Client for interacting with Databricks serving endpoints.</p>
 <p>Example:</p>
 <p>First, set up credentials for authentication:</p>
@@ -631,7 +632,7 @@ endpoint</p></li>
 <p>See <a class="reference external" href="https://docs.databricks.com/en/dev-tools/auth.html">https://docs.databricks.com/en/dev-tools/auth.html</a> for other authentication methods.</p>
 </div>
 <p>Then, create a deployment client and use it to interact with Databricks serving endpoints:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;databricks&quot;</span><span class="p">)</span>
 <span class="n">endpoints</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">list_endpoints</span><span class="p">()</span>
@@ -650,8 +651,8 @@ endpoint</p></li>
 </pre></div>
 </div>
 <dl class="py method">
-<dt id="mlflow.deployments.DatabricksDeploymentClient.create_deployment">
-<code class="sig-name descname"><span class="pre">create_deployment</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flavor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.create_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.create_deployment" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.DatabricksDeploymentClient.create_deployment">
+<span class="sig-name descname"><span class="pre">create_deployment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flavor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.create_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.create_deployment" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This method is not implemented for <cite>DatabricksDeploymentClient</cite>.</p>
@@ -659,8 +660,8 @@ endpoint</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.DatabricksDeploymentClient.create_endpoint">
-<code class="sig-name descname"><span class="pre">create_endpoint</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">route_optimized</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.create_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.create_endpoint" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.DatabricksDeploymentClient.create_endpoint">
+<span class="sig-name descname"><span class="pre">create_endpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">route_optimized</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.create_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.create_endpoint" title="Permalink to this definition"> </a></dt>
 <dd><p>Create a new serving endpoint with the provided name and configuration.</p>
 <p>See <a class="reference external" href="https://docs.databricks.com/api/workspace/servingendpoints/create">https://docs.databricks.com/api/workspace/servingendpoints/create</a> for request/response
 schema.</p>
@@ -689,7 +690,7 @@ is optimized for routing traffic. Only used in the deprecated approach.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;databricks&quot;</span><span class="p">)</span>
 <span class="n">endpoint</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_endpoint</span><span class="p">(</span>
@@ -733,8 +734,8 @@ is optimized for routing traffic. Only used in the deprecated approach.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.DatabricksDeploymentClient.delete_deployment">
-<code class="sig-name descname"><span class="pre">delete_deployment</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.delete_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.delete_deployment" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.DatabricksDeploymentClient.delete_deployment">
+<span class="sig-name descname"><span class="pre">delete_deployment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.delete_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.delete_deployment" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This method is not implemented for <cite>DatabricksDeploymentClient</cite>.</p>
@@ -742,8 +743,8 @@ is optimized for routing traffic. Only used in the deprecated approach.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.DatabricksDeploymentClient.delete_endpoint">
-<code class="sig-name descname"><span class="pre">delete_endpoint</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.delete_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.delete_endpoint" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.DatabricksDeploymentClient.delete_endpoint">
+<span class="sig-name descname"><span class="pre">delete_endpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.delete_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.delete_endpoint" title="Permalink to this definition"> </a></dt>
 <dd><p>Delete a specified serving endpoint.
 See <a class="reference external" href="https://docs.databricks.com/api/workspace/servingendpoints/delete">https://docs.databricks.com/api/workspace/servingendpoints/delete</a> for request/response
 schema.</p>
@@ -756,7 +757,7 @@ schema.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;databricks&quot;</span><span class="p">)</span>
 <span class="n">client</span><span class="o">.</span><span class="n">delete_endpoint</span><span class="p">(</span><span class="n">endpoint</span><span class="o">=</span><span class="s2">&quot;chat&quot;</span><span class="p">)</span>
@@ -765,8 +766,8 @@ schema.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.DatabricksDeploymentClient.get_deployment">
-<code class="sig-name descname"><span class="pre">get_deployment</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.get_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.get_deployment" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.DatabricksDeploymentClient.get_deployment">
+<span class="sig-name descname"><span class="pre">get_deployment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.get_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.get_deployment" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This method is not implemented for <cite>DatabricksDeploymentClient</cite>.</p>
@@ -774,8 +775,8 @@ schema.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.DatabricksDeploymentClient.get_endpoint">
-<code class="sig-name descname"><span class="pre">get_endpoint</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.get_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.get_endpoint" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.DatabricksDeploymentClient.get_endpoint">
+<span class="sig-name descname"><span class="pre">get_endpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.get_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.get_endpoint" title="Permalink to this definition"> </a></dt>
 <dd><p>Get a specified serving endpoint.
 See <a class="reference external" href="https://docs.databricks.com/api/workspace/servingendpoints/get">https://docs.databricks.com/api/workspace/servingendpoints/get</a> for request/response
 schema.</p>
@@ -788,7 +789,7 @@ schema.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;databricks&quot;</span><span class="p">)</span>
 <span class="n">endpoint</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_endpoint</span><span class="p">(</span><span class="n">endpoint</span><span class="o">=</span><span class="s2">&quot;chat&quot;</span><span class="p">)</span>
@@ -807,8 +808,8 @@ schema.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.DatabricksDeploymentClient.list_deployments">
-<code class="sig-name descname"><span class="pre">list_deployments</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.list_deployments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.list_deployments" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.DatabricksDeploymentClient.list_deployments">
+<span class="sig-name descname"><span class="pre">list_deployments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.list_deployments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.list_deployments" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This method is not implemented for <cite>DatabricksDeploymentClient</cite>.</p>
@@ -816,8 +817,8 @@ schema.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.DatabricksDeploymentClient.list_endpoints">
-<code class="sig-name descname"><span class="pre">list_endpoints</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.list_endpoints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.list_endpoints" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.DatabricksDeploymentClient.list_endpoints">
+<span class="sig-name descname"><span class="pre">list_endpoints</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.list_endpoints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.list_endpoints" title="Permalink to this definition"> </a></dt>
 <dd><p>Retrieve all serving endpoints.</p>
 <p>See <a class="reference external" href="https://docs.databricks.com/api/workspace/servingendpoints/list">https://docs.databricks.com/api/workspace/servingendpoints/list</a> for request/response
 schema.</p>
@@ -827,7 +828,7 @@ schema.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;databricks&quot;</span><span class="p">)</span>
 <span class="n">endpoints</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">list_endpoints</span><span class="p">()</span>
@@ -848,8 +849,8 @@ schema.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.DatabricksDeploymentClient.predict">
-<code class="sig-name descname"><span class="pre">predict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.predict" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.DatabricksDeploymentClient.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.predict" title="Permalink to this definition"> </a></dt>
 <dd><p>Query a serving endpoint with the provided model inputs.
 See <a class="reference external" href="https://docs.databricks.com/api/workspace/servingendpoints/query">https://docs.databricks.com/api/workspace/servingendpoints/query</a> for request/response
 schema.</p>
@@ -866,7 +867,7 @@ schema.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;databricks&quot;</span><span class="p">)</span>
 <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
@@ -903,8 +904,8 @@ schema.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.DatabricksDeploymentClient.predict_stream">
-<code class="sig-name descname"><span class="pre">predict_stream</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.predict_stream"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.predict_stream" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.DatabricksDeploymentClient.predict_stream">
+<span class="sig-name descname"><span class="pre">predict_stream</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">typing.Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.predict_stream"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.predict_stream" title="Permalink to this definition"> </a></dt>
 <dd><p>Submit a query to a configured provider endpoint, and get streaming response</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -919,7 +920,7 @@ schema.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;databricks&quot;</span><span class="p">)</span>
 <span class="n">chunk_iter</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">predict_stream</span><span class="p">(</span>
@@ -952,8 +953,8 @@ schema.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.DatabricksDeploymentClient.update_deployment">
-<code class="sig-name descname"><span class="pre">update_deployment</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_uri</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flavor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.update_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.update_deployment" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.DatabricksDeploymentClient.update_deployment">
+<span class="sig-name descname"><span class="pre">update_deployment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_uri</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flavor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.update_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.update_deployment" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This method is not implemented for <cite>DatabricksDeploymentClient</cite>.</p>
@@ -961,8 +962,8 @@ schema.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.DatabricksDeploymentClient.update_endpoint">
-<code class="sig-name descname"><span class="pre">update_endpoint</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.update_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.update_endpoint" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.DatabricksDeploymentClient.update_endpoint">
+<span class="sig-name descname"><span class="pre">update_endpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.update_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.update_endpoint" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p><code class="docutils literal notranslate"><span class="pre">mlflow.deployments.databricks.DatabricksDeploymentClient.update_endpoint</span></code> is deprecated. This method will be removed in a future release. Use <code class="docutils literal notranslate"><span class="pre">update_endpoint_config,</span> <span class="pre">update_endpoint_tags,</span> <span class="pre">update_endpoint_rate_limits,</span> <span class="pre">or</span> <span class="pre">update_endpoint_ai_gateway</span></code> instead.</p>
@@ -982,7 +983,7 @@ request/response schema.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;databricks&quot;</span><span class="p">)</span>
 <span class="n">endpoint</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">update_endpoint</span><span class="p">(</span>
@@ -1040,8 +1041,8 @@ request/response schema.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.DatabricksDeploymentClient.update_endpoint_ai_gateway">
-<code class="sig-name descname"><span class="pre">update_endpoint_ai_gateway</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.update_endpoint_ai_gateway"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.update_endpoint_ai_gateway" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.DatabricksDeploymentClient.update_endpoint_ai_gateway">
+<span class="sig-name descname"><span class="pre">update_endpoint_ai_gateway</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.update_endpoint_ai_gateway"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.update_endpoint_ai_gateway" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Experimental: This function may change or be removed in a future release without warning.</p>
@@ -1062,7 +1063,7 @@ request/response schema.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;databricks&quot;</span><span class="p">)</span>
 <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;test&quot;</span>
@@ -1093,8 +1094,8 @@ request/response schema.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.DatabricksDeploymentClient.update_endpoint_config">
-<code class="sig-name descname"><span class="pre">update_endpoint_config</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.update_endpoint_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.update_endpoint_config" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.DatabricksDeploymentClient.update_endpoint_config">
+<span class="sig-name descname"><span class="pre">update_endpoint_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.update_endpoint_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.update_endpoint_config" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Experimental: This function may change or be removed in a future release without warning.</p>
@@ -1114,7 +1115,7 @@ request/response schema.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;databricks&quot;</span><span class="p">)</span>
 <span class="n">updated_endpoint</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">update_endpoint_config</span><span class="p">(</span>
@@ -1155,8 +1156,8 @@ request/response schema.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.DatabricksDeploymentClient.update_endpoint_rate_limits">
-<code class="sig-name descname"><span class="pre">update_endpoint_rate_limits</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.update_endpoint_rate_limits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.update_endpoint_rate_limits" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.DatabricksDeploymentClient.update_endpoint_rate_limits">
+<span class="sig-name descname"><span class="pre">update_endpoint_rate_limits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.update_endpoint_rate_limits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.update_endpoint_rate_limits" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Experimental: This function may change or be removed in a future release without warning.</p>
@@ -1176,7 +1177,7 @@ schema.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;databricks&quot;</span><span class="p">)</span>
 <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;databricks-dbrx-instruct&quot;</span>
@@ -1194,8 +1195,8 @@ schema.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.DatabricksDeploymentClient.update_endpoint_tags">
-<code class="sig-name descname"><span class="pre">update_endpoint_tags</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.update_endpoint_tags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.update_endpoint_tags" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.DatabricksDeploymentClient.update_endpoint_tags">
+<span class="sig-name descname"><span class="pre">update_endpoint_tags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.update_endpoint_tags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.update_endpoint_tags" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Experimental: This function may change or be removed in a future release without warning.</p>
@@ -1215,7 +1216,7 @@ schema.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;databricks&quot;</span><span class="p">)</span>
 <span class="n">updated_tags</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">update_endpoint_tags</span><span class="p">(</span>
@@ -1229,8 +1230,8 @@ schema.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="mlflow.deployments.DatabricksEndpoint">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mlflow.deployments.</span></code><code class="sig-name descname"><span class="pre">DatabricksEndpoint</span></code><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksEndpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksEndpoint" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.DatabricksEndpoint">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.deployments.</span></span><span class="sig-name descname"><span class="pre">DatabricksEndpoint</span></span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksEndpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksEndpoint" title="Permalink to this definition"> </a></dt>
 <dd><p>A dictionary-like object representing a Databricks serving endpoint.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">endpoint</span> <span class="o">=</span> <span class="n">DatabricksEndpoint</span><span class="p">(</span>
     <span class="p">{</span>
@@ -1250,8 +1251,8 @@ schema.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="mlflow.deployments.MlflowDeploymentClient">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mlflow.deployments.</span></code><code class="sig-name descname"><span class="pre">MlflowDeploymentClient</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_uri</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/mlflow.html#MlflowDeploymentClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.MlflowDeploymentClient" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.MlflowDeploymentClient">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.deployments.</span></span><span class="sig-name descname"><span class="pre">MlflowDeploymentClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_uri</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/mlflow.html#MlflowDeploymentClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.MlflowDeploymentClient" title="Permalink to this definition"> </a></dt>
 <dd><p>Client for interacting with the MLflow AI Gateway.</p>
 <p>Example:</p>
 <p>First, start the MLflow AI Gateway:</p>
@@ -1259,7 +1260,7 @@ schema.</p>
 </pre></div>
 </div>
 <p>Then, create a client and use it to interact with the server:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;http://localhost:5000&quot;</span><span class="p">)</span>
 <span class="n">endpoints</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">list_endpoints</span><span class="p">()</span>
@@ -1274,8 +1275,8 @@ schema.</p>
 </pre></div>
 </div>
 <dl class="py method">
-<dt id="mlflow.deployments.MlflowDeploymentClient.create_deployment">
-<code class="sig-name descname"><span class="pre">create_deployment</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flavor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/mlflow.html#MlflowDeploymentClient.create_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.MlflowDeploymentClient.create_deployment" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.MlflowDeploymentClient.create_deployment">
+<span class="sig-name descname"><span class="pre">create_deployment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flavor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/mlflow.html#MlflowDeploymentClient.create_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.MlflowDeploymentClient.create_deployment" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This method is not implemented for <cite>MlflowDeploymentClient</cite>.</p>
@@ -1283,8 +1284,8 @@ schema.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.MlflowDeploymentClient.create_endpoint">
-<code class="sig-name descname"><span class="pre">create_endpoint</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/mlflow.html#MlflowDeploymentClient.create_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.MlflowDeploymentClient.create_endpoint" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.MlflowDeploymentClient.create_endpoint">
+<span class="sig-name descname"><span class="pre">create_endpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/mlflow.html#MlflowDeploymentClient.create_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.MlflowDeploymentClient.create_endpoint" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This method is not implemented for <cite>MlflowDeploymentClient</cite>.</p>
@@ -1292,8 +1293,8 @@ schema.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.MlflowDeploymentClient.delete_deployment">
-<code class="sig-name descname"><span class="pre">delete_deployment</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/mlflow.html#MlflowDeploymentClient.delete_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.MlflowDeploymentClient.delete_deployment" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.MlflowDeploymentClient.delete_deployment">
+<span class="sig-name descname"><span class="pre">delete_deployment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/mlflow.html#MlflowDeploymentClient.delete_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.MlflowDeploymentClient.delete_deployment" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This method is not implemented for <cite>MlflowDeploymentClient</cite>.</p>
@@ -1301,8 +1302,8 @@ schema.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.MlflowDeploymentClient.delete_endpoint">
-<code class="sig-name descname"><span class="pre">delete_endpoint</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/mlflow.html#MlflowDeploymentClient.delete_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.MlflowDeploymentClient.delete_endpoint" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.MlflowDeploymentClient.delete_endpoint">
+<span class="sig-name descname"><span class="pre">delete_endpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/mlflow.html#MlflowDeploymentClient.delete_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.MlflowDeploymentClient.delete_endpoint" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This method is not implemented for <cite>MlflowDeploymentClient</cite>.</p>
@@ -1310,8 +1311,8 @@ schema.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.MlflowDeploymentClient.get_deployment">
-<code class="sig-name descname"><span class="pre">get_deployment</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/mlflow.html#MlflowDeploymentClient.get_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.MlflowDeploymentClient.get_deployment" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.MlflowDeploymentClient.get_deployment">
+<span class="sig-name descname"><span class="pre">get_deployment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/mlflow.html#MlflowDeploymentClient.get_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.MlflowDeploymentClient.get_deployment" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This method is not implemented for <cite>MLflowDeploymentClient</cite>.</p>
@@ -1319,8 +1320,8 @@ schema.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.MlflowDeploymentClient.get_endpoint">
-<code class="sig-name descname"><span class="pre">get_endpoint</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Endpoint</span><a class="reference internal" href="../_modules/mlflow/deployments/mlflow.html#MlflowDeploymentClient.get_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.MlflowDeploymentClient.get_endpoint" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.MlflowDeploymentClient.get_endpoint">
+<span class="sig-name descname"><span class="pre">get_endpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Endpoint</span></span></span><a class="reference internal" href="../_modules/mlflow/deployments/mlflow.html#MlflowDeploymentClient.get_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.MlflowDeploymentClient.get_endpoint" title="Permalink to this definition"> </a></dt>
 <dd><p>Gets a specified endpoint configured for the MLflow AI Gateway.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1331,7 +1332,7 @@ schema.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;http://localhost:5000&quot;</span><span class="p">)</span>
 <span class="n">endpoint</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_endpoint</span><span class="p">(</span><span class="n">endpoint</span><span class="o">=</span><span class="s2">&quot;chat&quot;</span><span class="p">)</span>
@@ -1346,8 +1347,8 @@ schema.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.MlflowDeploymentClient.list_deployments">
-<code class="sig-name descname"><span class="pre">list_deployments</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/mlflow.html#MlflowDeploymentClient.list_deployments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.MlflowDeploymentClient.list_deployments" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.MlflowDeploymentClient.list_deployments">
+<span class="sig-name descname"><span class="pre">list_deployments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/mlflow.html#MlflowDeploymentClient.list_deployments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.MlflowDeploymentClient.list_deployments" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This method is not implemented for <cite>MlflowDeploymentClient</cite>.</p>
@@ -1355,8 +1356,8 @@ schema.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.MlflowDeploymentClient.list_endpoints">
-<code class="sig-name descname"><span class="pre">list_endpoints</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Endpoint</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../_modules/mlflow/deployments/mlflow.html#MlflowDeploymentClient.list_endpoints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.MlflowDeploymentClient.list_endpoints" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.MlflowDeploymentClient.list_endpoints">
+<span class="sig-name descname"><span class="pre">list_endpoints</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Endpoint</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/mlflow/deployments/mlflow.html#MlflowDeploymentClient.list_endpoints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.MlflowDeploymentClient.list_endpoints" title="Permalink to this definition"> </a></dt>
 <dd><p>List endpoints configured for the MLflow AI Gateway.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -1364,7 +1365,7 @@ schema.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;http://localhost:5000&quot;</span><span class="p">)</span>
 
@@ -1382,8 +1383,8 @@ schema.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.MlflowDeploymentClient.predict">
-<code class="sig-name descname"><span class="pre">predict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">dict</span><a class="reference internal" href="../_modules/mlflow/deployments/mlflow.html#MlflowDeploymentClient.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.MlflowDeploymentClient.predict" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.MlflowDeploymentClient.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">typing.Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/mlflow/deployments/mlflow.html#MlflowDeploymentClient.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.MlflowDeploymentClient.predict" title="Permalink to this definition"> </a></dt>
 <dd><p>Submit a query to a configured provider endpoint.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1398,7 +1399,7 @@ schema.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;http://localhost:5000&quot;</span><span class="p">)</span>
 
@@ -1432,7 +1433,7 @@ schema.</p>
 <p>Additional parameters that are valid for a given provider and endpoint configuration can be
 included with the request as shown below, using an openai completions endpoint request as
 an example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;http://localhost:5000&quot;</span><span class="p">)</span>
 <span class="n">client</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
@@ -1448,8 +1449,8 @@ an example:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.MlflowDeploymentClient.update_deployment">
-<code class="sig-name descname"><span class="pre">update_deployment</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_uri</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flavor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/mlflow.html#MlflowDeploymentClient.update_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.MlflowDeploymentClient.update_deployment" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.MlflowDeploymentClient.update_deployment">
+<span class="sig-name descname"><span class="pre">update_deployment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_uri</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flavor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/mlflow.html#MlflowDeploymentClient.update_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.MlflowDeploymentClient.update_deployment" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This method is not implemented for <cite>MlflowDeploymentClient</cite>.</p>
@@ -1457,8 +1458,8 @@ an example:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.MlflowDeploymentClient.update_endpoint">
-<code class="sig-name descname"><span class="pre">update_endpoint</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/mlflow.html#MlflowDeploymentClient.update_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.MlflowDeploymentClient.update_endpoint" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.MlflowDeploymentClient.update_endpoint">
+<span class="sig-name descname"><span class="pre">update_endpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/mlflow.html#MlflowDeploymentClient.update_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.MlflowDeploymentClient.update_endpoint" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This method is not implemented for <cite>MlflowDeploymentClient</cite>.</p>
@@ -1468,8 +1469,8 @@ an example:</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="mlflow.deployments.OpenAIDeploymentClient">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mlflow.deployments.</span></code><code class="sig-name descname"><span class="pre">OpenAIDeploymentClient</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_uri</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/openai.html#OpenAIDeploymentClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.OpenAIDeploymentClient" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.OpenAIDeploymentClient">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.deployments.</span></span><span class="sig-name descname"><span class="pre">OpenAIDeploymentClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_uri</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/openai.html#OpenAIDeploymentClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.OpenAIDeploymentClient" title="Permalink to this definition"> </a></dt>
 <dd><p>Client for interacting with OpenAI endpoints.</p>
 <p>Example:</p>
 <p>First, set up credentials for authentication:</p>
@@ -1482,7 +1483,7 @@ an example:</p>
 methods.</p>
 </div>
 <p>Then, create a deployment client and use it to interact with OpenAI endpoints:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;openai&quot;</span><span class="p">)</span>
 <span class="n">client</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
@@ -1496,8 +1497,8 @@ methods.</p>
 </pre></div>
 </div>
 <dl class="py method">
-<dt id="mlflow.deployments.OpenAIDeploymentClient.create_deployment">
-<code class="sig-name descname"><span class="pre">create_deployment</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flavor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/openai.html#OpenAIDeploymentClient.create_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.OpenAIDeploymentClient.create_deployment" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.OpenAIDeploymentClient.create_deployment">
+<span class="sig-name descname"><span class="pre">create_deployment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flavor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/openai.html#OpenAIDeploymentClient.create_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.OpenAIDeploymentClient.create_deployment" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This method is not implemented for <cite>OpenAIDeploymentClient</cite>.</p>
@@ -1505,8 +1506,8 @@ methods.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.OpenAIDeploymentClient.create_endpoint">
-<code class="sig-name descname"><span class="pre">create_endpoint</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/openai.html#OpenAIDeploymentClient.create_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.OpenAIDeploymentClient.create_endpoint" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.OpenAIDeploymentClient.create_endpoint">
+<span class="sig-name descname"><span class="pre">create_endpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/openai.html#OpenAIDeploymentClient.create_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.OpenAIDeploymentClient.create_endpoint" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This method is not implemented for <cite>OpenAIDeploymentClient</cite>.</p>
@@ -1514,8 +1515,8 @@ methods.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.OpenAIDeploymentClient.delete_deployment">
-<code class="sig-name descname"><span class="pre">delete_deployment</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/openai.html#OpenAIDeploymentClient.delete_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.OpenAIDeploymentClient.delete_deployment" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.OpenAIDeploymentClient.delete_deployment">
+<span class="sig-name descname"><span class="pre">delete_deployment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/openai.html#OpenAIDeploymentClient.delete_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.OpenAIDeploymentClient.delete_deployment" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This method is not implemented for <cite>OpenAIDeploymentClient</cite>.</p>
@@ -1523,8 +1524,8 @@ methods.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.OpenAIDeploymentClient.delete_endpoint">
-<code class="sig-name descname"><span class="pre">delete_endpoint</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/openai.html#OpenAIDeploymentClient.delete_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.OpenAIDeploymentClient.delete_endpoint" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.OpenAIDeploymentClient.delete_endpoint">
+<span class="sig-name descname"><span class="pre">delete_endpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/openai.html#OpenAIDeploymentClient.delete_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.OpenAIDeploymentClient.delete_endpoint" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This method is not implemented for <cite>OpenAIDeploymentClient</cite>.</p>
@@ -1532,8 +1533,8 @@ methods.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.OpenAIDeploymentClient.get_deployment">
-<code class="sig-name descname"><span class="pre">get_deployment</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/openai.html#OpenAIDeploymentClient.get_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.OpenAIDeploymentClient.get_deployment" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.OpenAIDeploymentClient.get_deployment">
+<span class="sig-name descname"><span class="pre">get_deployment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/openai.html#OpenAIDeploymentClient.get_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.OpenAIDeploymentClient.get_deployment" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This method is not implemented for <cite>OpenAIDeploymentClient</cite>.</p>
@@ -1541,14 +1542,14 @@ methods.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.OpenAIDeploymentClient.get_endpoint">
-<code class="sig-name descname"><span class="pre">get_endpoint</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/openai.html#OpenAIDeploymentClient.get_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.OpenAIDeploymentClient.get_endpoint" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.OpenAIDeploymentClient.get_endpoint">
+<span class="sig-name descname"><span class="pre">get_endpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/openai.html#OpenAIDeploymentClient.get_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.OpenAIDeploymentClient.get_endpoint" title="Permalink to this definition"> </a></dt>
 <dd><p>Get information about a specific model.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.OpenAIDeploymentClient.list_deployments">
-<code class="sig-name descname"><span class="pre">list_deployments</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/openai.html#OpenAIDeploymentClient.list_deployments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.OpenAIDeploymentClient.list_deployments" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.OpenAIDeploymentClient.list_deployments">
+<span class="sig-name descname"><span class="pre">list_deployments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/openai.html#OpenAIDeploymentClient.list_deployments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.OpenAIDeploymentClient.list_deployments" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This method is not implemented for <cite>OpenAIDeploymentClient</cite>.</p>
@@ -1556,14 +1557,14 @@ methods.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.OpenAIDeploymentClient.list_endpoints">
-<code class="sig-name descname"><span class="pre">list_endpoints</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/openai.html#OpenAIDeploymentClient.list_endpoints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.OpenAIDeploymentClient.list_endpoints" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.OpenAIDeploymentClient.list_endpoints">
+<span class="sig-name descname"><span class="pre">list_endpoints</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/openai.html#OpenAIDeploymentClient.list_endpoints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.OpenAIDeploymentClient.list_endpoints" title="Permalink to this definition"> </a></dt>
 <dd><p>List the currently available models.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.OpenAIDeploymentClient.predict">
-<code class="sig-name descname"><span class="pre">predict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/openai.html#OpenAIDeploymentClient.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.OpenAIDeploymentClient.predict" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.OpenAIDeploymentClient.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/openai.html#OpenAIDeploymentClient.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.OpenAIDeploymentClient.predict" title="Permalink to this definition"> </a></dt>
 <dd><p>Query an OpenAI endpoint.
 See <a class="reference external" href="https://platform.openai.com/docs/api-reference">https://platform.openai.com/docs/api-reference</a> for more information.</p>
 <dl class="field-list simple">
@@ -1581,8 +1582,8 @@ See <a class="reference external" href="https://platform.openai.com/docs/api-ref
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.OpenAIDeploymentClient.update_deployment">
-<code class="sig-name descname"><span class="pre">update_deployment</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_uri</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flavor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/openai.html#OpenAIDeploymentClient.update_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.OpenAIDeploymentClient.update_deployment" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.OpenAIDeploymentClient.update_deployment">
+<span class="sig-name descname"><span class="pre">update_deployment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_uri</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flavor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/openai.html#OpenAIDeploymentClient.update_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.OpenAIDeploymentClient.update_deployment" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This method is not implemented for <cite>OpenAIDeploymentClient</cite>.</p>
@@ -1590,8 +1591,8 @@ See <a class="reference external" href="https://platform.openai.com/docs/api-ref
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.OpenAIDeploymentClient.update_endpoint">
-<code class="sig-name descname"><span class="pre">update_endpoint</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/openai.html#OpenAIDeploymentClient.update_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.OpenAIDeploymentClient.update_endpoint" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.OpenAIDeploymentClient.update_endpoint">
+<span class="sig-name descname"><span class="pre">update_endpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/openai.html#OpenAIDeploymentClient.update_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.OpenAIDeploymentClient.update_endpoint" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This method is not implemented for <cite>OpenAIDeploymentClient</cite>.</p>
@@ -1601,8 +1602,8 @@ See <a class="reference external" href="https://platform.openai.com/docs/api-ref
 </dd></dl>
 
 <dl class="py function">
-<dt id="mlflow.deployments.get_deploy_client">
-<code class="sig-prename descclassname"><span class="pre">mlflow.deployments.</span></code><code class="sig-name descname"><span class="pre">get_deploy_client</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_uri</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/interface.html#get_deploy_client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.get_deploy_client" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.get_deploy_client">
+<span class="sig-prename descclassname"><span class="pre">mlflow.deployments.</span></span><span class="sig-name descname"><span class="pre">get_deploy_client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_uri</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/interface.html#get_deploy_client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.get_deploy_client" title="Permalink to this definition"> </a></dt>
 <dd><p>Returns a subclass of <a class="reference internal" href="#mlflow.deployments.BaseDeploymentClient" title="mlflow.deployments.BaseDeploymentClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">mlflow.deployments.BaseDeploymentClient</span></code></a> exposing standard
 APIs for deploying models to the specified target. See available deployment APIs
 by calling <code class="docutils literal notranslate"><span class="pre">help()</span></code> on the returned object or viewing docs for
@@ -1618,8 +1619,8 @@ MLflow will attempt to get the deployments target set via <cite>get_deployments_
 </dl>
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id1" title="Permalink to this code"> </a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;redisai&quot;</span><span class="p">)</span>
 <span class="c1"># Deploy the model stored at artifact path &#39;myModel&#39; under run with ID &#39;someRunId&#39;. The</span>
@@ -1641,16 +1642,16 @@ MLflow will attempt to get the deployments target set via <cite>get_deployments_
 </dd></dl>
 
 <dl class="py function">
-<dt id="mlflow.deployments.get_deployments_target">
-<code class="sig-prename descclassname"><span class="pre">mlflow.deployments.</span></code><code class="sig-name descname"><span class="pre">get_deployments_target</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="reference internal" href="../_modules/mlflow/deployments/utils.html#get_deployments_target"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.get_deployments_target" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.get_deployments_target">
+<span class="sig-prename descclassname"><span class="pre">mlflow.deployments.</span></span><span class="sig-name descname"><span class="pre">get_deployments_target</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/mlflow/deployments/utils.html#get_deployments_target"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.get_deployments_target" title="Permalink to this definition"> </a></dt>
 <dd><p>Returns the currently set MLflow deployments target iff set.
 If the deployments target has not been set by using <code class="docutils literal notranslate"><span class="pre">set_deployments_target</span></code>, an
 <code class="docutils literal notranslate"><span class="pre">MlflowException</span></code> is raised.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="mlflow.deployments.run_local">
-<code class="sig-prename descclassname"><span class="pre">mlflow.deployments.</span></code><code class="sig-name descname"><span class="pre">run_local</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flavor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/interface.html#run_local"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.run_local" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.run_local">
+<span class="sig-prename descclassname"><span class="pre">mlflow.deployments.</span></span><span class="sig-name descname"><span class="pre">run_local</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flavor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/interface.html#run_local"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.run_local" title="Permalink to this definition"> </a></dt>
 <dd><p>Deploys the specified model locally, for testing. Note that models deployed locally cannot
 be managed by other deployment APIs (e.g. <code class="docutils literal notranslate"><span class="pre">update_deployment</span></code>, <code class="docutils literal notranslate"><span class="pre">delete_deployment</span></code>, etc).</p>
 <dl class="field-list simple">
@@ -1672,8 +1673,8 @@ the deployment</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="mlflow.deployments.set_deployments_target">
-<code class="sig-prename descclassname"><span class="pre">mlflow.deployments.</span></code><code class="sig-name descname"><span class="pre">set_deployments_target</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/utils.html#set_deployments_target"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.set_deployments_target" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.set_deployments_target">
+<span class="sig-prename descclassname"><span class="pre">mlflow.deployments.</span></span><span class="sig-name descname"><span class="pre">set_deployments_target</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/utils.html#set_deployments_target"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.set_deployments_target" title="Permalink to this definition"> </a></dt>
 <dd><p>Sets the target deployment client for MLflow deployments</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1684,13 +1685,13 @@ Databricks, “databricks”.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="mlflow.deployments.PredictionsResponse">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mlflow.deployments.</span></code><code class="sig-name descname"><span class="pre">PredictionsResponse</span></code><a class="reference internal" href="../_modules/mlflow/deployments.html#PredictionsResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.PredictionsResponse" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.PredictionsResponse">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.deployments.</span></span><span class="sig-name descname"><span class="pre">PredictionsResponse</span></span><a class="reference internal" href="../_modules/mlflow/deployments.html#PredictionsResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.PredictionsResponse" title="Permalink to this definition"> </a></dt>
 <dd><p>Represents the predictions and metadata returned in response to a scoring request, such as a
 REST API request sent to the <code class="docutils literal notranslate"><span class="pre">/invocations</span></code> endpoint of an MLflow Model Server.</p>
 <dl class="py method">
-<dt id="mlflow.deployments.PredictionsResponse.get_predictions">
-<code class="sig-name descname"><span class="pre">get_predictions</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictions_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'dataframe'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments.html#PredictionsResponse.get_predictions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.PredictionsResponse.get_predictions" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.PredictionsResponse.get_predictions">
+<span class="sig-name descname"><span class="pre">get_predictions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictions_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'dataframe'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments.html#PredictionsResponse.get_predictions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.PredictionsResponse.get_predictions" title="Permalink to this definition"> </a></dt>
 <dd><p>Get the predictions returned from the MLflow Model Server in the specified format.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1711,8 +1712,8 @@ the “ndarray” predictions_format is specified.</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.deployments.PredictionsResponse.to_json">
-<code class="sig-name descname"><span class="pre">to_json</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments.html#PredictionsResponse.to_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.PredictionsResponse.to_json" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.deployments.PredictionsResponse.to_json">
+<span class="sig-name descname"><span class="pre">to_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments.html#PredictionsResponse.to_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.PredictionsResponse.to_json" title="Permalink to this definition"> </a></dt>
 <dd><p>Get the JSON representation of the MLflow Predictions Response.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

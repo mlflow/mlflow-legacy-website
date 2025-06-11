@@ -78,6 +78,7 @@
   <script src="../../../_static/js/modernizr.min.js"></script>
 
 </head>
+<script type="text/javascript" src="../../../_static/documentation_options.js"></script>
 <script type="text/javascript" src="../../../_static/jquery.js"></script>
 <script type="text/javascript" src="../../../_static/underscore.js"></script>
 <script type="text/javascript" src="../../../_static/doctools.js"></script>
@@ -238,14 +239,14 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.entities.trace_state</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
 
-<span class="kn">from</span> <span class="nn">opentelemetry</span> <span class="kn">import</span> <span class="n">trace</span> <span class="k">as</span> <span class="n">trace_api</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">opentelemetry</span><span class="w"> </span><span class="kn">import</span> <span class="n">trace</span> <span class="k">as</span> <span class="n">trace_api</span>
 
-<span class="kn">from</span> <span class="nn">mlflow.protos</span> <span class="kn">import</span> <span class="n">service_pb2</span> <span class="k">as</span> <span class="n">pb</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.protos</span><span class="w"> </span><span class="kn">import</span> <span class="n">service_pb2</span> <span class="k">as</span> <span class="n">pb</span>
 
 
-<div class="viewcode-block" id="TraceState"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.TraceState">[docs]</a><span class="k">class</span> <span class="nc">TraceState</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<div class="viewcode-block" id="TraceState"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.TraceState">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">TraceState</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Enum representing the state of a trace.</span>
 
 <span class="sd">    - ``STATE_UNSPECIFIED``: Unspecified trace state.</span>
@@ -259,15 +260,15 @@
     <span class="n">ERROR</span> <span class="o">=</span> <span class="s2">&quot;ERROR&quot;</span>
     <span class="n">IN_PROGRESS</span> <span class="o">=</span> <span class="s2">&quot;IN_PROGRESS&quot;</span>
 
-<div class="viewcode-block" id="TraceState.to_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.TraceState.to_proto">[docs]</a>    <span class="k">def</span> <span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TraceState.to_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.TraceState.to_proto">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">pb</span><span class="o">.</span><span class="n">TraceInfoV3</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">Value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TraceState.from_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.TraceState.from_proto">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TraceState&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TraceState&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">TraceState</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">TraceInfoV3</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">Name</span><span class="p">(</span><span class="n">proto</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="TraceState.from_otel_status"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.TraceState.from_otel_status">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">from_otel_status</span><span class="p">(</span><span class="n">otel_status</span><span class="p">:</span> <span class="n">trace_api</span><span class="o">.</span><span class="n">Status</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_otel_status</span><span class="p">(</span><span class="n">otel_status</span><span class="p">:</span> <span class="n">trace_api</span><span class="o">.</span><span class="n">Status</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert OpenTelemetry status code to MLflow TraceState.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">_OTEL_STATUS_CODE_TO_MLFLOW</span><span class="p">[</span><span class="n">otel_status</span><span class="o">.</span><span class="n">status_code</span><span class="p">]</span></div></div>
 

@@ -78,6 +78,7 @@
   <script src="../../../_static/js/modernizr.min.js"></script>
 
 </head>
+<script type="text/javascript" src="../../../_static/documentation_options.js"></script>
 <script type="text/javascript" src="../../../_static/jquery.js"></script>
 <script type="text/javascript" src="../../../_static/underscore.js"></script>
 <script type="text/javascript" src="../../../_static/doctools.js"></script>
@@ -238,38 +239,38 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.types.chat</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Annotated</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
-<span class="kn">from</span> <span class="nn">uuid</span> <span class="kn">import</span> <span class="n">uuid4</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Annotated</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">uuid</span><span class="w"> </span><span class="kn">import</span> <span class="n">uuid4</span>
 
-<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span> <span class="k">as</span> <span class="n">_BaseModel</span>
-<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">Field</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span> <span class="k">as</span> <span class="n">_BaseModel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">Field</span>
 
-<span class="kn">from</span> <span class="nn">mlflow.utils</span> <span class="kn">import</span> <span class="n">IS_PYDANTIC_V2_OR_NEWER</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">IS_PYDANTIC_V2_OR_NEWER</span>
 
 
-<div class="viewcode-block" id="BaseModel"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.BaseModel">[docs]</a><span class="k">class</span> <span class="nc">BaseModel</span><span class="p">(</span><span class="n">_BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseModel"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.BaseModel">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">BaseModel</span><span class="p">(</span><span class="n">_BaseModel</span><span class="p">):</span>
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">validate_compat</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate_compat</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">IS_PYDANTIC_V2_OR_NEWER</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">model_validate</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">parse_obj</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">model_dump_compat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">model_dump_compat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">IS_PYDANTIC_V2_OR_NEWER</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_dump</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="TextContentPart"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.TextContentPart">[docs]</a><span class="k">class</span> <span class="nc">TextContentPart</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="TextContentPart"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.TextContentPart">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">TextContentPart</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span>
     <span class="n">text</span><span class="p">:</span> <span class="nb">str</span></div>
 
 
-<div class="viewcode-block" id="ImageUrl"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.ImageUrl">[docs]</a><span class="k">class</span> <span class="nc">ImageUrl</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="ImageUrl"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.ImageUrl">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ImageUrl</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents an image URL.</span>
 
@@ -287,17 +288,17 @@
     <span class="n">detail</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="s2">&quot;low&quot;</span><span class="p">,</span> <span class="s2">&quot;high&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="ImageContentPart"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.ImageContentPart">[docs]</a><span class="k">class</span> <span class="nc">ImageContentPart</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="ImageContentPart"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.ImageContentPart">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ImageContentPart</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;image_url&quot;</span><span class="p">]</span>
     <span class="n">image_url</span><span class="p">:</span> <span class="n">ImageUrl</span></div>
 
 
-<div class="viewcode-block" id="InputAudio"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.InputAudio">[docs]</a><span class="k">class</span> <span class="nc">InputAudio</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="InputAudio"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.InputAudio">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">InputAudio</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="n">data</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># base64 encoded data</span>
     <span class="nb">format</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;wav&quot;</span><span class="p">,</span> <span class="s2">&quot;mp3&quot;</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="AudioContentPart"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.AudioContentPart">[docs]</a><span class="k">class</span> <span class="nc">AudioContentPart</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="AudioContentPart"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.AudioContentPart">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">AudioContentPart</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;input_audio&quot;</span><span class="p">]</span>
     <span class="n">input_audio</span><span class="p">:</span> <span class="n">InputAudio</span></div>
 
@@ -312,23 +313,23 @@
 <span class="n">ContentType</span> <span class="o">=</span> <span class="n">Annotated</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ContentPartsList</span><span class="p">],</span> <span class="n">Field</span><span class="p">(</span><span class="n">union_mode</span><span class="o">=</span><span class="s2">&quot;left_to_right&quot;</span><span class="p">)]</span>
 
 
-<div class="viewcode-block" id="Function"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.Function">[docs]</a><span class="k">class</span> <span class="nc">Function</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="Function"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.Function">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">Function</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">arguments</span><span class="p">:</span> <span class="nb">str</span>
 
-    <span class="k">def</span> <span class="nf">to_tool_call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ToolCall</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_tool_call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ToolCall</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="nb">id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid4</span><span class="p">())</span>
         <span class="k">return</span> <span class="n">ToolCall</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;function&quot;</span><span class="p">,</span> <span class="n">function</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="ToolCall"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.ToolCall">[docs]</a><span class="k">class</span> <span class="nc">ToolCall</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="ToolCall"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.ToolCall">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ToolCall</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
     <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;function&quot;</span><span class="p">)</span>
     <span class="n">function</span><span class="p">:</span> <span class="n">Function</span></div>
 
 
-<div class="viewcode-block" id="ChatMessage"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.ChatMessage">[docs]</a><span class="k">class</span> <span class="nc">ChatMessage</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="ChatMessage"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.ChatMessage">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ChatMessage</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A chat request. ``content`` can be a string, or an array of content parts.</span>
 
@@ -357,33 +358,33 @@
     <span class="n">tool_call_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="ParamType"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.ParamType">[docs]</a><span class="k">class</span> <span class="nc">ParamType</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="ParamType"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.ParamType">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ParamType</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="nb">type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="s2">&quot;number&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span> <span class="s2">&quot;boolean&quot;</span><span class="p">,</span> <span class="s2">&quot;null&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span>
         <span class="kc">None</span>
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="ParamProperty"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.ParamProperty">[docs]</a><span class="k">class</span> <span class="nc">ParamProperty</span><span class="p">(</span><span class="n">ParamType</span><span class="p">):</span>
+<div class="viewcode-block" id="ParamProperty"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.ParamProperty">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ParamProperty</span><span class="p">(</span><span class="n">ParamType</span><span class="p">):</span>
     <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">enum</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">items</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ParamType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="FunctionParams"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.FunctionParams">[docs]</a><span class="k">class</span> <span class="nc">FunctionParams</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="FunctionParams"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.FunctionParams">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">FunctionParams</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="n">properties</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ParamProperty</span><span class="p">]</span>
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;object&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;object&quot;</span>
     <span class="n">required</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">additionalProperties</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="FunctionToolDefinition"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.FunctionToolDefinition">[docs]</a><span class="k">class</span> <span class="nc">FunctionToolDefinition</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="FunctionToolDefinition"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.FunctionToolDefinition">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">FunctionToolDefinition</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">parameters</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">FunctionParams</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">strict</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="ChatTool"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.ChatTool">[docs]</a><span class="k">class</span> <span class="nc">ChatTool</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="ChatTool"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.ChatTool">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ChatTool</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A tool definition passed to the chat completion API.</span>
 
@@ -394,7 +395,7 @@
     <span class="n">function</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">FunctionToolDefinition</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="BaseRequestPayload"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.BaseRequestPayload">[docs]</a><span class="k">class</span> <span class="nc">BaseRequestPayload</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseRequestPayload"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.BaseRequestPayload">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">BaseRequestPayload</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Common parameters used for chat completions and completion endpoints.&quot;&quot;&quot;</span>
 
     <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">ge</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">le</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
@@ -415,30 +416,30 @@
 <span class="c1"># this file have dependencies defined higher than the line of usage.</span>
 
 
-<div class="viewcode-block" id="ChatChoice"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.ChatChoice">[docs]</a><span class="k">class</span> <span class="nc">ChatChoice</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="ChatChoice"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.ChatChoice">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ChatChoice</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="n">index</span><span class="p">:</span> <span class="nb">int</span>
     <span class="n">message</span><span class="p">:</span> <span class="n">ChatMessage</span>
     <span class="n">finish_reason</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="ChatUsage"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.ChatUsage">[docs]</a><span class="k">class</span> <span class="nc">ChatUsage</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="ChatUsage"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.ChatUsage">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ChatUsage</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="n">prompt_tokens</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">completion_tokens</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">total_tokens</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="ChatChoiceDelta"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.ChatChoiceDelta">[docs]</a><span class="k">class</span> <span class="nc">ChatChoiceDelta</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="ChatChoiceDelta"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.ChatChoiceDelta">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ChatChoiceDelta</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="n">role</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">content</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="ChatChunkChoice"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.ChatChunkChoice">[docs]</a><span class="k">class</span> <span class="nc">ChatChunkChoice</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="ChatChunkChoice"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.ChatChunkChoice">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ChatChunkChoice</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="n">index</span><span class="p">:</span> <span class="nb">int</span>
     <span class="n">finish_reason</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">delta</span><span class="p">:</span> <span class="n">ChatChoiceDelta</span></div>
 
 
-<div class="viewcode-block" id="ChatCompletionChunk"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.ChatCompletionChunk">[docs]</a><span class="k">class</span> <span class="nc">ChatCompletionChunk</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="ChatCompletionChunk"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.ChatCompletionChunk">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ChatCompletionChunk</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A chunk of a chat completion stream response.&quot;&quot;&quot;</span>
 
     <span class="nb">id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
@@ -448,7 +449,7 @@
     <span class="n">choices</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ChatChunkChoice</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="ChatCompletionRequest"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.ChatCompletionRequest">[docs]</a><span class="k">class</span> <span class="nc">ChatCompletionRequest</span><span class="p">(</span><span class="n">BaseRequestPayload</span><span class="p">):</span>
+<div class="viewcode-block" id="ChatCompletionRequest"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.ChatCompletionRequest">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ChatCompletionRequest</span><span class="p">(</span><span class="n">BaseRequestPayload</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A request to the chat completion API.</span>
 
@@ -464,7 +465,7 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="ChatCompletionResponse"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.ChatCompletionResponse">[docs]</a><span class="k">class</span> <span class="nc">ChatCompletionResponse</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="ChatCompletionResponse"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.chat.ChatCompletionResponse">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ChatCompletionResponse</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A response from the chat completion API.</span>
 

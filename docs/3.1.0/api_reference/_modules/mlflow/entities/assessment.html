@@ -78,6 +78,7 @@
   <script src="../../../_static/js/modernizr.min.js"></script>
 
 </head>
+<script type="text/javascript" src="../../../_static/documentation_options.js"></script>
 <script type="text/javascript" src="../../../_static/jquery.js"></script>
 <script type="text/javascript" src="../../../_static/underscore.js"></script>
 <script type="text/javascript" src="../../../_static/doctools.js"></script>
@@ -238,26 +239,26 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.entities.assessment</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">from</span> <span class="nn">google.protobuf.json_format</span> <span class="kn">import</span> <span class="n">MessageToDict</span><span class="p">,</span> <span class="n">ParseDict</span>
-<span class="kn">from</span> <span class="nn">google.protobuf.struct_pb2</span> <span class="kn">import</span> <span class="n">Value</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">google.protobuf.json_format</span><span class="w"> </span><span class="kn">import</span> <span class="n">MessageToDict</span><span class="p">,</span> <span class="n">ParseDict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">google.protobuf.struct_pb2</span><span class="w"> </span><span class="kn">import</span> <span class="n">Value</span>
 
-<span class="kn">from</span> <span class="nn">mlflow.entities._mlflow_object</span> <span class="kn">import</span> <span class="n">_MlflowObject</span>
-<span class="kn">from</span> <span class="nn">mlflow.entities.assessment_error</span> <span class="kn">import</span> <span class="n">AssessmentError</span>
-<span class="kn">from</span> <span class="nn">mlflow.entities.assessment_source</span> <span class="kn">import</span> <span class="n">AssessmentSource</span><span class="p">,</span> <span class="n">AssessmentSourceType</span>
-<span class="kn">from</span> <span class="nn">mlflow.exceptions</span> <span class="kn">import</span> <span class="n">MlflowException</span>
-<span class="kn">from</span> <span class="nn">mlflow.protos.assessments_pb2</span> <span class="kn">import</span> <span class="n">Assessment</span> <span class="k">as</span> <span class="n">ProtoAssessment</span>
-<span class="kn">from</span> <span class="nn">mlflow.protos.assessments_pb2</span> <span class="kn">import</span> <span class="n">Expectation</span> <span class="k">as</span> <span class="n">ProtoExpectation</span>
-<span class="kn">from</span> <span class="nn">mlflow.protos.assessments_pb2</span> <span class="kn">import</span> <span class="n">Feedback</span> <span class="k">as</span> <span class="n">ProtoFeedback</span>
-<span class="kn">from</span> <span class="nn">mlflow.utils.annotations</span> <span class="kn">import</span> <span class="n">experimental</span>
-<span class="kn">from</span> <span class="nn">mlflow.utils.exception_utils</span> <span class="kn">import</span> <span class="n">get_stacktrace</span>
-<span class="kn">from</span> <span class="nn">mlflow.utils.proto_json_utils</span> <span class="kn">import</span> <span class="n">proto_timestamp_to_milliseconds</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities._mlflow_object</span><span class="w"> </span><span class="kn">import</span> <span class="n">_MlflowObject</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.assessment_error</span><span class="w"> </span><span class="kn">import</span> <span class="n">AssessmentError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.assessment_source</span><span class="w"> </span><span class="kn">import</span> <span class="n">AssessmentSource</span><span class="p">,</span> <span class="n">AssessmentSourceType</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.protos.assessments_pb2</span><span class="w"> </span><span class="kn">import</span> <span class="n">Assessment</span> <span class="k">as</span> <span class="n">ProtoAssessment</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.protos.assessments_pb2</span><span class="w"> </span><span class="kn">import</span> <span class="n">Expectation</span> <span class="k">as</span> <span class="n">ProtoExpectation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.protos.assessments_pb2</span><span class="w"> </span><span class="kn">import</span> <span class="n">Feedback</span> <span class="k">as</span> <span class="n">ProtoFeedback</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">experimental</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.exception_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_stacktrace</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.proto_json_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">proto_timestamp_to_milliseconds</span>
 
 <span class="c1"># Feedback value should be one of the following types:</span>
 <span class="c1"># - float</span>
@@ -272,7 +273,7 @@
 
 <div class="viewcode-block" id="Assessment"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.Assessment">[docs]</a><span class="nd">@experimental</span>
 <span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">Assessment</span><span class="p">(</span><span class="n">_MlflowObject</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Assessment</span><span class="p">(</span><span class="n">_MlflowObject</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Base class for assessments that can be attached to a trace.</span>
 <span class="sd">    An Assessment should be one of the following types:</span>
@@ -314,7 +315,7 @@
     <span class="c1"># This should not be set by the user, it is automatically set by the backend.</span>
     <span class="n">valid</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expectation</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">feedback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
                 <span class="s2">&quot;Exactly one of `expectation` or `feedback` should be specified.&quot;</span><span class="p">,</span>
@@ -345,7 +346,7 @@
                 <span class="sa">f</span><span class="s2">&quot;Got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">)</span><span class="si">}</span><span class="s2"> instead.&quot;</span>
             <span class="p">)</span>
 
-<div class="viewcode-block" id="Assessment.to_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.Assessment.to_proto">[docs]</a>    <span class="k">def</span> <span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Assessment.to_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.Assessment.to_proto">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">assessment</span> <span class="o">=</span> <span class="n">ProtoAssessment</span><span class="p">()</span>
         <span class="n">assessment</span><span class="o">.</span><span class="n">assessment_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
         <span class="n">assessment</span><span class="o">.</span><span class="n">trace_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trace_id</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span>
@@ -378,7 +379,7 @@
         <span class="k">return</span> <span class="n">assessment</span></div>
 
 <div class="viewcode-block" id="Assessment.from_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.Assessment.from_proto">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">proto</span><span class="o">.</span><span class="n">WhichOneof</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;expectation&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">Expectation</span><span class="o">.</span><span class="n">from_proto</span><span class="p">(</span><span class="n">proto</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">proto</span><span class="o">.</span><span class="n">WhichOneof</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;feedback&quot;</span><span class="p">:</span>
@@ -388,13 +389,13 @@
                 <span class="sa">f</span><span class="s2">&quot;Unknown assessment type: </span><span class="si">{</span><span class="n">proto</span><span class="o">.</span><span class="n">WhichOneof</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="p">)</span></div>
 
-<div class="viewcode-block" id="Assessment.to_dictionary"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.Assessment.to_dictionary">[docs]</a>    <span class="k">def</span> <span class="nf">to_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Assessment.to_dictionary"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.Assessment.to_dictionary">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># Note that MessageToDict excludes None fields. For example, if assessment_id is None,</span>
         <span class="c1"># it won&#39;t be included in the resulting dictionary.</span>
         <span class="k">return</span> <span class="n">MessageToDict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_proto</span><span class="p">(),</span> <span class="n">preserving_proto_field_name</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Assessment.from_dictionary"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.Assessment.from_dictionary">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dictionary</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;Assessment&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_dictionary</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;Assessment&quot;</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;expectation&quot;</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">Expectation</span><span class="o">.</span><span class="n">from_dictionary</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;feedback&quot;</span><span class="p">):</span>
@@ -410,7 +411,7 @@
 
 <div class="viewcode-block" id="Feedback"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.Feedback">[docs]</a><span class="nd">@experimental</span>
 <span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">Feedback</span><span class="p">(</span><span class="n">Assessment</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Feedback</span><span class="p">(</span><span class="n">Assessment</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents feedback about the output of an operation. For example, if the response from a</span>
 <span class="sd">    generative AI application to a particular user query is correct, then a human or LLM judge</span>
@@ -459,7 +460,7 @@
 <span class="sd">            )</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_FEEDBACK_NAME</span><span class="p">,</span>
         <span class="n">value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">FeedbackValueType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -506,15 +507,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">error</span> <span class="o">=</span> <span class="n">error</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FeedbackValueType</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FeedbackValueType</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">feedback</span><span class="o">.</span><span class="n">value</span>
 
     <span class="nd">@value</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">FeedbackValueType</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">FeedbackValueType</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">feedback</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
 
 <div class="viewcode-block" id="Feedback.from_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.Feedback.from_proto">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">):</span>
         <span class="c1"># Convert ScalarMapContainer to a normal Python dict</span>
         <span class="n">metadata</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">proto</span><span class="o">.</span><span class="n">metadata</span><span class="p">)</span> <span class="k">if</span> <span class="n">proto</span><span class="o">.</span><span class="n">metadata</span> <span class="k">else</span> <span class="kc">None</span>
         <span class="n">feedback_value</span> <span class="o">=</span> <span class="n">FeedbackValue</span><span class="o">.</span><span class="n">from_proto</span><span class="p">(</span><span class="n">proto</span><span class="o">.</span><span class="n">feedback</span><span class="p">)</span>
@@ -536,7 +537,7 @@
         <span class="k">return</span> <span class="n">feedback</span></div>
 
 <div class="viewcode-block" id="Feedback.from_dictionary"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.Feedback.from_dictionary">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dictionary</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;Feedback&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_dictionary</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;Feedback&quot;</span><span class="p">:</span>
         <span class="n">feedback_value</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;feedback&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">feedback_value</span><span class="p">:</span>
@@ -565,19 +566,19 @@
 
     <span class="c1"># Backward compatibility: The old assessment object had these fields at top level.</span>
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">error_code</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">error_code</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The error code of the error that occurred when the feedback was created.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">feedback</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">error_code</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">feedback</span><span class="o">.</span><span class="n">error</span> <span class="k">else</span> <span class="kc">None</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">error_message</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">error_message</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The error message of the error that occurred when the feedback was created.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">feedback</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">error_message</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">feedback</span><span class="o">.</span><span class="n">error</span> <span class="k">else</span> <span class="kc">None</span></div>
 
 
 <div class="viewcode-block" id="Expectation"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.Expectation">[docs]</a><span class="nd">@experimental</span>
 <span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">Expectation</span><span class="p">(</span><span class="n">Assessment</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Expectation</span><span class="p">(</span><span class="n">Assessment</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents an expectation about the output of an operation, such as the expected response</span>
 <span class="sd">    that a generative AI application should provide to a particular user query.</span>
@@ -614,7 +615,7 @@
 <span class="sd">            )</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
@@ -643,15 +644,15 @@
         <span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">expectation</span><span class="o">.</span><span class="n">value</span>
 
     <span class="nd">@value</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">expectation</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
 
 <div class="viewcode-block" id="Expectation.from_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.Expectation.from_proto">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Expectation&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Expectation&quot;</span><span class="p">:</span>
         <span class="c1"># Convert ScalarMapContainer to a normal Python dict</span>
         <span class="n">metadata</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">proto</span><span class="o">.</span><span class="n">metadata</span><span class="p">)</span> <span class="k">if</span> <span class="n">proto</span><span class="o">.</span><span class="n">metadata</span> <span class="k">else</span> <span class="kc">None</span>
         <span class="n">expectation_value</span> <span class="o">=</span> <span class="n">ExpectationValue</span><span class="o">.</span><span class="n">from_proto</span><span class="p">(</span><span class="n">proto</span><span class="o">.</span><span class="n">expectation</span><span class="p">)</span>
@@ -669,7 +670,7 @@
         <span class="k">return</span> <span class="n">expectation</span></div>
 
 <div class="viewcode-block" id="Expectation.from_dictionary"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.Expectation.from_dictionary">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dictionary</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;Expectation&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_dictionary</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;Expectation&quot;</span><span class="p">:</span>
         <span class="n">expectation_value</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;expectation&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">expectation_value</span><span class="p">:</span>
@@ -698,12 +699,12 @@
 
 <span class="nd">@experimental</span>
 <span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">ExpectationValue</span><span class="p">(</span><span class="n">_MlflowObject</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ExpectationValue</span><span class="p">(</span><span class="n">_MlflowObject</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Represents an expectation value.&quot;&quot;&quot;</span>
 
     <span class="n">value</span><span class="p">:</span> <span class="n">Any</span>
 
-    <span class="k">def</span> <span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_need_serialization</span><span class="p">():</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">serialized_value</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
@@ -711,7 +712,7 @@
                 <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
                     <span class="sa">f</span><span class="s2">&quot;Failed to serialize value </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2"> to JSON string. &quot;</span>
                     <span class="s2">&quot;Expectation value must be JSON-serializable.&quot;</span>
-                <span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+                <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
             <span class="k">return</span> <span class="n">ProtoExpectation</span><span class="p">(</span>
                 <span class="n">serialized_value</span><span class="o">=</span><span class="n">ProtoExpectation</span><span class="o">.</span><span class="n">SerializedValue</span><span class="p">(</span>
                     <span class="n">serialization_format</span><span class="o">=</span><span class="n">_JSON_SERIALIZATION_FORMAT</span><span class="p">,</span>
@@ -722,7 +723,7 @@
         <span class="k">return</span> <span class="n">ProtoExpectation</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">ParseDict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">Value</span><span class="p">()))</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Expectation&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Expectation&quot;</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">proto</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span><span class="s2">&quot;serialized_value&quot;</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">proto</span><span class="o">.</span><span class="n">serialized_value</span><span class="o">.</span><span class="n">serialization_format</span> <span class="o">!=</span> <span class="n">_JSON_SERIALIZATION_FORMAT</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
@@ -733,11 +734,11 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">MessageToDict</span><span class="p">(</span><span class="n">proto</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="nf">to_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">MessageToDict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_proto</span><span class="p">(),</span> <span class="n">preserving_proto_field_name</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dictionary</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_dictionary</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
         <span class="k">if</span> <span class="s2">&quot;value&quot;</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">])</span>
         <span class="k">elif</span> <span class="s2">&quot;serialized_value&quot;</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
@@ -748,37 +749,37 @@
                 <span class="s2">&quot;representation of an Expectation.&quot;</span>
             <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_need_serialization</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_need_serialization</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># Values like None, lists, dicts, should be serialized as a JSON string</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">))</span>
 
 
 <span class="nd">@experimental</span>
 <span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">FeedbackValue</span><span class="p">(</span><span class="n">_MlflowObject</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">FeedbackValue</span><span class="p">(</span><span class="n">_MlflowObject</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Represents a feedback value.&quot;&quot;&quot;</span>
 
     <span class="n">value</span><span class="p">:</span> <span class="n">FeedbackValueType</span>
     <span class="n">error</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">AssessmentError</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">ProtoFeedback</span><span class="p">(</span>
             <span class="n">value</span><span class="o">=</span><span class="n">ParseDict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">Value</span><span class="p">(),</span> <span class="n">ignore_unknown_fields</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
             <span class="n">error</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">to_proto</span><span class="p">()</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">error</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
         <span class="p">)</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;FeedbackValue&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;FeedbackValue&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">FeedbackValue</span><span class="p">(</span>
             <span class="n">value</span><span class="o">=</span><span class="n">MessageToDict</span><span class="p">(</span><span class="n">proto</span><span class="o">.</span><span class="n">value</span><span class="p">),</span>
             <span class="n">error</span><span class="o">=</span><span class="n">AssessmentError</span><span class="o">.</span><span class="n">from_proto</span><span class="p">(</span><span class="n">proto</span><span class="o">.</span><span class="n">error</span><span class="p">)</span> <span class="k">if</span> <span class="n">proto</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span><span class="s2">&quot;error&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
         <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">to_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">MessageToDict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_proto</span><span class="p">(),</span> <span class="n">preserving_proto_field_name</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dictionary</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_dictionary</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
             <span class="n">value</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">],</span>
             <span class="n">error</span><span class="o">=</span><span class="n">AssessmentError</span><span class="o">.</span><span class="n">from_dictionary</span><span class="p">(</span><span class="n">err</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="n">err</span> <span class="o">:=</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;error&quot;</span><span class="p">))</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>

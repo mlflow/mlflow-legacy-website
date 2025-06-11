@@ -78,6 +78,7 @@
   <script src="../../../_static/js/modernizr.min.js"></script>
 
 </head>
+<script type="text/javascript" src="../../../_static/documentation_options.js"></script>
 <script type="text/javascript" src="../../../_static/jquery.js"></script>
 <script type="text/javascript" src="../../../_static/underscore.js"></script>
 <script type="text/javascript" src="../../../_static/doctools.js"></script>
@@ -238,17 +239,17 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.entities.trace_location</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
-<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
 
-<span class="kn">from</span> <span class="nn">mlflow.entities._mlflow_object</span> <span class="kn">import</span> <span class="n">_MlflowObject</span>
-<span class="kn">from</span> <span class="nn">mlflow.exceptions</span> <span class="kn">import</span> <span class="n">MlflowException</span>
-<span class="kn">from</span> <span class="nn">mlflow.protos</span> <span class="kn">import</span> <span class="n">service_pb2</span> <span class="k">as</span> <span class="n">pb</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities._mlflow_object</span><span class="w"> </span><span class="kn">import</span> <span class="n">_MlflowObject</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.protos</span><span class="w"> </span><span class="kn">import</span> <span class="n">service_pb2</span> <span class="k">as</span> <span class="n">pb</span>
 
 
 <div class="viewcode-block" id="MlflowExperimentLocation"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.MlflowExperimentLocation">[docs]</a><span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">MlflowExperimentLocation</span><span class="p">(</span><span class="n">_MlflowObject</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MlflowExperimentLocation</span><span class="p">(</span><span class="n">_MlflowObject</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents the location of an MLflow experiment.</span>
 
@@ -258,23 +259,23 @@
 
     <span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span>
 
-<div class="viewcode-block" id="MlflowExperimentLocation.to_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.MlflowExperimentLocation.to_proto">[docs]</a>    <span class="k">def</span> <span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MlflowExperimentLocation.to_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.MlflowExperimentLocation.to_proto">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">pb</span><span class="o">.</span><span class="n">TraceLocation</span><span class="o">.</span><span class="n">MlflowExperimentLocation</span><span class="p">(</span><span class="n">experiment_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">experiment_id</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="MlflowExperimentLocation.from_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.MlflowExperimentLocation.from_proto">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;MlflowExperimentLocation&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;MlflowExperimentLocation&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">experiment_id</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">experiment_id</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="MlflowExperimentLocation.to_dict"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.MlflowExperimentLocation.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<div class="viewcode-block" id="MlflowExperimentLocation.to_dict"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.MlflowExperimentLocation.to_dict">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
         <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;experiment_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">experiment_id</span><span class="p">}</span></div>
 
 <div class="viewcode-block" id="MlflowExperimentLocation.from_dict"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.MlflowExperimentLocation.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;MlflowExperimentLocation&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;MlflowExperimentLocation&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">experiment_id</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;experiment_id&quot;</span><span class="p">])</span></div></div>
 
 
 <div class="viewcode-block" id="InferenceTableLocation"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.InferenceTableLocation">[docs]</a><span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">InferenceTableLocation</span><span class="p">(</span><span class="n">_MlflowObject</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">InferenceTableLocation</span><span class="p">(</span><span class="n">_MlflowObject</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents the location of a Databricks inference table.</span>
 
@@ -285,40 +286,40 @@
 
     <span class="n">full_table_name</span><span class="p">:</span> <span class="nb">str</span>
 
-<div class="viewcode-block" id="InferenceTableLocation.to_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.InferenceTableLocation.to_proto">[docs]</a>    <span class="k">def</span> <span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="InferenceTableLocation.to_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.InferenceTableLocation.to_proto">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">pb</span><span class="o">.</span><span class="n">TraceLocation</span><span class="o">.</span><span class="n">InferenceTableLocation</span><span class="p">(</span><span class="n">full_table_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">full_table_name</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="InferenceTableLocation.from_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.InferenceTableLocation.from_proto">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;InferenceTableLocation&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;InferenceTableLocation&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">full_table_name</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">full_table_name</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="InferenceTableLocation.to_dict"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.InferenceTableLocation.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<div class="viewcode-block" id="InferenceTableLocation.to_dict"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.InferenceTableLocation.to_dict">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
         <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;full_table_name&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">full_table_name</span><span class="p">}</span></div>
 
 <div class="viewcode-block" id="InferenceTableLocation.from_dict"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.InferenceTableLocation.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;InferenceTableLocation&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;InferenceTableLocation&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">full_table_name</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;full_table_name&quot;</span><span class="p">])</span></div></div>
 
 
-<div class="viewcode-block" id="TraceLocationType"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.TraceLocationType">[docs]</a><span class="k">class</span> <span class="nc">TraceLocationType</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<div class="viewcode-block" id="TraceLocationType"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.TraceLocationType">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">TraceLocationType</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
     <span class="n">TRACE_LOCATION_TYPE_UNSPECIFIED</span> <span class="o">=</span> <span class="s2">&quot;TRACE_LOCATION_TYPE_UNSPECIFIED&quot;</span>
     <span class="n">MLFLOW_EXPERIMENT</span> <span class="o">=</span> <span class="s2">&quot;MLFLOW_EXPERIMENT&quot;</span>
     <span class="n">INFERENCE_TABLE</span> <span class="o">=</span> <span class="s2">&quot;INFERENCE_TABLE&quot;</span>
 
-<div class="viewcode-block" id="TraceLocationType.to_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.TraceLocationType.to_proto">[docs]</a>    <span class="k">def</span> <span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TraceLocationType.to_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.TraceLocationType.to_proto">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">pb</span><span class="o">.</span><span class="n">TraceLocation</span><span class="o">.</span><span class="n">TraceLocationType</span><span class="o">.</span><span class="n">Value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TraceLocationType.from_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.TraceLocationType.from_proto">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TraceLocationType&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TraceLocationType&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">TraceLocationType</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">TraceLocation</span><span class="o">.</span><span class="n">TraceLocationType</span><span class="o">.</span><span class="n">Name</span><span class="p">(</span><span class="n">proto</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="TraceLocationType.from_dict"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.TraceLocationType.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;TraceLocationType&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;TraceLocationType&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">])</span></div></div>
 
 
 <div class="viewcode-block" id="TraceLocation"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.TraceLocation">[docs]</a><span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">TraceLocation</span><span class="p">(</span><span class="n">_MlflowObject</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TraceLocation</span><span class="p">(</span><span class="n">_MlflowObject</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents the location where the trace is stored.</span>
 
@@ -340,7 +341,7 @@
     <span class="n">mlflow_experiment</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">MlflowExperimentLocation</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">inference_table</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">InferenceTableLocation</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mlflow_experiment</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">inference_table</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
                 <span class="s2">&quot;Only one of mlflow_experiment or inference_table can be provided.&quot;</span>
@@ -354,7 +355,7 @@
                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">mlflow_experiment</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">inference_table</span><span class="si">}</span><span class="s2">.&quot;</span>
             <span class="p">)</span>
 
-<div class="viewcode-block" id="TraceLocation.to_dict"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.TraceLocation.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<div class="viewcode-block" id="TraceLocation.to_dict"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.TraceLocation.to_dict">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
         <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">value</span><span class="p">}</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mlflow_experiment</span><span class="p">:</span>
             <span class="n">d</span><span class="p">[</span><span class="s2">&quot;mlflow_experiment&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mlflow_experiment</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
@@ -363,7 +364,7 @@
         <span class="k">return</span> <span class="n">d</span></div>
 
 <div class="viewcode-block" id="TraceLocation.from_dict"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.TraceLocation.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;TraceLocation&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;TraceLocation&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
             <span class="nb">type</span><span class="o">=</span><span class="n">TraceLocationType</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]),</span>
             <span class="n">mlflow_experiment</span><span class="o">=</span><span class="p">(</span>
@@ -374,7 +375,7 @@
             <span class="p">),</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="TraceLocation.to_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.TraceLocation.to_proto">[docs]</a>    <span class="k">def</span> <span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TraceLocation.to_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.TraceLocation.to_proto">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mlflow_experiment</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">pb</span><span class="o">.</span><span class="n">TraceLocation</span><span class="p">(</span>
                 <span class="nb">type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">to_proto</span><span class="p">(),</span>
@@ -390,7 +391,7 @@
             <span class="k">return</span> <span class="n">pb</span><span class="o">.</span><span class="n">TraceLocation</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">to_proto</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="TraceLocation.from_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.TraceLocation.from_proto">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TraceLocation&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TraceLocation&quot;</span><span class="p">:</span>
         <span class="n">type_</span> <span class="o">=</span> <span class="n">TraceLocationType</span><span class="o">.</span><span class="n">from_proto</span><span class="p">(</span><span class="n">proto</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">proto</span><span class="o">.</span><span class="n">WhichOneof</span><span class="p">(</span><span class="s2">&quot;identifier&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;mlflow_experiment&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
@@ -406,7 +407,7 @@
             <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">type_</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TraceLocation.from_experiment_id"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.TraceLocation.from_experiment_id">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_experiment_id</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TraceLocation&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_experiment_id</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TraceLocation&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
             <span class="nb">type</span><span class="o">=</span><span class="n">TraceLocationType</span><span class="o">.</span><span class="n">MLFLOW_EXPERIMENT</span><span class="p">,</span>
             <span class="n">mlflow_experiment</span><span class="o">=</span><span class="n">MlflowExperimentLocation</span><span class="p">(</span><span class="n">experiment_id</span><span class="o">=</span><span class="n">experiment_id</span><span class="p">),</span>

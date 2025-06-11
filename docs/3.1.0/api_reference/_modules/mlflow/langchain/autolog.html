@@ -78,6 +78,7 @@
   <script src="../../../_static/js/modernizr.min.js"></script>
 
 </head>
+<script type="text/javascript" src="../../../_static/documentation_options.js"></script>
 <script type="text/javascript" src="../../../_static/jquery.js"></script>
 <script type="text/javascript" src="../../../_static/underscore.js"></script>
 <script type="text/javascript" src="../../../_static/doctools.js"></script>
@@ -238,20 +239,20 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.langchain.autolog</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 
-<span class="kn">from</span> <span class="nn">mlflow.langchain.constant</span> <span class="kn">import</span> <span class="n">FLAVOR_NAME</span>
-<span class="kn">from</span> <span class="nn">mlflow.utils.annotations</span> <span class="kn">import</span> <span class="n">experimental</span>
-<span class="kn">from</span> <span class="nn">mlflow.utils.autologging_utils</span> <span class="kn">import</span> <span class="n">autologging_integration</span>
-<span class="kn">from</span> <span class="nn">mlflow.utils.autologging_utils.config</span> <span class="kn">import</span> <span class="n">AutoLoggingConfig</span>
-<span class="kn">from</span> <span class="nn">mlflow.utils.autologging_utils.safety</span> <span class="kn">import</span> <span class="n">safe_patch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.langchain.constant</span><span class="w"> </span><span class="kn">import</span> <span class="n">FLAVOR_NAME</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">experimental</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.autologging_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">autologging_integration</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.autologging_utils.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoLoggingConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.autologging_utils.safety</span><span class="w"> </span><span class="kn">import</span> <span class="n">safe_patch</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="autolog"><a class="viewcode-back" href="../../../python_api/mlflow.langchain.html#mlflow.langchain.autolog">[docs]</a><span class="nd">@experimental</span>
 <span class="nd">@autologging_integration</span><span class="p">(</span><span class="n">FLAVOR_NAME</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">autolog</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">autolog</span><span class="p">(</span>
     <span class="n">disable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">exclusive</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">disable_for_unsupported_versions</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -278,7 +279,7 @@
 <span class="sd">            collected during inference. Default to ``True``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="kn">from</span> <span class="nn">langchain_core.callbacks</span> <span class="kn">import</span> <span class="n">BaseCallbackManager</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseCallbackManager</span>
 
         <span class="n">safe_patch</span><span class="p">(</span>
             <span class="n">FLAVOR_NAME</span><span class="p">,</span>
@@ -291,8 +292,8 @@
 
     <span class="c1"># Special handlings for edge cases.</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="kn">from</span> <span class="nn">langchain_core.callbacks</span> <span class="kn">import</span> <span class="n">BaseCallbackManager</span>
-        <span class="kn">from</span> <span class="nn">langchain_core.runnables</span> <span class="kn">import</span> <span class="n">RunnableSequence</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseCallbackManager</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.runnables</span><span class="w"> </span><span class="kn">import</span> <span class="n">RunnableSequence</span>
 
         <span class="n">safe_patch</span><span class="p">(</span>
             <span class="n">FLAVOR_NAME</span><span class="p">,</span>
@@ -311,8 +312,8 @@
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Failed to patch RunnableSequence or BaseCallbackManager.&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">_patched_callback_manager_init</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">mlflow.langchain.langchain_tracer</span> <span class="kn">import</span> <span class="n">MlflowLangchainTracer</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_patched_callback_manager_init</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.langchain.langchain_tracer</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowLangchainTracer</span>
 
     <span class="n">original</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
@@ -327,7 +328,7 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">add_handler</span><span class="p">(</span><span class="n">_handler</span><span class="p">,</span> <span class="n">inherit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_patched_callback_manager_merge</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_patched_callback_manager_merge</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Patch BaseCallbackManager.merge to avoid a duplicated callback issue.</span>
 
@@ -337,7 +338,7 @@
 <span class="sd">    callbacks via the setter method. This causes duplicated callbacks injection.</span>
 <span class="sd">    https://github.com/langchain-ai/langchain/blob/d9a069c414a321e7a3f3638a32ecf8a37ec2d188/libs/core/langchain_core/callbacks/base.py#L962-L982</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">from</span> <span class="nn">mlflow.langchain.langchain_tracer</span> <span class="kn">import</span> <span class="n">MlflowLangchainTracer</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.langchain.langchain_tracer</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowLangchainTracer</span>
 
     <span class="c1"># Get the MLflow callback inherited from parent</span>
     <span class="n">inherited</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inheritable_handlers</span> <span class="o">+</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">inheritable_handlers</span>
@@ -361,7 +362,7 @@
     <span class="k">return</span> <span class="n">merged</span>
 
 
-<span class="k">def</span> <span class="nf">_patched_runnable_sequence_batch</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_patched_runnable_sequence_batch</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Patch to terminate span context attachment during batch execution.</span>
 
@@ -377,7 +378,7 @@
 <span class="sd">    Due to this behavior, we cannot attach the span to the context for this particular</span>
 <span class="sd">    API, otherwise spans for different inputs will be mixed up.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">from</span> <span class="nn">mlflow.langchain.langchain_tracer</span> <span class="kn">import</span> <span class="n">_should_attach_span_to_context</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.langchain.langchain_tracer</span><span class="w"> </span><span class="kn">import</span> <span class="n">_should_attach_span_to_context</span>
 
     <span class="n">original_state</span> <span class="o">=</span> <span class="n">_should_attach_span_to_context</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
     <span class="n">_should_attach_span_to_context</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>

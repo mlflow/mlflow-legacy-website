@@ -78,6 +78,7 @@
   <script src="../../_static/js/modernizr.min.js"></script>
 
 </head>
+<script type="text/javascript" src="../../_static/documentation_options.js"></script>
 <script type="text/javascript" src="../../_static/jquery.js"></script>
 <script type="text/javascript" src="../../_static/underscore.js"></script>
 <script type="text/javascript" src="../../_static/doctools.js"></script>
@@ -238,10 +239,10 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.bedrock</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 
-<span class="kn">from</span> <span class="nn">mlflow.utils.annotations</span> <span class="kn">import</span> <span class="n">experimental</span>
-<span class="kn">from</span> <span class="nn">mlflow.utils.autologging_utils</span> <span class="kn">import</span> <span class="n">autologging_integration</span><span class="p">,</span> <span class="n">safe_patch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">experimental</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.autologging_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">autologging_integration</span><span class="p">,</span> <span class="n">safe_patch</span>
 
 <span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -250,7 +251,7 @@
 
 <div class="viewcode-block" id="autolog"><a class="viewcode-back" href="../../python_api/mlflow.bedrock.html#mlflow.bedrock.autolog">[docs]</a><span class="nd">@experimental</span>
 <span class="nd">@autologging_integration</span><span class="p">(</span><span class="n">FLAVOR_NAME</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">autolog</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">autolog</span><span class="p">(</span>
     <span class="n">log_traces</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">disable</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">silent</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -266,9 +267,9 @@
 <span class="sd">        silent: If ``True``, suppress all event logs and warnings from MLflow during Bedrock</span>
 <span class="sd">            autologging. If ``False``, show all events and warnings.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">from</span> <span class="nn">botocore.client</span> <span class="kn">import</span> <span class="n">ClientCreator</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">botocore.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">ClientCreator</span>
 
-    <span class="kn">from</span> <span class="nn">mlflow.bedrock._autolog</span> <span class="kn">import</span> <span class="n">patched_create_client</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.bedrock._autolog</span><span class="w"> </span><span class="kn">import</span> <span class="n">patched_create_client</span>
 
     <span class="c1"># NB: In boto3, the client class for each service is dynamically created at</span>
     <span class="c1"># runtime via the ClientCreator factory class. Therefore, we cannot patch</span>

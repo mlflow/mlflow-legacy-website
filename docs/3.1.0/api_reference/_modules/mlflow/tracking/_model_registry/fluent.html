@@ -78,6 +78,7 @@
   <script src="../../../../_static/js/modernizr.min.js"></script>
 
 </head>
+<script type="text/javascript" src="../../../../_static/documentation_options.js"></script>
 <script type="text/javascript" src="../../../../_static/jquery.js"></script>
 <script type="text/javascript" src="../../../../_static/underscore.js"></script>
 <script type="text/javascript" src="../../../../_static/doctools.js"></script>
@@ -238,53 +239,53 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.tracking._model_registry.fluent</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">functools</span>
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">threading</span>
-<span class="kn">import</span> <span class="nn">uuid</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">functools</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">import</span> <span class="nn">mlflow</span>
-<span class="kn">from</span> <span class="nn">mlflow.entities.logged_model</span> <span class="kn">import</span> <span class="n">LoggedModel</span>
-<span class="kn">from</span> <span class="nn">mlflow.entities.model_registry</span> <span class="kn">import</span> <span class="n">ModelVersion</span><span class="p">,</span> <span class="n">Prompt</span><span class="p">,</span> <span class="n">PromptVersion</span><span class="p">,</span> <span class="n">RegisteredModel</span>
-<span class="kn">from</span> <span class="nn">mlflow.entities.run</span> <span class="kn">import</span> <span class="n">Run</span>
-<span class="kn">from</span> <span class="nn">mlflow.environment_variables</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">mlflow</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.logged_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LoggedModel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.model_registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModelVersion</span><span class="p">,</span> <span class="n">Prompt</span><span class="p">,</span> <span class="n">PromptVersion</span><span class="p">,</span> <span class="n">RegisteredModel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.run</span><span class="w"> </span><span class="kn">import</span> <span class="n">Run</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.environment_variables</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">MLFLOW_PRINT_MODEL_URLS_ON_CREATION</span><span class="p">,</span>
     <span class="n">MLFLOW_PROMPT_CACHE_MAX_SIZE</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">mlflow.exceptions</span> <span class="kn">import</span> <span class="n">MlflowException</span>
-<span class="kn">from</span> <span class="nn">mlflow.models.model</span> <span class="kn">import</span> <span class="n">MLMODEL_FILE_NAME</span>
-<span class="kn">from</span> <span class="nn">mlflow.prompt.registry_utils</span> <span class="kn">import</span> <span class="n">parse_prompt_name_or_uri</span><span class="p">,</span> <span class="n">require_prompt_registry</span>
-<span class="kn">from</span> <span class="nn">mlflow.protos.databricks_pb2</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.models.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">MLMODEL_FILE_NAME</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.prompt.registry_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_prompt_name_or_uri</span><span class="p">,</span> <span class="n">require_prompt_registry</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.protos.databricks_pb2</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">ALREADY_EXISTS</span><span class="p">,</span>
     <span class="n">NOT_FOUND</span><span class="p">,</span>
     <span class="n">RESOURCE_ALREADY_EXISTS</span><span class="p">,</span>
     <span class="n">ErrorCode</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">mlflow.store.artifact.runs_artifact_repo</span> <span class="kn">import</span> <span class="n">RunsArtifactRepository</span>
-<span class="kn">from</span> <span class="nn">mlflow.store.artifact.utils.models</span> <span class="kn">import</span> <span class="n">_parse_model_id_if_present</span>
-<span class="kn">from</span> <span class="nn">mlflow.store.entities.paged_list</span> <span class="kn">import</span> <span class="n">PagedList</span>
-<span class="kn">from</span> <span class="nn">mlflow.store.model_registry</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.store.artifact.runs_artifact_repo</span><span class="w"> </span><span class="kn">import</span> <span class="n">RunsArtifactRepository</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.store.artifact.utils.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">_parse_model_id_if_present</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.store.entities.paged_list</span><span class="w"> </span><span class="kn">import</span> <span class="n">PagedList</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.store.model_registry</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">SEARCH_MODEL_VERSION_MAX_RESULTS_DEFAULT</span><span class="p">,</span>
     <span class="n">SEARCH_REGISTERED_MODEL_MAX_RESULTS_DEFAULT</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">mlflow.tracing.fluent</span> <span class="kn">import</span> <span class="n">get_active_trace_id</span>
-<span class="kn">from</span> <span class="nn">mlflow.tracing.trace_manager</span> <span class="kn">import</span> <span class="n">InMemoryTraceManager</span>
-<span class="kn">from</span> <span class="nn">mlflow.tracking._model_registry</span> <span class="kn">import</span> <span class="n">DEFAULT_AWAIT_MAX_SLEEP_SECONDS</span>
-<span class="kn">from</span> <span class="nn">mlflow.tracking.client</span> <span class="kn">import</span> <span class="n">MlflowClient</span>
-<span class="kn">from</span> <span class="nn">mlflow.tracking.fluent</span> <span class="kn">import</span> <span class="n">active_run</span><span class="p">,</span> <span class="n">get_active_model_id</span>
-<span class="kn">from</span> <span class="nn">mlflow.utils</span> <span class="kn">import</span> <span class="n">get_results_from_paginated_fn</span><span class="p">,</span> <span class="n">mlflow_tags</span>
-<span class="kn">from</span> <span class="nn">mlflow.utils.databricks_utils</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.fluent</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_active_trace_id</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.trace_manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">InMemoryTraceManager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracking._model_registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">DEFAULT_AWAIT_MAX_SLEEP_SECONDS</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracking.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowClient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracking.fluent</span><span class="w"> </span><span class="kn">import</span> <span class="n">active_run</span><span class="p">,</span> <span class="n">get_active_model_id</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_results_from_paginated_fn</span><span class="p">,</span> <span class="n">mlflow_tags</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.databricks_utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">_construct_databricks_uc_registered_model_url</span><span class="p">,</span>
     <span class="n">get_workspace_id</span><span class="p">,</span>
     <span class="n">get_workspace_url</span><span class="p">,</span>
     <span class="n">stage_model_for_databricks_model_serving</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">mlflow.utils.env_pack</span> <span class="kn">import</span> <span class="n">EnvPackType</span><span class="p">,</span> <span class="n">pack_env_for_databricks_model_serving</span>
-<span class="kn">from</span> <span class="nn">mlflow.utils.logging_utils</span> <span class="kn">import</span> <span class="n">eprint</span>
-<span class="kn">from</span> <span class="nn">mlflow.utils.uri</span> <span class="kn">import</span> <span class="n">is_databricks_unity_catalog_uri</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.env_pack</span><span class="w"> </span><span class="kn">import</span> <span class="n">EnvPackType</span><span class="p">,</span> <span class="n">pack_env_for_databricks_model_serving</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.logging_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">eprint</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.uri</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_databricks_unity_catalog_uri</span>
 
 <span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -296,7 +297,7 @@
 <span class="p">)</span>
 
 
-<div class="viewcode-block" id="register_model"><a class="viewcode-back" href="../../../../python_api/mlflow.html#mlflow.register_model">[docs]</a><span class="k">def</span> <span class="nf">register_model</span><span class="p">(</span>
+<div class="viewcode-block" id="register_model"><a class="viewcode-back" href="../../../../python_api/mlflow.html#mlflow.register_model">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">register_model</span><span class="p">(</span>
     <span class="n">model_uri</span><span class="p">,</span>
     <span class="n">name</span><span class="p">,</span>
     <span class="n">await_registration_for</span><span class="o">=</span><span class="n">DEFAULT_AWAIT_MAX_SLEEP_SECONDS</span><span class="p">,</span>
@@ -373,7 +374,7 @@
     <span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">_register_model</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_register_model</span><span class="p">(</span>
     <span class="n">model_uri</span><span class="p">,</span>
     <span class="n">name</span><span class="p">,</span>
     <span class="n">await_registration_for</span><span class="o">=</span><span class="n">DEFAULT_AWAIT_MAX_SLEEP_SECONDS</span><span class="p">,</span>
@@ -516,7 +517,7 @@
     <span class="k">return</span> <span class="n">create_version_response</span>
 
 
-<span class="k">def</span> <span class="nf">_get_logged_models_from_run</span><span class="p">(</span><span class="n">source_run</span><span class="p">:</span> <span class="n">Run</span><span class="p">,</span> <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">LoggedModel</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_logged_models_from_run</span><span class="p">(</span><span class="n">source_run</span><span class="p">:</span> <span class="n">Run</span><span class="p">,</span> <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">LoggedModel</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get all logged models from the source rnu that have the specified model name.</span>
 
 <span class="sd">    Args:</span>
@@ -544,7 +545,7 @@
     <span class="k">return</span> <span class="n">logged_models</span>
 
 
-<div class="viewcode-block" id="search_registered_models"><a class="viewcode-back" href="../../../../python_api/mlflow.html#mlflow.search_registered_models">[docs]</a><span class="k">def</span> <span class="nf">search_registered_models</span><span class="p">(</span>
+<div class="viewcode-block" id="search_registered_models"><a class="viewcode-back" href="../../../../python_api/mlflow.html#mlflow.search_registered_models">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">search_registered_models</span><span class="p">(</span>
     <span class="n">max_results</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">filter_string</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">order_by</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -634,7 +635,7 @@
 <span class="sd">        name=CordobaWeatherForecastModel; run_id=248c66a666744b4887bdeb2f9cf7f1c6; version=1</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">pagination_wrapper_func</span><span class="p">(</span><span class="n">number_to_get</span><span class="p">,</span> <span class="n">next_page_token</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pagination_wrapper_func</span><span class="p">(</span><span class="n">number_to_get</span><span class="p">,</span> <span class="n">next_page_token</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">search_registered_models</span><span class="p">(</span>
             <span class="n">max_results</span><span class="o">=</span><span class="n">number_to_get</span><span class="p">,</span>
             <span class="n">filter_string</span><span class="o">=</span><span class="n">filter_string</span><span class="p">,</span>
@@ -649,7 +650,7 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="search_model_versions"><a class="viewcode-back" href="../../../../python_api/mlflow.html#mlflow.search_model_versions">[docs]</a><span class="k">def</span> <span class="nf">search_model_versions</span><span class="p">(</span>
+<div class="viewcode-block" id="search_model_versions"><a class="viewcode-back" href="../../../../python_api/mlflow.html#mlflow.search_model_versions">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">search_model_versions</span><span class="p">(</span>
     <span class="n">max_results</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">filter_string</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">order_by</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -731,7 +732,7 @@
 <span class="sd">        name=CordobaWeatherForecastModel; run_id=ae9a606a12834c04a8ef1006d0cff779; version=2</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">pagination_wrapper_func</span><span class="p">(</span><span class="n">number_to_get</span><span class="p">,</span> <span class="n">next_page_token</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pagination_wrapper_func</span><span class="p">(</span><span class="n">number_to_get</span><span class="p">,</span> <span class="n">next_page_token</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">search_model_versions</span><span class="p">(</span>
             <span class="n">max_results</span><span class="o">=</span><span class="n">number_to_get</span><span class="p">,</span>
             <span class="n">filter_string</span><span class="o">=</span><span class="n">filter_string</span><span class="p">,</span>
@@ -746,7 +747,7 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="set_model_version_tag"><a class="viewcode-back" href="../../../../python_api/mlflow.html#mlflow.set_model_version_tag">[docs]</a><span class="k">def</span> <span class="nf">set_model_version_tag</span><span class="p">(</span>
+<div class="viewcode-block" id="set_model_version_tag"><a class="viewcode-back" href="../../../../python_api/mlflow.html#mlflow.set_model_version_tag">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">set_model_version_tag</span><span class="p">(</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">version</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -770,7 +771,7 @@
 
 
 <span class="nd">@require_prompt_registry</span>
-<span class="k">def</span> <span class="nf">register_prompt</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">register_prompt</span><span class="p">(</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">template</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">commit_message</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -863,7 +864,7 @@
 
 
 <span class="nd">@require_prompt_registry</span>
-<span class="k">def</span> <span class="nf">search_prompts</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">search_prompts</span><span class="p">(</span>
     <span class="n">filter_string</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">max_results</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PagedList</span><span class="p">[</span><span class="n">Prompt</span><span class="p">]:</span>
@@ -873,7 +874,7 @@
         <span class="n">stacklevel</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">pagination_wrapper_func</span><span class="p">(</span><span class="n">number_to_get</span><span class="p">,</span> <span class="n">next_page_token</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pagination_wrapper_func</span><span class="p">(</span><span class="n">number_to_get</span><span class="p">,</span> <span class="n">next_page_token</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">search_prompts</span><span class="p">(</span>
             <span class="n">filter_string</span><span class="o">=</span><span class="n">filter_string</span><span class="p">,</span> <span class="n">max_results</span><span class="o">=</span><span class="n">number_to_get</span><span class="p">,</span> <span class="n">page_token</span><span class="o">=</span><span class="n">next_page_token</span>
         <span class="p">)</span>
@@ -886,7 +887,7 @@
 
 
 <span class="nd">@require_prompt_registry</span>
-<span class="k">def</span> <span class="nf">load_prompt</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_prompt</span><span class="p">(</span>
     <span class="n">name_or_uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">version</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">allow_missing</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -973,7 +974,7 @@
             <span class="c1"># workflow is minorly affected), so we handle it asynchronously and gracefully</span>
             <span class="c1"># handle any failures without impacting the core prompt loading functionality.</span>
 
-            <span class="k">def</span> <span class="nf">_link_prompt_async</span><span class="p">():</span>
+            <span class="k">def</span><span class="w"> </span><span class="nf">_link_prompt_async</span><span class="p">():</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">client</span><span class="o">.</span><span class="n">link_prompt_version_to_model</span><span class="p">(</span>
                         <span class="n">name</span><span class="o">=</span><span class="n">prompt</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
@@ -1005,7 +1006,7 @@
 
 
 <span class="nd">@functools</span><span class="o">.</span><span class="n">lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="n">MLFLOW_PROMPT_CACHE_MAX_SIZE</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
-<span class="k">def</span> <span class="nf">_load_prompt_cached</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_load_prompt_cached</span><span class="p">(</span>
     <span class="n">name_or_uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">version</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">allow_missing</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -1016,7 +1017,7 @@
     <span class="k">return</span> <span class="n">_load_prompt_not_cached</span><span class="p">(</span><span class="n">name_or_uri</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">allow_missing</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_load_prompt_not_cached</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_load_prompt_not_cached</span><span class="p">(</span>
     <span class="n">name_or_uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">version</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">allow_missing</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -1039,7 +1040,7 @@
 
 
 <span class="nd">@require_prompt_registry</span>
-<span class="k">def</span> <span class="nf">set_prompt_alias</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">set_prompt_alias</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Set an alias for a :py:class:`Prompt &lt;mlflow.entities.Prompt&gt;` in the MLflow Prompt Registry.</span>
 
@@ -1076,7 +1077,7 @@
 
 
 <span class="nd">@require_prompt_registry</span>
-<span class="k">def</span> <span class="nf">delete_prompt_alias</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">delete_prompt_alias</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Delete an alias for a :py:class:`Prompt &lt;mlflow.entities.Prompt&gt;` in the MLflow Prompt Registry.</span>
 

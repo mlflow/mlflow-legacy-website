@@ -78,6 +78,7 @@
   <script src="../../../../_static/js/modernizr.min.js"></script>
 
 </head>
+<script type="text/javascript" src="../../../../_static/documentation_options.js"></script>
 <script type="text/javascript" src="../../../../_static/jquery.js"></script>
 <script type="text/javascript" src="../../../../_static/underscore.js"></script>
 <script type="text/javascript" src="../../../../_static/doctools.js"></script>
@@ -240,22 +241,22 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.genai.datasets.evaluation_dataset</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">from</span> <span class="nn">mlflow.data</span> <span class="kn">import</span> <span class="n">Dataset</span>
-<span class="kn">from</span> <span class="nn">mlflow.data.digest_utils</span> <span class="kn">import</span> <span class="n">compute_pandas_digest</span>
-<span class="kn">from</span> <span class="nn">mlflow.data.evaluation_dataset</span> <span class="kn">import</span> <span class="n">EvaluationDataset</span> <span class="k">as</span> <span class="n">LegacyEvaluationDataset</span>
-<span class="kn">from</span> <span class="nn">mlflow.data.pyfunc_dataset_mixin</span> <span class="kn">import</span> <span class="n">PyFuncConvertibleDatasetMixin</span>
-<span class="kn">from</span> <span class="nn">mlflow.data.spark_dataset_source</span> <span class="kn">import</span> <span class="n">SparkDatasetSource</span>
-<span class="kn">from</span> <span class="nn">mlflow.entities</span> <span class="kn">import</span> <span class="n">Dataset</span> <span class="k">as</span> <span class="n">DatasetEntity</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.data.digest_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_pandas_digest</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.data.evaluation_dataset</span><span class="w"> </span><span class="kn">import</span> <span class="n">EvaluationDataset</span> <span class="k">as</span> <span class="n">LegacyEvaluationDataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.data.pyfunc_dataset_mixin</span><span class="w"> </span><span class="kn">import</span> <span class="n">PyFuncConvertibleDatasetMixin</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.data.spark_dataset_source</span><span class="w"> </span><span class="kn">import</span> <span class="n">SparkDatasetSource</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dataset</span> <span class="k">as</span> <span class="n">DatasetEntity</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-    <span class="kn">import</span> <span class="nn">pyspark</span>
-    <span class="kn">from</span> <span class="nn">databricks.agents.datasets</span> <span class="kn">import</span> <span class="n">Dataset</span> <span class="k">as</span> <span class="n">ManagedDataset</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">pyspark</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">databricks.agents.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dataset</span> <span class="k">as</span> <span class="n">ManagedDataset</span>
 
 
-<div class="viewcode-block" id="EvaluationDataset"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset">[docs]</a><span class="k">class</span> <span class="nc">EvaluationDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">PyFuncConvertibleDatasetMixin</span><span class="p">):</span>
+<div class="viewcode-block" id="EvaluationDataset"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">EvaluationDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">PyFuncConvertibleDatasetMixin</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A dataset for storing evaluation records (inputs and expectations).</span>
 
@@ -263,18 +264,18 @@
 <span class="sd">    To use this class, you must have the `databricks-agents` package installed.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="s2">&quot;ManagedDataset&quot;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="s2">&quot;ManagedDataset&quot;</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span> <span class="o">=</span> <span class="n">dataset</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_df</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_digest</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">dataset_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dataset_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The unique identifier of the dataset.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span><span class="o">.</span><span class="n">dataset_id</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">digest</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">digest</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;String digest (hash) of the dataset provided by the caller that uniquely identifies&quot;&quot;&quot;</span>
         <span class="c1"># NB: The managed Dataset entity in Agent SDK doesn&#39;t propagate the digest</span>
         <span class="c1"># information. So we compute the digest of the dataframe view.</span>
@@ -283,58 +284,58 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_digest</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The UC table name of the dataset.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span><span class="o">.</span><span class="n">name</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">schema</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">schema</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The schema of the dataset.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span><span class="o">.</span><span class="n">schema</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">profile</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">profile</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The profile of the dataset, summary statistics.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span><span class="o">.</span><span class="n">profile</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">source</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">source</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Source information for the dataset.&quot;&quot;&quot;</span>
         <span class="c1"># NB: The managed Dataset entity in Agent SDK doesn&#39;t propagate the source</span>
         <span class="c1"># information. So we use the table name as the fallback source.</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span><span class="o">.</span><span class="n">source</span> <span class="ow">or</span> <span class="n">SparkDatasetSource</span><span class="p">(</span><span class="n">table_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">source_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">source_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The type of the dataset source, e.g. &quot;databricks-uc-table&quot;, &quot;DBFS&quot;, &quot;S3&quot;, ...&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span><span class="o">.</span><span class="n">source_type</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">create_time</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_time</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The time the dataset was created.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span><span class="o">.</span><span class="n">create_time</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">created_by</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">created_by</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The user who created the dataset.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span><span class="o">.</span><span class="n">created_by</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">last_update_time</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">last_update_time</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The time the dataset was last updated.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span><span class="o">.</span><span class="n">last_update_time</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">last_updated_by</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">last_updated_by</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The user who last updated the dataset.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span><span class="o">.</span><span class="n">last_updated_by</span>
 
-<div class="viewcode-block" id="EvaluationDataset.set_profile"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset.set_profile">[docs]</a>    <span class="k">def</span> <span class="nf">set_profile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profile</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;EvaluationDataset&quot;</span><span class="p">:</span>
+<div class="viewcode-block" id="EvaluationDataset.set_profile"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset.set_profile">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">set_profile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profile</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;EvaluationDataset&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the profile of the dataset.&quot;&quot;&quot;</span>
         <span class="n">dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span><span class="o">.</span><span class="n">set_profile</span><span class="p">(</span><span class="n">profile</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">EvaluationDataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="EvaluationDataset.merge_records"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset.merge_records">[docs]</a>    <span class="k">def</span> <span class="nf">merge_records</span><span class="p">(</span>
+<div class="viewcode-block" id="EvaluationDataset.merge_records"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset.merge_records">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">merge_records</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">records</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span> <span class="s2">&quot;pd.DataFrame&quot;</span><span class="p">,</span> <span class="s2">&quot;pyspark.sql.DataFrame&quot;</span><span class="p">],</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;EvaluationDataset&quot;</span><span class="p">:</span>
@@ -342,14 +343,14 @@
         <span class="n">dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span><span class="o">.</span><span class="n">merge_records</span><span class="p">(</span><span class="n">records</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">EvaluationDataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="EvaluationDataset.to_df"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset.to_df">[docs]</a>    <span class="k">def</span> <span class="nf">to_df</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;pd.DataFrame&quot;</span><span class="p">:</span>
+<div class="viewcode-block" id="EvaluationDataset.to_df"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset.to_df">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_df</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;pd.DataFrame&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert the dataset to a pandas DataFrame.&quot;&quot;&quot;</span>
         <span class="c1"># Cache the dataframe view to avoid re-fetching the records many times</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span><span class="o">.</span><span class="n">to_df</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span></div>
 
-<div class="viewcode-block" id="EvaluationDataset.to_evaluation_dataset"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset.to_evaluation_dataset">[docs]</a>    <span class="k">def</span> <span class="nf">to_evaluation_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LegacyEvaluationDataset</span><span class="p">:</span>
+<div class="viewcode-block" id="EvaluationDataset.to_evaluation_dataset"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset.to_evaluation_dataset">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_evaluation_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LegacyEvaluationDataset</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Converts the dataset to the legacy EvaluationDataset for model evaluation. Required</span>
 <span class="sd">        for use with mlflow.evaluate().</span>
@@ -362,7 +363,7 @@
             <span class="n">digest</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">digest</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_to_mlflow_entity</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DatasetEntity</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_to_mlflow_entity</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DatasetEntity</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">DatasetEntity</span><span class="p">(</span>
             <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
             <span class="n">digest</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">digest</span><span class="p">,</span>

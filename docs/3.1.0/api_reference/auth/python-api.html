@@ -79,6 +79,7 @@
   <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
+<script type="text/javascript" src="../_static/documentation_options.js"></script>
 <script type="text/javascript" src="../_static/jquery.js"></script>
 <script type="text/javascript" src="../_static/underscore.js"></script>
 <script type="text/javascript" src="../_static/doctools.js"></script>
@@ -244,15 +245,15 @@
 <div class="section" id="mlflow-server-auth-client">
 <h2>mlflow.server.auth.client<a class="headerlink" href="#mlflow-server-auth-client" title="Permalink to this headline"> </a></h2>
 <dl class="py class">
-<dt id="mlflow.server.auth.client.AuthServiceClient">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mlflow.server.auth.client.</span></code><code class="sig-name descname"><span class="pre">AuthServiceClient</span></code><a class="reference internal" href="../_modules/mlflow/server/auth/client.html#AuthServiceClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.client.AuthServiceClient" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.server.auth.client.AuthServiceClient">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.server.auth.client.</span></span><span class="sig-name descname"><span class="pre">AuthServiceClient</span></span><a class="reference internal" href="../_modules/mlflow/server/auth/client.html#AuthServiceClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.client.AuthServiceClient" title="Permalink to this definition"> </a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Client of an MLflow Tracking Server that enabled the default basic authentication plugin.
 It is recommended to use <a class="reference internal" href="../python_api/mlflow.server.html#mlflow.server.get_app_client" title="mlflow.server.get_app_client"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.server.get_app_client()</span></code></a> to instantiate this class.
 See <a class="reference external" href="https://mlflow.org/docs/latest/auth.html">https://mlflow.org/docs/latest/auth.html</a> for more information.</p>
 <dl class="py method">
-<dt id="mlflow.server.auth.client.AuthServiceClient.create_experiment_permission">
-<code class="sig-name descname"><span class="pre">create_experiment_permission</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permission</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/client.html#AuthServiceClient.create_experiment_permission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.client.AuthServiceClient.create_experiment_permission" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.server.auth.client.AuthServiceClient.create_experiment_permission">
+<span class="sig-name descname"><span class="pre">create_experiment_permission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permission</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/client.html#AuthServiceClient.create_experiment_permission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.client.AuthServiceClient.create_experiment_permission" title="Permalink to this definition"> </a></dt>
 <dd><p>Create a permission on an experiment for a user.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -279,7 +280,7 @@ See <a class="reference external" href="https://mlflow.org/docs/latest/auth.html
 </pre></div>
 </div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.server.auth.client</span> <span class="kn">import</span> <span class="n">AuthServiceClient</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.server.auth.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuthServiceClient</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">AuthServiceClient</span><span class="p">(</span><span class="s2">&quot;tracking_uri&quot;</span><span class="p">)</span>
 <span class="n">client</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s2">&quot;newuser&quot;</span><span class="p">,</span> <span class="s2">&quot;newpassword&quot;</span><span class="p">)</span>
@@ -301,8 +302,8 @@ permission: READ
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.server.auth.client.AuthServiceClient.create_registered_model_permission">
-<code class="sig-name descname"><span class="pre">create_registered_model_permission</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permission</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/client.html#AuthServiceClient.create_registered_model_permission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.client.AuthServiceClient.create_registered_model_permission" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.server.auth.client.AuthServiceClient.create_registered_model_permission">
+<span class="sig-name descname"><span class="pre">create_registered_model_permission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permission</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/client.html#AuthServiceClient.create_registered_model_permission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.client.AuthServiceClient.create_registered_model_permission" title="Permalink to this definition"> </a></dt>
 <dd><p>Create a permission on an registered model for a user.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -326,8 +327,8 @@ permission: READ
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.server.auth.client.AuthServiceClient.create_user">
-<code class="sig-name descname"><span class="pre">create_user</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/client.html#AuthServiceClient.create_user"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.client.AuthServiceClient.create_user" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.server.auth.client.AuthServiceClient.create_user">
+<span class="sig-name descname"><span class="pre">create_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/client.html#AuthServiceClient.create_user"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.client.AuthServiceClient.create_user" title="Permalink to this definition"> </a></dt>
 <dd><p>Create a new user.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -345,7 +346,7 @@ permission: READ
 </dl>
 <div class="literal-block-wrapper docutils container" id="id3">
 <div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id3" title="Permalink to this code"> </a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.server.auth.client</span> <span class="kn">import</span> <span class="n">AuthServiceClient</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.server.auth.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuthServiceClient</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">AuthServiceClient</span><span class="p">(</span><span class="s2">&quot;tracking_uri&quot;</span><span class="p">)</span>
 <span class="n">user</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s2">&quot;newuser&quot;</span><span class="p">,</span> <span class="s2">&quot;newpassword&quot;</span><span class="p">)</span>
@@ -368,8 +369,8 @@ is_admin: False
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.server.auth.client.AuthServiceClient.delete_experiment_permission">
-<code class="sig-name descname"><span class="pre">delete_experiment_permission</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/client.html#AuthServiceClient.delete_experiment_permission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.client.AuthServiceClient.delete_experiment_permission" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.server.auth.client.AuthServiceClient.delete_experiment_permission">
+<span class="sig-name descname"><span class="pre">delete_experiment_permission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/client.html#AuthServiceClient.delete_experiment_permission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.client.AuthServiceClient.delete_experiment_permission" title="Permalink to this definition"> </a></dt>
 <dd><p>Delete an existing experiment permission for a user.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -392,7 +393,7 @@ is_admin: False
 </pre></div>
 </div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.server.auth.client</span> <span class="kn">import</span> <span class="n">AuthServiceClient</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.server.auth.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuthServiceClient</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">AuthServiceClient</span><span class="p">(</span><span class="s2">&quot;tracking_uri&quot;</span><span class="p">)</span>
 <span class="n">client</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s2">&quot;newuser&quot;</span><span class="p">,</span> <span class="s2">&quot;newpassword&quot;</span><span class="p">)</span>
@@ -403,8 +404,8 @@ is_admin: False
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.server.auth.client.AuthServiceClient.delete_registered_model_permission">
-<code class="sig-name descname"><span class="pre">delete_registered_model_permission</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/client.html#AuthServiceClient.delete_registered_model_permission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.client.AuthServiceClient.delete_registered_model_permission" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.server.auth.client.AuthServiceClient.delete_registered_model_permission">
+<span class="sig-name descname"><span class="pre">delete_registered_model_permission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/client.html#AuthServiceClient.delete_registered_model_permission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.client.AuthServiceClient.delete_registered_model_permission" title="Permalink to this definition"> </a></dt>
 <dd><p>Delete an existing registered model permission for a user.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -428,7 +429,7 @@ is_admin: False
 </pre></div>
 </div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.server.auth.client</span> <span class="kn">import</span> <span class="n">AuthServiceClient</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.server.auth.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuthServiceClient</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">AuthServiceClient</span><span class="p">(</span><span class="s2">&quot;tracking_uri&quot;</span><span class="p">)</span>
 <span class="n">client</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s2">&quot;newuser&quot;</span><span class="p">,</span> <span class="s2">&quot;newpassword&quot;</span><span class="p">)</span>
@@ -439,8 +440,8 @@ is_admin: False
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.server.auth.client.AuthServiceClient.delete_user">
-<code class="sig-name descname"><span class="pre">delete_user</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/client.html#AuthServiceClient.delete_user"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.client.AuthServiceClient.delete_user" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.server.auth.client.AuthServiceClient.delete_user">
+<span class="sig-name descname"><span class="pre">delete_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/client.html#AuthServiceClient.delete_user"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.client.AuthServiceClient.delete_user" title="Permalink to this definition"> </a></dt>
 <dd><p>Delete a specific user.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -457,7 +458,7 @@ is_admin: False
 </pre></div>
 </div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.server.auth.client</span> <span class="kn">import</span> <span class="n">AuthServiceClient</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.server.auth.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuthServiceClient</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">AuthServiceClient</span><span class="p">(</span><span class="s2">&quot;tracking_uri&quot;</span><span class="p">)</span>
 <span class="n">client</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s2">&quot;newuser&quot;</span><span class="p">,</span> <span class="s2">&quot;newpassword&quot;</span><span class="p">)</span>
@@ -468,8 +469,8 @@ is_admin: False
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.server.auth.client.AuthServiceClient.get_experiment_permission">
-<code class="sig-name descname"><span class="pre">get_experiment_permission</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/client.html#AuthServiceClient.get_experiment_permission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.client.AuthServiceClient.get_experiment_permission" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.server.auth.client.AuthServiceClient.get_experiment_permission">
+<span class="sig-name descname"><span class="pre">get_experiment_permission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/client.html#AuthServiceClient.get_experiment_permission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.client.AuthServiceClient.get_experiment_permission" title="Permalink to this definition"> </a></dt>
 <dd><p>Get an experiment permission for a user.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -495,7 +496,7 @@ is_admin: False
 </pre></div>
 </div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.server.auth.client</span> <span class="kn">import</span> <span class="n">AuthServiceClient</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.server.auth.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuthServiceClient</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">AuthServiceClient</span><span class="p">(</span><span class="s2">&quot;tracking_uri&quot;</span><span class="p">)</span>
 <span class="n">client</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s2">&quot;newuser&quot;</span><span class="p">,</span> <span class="s2">&quot;newpassword&quot;</span><span class="p">)</span>
@@ -517,8 +518,8 @@ permission: READ
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.server.auth.client.AuthServiceClient.get_registered_model_permission">
-<code class="sig-name descname"><span class="pre">get_registered_model_permission</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/client.html#AuthServiceClient.get_registered_model_permission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.client.AuthServiceClient.get_registered_model_permission" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.server.auth.client.AuthServiceClient.get_registered_model_permission">
+<span class="sig-name descname"><span class="pre">get_registered_model_permission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/client.html#AuthServiceClient.get_registered_model_permission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.client.AuthServiceClient.get_registered_model_permission" title="Permalink to this definition"> </a></dt>
 <dd><p>Get an registered model permission for a user.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -543,7 +544,7 @@ permission: READ
 </pre></div>
 </div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.server.auth.client</span> <span class="kn">import</span> <span class="n">AuthServiceClient</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.server.auth.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuthServiceClient</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">AuthServiceClient</span><span class="p">(</span><span class="s2">&quot;tracking_uri&quot;</span><span class="p">)</span>
 <span class="n">client</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s2">&quot;newuser&quot;</span><span class="p">,</span> <span class="s2">&quot;newpassword&quot;</span><span class="p">)</span>
@@ -566,8 +567,8 @@ permission: READ
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.server.auth.client.AuthServiceClient.get_user">
-<code class="sig-name descname"><span class="pre">get_user</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/client.html#AuthServiceClient.get_user"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.client.AuthServiceClient.get_user" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.server.auth.client.AuthServiceClient.get_user">
+<span class="sig-name descname"><span class="pre">get_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/client.html#AuthServiceClient.get_user"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.client.AuthServiceClient.get_user" title="Permalink to this definition"> </a></dt>
 <dd><p>Get a user with a specific username.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -587,7 +588,7 @@ permission: READ
 </pre></div>
 </div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.server.auth.client</span> <span class="kn">import</span> <span class="n">AuthServiceClient</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.server.auth.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuthServiceClient</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">AuthServiceClient</span><span class="p">(</span><span class="s2">&quot;tracking_uri&quot;</span><span class="p">)</span>
 <span class="n">client</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s2">&quot;newuser&quot;</span><span class="p">,</span> <span class="s2">&quot;newpassword&quot;</span><span class="p">)</span>
@@ -611,8 +612,8 @@ is_admin: False
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.server.auth.client.AuthServiceClient.update_experiment_permission">
-<code class="sig-name descname"><span class="pre">update_experiment_permission</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permission</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/client.html#AuthServiceClient.update_experiment_permission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.client.AuthServiceClient.update_experiment_permission" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.server.auth.client.AuthServiceClient.update_experiment_permission">
+<span class="sig-name descname"><span class="pre">update_experiment_permission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permission</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/client.html#AuthServiceClient.update_experiment_permission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.client.AuthServiceClient.update_experiment_permission" title="Permalink to this definition"> </a></dt>
 <dd><p>Update an existing experiment permission for a user.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -635,7 +636,7 @@ is_admin: False
 </pre></div>
 </div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.server.auth.client</span> <span class="kn">import</span> <span class="n">AuthServiceClient</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.server.auth.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuthServiceClient</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">AuthServiceClient</span><span class="p">(</span><span class="s2">&quot;tracking_uri&quot;</span><span class="p">)</span>
 <span class="n">client</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s2">&quot;newuser&quot;</span><span class="p">,</span> <span class="s2">&quot;newpassword&quot;</span><span class="p">)</span>
@@ -646,8 +647,8 @@ is_admin: False
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.server.auth.client.AuthServiceClient.update_registered_model_permission">
-<code class="sig-name descname"><span class="pre">update_registered_model_permission</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permission</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/client.html#AuthServiceClient.update_registered_model_permission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.client.AuthServiceClient.update_registered_model_permission" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.server.auth.client.AuthServiceClient.update_registered_model_permission">
+<span class="sig-name descname"><span class="pre">update_registered_model_permission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permission</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/client.html#AuthServiceClient.update_registered_model_permission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.client.AuthServiceClient.update_registered_model_permission" title="Permalink to this definition"> </a></dt>
 <dd><p>Update an existing registered model permission for a user.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -670,7 +671,7 @@ is_admin: False
 </pre></div>
 </div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.server.auth.client</span> <span class="kn">import</span> <span class="n">AuthServiceClient</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.server.auth.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuthServiceClient</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">AuthServiceClient</span><span class="p">(</span><span class="s2">&quot;tracking_uri&quot;</span><span class="p">)</span>
 <span class="n">client</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s2">&quot;newuser&quot;</span><span class="p">,</span> <span class="s2">&quot;newpassword&quot;</span><span class="p">)</span>
@@ -681,8 +682,8 @@ is_admin: False
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.server.auth.client.AuthServiceClient.update_user_admin">
-<code class="sig-name descname"><span class="pre">update_user_admin</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_admin</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/client.html#AuthServiceClient.update_user_admin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.client.AuthServiceClient.update_user_admin" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.server.auth.client.AuthServiceClient.update_user_admin">
+<span class="sig-name descname"><span class="pre">update_user_admin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_admin</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/client.html#AuthServiceClient.update_user_admin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.client.AuthServiceClient.update_user_admin" title="Permalink to this definition"> </a></dt>
 <dd><p>Update the admin status of a specific user.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -702,7 +703,7 @@ is_admin: False
 </pre></div>
 </div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.server.auth.client</span> <span class="kn">import</span> <span class="n">AuthServiceClient</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.server.auth.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuthServiceClient</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">AuthServiceClient</span><span class="p">(</span><span class="s2">&quot;tracking_uri&quot;</span><span class="p">)</span>
 <span class="n">client</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s2">&quot;newuser&quot;</span><span class="p">,</span> <span class="s2">&quot;newpassword&quot;</span><span class="p">)</span>
@@ -713,8 +714,8 @@ is_admin: False
 </dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.server.auth.client.AuthServiceClient.update_user_password">
-<code class="sig-name descname"><span class="pre">update_user_password</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/client.html#AuthServiceClient.update_user_password"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.client.AuthServiceClient.update_user_password" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.server.auth.client.AuthServiceClient.update_user_password">
+<span class="sig-name descname"><span class="pre">update_user_password</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/client.html#AuthServiceClient.update_user_password"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.client.AuthServiceClient.update_user_password" title="Permalink to this definition"> </a></dt>
 <dd><p>Update the password of a specific user.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -734,7 +735,7 @@ is_admin: False
 </pre></div>
 </div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.server.auth.client</span> <span class="kn">import</span> <span class="n">AuthServiceClient</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.server.auth.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuthServiceClient</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">AuthServiceClient</span><span class="p">(</span><span class="s2">&quot;tracking_uri&quot;</span><span class="p">)</span>
 <span class="n">client</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s2">&quot;newuser&quot;</span><span class="p">,</span> <span class="s2">&quot;newpassword&quot;</span><span class="p">)</span>
@@ -750,109 +751,109 @@ is_admin: False
 <div class="section" id="module-mlflow.server.auth.entities">
 <span id="mlflow-server-auth-entities"></span><h2>mlflow.server.auth.entities<a class="headerlink" href="#module-mlflow.server.auth.entities" title="Permalink to this headline"> </a></h2>
 <dl class="py class">
-<dt id="mlflow.server.auth.entities.ExperimentPermission">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mlflow.server.auth.entities.</span></code><code class="sig-name descname"><span class="pre">ExperimentPermission</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permission</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/entities.html#ExperimentPermission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.entities.ExperimentPermission" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.server.auth.entities.ExperimentPermission">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.server.auth.entities.</span></span><span class="sig-name descname"><span class="pre">ExperimentPermission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permission</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/entities.html#ExperimentPermission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.entities.ExperimentPermission" title="Permalink to this definition"> </a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py method">
-<dt id="mlflow.server.auth.entities.ExperimentPermission.experiment_id">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">experiment_id</span></code><a class="headerlink" href="#mlflow.server.auth.entities.ExperimentPermission.experiment_id" title="Permalink to this definition"> </a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="mlflow.server.auth.entities.ExperimentPermission.experiment_id">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">experiment_id</span></span><a class="headerlink" href="#mlflow.server.auth.entities.ExperimentPermission.experiment_id" title="Permalink to this definition"> </a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.server.auth.entities.ExperimentPermission.from_json">
-<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">from_json</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dictionary</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/entities.html#ExperimentPermission.from_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.entities.ExperimentPermission.from_json" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.server.auth.entities.ExperimentPermission.from_json">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dictionary</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/entities.html#ExperimentPermission.from_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.entities.ExperimentPermission.from_json" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mlflow.server.auth.entities.ExperimentPermission.permission">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">permission</span></span><a class="headerlink" href="#mlflow.server.auth.entities.ExperimentPermission.permission" title="Permalink to this definition"> </a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.server.auth.entities.ExperimentPermission.permission">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">permission</span></code><a class="headerlink" href="#mlflow.server.auth.entities.ExperimentPermission.permission" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.server.auth.entities.ExperimentPermission.to_json">
+<span class="sig-name descname"><span class="pre">to_json</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/entities.html#ExperimentPermission.to_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.entities.ExperimentPermission.to_json" title="Permalink to this definition"> </a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
-<dt id="mlflow.server.auth.entities.ExperimentPermission.to_json">
-<code class="sig-name descname"><span class="pre">to_json</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/entities.html#ExperimentPermission.to_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.entities.ExperimentPermission.to_json" title="Permalink to this definition"> </a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="mlflow.server.auth.entities.ExperimentPermission.user_id">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">user_id</span></code><a class="headerlink" href="#mlflow.server.auth.entities.ExperimentPermission.user_id" title="Permalink to this definition"> </a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="mlflow.server.auth.entities.ExperimentPermission.user_id">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">user_id</span></span><a class="headerlink" href="#mlflow.server.auth.entities.ExperimentPermission.user_id" title="Permalink to this definition"> </a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="mlflow.server.auth.entities.RegisteredModelPermission">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mlflow.server.auth.entities.</span></code><code class="sig-name descname"><span class="pre">RegisteredModelPermission</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permission</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/entities.html#RegisteredModelPermission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.entities.RegisteredModelPermission" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.server.auth.entities.RegisteredModelPermission">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.server.auth.entities.</span></span><span class="sig-name descname"><span class="pre">RegisteredModelPermission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permission</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/entities.html#RegisteredModelPermission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.entities.RegisteredModelPermission" title="Permalink to this definition"> </a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
-<dt id="mlflow.server.auth.entities.RegisteredModelPermission.from_json">
-<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">from_json</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dictionary</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/entities.html#RegisteredModelPermission.from_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.entities.RegisteredModelPermission.from_json" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.server.auth.entities.RegisteredModelPermission.from_json">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dictionary</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/entities.html#RegisteredModelPermission.from_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.entities.RegisteredModelPermission.from_json" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mlflow.server.auth.entities.RegisteredModelPermission.name">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#mlflow.server.auth.entities.RegisteredModelPermission.name" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mlflow.server.auth.entities.RegisteredModelPermission.permission">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">permission</span></span><a class="headerlink" href="#mlflow.server.auth.entities.RegisteredModelPermission.permission" title="Permalink to this definition"> </a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.server.auth.entities.RegisteredModelPermission.name">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">name</span></code><a class="headerlink" href="#mlflow.server.auth.entities.RegisteredModelPermission.name" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.server.auth.entities.RegisteredModelPermission.to_json">
+<span class="sig-name descname"><span class="pre">to_json</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/entities.html#RegisteredModelPermission.to_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.entities.RegisteredModelPermission.to_json" title="Permalink to this definition"> </a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
-<dt id="mlflow.server.auth.entities.RegisteredModelPermission.permission">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">permission</span></code><a class="headerlink" href="#mlflow.server.auth.entities.RegisteredModelPermission.permission" title="Permalink to this definition"> </a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="mlflow.server.auth.entities.RegisteredModelPermission.to_json">
-<code class="sig-name descname"><span class="pre">to_json</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/entities.html#RegisteredModelPermission.to_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.entities.RegisteredModelPermission.to_json" title="Permalink to this definition"> </a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="mlflow.server.auth.entities.RegisteredModelPermission.user_id">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">user_id</span></code><a class="headerlink" href="#mlflow.server.auth.entities.RegisteredModelPermission.user_id" title="Permalink to this definition"> </a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="mlflow.server.auth.entities.RegisteredModelPermission.user_id">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">user_id</span></span><a class="headerlink" href="#mlflow.server.auth.entities.RegisteredModelPermission.user_id" title="Permalink to this definition"> </a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="mlflow.server.auth.entities.User">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mlflow.server.auth.entities.</span></code><code class="sig-name descname"><span class="pre">User</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id_</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password_hash</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_admin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experiment_permissions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">registered_model_permissions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/entities.html#User"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.entities.User" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.server.auth.entities.User">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.server.auth.entities.</span></span><span class="sig-name descname"><span class="pre">User</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id_</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password_hash</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_admin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experiment_permissions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">registered_model_permissions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/entities.html#User"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.entities.User" title="Permalink to this definition"> </a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py method">
-<dt id="mlflow.server.auth.entities.User.experiment_permissions">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">experiment_permissions</span></code><a class="headerlink" href="#mlflow.server.auth.entities.User.experiment_permissions" title="Permalink to this definition"> </a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="mlflow.server.auth.entities.User.experiment_permissions">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">experiment_permissions</span></span><a class="headerlink" href="#mlflow.server.auth.entities.User.experiment_permissions" title="Permalink to this definition"> </a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.server.auth.entities.User.from_json">
-<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">from_json</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dictionary</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/entities.html#User.from_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.entities.User.from_json" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.server.auth.entities.User.from_json">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dictionary</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/entities.html#User.from_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.entities.User.from_json" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mlflow.server.auth.entities.User.id">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#mlflow.server.auth.entities.User.id" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mlflow.server.auth.entities.User.is_admin">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">is_admin</span></span><a class="headerlink" href="#mlflow.server.auth.entities.User.is_admin" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mlflow.server.auth.entities.User.password_hash">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">password_hash</span></span><a class="headerlink" href="#mlflow.server.auth.entities.User.password_hash" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mlflow.server.auth.entities.User.registered_model_permissions">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">registered_model_permissions</span></span><a class="headerlink" href="#mlflow.server.auth.entities.User.registered_model_permissions" title="Permalink to this definition"> </a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="mlflow.server.auth.entities.User.id">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">id</span></code><a class="headerlink" href="#mlflow.server.auth.entities.User.id" title="Permalink to this definition"> </a></dt>
+<dt class="sig sig-object py" id="mlflow.server.auth.entities.User.to_json">
+<span class="sig-name descname"><span class="pre">to_json</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/entities.html#User.to_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.entities.User.to_json" title="Permalink to this definition"> </a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
-<dt id="mlflow.server.auth.entities.User.is_admin">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">is_admin</span></code><a class="headerlink" href="#mlflow.server.auth.entities.User.is_admin" title="Permalink to this definition"> </a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="mlflow.server.auth.entities.User.password_hash">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">password_hash</span></code><a class="headerlink" href="#mlflow.server.auth.entities.User.password_hash" title="Permalink to this definition"> </a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="mlflow.server.auth.entities.User.registered_model_permissions">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">registered_model_permissions</span></code><a class="headerlink" href="#mlflow.server.auth.entities.User.registered_model_permissions" title="Permalink to this definition"> </a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="mlflow.server.auth.entities.User.to_json">
-<code class="sig-name descname"><span class="pre">to_json</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/server/auth/entities.html#User.to_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.server.auth.entities.User.to_json" title="Permalink to this definition"> </a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="mlflow.server.auth.entities.User.username">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">username</span></code><a class="headerlink" href="#mlflow.server.auth.entities.User.username" title="Permalink to this definition"> </a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="mlflow.server.auth.entities.User.username">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">username</span></span><a class="headerlink" href="#mlflow.server.auth.entities.User.username" title="Permalink to this definition"> </a></dt>
 <dd></dd></dl>
 
 </dd></dl>

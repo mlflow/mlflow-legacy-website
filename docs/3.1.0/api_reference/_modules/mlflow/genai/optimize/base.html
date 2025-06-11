@@ -78,6 +78,7 @@
   <script src="../../../../_static/js/modernizr.min.js"></script>
 
 </head>
+<script type="text/javascript" src="../../../../_static/documentation_options.js"></script>
 <script type="text/javascript" src="../../../../_static/jquery.js"></script>
 <script type="text/javascript" src="../../../../_static/underscore.js"></script>
 <script type="text/javascript" src="../../../../_static/doctools.js"></script>
@@ -238,32 +239,32 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.genai.optimize.base</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">inspect</span>
-<span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">contextmanager</span>
-<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">asdict</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">contextmanager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">asdict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">from</span> <span class="nn">mlflow.entities.model_registry</span> <span class="kn">import</span> <span class="n">PromptVersion</span>
-<span class="kn">from</span> <span class="nn">mlflow.exceptions</span> <span class="kn">import</span> <span class="n">MlflowException</span>
-<span class="kn">from</span> <span class="nn">mlflow.genai.evaluation.utils</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.model_registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptVersion</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.evaluation.utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">_convert_eval_set_to_df</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">mlflow.genai.optimize.optimizers</span> <span class="kn">import</span> <span class="n">_BaseOptimizer</span><span class="p">,</span> <span class="n">_DSPyMIPROv2Optimizer</span>
-<span class="kn">from</span> <span class="nn">mlflow.genai.optimize.types</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.optimize.optimizers</span><span class="w"> </span><span class="kn">import</span> <span class="n">_BaseOptimizer</span><span class="p">,</span> <span class="n">_DSPyMIPROv2Optimizer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.optimize.types</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">OBJECTIVE_FN</span><span class="p">,</span>
     <span class="n">LLMParams</span><span class="p">,</span>
     <span class="n">OptimizerConfig</span><span class="p">,</span>
     <span class="n">PromptOptimizationResult</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">mlflow.genai.scorers</span> <span class="kn">import</span> <span class="n">Scorer</span>
-<span class="kn">from</span> <span class="nn">mlflow.tracking._model_registry.fluent</span> <span class="kn">import</span> <span class="n">load_prompt</span>
-<span class="kn">from</span> <span class="nn">mlflow.tracking.fluent</span> <span class="kn">import</span> <span class="n">log_params</span><span class="p">,</span> <span class="n">log_table</span><span class="p">,</span> <span class="n">start_run</span>
-<span class="kn">from</span> <span class="nn">mlflow.utils.annotations</span> <span class="kn">import</span> <span class="n">experimental</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.scorers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Scorer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracking._model_registry.fluent</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_prompt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracking.fluent</span><span class="w"> </span><span class="kn">import</span> <span class="n">log_params</span><span class="p">,</span> <span class="n">log_table</span><span class="p">,</span> <span class="n">start_run</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">experimental</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-    <span class="kn">from</span> <span class="nn">genai.evaluation.utils</span> <span class="kn">import</span> <span class="n">EvaluationDatasetTypes</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">genai.evaluation.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">EvaluationDatasetTypes</span>
 
 <span class="n">_ALGORITHMS</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;DSPy/MIPROv2&quot;</span><span class="p">:</span> <span class="n">_DSPyMIPROv2Optimizer</span><span class="p">}</span>
 
@@ -271,7 +272,7 @@
 
 
 <div class="viewcode-block" id="optimize_prompt"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.optimize_prompt">[docs]</a><span class="nd">@experimental</span>
-<span class="k">def</span> <span class="nf">optimize_prompt</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">optimize_prompt</span><span class="p">(</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">target_llm_params</span><span class="p">:</span> <span class="n">LLMParams</span><span class="p">,</span>
     <span class="n">prompt</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PromptVersion</span><span class="p">],</span>
@@ -382,7 +383,7 @@
     <span class="k">return</span> <span class="n">PromptOptimizationResult</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="n">optimized_prompt</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">_select_optimizer</span><span class="p">(</span><span class="n">optimizer_config</span><span class="p">:</span> <span class="n">OptimizerConfig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_BaseOptimizer</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_select_optimizer</span><span class="p">(</span><span class="n">optimizer_config</span><span class="p">:</span> <span class="n">OptimizerConfig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_BaseOptimizer</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">optimizer_config</span><span class="o">.</span><span class="n">algorithm</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_ALGORITHMS</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;Algorithm </span><span class="si">{</span><span class="n">optimizer_config</span><span class="o">.</span><span class="n">algorithm</span><span class="si">}</span><span class="s2"> is not supported. &quot;</span>
@@ -392,7 +393,7 @@
     <span class="k">return</span> <span class="n">_ALGORITHMS</span><span class="p">[</span><span class="n">optimizer_config</span><span class="o">.</span><span class="n">algorithm</span><span class="p">](</span><span class="n">optimizer_config</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_validate_scorers</span><span class="p">(</span><span class="n">scorers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Scorer</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_validate_scorers</span><span class="p">(</span><span class="n">scorers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Scorer</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="k">for</span> <span class="n">scorer</span> <span class="ow">in</span> <span class="n">scorers</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">scorer</span><span class="p">,</span> <span class="n">Scorer</span><span class="p">):</span>
             <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
@@ -409,7 +410,7 @@
 
 
 <span class="nd">@contextmanager</span>
-<span class="k">def</span> <span class="nf">_maybe_start_autolog</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_maybe_start_autolog</span><span class="p">(</span>
     <span class="n">optimizer_config</span><span class="p">:</span> <span class="n">OptimizerConfig</span><span class="p">,</span>
     <span class="n">train_data</span><span class="p">:</span> <span class="s2">&quot;pd.DataFrame&quot;</span><span class="p">,</span>
     <span class="n">eval_data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;pd.DataFrame&quot;</span><span class="p">],</span>

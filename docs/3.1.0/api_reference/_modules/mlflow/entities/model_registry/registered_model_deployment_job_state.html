@@ -78,6 +78,7 @@
   <script src="../../../../_static/js/modernizr.min.js"></script>
 
 </head>
+<script type="text/javascript" src="../../../../_static/documentation_options.js"></script>
 <script type="text/javascript" src="../../../../_static/jquery.js"></script>
 <script type="text/javascript" src="../../../../_static/underscore.js"></script>
 <script type="text/javascript" src="../../../../_static/doctools.js"></script>
@@ -238,10 +239,10 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.entities.model_registry.registered_model_deployment_job_state</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">mlflow.protos.databricks_uc_registry_messages_pb2</span> <span class="kn">import</span> <span class="n">DeploymentJobConnection</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.protos.databricks_uc_registry_messages_pb2</span><span class="w"> </span><span class="kn">import</span> <span class="n">DeploymentJobConnection</span>
 
 
-<div class="viewcode-block" id="RegisteredModelDeploymentJobState"><a class="viewcode-back" href="../../../../python_api/mlflow.entities.html#mlflow.entities.model_registry.RegisteredModelDeploymentJobState">[docs]</a><span class="k">class</span> <span class="nc">RegisteredModelDeploymentJobState</span><span class="p">:</span>
+<div class="viewcode-block" id="RegisteredModelDeploymentJobState"><a class="viewcode-back" href="../../../../python_api/mlflow.entities.html#mlflow.entities.model_registry.RegisteredModelDeploymentJobState">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">RegisteredModelDeploymentJobState</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Enum for registered model deployment state of an</span>
 <span class="sd">    :py:class:`mlflow.entities.model_registry.RegisteredModel`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -256,7 +257,7 @@
     <span class="n">_STATE_TO_STRING</span> <span class="o">=</span> <span class="p">{</span><span class="n">value</span><span class="p">:</span> <span class="n">key</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">_STRING_TO_STATE</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
 
 <div class="viewcode-block" id="RegisteredModelDeploymentJobState.from_string"><a class="viewcode-back" href="../../../../python_api/mlflow.entities.html#mlflow.entities.model_registry.RegisteredModelDeploymentJobState.from_string">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span><span class="n">state_str</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_string</span><span class="p">(</span><span class="n">state_str</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">state_str</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">RegisteredModelDeploymentJobState</span><span class="o">.</span><span class="n">_STRING_TO_STATE</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Could not get deployment job connection state corresponding to string &quot;</span>
@@ -266,7 +267,7 @@
         <span class="k">return</span> <span class="n">RegisteredModelDeploymentJobState</span><span class="o">.</span><span class="n">_STRING_TO_STATE</span><span class="p">[</span><span class="n">state_str</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="RegisteredModelDeploymentJobState.to_string"><a class="viewcode-back" href="../../../../python_api/mlflow.entities.html#mlflow.entities.model_registry.RegisteredModelDeploymentJobState.to_string">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">to_string</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_string</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">state</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">RegisteredModelDeploymentJobState</span><span class="o">.</span><span class="n">_STATE_TO_STRING</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Could not get string corresponding to deployment job connection </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">. &quot;</span>
@@ -275,7 +276,7 @@
         <span class="k">return</span> <span class="n">RegisteredModelDeploymentJobState</span><span class="o">.</span><span class="n">_STATE_TO_STRING</span><span class="p">[</span><span class="n">state</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="RegisteredModelDeploymentJobState.all_states"><a class="viewcode-back" href="../../../../python_api/mlflow.entities.html#mlflow.entities.model_registry.RegisteredModelDeploymentJobState.all_states">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">all_states</span><span class="p">():</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">all_states</span><span class="p">():</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">RegisteredModelDeploymentJobState</span><span class="o">.</span><span class="n">_STATE_TO_STRING</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div></div>
 </pre></div>
 
