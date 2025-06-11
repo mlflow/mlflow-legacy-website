@@ -11,14 +11,12 @@ The API is hosted under the ``/api`` route on the MLflow tracking server. For ex
 experiments on a tracking server hosted at ``http://localhost:5000``, make a POST request to
 ``http://localhost:5000/api/2.0/mlflow/experiments/search``.
 
-.. important::
-    The MLflow REST API requires content type ``application/json`` for all POST requests.
-
 .. contents:: Table of Contents
     :local:
     :depth: 1
 
 ===========================
+
 
 
 .. _mlflowMlflowServicecreateExperiment:
@@ -813,8 +811,7 @@ Log Inputs
 | ``2.0/mlflow/runs/log-inputs`` | ``POST``    |
 +--------------------------------+-------------+
 
-.. note::
-    Experimental: This API may change or be removed in a future release without warning.
+
 
 
 
@@ -826,8 +823,7 @@ Request Structure
 
 
 
-.. note::
-    Experimental: This API may change or be removed in a future release without warning.
+
 
 
 +------------+---------------------------------------+----------------------------+
@@ -1029,7 +1025,7 @@ Request Structure
 |            |            | This field is required.                                                                      |
 |            |            |                                                                                              |
 +------------+------------+----------------------------------------------------------------------------------------------+
-| value      | ``STRING`` | String value of the param being logged. Maximum size is 500 bytes.                           |
+| value      | ``STRING`` | String value of the param being logged. Maximum size is 6000 bytes.                          |
 |            |            | This field is required.                                                                      |
 |            |            |                                                                                              |
 +------------+------------+----------------------------------------------------------------------------------------------+
@@ -1345,17 +1341,19 @@ Request Structure
 
 
 
-+-------------+---------------------------------------------+--------------------------------------------+
-| Field Name  |                    Type                     |                Description                 |
-+=============+=============================================+============================================+
-| name        | ``STRING``                                  | Register models under this name            |
-|             |                                             | This field is required.                    |
-|             |                                             |                                            |
-+-------------+---------------------------------------------+--------------------------------------------+
-| tags        | An array of :ref:`mlflowregisteredmodeltag` | Additional metadata for registered model.  |
-+-------------+---------------------------------------------+--------------------------------------------+
-| description | ``STRING``                                  | Optional description for registered model. |
-+-------------+---------------------------------------------+--------------------------------------------+
++-------------------+---------------------------------------------+--------------------------------------------+
+|    Field Name     |                    Type                     |                Description                 |
++===================+=============================================+============================================+
+| name              | ``STRING``                                  | Register models under this name            |
+|                   |                                             | This field is required.                    |
+|                   |                                             |                                            |
++-------------------+---------------------------------------------+--------------------------------------------+
+| tags              | An array of :ref:`mlflowregisteredmodeltag` | Additional metadata for registered model.  |
++-------------------+---------------------------------------------+--------------------------------------------+
+| description       | ``STRING``                                  | Optional description for registered model. |
++-------------------+---------------------------------------------+--------------------------------------------+
+| deployment_job_id | ``STRING``                                  | Deployment job id for this model.          |
++-------------------+---------------------------------------------+--------------------------------------------+
 
 .. _mlflowCreateRegisteredModelResponse:
 
@@ -1516,15 +1514,17 @@ Request Structure
 
 
 
-+-------------+------------+---------------------------------------------------------------------+
-| Field Name  |    Type    |                             Description                             |
-+=============+============+=====================================================================+
-| name        | ``STRING`` | Registered model unique name identifier.                            |
-|             |            | This field is required.                                             |
-|             |            |                                                                     |
-+-------------+------------+---------------------------------------------------------------------+
-| description | ``STRING`` | If provided, updates the description for this ``registered_model``. |
-+-------------+------------+---------------------------------------------------------------------+
++-------------------+------------+---------------------------------------------------------------------+
+|    Field Name     |    Type    |                             Description                             |
++===================+============+=====================================================================+
+| name              | ``STRING`` | Registered model unique name identifier.                            |
+|                   |            | This field is required.                                             |
+|                   |            |                                                                     |
++-------------------+------------+---------------------------------------------------------------------+
+| description       | ``STRING`` | If provided, updates the description for this ``registered_model``. |
++-------------------+------------+---------------------------------------------------------------------+
+| deployment_job_id | ``STRING`` | Deployment job id for this model.                                   |
++-------------------+------------+---------------------------------------------------------------------+
 
 .. _mlflowUpdateRegisteredModelResponse:
 
@@ -1590,12 +1590,11 @@ Request Structure
 Get Latest ModelVersions
 ========================
 
-.. warning:: Model Stages are deprecated and will be removed in a future major release. To learn more about this deprecation, see our `migration guide <../model-registry/index.html#migrating-from-stages>`_.
 
 +------------------------------------------------------+-------------+
 |                       Endpoint                       | HTTP Method |
 +======================================================+=============+
-| ``2.0/mlflow/registered-models/get-latest-versions`` | ``GET``     |
+| ``2.0/mlflow/registered-models/get-latest-versions`` | ``POST``    |
 +------------------------------------------------------+-------------+
 
 
@@ -1671,27 +1670,29 @@ Request Structure
 
 
 
-+-------------+------------------------------------------+----------------------------------------------------------------------------------------+
-| Field Name  |                   Type                   |                                      Description                                       |
-+=============+==========================================+========================================================================================+
-| name        | ``STRING``                               | Register model under this name                                                         |
-|             |                                          | This field is required.                                                                |
-|             |                                          |                                                                                        |
-+-------------+------------------------------------------+----------------------------------------------------------------------------------------+
-| source      | ``STRING``                               | URI indicating the location of the model artifacts.                                    |
-|             |                                          | This field is required.                                                                |
-|             |                                          |                                                                                        |
-+-------------+------------------------------------------+----------------------------------------------------------------------------------------+
-| run_id      | ``STRING``                               | MLflow run ID for correlation, if ``source`` was generated by an experiment run in     |
-|             |                                          | MLflow tracking server                                                                 |
-+-------------+------------------------------------------+----------------------------------------------------------------------------------------+
-| tags        | An array of :ref:`mlflowmodelversiontag` | Additional metadata for model version.                                                 |
-+-------------+------------------------------------------+----------------------------------------------------------------------------------------+
-| run_link    | ``STRING``                               | MLflow run link - this is the exact link of the run that generated this model version, |
-|             |                                          | potentially hosted at another instance of MLflow.                                      |
-+-------------+------------------------------------------+----------------------------------------------------------------------------------------+
-| description | ``STRING``                               | Optional description for model version.                                                |
-+-------------+------------------------------------------+----------------------------------------------------------------------------------------+
++-------------+------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| Field Name  |                   Type                   |                                                Description                                                 |
++=============+==========================================+============================================================================================================+
+| name        | ``STRING``                               | Register model under this name                                                                             |
+|             |                                          | This field is required.                                                                                    |
+|             |                                          |                                                                                                            |
++-------------+------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| source      | ``STRING``                               | URI indicating the location of the model artifacts.                                                        |
+|             |                                          | This field is required.                                                                                    |
+|             |                                          |                                                                                                            |
++-------------+------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| run_id      | ``STRING``                               | MLflow run ID for correlation, if ``source`` was generated by an experiment run in                         |
+|             |                                          | MLflow tracking server                                                                                     |
++-------------+------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| tags        | An array of :ref:`mlflowmodelversiontag` | Additional metadata for model version.                                                                     |
++-------------+------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| run_link    | ``STRING``                               | MLflow run link - this is the exact link of the run that generated this model version,                     |
+|             |                                          | potentially hosted at another instance of MLflow.                                                          |
++-------------+------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| description | ``STRING``                               | Optional description for model version.                                                                    |
++-------------+------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| model_id    | ``STRING``                               | Optional `model_id` for model version that is used to link the registered model to the source logged model |
++-------------+------------------------------------------+------------------------------------------------------------------------------------------------------------+
 
 .. _mlflowCreateModelVersionResponse:
 
@@ -2006,7 +2007,6 @@ Response Structure
 Transition ModelVersion Stage
 =============================
 
-.. warning:: Model Stages are deprecated and will be removed in a future major release. To learn more about this deprecation, see our `migration guide <../model-registry/index.html#migrating-from-stages>`_.
 
 +------------------------------------------------+-------------+
 |                    Endpoint                    | HTTP Method |
@@ -2490,9 +2490,6 @@ Dataset
 
 
 
-.. note::
-    Experimental: This API may change or be removed in a future release without warning.
-
 Dataset. Represents a reference to data used for training, testing, or evaluation during
 the model development process.
 
@@ -2509,12 +2506,12 @@ the model development process.
 |             |            | This field is required.                                                                      |
 |             |            |                                                                                              |
 +-------------+------------+----------------------------------------------------------------------------------------------+
-| source_type | ``STRING`` | Source information for the dataset. Note that the source may not exactly reproduce the       |
-|             |            | dataset if it was transformed / modified before use with MLflow.                             |
+| source_type | ``STRING`` | The type of the dataset source, e.g. ?databricks-uc-table?, ?DBFS?, ?S3?, ...                |
 |             |            | This field is required.                                                                      |
 |             |            |                                                                                              |
 +-------------+------------+----------------------------------------------------------------------------------------------+
-| source      | ``STRING`` | The type of the dataset source, e.g. ?databricks-uc-table?, ?DBFS?, ?S3?, ...                |
+| source      | ``STRING`` | Source information for the dataset. Note that the source may not exactly reproduce the       |
+|             |            | dataset if it was transformed / modified before use with MLflow.                             |
 |             |            | This field is required.                                                                      |
 |             |            |                                                                                              |
 +-------------+------------+----------------------------------------------------------------------------------------------+
@@ -2532,9 +2529,6 @@ DatasetInput
 ------------
 
 
-
-.. note::
-    Experimental: This API may change or be removed in a future release without warning.
 
 DatasetInput. Represents a dataset and input tags.
 
@@ -2623,9 +2617,6 @@ InputTag
 
 
 
-.. note::
-    Experimental: This API may change or be removed in a future release without warning.
-
 Tag for an input.
 
 
@@ -2663,6 +2654,87 @@ Metric associated with a run, represented as a key-value pair.
 | step       | ``INT64``  | Step at which to log the metric.                 |
 +------------+------------+--------------------------------------------------+
 
+.. _mlflowModelInput:
+
+ModelInput
+----------
+
+
+
+Represents a LoggedModel or Registered Model Version input to a Run.
+
+
++------------+------------+-------------------------------------+
+| Field Name |    Type    |             Description             |
++============+============+=====================================+
+| model_id   | ``STRING`` | The unique identifier of the model. |
+|            |            | This field is required.             |
+|            |            |                                     |
++------------+------------+-------------------------------------+
+
+.. _mlflowModelMetric:
+
+ModelMetric
+-----------
+
+
+
+Metric associated with a model, represented as a key-value pair.
+Copied from MLflow metric
+
+
++------------+------------+--------------------------------------------------+
+| Field Name |    Type    |                   Description                    |
++============+============+==================================================+
+| key        | ``STRING`` | Key identifying this metric.                     |
++------------+------------+--------------------------------------------------+
+| value      | ``DOUBLE`` | Value associated with this metric.               |
++------------+------------+--------------------------------------------------+
+| timestamp  | ``INT64``  | The timestamp at which this metric was recorded. |
++------------+------------+--------------------------------------------------+
+| step       | ``INT64``  | Step at which to log the metric.                 |
++------------+------------+--------------------------------------------------+
+
+.. _mlflowModelOutput:
+
+ModelOutput
+-----------
+
+
+
+Represents a LoggedModel output of a Run.
+
+
++------------+------------+---------------------------------------+
+| Field Name |    Type    |              Description              |
++============+============+=======================================+
+| model_id   | ``STRING`` | The unique identifier of the model.   |
+|            |            | This field is required.               |
+|            |            |                                       |
++------------+------------+---------------------------------------+
+| step       | ``INT64``  | Step at which the model was produced. |
+|            |            | This field is required.               |
+|            |            |                                       |
++------------+------------+---------------------------------------+
+
+.. _mlflowModelParam:
+
+ModelParam
+----------
+
+
+
+Param for a model version.
+
+
++------------+------------+-------------------------------------------------------------+
+| Field Name |    Type    |                         Description                         |
++============+============+=============================================================+
+| name       | ``STRING`` | Name of the param.                                          |
++------------+------------+-------------------------------------------------------------+
+| value      | ``STRING`` | Value of the param associated with the name, could be empty |
++------------+------------+-------------------------------------------------------------+
+
 .. _mlflowModelVersion:
 
 ModelVersion
@@ -2673,39 +2745,71 @@ ModelVersion
 
 
 
-+------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------+
-|       Field Name       |                   Type                   |                                                  Description                                                   |
-+========================+==========================================+================================================================================================================+
-| name                   | ``STRING``                               | Unique name of the model                                                                                       |
-+------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------+
-| version                | ``STRING``                               | Model's version number.                                                                                        |
-+------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------+
-| creation_timestamp     | ``INT64``                                | Timestamp recorded when this ``model_version`` was created.                                                    |
-+------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------+
-| last_updated_timestamp | ``INT64``                                | Timestamp recorded when metadata for this ``model_version`` was last updated.                                  |
-+------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------+
-| user_id                | ``STRING``                               | User that created this ``model_version``.                                                                      |
-+------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------+
-| current_stage          | ``STRING``                               | Current stage for this ``model_version``.                                                                      |
-+------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------+
-| description            | ``STRING``                               | Description of this ``model_version``.                                                                         |
-+------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------+
-| source                 | ``STRING``                               | URI indicating the location of the source model artifacts, used when creating ``model_version``                |
-+------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------+
-| run_id                 | ``STRING``                               | MLflow run ID used when creating ``model_version``, if ``source`` was generated by an                          |
-|                        |                                          | experiment run stored in MLflow tracking server.                                                               |
-+------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------+
-| status                 | :ref:`mlflowmodelversionstatus`          | Current status of ``model_version``                                                                            |
-+------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------+
-| status_message         | ``STRING``                               | Details on current ``status``, if it is pending or failed.                                                     |
-+------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------+
-| tags                   | An array of :ref:`mlflowmodelversiontag` | Tags: Additional metadata key-value pairs for this ``model_version``.                                          |
-+------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------+
-| run_link               | ``STRING``                               | Run Link: Direct link to the run that generated this version. This field is set at model version creation time |
-|                        |                                          | only for model versions whose source run is from a tracking server that is different from the registry server. |
-+------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------+
-| aliases                | An array of ``STRING``                   | Aliases pointing to this ``model_version``.                                                                    |
-+------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------+
++------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------------------+
+|       Field Name       |                    Type                     |                                                  Description                                                   |
++========================+=============================================+================================================================================================================+
+| name                   | ``STRING``                                  | Unique name of the model                                                                                       |
++------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------------------+
+| version                | ``STRING``                                  | Model's version number.                                                                                        |
++------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------------------+
+| creation_timestamp     | ``INT64``                                   | Timestamp recorded when this ``model_version`` was created.                                                    |
++------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------------------+
+| last_updated_timestamp | ``INT64``                                   | Timestamp recorded when metadata for this ``model_version`` was last updated.                                  |
++------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------------------+
+| user_id                | ``STRING``                                  | User that created this ``model_version``.                                                                      |
++------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------------------+
+| current_stage          | ``STRING``                                  | Current stage for this ``model_version``.                                                                      |
++------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------------------+
+| description            | ``STRING``                                  | Description of this ``model_version``.                                                                         |
++------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------------------+
+| source                 | ``STRING``                                  | URI indicating the location of the source model artifacts, used when creating ``model_version``                |
++------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------------------+
+| run_id                 | ``STRING``                                  | MLflow run ID used when creating ``model_version``, if ``source`` was generated by an                          |
+|                        |                                             | experiment run stored in MLflow tracking server.                                                               |
++------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------------------+
+| status                 | :ref:`mlflowmodelversionstatus`             | Current status of ``model_version``                                                                            |
++------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------------------+
+| status_message         | ``STRING``                                  | Details on current ``status``, if it is pending or failed.                                                     |
++------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------------------+
+| tags                   | An array of :ref:`mlflowmodelversiontag`    | Tags: Additional metadata key-value pairs for this ``model_version``.                                          |
++------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------------------+
+| run_link               | ``STRING``                                  | Run Link: Direct link to the run that generated this version. This field is set at model version creation time |
+|                        |                                             | only for model versions whose source run is from a tracking server that is different from the registry server. |
++------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------------------+
+| aliases                | An array of ``STRING``                      | Aliases pointing to this ``model_version``.                                                                    |
++------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------------------+
+| model_id               | ``STRING``                                  | Optional `model_id` for model version that is used to link the registered model to the source logged model     |
++------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------------------+
+| model_params           | An array of :ref:`mlflowmodelparam`         | Optional parameters for the model.                                                                             |
++------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------------------+
+| model_metrics          | An array of :ref:`mlflowmodelmetric`        | Optional metrics for the model.                                                                                |
++------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------------------+
+| deployment_job_state   | :ref:`mlflowmodelversiondeploymentjobstate` | Deployment job state for this model version.                                                                   |
++------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------------------+
+
+.. _mlflowModelVersionDeploymentJobState:
+
+ModelVersionDeploymentJobState
+------------------------------
+
+
+
+
+
+
++-------------------+------------------------------------------------------------------+-------------+
+|    Field Name     |                               Type                               | Description |
++===================+==================================================================+=============+
+| job_id            | ``STRING``                                                       |             |
++-------------------+------------------------------------------------------------------+-------------+
+| run_id            | ``STRING``                                                       |             |
++-------------------+------------------------------------------------------------------+-------------+
+| job_state         | :ref:`mlflowdeploymentjobconnectionstate`                        |             |
++-------------------+------------------------------------------------------------------+-------------+
+| run_state         | :ref:`mlflowmodelversiondeploymentjobstatedeploymentjobrunstate` |             |
++-------------------+------------------------------------------------------------------+-------------+
+| current_task_name | ``STRING``                                                       |             |
++-------------------+------------------------------------------------------------------+-------------+
 
 .. _mlflowModelVersionTag:
 
@@ -2774,6 +2878,10 @@ RegisteredModel
 +------------------------+-----------------------------------------------+----------------------------------------------------------------------------------+
 | aliases                | An array of :ref:`mlflowregisteredmodelalias` | Aliases pointing to model versions associated with this ``registered_model``.    |
 +------------------------+-----------------------------------------------+----------------------------------------------------------------------------------+
+| deployment_job_id      | ``STRING``                                    | Deployment job id for this model.                                                |
++------------------------+-----------------------------------------------+----------------------------------------------------------------------------------+
+| deployment_job_state   | :ref:`mlflowdeploymentjobconnectionstate`     | Deployment job state for this model.                                             |
++------------------------+-----------------------------------------------+----------------------------------------------------------------------------------+
 
 .. _mlflowRegisteredModelAlias:
 
@@ -2821,15 +2929,17 @@ Run
 A single run.
 
 
-+------------+------------------------+---------------+
-| Field Name |          Type          |  Description  |
-+============+========================+===============+
-| info       | :ref:`mlflowruninfo`   | Run metadata. |
-+------------+------------------------+---------------+
-| data       | :ref:`mlflowrundata`   | Run data.     |
-+------------+------------------------+---------------+
-| inputs     | :ref:`mlflowruninputs` | Run inputs.   |
-+------------+------------------------+---------------+
++------------+-------------------------+---------------+
+| Field Name |          Type           |  Description  |
++============+=========================+===============+
+| info       | :ref:`mlflowruninfo`    | Run metadata. |
++------------+-------------------------+---------------+
+| data       | :ref:`mlflowrundata`    | Run data.     |
++------------+-------------------------+---------------+
+| inputs     | :ref:`mlflowruninputs`  | Run inputs.   |
++------------+-------------------------+---------------+
+| outputs    | :ref:`mlflowrunoutputs` | Run outputs.  |
++------------+-------------------------+---------------+
 
 .. _mlflowRunData:
 
@@ -2898,9 +3008,6 @@ RunInputs
 
 
 
-.. note::
-    Experimental: This API may change or be removed in a future release without warning.
-
 Run inputs.
 
 
@@ -2909,6 +3016,24 @@ Run inputs.
 +================+=======================================+============================+
 | dataset_inputs | An array of :ref:`mlflowdatasetinput` | Dataset inputs to the Run. |
 +----------------+---------------------------------------+----------------------------+
+| model_inputs   | An array of :ref:`mlflowmodelinput`   | Model inputs to the Run.   |
++----------------+---------------------------------------+----------------------------+
+
+.. _mlflowRunOutputs:
+
+RunOutputs
+----------
+
+
+
+Outputs of a Run.
+
+
++---------------+--------------------------------------+---------------------------+
+|  Field Name   |                 Type                 |        Description        |
++===============+======================================+===========================+
+| model_outputs | An array of :ref:`mlflowmodeloutput` | Model outputs of the Run. |
++---------------+--------------------------------------+---------------------------+
 
 .. _mlflowRunTag:
 
@@ -2927,6 +3052,30 @@ Tag for a run.
 +------------+------------+----------------+
 | value      | ``STRING`` | The tag value. |
 +------------+------------+----------------+
+
+.. _mlflowModelVersionDeploymentJobStateDeploymentJobRunState:
+
+DeploymentJobRunState
+---------------------
+
+
+
+
++--------------------------------------+-------------+
+|                 Name                 | Description |
++======================================+=============+
+| DEPLOYMENT_JOB_RUN_STATE_UNSPECIFIED |             |
++--------------------------------------+-------------+
+| NO_VALID_DEPLOYMENT_JOB_FOUND        |             |
++--------------------------------------+-------------+
+| RUNNING                              |             |
++--------------------------------------+-------------+
+| SUCCEEDED                            |             |
++--------------------------------------+-------------+
+| FAILED                               |             |
++--------------------------------------+-------------+
+| PENDING                              |             |
++--------------------------------------+-------------+
 
 .. _mlflowModelVersionStatus:
 
@@ -2967,6 +3116,28 @@ Status of a run.
 +-----------+------------------------------------------+
 | KILLED    | Run killed by user.                      |
 +-----------+------------------------------------------+
+
+.. _mlflowDeploymentJobConnectionState:
+
+State
+-----
+
+
+
+
++---------------------------------------------+------------------------------------------------------------------------------------+
+|                    Name                     |                                    Description                                     |
++=============================================+====================================================================================+
+| DEPLOYMENT_JOB_CONNECTION_STATE_UNSPECIFIED |                                                                                    |
++---------------------------------------------+------------------------------------------------------------------------------------+
+| NOT_SET_UP                                  | default state                                                                      |
++---------------------------------------------+------------------------------------------------------------------------------------+
+| CONNECTED                                   | connected job: job exists, owner has ACLs, and required job parameters are present |
++---------------------------------------------+------------------------------------------------------------------------------------+
+| NOT_FOUND                                   | job was deleted OR owner had job ACLs removed                                      |
++---------------------------------------------+------------------------------------------------------------------------------------+
+| REQUIRED_PARAMETERS_CHANGED                 | required job parameters were changed                                               |
++---------------------------------------------+------------------------------------------------------------------------------------+
 
 .. _mlflowViewType:
 
