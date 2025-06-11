@@ -71,7 +71,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 2.22.1 documentation" href="../../../index.html"/>
+    <link rel="top" title="MLflow 3.1.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -103,8 +103,10 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      padding-left: 12px;
-      padding-right: 12px;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
     }
 
     .logo-container {
@@ -112,21 +114,37 @@
       gap: 12px;
       flex-direction: row;
       white-space: nowrap;
+      align-items: center;
+      justify-content: center;
     }
 
     a:hover {
-      text-decoration: underline;
+      text-decoration: none;
+      color: #0194e2;
     }
   </style>
   <div class="logo-container">
-    <i data-toggle="wy-nav-top" class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"></i>
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
     <a href="../../../index.html" class="wy-nav-top-logo">
-      <img src="../../../_static/MLflow-logo-final-black.png" alt="MLflow"/>
+      <img
+        src="../../../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
     </a>
-    <b style="overflow: hidden; text-overflow: ellipsis;">API Documentation</b>
-    <a style="overflow: hidden; text-overflow: ellipsis;" href="/docs/latest">Main Docs</a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
   </div>
-  <span class="version">2.22.1</span>
+  <span class="header-link">3.1.0</span>
 </div>
   </nav>
   <page>
@@ -220,16 +238,16 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.dspy.autolog</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span>
+<span></span><span class="kn">import</span> <span class="nn">importlib</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">packaging.version</span><span class="w"> </span><span class="kn">import</span> <span class="n">Version</span>
+<span class="kn">from</span> <span class="nn">packaging.version</span> <span class="kn">import</span> <span class="n">Version</span>
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">mlflow</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.dspy.save</span><span class="w"> </span><span class="kn">import</span> <span class="n">FLAVOR_NAME</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.provider</span><span class="w"> </span><span class="kn">import</span> <span class="n">trace_disabled</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">construct_full_inputs</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">experimental</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.autologging_utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="kn">import</span> <span class="nn">mlflow</span>
+<span class="kn">from</span> <span class="nn">mlflow.dspy.constant</span> <span class="kn">import</span> <span class="n">FLAVOR_NAME</span>
+<span class="kn">from</span> <span class="nn">mlflow.tracing.provider</span> <span class="kn">import</span> <span class="n">trace_disabled</span>
+<span class="kn">from</span> <span class="nn">mlflow.tracing.utils</span> <span class="kn">import</span> <span class="n">construct_full_inputs</span>
+<span class="kn">from</span> <span class="nn">mlflow.utils.annotations</span> <span class="kn">import</span> <span class="n">experimental</span>
+<span class="kn">from</span> <span class="nn">mlflow.utils.autologging_utils</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">autologging_integration</span><span class="p">,</span>
     <span class="n">get_autologging_config</span><span class="p">,</span>
     <span class="n">safe_patch</span><span class="p">,</span>
@@ -237,7 +255,7 @@
 
 
 <div class="viewcode-block" id="autolog"><a class="viewcode-back" href="../../../python_api/mlflow.dspy.html#mlflow.dspy.autolog">[docs]</a><span class="nd">@experimental</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">autolog</span><span class="p">(</span>
+<span class="k">def</span> <span class="nf">autolog</span><span class="p">(</span>
     <span class="n">log_traces</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">log_traces_from_compile</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">log_traces_from_eval</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
@@ -285,10 +303,10 @@
         <span class="n">silent</span><span class="o">=</span><span class="n">silent</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="kn">import</span><span class="w"> </span><span class="nn">dspy</span>
+    <span class="kn">import</span> <span class="nn">dspy</span>
 
-    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.dspy.callback</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowCallback</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.dspy.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">log_dspy_dataset</span><span class="p">,</span> <span class="n">save_dspy_module_state</span>
+    <span class="kn">from</span> <span class="nn">mlflow.dspy.callback</span> <span class="kn">import</span> <span class="n">MlflowCallback</span>
+    <span class="kn">from</span> <span class="nn">mlflow.dspy.util</span> <span class="kn">import</span> <span class="n">log_dspy_dataset</span><span class="p">,</span> <span class="n">save_dspy_module_state</span>
 
     <span class="c1"># Enable tracing by setting the MlflowCallback</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">disable</span><span class="p">:</span>
@@ -299,15 +317,16 @@
             <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">dspy</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">callbacks</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">MlflowCallback</span><span class="p">)]</span>
         <span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">patch_fn</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="c1"># Patch teleprompter/evaluator not to generate traces by default</span>
+    <span class="k">def</span> <span class="nf">patch_fn</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="c1"># NB: Since calling mlflow.dspy.autolog() again does not unpatch a function, we need to</span>
         <span class="c1"># check this flag at runtime to determine if we should generate traces.</span>
         <span class="c1"># method to disable tracing for compile and evaluate by default</span>
         <span class="nd">@trace_disabled</span>
-        <span class="k">def</span><span class="w"> </span><span class="nf">_trace_disabled_fn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">_trace_disabled_fn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">original</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-        <span class="k">def</span><span class="w"> </span><span class="nf">_compile_fn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">_compile_fn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">callback</span> <span class="o">:=</span> <span class="n">_active_callback</span><span class="p">():</span>
                 <span class="n">callback</span><span class="o">.</span><span class="n">optimizer_stack_level</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="k">try</span><span class="p">:</span>
@@ -364,8 +383,8 @@
 
         <span class="k">return</span> <span class="n">_trace_disabled_fn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-    <span class="kn">from</span><span class="w"> </span><span class="nn">dspy.evaluate</span><span class="w"> </span><span class="kn">import</span> <span class="n">Evaluate</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">dspy.teleprompt</span><span class="w"> </span><span class="kn">import</span> <span class="n">Teleprompter</span>
+    <span class="kn">from</span> <span class="nn">dspy.evaluate</span> <span class="kn">import</span> <span class="n">Evaluate</span>
+    <span class="kn">from</span> <span class="nn">dspy.teleprompt</span> <span class="kn">import</span> <span class="n">Teleprompter</span>
 
     <span class="n">compile_patch</span> <span class="o">=</span> <span class="s2">&quot;compile&quot;</span>
     <span class="k">for</span> <span class="bp">cls</span> <span class="ow">in</span> <span class="n">Teleprompter</span><span class="o">.</span><span class="n">__subclasses__</span><span class="p">():</span>
@@ -396,7 +415,7 @@
 
 
 <span class="nd">@autologging_integration</span><span class="p">(</span><span class="n">FLAVOR_NAME</span><span class="p">)</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">_autolog</span><span class="p">(</span>
+<span class="k">def</span> <span class="nf">_autolog</span><span class="p">(</span>
     <span class="n">log_traces</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
     <span class="n">log_traces_from_compile</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
     <span class="n">log_traces_from_eval</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
@@ -405,15 +424,13 @@
     <span class="n">disable</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">silent</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    TODO: Implement patching logic for autologging artifacts.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_active_callback</span><span class="p">():</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">dspy</span>
+<span class="k">def</span> <span class="nf">_active_callback</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">dspy</span>
 
-    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.dspy.callback</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowCallback</span>
+    <span class="kn">from</span> <span class="nn">mlflow.dspy.callback</span> <span class="kn">import</span> <span class="n">MlflowCallback</span>
 
     <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="n">dspy</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">callbacks</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">callback</span><span class="p">,</span> <span class="n">MlflowCallback</span><span class="p">):</span>
@@ -448,7 +465,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'2.22.1',
+      VERSION:'3.1.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

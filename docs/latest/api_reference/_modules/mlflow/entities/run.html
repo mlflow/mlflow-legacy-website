@@ -71,7 +71,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 2.22.1 documentation" href="../../../index.html"/>
+    <link rel="top" title="MLflow 3.1.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -103,8 +103,10 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      padding-left: 12px;
-      padding-right: 12px;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
     }
 
     .logo-container {
@@ -112,21 +114,37 @@
       gap: 12px;
       flex-direction: row;
       white-space: nowrap;
+      align-items: center;
+      justify-content: center;
     }
 
     a:hover {
-      text-decoration: underline;
+      text-decoration: none;
+      color: #0194e2;
     }
   </style>
   <div class="logo-container">
-    <i data-toggle="wy-nav-top" class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"></i>
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
     <a href="../../../index.html" class="wy-nav-top-logo">
-      <img src="../../../_static/MLflow-logo-final-black.png" alt="MLflow"/>
+      <img
+        src="../../../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
     </a>
-    <b style="overflow: hidden; text-overflow: ellipsis;">API Documentation</b>
-    <a style="overflow: hidden; text-overflow: ellipsis;" href="/docs/latest">Main Docs</a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
   </div>
-  <span class="version">2.22.1</span>
+  <span class="header-link">3.1.0</span>
 </div>
   </nav>
   <page>
@@ -220,32 +238,38 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.entities.run</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities._mlflow_object</span><span class="w"> </span><span class="kn">import</span> <span class="n">_MlflowObject</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.run_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">RunData</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.run_info</span><span class="w"> </span><span class="kn">import</span> <span class="n">RunInfo</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.run_inputs</span><span class="w"> </span><span class="kn">import</span> <span class="n">RunInputs</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.protos.service_pb2</span><span class="w"> </span><span class="kn">import</span> <span class="n">Run</span> <span class="k">as</span> <span class="n">ProtoRun</span>
+<span class="kn">from</span> <span class="nn">mlflow.entities._mlflow_object</span> <span class="kn">import</span> <span class="n">_MlflowObject</span>
+<span class="kn">from</span> <span class="nn">mlflow.entities.run_data</span> <span class="kn">import</span> <span class="n">RunData</span>
+<span class="kn">from</span> <span class="nn">mlflow.entities.run_info</span> <span class="kn">import</span> <span class="n">RunInfo</span>
+<span class="kn">from</span> <span class="nn">mlflow.entities.run_inputs</span> <span class="kn">import</span> <span class="n">RunInputs</span>
+<span class="kn">from</span> <span class="nn">mlflow.entities.run_outputs</span> <span class="kn">import</span> <span class="n">RunOutputs</span>
+<span class="kn">from</span> <span class="nn">mlflow.exceptions</span> <span class="kn">import</span> <span class="n">MlflowException</span>
+<span class="kn">from</span> <span class="nn">mlflow.protos.service_pb2</span> <span class="kn">import</span> <span class="n">Run</span> <span class="k">as</span> <span class="n">ProtoRun</span>
 
 
-<div class="viewcode-block" id="Run"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.Run">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">Run</span><span class="p">(</span><span class="n">_MlflowObject</span><span class="p">):</span>
+<div class="viewcode-block" id="Run"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.Run">[docs]</a><span class="k">class</span> <span class="nc">Run</span><span class="p">(</span><span class="n">_MlflowObject</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Run object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">run_info</span><span class="p">:</span> <span class="n">RunInfo</span><span class="p">,</span> <span class="n">run_data</span><span class="p">:</span> <span class="n">RunData</span><span class="p">,</span> <span class="n">run_inputs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">RunInputs</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">run_info</span><span class="p">:</span> <span class="n">RunInfo</span><span class="p">,</span>
+        <span class="n">run_data</span><span class="p">:</span> <span class="n">RunData</span><span class="p">,</span>
+        <span class="n">run_inputs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">RunInputs</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">run_outputs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">RunOutputs</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">run_info</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span><span class="s2">&quot;run_info cannot be None&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_info</span> <span class="o">=</span> <span class="n">run_info</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">run_data</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_inputs</span> <span class="o">=</span> <span class="n">run_inputs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_outputs</span> <span class="o">=</span> <span class="n">run_outputs</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RunInfo</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RunInfo</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The run metadata, such as the run id, start time, and status.</span>
 
@@ -254,7 +278,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_info</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RunData</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RunData</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The run data, including metrics, parameters, and tags.</span>
 
@@ -263,32 +287,44 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RunInputs</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RunInputs</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The run inputs, including dataset inputs</span>
+<span class="sd">        The run inputs, including dataset inputs.</span>
 
 <span class="sd">        :rtype: :py:class:`mlflow.entities.RunInputs`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inputs</span>
 
-<div class="viewcode-block" id="Run.to_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.Run.to_proto">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">outputs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RunOutputs</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The run outputs, including model outputs.</span>
+
+<span class="sd">        :rtype: :py:class:`mlflow.entities.RunOutputs`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_outputs</span>
+
+<div class="viewcode-block" id="Run.to_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.Run.to_proto">[docs]</a>    <span class="k">def</span> <span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">run</span> <span class="o">=</span> <span class="n">ProtoRun</span><span class="p">()</span>
         <span class="n">run</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">MergeFrom</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">to_proto</span><span class="p">())</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
             <span class="n">run</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MergeFrom</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">to_proto</span><span class="p">())</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">:</span>
             <span class="n">run</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">MergeFrom</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">to_proto</span><span class="p">())</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">:</span>
+            <span class="n">run</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">MergeFrom</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">to_proto</span><span class="p">())</span>
         <span class="k">return</span> <span class="n">run</span></div>
 
 <div class="viewcode-block" id="Run.from_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.Run.from_proto">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
             <span class="n">RunInfo</span><span class="o">.</span><span class="n">from_proto</span><span class="p">(</span><span class="n">proto</span><span class="o">.</span><span class="n">info</span><span class="p">),</span>
             <span class="n">RunData</span><span class="o">.</span><span class="n">from_proto</span><span class="p">(</span><span class="n">proto</span><span class="o">.</span><span class="n">data</span><span class="p">),</span>
-            <span class="n">RunInputs</span><span class="o">.</span><span class="n">from_proto</span><span class="p">(</span><span class="n">proto</span><span class="o">.</span><span class="n">inputs</span><span class="p">),</span>
+            <span class="n">RunInputs</span><span class="o">.</span><span class="n">from_proto</span><span class="p">(</span><span class="n">proto</span><span class="o">.</span><span class="n">inputs</span><span class="p">)</span> <span class="k">if</span> <span class="n">proto</span><span class="o">.</span><span class="n">inputs</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">RunOutputs</span><span class="o">.</span><span class="n">from_proto</span><span class="p">(</span><span class="n">proto</span><span class="o">.</span><span class="n">outputs</span><span class="p">)</span> <span class="k">if</span> <span class="n">proto</span><span class="o">.</span><span class="n">outputs</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="Run.to_dictionary"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.Run.to_dictionary">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<div class="viewcode-block" id="Run.to_dictionary"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.Run.to_dictionary">[docs]</a>    <span class="k">def</span> <span class="nf">to_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
         <span class="n">run_dict</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;info&quot;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">),</span>
         <span class="p">}</span>
@@ -296,6 +332,8 @@
             <span class="n">run_dict</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">to_dictionary</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">:</span>
             <span class="n">run_dict</span><span class="p">[</span><span class="s2">&quot;inputs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">to_dictionary</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">:</span>
+            <span class="n">run_dict</span><span class="p">[</span><span class="s2">&quot;outputs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">to_dictionary</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">run_dict</span></div></div>
 </pre></div>
 
@@ -327,7 +365,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'2.22.1',
+      VERSION:'3.1.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

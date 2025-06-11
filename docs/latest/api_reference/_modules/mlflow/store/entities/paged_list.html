@@ -71,7 +71,7 @@
         <link rel="index" title="Index"
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="MLflow 2.22.1 documentation" href="../../../../index.html"/>
+    <link rel="top" title="MLflow 3.1.0 documentation" href="../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../index.html"/> 
 
   
@@ -103,8 +103,10 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      padding-left: 12px;
-      padding-right: 12px;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
     }
 
     .logo-container {
@@ -112,21 +114,37 @@
       gap: 12px;
       flex-direction: row;
       white-space: nowrap;
+      align-items: center;
+      justify-content: center;
     }
 
     a:hover {
-      text-decoration: underline;
+      text-decoration: none;
+      color: #0194e2;
     }
   </style>
   <div class="logo-container">
-    <i data-toggle="wy-nav-top" class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"></i>
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
     <a href="../../../../index.html" class="wy-nav-top-logo">
-      <img src="../../../../_static/MLflow-logo-final-black.png" alt="MLflow"/>
+      <img
+        src="../../../../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
     </a>
-    <b style="overflow: hidden; text-overflow: ellipsis;">API Documentation</b>
-    <a style="overflow: hidden; text-overflow: ellipsis;" href="/docs/latest">Main Docs</a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
   </div>
-  <span class="version">2.22.1</span>
+  <span class="header-link">3.1.0</span>
 </div>
   </nav>
   <page>
@@ -220,23 +238,23 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.store.entities.paged_list</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TypeVar</span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypeVar</span>
 
 <span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="PagedList"><a class="viewcode-back" href="../../../../python_api/mlflow.entities.html#mlflow.store.entities.PagedList">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">PagedList</span><span class="p">(</span><span class="nb">list</span><span class="p">[</span><span class="n">T</span><span class="p">]):</span>
+<div class="viewcode-block" id="PagedList"><a class="viewcode-back" href="../../../../python_api/mlflow.entities.html#mlflow.store.entities.PagedList">[docs]</a><span class="k">class</span> <span class="nc">PagedList</span><span class="p">(</span><span class="nb">list</span><span class="p">[</span><span class="n">T</span><span class="p">]):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Wrapper class around the base Python `List` type. Contains an additional `token`  string</span>
 <span class="sd">    attribute that can be passed to the pagination API that returned this list to fetch additional</span>
 <span class="sd">    elements, if any are available</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">token</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">token</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">token</span> <span class="o">=</span> <span class="n">token</span>
 
-<div class="viewcode-block" id="PagedList.to_list"><a class="viewcode-back" href="../../../../python_api/mlflow.entities.html#mlflow.store.entities.PagedList.to_list">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PagedList.to_list"><a class="viewcode-back" href="../../../../python_api/mlflow.entities.html#mlflow.store.entities.PagedList.to_list">[docs]</a>    <span class="k">def</span> <span class="nf">to_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div></div>
 </pre></div>
 
@@ -268,7 +286,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../../',
-      VERSION:'2.22.1',
+      VERSION:'3.1.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

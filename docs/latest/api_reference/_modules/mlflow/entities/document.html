@@ -71,7 +71,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 2.22.1 documentation" href="../../../index.html"/>
+    <link rel="top" title="MLflow 3.1.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -103,8 +103,10 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      padding-left: 12px;
-      padding-right: 12px;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
     }
 
     .logo-container {
@@ -112,21 +114,37 @@
       gap: 12px;
       flex-direction: row;
       white-space: nowrap;
+      align-items: center;
+      justify-content: center;
     }
 
     a:hover {
-      text-decoration: underline;
+      text-decoration: none;
+      color: #0194e2;
     }
   </style>
   <div class="logo-container">
-    <i data-toggle="wy-nav-top" class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"></i>
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
     <a href="../../../index.html" class="wy-nav-top-logo">
-      <img src="../../../_static/MLflow-logo-final-black.png" alt="MLflow"/>
+      <img
+        src="../../../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
     </a>
-    <b style="overflow: hidden; text-overflow: ellipsis;">API Documentation</b>
-    <a style="overflow: hidden; text-overflow: ellipsis;" href="/docs/latest">Main Docs</a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
   </div>
-  <span class="version">2.22.1</span>
+  <span class="header-link">3.1.0</span>
 </div>
   </nav>
   <page>
@@ -220,13 +238,13 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.entities.document</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">deepcopy</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">asdict</span><span class="p">,</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
+<span></span><span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">asdict</span><span class="p">,</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
 
 
 <div class="viewcode-block" id="Document"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.Document">[docs]</a><span class="nd">@dataclass</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">Document</span><span class="p">:</span>
+<span class="k">class</span> <span class="nc">Document</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An entity used in MLflow Tracing to represent retrieved documents in a RETRIEVER span.</span>
 
@@ -241,7 +259,7 @@
     <span class="nb">id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="Document.from_langchain_document"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.Document.from_langchain_document">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">from_langchain_document</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">document</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">from_langchain_document</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">document</span><span class="p">):</span>
         <span class="c1"># older versions of langchain do not have the id attribute</span>
         <span class="nb">id</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">document</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
@@ -252,7 +270,7 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="Document.from_llama_index_node_with_score"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.Document.from_llama_index_node_with_score">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">from_llama_index_node_with_score</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">node_with_score</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">from_llama_index_node_with_score</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">node_with_score</span><span class="p">):</span>
         <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;score&quot;</span><span class="p">:</span> <span class="n">node_with_score</span><span class="o">.</span><span class="n">get_score</span><span class="p">(),</span>
             <span class="c1"># update after setting score so that it can be</span>
@@ -266,7 +284,7 @@
             <span class="nb">id</span><span class="o">=</span><span class="n">node_with_score</span><span class="o">.</span><span class="n">node_id</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="Document.to_dict"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.Document.to_dict">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Document.to_dict"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.Document.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">asdict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div></div>
 </pre></div>
 
@@ -298,7 +316,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'2.22.1',
+      VERSION:'3.1.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

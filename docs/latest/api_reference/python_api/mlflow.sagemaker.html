@@ -71,10 +71,10 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MLflow 2.22.1 documentation" href="../index.html"/>
+    <link rel="top" title="MLflow 3.1.0 documentation" href="../index.html"/>
         <link rel="up" title="Python API" href="index.html"/>
         <link rel="next" title="mlflow.sentence_transformers" href="/mlflow.sentence_transformers.html"/>
-        <link rel="prev" title="mlflow.recipes" href="/mlflow.recipes.html"/> 
+        <link rel="prev" title="mlflow.pytorch" href="/mlflow.pytorch.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -104,8 +104,10 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      padding-left: 12px;
-      padding-right: 12px;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
     }
 
     .logo-container {
@@ -113,21 +115,37 @@
       gap: 12px;
       flex-direction: row;
       white-space: nowrap;
+      align-items: center;
+      justify-content: center;
     }
 
     a:hover {
-      text-decoration: underline;
+      text-decoration: none;
+      color: #0194e2;
     }
   </style>
   <div class="logo-container">
-    <i data-toggle="wy-nav-top" class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"></i>
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
     <a href="../index.html" class="wy-nav-top-logo">
-      <img src="../_static/MLflow-logo-final-black.png" alt="MLflow"/>
+      <img
+        src="../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
     </a>
-    <b style="overflow: hidden; text-overflow: ellipsis;">API Documentation</b>
-    <a style="overflow: hidden; text-overflow: ellipsis;" href="/docs/latest">Main Docs</a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
   </div>
-  <span class="version">2.22.1</span>
+  <span class="header-link">3.1.0</span>
 </div>
   </nav>
   <page>
@@ -166,6 +184,8 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Python API</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="mlflow.html">mlflow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.html#mlflow-tracing-apis">MLflow Tracing APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.html#mlflow-logged-model-apis">MLflow Logged Model APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.ag2.html">mlflow.ag2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.anthropic.html">mlflow.anthropic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.artifacts.html">mlflow.artifacts</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.autogen.html">mlflow.autogen</a></li>
@@ -180,9 +200,9 @@
 <li class="toctree-l2"><a class="reference internal" href="mlflow.dspy.html">mlflow.dspy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.entities.html">mlflow.entities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.environment_variables.html">mlflow.environment_variables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mlflow.fastai.html">mlflow.fastai</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.gateway.html">mlflow.gateway</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.gemini.html">mlflow.gemini</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.genai.html">mlflow.genai</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.groq.html">mlflow.groq</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.h2o.html">mlflow.h2o</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.johnsnowlabs.html">mlflow.johnsnowlabs</a></li>
@@ -193,7 +213,6 @@
 <li class="toctree-l2"><a class="reference internal" href="mlflow.llama_index.html">mlflow.llama_index</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.metrics.html">mlflow.metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.mistral.html">mlflow.mistral</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mlflow.mleap.html">mlflow.mleap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.models.html">mlflow.models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.onnx.html">mlflow.onnx</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.openai.html">mlflow.openai</a></li>
@@ -202,15 +221,16 @@
 <li class="toctree-l2"><a class="reference internal" href="mlflow.projects.html">mlflow.projects</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.promptflow.html">mlflow.promptflow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.prophet.html">mlflow.prophet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.pydantic_ai.html">mlflow.pydantic_ai</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.pyfunc.html">mlflow.pyfunc</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.pyspark.ml.html">mlflow.pyspark.ml</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.pytorch.html">mlflow.pytorch</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mlflow.recipes.html">mlflow.recipes</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">mlflow.sagemaker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.sentence_transformers.html">mlflow.sentence_transformers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.server.html">mlflow.server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.shap.html">mlflow.shap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.sklearn.html">mlflow.sklearn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.smolagents.html">mlflow.smolagents</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.spacy.html">mlflow.spacy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.spark.html">mlflow.spark</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.statsmodels.html">mlflow.statsmodels</a></li>
@@ -425,7 +445,7 @@ tags to be set for the deployed model. Defaults to <code class="docutils literal
 </dl>
 <div class="literal-block-wrapper docutils container" id="id11">
 <div class="code-block-caption"><span class="caption-text">Python example</span><a class="headerlink" href="#id11" title="Permalink to this code"> </a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">vpc_config</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;SecurityGroupIds&quot;</span><span class="p">:</span> <span class="p">[</span>
@@ -552,7 +572,7 @@ parameter is ignored. Defaults to <code class="docutils literal notranslate"><sp
 </dl>
 <div class="literal-block-wrapper docutils container" id="id13">
 <div class="code-block-caption"><span class="caption-text">Python example</span><a class="headerlink" href="#id13" title="Permalink to this code"> </a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">config</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
     <span class="n">assume_role_arn</span><span class="o">=</span><span class="s2">&quot;arn:aws:123:role/assumed_role&quot;</span><span class="p">,</span>
@@ -622,7 +642,7 @@ while retrieving the deployment.</p>
 </dl>
 <div class="literal-block-wrapper docutils container" id="id15">
 <div class="code-block-caption"><span class="caption-text">Python example</span><a class="headerlink" href="#id15" title="Permalink to this code"> </a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;sagemaker:/us-east-1/arn:aws:123:role/assumed_role&quot;</span><span class="p">)</span>
 <span class="n">client</span><span class="o">.</span><span class="n">get_deployment</span><span class="p">(</span><span class="s2">&quot;my-deployment&quot;</span><span class="p">)</span>
@@ -672,7 +692,7 @@ with the AWS region and the role ARN in the <code class="docutils literal notran
 </dl>
 <div class="literal-block-wrapper docutils container" id="id17">
 <div class="code-block-caption"><span class="caption-text">Python example</span><a class="headerlink" href="#id17" title="Permalink to this code"> </a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;sagemaker:/us-east-1/arn:aws:123:role/assumed_role&quot;</span><span class="p">)</span>
 <span class="n">client</span><span class="o">.</span><span class="n">list_deployments</span><span class="p">()</span>
@@ -734,8 +754,8 @@ For a complete list of supported output types, see <a class="reference internal"
 </dl>
 <div class="literal-block-wrapper docutils container" id="id19">
 <div class="code-block-caption"><span class="caption-text">Python example</span><a class="headerlink" href="#id19" title="Permalink to this code"> </a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]],</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;feat1&quot;</span><span class="p">,</span> <span class="s2">&quot;feat2&quot;</span><span class="p">,</span> <span class="s2">&quot;feat3&quot;</span><span class="p">])</span>
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;sagemaker:/us-east-1/arn:aws:123:role/assumed_role&quot;</span><span class="p">)</span>
@@ -889,7 +909,7 @@ to be set for the deployed model. Defaults to <code class="docutils literal notr
 </dl>
 <div class="literal-block-wrapper docutils container" id="id21">
 <div class="code-block-caption"><span class="caption-text">Python example</span><a class="headerlink" href="#id21" title="Permalink to this code"> </a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">vpc_config</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;SecurityGroupIds&quot;</span><span class="p">:</span> <span class="p">[</span>
@@ -1049,7 +1069,7 @@ parameter in the <a class="reference external" href="https://boto3.readthedocs.i
 <a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/API_VpcConfig.html">https://docs.aws.amazon.com/sagemaker/latest/dg/API_VpcConfig.html</a>.</p>
 <div class="literal-block-wrapper docutils container" id="id23">
 <div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id23" title="Permalink to this code"> </a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">mlflow.sagemaker</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mfs</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mlflow.sagemaker</span> <span class="k">as</span> <span class="nn">mfs</span>
 
 <span class="n">vpc_config</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;SecurityGroupIds&quot;</span><span class="p">:</span> <span class="p">[</span>
@@ -1151,7 +1171,7 @@ create_model method</a>. For more information, see
 <a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/API_VpcConfig.html">https://docs.aws.amazon.com/sagemaker/latest/dg/API_VpcConfig.html</a>.</p>
 <div class="literal-block-wrapper docutils container" id="id24">
 <div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id24" title="Permalink to this code"> </a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">mlflow.sagemaker</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mfs</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mlflow.sagemaker</span> <span class="k">as</span> <span class="nn">mfs</span>
 
 <span class="n">vpc_config</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;SecurityGroupIds&quot;</span><span class="p">:</span> <span class="p">[</span>
@@ -1223,8 +1243,8 @@ deployment, an exception will be thrown.</p></li>
 </dl>
 <div class="literal-block-wrapper docutils container" id="id25">
 <div class="code-block-caption"><span class="caption-text">Python example</span><a class="headerlink" href="#id25" title="Permalink to this code"> </a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_docker</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.models</span> <span class="kn">import</span> <span class="n">build_docker</span>
+<span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">build_docker</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;mlflow-pyfunc&quot;</span><span class="p">)</span>
 
@@ -1304,7 +1324,7 @@ parameter is ignored.</p></li>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="mlflow.recipes.html" class="btn btn-neutral" title="mlflow.recipes" accesskey="p"><span class="db-icon db-icon-chevron-left"></span> Previous</a>
+        <a href="mlflow.pytorch.html" class="btn btn-neutral" title="mlflow.pytorch" accesskey="p"><span class="db-icon db-icon-chevron-left"></span> Previous</a>
       
       
         <a href="mlflow.sentence_transformers.html" class="btn btn-neutral" title="mlflow.sentence_transformers" accesskey="n">Next <span class="db-icon db-icon-chevron-right"></span></a>
@@ -1335,7 +1355,7 @@ parameter is ignored.</p></li>
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../',
-      VERSION:'2.22.1',
+      VERSION:'3.1.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

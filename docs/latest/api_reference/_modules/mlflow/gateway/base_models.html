@@ -71,7 +71,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 2.22.1 documentation" href="../../../index.html"/>
+    <link rel="top" title="MLflow 3.1.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -103,8 +103,10 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      padding-left: 12px;
-      padding-right: 12px;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
     }
 
     .logo-container {
@@ -112,21 +114,37 @@
       gap: 12px;
       flex-direction: row;
       white-space: nowrap;
+      align-items: center;
+      justify-content: center;
     }
 
     a:hover {
-      text-decoration: underline;
+      text-decoration: none;
+      color: #0194e2;
     }
   </style>
   <div class="logo-container">
-    <i data-toggle="wy-nav-top" class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"></i>
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
     <a href="../../../index.html" class="wy-nav-top-logo">
-      <img src="../../../_static/MLflow-logo-final-black.png" alt="MLflow"/>
+      <img
+        src="../../../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
     </a>
-    <b style="overflow: hidden; text-overflow: ellipsis;">API Documentation</b>
-    <a style="overflow: hidden; text-overflow: ellipsis;" href="/docs/latest">Main Docs</a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
   </div>
-  <span class="version">2.22.1</span>
+  <span class="header-link">3.1.0</span>
 </div>
   </nav>
   <page>
@@ -220,12 +238,12 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.gateway.base_models</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span>
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
 
 
-<span class="k">class</span><span class="w"> </span><span class="nc">RequestModel</span><span class="p">(</span>
+<span class="k">class</span> <span class="nc">RequestModel</span><span class="p">(</span>
     <span class="n">BaseModel</span><span class="p">,</span>
     <span class="c1"># Allow extra fields for pydantic request models, e.g. to support</span>
     <span class="c1"># vendor-specific embeddings parameters</span>
@@ -236,7 +254,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
 
-<span class="k">class</span><span class="w"> </span><span class="nc">ResponseModel</span><span class="p">(</span>
+<span class="k">class</span> <span class="nc">ResponseModel</span><span class="p">(</span>
     <span class="n">BaseModel</span><span class="p">,</span>
     <span class="c1"># Ignore extra fields for pydantic response models to ensure a consistent response</span>
     <span class="c1"># experience for clients across different backends</span>
@@ -248,7 +266,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
 
-<div class="viewcode-block" id="ConfigModel"><a class="viewcode-back" href="../../../python_api/mlflow.gateway.html#mlflow.gateway.base_models.ConfigModel">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ConfigModel</span><span class="p">(</span>
+<div class="viewcode-block" id="ConfigModel"><a class="viewcode-back" href="../../../python_api/mlflow.gateway.html#mlflow.gateway.base_models.ConfigModel">[docs]</a><span class="k">class</span> <span class="nc">ConfigModel</span><span class="p">(</span>
     <span class="n">BaseModel</span><span class="p">,</span>
     <span class="c1"># Ignore extra fields for pydantic config models, since they are unused</span>
     <span class="n">extra</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span>
@@ -259,7 +277,7 @@
 <span class="sd">    &quot;&quot;&quot;</span></div>
 
 
-<span class="k">class</span><span class="w"> </span><span class="nc">LimitModel</span><span class="p">(</span>
+<span class="k">class</span> <span class="nc">LimitModel</span><span class="p">(</span>
     <span class="n">BaseModel</span><span class="p">,</span>
     <span class="c1"># Ignore extra fields for pydantic limit models, since they are unused</span>
     <span class="n">extra</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span>
@@ -270,7 +288,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
 
-<span class="k">class</span><span class="w"> </span><span class="nc">SetLimitsModel</span><span class="p">(</span>
+<span class="k">class</span> <span class="nc">SetLimitsModel</span><span class="p">(</span>
     <span class="n">BaseModel</span><span class="p">,</span>
     <span class="c1"># Ignore extra fields for pydantic limit models, since they are unused</span>
     <span class="n">extra</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span>
@@ -310,7 +328,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'2.22.1',
+      VERSION:'3.1.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

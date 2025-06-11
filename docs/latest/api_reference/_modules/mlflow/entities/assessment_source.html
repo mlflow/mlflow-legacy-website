@@ -71,7 +71,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 2.22.1 documentation" href="../../../index.html"/>
+    <link rel="top" title="MLflow 3.1.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -103,8 +103,10 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      padding-left: 12px;
-      padding-right: 12px;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
     }
 
     .logo-container {
@@ -112,21 +114,37 @@
       gap: 12px;
       flex-direction: row;
       white-space: nowrap;
+      align-items: center;
+      justify-content: center;
     }
 
     a:hover {
-      text-decoration: underline;
+      text-decoration: none;
+      color: #0194e2;
     }
   </style>
   <div class="logo-container">
-    <i data-toggle="wy-nav-top" class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"></i>
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
     <a href="../../../index.html" class="wy-nav-top-logo">
-      <img src="../../../_static/MLflow-logo-final-black.png" alt="MLflow"/>
+      <img
+        src="../../../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
     </a>
-    <b style="overflow: hidden; text-overflow: ellipsis;">API Documentation</b>
-    <a style="overflow: hidden; text-overflow: ellipsis;" href="/docs/latest">Main Docs</a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
   </div>
-  <span class="version">2.22.1</span>
+  <span class="header-link">3.1.0</span>
 </div>
   </nav>
   <page>
@@ -220,44 +238,89 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.entities.assessment_source</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">asdict</span><span class="p">,</span> <span class="n">dataclass</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
+<span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">asdict</span><span class="p">,</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities._mlflow_object</span><span class="w"> </span><span class="kn">import</span> <span class="n">_MlflowObject</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.protos.assessments_pb2</span><span class="w"> </span><span class="kn">import</span> <span class="n">AssessmentSource</span> <span class="k">as</span> <span class="n">ProtoAssessmentSource</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.protos.databricks_pb2</span><span class="w"> </span><span class="kn">import</span> <span class="n">INVALID_PARAMETER_VALUE</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">experimental</span>
+<span class="kn">from</span> <span class="nn">mlflow.entities._mlflow_object</span> <span class="kn">import</span> <span class="n">_MlflowObject</span>
+<span class="kn">from</span> <span class="nn">mlflow.exceptions</span> <span class="kn">import</span> <span class="n">MlflowException</span>
+<span class="kn">from</span> <span class="nn">mlflow.protos.assessments_pb2</span> <span class="kn">import</span> <span class="n">AssessmentSource</span> <span class="k">as</span> <span class="n">ProtoAssessmentSource</span>
+<span class="kn">from</span> <span class="nn">mlflow.protos.databricks_pb2</span> <span class="kn">import</span> <span class="n">INVALID_PARAMETER_VALUE</span>
+<span class="kn">from</span> <span class="nn">mlflow.utils.annotations</span> <span class="kn">import</span> <span class="n">experimental</span>
 
 
 <div class="viewcode-block" id="AssessmentSource"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.AssessmentSource">[docs]</a><span class="nd">@experimental</span>
 <span class="nd">@dataclass</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">AssessmentSource</span><span class="p">(</span><span class="n">_MlflowObject</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">AssessmentSource</span><span class="p">(</span><span class="n">_MlflowObject</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Source of an assessment (human, LLM as a judge with GPT-4, etc).</span>
+
+<span class="sd">    When recording an assessment, MLflow mandates providing a source information</span>
+<span class="sd">    to keep track of how the assessment is conducted.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        source_type: The type of the assessment source. Must be one of the values in</span>
 <span class="sd">            the AssessmentSourceType enum.</span>
-<span class="sd">        source_id: An identifier for the source, e.g. user ID or LLM judge ID.</span>
+<span class="sd">        source_id: An identifier for the source, e.g. user ID or LLM judge ID. If not</span>
+<span class="sd">            provided, the default value &quot;default&quot; is used.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    Human annotation can be represented with a source type of &quot;HUMAN&quot;:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        import mlflow</span>
+<span class="sd">        from mlflow.entities.assessment import AssessmentSource, AssessmentSourceType</span>
+
+<span class="sd">        source = AssessmentSource(</span>
+<span class="sd">            source_type=AssessmentSourceType.HUMAN,</span>
+<span class="sd">            source_id=&quot;bob@example.com&quot;,</span>
+<span class="sd">        )</span>
+
+<span class="sd">    LLM-as-a-judge can be represented with a source type of &quot;LLM_JUDGE&quot;:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        import mlflow</span>
+<span class="sd">        from mlflow.entities.assessment import AssessmentSource, AssessmentSourceType</span>
+
+<span class="sd">        source = AssessmentSource(</span>
+<span class="sd">            source_type=AssessmentSourceType.LLM_JUDGE,</span>
+<span class="sd">            source_id=&quot;gpt-4o-mini&quot;,</span>
+<span class="sd">        )</span>
+
+<span class="sd">    Heuristic evaluation can be represented with a source type of &quot;CODE&quot;:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        import mlflow</span>
+<span class="sd">        from mlflow.entities.assessment import AssessmentSource, AssessmentSourceType</span>
+
+<span class="sd">        source = AssessmentSource(</span>
+<span class="sd">            source_type=AssessmentSourceType.CODE,</span>
+<span class="sd">            source_id=&quot;repo/evaluation_script.py&quot;,</span>
+<span class="sd">        )</span>
+
+<span class="sd">    To record more context about the assessment, you can use the `metadata` field of</span>
+<span class="sd">    the assessment logging APIs as well.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">source_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">source_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;default&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># Perform the standardization on source_type after initialization</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">source_type</span> <span class="o">=</span> <span class="n">AssessmentSourceType</span><span class="o">.</span><span class="n">_standardize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source_type</span><span class="p">)</span>
 
-<div class="viewcode-block" id="AssessmentSource.to_dictionary"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.AssessmentSource.to_dictionary">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<div class="viewcode-block" id="AssessmentSource.to_dictionary"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.AssessmentSource.to_dictionary">[docs]</a>    <span class="k">def</span> <span class="nf">to_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
         <span class="k">return</span> <span class="n">asdict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="AssessmentSource.from_dictionary"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.AssessmentSource.from_dictionary">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">from_dictionary</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">source_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;AssessmentSource&quot;</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">from_dictionary</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">source_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;AssessmentSource&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">source_dict</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="AssessmentSource.to_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.AssessmentSource.to_proto">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="AssessmentSource.to_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.AssessmentSource.to_proto">[docs]</a>    <span class="k">def</span> <span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">source</span> <span class="o">=</span> <span class="n">ProtoAssessmentSource</span><span class="p">()</span>
         <span class="n">source</span><span class="o">.</span><span class="n">source_type</span> <span class="o">=</span> <span class="n">ProtoAssessmentSource</span><span class="o">.</span><span class="n">SourceType</span><span class="o">.</span><span class="n">Value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source_type</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -265,7 +328,7 @@
         <span class="k">return</span> <span class="n">source</span></div>
 
 <div class="viewcode-block" id="AssessmentSource.from_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.AssessmentSource.from_proto">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">AssessmentSource</span><span class="p">(</span>
             <span class="n">source_type</span><span class="o">=</span><span class="n">AssessmentSourceType</span><span class="o">.</span><span class="n">from_proto</span><span class="p">(</span><span class="n">proto</span><span class="o">.</span><span class="n">source_type</span><span class="p">),</span>
             <span class="n">source_id</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">source_id</span> <span class="k">if</span> <span class="n">proto</span><span class="o">.</span><span class="n">source_id</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
@@ -273,7 +336,7 @@
 
 
 <div class="viewcode-block" id="AssessmentSourceType"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.AssessmentSourceType">[docs]</a><span class="nd">@experimental</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">AssessmentSourceType</span><span class="p">:</span>
+<span class="k">class</span> <span class="nc">AssessmentSourceType</span><span class="p">:</span>
     <span class="n">SOURCE_TYPE_UNSPECIFIED</span> <span class="o">=</span> <span class="s2">&quot;SOURCE_TYPE_UNSPECIFIED&quot;</span>
     <span class="n">LLM_JUDGE</span> <span class="o">=</span> <span class="s2">&quot;LLM_JUDGE&quot;</span>
     <span class="n">AI_JUDGE</span> <span class="o">=</span> <span class="s2">&quot;AI_JUDGE&quot;</span>  <span class="c1"># Deprecated, use LLM_JUDGE instead</span>
@@ -281,11 +344,11 @@
     <span class="n">CODE</span> <span class="o">=</span> <span class="s2">&quot;CODE&quot;</span>
     <span class="n">_SOURCE_TYPES</span> <span class="o">=</span> <span class="p">[</span><span class="n">SOURCE_TYPE_UNSPECIFIED</span><span class="p">,</span> <span class="n">LLM_JUDGE</span><span class="p">,</span> <span class="n">HUMAN</span><span class="p">,</span> <span class="n">CODE</span><span class="p">]</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_source_type</span> <span class="o">=</span> <span class="n">AssessmentSourceType</span><span class="o">.</span><span class="n">_parse</span><span class="p">(</span><span class="n">source_type</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_parse</span><span class="p">(</span><span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_parse</span><span class="p">(</span><span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="n">source_type</span> <span class="o">=</span> <span class="n">source_type</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
 
         <span class="c1"># Backwards compatibility shim for mlflow.evaluations.AssessmentSourceType</span>
@@ -306,15 +369,15 @@
             <span class="p">)</span>
         <span class="k">return</span> <span class="n">source_type</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_source_type</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_standardize</span><span class="p">(</span><span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_standardize</span><span class="p">(</span><span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">AssessmentSourceType</span><span class="p">(</span><span class="n">source_type</span><span class="p">))</span>
 
 <div class="viewcode-block" id="AssessmentSourceType.from_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.AssessmentSourceType.from_proto">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto_source_type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto_source_type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">ProtoAssessmentSource</span><span class="o">.</span><span class="n">SourceType</span><span class="o">.</span><span class="n">Name</span><span class="p">(</span><span class="n">proto_source_type</span><span class="p">)</span></div></div>
 </pre></div>
 
@@ -346,7 +409,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'2.22.1',
+      VERSION:'3.1.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

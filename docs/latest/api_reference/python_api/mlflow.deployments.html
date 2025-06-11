@@ -71,7 +71,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MLflow 2.22.1 documentation" href="../index.html"/>
+    <link rel="top" title="MLflow 3.1.0 documentation" href="../index.html"/>
         <link rel="up" title="Python API" href="index.html"/>
         <link rel="next" title="mlflow.diviner" href="/mlflow.diviner.html"/>
         <link rel="prev" title="mlflow.data" href="/mlflow.data.html"/> 
@@ -104,8 +104,10 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      padding-left: 12px;
-      padding-right: 12px;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
     }
 
     .logo-container {
@@ -113,21 +115,37 @@
       gap: 12px;
       flex-direction: row;
       white-space: nowrap;
+      align-items: center;
+      justify-content: center;
     }
 
     a:hover {
-      text-decoration: underline;
+      text-decoration: none;
+      color: #0194e2;
     }
   </style>
   <div class="logo-container">
-    <i data-toggle="wy-nav-top" class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"></i>
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
     <a href="../index.html" class="wy-nav-top-logo">
-      <img src="../_static/MLflow-logo-final-black.png" alt="MLflow"/>
+      <img
+        src="../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
     </a>
-    <b style="overflow: hidden; text-overflow: ellipsis;">API Documentation</b>
-    <a style="overflow: hidden; text-overflow: ellipsis;" href="/docs/latest">Main Docs</a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
   </div>
-  <span class="version">2.22.1</span>
+  <span class="header-link">3.1.0</span>
 </div>
   </nav>
   <page>
@@ -166,6 +184,8 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Python API</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="mlflow.html">mlflow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.html#mlflow-tracing-apis">MLflow Tracing APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.html#mlflow-logged-model-apis">MLflow Logged Model APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.ag2.html">mlflow.ag2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.anthropic.html">mlflow.anthropic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.artifacts.html">mlflow.artifacts</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.autogen.html">mlflow.autogen</a></li>
@@ -180,9 +200,9 @@
 <li class="toctree-l2"><a class="reference internal" href="mlflow.dspy.html">mlflow.dspy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.entities.html">mlflow.entities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.environment_variables.html">mlflow.environment_variables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mlflow.fastai.html">mlflow.fastai</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.gateway.html">mlflow.gateway</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.gemini.html">mlflow.gemini</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.genai.html">mlflow.genai</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.groq.html">mlflow.groq</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.h2o.html">mlflow.h2o</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.johnsnowlabs.html">mlflow.johnsnowlabs</a></li>
@@ -193,7 +213,6 @@
 <li class="toctree-l2"><a class="reference internal" href="mlflow.llama_index.html">mlflow.llama_index</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.metrics.html">mlflow.metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.mistral.html">mlflow.mistral</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mlflow.mleap.html">mlflow.mleap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.models.html">mlflow.models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.onnx.html">mlflow.onnx</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.openai.html">mlflow.openai</a></li>
@@ -202,15 +221,16 @@
 <li class="toctree-l2"><a class="reference internal" href="mlflow.projects.html">mlflow.projects</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.promptflow.html">mlflow.promptflow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.prophet.html">mlflow.prophet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.pydantic_ai.html">mlflow.pydantic_ai</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.pyfunc.html">mlflow.pyfunc</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.pyspark.ml.html">mlflow.pyspark.ml</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.pytorch.html">mlflow.pytorch</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mlflow.recipes.html">mlflow.recipes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.sagemaker.html">mlflow.sagemaker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.sentence_transformers.html">mlflow.sentence_transformers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.server.html">mlflow.server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.shap.html">mlflow.shap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.sklearn.html">mlflow.sklearn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.smolagents.html">mlflow.smolagents</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.spacy.html">mlflow.spacy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.spark.html">mlflow.spark</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.statsmodels.html">mlflow.statsmodels</a></li>
@@ -599,11 +619,7 @@ endpoint</p></li>
 <dl class="py class">
 <dt id="mlflow.deployments.DatabricksDeploymentClient">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mlflow.deployments.</span></code><code class="sig-name descname"><span class="pre">DatabricksDeploymentClient</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_uri</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient" title="Permalink to this definition"> </a></dt>
-<dd><div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Experimental: This class may change or be removed in a future release without warning.</p>
-</div>
-<p>Client for interacting with Databricks serving endpoints.</p>
+<dd><p>Client for interacting with Databricks serving endpoints.</p>
 <p>Example:</p>
 <p>First, set up credentials for authentication:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">DATABRICKS_HOST</span><span class="o">=</span>...
@@ -615,7 +631,7 @@ endpoint</p></li>
 <p>See <a class="reference external" href="https://docs.databricks.com/en/dev-tools/auth.html">https://docs.databricks.com/en/dev-tools/auth.html</a> for other authentication methods.</p>
 </div>
 <p>Then, create a deployment client and use it to interact with Databricks serving endpoints:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;databricks&quot;</span><span class="p">)</span>
 <span class="n">endpoints</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">list_endpoints</span><span class="p">()</span>
@@ -645,11 +661,7 @@ endpoint</p></li>
 <dl class="py method">
 <dt id="mlflow.deployments.DatabricksDeploymentClient.create_endpoint">
 <code class="sig-name descname"><span class="pre">create_endpoint</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">route_optimized</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.create_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.create_endpoint" title="Permalink to this definition"> </a></dt>
-<dd><div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Experimental: This function may change or be removed in a future release without warning.</p>
-</div>
-<p>Create a new serving endpoint with the provided name and configuration.</p>
+<dd><p>Create a new serving endpoint with the provided name and configuration.</p>
 <p>See <a class="reference external" href="https://docs.databricks.com/api/workspace/servingendpoints/create">https://docs.databricks.com/api/workspace/servingendpoints/create</a> for request/response
 schema.</p>
 <dl class="field-list simple">
@@ -677,7 +689,7 @@ is optimized for routing traffic. Only used in the deprecated approach.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;databricks&quot;</span><span class="p">)</span>
 <span class="n">endpoint</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_endpoint</span><span class="p">(</span>
@@ -732,11 +744,7 @@ is optimized for routing traffic. Only used in the deprecated approach.</p>
 <dl class="py method">
 <dt id="mlflow.deployments.DatabricksDeploymentClient.delete_endpoint">
 <code class="sig-name descname"><span class="pre">delete_endpoint</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.delete_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.delete_endpoint" title="Permalink to this definition"> </a></dt>
-<dd><div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Experimental: This function may change or be removed in a future release without warning.</p>
-</div>
-<p>Delete a specified serving endpoint.
+<dd><p>Delete a specified serving endpoint.
 See <a class="reference external" href="https://docs.databricks.com/api/workspace/servingendpoints/delete">https://docs.databricks.com/api/workspace/servingendpoints/delete</a> for request/response
 schema.</p>
 <dl class="field-list simple">
@@ -748,7 +756,7 @@ schema.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;databricks&quot;</span><span class="p">)</span>
 <span class="n">client</span><span class="o">.</span><span class="n">delete_endpoint</span><span class="p">(</span><span class="n">endpoint</span><span class="o">=</span><span class="s2">&quot;chat&quot;</span><span class="p">)</span>
@@ -768,11 +776,7 @@ schema.</p>
 <dl class="py method">
 <dt id="mlflow.deployments.DatabricksDeploymentClient.get_endpoint">
 <code class="sig-name descname"><span class="pre">get_endpoint</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.get_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.get_endpoint" title="Permalink to this definition"> </a></dt>
-<dd><div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Experimental: This function may change or be removed in a future release without warning.</p>
-</div>
-<p>Get a specified serving endpoint.
+<dd><p>Get a specified serving endpoint.
 See <a class="reference external" href="https://docs.databricks.com/api/workspace/servingendpoints/get">https://docs.databricks.com/api/workspace/servingendpoints/get</a> for request/response
 schema.</p>
 <dl class="field-list simple">
@@ -784,7 +788,7 @@ schema.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;databricks&quot;</span><span class="p">)</span>
 <span class="n">endpoint</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_endpoint</span><span class="p">(</span><span class="n">endpoint</span><span class="o">=</span><span class="s2">&quot;chat&quot;</span><span class="p">)</span>
@@ -814,11 +818,7 @@ schema.</p>
 <dl class="py method">
 <dt id="mlflow.deployments.DatabricksDeploymentClient.list_endpoints">
 <code class="sig-name descname"><span class="pre">list_endpoints</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.list_endpoints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.list_endpoints" title="Permalink to this definition"> </a></dt>
-<dd><div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Experimental: This function may change or be removed in a future release without warning.</p>
-</div>
-<p>Retrieve all serving endpoints.</p>
+<dd><p>Retrieve all serving endpoints.</p>
 <p>See <a class="reference external" href="https://docs.databricks.com/api/workspace/servingendpoints/list">https://docs.databricks.com/api/workspace/servingendpoints/list</a> for request/response
 schema.</p>
 <dl class="field-list simple">
@@ -827,7 +827,7 @@ schema.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;databricks&quot;</span><span class="p">)</span>
 <span class="n">endpoints</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">list_endpoints</span><span class="p">()</span>
@@ -850,11 +850,7 @@ schema.</p>
 <dl class="py method">
 <dt id="mlflow.deployments.DatabricksDeploymentClient.predict">
 <code class="sig-name descname"><span class="pre">predict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.predict" title="Permalink to this definition"> </a></dt>
-<dd><div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Experimental: This function may change or be removed in a future release without warning.</p>
-</div>
-<p>Query a serving endpoint with the provided model inputs.
+<dd><p>Query a serving endpoint with the provided model inputs.
 See <a class="reference external" href="https://docs.databricks.com/api/workspace/servingendpoints/query">https://docs.databricks.com/api/workspace/servingendpoints/query</a> for request/response
 schema.</p>
 <dl class="field-list simple">
@@ -870,7 +866,7 @@ schema.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;databricks&quot;</span><span class="p">)</span>
 <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
@@ -909,11 +905,7 @@ schema.</p>
 <dl class="py method">
 <dt id="mlflow.deployments.DatabricksDeploymentClient.predict_stream">
 <code class="sig-name descname"><span class="pre">predict_stream</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.predict_stream"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.predict_stream" title="Permalink to this definition"> </a></dt>
-<dd><div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Experimental: This function may change or be removed in a future release without warning.</p>
-</div>
-<p>Submit a query to a configured provider endpoint, and get streaming response</p>
+<dd><p>Submit a query to a configured provider endpoint, and get streaming response</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -927,7 +919,7 @@ schema.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;databricks&quot;</span><span class="p">)</span>
 <span class="n">chunk_iter</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">predict_stream</span><span class="p">(</span>
@@ -990,7 +982,7 @@ request/response schema.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;databricks&quot;</span><span class="p">)</span>
 <span class="n">endpoint</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">update_endpoint</span><span class="p">(</span>
@@ -1070,7 +1062,7 @@ request/response schema.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;databricks&quot;</span><span class="p">)</span>
 <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;test&quot;</span>
@@ -1122,7 +1114,7 @@ request/response schema.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;databricks&quot;</span><span class="p">)</span>
 <span class="n">updated_endpoint</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">update_endpoint_config</span><span class="p">(</span>
@@ -1184,7 +1176,7 @@ schema.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;databricks&quot;</span><span class="p">)</span>
 <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;databricks-dbrx-instruct&quot;</span>
@@ -1223,7 +1215,7 @@ schema.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;databricks&quot;</span><span class="p">)</span>
 <span class="n">updated_tags</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">update_endpoint_tags</span><span class="p">(</span>
@@ -1260,18 +1252,14 @@ schema.</p>
 <dl class="py class">
 <dt id="mlflow.deployments.MlflowDeploymentClient">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mlflow.deployments.</span></code><code class="sig-name descname"><span class="pre">MlflowDeploymentClient</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_uri</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/mlflow.html#MlflowDeploymentClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.MlflowDeploymentClient" title="Permalink to this definition"> </a></dt>
-<dd><div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Experimental: This class may change or be removed in a future release without warning.</p>
-</div>
-<p>Client for interacting with the MLflow AI Gateway.</p>
+<dd><p>Client for interacting with the MLflow AI Gateway.</p>
 <p>Example:</p>
 <p>First, start the MLflow AI Gateway:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mlflow<span class="w"> </span>gateway<span class="w"> </span>start<span class="w"> </span>--config-path<span class="w"> </span>path/to/config.yaml
 </pre></div>
 </div>
 <p>Then, create a client and use it to interact with the server:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;http://localhost:5000&quot;</span><span class="p">)</span>
 <span class="n">endpoints</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">list_endpoints</span><span class="p">()</span>
@@ -1333,11 +1321,7 @@ schema.</p>
 <dl class="py method">
 <dt id="mlflow.deployments.MlflowDeploymentClient.get_endpoint">
 <code class="sig-name descname"><span class="pre">get_endpoint</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Endpoint</span><a class="reference internal" href="../_modules/mlflow/deployments/mlflow.html#MlflowDeploymentClient.get_endpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.MlflowDeploymentClient.get_endpoint" title="Permalink to this definition"> </a></dt>
-<dd><div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Experimental: This function may change or be removed in a future release without warning.</p>
-</div>
-<p>Gets a specified endpoint configured for the MLflow AI Gateway.</p>
+<dd><p>Gets a specified endpoint configured for the MLflow AI Gateway.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>endpoint</strong> – The name of the endpoint to retrieve.</p>
@@ -1347,7 +1331,7 @@ schema.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;http://localhost:5000&quot;</span><span class="p">)</span>
 <span class="n">endpoint</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_endpoint</span><span class="p">(</span><span class="n">endpoint</span><span class="o">=</span><span class="s2">&quot;chat&quot;</span><span class="p">)</span>
@@ -1373,18 +1357,14 @@ schema.</p>
 <dl class="py method">
 <dt id="mlflow.deployments.MlflowDeploymentClient.list_endpoints">
 <code class="sig-name descname"><span class="pre">list_endpoints</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Endpoint</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../_modules/mlflow/deployments/mlflow.html#MlflowDeploymentClient.list_endpoints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.MlflowDeploymentClient.list_endpoints" title="Permalink to this definition"> </a></dt>
-<dd><div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Experimental: This function may change or be removed in a future release without warning.</p>
-</div>
-<p>List endpoints configured for the MLflow AI Gateway.</p>
+<dd><p>List endpoints configured for the MLflow AI Gateway.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>A list of <code class="docutils literal notranslate"><span class="pre">Endpoint</span></code> objects.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;http://localhost:5000&quot;</span><span class="p">)</span>
 
@@ -1404,11 +1384,7 @@ schema.</p>
 <dl class="py method">
 <dt id="mlflow.deployments.MlflowDeploymentClient.predict">
 <code class="sig-name descname"><span class="pre">predict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">dict</span><a class="reference internal" href="../_modules/mlflow/deployments/mlflow.html#MlflowDeploymentClient.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.MlflowDeploymentClient.predict" title="Permalink to this definition"> </a></dt>
-<dd><div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Experimental: This function may change or be removed in a future release without warning.</p>
-</div>
-<p>Submit a query to a configured provider endpoint.</p>
+<dd><p>Submit a query to a configured provider endpoint.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1422,7 +1398,7 @@ schema.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;http://localhost:5000&quot;</span><span class="p">)</span>
 
@@ -1456,7 +1432,7 @@ schema.</p>
 <p>Additional parameters that are valid for a given provider and endpoint configuration can be
 included with the request as shown below, using an openai completions endpoint request as
 an example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;http://localhost:5000&quot;</span><span class="p">)</span>
 <span class="n">client</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
@@ -1506,7 +1482,7 @@ an example:</p>
 methods.</p>
 </div>
 <p>Then, create a deployment client and use it to interact with OpenAI endpoints:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;openai&quot;</span><span class="p">)</span>
 <span class="n">client</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
@@ -1642,8 +1618,8 @@ MLflow will attempt to get the deployments target set via <cite>get_deployments_
 </dl>
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id1" title="Permalink to this code"> </a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_deploy_client</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.deployments</span> <span class="kn">import</span> <span class="n">get_deploy_client</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_deploy_client</span><span class="p">(</span><span class="s2">&quot;redisai&quot;</span><span class="p">)</span>
 <span class="c1"># Deploy the model stored at artifact path &#39;myModel&#39; under run with ID &#39;someRunId&#39;. The</span>
@@ -1791,7 +1767,7 @@ Response. Else, None.</p>
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../',
-      VERSION:'2.22.1',
+      VERSION:'3.1.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

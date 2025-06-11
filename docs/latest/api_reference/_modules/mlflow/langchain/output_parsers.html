@@ -71,8 +71,8 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 2.22.1 documentation" href="../../../index.html"/>
-        <link rel="up" title="mlflow.langchain" href="../langchain.html"/> 
+    <link rel="top" title="MLflow 3.1.0 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -103,8 +103,10 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      padding-left: 12px;
-      padding-right: 12px;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
     }
 
     .logo-container {
@@ -112,21 +114,37 @@
       gap: 12px;
       flex-direction: row;
       white-space: nowrap;
+      align-items: center;
+      justify-content: center;
     }
 
     a:hover {
-      text-decoration: underline;
+      text-decoration: none;
+      color: #0194e2;
     }
   </style>
   <div class="logo-container">
-    <i data-toggle="wy-nav-top" class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"></i>
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
     <a href="../../../index.html" class="wy-nav-top-logo">
-      <img src="../../../_static/MLflow-logo-final-black.png" alt="MLflow"/>
+      <img
+        src="../../../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
     </a>
-    <b style="overflow: hidden; text-overflow: ellipsis;">API Documentation</b>
-    <a style="overflow: hidden; text-overflow: ellipsis;" href="/docs/latest">Main Docs</a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
   </div>
-  <span class="version">2.22.1</span>
+  <span class="header-link">3.1.0</span>
 </div>
   </nav>
   <page>
@@ -206,8 +224,6 @@
     
         <li><a href="../../index.html">Module code</a> <span class="db-icon db-icon-chevron-right"></span></li>
     
-        <li><a href="../langchain.html">mlflow.langchain</a> <span class="db-icon db-icon-chevron-right"></span></li>
-    
     
       <li>mlflow.langchain.output_parsers</li>
     
@@ -222,23 +238,23 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.langchain.output_parsers</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">asdict</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Iterator</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">uuid</span><span class="w"> </span><span class="kn">import</span> <span class="n">uuid4</span>
+<span></span><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">asdict</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Iterator</span>
+<span class="kn">from</span> <span class="nn">uuid</span> <span class="kn">import</span> <span class="n">uuid4</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.messages.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseMessage</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.output_parsers.transform</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseTransformOutputParser</span>
+<span class="kn">from</span> <span class="nn">langchain_core.messages.base</span> <span class="kn">import</span> <span class="n">BaseMessage</span>
+<span class="kn">from</span> <span class="nn">langchain_core.output_parsers.transform</span> <span class="kn">import</span> <span class="n">BaseTransformOutputParser</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.models.rag_signatures</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">mlflow.models.rag_signatures</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">ChainCompletionChoice</span><span class="p">,</span>
     <span class="n">Message</span><span class="p">,</span>
     <span class="n">StringResponse</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.models.rag_signatures</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">mlflow.models.rag_signatures</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">ChatCompletionResponse</span> <span class="k">as</span> <span class="n">RagChatCompletionResponse</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.types.agent</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatAgentChunk</span><span class="p">,</span> <span class="n">ChatAgentMessage</span><span class="p">,</span> <span class="n">ChatAgentResponse</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.types.llm</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">mlflow.types.agent</span> <span class="kn">import</span> <span class="n">ChatAgentChunk</span><span class="p">,</span> <span class="n">ChatAgentMessage</span><span class="p">,</span> <span class="n">ChatAgentResponse</span>
+<span class="kn">from</span> <span class="nn">mlflow.types.llm</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">ChatChoice</span><span class="p">,</span>
     <span class="n">ChatChoiceDelta</span><span class="p">,</span>
     <span class="n">ChatChunkChoice</span><span class="p">,</span>
@@ -246,27 +262,27 @@
     <span class="n">ChatCompletionResponse</span><span class="p">,</span>
     <span class="n">ChatMessage</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">deprecated</span><span class="p">,</span> <span class="n">experimental</span>
+<span class="kn">from</span> <span class="nn">mlflow.utils.annotations</span> <span class="kn">import</span> <span class="n">deprecated</span><span class="p">,</span> <span class="n">experimental</span>
 
 
 <span class="nd">@deprecated</span><span class="p">(</span><span class="s2">&quot;mlflow.langchain.output_parser.ChatCompletionOutputParser&quot;</span><span class="p">)</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">ChatCompletionsOutputParser</span><span class="p">(</span><span class="n">BaseTransformOutputParser</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]):</span>
+<span class="k">class</span> <span class="nc">ChatCompletionsOutputParser</span><span class="p">(</span><span class="n">BaseTransformOutputParser</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    OutputParser that wraps the string output into a dictionary representation of a</span>
 <span class="sd">    :py:class:`ChatCompletionResponse`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">is_lc_serializable</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">is_lc_serializable</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return whether this class is serializable.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the output parser type for serialization.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s2">&quot;mlflow_simplified_chat_completions&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
         <span class="k">return</span> <span class="n">asdict</span><span class="p">(</span>
             <span class="n">RagChatCompletionResponse</span><span class="p">(</span>
                 <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="n">ChainCompletionChoice</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="n">Message</span><span class="p">(</span><span class="n">role</span><span class="o">=</span><span class="s2">&quot;assistant&quot;</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">text</span><span class="p">))],</span>
@@ -275,7 +291,7 @@
         <span class="p">)</span>
 
 
-<span class="k">class</span><span class="w"> </span><span class="nc">ChatCompletionOutputParser</span><span class="p">(</span><span class="n">BaseTransformOutputParser</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+<span class="k">class</span> <span class="nc">ChatCompletionOutputParser</span><span class="p">(</span><span class="n">BaseTransformOutputParser</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    OutputParser that wraps the string output into a dictionary representation of a</span>
 <span class="sd">    :py:class:`ChatCompletionResponse` or :py:class:`ChatCompletionChunk`</span>
@@ -283,22 +299,22 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">is_lc_serializable</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">is_lc_serializable</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return whether this class is serializable.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the output parser type for serialization.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s2">&quot;mlflow_chat_completion&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the input text as a ChatCompletionResponse with no changes.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">ChatCompletionResponse</span><span class="p">(</span>
             <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="n">ChatChoice</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="n">ChatMessage</span><span class="p">(</span><span class="n">role</span><span class="o">=</span><span class="s2">&quot;assistant&quot;</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">text</span><span class="p">))]</span>
         <span class="p">)</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">BaseMessage</span><span class="p">],</span> <span class="n">config</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">BaseMessage</span><span class="p">],</span> <span class="n">config</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns a generator of ChatCompletionChunk objects&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">input</span><span class="p">:</span>
             <span class="k">yield</span> <span class="n">ChatCompletionChunk</span><span class="p">(</span>
@@ -307,28 +323,28 @@
 
 
 <span class="nd">@deprecated</span><span class="p">(</span><span class="s2">&quot;mlflow.langchain.output_parser.ChatCompletionOutputParser&quot;</span><span class="p">)</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">StringResponseOutputParser</span><span class="p">(</span><span class="n">BaseTransformOutputParser</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]):</span>
+<span class="k">class</span> <span class="nc">StringResponseOutputParser</span><span class="p">(</span><span class="n">BaseTransformOutputParser</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    OutputParser that wraps the string output into an dictionary representation of a</span>
 <span class="sd">    :py:class:`StringResponse`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">is_lc_serializable</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">is_lc_serializable</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return whether this class is serializable.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the output parser type for serialization.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s2">&quot;mlflow_simplified_str_object&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
         <span class="k">return</span> <span class="n">asdict</span><span class="p">(</span><span class="n">StringResponse</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="n">text</span><span class="p">))</span>
 
 
 <div class="viewcode-block" id="ChatAgentOutputParser"><a class="viewcode-back" href="../../../python_api/mlflow.langchain.html#mlflow.langchain.output_parsers.ChatAgentOutputParser">[docs]</a><span class="nd">@experimental</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">ChatAgentOutputParser</span><span class="p">(</span><span class="n">BaseTransformOutputParser</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+<span class="k">class</span> <span class="nc">ChatAgentOutputParser</span><span class="p">(</span><span class="n">BaseTransformOutputParser</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    OutputParser that wraps the string output into a dictionary representation of a</span>
 <span class="sd">    :py:class:`ChatAgentResponse &lt;mlflow.types.agent.ChatAgentResponse&gt;` or a</span>
@@ -336,16 +352,16 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">is_lc_serializable</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">is_lc_serializable</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return whether this class is serializable.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the output parser type for serialization.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s2">&quot;mlflow_chat_agent&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the output text as a dictionary representation of a</span>
 <span class="sd">        :py:class:`ChatAgentResponse &lt;mlflow.types.agent.ChatAgentResponse&gt;`.</span>
@@ -354,7 +370,7 @@
             <span class="n">messages</span><span class="o">=</span><span class="p">[</span><span class="n">ChatAgentMessage</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="n">text</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="s2">&quot;assistant&quot;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">uuid4</span><span class="p">()))]</span>
         <span class="p">)</span><span class="o">.</span><span class="n">model_dump_compat</span><span class="p">(</span><span class="n">exclude_none</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">BaseMessage</span><span class="p">],</span> <span class="n">config</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">BaseMessage</span><span class="p">],</span> <span class="n">config</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a generator of</span>
 <span class="sd">        :py:class:`ChatAgentChunk &lt;mlflow.types.agent.ChatAgentChunk&gt;` objects</span>
@@ -394,7 +410,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'2.22.1',
+      VERSION:'3.1.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

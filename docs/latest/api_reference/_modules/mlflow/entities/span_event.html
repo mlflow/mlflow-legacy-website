@@ -71,7 +71,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 2.22.1 documentation" href="../../../index.html"/>
+    <link rel="top" title="MLflow 3.1.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -103,8 +103,10 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      padding-left: 12px;
-      padding-right: 12px;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
     }
 
     .logo-container {
@@ -112,21 +114,37 @@
       gap: 12px;
       flex-direction: row;
       white-space: nowrap;
+      align-items: center;
+      justify-content: center;
     }
 
     a:hover {
-      text-decoration: underline;
+      text-decoration: none;
+      color: #0194e2;
     }
   </style>
   <div class="logo-container">
-    <i data-toggle="wy-nav-top" class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"></i>
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
     <a href="../../../index.html" class="wy-nav-top-logo">
-      <img src="../../../_static/MLflow-logo-final-black.png" alt="MLflow"/>
+      <img
+        src="../../../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
     </a>
-    <b style="overflow: hidden; text-overflow: ellipsis;">API Documentation</b>
-    <a style="overflow: hidden; text-overflow: ellipsis;" href="/docs/latest">Main Docs</a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
   </div>
-  <span class="version">2.22.1</span>
+  <span class="header-link">3.1.0</span>
 </div>
   </nav>
   <page>
@@ -220,29 +238,30 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.entities.span_event</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">opentelemetry.util.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">AttributeValue</span>
+<span class="kn">from</span> <span class="nn">google.protobuf.json_format</span> <span class="kn">import</span> <span class="n">ParseDict</span>
+<span class="kn">from</span> <span class="nn">google.protobuf.struct_pb2</span> <span class="kn">import</span> <span class="n">Value</span>
+<span class="kn">from</span> <span class="nn">opentelemetry.util.types</span> <span class="kn">import</span> <span class="n">AttributeValue</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities._mlflow_object</span><span class="w"> </span><span class="kn">import</span> <span class="n">_MlflowObject</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.protos.databricks_trace_server_pb2</span><span class="w"> </span><span class="kn">import</span> <span class="n">Span</span> <span class="k">as</span> <span class="n">ProtoSpan</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.proto_json_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">set_pb_value</span>
+<span class="kn">from</span> <span class="nn">mlflow.entities._mlflow_object</span> <span class="kn">import</span> <span class="n">_MlflowObject</span>
+<span class="kn">from</span> <span class="nn">mlflow.protos.databricks_trace_server_pb2</span> <span class="kn">import</span> <span class="n">Span</span> <span class="k">as</span> <span class="n">ProtoSpan</span>
 
 
 <div class="viewcode-block" id="SpanEvent"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.SpanEvent">[docs]</a><span class="nd">@dataclass</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">SpanEvent</span><span class="p">(</span><span class="n">_MlflowObject</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">SpanEvent</span><span class="p">(</span><span class="n">_MlflowObject</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An event that records a specific occurrences or moments in time</span>
 <span class="sd">    during a span, such as an exception being thrown. Compatible with OpenTelemetry.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        name: Name of the event.</span>
-<span class="sd">        timestamp:  The exact time the event occurred, measured in microseconds.</span>
+<span class="sd">        timestamp:  The exact time the event occurred, measured in nanoseconds.</span>
 <span class="sd">            If not provided, the current time will be used.</span>
 <span class="sd">        attributes: A collection of key-value pairs representing detailed</span>
 <span class="sd">            attributes of the event, such as the exception stack trace.</span>
@@ -257,7 +276,7 @@
     <span class="n">attributes</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">AttributeValue</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SpanEvent.from_exception"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.SpanEvent.from_exception">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">from_exception</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">exception</span><span class="p">:</span> <span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">from_exception</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">exception</span><span class="p">:</span> <span class="ne">Exception</span><span class="p">):</span>
         <span class="s2">&quot;Create a span event from an exception.&quot;</span>
 
         <span class="n">stack_trace</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_get_stacktrace</span><span class="p">(</span><span class="n">exception</span><span class="p">)</span>
@@ -271,7 +290,7 @@
         <span class="p">)</span></div>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_get_stacktrace</span><span class="p">(</span><span class="n">error</span><span class="p">:</span> <span class="ne">BaseException</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_get_stacktrace</span><span class="p">(</span><span class="n">error</span><span class="p">:</span> <span class="ne">BaseException</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the stacktrace of the parent error.&quot;&quot;&quot;</span>
         <span class="n">msg</span> <span class="o">=</span> <span class="nb">repr</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
@@ -283,7 +302,7 @@
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">msg</span>
 
-<div class="viewcode-block" id="SpanEvent.json"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.SpanEvent.json">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SpanEvent.json"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.SpanEvent.json">[docs]</a>    <span class="k">def</span> <span class="nf">json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">{</span>
             <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
             <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="p">,</span>
@@ -292,24 +311,21 @@
             <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
         <span class="p">}</span></div>
 
-<div class="viewcode-block" id="SpanEvent.to_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.SpanEvent.to_proto">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SpanEvent.to_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.SpanEvent.to_proto">[docs]</a>    <span class="k">def</span> <span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert into OTLP compatible proto object to sent to the Databricks Trace Server.&quot;&quot;&quot;</span>
-        <span class="n">proto</span> <span class="o">=</span> <span class="n">ProtoSpan</span><span class="o">.</span><span class="n">Event</span><span class="p">(</span>
+        <span class="k">return</span> <span class="n">ProtoSpan</span><span class="o">.</span><span class="n">Event</span><span class="p">(</span>
             <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
             <span class="n">time_unix_nano</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="c1"># Trace server&#39;s proto uses map&lt;string, google.protobuf.Value&gt; for attributes</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="n">set_pb_value</span><span class="p">(</span><span class="n">proto</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">value</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">proto</span></div></div>
+            <span class="n">attributes</span><span class="o">=</span><span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">ParseDict</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">Value</span><span class="p">())</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">items</span><span class="p">()},</span>
+        <span class="p">)</span></div></div>
 
 
-<span class="k">class</span><span class="w"> </span><span class="nc">CustomEncoder</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">JSONEncoder</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">CustomEncoder</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">JSONEncoder</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Custom encoder to handle json serialization.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
@@ -348,7 +364,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'2.22.1',
+      VERSION:'3.1.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

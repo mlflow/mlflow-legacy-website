@@ -71,7 +71,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="MLflow 2.22.1 documentation" href="../../index.html"/>
+    <link rel="top" title="MLflow 3.1.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -103,8 +103,10 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      padding-left: 12px;
-      padding-right: 12px;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
     }
 
     .logo-container {
@@ -112,21 +114,37 @@
       gap: 12px;
       flex-direction: row;
       white-space: nowrap;
+      align-items: center;
+      justify-content: center;
     }
 
     a:hover {
-      text-decoration: underline;
+      text-decoration: none;
+      color: #0194e2;
     }
   </style>
   <div class="logo-container">
-    <i data-toggle="wy-nav-top" class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"></i>
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
     <a href="../../index.html" class="wy-nav-top-logo">
-      <img src="../../_static/MLflow-logo-final-black.png" alt="MLflow"/>
+      <img
+        src="../../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
     </a>
-    <b style="overflow: hidden; text-overflow: ellipsis;">API Documentation</b>
-    <a style="overflow: hidden; text-overflow: ellipsis;" href="/docs/latest">Main Docs</a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
   </div>
-  <span class="version">2.22.1</span>
+  <span class="header-link">3.1.0</span>
 </div>
   </nav>
   <page>
@@ -230,38 +248,37 @@
 <span class="sd">    Produced for use by generic pyfunc-based deployment tools and batch inference.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">atexit</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">posixpath</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">import</span> <span class="nn">atexit</span>
+<span class="kn">import</span> <span class="nn">importlib</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">posixpath</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">packaging.version</span><span class="w"> </span><span class="kn">import</span> <span class="n">Version</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">yaml</span>
+<span class="kn">from</span> <span class="nn">packaging.version</span> <span class="kn">import</span> <span class="n">Version</span>
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">mlflow</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyfunc</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.environment_variables</span><span class="w"> </span><span class="kn">import</span> <span class="n">MLFLOW_DEFAULT_PREDICTION_DEVICE</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.ml_package_versions</span><span class="w"> </span><span class="kn">import</span> <span class="n">_ML_PACKAGE_VERSIONS</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">ModelSignature</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.models.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">MLMODEL_FILE_NAME</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.models.signature</span><span class="w"> </span><span class="kn">import</span> <span class="n">_infer_signature_from_input_example</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.models.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModelInputExample</span><span class="p">,</span> <span class="n">_save_example</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.protos.databricks_pb2</span><span class="w"> </span><span class="kn">import</span> <span class="n">RESOURCE_DOES_NOT_EXIST</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.pytorch</span><span class="w"> </span><span class="kn">import</span> <span class="n">pickle_module</span> <span class="k">as</span> <span class="n">mlflow_pytorch_pickle_module</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracking._model_registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">DEFAULT_AWAIT_MAX_SLEEP_SECONDS</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracking.artifact_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">_download_artifact_from_uri</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.autologging_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">autologging_integration</span><span class="p">,</span> <span class="n">safe_patch</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.checkpoint_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">download_checkpoint_artifact</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.docstring_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">LOG_MODEL_PARAM_DOCS</span><span class="p">,</span> <span class="n">format_docstring</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.environment</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="kn">import</span> <span class="nn">mlflow</span>
+<span class="kn">from</span> <span class="nn">mlflow</span> <span class="kn">import</span> <span class="n">pyfunc</span>
+<span class="kn">from</span> <span class="nn">mlflow.environment_variables</span> <span class="kn">import</span> <span class="n">MLFLOW_DEFAULT_PREDICTION_DEVICE</span>
+<span class="kn">from</span> <span class="nn">mlflow.exceptions</span> <span class="kn">import</span> <span class="n">MlflowException</span>
+<span class="kn">from</span> <span class="nn">mlflow.ml_package_versions</span> <span class="kn">import</span> <span class="n">_ML_PACKAGE_VERSIONS</span>
+<span class="kn">from</span> <span class="nn">mlflow.models</span> <span class="kn">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">ModelSignature</span>
+<span class="kn">from</span> <span class="nn">mlflow.models.model</span> <span class="kn">import</span> <span class="n">MLMODEL_FILE_NAME</span>
+<span class="kn">from</span> <span class="nn">mlflow.models.signature</span> <span class="kn">import</span> <span class="n">_infer_signature_from_input_example</span>
+<span class="kn">from</span> <span class="nn">mlflow.models.utils</span> <span class="kn">import</span> <span class="n">ModelInputExample</span><span class="p">,</span> <span class="n">_save_example</span>
+<span class="kn">from</span> <span class="nn">mlflow.protos.databricks_pb2</span> <span class="kn">import</span> <span class="n">RESOURCE_DOES_NOT_EXIST</span>
+<span class="kn">from</span> <span class="nn">mlflow.pytorch</span> <span class="kn">import</span> <span class="n">pickle_module</span> <span class="k">as</span> <span class="n">mlflow_pytorch_pickle_module</span>
+<span class="kn">from</span> <span class="nn">mlflow.tracking._model_registry</span> <span class="kn">import</span> <span class="n">DEFAULT_AWAIT_MAX_SLEEP_SECONDS</span>
+<span class="kn">from</span> <span class="nn">mlflow.tracking.artifact_utils</span> <span class="kn">import</span> <span class="n">_download_artifact_from_uri</span>
+<span class="kn">from</span> <span class="nn">mlflow.utils.autologging_utils</span> <span class="kn">import</span> <span class="n">autologging_integration</span><span class="p">,</span> <span class="n">safe_patch</span>
+<span class="kn">from</span> <span class="nn">mlflow.utils.checkpoint_utils</span> <span class="kn">import</span> <span class="n">download_checkpoint_artifact</span>
+<span class="kn">from</span> <span class="nn">mlflow.utils.docstring_utils</span> <span class="kn">import</span> <span class="n">LOG_MODEL_PARAM_DOCS</span><span class="p">,</span> <span class="n">format_docstring</span>
+<span class="kn">from</span> <span class="nn">mlflow.utils.environment</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">_CONDA_ENV_FILE_NAME</span><span class="p">,</span>
     <span class="n">_CONSTRAINTS_FILE_NAME</span><span class="p">,</span>
     <span class="n">_PYTHON_ENV_FILE_NAME</span><span class="p">,</span>
@@ -272,18 +289,18 @@
     <span class="n">_PythonEnv</span><span class="p">,</span>
     <span class="n">_validate_env_arguments</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.file_utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">mlflow.utils.file_utils</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">TempDir</span><span class="p">,</span>
     <span class="n">get_total_file_size</span><span class="p">,</span>
     <span class="n">write_to</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.model_utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">mlflow.utils.model_utils</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">_add_code_from_conf_to_system_path</span><span class="p">,</span>
     <span class="n">_get_flavor_configuration</span><span class="p">,</span>
     <span class="n">_validate_and_copy_code_paths</span><span class="p">,</span>
     <span class="n">_validate_and_prepare_target_save_path</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.requirements_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">_get_pinned_requirement</span>
+<span class="kn">from</span> <span class="nn">mlflow.utils.requirements_utils</span> <span class="kn">import</span> <span class="n">_get_pinned_requirement</span>
 
 <span class="n">FLAVOR_NAME</span> <span class="o">=</span> <span class="s2">&quot;pytorch&quot;</span>
 
@@ -291,7 +308,6 @@
 <span class="n">_TORCH_STATE_DICT_FILE_NAME</span> <span class="o">=</span> <span class="s2">&quot;state_dict.pth&quot;</span>
 <span class="n">_PICKLE_MODULE_INFO_FILE_NAME</span> <span class="o">=</span> <span class="s2">&quot;pickle_module_info.txt&quot;</span>
 <span class="n">_EXTRA_FILES_KEY</span> <span class="o">=</span> <span class="s2">&quot;extra_files&quot;</span>
-<span class="n">_REQUIREMENTS_FILE_KEY</span> <span class="o">=</span> <span class="s2">&quot;requirements_file&quot;</span>
 <span class="n">_TORCH_CPU_DEVICE_NAME</span> <span class="o">=</span> <span class="s2">&quot;cpu&quot;</span>
 <span class="n">_TORCH_DEFAULT_GPU_DEVICE_NAME</span> <span class="o">=</span> <span class="s2">&quot;cuda&quot;</span>
 
@@ -304,7 +320,7 @@
 <span class="n">_MODEL_DATA_SUBPATH</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
 
 
-<div class="viewcode-block" id="get_default_pip_requirements"><a class="viewcode-back" href="../../python_api/mlflow.pytorch.html#mlflow.pytorch.get_default_pip_requirements">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">get_default_pip_requirements</span><span class="p">():</span>
+<div class="viewcode-block" id="get_default_pip_requirements"><a class="viewcode-back" href="../../python_api/mlflow.pytorch.html#mlflow.pytorch.get_default_pip_requirements">[docs]</a><span class="k">def</span> <span class="nf">get_default_pip_requirements</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        A list of default pip requirements for MLflow Models produced by this flavor. Calls to</span>
@@ -325,7 +341,7 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="get_default_conda_env"><a class="viewcode-back" href="../../python_api/mlflow.pytorch.html#mlflow.pytorch.get_default_conda_env">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">get_default_conda_env</span><span class="p">():</span>
+<div class="viewcode-block" id="get_default_conda_env"><a class="viewcode-back" href="../../python_api/mlflow.pytorch.html#mlflow.pytorch.get_default_conda_env">[docs]</a><span class="k">def</span> <span class="nf">get_default_conda_env</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        The default Conda environment as a dictionary for MLflow Models produced by calls to</span>
@@ -338,7 +354,7 @@
 
 <span class="sd">        # Log PyTorch model</span>
 <span class="sd">        with mlflow.start_run() as run:</span>
-<span class="sd">            mlflow.pytorch.log_model(model, &quot;model&quot;, signature=signature)</span>
+<span class="sd">            mlflow.pytorch.log_model(model, name=&quot;model&quot;, signature=signature)</span>
 
 <span class="sd">        # Fetch the associated conda environment</span>
 <span class="sd">        env = mlflow.pytorch.get_default_conda_env()</span>
@@ -358,9 +374,9 @@
 
 
 <div class="viewcode-block" id="log_model"><a class="viewcode-back" href="../../python_api/mlflow.pytorch.html#mlflow.pytorch.log_model">[docs]</a><span class="nd">@format_docstring</span><span class="p">(</span><span class="n">LOG_MODEL_PARAM_DOCS</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">package_name</span><span class="o">=</span><span class="s2">&quot;torch&quot;</span><span class="p">))</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">log_model</span><span class="p">(</span>
+<span class="k">def</span> <span class="nf">log_model</span><span class="p">(</span>
     <span class="n">pytorch_model</span><span class="p">,</span>
-    <span class="n">artifact_path</span><span class="p">,</span>
+    <span class="n">artifact_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">conda_env</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">code_paths</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">pickle_module</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -368,11 +384,16 @@
     <span class="n">signature</span><span class="p">:</span> <span class="n">ModelSignature</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">input_example</span><span class="p">:</span> <span class="n">ModelInputExample</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">await_registration_for</span><span class="o">=</span><span class="n">DEFAULT_AWAIT_MAX_SLEEP_SECONDS</span><span class="p">,</span>
-    <span class="n">requirements_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">extra_files</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">pip_requirements</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">extra_pip_requirements</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">model_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">step</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">model_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -399,8 +420,7 @@
 <span class="sd">                - The package(s) listed in the model&#39;s Conda environment, specified by the</span>
 <span class="sd">                  ``conda_env`` parameter.</span>
 <span class="sd">                - One or more of the files specified by the ``code_paths`` parameter.</span>
-
-<span class="sd">        artifact_path: Run-relative artifact path.</span>
+<span class="sd">        artifact_path: Deprecated. Use `name` instead.</span>
 <span class="sd">        conda_env: {{ conda_env }}</span>
 <span class="sd">        code_paths: {{ code_paths }}</span>
 <span class="sd">        pickle_module: The module that PyTorch should use to serialize (&quot;pickle&quot;) the specified</span>
@@ -415,22 +435,6 @@
 <span class="sd">            being created and is in ``READY`` status. By default, the function waits for five</span>
 <span class="sd">            minutes.  Specify 0 or None to skip waiting.</span>
 
-<span class="sd">        requirements_file:</span>
-
-<span class="sd">            .. warning::</span>
-
-<span class="sd">                ``requirements_file`` has been deprecated. Please use ``pip_requirements`` instead.</span>
-
-<span class="sd">            A string containing the path to requirements file. Remote URIs are resolved to absolute</span>
-<span class="sd">            filesystem paths. For example, consider the following ``requirements_file`` string:</span>
-
-<span class="sd">            .. code-block:: python</span>
-
-<span class="sd">                requirements_file = &quot;s3://my-bucket/path/to/my_file&quot;</span>
-
-<span class="sd">            In this case, the ``&quot;my_file&quot;`` requirements file is downloaded from S3. If ``None``,</span>
-<span class="sd">            no requirements file is added to the model.</span>
-
 <span class="sd">        extra_files: A list containing the paths to corresponding extra files, if ``None``, no</span>
 <span class="sd">            extra files are added to the model. Remote URIs are resolved to absolute filesystem</span>
 <span class="sd">            paths. For example, consider the following ``extra_files`` list:</span>
@@ -444,6 +448,12 @@
 <span class="sd">        pip_requirements: {{ pip_requirements }}</span>
 <span class="sd">        extra_pip_requirements: {{ extra_pip_requirements }}</span>
 <span class="sd">        metadata: {{ metadata }}</span>
+<span class="sd">        name: {{ name }}</span>
+<span class="sd">        params: {{ params }}</span>
+<span class="sd">        tags: {{ tags }}</span>
+<span class="sd">        model_type: {{ model_type }}</span>
+<span class="sd">        step: {{ step }}</span>
+<span class="sd">        model_id: {{ model_id }}</span>
 <span class="sd">        kwargs: kwargs to pass to ``torch.save`` method.</span>
 
 <span class="sd">    Returns:</span>
@@ -487,11 +497,11 @@
 
 <span class="sd">        # Log the model</span>
 <span class="sd">        with mlflow.start_run() as run:</span>
-<span class="sd">            mlflow.pytorch.log_model(model, &quot;model&quot;)</span>
+<span class="sd">            mlflow.pytorch.log_model(model, name=&quot;model&quot;)</span>
 
 <span class="sd">            # convert to scripted model and log the model</span>
 <span class="sd">            scripted_pytorch_model = torch.jit.script(model)</span>
-<span class="sd">            mlflow.pytorch.log_model(scripted_pytorch_model, &quot;scripted_model&quot;)</span>
+<span class="sd">            mlflow.pytorch.log_model(scripted_pytorch_model, name=&quot;scripted_model&quot;)</span>
 
 <span class="sd">        # Fetch the logged model artifacts</span>
 <span class="sd">        print(f&quot;run_id: {run.info.run_id}&quot;)</span>
@@ -517,6 +527,7 @@
     <span class="n">pickle_module</span> <span class="o">=</span> <span class="n">pickle_module</span> <span class="ow">or</span> <span class="n">mlflow_pytorch_pickle_module</span>
     <span class="k">return</span> <span class="n">Model</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
         <span class="n">artifact_path</span><span class="o">=</span><span class="n">artifact_path</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
         <span class="n">flavor</span><span class="o">=</span><span class="n">mlflow</span><span class="o">.</span><span class="n">pytorch</span><span class="p">,</span>
         <span class="n">pytorch_model</span><span class="o">=</span><span class="n">pytorch_model</span><span class="p">,</span>
         <span class="n">conda_env</span><span class="o">=</span><span class="n">conda_env</span><span class="p">,</span>
@@ -526,17 +537,21 @@
         <span class="n">signature</span><span class="o">=</span><span class="n">signature</span><span class="p">,</span>
         <span class="n">input_example</span><span class="o">=</span><span class="n">input_example</span><span class="p">,</span>
         <span class="n">await_registration_for</span><span class="o">=</span><span class="n">await_registration_for</span><span class="p">,</span>
-        <span class="n">requirements_file</span><span class="o">=</span><span class="n">requirements_file</span><span class="p">,</span>
         <span class="n">extra_files</span><span class="o">=</span><span class="n">extra_files</span><span class="p">,</span>
         <span class="n">pip_requirements</span><span class="o">=</span><span class="n">pip_requirements</span><span class="p">,</span>
         <span class="n">extra_pip_requirements</span><span class="o">=</span><span class="n">extra_pip_requirements</span><span class="p">,</span>
         <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">,</span>
+        <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
+        <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">,</span>
+        <span class="n">model_type</span><span class="o">=</span><span class="n">model_type</span><span class="p">,</span>
+        <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">,</span>
+        <span class="n">model_id</span><span class="o">=</span><span class="n">model_id</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="save_model"><a class="viewcode-back" href="../../python_api/mlflow.pytorch.html#mlflow.pytorch.save_model">[docs]</a><span class="nd">@format_docstring</span><span class="p">(</span><span class="n">LOG_MODEL_PARAM_DOCS</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">package_name</span><span class="o">=</span><span class="s2">&quot;torch&quot;</span><span class="p">))</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">save_model</span><span class="p">(</span>
+<span class="k">def</span> <span class="nf">save_model</span><span class="p">(</span>
     <span class="n">pytorch_model</span><span class="p">,</span>
     <span class="n">path</span><span class="p">,</span>
     <span class="n">conda_env</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -545,7 +560,6 @@
     <span class="n">pickle_module</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">signature</span><span class="p">:</span> <span class="n">ModelSignature</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">input_example</span><span class="p">:</span> <span class="n">ModelInputExample</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">requirements_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">extra_files</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">pip_requirements</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">extra_pip_requirements</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -577,21 +591,6 @@
 <span class="sd">            model at loading time.</span>
 <span class="sd">        signature: {{ signature }}</span>
 <span class="sd">        input_example: {{ input_example }}</span>
-<span class="sd">        requirements_file:</span>
-
-<span class="sd">            .. warning::</span>
-
-<span class="sd">                ``requirements_file`` has been deprecated. Please use ``pip_requirements`` instead.</span>
-
-<span class="sd">            A string containing the path to requirements file. Remote URIs are resolved to absolute</span>
-<span class="sd">            filesystem paths. For example, consider the following ``requirements_file`` string:</span>
-
-<span class="sd">            .. code-block:: python</span>
-
-<span class="sd">                requirements_file = &quot;s3://my-bucket/path/to/my_file&quot;</span>
-
-<span class="sd">            In this case, the ``&quot;my_file&quot;`` requirements file is downloaded from S3. If ``None``,</span>
-<span class="sd">            no requirements file is added to the model.</span>
 
 <span class="sd">        extra_files: A list containing the paths to corresponding extra files. Remote URIs</span>
 <span class="sd">            are resolved to absolute filesystem paths.</span>
@@ -652,7 +651,7 @@
 <span class="sd">        predict X: 30.0, y_pred: 60.13</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+    <span class="kn">import</span> <span class="nn">torch</span>
 
     <span class="n">_validate_env_arguments</span><span class="p">(</span><span class="n">conda_env</span><span class="p">,</span> <span class="n">pip_requirements</span><span class="p">,</span> <span class="n">extra_pip_requirements</span><span class="p">)</span>
 
@@ -720,24 +719,6 @@
                 <span class="n">posixpath</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">_EXTRA_FILES_KEY</span><span class="p">),</span>
             <span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">requirements_file</span><span class="p">:</span>
-        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-            <span class="s2">&quot;`requirements_file` has been deprecated. Please use `pip_requirements` instead.&quot;</span><span class="p">,</span>
-            <span class="ne">FutureWarning</span><span class="p">,</span>
-            <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-        <span class="p">)</span>
-
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">requirements_file</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Path to requirements file should be a string&quot;</span><span class="p">)</span>
-
-        <span class="k">with</span> <span class="n">TempDir</span><span class="p">()</span> <span class="k">as</span> <span class="n">tmp_requirements_dir</span><span class="p">:</span>
-            <span class="n">_download_artifact_from_uri</span><span class="p">(</span>
-                <span class="n">artifact_uri</span><span class="o">=</span><span class="n">requirements_file</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="n">tmp_requirements_dir</span><span class="o">.</span><span class="n">path</span><span class="p">()</span>
-            <span class="p">)</span>
-            <span class="n">rel_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">requirements_file</span><span class="p">)</span>
-            <span class="n">torchserve_artifacts_config</span><span class="p">[</span><span class="n">_REQUIREMENTS_FILE_KEY</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">rel_path</span><span class="p">}</span>
-            <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">tmp_requirements_dir</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">rel_path</span><span class="p">),</span> <span class="n">path</span><span class="p">)</span>
-
     <span class="n">mlflow_model</span><span class="o">.</span><span class="n">add_flavor</span><span class="p">(</span>
         <span class="n">FLAVOR_NAME</span><span class="p">,</span>
         <span class="n">model_data</span><span class="o">=</span><span class="n">model_data_subpath</span><span class="p">,</span>
@@ -787,21 +768,20 @@
     <span class="k">if</span> <span class="n">pip_constraints</span><span class="p">:</span>
         <span class="n">write_to</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">_CONSTRAINTS_FILE_NAME</span><span class="p">),</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pip_constraints</span><span class="p">))</span>
 
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">requirements_file</span><span class="p">:</span>
-        <span class="c1"># Save `requirements.txt`</span>
-        <span class="n">write_to</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">_REQUIREMENTS_FILE_NAME</span><span class="p">),</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pip_requirements</span><span class="p">))</span>
+    <span class="c1"># Save `requirements.txt`</span>
+    <span class="n">write_to</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">_REQUIREMENTS_FILE_NAME</span><span class="p">),</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pip_requirements</span><span class="p">))</span>
 
     <span class="n">_PythonEnv</span><span class="o">.</span><span class="n">current</span><span class="p">()</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">_PYTHON_ENV_FILE_NAME</span><span class="p">))</span></div>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_load_model</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_load_model</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Args:</span>
 <span class="sd">        path: The path to a serialized PyTorch model.</span>
 <span class="sd">        device: If specified, load the model on the specified device.</span>
 <span class="sd">        kwargs: Additional kwargs to pass to the PyTorch ``torch.load`` function.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+    <span class="kn">import</span> <span class="nn">torch</span>
 
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
         <span class="c1"># `path` is a directory containing a serialized PyTorch model and a text file containing</span>
@@ -827,7 +807,7 @@
                         <span class="sa">f</span><span class="s2">&quot; model. Pickle module name: `</span><span class="si">{</span><span class="n">pickle_module_name</span><span class="si">}</span><span class="s2">`&quot;</span>
                     <span class="p">),</span>
                     <span class="n">error_code</span><span class="o">=</span><span class="n">RESOURCE_DOES_NOT_EXIST</span><span class="p">,</span>
-                <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
+                <span class="p">)</span> <span class="kn">from</span> <span class="nn">exc</span>
 
     <span class="k">else</span><span class="p">:</span>
         <span class="n">model_path</span> <span class="o">=</span> <span class="n">path</span>
@@ -850,7 +830,7 @@
     <span class="k">return</span> <span class="n">pytorch_model</span>
 
 
-<div class="viewcode-block" id="load_model"><a class="viewcode-back" href="../../python_api/mlflow.pytorch.html#mlflow.pytorch.load_model">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">load_model</span><span class="p">(</span><span class="n">model_uri</span><span class="p">,</span> <span class="n">dst_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="load_model"><a class="viewcode-back" href="../../python_api/mlflow.pytorch.html#mlflow.pytorch.load_model">[docs]</a><span class="k">def</span> <span class="nf">load_model</span><span class="p">(</span><span class="n">model_uri</span><span class="p">,</span> <span class="n">dst_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Load a PyTorch model from a local file or a run.</span>
 
@@ -884,7 +864,7 @@
 
 <span class="sd">        # Log the model</span>
 <span class="sd">        with mlflow.start_run() as run:</span>
-<span class="sd">            mlflow.pytorch.log_model(model, &quot;model&quot;)</span>
+<span class="sd">            mlflow.pytorch.log_model(model, name=&quot;model&quot;)</span>
 
 <span class="sd">        # Inference after loading the logged model</span>
 <span class="sd">        model_uri = f&quot;runs:/{run.info.run_id}/model&quot;</span>
@@ -901,7 +881,7 @@
 <span class="sd">        predict X: 6.0, y_pred: 11.64</span>
 <span class="sd">        predict X: 30.0, y_pred: 60.48</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+    <span class="kn">import</span> <span class="nn">torch</span>
 
     <span class="n">local_model_path</span> <span class="o">=</span> <span class="n">_download_artifact_from_uri</span><span class="p">(</span><span class="n">artifact_uri</span><span class="o">=</span><span class="n">model_uri</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="n">dst_path</span><span class="p">)</span>
     <span class="n">pytorch_conf</span> <span class="o">=</span> <span class="n">_get_flavor_configuration</span><span class="p">(</span><span class="n">model_path</span><span class="o">=</span><span class="n">local_model_path</span><span class="p">,</span> <span class="n">flavor_name</span><span class="o">=</span><span class="n">FLAVOR_NAME</span><span class="p">)</span>
@@ -917,14 +897,14 @@
     <span class="k">return</span> <span class="n">_load_model</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">torch_model_artifacts_path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_load_pyfunc</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">model_config</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">weights_only</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># noqa: D417</span>
+<span class="k">def</span> <span class="nf">_load_pyfunc</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">model_config</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">weights_only</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># noqa: D417</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Load PyFunc implementation. Called by ``pyfunc.load_model``.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        path: Local filesystem path to the MLflow Model with the ``pytorch`` flavor.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+    <span class="kn">import</span> <span class="nn">torch</span>
 
     <span class="n">device</span> <span class="o">=</span> <span class="n">model_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;device&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="k">if</span> <span class="n">model_config</span> <span class="k">else</span> <span class="kc">None</span>
     <span class="c1"># if CUDA is available, we use the default CUDA device.</span>
@@ -951,23 +931,23 @@
     <span class="k">return</span> <span class="n">_PyTorchWrapper</span><span class="p">(</span><span class="n">_load_model</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">),</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
 
 
-<span class="k">class</span><span class="w"> </span><span class="nc">_PyTorchWrapper</span><span class="p">:</span>
+<span class="k">class</span> <span class="nc">_PyTorchWrapper</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Wrapper class that creates a predict function such that</span>
 <span class="sd">    predict(data: pd.DataFrame) -&gt; model&#39;s output as pd.DataFrame (pandas DataFrame)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pytorch_model</span><span class="p">,</span> <span class="n">device</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pytorch_model</span><span class="p">,</span> <span class="n">device</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pytorch_model</span> <span class="o">=</span> <span class="n">pytorch_model</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">device</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_raw_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_raw_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the underlying model.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pytorch_model</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            data: Model input data.</span>
@@ -976,7 +956,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Model predictions.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+        <span class="kn">import</span> <span class="nn">torch</span>
 
         <span class="k">if</span> <span class="n">params</span> <span class="ow">and</span> <span class="s2">&quot;device&quot;</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
@@ -1001,7 +981,7 @@
         <span class="n">device</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span>
         <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
             <span class="n">input_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">inp_data</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-            <span class="n">preds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pytorch_model</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">)</span>
+            <span class="n">preds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pytorch_model</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">,</span> <span class="o">**</span><span class="p">(</span><span class="n">params</span> <span class="ow">or</span> <span class="p">{}))</span>
             <span class="c1"># if the predictions happened on a remote device, copy them back to</span>
             <span class="c1"># the host CPU for processing</span>
             <span class="k">if</span> <span class="n">device</span> <span class="o">!=</span> <span class="n">_TORCH_CPU_DEVICE_NAME</span><span class="p">:</span>
@@ -1019,7 +999,7 @@
             <span class="k">return</span> <span class="n">predicted</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">log_state_dict</span><span class="p">(</span><span class="n">state_dict</span><span class="p">,</span> <span class="n">artifact_path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">log_state_dict</span><span class="p">(</span><span class="n">state_dict</span><span class="p">,</span> <span class="n">artifact_path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Log a state_dict as an MLflow artifact for the current run.</span>
 
@@ -1057,7 +1037,7 @@
         <span class="n">mlflow</span><span class="o">.</span><span class="n">log_artifacts</span><span class="p">(</span><span class="n">local_path</span><span class="p">,</span> <span class="n">artifact_path</span><span class="p">)</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">save_state_dict</span><span class="p">(</span><span class="n">state_dict</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">save_state_dict</span><span class="p">(</span><span class="n">state_dict</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Save a state_dict to a path on the local file system</span>
 
@@ -1066,7 +1046,7 @@
 <span class="sd">        path: Local path where the state_dict is to be saved.</span>
 <span class="sd">        kwargs: kwargs to pass to ``torch.save``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+    <span class="kn">import</span> <span class="nn">torch</span>
 
     <span class="c1"># The object type check here aims to prevent a scenario where a user accidentally passees</span>
     <span class="c1"># a model instead of a state_dict and `torch.save` (which accepts both model and state_dict)</span>
@@ -1083,7 +1063,7 @@
     <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">state_dict</span><span class="p">,</span> <span class="n">state_dict_path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">load_state_dict</span><span class="p">(</span><span class="n">state_dict_uri</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">load_state_dict</span><span class="p">(</span><span class="n">state_dict_uri</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Load a state_dict from a local file or a run.</span>
 
@@ -1113,7 +1093,7 @@
 
 <span class="sd">        state_dict = mlflow.pytorch.load_state_dict(state_dict_uri)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+    <span class="kn">import</span> <span class="nn">torch</span>
 
     <span class="n">local_path</span> <span class="o">=</span> <span class="n">_download_artifact_from_uri</span><span class="p">(</span><span class="n">artifact_uri</span><span class="o">=</span><span class="n">state_dict_uri</span><span class="p">)</span>
     <span class="n">state_dict_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">local_path</span><span class="p">,</span> <span class="n">_TORCH_STATE_DICT_FILE_NAME</span><span class="p">)</span>
@@ -1121,7 +1101,7 @@
 
 
 <div class="viewcode-block" id="autolog"><a class="viewcode-back" href="../../python_api/mlflow.pytorch.html#mlflow.pytorch.autolog">[docs]</a><span class="nd">@autologging_integration</span><span class="p">(</span><span class="n">FLAVOR_NAME</span><span class="p">)</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">autolog</span><span class="p">(</span>
+<span class="k">def</span> <span class="nf">autolog</span><span class="p">(</span>
     <span class="n">log_every_n_epoch</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
     <span class="n">log_every_n_step</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">log_models</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -1288,33 +1268,33 @@
 <span class="sd">        print_auto_logged_info(mlflow.get_run(run_id=run.info.run_id))</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="kn">import</span><span class="w"> </span><span class="nn">pytorch_lightning</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pl</span>
+        <span class="kn">import</span> <span class="nn">pytorch_lightning</span> <span class="k">as</span> <span class="nn">pl</span>
     <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
         <span class="k">pass</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.pytorch._lightning_autolog</span><span class="w"> </span><span class="kn">import</span> <span class="n">patched_fit</span>
+        <span class="kn">from</span> <span class="nn">mlflow.pytorch._lightning_autolog</span> <span class="kn">import</span> <span class="n">patched_fit</span>
 
         <span class="n">safe_patch</span><span class="p">(</span>
             <span class="n">FLAVOR_NAME</span><span class="p">,</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">,</span> <span class="s2">&quot;fit&quot;</span><span class="p">,</span> <span class="n">patched_fit</span><span class="p">,</span> <span class="n">manage_run</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">extra_tags</span><span class="o">=</span><span class="n">extra_tags</span>
         <span class="p">)</span>
 
     <span class="k">try</span><span class="p">:</span>
-        <span class="kn">import</span><span class="w"> </span><span class="nn">lightning</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">L</span>
+        <span class="kn">import</span> <span class="nn">lightning</span> <span class="k">as</span> <span class="nn">L</span>
     <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
         <span class="k">pass</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.pytorch._lightning_autolog</span><span class="w"> </span><span class="kn">import</span> <span class="n">patched_fit</span>
+        <span class="kn">from</span> <span class="nn">mlflow.pytorch._lightning_autolog</span> <span class="kn">import</span> <span class="n">patched_fit</span>
 
         <span class="n">safe_patch</span><span class="p">(</span>
             <span class="n">FLAVOR_NAME</span><span class="p">,</span> <span class="n">L</span><span class="o">.</span><span class="n">Trainer</span><span class="p">,</span> <span class="s2">&quot;fit&quot;</span><span class="p">,</span> <span class="n">patched_fit</span><span class="p">,</span> <span class="n">manage_run</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">extra_tags</span><span class="o">=</span><span class="n">extra_tags</span>
         <span class="p">)</span>
 
     <span class="k">try</span><span class="p">:</span>
-        <span class="kn">import</span><span class="w"> </span><span class="nn">torch.utils.tensorboard.writer</span>
+        <span class="kn">import</span> <span class="nn">torch.utils.tensorboard.writer</span>
     <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
         <span class="k">pass</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.pytorch._pytorch_autolog</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+        <span class="kn">from</span> <span class="nn">mlflow.pytorch._pytorch_autolog</span> <span class="kn">import</span> <span class="p">(</span>
             <span class="n">flush_metrics_queue</span><span class="p">,</span>
             <span class="n">patched_add_event</span><span class="p">,</span>
             <span class="n">patched_add_hparams</span><span class="p">,</span>
@@ -1355,7 +1335,7 @@
     <span class="p">)</span>
 
 
-<div class="viewcode-block" id="load_checkpoint"><a class="viewcode-back" href="../../python_api/mlflow.pytorch.html#mlflow.pytorch.load_checkpoint">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">load_checkpoint</span><span class="p">(</span><span class="n">model_class</span><span class="p">,</span> <span class="n">run_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">global_step</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="load_checkpoint"><a class="viewcode-back" href="../../python_api/mlflow.pytorch.html#mlflow.pytorch.load_checkpoint">[docs]</a><span class="k">def</span> <span class="nf">load_checkpoint</span><span class="p">(</span><span class="n">model_class</span><span class="p">,</span> <span class="n">run_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">global_step</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    If you enable &quot;checkpoint&quot; in autologging, during pytorch-lightning model</span>
 <span class="sd">    training execution, checkpointed models are logged as MLflow artifacts.</span>
@@ -1423,7 +1403,7 @@
 <span class="p">]</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.pytorch._lightning_autolog</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowModelCheckpointCallback</span>  <span class="c1"># noqa: F401</span>
+    <span class="kn">from</span> <span class="nn">mlflow.pytorch._lightning_autolog</span> <span class="kn">import</span> <span class="n">MlflowModelCheckpointCallback</span>  <span class="c1"># noqa: F401</span>
 
     <span class="n">__all__</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;MLflowModelCheckpointCallback&quot;</span><span class="p">)</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
@@ -1459,7 +1439,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../',
-      VERSION:'2.22.1',
+      VERSION:'3.1.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

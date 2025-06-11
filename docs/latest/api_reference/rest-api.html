@@ -71,7 +71,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="MLflow 2.22.1 documentation" href="index.html"/>
+    <link rel="top" title="MLflow 3.1.0 documentation" href="index.html"/>
         <link rel="prev" title="Java API" href="/java_api/index.html"/> 
 
   
@@ -102,8 +102,10 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      padding-left: 12px;
-      padding-right: 12px;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
     }
 
     .logo-container {
@@ -111,21 +113,37 @@
       gap: 12px;
       flex-direction: row;
       white-space: nowrap;
+      align-items: center;
+      justify-content: center;
     }
 
     a:hover {
-      text-decoration: underline;
+      text-decoration: none;
+      color: #0194e2;
     }
   </style>
   <div class="logo-container">
-    <i data-toggle="wy-nav-top" class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"></i>
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
     <a href="index.html" class="wy-nav-top-logo">
-      <img src="_static/MLflow-logo-final-black.png" alt="MLflow"/>
+      <img
+        src="_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
     </a>
-    <b style="overflow: hidden; text-overflow: ellipsis;">API Documentation</b>
-    <a style="overflow: hidden; text-overflow: ellipsis;" href="/docs/latest">Main Docs</a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
   </div>
-  <span class="version">2.22.1</span>
+  <span class="header-link">3.1.0</span>
 </div>
   </nav>
   <page>
@@ -448,59 +466,63 @@
 The API is hosted under the <code class="docutils literal notranslate"><span class="pre">/api</span></code> route on the MLflow tracking server. For example, to search for
 experiments on a tracking server hosted at <code class="docutils literal notranslate"><span class="pre">http://localhost:5000</span></code>, make a POST request to
 <code class="docutils literal notranslate"><span class="pre">http://localhost:5000/api/2.0/mlflow/experiments/search</span></code>.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The MLflow REST API requires content type <code class="docutils literal notranslate"><span class="pre">application/json</span></code> for all POST requests.</p>
+</div>
 <div class="contents local topic" id="table-of-contents">
 <p class="topic-title">Table of Contents</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#create-experiment" id="id67">Create Experiment</a></p></li>
-<li><p><a class="reference internal" href="#search-experiments" id="id68">Search Experiments</a></p></li>
-<li><p><a class="reference internal" href="#get-experiment" id="id69">Get Experiment</a></p></li>
-<li><p><a class="reference internal" href="#get-experiment-by-name" id="id70">Get Experiment By Name</a></p></li>
-<li><p><a class="reference internal" href="#delete-experiment" id="id71">Delete Experiment</a></p></li>
-<li><p><a class="reference internal" href="#restore-experiment" id="id72">Restore Experiment</a></p></li>
-<li><p><a class="reference internal" href="#update-experiment" id="id73">Update Experiment</a></p></li>
-<li><p><a class="reference internal" href="#create-run" id="id74">Create Run</a></p></li>
-<li><p><a class="reference internal" href="#delete-run" id="id75">Delete Run</a></p></li>
-<li><p><a class="reference internal" href="#restore-run" id="id76">Restore Run</a></p></li>
-<li><p><a class="reference internal" href="#get-run" id="id77">Get Run</a></p></li>
-<li><p><a class="reference internal" href="#log-metric" id="id78">Log Metric</a></p></li>
-<li><p><a class="reference internal" href="#log-batch" id="id79">Log Batch</a></p></li>
-<li><p><a class="reference internal" href="#log-model" id="id80">Log Model</a></p></li>
-<li><p><a class="reference internal" href="#log-inputs" id="id81">Log Inputs</a></p></li>
-<li><p><a class="reference internal" href="#set-experiment-tag" id="id82">Set Experiment Tag</a></p></li>
-<li><p><a class="reference internal" href="#set-tag" id="id83">Set Tag</a></p></li>
-<li><p><a class="reference internal" href="#delete-tag" id="id84">Delete Tag</a></p></li>
-<li><p><a class="reference internal" href="#log-param" id="id85">Log Param</a></p></li>
-<li><p><a class="reference internal" href="#get-metric-history" id="id86">Get Metric History</a></p></li>
-<li><p><a class="reference internal" href="#search-runs" id="id87">Search Runs</a></p></li>
-<li><p><a class="reference internal" href="#list-artifacts" id="id88">List Artifacts</a></p></li>
-<li><p><a class="reference internal" href="#update-run" id="id89">Update Run</a></p></li>
-<li><p><a class="reference internal" href="#create-registeredmodel" id="id90">Create RegisteredModel</a></p></li>
-<li><p><a class="reference internal" href="#get-registeredmodel" id="id91">Get RegisteredModel</a></p></li>
-<li><p><a class="reference internal" href="#rename-registeredmodel" id="id92">Rename RegisteredModel</a></p></li>
-<li><p><a class="reference internal" href="#update-registeredmodel" id="id93">Update RegisteredModel</a></p></li>
-<li><p><a class="reference internal" href="#delete-registeredmodel" id="id94">Delete RegisteredModel</a></p></li>
-<li><p><a class="reference internal" href="#get-latest-modelversions" id="id95">Get Latest ModelVersions</a></p></li>
-<li><p><a class="reference internal" href="#create-modelversion" id="id96">Create ModelVersion</a></p></li>
-<li><p><a class="reference internal" href="#get-modelversion" id="id97">Get ModelVersion</a></p></li>
-<li><p><a class="reference internal" href="#update-modelversion" id="id98">Update ModelVersion</a></p></li>
-<li><p><a class="reference internal" href="#delete-modelversion" id="id99">Delete ModelVersion</a></p></li>
-<li><p><a class="reference internal" href="#search-modelversions" id="id100">Search ModelVersions</a></p></li>
-<li><p><a class="reference internal" href="#get-download-uri-for-modelversion-artifacts" id="id101">Get Download URI For ModelVersion Artifacts</a></p></li>
-<li><p><a class="reference internal" href="#transition-modelversion-stage" id="id102">Transition ModelVersion Stage</a></p></li>
-<li><p><a class="reference internal" href="#search-registeredmodels" id="id103">Search RegisteredModels</a></p></li>
-<li><p><a class="reference internal" href="#set-registered-model-tag" id="id104">Set Registered Model Tag</a></p></li>
-<li><p><a class="reference internal" href="#set-model-version-tag" id="id105">Set Model Version Tag</a></p></li>
-<li><p><a class="reference internal" href="#delete-registered-model-tag" id="id106">Delete Registered Model Tag</a></p></li>
-<li><p><a class="reference internal" href="#delete-model-version-tag" id="id107">Delete Model Version Tag</a></p></li>
-<li><p><a class="reference internal" href="#delete-registered-model-alias" id="id108">Delete Registered Model Alias</a></p></li>
-<li><p><a class="reference internal" href="#get-model-version-by-alias" id="id109">Get Model Version by Alias</a></p></li>
-<li><p><a class="reference internal" href="#set-registered-model-alias" id="id110">Set Registered Model Alias</a></p></li>
-<li><p><a class="reference internal" href="#data-structures" id="id111">Data Structures</a></p></li>
+<li><p><a class="reference internal" href="#create-experiment" id="id68">Create Experiment</a></p></li>
+<li><p><a class="reference internal" href="#search-experiments" id="id69">Search Experiments</a></p></li>
+<li><p><a class="reference internal" href="#get-experiment" id="id70">Get Experiment</a></p></li>
+<li><p><a class="reference internal" href="#get-experiment-by-name" id="id71">Get Experiment By Name</a></p></li>
+<li><p><a class="reference internal" href="#delete-experiment" id="id72">Delete Experiment</a></p></li>
+<li><p><a class="reference internal" href="#restore-experiment" id="id73">Restore Experiment</a></p></li>
+<li><p><a class="reference internal" href="#update-experiment" id="id74">Update Experiment</a></p></li>
+<li><p><a class="reference internal" href="#create-run" id="id75">Create Run</a></p></li>
+<li><p><a class="reference internal" href="#delete-run" id="id76">Delete Run</a></p></li>
+<li><p><a class="reference internal" href="#restore-run" id="id77">Restore Run</a></p></li>
+<li><p><a class="reference internal" href="#get-run" id="id78">Get Run</a></p></li>
+<li><p><a class="reference internal" href="#log-metric" id="id79">Log Metric</a></p></li>
+<li><p><a class="reference internal" href="#log-batch" id="id80">Log Batch</a></p></li>
+<li><p><a class="reference internal" href="#log-model" id="id81">Log Model</a></p></li>
+<li><p><a class="reference internal" href="#log-inputs" id="id82">Log Inputs</a></p></li>
+<li><p><a class="reference internal" href="#set-experiment-tag" id="id83">Set Experiment Tag</a></p></li>
+<li><p><a class="reference internal" href="#set-tag" id="id84">Set Tag</a></p></li>
+<li><p><a class="reference internal" href="#delete-tag" id="id85">Delete Tag</a></p></li>
+<li><p><a class="reference internal" href="#log-param" id="id86">Log Param</a></p></li>
+<li><p><a class="reference internal" href="#get-metric-history" id="id87">Get Metric History</a></p></li>
+<li><p><a class="reference internal" href="#search-runs" id="id88">Search Runs</a></p></li>
+<li><p><a class="reference internal" href="#list-artifacts" id="id89">List Artifacts</a></p></li>
+<li><p><a class="reference internal" href="#update-run" id="id90">Update Run</a></p></li>
+<li><p><a class="reference internal" href="#create-registeredmodel" id="id91">Create RegisteredModel</a></p></li>
+<li><p><a class="reference internal" href="#get-registeredmodel" id="id92">Get RegisteredModel</a></p></li>
+<li><p><a class="reference internal" href="#rename-registeredmodel" id="id93">Rename RegisteredModel</a></p></li>
+<li><p><a class="reference internal" href="#update-registeredmodel" id="id94">Update RegisteredModel</a></p></li>
+<li><p><a class="reference internal" href="#delete-registeredmodel" id="id95">Delete RegisteredModel</a></p></li>
+<li><p><a class="reference internal" href="#get-latest-modelversions" id="id96">Get Latest ModelVersions</a></p></li>
+<li><p><a class="reference internal" href="#create-modelversion" id="id97">Create ModelVersion</a></p></li>
+<li><p><a class="reference internal" href="#get-modelversion" id="id98">Get ModelVersion</a></p></li>
+<li><p><a class="reference internal" href="#update-modelversion" id="id99">Update ModelVersion</a></p></li>
+<li><p><a class="reference internal" href="#delete-modelversion" id="id100">Delete ModelVersion</a></p></li>
+<li><p><a class="reference internal" href="#search-modelversions" id="id101">Search ModelVersions</a></p></li>
+<li><p><a class="reference internal" href="#get-download-uri-for-modelversion-artifacts" id="id102">Get Download URI For ModelVersion Artifacts</a></p></li>
+<li><p><a class="reference internal" href="#transition-modelversion-stage" id="id103">Transition ModelVersion Stage</a></p></li>
+<li><p><a class="reference internal" href="#search-registeredmodels" id="id104">Search RegisteredModels</a></p></li>
+<li><p><a class="reference internal" href="#set-registered-model-tag" id="id105">Set Registered Model Tag</a></p></li>
+<li><p><a class="reference internal" href="#set-model-version-tag" id="id106">Set Model Version Tag</a></p></li>
+<li><p><a class="reference internal" href="#delete-registered-model-tag" id="id107">Delete Registered Model Tag</a></p></li>
+<li><p><a class="reference internal" href="#delete-model-version-tag" id="id108">Delete Model Version Tag</a></p></li>
+<li><p><a class="reference internal" href="#delete-registered-model-alias" id="id109">Delete Registered Model Alias</a></p></li>
+<li><p><a class="reference internal" href="#get-model-version-by-alias" id="id110">Get Model Version by Alias</a></p></li>
+<li><p><a class="reference internal" href="#set-registered-model-alias" id="id111">Set Registered Model Alias</a></p></li>
+<li><p><a class="reference internal" href="#data-structures" id="id112">Data Structures</a></p></li>
 </ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="create-experiment">
-<span id="mlflowmlflowservicecreateexperiment"></span><h2><a class="toc-backref" href="#id67">Create Experiment</a><a class="headerlink" href="#create-experiment" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicecreateexperiment"></span><h2><a class="toc-backref" href="#id68">Create Experiment</a><a class="headerlink" href="#create-experiment" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 73%" />
@@ -581,7 +603,7 @@ guaranteed to support up to 20 tags per request.</p></td>
 </div>
 </div>
 <div class="section" id="search-experiments">
-<span id="mlflowmlflowservicesearchexperiments"></span><h2><a class="toc-backref" href="#id68">Search Experiments</a><a class="headerlink" href="#search-experiments" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicesearchexperiments"></span><h2><a class="toc-backref" href="#id69">Search Experiments</a><a class="headerlink" href="#search-experiments" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 73%" />
@@ -681,7 +703,7 @@ An empty token means that no more experiments are available for retrieval.</p></
 </div>
 </div>
 <div class="section" id="get-experiment">
-<span id="mlflowmlflowservicegetexperiment"></span><h2><a class="toc-backref" href="#id69">Get Experiment</a><a class="headerlink" href="#get-experiment" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicegetexperiment"></span><h2><a class="toc-backref" href="#id70">Get Experiment</a><a class="headerlink" href="#get-experiment" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 71%" />
@@ -747,7 +769,7 @@ This field is required.</p></td>
 </div>
 </div>
 <div class="section" id="get-experiment-by-name">
-<span id="mlflowmlflowservicegetexperimentbyname"></span><h2><a class="toc-backref" href="#id70">Get Experiment By Name</a><a class="headerlink" href="#get-experiment-by-name" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicegetexperimentbyname"></span><h2><a class="toc-backref" href="#id71">Get Experiment By Name</a><a class="headerlink" href="#get-experiment-by-name" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 75%" />
@@ -817,7 +839,7 @@ This field is required.</p></td>
 </div>
 </div>
 <div class="section" id="delete-experiment">
-<span id="mlflowmlflowservicedeleteexperiment"></span><h2><a class="toc-backref" href="#id71">Delete Experiment</a><a class="headerlink" href="#delete-experiment" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicedeleteexperiment"></span><h2><a class="toc-backref" href="#id72">Delete Experiment</a><a class="headerlink" href="#delete-experiment" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 73%" />
@@ -862,7 +884,7 @@ This field is required.</p></td>
 </div>
 </div>
 <div class="section" id="restore-experiment">
-<span id="mlflowmlflowservicerestoreexperiment"></span><h2><a class="toc-backref" href="#id72">Restore Experiment</a><a class="headerlink" href="#restore-experiment" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicerestoreexperiment"></span><h2><a class="toc-backref" href="#id73">Restore Experiment</a><a class="headerlink" href="#restore-experiment" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 73%" />
@@ -909,7 +931,7 @@ This field is required.</p></td>
 </div>
 </div>
 <div class="section" id="update-experiment">
-<span id="mlflowmlflowserviceupdateexperiment"></span><h2><a class="toc-backref" href="#id73">Update Experiment</a><a class="headerlink" href="#update-experiment" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowserviceupdateexperiment"></span><h2><a class="toc-backref" href="#id74">Update Experiment</a><a class="headerlink" href="#update-experiment" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 73%" />
@@ -957,7 +979,7 @@ This field is required.</p></td>
 </div>
 </div>
 <div class="section" id="create-run">
-<span id="mlflowmlflowservicecreaterun"></span><h2><a class="toc-backref" href="#id74">Create Run</a><a class="headerlink" href="#create-run" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicecreaterun"></span><h2><a class="toc-backref" href="#id75">Create Run</a><a class="headerlink" href="#create-run" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 68%" />
@@ -1042,7 +1064,7 @@ MLflow release. Use ‘mlflow.user’ tag instead.</p></td>
 </div>
 </div>
 <div class="section" id="delete-run">
-<span id="mlflowmlflowservicedeleterun"></span><h2><a class="toc-backref" href="#id75">Delete Run</a><a class="headerlink" href="#delete-run" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicedeleterun"></span><h2><a class="toc-backref" href="#id76">Delete Run</a><a class="headerlink" href="#delete-run" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 68%" />
@@ -1086,7 +1108,7 @@ This field is required.</p></td>
 </div>
 </div>
 <div class="section" id="restore-run">
-<span id="mlflowmlflowservicerestorerun"></span><h2><a class="toc-backref" href="#id76">Restore Run</a><a class="headerlink" href="#restore-run" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicerestorerun"></span><h2><a class="toc-backref" href="#id77">Restore Run</a><a class="headerlink" href="#restore-run" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 69%" />
@@ -1130,7 +1152,7 @@ This field is required.</p></td>
 </div>
 </div>
 <div class="section" id="get-run">
-<span id="mlflowmlflowservicegetrun"></span><h2><a class="toc-backref" href="#id77">Get Run</a><a class="headerlink" href="#get-run" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicegetrun"></span><h2><a class="toc-backref" href="#id78">Get Run</a><a class="headerlink" href="#get-run" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 66%" />
@@ -1202,7 +1224,7 @@ be removed in a future MLflow version.</p></td>
 </div>
 </div>
 <div class="section" id="log-metric">
-<span id="mlflowmlflowservicelogmetric"></span><h2><a class="toc-backref" href="#id78">Log Metric</a><a class="headerlink" href="#log-metric" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicelogmetric"></span><h2><a class="toc-backref" href="#id79">Log Metric</a><a class="headerlink" href="#log-metric" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 71%" />
@@ -1271,7 +1293,7 @@ This field is required.</p></td>
 </div>
 </div>
 <div class="section" id="log-batch">
-<span id="mlflowmlflowservicelogbatch"></span><h2><a class="toc-backref" href="#id79">Log Batch</a><a class="headerlink" href="#log-batch" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicelogbatch"></span><h2><a class="toc-backref" href="#id80">Log Batch</a><a class="headerlink" href="#log-batch" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 70%" />
@@ -1372,7 +1394,7 @@ metrics, params, and tags in total.</p></td>
 </div>
 </div>
 <div class="section" id="log-model">
-<span id="mlflowmlflowservicelogmodel"></span><h2><a class="toc-backref" href="#id80">Log Model</a><a class="headerlink" href="#log-model" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicelogmodel"></span><h2><a class="toc-backref" href="#id81">Log Model</a><a class="headerlink" href="#log-model" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 70%" />
@@ -1422,7 +1444,7 @@ metrics, params, and tags in total.</p></td>
 </div>
 </div>
 <div class="section" id="log-inputs">
-<span id="mlflowmlflowserviceloginputs"></span><h2><a class="toc-backref" href="#id81">Log Inputs</a><a class="headerlink" href="#log-inputs" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowserviceloginputs"></span><h2><a class="toc-backref" href="#id82">Log Inputs</a><a class="headerlink" href="#log-inputs" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 71%" />
@@ -1439,8 +1461,16 @@ metrics, params, and tags in total.</p></td>
 </tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Experimental: This API may change or be removed in a future release without warning.</p>
+</div>
 <div class="section" id="mlflowloginputs">
 <span id="id20"></span><h3>Request Structure<a class="headerlink" href="#mlflowloginputs" title="Permalink to this headline"> </a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Experimental: This API may change or be removed in a future release without warning.</p>
+</div>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 15%" />
@@ -1469,7 +1499,7 @@ This field is required.</p></td>
 </div>
 </div>
 <div class="section" id="set-experiment-tag">
-<span id="mlflowmlflowservicesetexperimenttag"></span><h2><a class="toc-backref" href="#id82">Set Experiment Tag</a><a class="headerlink" href="#set-experiment-tag" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicesetexperimenttag"></span><h2><a class="toc-backref" href="#id83">Set Experiment Tag</a><a class="headerlink" href="#set-experiment-tag" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 78%" />
@@ -1525,7 +1555,7 @@ This field is required.</p></td>
 </div>
 </div>
 <div class="section" id="set-tag">
-<span id="mlflowmlflowservicesettag"></span><h2><a class="toc-backref" href="#id83">Set Tag</a><a class="headerlink" href="#set-tag" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicesettag"></span><h2><a class="toc-backref" href="#id84">Set Tag</a><a class="headerlink" href="#set-tag" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 69%" />
@@ -1586,7 +1616,7 @@ This field is required.</p></td>
 </div>
 </div>
 <div class="section" id="delete-tag">
-<span id="mlflowmlflowservicedeletetag"></span><h2><a class="toc-backref" href="#id84">Delete Tag</a><a class="headerlink" href="#delete-tag" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicedeletetag"></span><h2><a class="toc-backref" href="#id85">Delete Tag</a><a class="headerlink" href="#delete-tag" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 71%" />
@@ -1636,7 +1666,7 @@ This field is required.</p></td>
 </div>
 </div>
 <div class="section" id="log-param">
-<span id="mlflowmlflowservicelogparam"></span><h2><a class="toc-backref" href="#id85">Log Param</a><a class="headerlink" href="#log-param" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicelogparam"></span><h2><a class="toc-backref" href="#id86">Log Param</a><a class="headerlink" href="#log-param" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 73%" />
@@ -1687,7 +1717,7 @@ This field is required.</p></td>
 </tr>
 <tr class="row-odd"><td><p>value</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
-<td><p>String value of the param being logged. Maximum size is 6000 bytes.
+<td><p>String value of the param being logged. Maximum size is 500 bytes.
 This field is required.</p></td>
 </tr>
 </tbody>
@@ -1696,7 +1726,7 @@ This field is required.</p></td>
 </div>
 </div>
 <div class="section" id="get-metric-history">
-<span id="mlflowmlflowservicegetmetrichistory"></span><h2><a class="toc-backref" href="#id86">Get Metric History</a><a class="headerlink" href="#get-metric-history" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicegetmetrichistory"></span><h2><a class="toc-backref" href="#id87">Get Metric History</a><a class="headerlink" href="#get-metric-history" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 73%" />
@@ -1787,7 +1817,7 @@ A missing token indicates that no additional metrics are available to fetch.</p>
 </div>
 </div>
 <div class="section" id="search-runs">
-<span id="mlflowmlflowservicesearchruns"></span><h2><a class="toc-backref" href="#id87">Search Runs</a><a class="headerlink" href="#search-runs" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicesearchruns"></span><h2><a class="toc-backref" href="#id88">Search Runs</a><a class="headerlink" href="#search-runs" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 68%" />
@@ -1892,7 +1922,7 @@ Tiebreaks are done by start_time DESC followed by run_id for runs with the same 
 </div>
 </div>
 <div class="section" id="list-artifacts">
-<span id="mlflowmlflowservicelistartifacts"></span><h2><a class="toc-backref" href="#id88">List Artifacts</a><a class="headerlink" href="#list-artifacts" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicelistartifacts"></span><h2><a class="toc-backref" href="#id89">List Artifacts</a><a class="headerlink" href="#list-artifacts" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 70%" />
@@ -1979,7 +2009,7 @@ be removed in a future MLflow version.</p></td>
 </div>
 </div>
 <div class="section" id="update-run">
-<span id="mlflowmlflowserviceupdaterun"></span><h2><a class="toc-backref" href="#id89">Update Run</a><a class="headerlink" href="#update-run" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowserviceupdaterun"></span><h2><a class="toc-backref" href="#id90">Update Run</a><a class="headerlink" href="#update-run" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 68%" />
@@ -2061,7 +2091,7 @@ be removed in a future MLflow version.</p></td>
 </div>
 </div>
 <div class="section" id="create-registeredmodel">
-<span id="mlflowmodelregistryservicecreateregisteredmodel"></span><h2><a class="toc-backref" href="#id90">Create RegisteredModel</a><a class="headerlink" href="#create-registeredmodel" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicecreateregisteredmodel"></span><h2><a class="toc-backref" href="#id91">Create RegisteredModel</a><a class="headerlink" href="#create-registeredmodel" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 76%" />
@@ -2135,7 +2165,7 @@ This field is required.</p></td>
 </div>
 </div>
 <div class="section" id="get-registeredmodel">
-<span id="mlflowmodelregistryservicegetregisteredmodel"></span><h2><a class="toc-backref" href="#id91">Get RegisteredModel</a><a class="headerlink" href="#get-registeredmodel" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicegetregisteredmodel"></span><h2><a class="toc-backref" href="#id92">Get RegisteredModel</a><a class="headerlink" href="#get-registeredmodel" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 75%" />
@@ -2200,7 +2230,7 @@ This field is required.</p></td>
 </div>
 </div>
 <div class="section" id="rename-registeredmodel">
-<span id="mlflowmodelregistryservicerenameregisteredmodel"></span><h2><a class="toc-backref" href="#id92">Rename RegisteredModel</a><a class="headerlink" href="#rename-registeredmodel" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicerenameregisteredmodel"></span><h2><a class="toc-backref" href="#id93">Rename RegisteredModel</a><a class="headerlink" href="#rename-registeredmodel" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 76%" />
@@ -2269,7 +2299,7 @@ This field is required.</p></td>
 </div>
 </div>
 <div class="section" id="update-registeredmodel">
-<span id="mlflowmodelregistryserviceupdateregisteredmodel"></span><h2><a class="toc-backref" href="#id93">Update RegisteredModel</a><a class="headerlink" href="#update-registeredmodel" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryserviceupdateregisteredmodel"></span><h2><a class="toc-backref" href="#id94">Update RegisteredModel</a><a class="headerlink" href="#update-registeredmodel" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 76%" />
@@ -2338,7 +2368,7 @@ This field is required.</p></td>
 </div>
 </div>
 <div class="section" id="delete-registeredmodel">
-<span id="mlflowmodelregistryservicedeleteregisteredmodel"></span><h2><a class="toc-backref" href="#id94">Delete RegisteredModel</a><a class="headerlink" href="#delete-registeredmodel" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicedeleteregisteredmodel"></span><h2><a class="toc-backref" href="#id95">Delete RegisteredModel</a><a class="headerlink" href="#delete-registeredmodel" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 76%" />
@@ -2381,7 +2411,11 @@ This field is required.</p></td>
 </div>
 </div>
 <div class="section" id="get-latest-modelversions">
-<span id="mlflowmodelregistryservicegetlatestversions"></span><h2><a class="toc-backref" href="#id95">Get Latest ModelVersions</a><a class="headerlink" href="#get-latest-modelversions" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicegetlatestversions"></span><h2><a class="toc-backref" href="#id96">Get Latest ModelVersions</a><a class="headerlink" href="#get-latest-modelversions" title="Permalink to this headline"> </a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Model Stages are deprecated and will be removed in a future major release. To learn more about this deprecation, see our <a class="reference external" href="../model-registry/index.html#migrating-from-stages">migration guide</a>.</p>
+</div>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 81%" />
@@ -2394,7 +2428,7 @@ This field is required.</p></td>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">2.0/mlflow/registered-models/get-latest-versions</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">POST</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">GET</span></code></p></td>
 </tr>
 </tbody>
 </table>
@@ -2451,7 +2485,7 @@ If no <code class="docutils literal notranslate"><span class="pre">stages</span>
 </div>
 </div>
 <div class="section" id="create-modelversion">
-<span id="mlflowmodelregistryservicecreatemodelversion"></span><h2><a class="toc-backref" href="#id96">Create ModelVersion</a><a class="headerlink" href="#create-modelversion" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicecreatemodelversion"></span><h2><a class="toc-backref" href="#id97">Create ModelVersion</a><a class="headerlink" href="#create-modelversion" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 75%" />
@@ -2539,7 +2573,7 @@ potentially hosted at another instance of MLflow.</p></td>
 </div>
 </div>
 <div class="section" id="get-modelversion">
-<span id="mlflowmodelregistryservicegetmodelversion"></span><h2><a class="toc-backref" href="#id97">Get ModelVersion</a><a class="headerlink" href="#get-modelversion" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicegetmodelversion"></span><h2><a class="toc-backref" href="#id98">Get ModelVersion</a><a class="headerlink" href="#get-modelversion" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 73%" />
@@ -2609,7 +2643,7 @@ This field is required.</p></td>
 </div>
 </div>
 <div class="section" id="update-modelversion">
-<span id="mlflowmodelregistryserviceupdatemodelversion"></span><h2><a class="toc-backref" href="#id98">Update ModelVersion</a><a class="headerlink" href="#update-modelversion" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryserviceupdatemodelversion"></span><h2><a class="toc-backref" href="#id99">Update ModelVersion</a><a class="headerlink" href="#update-modelversion" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 75%" />
@@ -2683,7 +2717,7 @@ This field is required.</p></td>
 </div>
 </div>
 <div class="section" id="delete-modelversion">
-<span id="mlflowmodelregistryservicedeletemodelversion"></span><h2><a class="toc-backref" href="#id99">Delete ModelVersion</a><a class="headerlink" href="#delete-modelversion" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicedeletemodelversion"></span><h2><a class="toc-backref" href="#id100">Delete ModelVersion</a><a class="headerlink" href="#delete-modelversion" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 75%" />
@@ -2731,7 +2765,7 @@ This field is required.</p></td>
 </div>
 </div>
 <div class="section" id="search-modelversions">
-<span id="mlflowmodelregistryservicesearchmodelversions"></span><h2><a class="toc-backref" href="#id100">Search ModelVersions</a><a class="headerlink" href="#search-modelversions" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicesearchmodelversions"></span><h2><a class="toc-backref" href="#id101">Search ModelVersions</a><a class="headerlink" href="#search-modelversions" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 75%" />
@@ -2816,7 +2850,7 @@ version DESC.</p></td>
 </div>
 </div>
 <div class="section" id="get-download-uri-for-modelversion-artifacts">
-<span id="mlflowmodelregistryservicegetmodelversiondownloaduri"></span><h2><a class="toc-backref" href="#id101">Get Download URI For ModelVersion Artifacts</a><a class="headerlink" href="#get-download-uri-for-modelversion-artifacts" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicegetmodelversiondownloaduri"></span><h2><a class="toc-backref" href="#id102">Get Download URI For ModelVersion Artifacts</a><a class="headerlink" href="#get-download-uri-for-modelversion-artifacts" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 79%" />
@@ -2886,7 +2920,11 @@ This field is required.</p></td>
 </div>
 </div>
 <div class="section" id="transition-modelversion-stage">
-<span id="mlflowmodelregistryservicetransitionmodelversionstage"></span><h2><a class="toc-backref" href="#id102">Transition ModelVersion Stage</a><a class="headerlink" href="#transition-modelversion-stage" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicetransitionmodelversionstage"></span><h2><a class="toc-backref" href="#id103">Transition ModelVersion Stage</a><a class="headerlink" href="#transition-modelversion-stage" title="Permalink to this headline"> </a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Model Stages are deprecated and will be removed in a future major release. To learn more about this deprecation, see our <a class="reference external" href="../model-registry/index.html#migrating-from-stages">migration guide</a>.</p>
+</div>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 79%" />
@@ -2904,7 +2942,7 @@ This field is required.</p></td>
 </tbody>
 </table>
 <div class="section" id="mlflowtransitionmodelversionstage">
-<span id="id55"></span><h3>Request Structure<a class="headerlink" href="#mlflowtransitionmodelversionstage" title="Permalink to this headline"> </a></h3>
+<span id="id56"></span><h3>Request Structure<a class="headerlink" href="#mlflowtransitionmodelversionstage" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 21%" />
@@ -2945,7 +2983,7 @@ This field is required.</p></td>
 </table>
 </div>
 <div class="section" id="mlflowtransitionmodelversionstageresponse">
-<span id="id56"></span><h3>Response Structure<a class="headerlink" href="#mlflowtransitionmodelversionstageresponse" title="Permalink to this headline"> </a></h3>
+<span id="id57"></span><h3>Response Structure<a class="headerlink" href="#mlflowtransitionmodelversionstageresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 23%" />
@@ -2969,7 +3007,7 @@ This field is required.</p></td>
 </div>
 </div>
 <div class="section" id="search-registeredmodels">
-<span id="mlflowmodelregistryservicesearchregisteredmodels"></span><h2><a class="toc-backref" href="#id103">Search RegisteredModels</a><a class="headerlink" href="#search-registeredmodels" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicesearchregisteredmodels"></span><h2><a class="toc-backref" href="#id104">Search RegisteredModels</a><a class="headerlink" href="#search-registeredmodels" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 76%" />
@@ -2987,7 +3025,7 @@ This field is required.</p></td>
 </tbody>
 </table>
 <div class="section" id="mlflowsearchregisteredmodels">
-<span id="id57"></span><h3>Request Structure<a class="headerlink" href="#mlflowsearchregisteredmodels" title="Permalink to this headline"> </a></h3>
+<span id="id58"></span><h3>Request Structure<a class="headerlink" href="#mlflowsearchregisteredmodels" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 10%" />
@@ -3025,7 +3063,7 @@ Tiebreaks are done by model name ASC.</p></td>
 </table>
 </div>
 <div class="section" id="mlflowsearchregisteredmodelsresponse">
-<span id="id58"></span><h3>Response Structure<a class="headerlink" href="#mlflowsearchregisteredmodelsresponse" title="Permalink to this headline"> </a></h3>
+<span id="id59"></span><h3>Response Structure<a class="headerlink" href="#mlflowsearchregisteredmodelsresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 17%" />
@@ -3053,7 +3091,7 @@ Tiebreaks are done by model name ASC.</p></td>
 </div>
 </div>
 <div class="section" id="set-registered-model-tag">
-<span id="mlflowmodelregistryservicesetregisteredmodeltag"></span><h2><a class="toc-backref" href="#id104">Set Registered Model Tag</a><a class="headerlink" href="#set-registered-model-tag" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicesetregisteredmodeltag"></span><h2><a class="toc-backref" href="#id105">Set Registered Model Tag</a><a class="headerlink" href="#set-registered-model-tag" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 76%" />
@@ -3071,7 +3109,7 @@ Tiebreaks are done by model name ASC.</p></td>
 </tbody>
 </table>
 <div class="section" id="mlflowsetregisteredmodeltag">
-<span id="id59"></span><h3>Request Structure<a class="headerlink" href="#mlflowsetregisteredmodeltag" title="Permalink to this headline"> </a></h3>
+<span id="id60"></span><h3>Request Structure<a class="headerlink" href="#mlflowsetregisteredmodeltag" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 9%" />
@@ -3108,7 +3146,7 @@ This field is required.</p></td>
 </div>
 </div>
 <div class="section" id="set-model-version-tag">
-<span id="mlflowmodelregistryservicesetmodelversiontag"></span><h2><a class="toc-backref" href="#id105">Set Model Version Tag</a><a class="headerlink" href="#set-model-version-tag" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicesetmodelversiontag"></span><h2><a class="toc-backref" href="#id106">Set Model Version Tag</a><a class="headerlink" href="#set-model-version-tag" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 75%" />
@@ -3126,7 +3164,7 @@ This field is required.</p></td>
 </tbody>
 </table>
 <div class="section" id="mlflowsetmodelversiontag">
-<span id="id60"></span><h3>Request Structure<a class="headerlink" href="#mlflowsetmodelversiontag" title="Permalink to this headline"> </a></h3>
+<span id="id61"></span><h3>Request Structure<a class="headerlink" href="#mlflowsetmodelversiontag" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 9%" />
@@ -3168,7 +3206,7 @@ This field is required.</p></td>
 </div>
 </div>
 <div class="section" id="delete-registered-model-tag">
-<span id="mlflowmodelregistryservicedeleteregisteredmodeltag"></span><h2><a class="toc-backref" href="#id106">Delete Registered Model Tag</a><a class="headerlink" href="#delete-registered-model-tag" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicedeleteregisteredmodeltag"></span><h2><a class="toc-backref" href="#id107">Delete Registered Model Tag</a><a class="headerlink" href="#delete-registered-model-tag" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 78%" />
@@ -3186,7 +3224,7 @@ This field is required.</p></td>
 </tbody>
 </table>
 <div class="section" id="mlflowdeleteregisteredmodeltag">
-<span id="id61"></span><h3>Request Structure<a class="headerlink" href="#mlflowdeleteregisteredmodeltag" title="Permalink to this headline"> </a></h3>
+<span id="id62"></span><h3>Request Structure<a class="headerlink" href="#mlflowdeleteregisteredmodeltag" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 9%" />
@@ -3216,7 +3254,7 @@ This field is required.</p></td>
 </div>
 </div>
 <div class="section" id="delete-model-version-tag">
-<span id="mlflowmodelregistryservicedeletemodelversiontag"></span><h2><a class="toc-backref" href="#id107">Delete Model Version Tag</a><a class="headerlink" href="#delete-model-version-tag" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicedeletemodelversiontag"></span><h2><a class="toc-backref" href="#id108">Delete Model Version Tag</a><a class="headerlink" href="#delete-model-version-tag" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 76%" />
@@ -3234,7 +3272,7 @@ This field is required.</p></td>
 </tbody>
 </table>
 <div class="section" id="mlflowdeletemodelversiontag">
-<span id="id62"></span><h3>Request Structure<a class="headerlink" href="#mlflowdeletemodelversiontag" title="Permalink to this headline"> </a></h3>
+<span id="id63"></span><h3>Request Structure<a class="headerlink" href="#mlflowdeletemodelversiontag" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 9%" />
@@ -3269,7 +3307,7 @@ This field is required.</p></td>
 </div>
 </div>
 <div class="section" id="delete-registered-model-alias">
-<span id="mlflowmodelregistryservicedeleteregisteredmodelalias"></span><h2><a class="toc-backref" href="#id108">Delete Registered Model Alias</a><a class="headerlink" href="#delete-registered-model-alias" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicedeleteregisteredmodelalias"></span><h2><a class="toc-backref" href="#id109">Delete Registered Model Alias</a><a class="headerlink" href="#delete-registered-model-alias" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 75%" />
@@ -3287,7 +3325,7 @@ This field is required.</p></td>
 </tbody>
 </table>
 <div class="section" id="mlflowdeleteregisteredmodelalias">
-<span id="id63"></span><h3>Request Structure<a class="headerlink" href="#mlflowdeleteregisteredmodelalias" title="Permalink to this headline"> </a></h3>
+<span id="id64"></span><h3>Request Structure<a class="headerlink" href="#mlflowdeleteregisteredmodelalias" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 9%" />
@@ -3317,7 +3355,7 @@ This field is required.</p></td>
 </div>
 </div>
 <div class="section" id="get-model-version-by-alias">
-<span id="mlflowmodelregistryservicegetmodelversionbyalias"></span><h2><a class="toc-backref" href="#id109">Get Model Version by Alias</a><a class="headerlink" href="#get-model-version-by-alias" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicegetmodelversionbyalias"></span><h2><a class="toc-backref" href="#id110">Get Model Version by Alias</a><a class="headerlink" href="#get-model-version-by-alias" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 75%" />
@@ -3335,7 +3373,7 @@ This field is required.</p></td>
 </tbody>
 </table>
 <div class="section" id="mlflowgetmodelversionbyalias">
-<span id="id64"></span><h3>Request Structure<a class="headerlink" href="#mlflowgetmodelversionbyalias" title="Permalink to this headline"> </a></h3>
+<span id="id65"></span><h3>Request Structure<a class="headerlink" href="#mlflowgetmodelversionbyalias" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 17%" />
@@ -3363,7 +3401,7 @@ This field is required.</p></td>
 </table>
 </div>
 <div class="section" id="mlflowgetmodelversionbyaliasresponse">
-<span id="id65"></span><h3>Response Structure<a class="headerlink" href="#mlflowgetmodelversionbyaliasresponse" title="Permalink to this headline"> </a></h3>
+<span id="id66"></span><h3>Response Structure<a class="headerlink" href="#mlflowgetmodelversionbyaliasresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 27%" />
@@ -3387,7 +3425,7 @@ This field is required.</p></td>
 </div>
 </div>
 <div class="section" id="set-registered-model-alias">
-<span id="mlflowmodelregistryservicesetregisteredmodelalias"></span><h2><a class="toc-backref" href="#id110">Set Registered Model Alias</a><a class="headerlink" href="#set-registered-model-alias" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicesetregisteredmodelalias"></span><h2><a class="toc-backref" href="#id111">Set Registered Model Alias</a><a class="headerlink" href="#set-registered-model-alias" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 75%" />
@@ -3405,7 +3443,7 @@ This field is required.</p></td>
 </tbody>
 </table>
 <div class="section" id="mlflowsetregisteredmodelalias">
-<span id="id66"></span><h3>Request Structure<a class="headerlink" href="#mlflowsetregisteredmodelalias" title="Permalink to this headline"> </a></h3>
+<span id="id67"></span><h3>Request Structure<a class="headerlink" href="#mlflowsetregisteredmodelalias" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 9%" />
@@ -3441,9 +3479,13 @@ This field is required.</p></td>
 </div>
 </div>
 <div class="section" id="data-structures">
-<span id="restadd"></span><h2><a class="toc-backref" href="#id111">Data Structures</a><a class="headerlink" href="#data-structures" title="Permalink to this headline"> </a></h2>
+<span id="restadd"></span><h2><a class="toc-backref" href="#id112">Data Structures</a><a class="headerlink" href="#data-structures" title="Permalink to this headline"> </a></h2>
 <div class="section" id="dataset">
 <span id="mlflowdataset"></span><h3>Dataset<a class="headerlink" href="#dataset" title="Permalink to this headline"> </a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Experimental: This API may change or be removed in a future release without warning.</p>
+</div>
 <p>Dataset. Represents a reference to data used for training, testing, or evaluation during
 the model development process.</p>
 <table class="docutils align-default">
@@ -3472,13 +3514,13 @@ This field is required.</p></td>
 </tr>
 <tr class="row-even"><td><p>source_type</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
-<td><p>The type of the dataset source, e.g. ?databricks-uc-table?, ?DBFS?, ?S3?, …
+<td><p>Source information for the dataset. Note that the source may not exactly reproduce the
+dataset if it was transformed / modified before use with MLflow.
 This field is required.</p></td>
 </tr>
 <tr class="row-odd"><td><p>source</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
-<td><p>Source information for the dataset. Note that the source may not exactly reproduce the
-dataset if it was transformed / modified before use with MLflow.
+<td><p>The type of the dataset source, e.g. ?databricks-uc-table?, ?DBFS?, ?S3?, …
 This field is required.</p></td>
 </tr>
 <tr class="row-even"><td><p>schema</p></td>
@@ -3497,6 +3539,10 @@ in an array.</p></td>
 </div>
 <div class="section" id="datasetinput">
 <span id="mlflowdatasetinput"></span><h3>DatasetInput<a class="headerlink" href="#datasetinput" title="Permalink to this headline"> </a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Experimental: This API may change or be removed in a future release without warning.</p>
+</div>
 <p>DatasetInput. Represents a dataset and input tags.</p>
 <table class="docutils align-default">
 <colgroup>
@@ -3630,6 +3676,10 @@ Deleted experiments are not returned by APIs.</p></td>
 </div>
 <div class="section" id="inputtag">
 <span id="mlflowinputtag"></span><h3>InputTag<a class="headerlink" href="#inputtag" title="Permalink to this headline"> </a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Experimental: This API may change or be removed in a future release without warning.</p>
+</div>
 <p>Tag for an input.</p>
 <table class="docutils align-default">
 <colgroup>
@@ -4057,6 +4107,10 @@ If not set, the local <code class="docutils literal notranslate"><span class="pr
 </div>
 <div class="section" id="runinputs">
 <span id="mlflowruninputs"></span><h3>RunInputs<a class="headerlink" href="#runinputs" title="Permalink to this headline"> </a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Experimental: This API may change or be removed in a future release without warning.</p>
+</div>
 <p>Run inputs.</p>
 <table class="docutils align-default">
 <colgroup>
@@ -4227,7 +4281,7 @@ If not set, the local <code class="docutils literal notranslate"><span class="pr
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'./',
-      VERSION:'2.22.1',
+      VERSION:'3.1.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

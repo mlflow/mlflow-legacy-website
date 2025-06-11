@@ -71,7 +71,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="MLflow 2.22.1 documentation" href="index.html"/>
+    <link rel="top" title="MLflow 3.1.0 documentation" href="index.html"/>
  
 
 
@@ -105,8 +105,10 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      padding-left: 12px;
-      padding-right: 12px;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
     }
 
     .logo-container {
@@ -114,21 +116,37 @@
       gap: 12px;
       flex-direction: row;
       white-space: nowrap;
+      align-items: center;
+      justify-content: center;
     }
 
     a:hover {
-      text-decoration: underline;
+      text-decoration: none;
+      color: #0194e2;
     }
   </style>
   <div class="logo-container">
-    <i data-toggle="wy-nav-top" class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"></i>
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
     <a href="index.html" class="wy-nav-top-logo">
-      <img src="_static/MLflow-logo-final-black.png" alt="MLflow"/>
+      <img
+        src="_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
     </a>
-    <b style="overflow: hidden; text-overflow: ellipsis;">API Documentation</b>
-    <a style="overflow: hidden; text-overflow: ellipsis;" href="/docs/latest">Main Docs</a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
   </div>
-  <span class="version">2.22.1</span>
+  <span class="header-link">3.1.0</span>
 </div>
   </nav>
   <page>
@@ -239,6 +257,11 @@
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
+       <a href="python_api/mlflow.ag2.html#module-mlflow.ag2"><code class="xref">mlflow.ag2</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
        <a href="python_api/mlflow.anthropic.html#module-mlflow.anthropic"><code class="xref">mlflow.anthropic</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
@@ -314,11 +337,6 @@
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="python_api/mlflow.fastai.html#module-mlflow.fastai"><code class="xref">mlflow.fastai</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
        <a href="python_api/mlflow.gateway.html#module-mlflow.gateway"><code class="xref">mlflow.gateway</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
@@ -329,17 +347,42 @@
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="python_api/mlflow.gateway.html#module-mlflow.gateway.client"><code class="xref">mlflow.gateway.client</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
        <a href="python_api/mlflow.gateway.html#module-mlflow.gateway.config"><code class="xref">mlflow.gateway.config</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
        <a href="python_api/mlflow.gemini.html#module-mlflow.gemini"><code class="xref">mlflow.gemini</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="python_api/mlflow.genai.html#module-mlflow.genai"><code class="xref">mlflow.genai</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="python_api/mlflow.genai.html#module-mlflow.genai.datasets"><code class="xref">mlflow.genai.datasets</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="python_api/mlflow.genai.html#module-mlflow.genai.judges"><code class="xref">mlflow.genai.judges</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="python_api/mlflow.genai.html#module-mlflow.genai.label_schemas"><code class="xref">mlflow.genai.label_schemas</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="python_api/mlflow.genai.html#module-mlflow.genai.optimize"><code class="xref">mlflow.genai.optimize</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="python_api/mlflow.genai.html#module-mlflow.genai.scorers"><code class="xref">mlflow.genai.scorers</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
@@ -414,11 +457,6 @@
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="python_api/mlflow.mleap.html#module-mlflow.mleap"><code class="xref">mlflow.mleap</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
        <a href="python_api/mlflow.models.html#module-mlflow.models"><code class="xref">mlflow.models</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
@@ -459,6 +497,11 @@
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
+       <a href="python_api/mlflow.pydantic_ai.html#module-mlflow.pydantic_ai"><code class="xref">mlflow.pydantic_ai</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
        <a href="python_api/mlflow.pyfunc.html#module-mlflow.pyfunc"><code class="xref">mlflow.pyfunc</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
@@ -470,11 +513,6 @@
        <td></td>
        <td>&#160;&#160;&#160;
        <a href="python_api/mlflow.pytorch.html#module-mlflow.pytorch"><code class="xref">mlflow.pytorch</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="python_api/mlflow.recipes.html#module-mlflow.recipes"><code class="xref">mlflow.recipes</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
@@ -505,6 +543,11 @@
        <td></td>
        <td>&#160;&#160;&#160;
        <a href="python_api/mlflow.sklearn.html#module-mlflow.sklearn"><code class="xref">mlflow.sklearn</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="python_api/mlflow.smolagents.html#module-mlflow.smolagents"><code class="xref">mlflow.smolagents</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
@@ -579,6 +622,11 @@
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
+       <a href="python_api/mlflow.types.html#module-mlflow.types.responses"><code class="xref">mlflow.types.responses</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
        <a href="python_api/mlflow.types.html#module-mlflow.types.schema"><code class="xref">mlflow.types.schema</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
@@ -627,7 +675,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'./',
-      VERSION:'2.22.1',
+      VERSION:'3.1.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

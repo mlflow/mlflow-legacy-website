@@ -71,7 +71,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MLflow 2.22.1 documentation" href="../index.html"/>
+    <link rel="top" title="MLflow 3.1.0 documentation" href="../index.html"/>
         <link rel="up" title="Python API" href="index.html"/>
         <link rel="next" title="mlflow.lightgbm" href="/mlflow.lightgbm.html"/>
         <link rel="prev" title="mlflow.keras" href="/mlflow.keras.html"/> 
@@ -104,8 +104,10 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      padding-left: 12px;
-      padding-right: 12px;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
     }
 
     .logo-container {
@@ -113,21 +115,37 @@
       gap: 12px;
       flex-direction: row;
       white-space: nowrap;
+      align-items: center;
+      justify-content: center;
     }
 
     a:hover {
-      text-decoration: underline;
+      text-decoration: none;
+      color: #0194e2;
     }
   </style>
   <div class="logo-container">
-    <i data-toggle="wy-nav-top" class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"></i>
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
     <a href="../index.html" class="wy-nav-top-logo">
-      <img src="../_static/MLflow-logo-final-black.png" alt="MLflow"/>
+      <img
+        src="../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
     </a>
-    <b style="overflow: hidden; text-overflow: ellipsis;">API Documentation</b>
-    <a style="overflow: hidden; text-overflow: ellipsis;" href="/docs/latest">Main Docs</a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
   </div>
-  <span class="version">2.22.1</span>
+  <span class="header-link">3.1.0</span>
 </div>
   </nav>
   <page>
@@ -166,6 +184,8 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Python API</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="mlflow.html">mlflow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.html#mlflow-tracing-apis">MLflow Tracing APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.html#mlflow-logged-model-apis">MLflow Logged Model APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.ag2.html">mlflow.ag2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.anthropic.html">mlflow.anthropic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.artifacts.html">mlflow.artifacts</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.autogen.html">mlflow.autogen</a></li>
@@ -180,9 +200,9 @@
 <li class="toctree-l2"><a class="reference internal" href="mlflow.dspy.html">mlflow.dspy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.entities.html">mlflow.entities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.environment_variables.html">mlflow.environment_variables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mlflow.fastai.html">mlflow.fastai</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.gateway.html">mlflow.gateway</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.gemini.html">mlflow.gemini</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.genai.html">mlflow.genai</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.groq.html">mlflow.groq</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.h2o.html">mlflow.h2o</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.johnsnowlabs.html">mlflow.johnsnowlabs</a></li>
@@ -193,7 +213,6 @@
 <li class="toctree-l2"><a class="reference internal" href="mlflow.llama_index.html">mlflow.llama_index</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.metrics.html">mlflow.metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.mistral.html">mlflow.mistral</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mlflow.mleap.html">mlflow.mleap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.models.html">mlflow.models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.onnx.html">mlflow.onnx</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.openai.html">mlflow.openai</a></li>
@@ -202,15 +221,16 @@
 <li class="toctree-l2"><a class="reference internal" href="mlflow.projects.html">mlflow.projects</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.promptflow.html">mlflow.promptflow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.prophet.html">mlflow.prophet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.pydantic_ai.html">mlflow.pydantic_ai</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.pyfunc.html">mlflow.pyfunc</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.pyspark.ml.html">mlflow.pyspark.ml</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.pytorch.html">mlflow.pytorch</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mlflow.recipes.html">mlflow.recipes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.sagemaker.html">mlflow.sagemaker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.sentence_transformers.html">mlflow.sentence_transformers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.server.html">mlflow.server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.shap.html">mlflow.shap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.sklearn.html">mlflow.sklearn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.smolagents.html">mlflow.smolagents</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.spacy.html">mlflow.spacy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.spark.html">mlflow.spark</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.statsmodels.html">mlflow.statsmodels</a></li>
@@ -282,48 +302,21 @@
                 
   <div class="section" id="module-mlflow.langchain">
 <span id="mlflow-langchain"></span><h1>mlflow.langchain<a class="headerlink" href="#module-mlflow.langchain" title="Permalink to this headline"> </a></h1>
-<p>The <code class="docutils literal notranslate"><span class="pre">mlflow.langchain</span></code> module provides an API for logging and loading LangChain models.
-This module exports multivariate LangChain models in the langchain flavor and univariate
-LangChain models in the pyfunc flavor:</p>
-<dl class="simple">
-<dt>LangChain (native) format</dt><dd><p>This is the main flavor that can be accessed with LangChain APIs.</p>
-</dd>
-<dt><a class="reference internal" href="mlflow.pyfunc.html#module-mlflow.pyfunc" title="mlflow.pyfunc"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mlflow.pyfunc</span></code></a></dt><dd><p>Produced for use by generic pyfunc-based deployment tools and for batch inference.</p>
-</dd>
-</dl>
 <dl class="py function">
 <dt id="mlflow.langchain.autolog">
-<code class="sig-prename descclassname"><span class="pre">mlflow.langchain.</span></code><code class="sig-name descname"><span class="pre">autolog</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_input_examples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_model_signatures</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_models</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_datasets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclusive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disable_for_unsupported_versions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">silent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">registered_model_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_tags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_model_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_traces</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/langchain.html#autolog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.langchain.autolog" title="Permalink to this definition"> </a></dt>
+<code class="sig-prename descclassname"><span class="pre">mlflow.langchain.</span></code><code class="sig-name descname"><span class="pre">autolog</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">disable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclusive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disable_for_unsupported_versions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">silent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_traces</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/langchain/autolog.html#autolog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.langchain.autolog" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Experimental: This function may change or be removed in a future release without warning.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Autologging is known to be compatible with the following package versions: <code class="docutils literal notranslate"><span class="pre">0.1.0</span></code> &lt;= <code class="docutils literal notranslate"><span class="pre">langchain</span></code> &lt;= <code class="docutils literal notranslate"><span class="pre">0.3.23</span></code>. Autologging may not succeed when used with package versions outside of this range.</p>
+<p>Autologging is known to be compatible with the following package versions: <code class="docutils literal notranslate"><span class="pre">0.1.0</span></code> &lt;= <code class="docutils literal notranslate"><span class="pre">langchain</span></code> &lt;= <code class="docutils literal notranslate"><span class="pre">0.3.25</span></code>. Autologging may not succeed when used with package versions outside of this range.</p>
 </div>
 <p>Enables (or disables) and configures autologging from Langchain to MLflow.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>log_input_examples</strong> – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, input examples from inference data are collected and
-logged along with Langchain model artifacts during inference. If
-<code class="docutils literal notranslate"><span class="pre">False</span></code>, input examples are not logged.
-Note: Input examples are MLflow model attributes
-and are only collected if <code class="docutils literal notranslate"><span class="pre">log_models</span></code> is also <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
-<li><p><strong>log_model_signatures</strong> – If <code class="docutils literal notranslate"><span class="pre">True</span></code>,
-<a class="reference internal" href="mlflow.models.html#mlflow.models.ModelSignature" title="mlflow.models.ModelSignature"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModelSignatures</span></code></a>
-describing model inputs and outputs are collected and logged along
-with Langchain model artifacts during inference. If <code class="docutils literal notranslate"><span class="pre">False</span></code>,
-signatures are not logged.
-Note: Model signatures are MLflow model attributes
-and are only collected if <code class="docutils literal notranslate"><span class="pre">log_models</span></code> is also <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
-<li><p><strong>log_models</strong> – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, langchain models are logged as MLflow model artifacts.
-If <code class="docutils literal notranslate"><span class="pre">False</span></code>, langchain models are not logged.
-Input examples and model signatures, which are attributes of MLflow models,
-are also omitted when <code class="docutils literal notranslate"><span class="pre">log_models</span></code> is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
-<li><p><strong>log_datasets</strong> – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, dataset information is logged to MLflow Tracking
-if applicable. If <code class="docutils literal notranslate"><span class="pre">False</span></code>, dataset information is not logged.</p></li>
 <li><p><strong>disable</strong> – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, disables the Langchain autologging integration. If <code class="docutils literal notranslate"><span class="pre">False</span></code>,
 enables the Langchain autologging integration.</p></li>
 <li><p><strong>exclusive</strong> – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, autologged content is not logged to user-created fluent runs.
@@ -335,14 +328,6 @@ client or are incompatible.</p></li>
 <li><p><strong>silent</strong> – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, suppress all event logs and warnings from MLflow during Langchain
 autologging. If <code class="docutils literal notranslate"><span class="pre">False</span></code>, show all events and warnings during Langchain
 autologging.</p></li>
-<li><p><strong>registered_model_name</strong> – If given, each time a model is trained, it is registered as a
-new model version of the registered model with this name.
-The registered model is created if it does not already exist.</p></li>
-<li><p><strong>extra_tags</strong> – A dictionary of extra tags to set on each managed run created by autologging.</p></li>
-<li><p><strong>extra_model_classes</strong> – A list of langchain classes to log in addition to the default classes.
-We do not guarantee classes specified in this list can be logged as a model, but tracing
-will be supported. Note that all classes within the list must be subclasses of Runnable,
-and we only patch <cite>invoke</cite>, <cite>batch</cite>, and <cite>stream</cite> methods for tracing.</p></li>
 <li><p><strong>log_traces</strong> – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, traces are logged for Langchain models by using
 MlflowLangchainTracer as a callback during inference. If <code class="docutils literal notranslate"><span class="pre">False</span></code>, no traces are
 collected during inference. Default to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
@@ -352,38 +337,15 @@ collected during inference. Default to <code class="docutils literal notranslate
 </dd></dl>
 
 <dl class="py function">
-<dt id="mlflow.langchain.get_default_conda_env">
-<code class="sig-prename descclassname"><span class="pre">mlflow.langchain.</span></code><code class="sig-name descname"><span class="pre">get_default_conda_env</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/langchain.html#get_default_conda_env"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.langchain.get_default_conda_env" title="Permalink to this definition"> </a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>The default Conda environment for MLflow Models produced by calls to
-<a class="reference internal" href="#mlflow.langchain.save_model" title="mlflow.langchain.save_model"><code class="xref py py-func docutils literal notranslate"><span class="pre">save_model()</span></code></a> and <a class="reference internal" href="#mlflow.langchain.log_model" title="mlflow.langchain.log_model"><code class="xref py py-func docutils literal notranslate"><span class="pre">log_model()</span></code></a>.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="mlflow.langchain.get_default_pip_requirements">
-<code class="sig-prename descclassname"><span class="pre">mlflow.langchain.</span></code><code class="sig-name descname"><span class="pre">get_default_pip_requirements</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/langchain.html#get_default_pip_requirements"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.langchain.get_default_pip_requirements" title="Permalink to this definition"> </a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>A list of default pip requirements for MLflow Models produced by this flavor.
-Calls to <a class="reference internal" href="#mlflow.langchain.save_model" title="mlflow.langchain.save_model"><code class="xref py py-func docutils literal notranslate"><span class="pre">save_model()</span></code></a> and <a class="reference internal" href="#mlflow.langchain.log_model" title="mlflow.langchain.log_model"><code class="xref py py-func docutils literal notranslate"><span class="pre">log_model()</span></code></a> produce a pip environment
-that, at a minimum, contains these requirements.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
 <dt id="mlflow.langchain.load_model">
-<code class="sig-prename descclassname"><span class="pre">mlflow.langchain.</span></code><code class="sig-name descname"><span class="pre">load_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/langchain.html#load_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.langchain.load_model" title="Permalink to this definition"> </a></dt>
+<code class="sig-prename descclassname"><span class="pre">mlflow.langchain.</span></code><code class="sig-name descname"><span class="pre">load_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/langchain/model.html#load_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.langchain.load_model" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Experimental: This function may change or be removed in a future release without warning.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The ‘langchain’ MLflow Models integration is known to be compatible with <code class="docutils literal notranslate"><span class="pre">0.0.354</span></code> &lt;= <code class="docutils literal notranslate"><span class="pre">langchain</span></code> &lt;= <code class="docutils literal notranslate"><span class="pre">0.3.23</span></code>. MLflow Models integrations with langchain may not succeed when used with package versions outside of this range.</p>
+<p>The ‘langchain’ MLflow Models integration is known to be compatible with <code class="docutils literal notranslate"><span class="pre">0.0.354</span></code> &lt;= <code class="docutils literal notranslate"><span class="pre">langchain</span></code> &lt;= <code class="docutils literal notranslate"><span class="pre">0.3.25</span></code>. MLflow Models integrations with langchain may not succeed when used with package versions outside of this range.</p>
 </div>
 <p>Load a LangChain model from a local file or a run.</p>
 <dl class="field-list simple">
@@ -412,14 +374,14 @@ path will be created.</p></li>
 
 <dl class="py function">
 <dt id="mlflow.langchain.log_model">
-<code class="sig-prename descclassname"><span class="pre">mlflow.langchain.</span></code><code class="sig-name descname"><span class="pre">log_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lc_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artifact_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conda_env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code_paths</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">registered_model_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signature</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">mlflow.models.signature.ModelSignature</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_example</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">dict</span><span class="p"><span class="pre">,</span> </span><span class="pre">list</span><span class="p"><span class="pre">,</span> </span><span class="pre">csr_matrix</span><span class="p"><span class="pre">,</span> </span><span class="pre">csc_matrix</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">bytes</span><span class="p"><span class="pre">,</span> </span><span class="pre">tuple</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">await_registration_for</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pip_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_pip_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loader_fn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">persist_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">example_no_conversion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streamable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resources</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prompts</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/langchain.html#log_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.langchain.log_model" title="Permalink to this definition"> </a></dt>
+<code class="sig-prename descclassname"><span class="pre">mlflow.langchain.</span></code><code class="sig-name descname"><span class="pre">log_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lc_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artifact_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conda_env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code_paths</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">registered_model_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signature</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">mlflow.models.signature.ModelSignature</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_example</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">dict</span><span class="p"><span class="pre">,</span> </span><span class="pre">list</span><span class="p"><span class="pre">,</span> </span><span class="pre">csr_matrix</span><span class="p"><span class="pre">,</span> </span><span class="pre">csc_matrix</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">bytes</span><span class="p"><span class="pre">,</span> </span><span class="pre">tuple</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">await_registration_for</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pip_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_pip_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loader_fn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">persist_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streamable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resources</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prompts</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/langchain/model.html#log_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.langchain.log_model" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Experimental: This function may change or be removed in a future release without warning.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The ‘langchain’ MLflow Models integration is known to be compatible with <code class="docutils literal notranslate"><span class="pre">0.0.354</span></code> &lt;= <code class="docutils literal notranslate"><span class="pre">langchain</span></code> &lt;= <code class="docutils literal notranslate"><span class="pre">0.3.23</span></code>. MLflow Models integrations with langchain may not succeed when used with package versions outside of this range.</p>
+<p>The ‘langchain’ MLflow Models integration is known to be compatible with <code class="docutils literal notranslate"><span class="pre">0.0.354</span></code> &lt;= <code class="docutils literal notranslate"><span class="pre">langchain</span></code> &lt;= <code class="docutils literal notranslate"><span class="pre">0.3.25</span></code>. MLflow Models integrations with langchain may not succeed when used with package versions outside of this range.</p>
 </div>
 <p>Log a LangChain model as an MLflow artifact for the current run.</p>
 <dl class="field-list simple">
@@ -438,14 +400,14 @@ by using <a class="reference internal" href="mlflow.models.html#mlflow.models.se
 release without warning.</p>
 </div>
 </p></li>
-<li><p><strong>artifact_path</strong> – Run-relative artifact path.</p></li>
+<li><p><strong>artifact_path</strong> – Deprecated. Use <cite>name</cite> instead.</p></li>
 <li><p><strong>conda_env</strong> – <p>Either a dictionary representation of a Conda environment or the path to a conda
 environment yaml file. If provided, this describes the environment this model should be run in.
-At a minimum, it should specify the dependencies contained in <a class="reference internal" href="#mlflow.langchain.get_default_conda_env" title="mlflow.langchain.get_default_conda_env"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_default_conda_env()</span></code></a>.
+At a minimum, it should specify the dependencies contained in <cite>get_default_conda_env()</cite>.
 If <code class="docutils literal notranslate"><span class="pre">None</span></code>, a conda environment with pip requirements inferred by
 <a class="reference internal" href="mlflow.models.html#mlflow.models.infer_pip_requirements" title="mlflow.models.infer_pip_requirements"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.models.infer_pip_requirements()</span></code></a> is added
 to the model. If the requirement inference fails, it falls back to using
-<a class="reference internal" href="#mlflow.langchain.get_default_pip_requirements" title="mlflow.langchain.get_default_pip_requirements"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_default_pip_requirements()</span></code></a>. pip requirements from <code class="docutils literal notranslate"><span class="pre">conda_env</span></code> are written to a pip
+<cite>get_default_pip_requirements</cite>. pip requirements from <code class="docutils literal notranslate"><span class="pre">conda_env</span></code> are written to a pip
 <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> file and the full conda environment is written to <code class="docutils literal notranslate"><span class="pre">conda.yaml</span></code>.
 The following is an <em>example</em> dictionary representation of a conda environment:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -487,7 +449,7 @@ The model signature can be <a class="reference internal" href="mlflow.models.htm
 (e.g. the training dataset with target column omitted) and valid model
 output (e.g. model predictions generated on the training dataset),
 for example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">infer_signature</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.models</span> <span class="kn">import</span> <span class="n">infer_signature</span>
 
 <span class="n">chain</span> <span class="o">=</span> <span class="n">LLMChain</span><span class="p">(</span><span class="n">llm</span><span class="o">=</span><span class="n">llm</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="n">prompt</span><span class="p">)</span>
 <span class="n">prediction</span> <span class="o">=</span> <span class="n">chain</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">input_str</span><span class="p">)</span>
@@ -513,7 +475,7 @@ Specify 0 or None to skip waiting.</p></li>
 a pip requirements file on the local filesystem (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;requirements.txt&quot;</span></code>). If provided, this
 describes the environment this model should be run in. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, a default list of requirements
 is inferred by <a class="reference internal" href="mlflow.models.html#mlflow.models.infer_pip_requirements" title="mlflow.models.infer_pip_requirements"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.models.infer_pip_requirements()</span></code></a> from the current software environment.
-If the requirement inference fails, it falls back to using <a class="reference internal" href="#mlflow.langchain.get_default_pip_requirements" title="mlflow.langchain.get_default_pip_requirements"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_default_pip_requirements()</span></code></a>.
+If the requirement inference fails, it falls back to using <cite>get_default_pip_requirements</cite>.
 Both requirements and constraints are automatically parsed and written to <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> and
 <code class="docutils literal notranslate"><span class="pre">constraints.txt</span></code> files, respectively, and stored as part of the model. Requirements are also
 written to the <code class="docutils literal notranslate"><span class="pre">pip</span></code> section of the model’s conda environment (<code class="docutils literal notranslate"><span class="pre">conda.yaml</span></code>) file.</p></li>
@@ -568,7 +530,7 @@ and <cite>persist_dir</cite>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qa</span> <span class="o">=</span> <span class="n">RetrievalQA</span><span class="o">.</span><span class="n">from_llm</span><span class="p">(</span><span class="n">llm</span><span class="o">=</span><span class="n">OpenAI</span><span class="p">(),</span> <span class="n">retriever</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">as_retriever</span><span class="p">())</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">load_retriever</span><span class="p">(</span><span class="n">persist_directory</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">load_retriever</span><span class="p">(</span><span class="n">persist_directory</span><span class="p">):</span>
     <span class="n">embeddings</span> <span class="o">=</span> <span class="n">OpenAIEmbeddings</span><span class="p">()</span>
     <span class="n">vectorstore</span> <span class="o">=</span> <span class="n">FAISS</span><span class="o">.</span><span class="n">load_local</span><span class="p">(</span>
         <span class="n">persist_directory</span><span class="p">,</span>
@@ -583,7 +545,7 @@ and <cite>persist_dir</cite>:</p>
 <span class="k">with</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">start_run</span><span class="p">()</span> <span class="k">as</span> <span class="n">run</span><span class="p">:</span>
     <span class="n">logged_model</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">langchain</span><span class="o">.</span><span class="n">log_model</span><span class="p">(</span>
         <span class="n">qa</span><span class="p">,</span>
-        <span class="n">artifact_path</span><span class="o">=</span><span class="s2">&quot;retrieval_qa&quot;</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;retrieval_qa&quot;</span><span class="p">,</span>
         <span class="n">loader_fn</span><span class="o">=</span><span class="n">load_retriever</span><span class="p">,</span>
         <span class="n">persist_dir</span><span class="o">=</span><span class="n">persist_dir</span><span class="p">,</span>
     <span class="p">)</span>
@@ -591,9 +553,6 @@ and <cite>persist_dir</cite>:</p>
 </div>
 <p>See a complete example in examples/langchain/retrieval_qa_chain.py.</p>
 </p></li>
-<li><p><strong>example_no_conversion</strong> – This parameter is deprecated and will be removed in a future
-release. It’s no longer used and can be safely removed. Input examples are
-not converted anymore.</p></li>
 <li><p><strong>run_id</strong> – run_id to associate with this model version. If specified, we resume the
 run and log the model to that run. Otherwise, a new run is created.
 Default to None.</p></li>
@@ -619,7 +578,7 @@ registered in the MLflow Prompt Registry before being associated with the model.
 <p>This will create a mutual link between the model and the prompt. The associated prompts can be
 seen in the model’s metadata stored in the MLmodel file. From the Prompt Registry UI, you can
 navigate to the model as well.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">mlflow</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mlflow</span>
 
 <span class="n">prompt_template</span> <span class="o">=</span> <span class="s2">&quot;Hi, </span><span class="si">{name}</span><span class="s2">! How are you doing today?&quot;</span>
 
@@ -629,8 +588,8 @@ navigate to the model as well.</p>
 <span class="c1"># Log a model with the registered prompt</span>
 <span class="k">with</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">start_run</span><span class="p">():</span>
     <span class="n">model_info</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">pyfunc</span><span class="o">.</span><span class="n">log_model</span><span class="p">(</span>
-        <span class="n">MyModel</span><span class="p">(),</span>
-        <span class="n">artifact_path</span><span class="o">=</span><span class="s2">&quot;model&quot;</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">MyModel</span><span class="p">(),</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;model&quot;</span><span class="p">,</span>
         <span class="n">prompts</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;prompt:/my_prompt/1&quot;</span><span class="p">]</span>
     <span class="p">)</span>
 
@@ -638,10 +597,16 @@ navigate to the model as well.</p>
 <span class="c1"># Output: [&#39;prompt:/my_prompt/1&#39;]</span>
 
 <span class="c1"># Load the prompt</span>
-<span class="n">prompt</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">load_prompt</span><span class="p">(</span><span class="n">model_info</span><span class="o">.</span><span class="n">prompts</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">prompt</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">genai</span><span class="o">.</span><span class="n">load_prompt</span><span class="p">(</span><span class="n">model_info</span><span class="o">.</span><span class="n">prompts</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 </div>
 </p></li>
+<li><p><strong>name</strong> – Model name.</p></li>
+<li><p><strong>params</strong> – A dictionary of parameters to log with the model.</p></li>
+<li><p><strong>tags</strong> – A dictionary of tags to log with the model.</p></li>
+<li><p><strong>model_type</strong> – The type of the model.</p></li>
+<li><p><strong>step</strong> – The step at which to log the model outputs and metrics</p></li>
+<li><p><strong>model_id</strong> – The ID of the model.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -653,14 +618,14 @@ metadata of the logged model.</p>
 
 <dl class="py function">
 <dt id="mlflow.langchain.save_model">
-<code class="sig-prename descclassname"><span class="pre">mlflow.langchain.</span></code><code class="sig-name descname"><span class="pre">save_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lc_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conda_env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code_paths</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mlflow_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signature</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">mlflow.models.signature.ModelSignature</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_example</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">dict</span><span class="p"><span class="pre">,</span> </span><span class="pre">list</span><span class="p"><span class="pre">,</span> </span><span class="pre">csr_matrix</span><span class="p"><span class="pre">,</span> </span><span class="pre">csc_matrix</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">bytes</span><span class="p"><span class="pre">,</span> </span><span class="pre">tuple</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pip_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_pip_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loader_fn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">persist_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">example_no_conversion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streamable</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/langchain.html#save_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.langchain.save_model" title="Permalink to this definition"> </a></dt>
+<code class="sig-prename descclassname"><span class="pre">mlflow.langchain.</span></code><code class="sig-name descname"><span class="pre">save_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lc_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conda_env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code_paths</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mlflow_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signature</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">mlflow.models.signature.ModelSignature</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_example</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">dict</span><span class="p"><span class="pre">,</span> </span><span class="pre">list</span><span class="p"><span class="pre">,</span> </span><span class="pre">csr_matrix</span><span class="p"><span class="pre">,</span> </span><span class="pre">csc_matrix</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">bytes</span><span class="p"><span class="pre">,</span> </span><span class="pre">tuple</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pip_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_pip_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loader_fn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">persist_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streamable</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/langchain/model.html#save_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.langchain.save_model" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Experimental: This function may change or be removed in a future release without warning.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The ‘langchain’ MLflow Models integration is known to be compatible with <code class="docutils literal notranslate"><span class="pre">0.0.354</span></code> &lt;= <code class="docutils literal notranslate"><span class="pre">langchain</span></code> &lt;= <code class="docutils literal notranslate"><span class="pre">0.3.23</span></code>. MLflow Models integrations with langchain may not succeed when used with package versions outside of this range.</p>
+<p>The ‘langchain’ MLflow Models integration is known to be compatible with <code class="docutils literal notranslate"><span class="pre">0.0.354</span></code> &lt;= <code class="docutils literal notranslate"><span class="pre">langchain</span></code> &lt;= <code class="docutils literal notranslate"><span class="pre">0.3.25</span></code>. MLflow Models integrations with langchain may not succeed when used with package versions outside of this range.</p>
 </div>
 <p>Save a LangChain model to a path on the local file system.</p>
 <dl class="field-list simple">
@@ -683,11 +648,11 @@ release without warning.</p>
 <li><p><strong>path</strong> – Local path where the serialized model (as YAML) is to be saved.</p></li>
 <li><p><strong>conda_env</strong> – <p>Either a dictionary representation of a Conda environment or the path to a conda
 environment yaml file. If provided, this describes the environment this model should be run in.
-At a minimum, it should specify the dependencies contained in <a class="reference internal" href="#mlflow.langchain.get_default_conda_env" title="mlflow.langchain.get_default_conda_env"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_default_conda_env()</span></code></a>.
+At a minimum, it should specify the dependencies contained in <cite>get_default_conda_env()</cite>.
 If <code class="docutils literal notranslate"><span class="pre">None</span></code>, a conda environment with pip requirements inferred by
 <a class="reference internal" href="mlflow.models.html#mlflow.models.infer_pip_requirements" title="mlflow.models.infer_pip_requirements"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.models.infer_pip_requirements()</span></code></a> is added
 to the model. If the requirement inference fails, it falls back to using
-<a class="reference internal" href="#mlflow.langchain.get_default_pip_requirements" title="mlflow.langchain.get_default_pip_requirements"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_default_pip_requirements()</span></code></a>. pip requirements from <code class="docutils literal notranslate"><span class="pre">conda_env</span></code> are written to a pip
+<cite>get_default_pip_requirements</cite>. pip requirements from <code class="docutils literal notranslate"><span class="pre">conda_env</span></code> are written to a pip
 <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> file and the full conda environment is written to <code class="docutils literal notranslate"><span class="pre">conda.yaml</span></code>.
 The following is an <em>example</em> dictionary representation of a conda environment:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -725,7 +690,7 @@ The model signature can be <a class="reference internal" href="mlflow.models.htm
 from datasets with valid model input (e.g. the training dataset with target
 column omitted) and valid model output (e.g. model predictions generated on
 the training dataset), for example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">infer_signature</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.models</span> <span class="kn">import</span> <span class="n">infer_signature</span>
 
 <span class="n">chain</span> <span class="o">=</span> <span class="n">LLMChain</span><span class="p">(</span><span class="n">llm</span><span class="o">=</span><span class="n">llm</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="n">prompt</span><span class="p">)</span>
 <span class="n">prediction</span> <span class="o">=</span> <span class="n">chain</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">input_str</span><span class="p">)</span>
@@ -747,7 +712,7 @@ by converting it to a list. Bytes are base64-encoded. When the <code class="docu
 a pip requirements file on the local filesystem (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;requirements.txt&quot;</span></code>). If provided, this
 describes the environment this model should be run in. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, a default list of requirements
 is inferred by <a class="reference internal" href="mlflow.models.html#mlflow.models.infer_pip_requirements" title="mlflow.models.infer_pip_requirements"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.models.infer_pip_requirements()</span></code></a> from the current software environment.
-If the requirement inference fails, it falls back to using <a class="reference internal" href="#mlflow.langchain.get_default_pip_requirements" title="mlflow.langchain.get_default_pip_requirements"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_default_pip_requirements()</span></code></a>.
+If the requirement inference fails, it falls back to using <cite>get_default_pip_requirements</cite>.
 Both requirements and constraints are automatically parsed and written to <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> and
 <code class="docutils literal notranslate"><span class="pre">constraints.txt</span></code> files, respectively, and stored as part of the model. Requirements are also
 written to the <code class="docutils literal notranslate"><span class="pre">pip</span></code> section of the model’s conda environment (<code class="docutils literal notranslate"><span class="pre">conda.yaml</span></code>) file.</p></li>
@@ -802,7 +767,7 @@ and <cite>persist_dir</cite>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qa</span> <span class="o">=</span> <span class="n">RetrievalQA</span><span class="o">.</span><span class="n">from_llm</span><span class="p">(</span><span class="n">llm</span><span class="o">=</span><span class="n">OpenAI</span><span class="p">(),</span> <span class="n">retriever</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">as_retriever</span><span class="p">())</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">load_retriever</span><span class="p">(</span><span class="n">persist_directory</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">load_retriever</span><span class="p">(</span><span class="n">persist_directory</span><span class="p">):</span>
     <span class="n">embeddings</span> <span class="o">=</span> <span class="n">OpenAIEmbeddings</span><span class="p">()</span>
     <span class="n">vectorstore</span> <span class="o">=</span> <span class="n">FAISS</span><span class="o">.</span><span class="n">load_local</span><span class="p">(</span>
         <span class="n">persist_directory</span><span class="p">,</span>
@@ -817,7 +782,7 @@ and <cite>persist_dir</cite>:</p>
 <span class="k">with</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">start_run</span><span class="p">()</span> <span class="k">as</span> <span class="n">run</span><span class="p">:</span>
     <span class="n">logged_model</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">langchain</span><span class="o">.</span><span class="n">log_model</span><span class="p">(</span>
         <span class="n">qa</span><span class="p">,</span>
-        <span class="n">artifact_path</span><span class="o">=</span><span class="s2">&quot;retrieval_qa&quot;</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;retrieval_qa&quot;</span><span class="p">,</span>
         <span class="n">loader_fn</span><span class="o">=</span><span class="n">load_retriever</span><span class="p">,</span>
         <span class="n">persist_dir</span><span class="o">=</span><span class="n">persist_dir</span><span class="p">,</span>
     <span class="p">)</span>
@@ -825,9 +790,6 @@ and <cite>persist_dir</cite>:</p>
 </div>
 <p>See a complete example in examples/langchain/retrieval_qa_chain.py.</p>
 </p></li>
-<li><p><strong>example_no_conversion</strong> – This parameter is deprecated and will be removed in a future
-release. It’s no longer used and can be safely removed. Input examples are
-not converted anymore.</p></li>
 <li><p><strong>model_config</strong> – <p>The model configuration to apply to the model if saving model from code. This
 configuration is available during model loading.</p>
 <div class="admonition note">
@@ -871,25 +833,25 @@ objects and a <code class="docutils literal notranslate"><span class="pre">custo
 instead of LangGraph’s ToolNode to enable returning attachments and custom_outputs from
 LangChain and UnityCatalog Tools</p></li>
 </ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Union</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.language_models</span><span class="w"> </span><span class="kn">import</span> <span class="n">LanguageModelLike</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.runnables</span><span class="w"> </span><span class="kn">import</span> <span class="n">RunnableConfig</span><span class="p">,</span> <span class="n">RunnableLambda</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseTool</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">langgraph.graph</span><span class="w"> </span><span class="kn">import</span> <span class="n">END</span><span class="p">,</span> <span class="n">StateGraph</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">langgraph.graph.graph</span><span class="w"> </span><span class="kn">import</span> <span class="n">CompiledGraph</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">langgraph.prebuilt</span><span class="w"> </span><span class="kn">import</span> <span class="n">ToolNode</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.langchain.chat_agent_langgraph</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatAgentState</span><span class="p">,</span> <span class="n">ChatAgentToolNode</span>
+<span class="kn">from</span> <span class="nn">langchain_core.language_models</span> <span class="kn">import</span> <span class="n">LanguageModelLike</span>
+<span class="kn">from</span> <span class="nn">langchain_core.runnables</span> <span class="kn">import</span> <span class="n">RunnableConfig</span><span class="p">,</span> <span class="n">RunnableLambda</span>
+<span class="kn">from</span> <span class="nn">langchain_core.tools</span> <span class="kn">import</span> <span class="n">BaseTool</span>
+<span class="kn">from</span> <span class="nn">langgraph.graph</span> <span class="kn">import</span> <span class="n">END</span><span class="p">,</span> <span class="n">StateGraph</span>
+<span class="kn">from</span> <span class="nn">langgraph.graph.graph</span> <span class="kn">import</span> <span class="n">CompiledGraph</span>
+<span class="kn">from</span> <span class="nn">langgraph.prebuilt</span> <span class="kn">import</span> <span class="n">ToolNode</span>
+<span class="kn">from</span> <span class="nn">mlflow.langchain.chat_agent_langgraph</span> <span class="kn">import</span> <span class="n">ChatAgentState</span><span class="p">,</span> <span class="n">ChatAgentToolNode</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">create_tool_calling_agent</span><span class="p">(</span>
+<span class="k">def</span> <span class="nf">create_tool_calling_agent</span><span class="p">(</span>
     <span class="n">model</span><span class="p">:</span> <span class="n">LanguageModelLike</span><span class="p">,</span>
     <span class="n">tools</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ToolNode</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">BaseTool</span><span class="p">]],</span>
     <span class="n">agent_prompt</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CompiledGraph</span><span class="p">:</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">bind_tools</span><span class="p">(</span><span class="n">tools</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">routing_logic</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">ChatAgentState</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">routing_logic</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">ChatAgentState</span><span class="p">):</span>
         <span class="n">last_message</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;messages&quot;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">last_message</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tool_calls&quot;</span><span class="p">):</span>
             <span class="k">return</span> <span class="s2">&quot;continue&quot;</span>
@@ -905,7 +867,7 @@ LangChain and UnityCatalog Tools</p></li>
         <span class="n">preprocessor</span> <span class="o">=</span> <span class="n">RunnableLambda</span><span class="p">(</span><span class="k">lambda</span> <span class="n">state</span><span class="p">:</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;messages&quot;</span><span class="p">])</span>
     <span class="n">model_runnable</span> <span class="o">=</span> <span class="n">preprocessor</span> <span class="o">|</span> <span class="n">model</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">call_model</span><span class="p">(</span>
+    <span class="k">def</span> <span class="nf">call_model</span><span class="p">(</span>
         <span class="n">state</span><span class="p">:</span> <span class="n">ChatAgentState</span><span class="p">,</span>
         <span class="n">config</span><span class="p">:</span> <span class="n">RunnableConfig</span><span class="p">,</span>
     <span class="p">):</span>
@@ -936,15 +898,15 @@ LangChain and UnityCatalog Tools</p></li>
 <p>If you want to return attachments and custom_outputs from your tool, you can return a
 dictionary with keys “content”, “attachments”, and “custom_outputs”. This dictionary will be
 parsed out by the ChatAgentToolNode and properly stored in your LangGraph’s state.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">random</span><span class="w"> </span><span class="kn">import</span> <span class="n">randint</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">randint</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">databricks_langchain</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatDatabricks</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">tool</span>
+<span class="kn">from</span> <span class="nn">databricks_langchain</span> <span class="kn">import</span> <span class="n">ChatDatabricks</span>
+<span class="kn">from</span> <span class="nn">langchain_core.tools</span> <span class="kn">import</span> <span class="n">tool</span>
 
 
 <span class="nd">@tool</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">generate_random_ints</span><span class="p">(</span><span class="nb">min</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">max</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="k">def</span> <span class="nf">generate_random_ints</span><span class="p">(</span><span class="nb">min</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">max</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate size random ints in the range [min, max].&quot;&quot;&quot;</span>
     <span class="n">attachments</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;min&quot;</span><span class="p">:</span> <span class="nb">min</span><span class="p">,</span> <span class="s2">&quot;max&quot;</span><span class="p">:</span> <span class="nb">max</span><span class="p">}</span>
     <span class="n">custom_outputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">randint</span><span class="p">(</span><span class="nb">min</span><span class="p">,</span> <span class="nb">max</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size</span><span class="p">)]</span>
@@ -964,11 +926,11 @@ parsed out by the ChatAgentToolNode and properly stored in your LangGraph’s st
 </div>
 <p>Step 3: Wrap your LangGraph agent with ChatAgent</p>
 <p>This makes your agent easily loggable and deployable with the PyFunc flavor in serving.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">Optional</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">Optional</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">langgraph.graph.state</span><span class="w"> </span><span class="kn">import</span> <span class="n">CompiledStateGraph</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.pyfunc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatAgent</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.types.agent</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">langgraph.graph.state</span> <span class="kn">import</span> <span class="n">CompiledStateGraph</span>
+<span class="kn">from</span> <span class="nn">mlflow.pyfunc</span> <span class="kn">import</span> <span class="n">ChatAgent</span>
+<span class="kn">from</span> <span class="nn">mlflow.types.agent</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">ChatAgentChunk</span><span class="p">,</span>
     <span class="n">ChatAgentMessage</span><span class="p">,</span>
     <span class="n">ChatAgentResponse</span><span class="p">,</span>
@@ -976,11 +938,11 @@ parsed out by the ChatAgentToolNode and properly stored in your LangGraph’s st
 <span class="p">)</span>
 
 
-<span class="k">class</span><span class="w"> </span><span class="nc">LangGraphChatAgent</span><span class="p">(</span><span class="n">ChatAgent</span><span class="p">):</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">CompiledStateGraph</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">LangGraphChatAgent</span><span class="p">(</span><span class="n">ChatAgent</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">CompiledStateGraph</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">agent</span> <span class="o">=</span> <span class="n">agent</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span>
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">messages</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ChatAgentMessage</span><span class="p">],</span>
         <span class="n">context</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ChatContext</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -996,7 +958,7 @@ parsed out by the ChatAgentToolNode and properly stored in your LangGraph’s st
                 <span class="p">)</span>
         <span class="k">return</span> <span class="n">ChatAgentResponse</span><span class="p">(</span><span class="n">messages</span><span class="o">=</span><span class="n">messages</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">predict_stream</span><span class="p">(</span>
+    <span class="k">def</span> <span class="nf">predict_stream</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">messages</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ChatAgentMessage</span><span class="p">],</span>
         <span class="n">context</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ChatContext</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -1092,7 +1054,7 @@ LangGraph tool.</p>
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../',
-      VERSION:'2.22.1',
+      VERSION:'3.1.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

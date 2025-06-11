@@ -71,7 +71,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="MLflow 2.22.1 documentation" href="../../index.html"/>
+    <link rel="top" title="MLflow 3.1.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -103,8 +103,10 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      padding-left: 12px;
-      padding-right: 12px;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
     }
 
     .logo-container {
@@ -112,21 +114,37 @@
       gap: 12px;
       flex-direction: row;
       white-space: nowrap;
+      align-items: center;
+      justify-content: center;
     }
 
     a:hover {
-      text-decoration: underline;
+      text-decoration: none;
+      color: #0194e2;
     }
   </style>
   <div class="logo-container">
-    <i data-toggle="wy-nav-top" class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"></i>
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
     <a href="../../index.html" class="wy-nav-top-logo">
-      <img src="../../_static/MLflow-logo-final-black.png" alt="MLflow"/>
+      <img
+        src="../../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
     </a>
-    <b style="overflow: hidden; text-overflow: ellipsis;">API Documentation</b>
-    <a style="overflow: hidden; text-overflow: ellipsis;" href="/docs/latest">Main Docs</a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
   </div>
-  <span class="version">2.22.1</span>
+  <span class="header-link">3.1.0</span>
 </div>
   </nav>
   <page>
@@ -233,38 +251,38 @@
 <span class="sd">    since `predict()` is required for pyfunc model inference.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">functools</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">weakref</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">OrderedDict</span><span class="p">,</span> <span class="n">defaultdict</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">deepcopy</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">weakref</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span><span class="p">,</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">packaging.version</span><span class="w"> </span><span class="kn">import</span> <span class="n">Version</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">yaml</span>
+<span class="kn">from</span> <span class="nn">packaging.version</span> <span class="kn">import</span> <span class="n">Version</span>
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">mlflow</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyfunc</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.data.code_dataset_source</span><span class="w"> </span><span class="kn">import</span> <span class="n">CodeDatasetSource</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.data.numpy_dataset</span><span class="w"> </span><span class="kn">import</span> <span class="n">from_numpy</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.data.pandas_dataset</span><span class="w"> </span><span class="kn">import</span> <span class="n">from_pandas</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.dataset_input</span><span class="w"> </span><span class="kn">import</span> <span class="n">DatasetInput</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.input_tag</span><span class="w"> </span><span class="kn">import</span> <span class="n">InputTag</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">ModelInputExample</span><span class="p">,</span> <span class="n">ModelSignature</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.models.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">MLMODEL_FILE_NAME</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.models.signature</span><span class="w"> </span><span class="kn">import</span> <span class="n">_infer_signature_from_input_example</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.models.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">_save_example</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.protos.databricks_pb2</span><span class="w"> </span><span class="kn">import</span> <span class="n">INTERNAL_ERROR</span><span class="p">,</span> <span class="n">INVALID_PARAMETER_VALUE</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracking._model_registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">DEFAULT_AWAIT_MAX_SLEEP_SECONDS</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracking.artifact_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">_download_artifact_from_uri</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracking.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowClient</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">_inspect_original_var_name</span><span class="p">,</span> <span class="n">gorilla</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.autologging_utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="kn">import</span> <span class="nn">mlflow</span>
+<span class="kn">from</span> <span class="nn">mlflow</span> <span class="kn">import</span> <span class="n">pyfunc</span>
+<span class="kn">from</span> <span class="nn">mlflow.data.code_dataset_source</span> <span class="kn">import</span> <span class="n">CodeDatasetSource</span>
+<span class="kn">from</span> <span class="nn">mlflow.data.numpy_dataset</span> <span class="kn">import</span> <span class="n">from_numpy</span>
+<span class="kn">from</span> <span class="nn">mlflow.data.pandas_dataset</span> <span class="kn">import</span> <span class="n">from_pandas</span>
+<span class="kn">from</span> <span class="nn">mlflow.entities.dataset_input</span> <span class="kn">import</span> <span class="n">DatasetInput</span>
+<span class="kn">from</span> <span class="nn">mlflow.entities.input_tag</span> <span class="kn">import</span> <span class="n">InputTag</span>
+<span class="kn">from</span> <span class="nn">mlflow.exceptions</span> <span class="kn">import</span> <span class="n">MlflowException</span>
+<span class="kn">from</span> <span class="nn">mlflow.models</span> <span class="kn">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">ModelInputExample</span><span class="p">,</span> <span class="n">ModelSignature</span>
+<span class="kn">from</span> <span class="nn">mlflow.models.model</span> <span class="kn">import</span> <span class="n">MLMODEL_FILE_NAME</span>
+<span class="kn">from</span> <span class="nn">mlflow.models.signature</span> <span class="kn">import</span> <span class="n">_infer_signature_from_input_example</span>
+<span class="kn">from</span> <span class="nn">mlflow.models.utils</span> <span class="kn">import</span> <span class="n">_save_example</span>
+<span class="kn">from</span> <span class="nn">mlflow.protos.databricks_pb2</span> <span class="kn">import</span> <span class="n">INTERNAL_ERROR</span><span class="p">,</span> <span class="n">INVALID_PARAMETER_VALUE</span>
+<span class="kn">from</span> <span class="nn">mlflow.tracking._model_registry</span> <span class="kn">import</span> <span class="n">DEFAULT_AWAIT_MAX_SLEEP_SECONDS</span>
+<span class="kn">from</span> <span class="nn">mlflow.tracking.artifact_utils</span> <span class="kn">import</span> <span class="n">_download_artifact_from_uri</span>
+<span class="kn">from</span> <span class="nn">mlflow.tracking.client</span> <span class="kn">import</span> <span class="n">MlflowClient</span>
+<span class="kn">from</span> <span class="nn">mlflow.utils</span> <span class="kn">import</span> <span class="n">_inspect_original_var_name</span><span class="p">,</span> <span class="n">gorilla</span>
+<span class="kn">from</span> <span class="nn">mlflow.utils.autologging_utils</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">INPUT_EXAMPLE_SAMPLE_ROWS</span><span class="p">,</span>
     <span class="n">MlflowAutologgingQueueingClient</span><span class="p">,</span>
     <span class="n">_get_new_training_session_class</span><span class="p">,</span>
@@ -276,8 +294,8 @@
     <span class="n">safe_patch</span><span class="p">,</span>
     <span class="n">update_wrapper_extended</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.docstring_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">LOG_MODEL_PARAM_DOCS</span><span class="p">,</span> <span class="n">format_docstring</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.environment</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">mlflow.utils.docstring_utils</span> <span class="kn">import</span> <span class="n">LOG_MODEL_PARAM_DOCS</span><span class="p">,</span> <span class="n">format_docstring</span>
+<span class="kn">from</span> <span class="nn">mlflow.utils.environment</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">_CONDA_ENV_FILE_NAME</span><span class="p">,</span>
     <span class="n">_CONSTRAINTS_FILE_NAME</span><span class="p">,</span>
     <span class="n">_PYTHON_ENV_FILE_NAME</span><span class="p">,</span>
@@ -288,18 +306,18 @@
     <span class="n">_PythonEnv</span><span class="p">,</span>
     <span class="n">_validate_env_arguments</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.file_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_total_file_size</span><span class="p">,</span> <span class="n">write_to</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.mlflow_tags</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">mlflow.utils.file_utils</span> <span class="kn">import</span> <span class="n">get_total_file_size</span><span class="p">,</span> <span class="n">write_to</span>
+<span class="kn">from</span> <span class="nn">mlflow.utils.mlflow_tags</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">MLFLOW_AUTOLOGGING</span><span class="p">,</span>
     <span class="n">MLFLOW_DATASET_CONTEXT</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.model_utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">mlflow.utils.model_utils</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">_add_code_from_conf_to_system_path</span><span class="p">,</span>
     <span class="n">_get_flavor_configuration</span><span class="p">,</span>
     <span class="n">_validate_and_copy_code_paths</span><span class="p">,</span>
     <span class="n">_validate_and_prepare_target_save_path</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.requirements_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">_get_pinned_requirement</span>
+<span class="kn">from</span> <span class="nn">mlflow.utils.requirements_utils</span> <span class="kn">import</span> <span class="n">_get_pinned_requirement</span>
 
 <span class="n">FLAVOR_NAME</span> <span class="o">=</span> <span class="s2">&quot;sklearn&quot;</span>
 
@@ -314,8 +332,8 @@
 <span class="n">_MODEL_DATA_SUBPATH</span> <span class="o">=</span> <span class="s2">&quot;model.pkl&quot;</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_gen_estimators_to_patch</span><span class="p">():</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.sklearn.utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="k">def</span> <span class="nf">_gen_estimators_to_patch</span><span class="p">():</span>
+    <span class="kn">from</span> <span class="nn">mlflow.sklearn.utils</span> <span class="kn">import</span> <span class="p">(</span>
         <span class="n">_all_estimators</span><span class="p">,</span>
         <span class="n">_get_meta_estimators_for_autologging</span><span class="p">,</span>
     <span class="p">)</span>
@@ -353,7 +371,7 @@
     <span class="p">]</span>
 
 
-<div class="viewcode-block" id="get_default_pip_requirements"><a class="viewcode-back" href="../../python_api/mlflow.sklearn.html#mlflow.sklearn.get_default_pip_requirements">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">get_default_pip_requirements</span><span class="p">(</span><span class="n">include_cloudpickle</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="get_default_pip_requirements"><a class="viewcode-back" href="../../python_api/mlflow.sklearn.html#mlflow.sklearn.get_default_pip_requirements">[docs]</a><span class="k">def</span> <span class="nf">get_default_pip_requirements</span><span class="p">(</span><span class="n">include_cloudpickle</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        A list of default pip requirements for MLflow Models produced by this flavor.</span>
@@ -367,7 +385,7 @@
     <span class="k">return</span> <span class="n">pip_deps</span></div>
 
 
-<div class="viewcode-block" id="get_default_conda_env"><a class="viewcode-back" href="../../python_api/mlflow.sklearn.html#mlflow.sklearn.get_default_conda_env">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">get_default_conda_env</span><span class="p">(</span><span class="n">include_cloudpickle</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="get_default_conda_env"><a class="viewcode-back" href="../../python_api/mlflow.sklearn.html#mlflow.sklearn.get_default_conda_env">[docs]</a><span class="k">def</span> <span class="nf">get_default_conda_env</span><span class="p">(</span><span class="n">include_cloudpickle</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        The default Conda environment for MLflow Models produced by calls to</span>
@@ -377,7 +395,7 @@
 
 
 <div class="viewcode-block" id="save_model"><a class="viewcode-back" href="../../python_api/mlflow.sklearn.html#mlflow.sklearn.save_model">[docs]</a><span class="nd">@format_docstring</span><span class="p">(</span><span class="n">LOG_MODEL_PARAM_DOCS</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">package_name</span><span class="o">=</span><span class="s2">&quot;scikit-learn&quot;</span><span class="p">))</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">save_model</span><span class="p">(</span>
+<span class="k">def</span> <span class="nf">save_model</span><span class="p">(</span>
     <span class="n">sk_model</span><span class="p">,</span>
     <span class="n">path</span><span class="p">,</span>
     <span class="n">conda_env</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -451,7 +469,7 @@
 <span class="sd">            serialization_format=mlflow.sklearn.SERIALIZATION_FORMAT_PICKLE,</span>
 <span class="sd">        )</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">sklearn</span>
+    <span class="kn">import</span> <span class="nn">sklearn</span>
 
     <span class="n">_validate_env_arguments</span><span class="p">(</span><span class="n">conda_env</span><span class="p">,</span> <span class="n">pip_requirements</span><span class="p">,</span> <span class="n">extra_pip_requirements</span><span class="p">)</span>
 
@@ -554,9 +572,9 @@
 
 
 <div class="viewcode-block" id="log_model"><a class="viewcode-back" href="../../python_api/mlflow.sklearn.html#mlflow.sklearn.log_model">[docs]</a><span class="nd">@format_docstring</span><span class="p">(</span><span class="n">LOG_MODEL_PARAM_DOCS</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">package_name</span><span class="o">=</span><span class="s2">&quot;scikit-learn&quot;</span><span class="p">))</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">log_model</span><span class="p">(</span>
+<span class="k">def</span> <span class="nf">log_model</span><span class="p">(</span>
     <span class="n">sk_model</span><span class="p">,</span>
-    <span class="n">artifact_path</span><span class="p">,</span>
+    <span class="n">artifact_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">conda_env</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">code_paths</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">serialization_format</span><span class="o">=</span><span class="n">SERIALIZATION_FORMAT_CLOUDPICKLE</span><span class="p">,</span>
@@ -568,6 +586,13 @@
     <span class="n">extra_pip_requirements</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">pyfunc_predict_fn</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span>
     <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="c1"># New arguments</span>
+    <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">model_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">step</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">model_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Log a scikit-learn model as an MLflow artifact for the current run. Produces an MLflow Model</span>
@@ -579,7 +604,7 @@
 
 <span class="sd">    Args:</span>
 <span class="sd">        sk_model: scikit-learn model to be saved.</span>
-<span class="sd">        artifact_path: Run-relative artifact path.</span>
+<span class="sd">        artifact_path: Deprecated. Use `name` instead.</span>
 <span class="sd">        conda_env: {{ conda_env }}</span>
 <span class="sd">        code_paths: {{ code_paths }}</span>
 <span class="sd">        serialization_format: The format in which to serialize the model. This should be one of</span>
@@ -603,6 +628,12 @@
 <span class="sd">            are: ``&quot;predict&quot;``, ``&quot;predict_proba&quot;``, ``&quot;predict_log_proba&quot;``,</span>
 <span class="sd">            ``&quot;predict_joint_log_proba&quot;``, and ``&quot;score&quot;``.</span>
 <span class="sd">        metadata: {{ metadata }}</span>
+<span class="sd">        params: {{ params }}</span>
+<span class="sd">        tags: {{ tags }}</span>
+<span class="sd">        model_type: {{ model_type }}</span>
+<span class="sd">        step: {{ step }}</span>
+<span class="sd">        model_id: {{ model_id }}</span>
+<span class="sd">        name: {{ name }}</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        A :py:class:`ModelInfo &lt;mlflow.models.model.ModelInfo&gt;` instance that contains the</span>
@@ -629,11 +660,12 @@
 <span class="sd">            signature = infer_signature(iris.data, sk_model.predict(iris.data))</span>
 
 <span class="sd">            # log model</span>
-<span class="sd">            mlflow.sklearn.log_model(sk_model, &quot;sk_models&quot;, signature=signature)</span>
+<span class="sd">            mlflow.sklearn.log_model(sk_model, name=&quot;sk_models&quot;, signature=signature)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">Model</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
         <span class="n">artifact_path</span><span class="o">=</span><span class="n">artifact_path</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
         <span class="n">flavor</span><span class="o">=</span><span class="n">mlflow</span><span class="o">.</span><span class="n">sklearn</span><span class="p">,</span>
         <span class="n">sk_model</span><span class="o">=</span><span class="n">sk_model</span><span class="p">,</span>
         <span class="n">conda_env</span><span class="o">=</span><span class="n">conda_env</span><span class="p">,</span>
@@ -647,10 +679,15 @@
         <span class="n">extra_pip_requirements</span><span class="o">=</span><span class="n">extra_pip_requirements</span><span class="p">,</span>
         <span class="n">pyfunc_predict_fn</span><span class="o">=</span><span class="n">pyfunc_predict_fn</span><span class="p">,</span>
         <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">,</span>
+        <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
+        <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">,</span>
+        <span class="n">model_type</span><span class="o">=</span><span class="n">model_type</span><span class="p">,</span>
+        <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">,</span>
+        <span class="n">model_id</span><span class="o">=</span><span class="n">model_id</span><span class="p">,</span>
     <span class="p">)</span></div>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_load_model_from_local_file</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">serialization_format</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_load_model_from_local_file</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">serialization_format</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Load a scikit-learn model saved as an MLflow artifact on the local file system.</span>
 
 <span class="sd">    Args:</span>
@@ -674,12 +711,12 @@
         <span class="k">if</span> <span class="n">serialization_format</span> <span class="o">==</span> <span class="n">SERIALIZATION_FORMAT_PICKLE</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">serialization_format</span> <span class="o">==</span> <span class="n">SERIALIZATION_FORMAT_CLOUDPICKLE</span><span class="p">:</span>
-            <span class="kn">import</span><span class="w"> </span><span class="nn">cloudpickle</span>
+            <span class="kn">import</span> <span class="nn">cloudpickle</span>
 
             <span class="k">return</span> <span class="n">cloudpickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_load_pyfunc</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_load_pyfunc</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Load PyFunc implementation. Called by ``pyfunc.load_model``.</span>
 
@@ -724,7 +761,7 @@
     <span class="p">)</span>
 
 
-<span class="k">class</span><span class="w"> </span><span class="nc">_SklearnModelWrapper</span><span class="p">:</span>
+<span class="k">class</span> <span class="nc">_SklearnModelWrapper</span><span class="p">:</span>
     <span class="n">_SUPPORTED_CUSTOM_PREDICT_FN</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s2">&quot;predict_proba&quot;</span><span class="p">,</span>
         <span class="s2">&quot;predict_log_proba&quot;</span><span class="p">,</span>
@@ -732,7 +769,7 @@
         <span class="s2">&quot;score&quot;</span><span class="p">,</span>
     <span class="p">]</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sklearn_model</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sklearn_model</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sklearn_model</span> <span class="o">=</span> <span class="n">sklearn_model</span>
 
         <span class="c1"># Patch the model with custom predict functions that can be specified</span>
@@ -741,13 +778,13 @@
             <span class="k">if</span> <span class="n">fn</span> <span class="o">:=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sklearn_model</span><span class="p">,</span> <span class="n">predict_fn</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
                 <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">predict_fn</span><span class="p">,</span> <span class="n">fn</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_raw_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_raw_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the underlying scikit-learn model.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sklearn_model</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span>
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">data</span><span class="p">,</span>
         <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -763,12 +800,12 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sklearn_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
 
-<span class="k">class</span><span class="w"> </span><span class="nc">_SklearnCustomModelPicklingError</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">PicklingError</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">_SklearnCustomModelPicklingError</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">PicklingError</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Exception for describing error raised during pickling custom sklearn estimator</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sk_model</span><span class="p">,</span> <span class="n">original_exception</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sk_model</span><span class="p">,</span> <span class="n">original_exception</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            sk_model: The custom sklearn model to be pickled</span>
@@ -781,7 +818,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">original_exception</span> <span class="o">=</span> <span class="n">original_exception</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_dump_model</span><span class="p">(</span><span class="n">pickle_lib</span><span class="p">,</span> <span class="n">sk_model</span><span class="p">,</span> <span class="n">out</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_dump_model</span><span class="p">(</span><span class="n">pickle_lib</span><span class="p">,</span> <span class="n">sk_model</span><span class="p">,</span> <span class="n">out</span><span class="p">):</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="c1"># Using python&#39;s default protocol to optimize compatibility.</span>
         <span class="c1"># Otherwise cloudpickle uses latest protocol leading to incompatibilities.</span>
@@ -794,7 +831,7 @@
             <span class="k">raise</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_save_model</span><span class="p">(</span><span class="n">sk_model</span><span class="p">,</span> <span class="n">output_path</span><span class="p">,</span> <span class="n">serialization_format</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_save_model</span><span class="p">(</span><span class="n">sk_model</span><span class="p">,</span> <span class="n">output_path</span><span class="p">,</span> <span class="n">serialization_format</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Args:</span>
 <span class="sd">        sk_model: The scikit-learn model to serialize.</span>
@@ -807,7 +844,7 @@
         <span class="k">if</span> <span class="n">serialization_format</span> <span class="o">==</span> <span class="n">SERIALIZATION_FORMAT_PICKLE</span><span class="p">:</span>
             <span class="n">_dump_model</span><span class="p">(</span><span class="n">pickle</span><span class="p">,</span> <span class="n">sk_model</span><span class="p">,</span> <span class="n">out</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">serialization_format</span> <span class="o">==</span> <span class="n">SERIALIZATION_FORMAT_CLOUDPICKLE</span><span class="p">:</span>
-            <span class="kn">import</span><span class="w"> </span><span class="nn">cloudpickle</span>
+            <span class="kn">import</span> <span class="nn">cloudpickle</span>
 
             <span class="n">_dump_model</span><span class="p">(</span><span class="n">cloudpickle</span><span class="p">,</span> <span class="n">sk_model</span><span class="p">,</span> <span class="n">out</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -817,7 +854,7 @@
             <span class="p">)</span>
 
 
-<div class="viewcode-block" id="load_model"><a class="viewcode-back" href="../../python_api/mlflow.sklearn.html#mlflow.sklearn.load_model">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">load_model</span><span class="p">(</span><span class="n">model_uri</span><span class="p">,</span> <span class="n">dst_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="load_model"><a class="viewcode-back" href="../../python_api/mlflow.sklearn.html#mlflow.sklearn.load_model">[docs]</a><span class="k">def</span> <span class="nf">load_model</span><span class="p">(</span><span class="n">model_uri</span><span class="p">,</span> <span class="n">dst_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Load a scikit-learn model from a local file or a run.</span>
 
@@ -874,7 +911,7 @@
 <span class="p">]</span>
 
 
-<span class="k">class</span><span class="w"> </span><span class="nc">_AutologgingMetricsManager</span><span class="p">:</span>
+<span class="k">class</span> <span class="nc">_AutologgingMetricsManager</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class is designed for holding information which is used by autologging metrics</span>
 <span class="sd">    It will hold information of:</span>
@@ -909,14 +946,15 @@
 <span class="sd">     avoid reference to user dataset variables or model variables.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_pred_result_id_to_dataset_name_and_run_id</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pred_result_id_mapping</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_eval_dataset_info_map</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_metric_api_call_info</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_log_post_training_metrics_enabled</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_metric_info_artifact_need_update</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model_id_mapping</span> <span class="o">=</span> <span class="p">{}</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">should_log_post_training_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">should_log_post_training_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check whether we should run patching code for autologging post training metrics.</span>
 <span class="sd">        This checking should surround the whole patched code due to the safe guard checking,</span>
@@ -930,23 +968,23 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="n">_SklearnTrainingSession</span><span class="o">.</span><span class="n">is_active</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_post_training_metrics_enabled</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">disable_log_post_training_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">class</span><span class="w"> </span><span class="nc">LogPostTrainingMetricsDisabledScope</span><span class="p">:</span>
-            <span class="k">def</span><span class="w"> </span><span class="fm">__enter__</span><span class="p">(</span><span class="n">inner_self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">disable_log_post_training_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">class</span> <span class="nc">LogPostTrainingMetricsDisabledScope</span><span class="p">:</span>
+            <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="n">inner_self</span><span class="p">):</span>
                 <span class="n">inner_self</span><span class="o">.</span><span class="n">old_status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_post_training_metrics_enabled</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_log_post_training_metrics_enabled</span> <span class="o">=</span> <span class="kc">False</span>
 
-            <span class="k">def</span><span class="w"> </span><span class="fm">__exit__</span><span class="p">(</span><span class="n">inner_self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_val</span><span class="p">,</span> <span class="n">exc_tb</span><span class="p">):</span>
+            <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="n">inner_self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_val</span><span class="p">,</span> <span class="n">exc_tb</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_log_post_training_metrics_enabled</span> <span class="o">=</span> <span class="n">inner_self</span><span class="o">.</span><span class="n">old_status</span>
 
         <span class="k">return</span> <span class="n">LogPostTrainingMetricsDisabledScope</span><span class="p">()</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_run_id_for_model</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_run_id_for_model</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;_mlflow_run_id&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">is_metric_value_loggable</span><span class="p">(</span><span class="n">metric_value</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">is_metric_value_loggable</span><span class="p">(</span><span class="n">metric_value</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check whether the specified `metric_value` is a numeric value which can be logged</span>
 <span class="sd">        as an MLflow metric.</span>
@@ -955,7 +993,7 @@
             <span class="n">metric_value</span><span class="p">,</span> <span class="nb">bool</span>
         <span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">register_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">run_id</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">register_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">run_id</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        In `patched_fit`, we need register the model with the run_id used in `patched_fit`</span>
 <span class="sd">        So that in following metric autologging, the metric will be logged into the registered</span>
@@ -963,8 +1001,18 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">model</span><span class="o">.</span><span class="n">_mlflow_run_id</span> <span class="o">=</span> <span class="n">run_id</span>
 
+    <span class="k">def</span> <span class="nf">record_model_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">model_id</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Record the id(model) -&gt; model_id mapping so that we can log metrics to the</span>
+<span class="sd">        model later.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model_id_mapping</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="n">model</span><span class="p">)]</span> <span class="o">=</span> <span class="n">model_id</span>
+
+    <span class="k">def</span> <span class="nf">get_model_id_for_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_id_mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">model</span><span class="p">))</span>
+
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">gen_name_with_index</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">gen_name_with_index</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
         <span class="k">assert</span> <span class="n">index</span> <span class="o">&gt;=</span> <span class="mi">0</span>
         <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">name</span>
@@ -974,7 +1022,7 @@
             <span class="c1"># so it can prevent name conflicts after appending index.</span>
             <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">index</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">register_prediction_input_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">eval_dataset</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">register_prediction_input_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">eval_dataset</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Register prediction input dataset into eval_dataset_info_map, it will do:</span>
 <span class="sd">         1. inspect eval dataset var name.</span>
@@ -1008,25 +1056,25 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">gen_name_with_index</span><span class="p">(</span><span class="n">eval_dataset_name</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">register_prediction_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">run_id</span><span class="p">,</span> <span class="n">eval_dataset_name</span><span class="p">,</span> <span class="n">predict_result</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">register_prediction_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">run_id</span><span class="p">,</span> <span class="n">eval_dataset_name</span><span class="p">,</span> <span class="n">predict_result</span><span class="p">,</span> <span class="n">model_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Register the relationship</span>
-<span class="sd">         id(prediction_result) --&gt; (eval_dataset_name, run_id)</span>
-<span class="sd">        into map `_pred_result_id_to_dataset_name_and_run_id`</span>
+<span class="sd">         id(prediction_result) --&gt; (eval_dataset_name, run_id, model_id)</span>
+<span class="sd">        into map `_pred_result_id_mapping`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="p">(</span><span class="n">eval_dataset_name</span><span class="p">,</span> <span class="n">run_id</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="p">(</span><span class="n">eval_dataset_name</span><span class="p">,</span> <span class="n">run_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">)</span>
         <span class="n">prediction_result_id</span> <span class="o">=</span> <span class="nb">id</span><span class="p">(</span><span class="n">predict_result</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_pred_result_id_to_dataset_name_and_run_id</span><span class="p">[</span><span class="n">prediction_result_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pred_result_id_mapping</span><span class="p">[</span><span class="n">prediction_result_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 
-        <span class="k">def</span><span class="w"> </span><span class="nf">clean_id</span><span class="p">(</span><span class="n">id_</span><span class="p">):</span>
-            <span class="n">_AUTOLOGGING_METRICS_MANAGER</span><span class="o">.</span><span class="n">_pred_result_id_to_dataset_name_and_run_id</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">id_</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">clean_id</span><span class="p">(</span><span class="n">id_</span><span class="p">):</span>
+            <span class="n">_AUTOLOGGING_METRICS_MANAGER</span><span class="o">.</span><span class="n">_pred_result_id_mapping</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">id_</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
         <span class="c1"># When the `predict_result` object being GCed, its ID may be reused, so register a finalizer</span>
         <span class="c1"># to clear the ID from the dict for preventing wrong ID mapping.</span>
         <span class="n">weakref</span><span class="o">.</span><span class="n">finalize</span><span class="p">(</span><span class="n">predict_result</span><span class="p">,</span> <span class="n">clean_id</span><span class="p">,</span> <span class="n">prediction_result_id</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">gen_metric_call_command</span><span class="p">(</span><span class="n">self_obj</span><span class="p">,</span> <span class="n">metric_fn</span><span class="p">,</span> <span class="o">*</span><span class="n">call_pos_args</span><span class="p">,</span> <span class="o">**</span><span class="n">call_kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">gen_metric_call_command</span><span class="p">(</span><span class="n">self_obj</span><span class="p">,</span> <span class="n">metric_fn</span><span class="p">,</span> <span class="o">*</span><span class="n">call_pos_args</span><span class="p">,</span> <span class="o">**</span><span class="n">call_kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate metric function call command string like `metric_fn(arg1, arg2, ...)`</span>
 <span class="sd">        Note: this method include inspecting argument variable name.</span>
@@ -1045,7 +1093,7 @@
 
         <span class="n">arg_list</span> <span class="o">=</span> <span class="p">[]</span>
 
-        <span class="k">def</span><span class="w"> </span><span class="nf">arg_to_str</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">arg_to_str</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">arg</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">32</span><span class="p">:</span>
                     <span class="c1"># truncate too long string</span>
@@ -1079,7 +1127,7 @@
 
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">call_fn_name</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">arg_list_str</span><span class="si">}</span><span class="s2">)&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">register_metric_api_call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">run_id</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">,</span> <span class="n">call_command</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">register_metric_api_call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">run_id</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">,</span> <span class="n">call_command</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method will do:</span>
 <span class="sd">        (1) Generate and return metric key, format is:</span>
@@ -1105,15 +1153,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_metric_info_artifact_need_update</span><span class="p">[</span><span class="n">run_id</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="n">metric_key</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_run_id_and_dataset_name_for_metric_api_call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">call_pos_args</span><span class="p">,</span> <span class="n">call_kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_info_for_metric_api_call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">call_pos_args</span><span class="p">,</span> <span class="n">call_kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Given a metric api call (include the called metric function, and call arguments)</span>
 <span class="sd">        Register the call information (arguments dict) into the `metric_api_call_arg_dict_list_map`</span>
-<span class="sd">        and return a tuple of (run_id, eval_dataset_name)</span>
+<span class="sd">        and return a tuple of (run_id, eval_dataset_name, model_id)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">call_arg_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">call_pos_args</span><span class="p">)</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">call_kwargs</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
 
-        <span class="n">dataset_id_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pred_result_id_to_dataset_name_and_run_id</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="n">dataset_id_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pred_result_id_mapping</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
 
         <span class="c1"># Note: some metric API the arguments is not like `y_true`, `y_pred`</span>
         <span class="c1">#  e.g.</span>
@@ -1121,22 +1169,23 @@
         <span class="c1">#    https://scikit-learn.org/stable/modules/generated/sklearn.metrics.silhouette_score.html#sklearn.metrics.silhouette_score</span>
         <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">call_arg_list</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">arg</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">id</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="ow">in</span> <span class="n">dataset_id_list</span><span class="p">:</span>
-                <span class="n">dataset_name</span><span class="p">,</span> <span class="n">run_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pred_result_id_to_dataset_name_and_run_id</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="n">arg</span><span class="p">)]</span>
+                <span class="n">dataset_name</span><span class="p">,</span> <span class="n">run_id</span><span class="p">,</span> <span class="n">model_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pred_result_id_mapping</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="n">arg</span><span class="p">)]</span>
                 <span class="k">break</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
 
-        <span class="k">return</span> <span class="n">run_id</span><span class="p">,</span> <span class="n">dataset_name</span>
+        <span class="k">return</span> <span class="n">run_id</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">,</span> <span class="n">model_id</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">log_post_training_metric</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">run_id</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">log_post_training_metric</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">run_id</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">model_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Log the metric into the specified mlflow run.</span>
 <span class="sd">        and it will also update the metric_info artifact if needed.</span>
+<span class="sd">        If model_id is not None, metrics are logged into the model as well.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Note: if the case log the same metric key multiple times,</span>
         <span class="c1">#  newer value will overwrite old value</span>
         <span class="n">client</span> <span class="o">=</span> <span class="n">MlflowClient</span><span class="p">()</span>
-        <span class="n">client</span><span class="o">.</span><span class="n">log_metric</span><span class="p">(</span><span class="n">run_id</span><span class="o">=</span><span class="n">run_id</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">client</span><span class="o">.</span><span class="n">log_metric</span><span class="p">(</span><span class="n">run_id</span><span class="o">=</span><span class="n">run_id</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">model_id</span><span class="o">=</span><span class="n">model_id</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metric_info_artifact_need_update</span><span class="p">[</span><span class="n">run_id</span><span class="p">]:</span>
             <span class="n">call_commands_list</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metric_api_call_info</span><span class="p">[</span><span class="n">run_id</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
@@ -1156,11 +1205,11 @@
 <span class="n">_metric_api_excluding_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;check_scoring&quot;</span><span class="p">,</span> <span class="s2">&quot;get_scorer&quot;</span><span class="p">,</span> <span class="s2">&quot;make_scorer&quot;</span><span class="p">,</span> <span class="s2">&quot;get_scorer_names&quot;</span><span class="p">]</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_get_metric_name_list</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">_get_metric_name_list</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return metric function name list in `sklearn.metrics` module</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn</span><span class="w"> </span><span class="kn">import</span> <span class="n">metrics</span>
+    <span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">metrics</span>
 
     <span class="n">metric_list</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">metric_method_name</span> <span class="ow">in</span> <span class="n">metrics</span><span class="o">.</span><span class="n">__all__</span><span class="p">:</span>
@@ -1177,7 +1226,7 @@
     <span class="k">return</span> <span class="n">metric_list</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_patch_estimator_method_if_available</span><span class="p">(</span>
+<span class="k">def</span> <span class="nf">_patch_estimator_method_if_available</span><span class="p">(</span>
     <span class="n">flavor_name</span><span class="p">,</span> <span class="n">class_def</span><span class="p">,</span> <span class="n">func_name</span><span class="p">,</span> <span class="n">patched_fn</span><span class="p">,</span> <span class="n">manage_run</span><span class="p">,</span> <span class="n">extra_tags</span><span class="o">=</span><span class="kc">None</span>
 <span class="p">):</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">class_def</span><span class="p">,</span> <span class="n">func_name</span><span class="p">):</span>
@@ -1216,7 +1265,7 @@
 
 
 <div class="viewcode-block" id="autolog"><a class="viewcode-back" href="../../python_api/mlflow.sklearn.html#mlflow.sklearn.autolog">[docs]</a><span class="nd">@autologging_integration</span><span class="p">(</span><span class="n">FLAVOR_NAME</span><span class="p">)</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">autolog</span><span class="p">(</span>
+<span class="k">def</span> <span class="nf">autolog</span><span class="p">(</span>
     <span class="n">log_input_examples</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">log_model_signatures</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">log_models</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -1519,7 +1568,7 @@
     <span class="p">)</span></div>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_autolog</span><span class="p">(</span>  <span class="c1"># noqa: D417</span>
+<span class="k">def</span> <span class="nf">_autolog</span><span class="p">(</span>  <span class="c1"># noqa: D417</span>
     <span class="n">flavor_name</span><span class="o">=</span><span class="n">FLAVOR_NAME</span><span class="p">,</span>
     <span class="n">log_input_examples</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">log_model_signatures</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -1545,13 +1594,13 @@
 <span class="sd">            the argument is `xgboost`, autologging for XGBoost scikit-learn</span>
 <span class="sd">            models is enabled.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">sklearn</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">sklearn.metrics</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">sklearn.model_selection</span>
+    <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+    <span class="kn">import</span> <span class="nn">sklearn</span>
+    <span class="kn">import</span> <span class="nn">sklearn.metrics</span>
+    <span class="kn">import</span> <span class="nn">sklearn.model_selection</span>
 
-    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">infer_signature</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.sklearn.utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="kn">from</span> <span class="nn">mlflow.models</span> <span class="kn">import</span> <span class="n">infer_signature</span>
+    <span class="kn">from</span> <span class="nn">mlflow.sklearn.utils</span> <span class="kn">import</span> <span class="p">(</span>
         <span class="n">_TRAINING_PREFIX</span><span class="p">,</span>
         <span class="n">_create_child_runs_for_parameter_search</span><span class="p">,</span>
         <span class="n">_gen_lightgbm_sklearn_estimators_to_patch</span><span class="p">,</span>
@@ -1562,7 +1611,7 @@
         <span class="n">_log_estimator_content</span><span class="p">,</span>
         <span class="n">_log_parameter_search_results_as_artifact</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracking.context</span><span class="w"> </span><span class="kn">import</span> <span class="n">registry</span> <span class="k">as</span> <span class="n">context_registry</span>
+    <span class="kn">from</span> <span class="nn">mlflow.tracking.context</span> <span class="kn">import</span> <span class="n">registry</span> <span class="k">as</span> <span class="n">context_registry</span>
 
     <span class="k">if</span> <span class="n">max_tuning_runs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">max_tuning_runs</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
@@ -1570,7 +1619,7 @@
             <span class="n">error_code</span><span class="o">=</span><span class="n">INVALID_PARAMETER_VALUE</span><span class="p">,</span>
         <span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">fit_mlflow_xgboost_and_lightgbm</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">fit_mlflow_xgboost_and_lightgbm</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Autologging function for XGBoost and LightGBM scikit-learn models</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1585,7 +1634,7 @@
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">input_example_exc</span> <span class="o">=</span> <span class="n">e</span>
 
-        <span class="k">def</span><span class="w"> </span><span class="nf">get_input_example</span><span class="p">():</span>
+        <span class="k">def</span> <span class="nf">get_input_example</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">input_example_exc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">input_example_exc</span>
             <span class="k">else</span><span class="p">:</span>
@@ -1618,7 +1667,7 @@
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">flavor_name</span> <span class="o">==</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">xgboost</span><span class="o">.</span><span class="n">FLAVOR_NAME</span><span class="p">:</span>
                 <span class="n">model_format</span> <span class="o">=</span> <span class="n">get_autologging_config</span><span class="p">(</span><span class="n">flavor_name</span><span class="p">,</span> <span class="s2">&quot;model_format&quot;</span><span class="p">,</span> <span class="s2">&quot;xgb&quot;</span><span class="p">)</span>
-                <span class="n">log_model_func</span><span class="p">(</span>
+                <span class="n">model_info</span> <span class="o">=</span> <span class="n">log_model_func</span><span class="p">(</span>
                     <span class="bp">self</span><span class="p">,</span>
                     <span class="s2">&quot;model&quot;</span><span class="p">,</span>
                     <span class="n">signature</span><span class="o">=</span><span class="n">signature</span><span class="p">,</span>
@@ -1627,16 +1676,17 @@
                     <span class="n">model_format</span><span class="o">=</span><span class="n">model_format</span><span class="p">,</span>
                 <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">log_model_func</span><span class="p">(</span>
+                <span class="n">model_info</span> <span class="o">=</span> <span class="n">log_model_func</span><span class="p">(</span>
                     <span class="bp">self</span><span class="p">,</span>
                     <span class="s2">&quot;model&quot;</span><span class="p">,</span>
                     <span class="n">signature</span><span class="o">=</span><span class="n">signature</span><span class="p">,</span>
                     <span class="n">input_example</span><span class="o">=</span><span class="n">input_example</span><span class="p">,</span>
                     <span class="n">registered_model_name</span><span class="o">=</span><span class="n">registered_model_name</span><span class="p">,</span>
                 <span class="p">)</span>
+            <span class="n">_AUTOLOGGING_METRICS_MANAGER</span><span class="o">.</span><span class="n">record_model_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_info</span><span class="o">.</span><span class="n">model_id</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">fit_output</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">fit_mlflow</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">fit_mlflow</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Autologging function that performs model training by executing the training method</span>
 <span class="sd">        referred to be `func_name` on the instance of `clazz` referred to by `self` &amp; records</span>
@@ -1655,7 +1705,7 @@
         <span class="n">params_logging_future</span><span class="o">.</span><span class="n">await_completion</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">fit_output</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_log_pretraining_metadata</span><span class="p">(</span><span class="n">autologging_client</span><span class="p">,</span> <span class="n">estimator</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>  <span class="c1"># noqa: D417</span>
+    <span class="k">def</span> <span class="nf">_log_pretraining_metadata</span><span class="p">(</span><span class="n">autologging_client</span><span class="p">,</span> <span class="n">estimator</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>  <span class="c1"># noqa: D417</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Records metadata (e.g., params and tags) for a scikit-learn estimator prior to training.</span>
 <span class="sd">        This is intended to be invoked within a patched scikit-learn training routine</span>
@@ -1702,7 +1752,7 @@
                     <span class="s2">&quot;Failed to log training dataset information to MLflow Tracking. Reason: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">e</span>
                 <span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_log_posttraining_metadata</span><span class="p">(</span><span class="n">autologging_client</span><span class="p">,</span> <span class="n">estimator</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sample_weight</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_log_posttraining_metadata</span><span class="p">(</span><span class="n">autologging_client</span><span class="p">,</span> <span class="n">estimator</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sample_weight</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Records metadata for a scikit-learn estimator after training has completed.</span>
 <span class="sd">        This is intended to be invoked within a patched scikit-learn training routine</span>
@@ -1726,13 +1776,13 @@
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">input_example_exc</span> <span class="o">=</span> <span class="n">e</span>
 
-        <span class="k">def</span><span class="w"> </span><span class="nf">get_input_example</span><span class="p">():</span>
+        <span class="k">def</span> <span class="nf">get_input_example</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">input_example_exc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">input_example_exc</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">input_example</span>
 
-        <span class="k">def</span><span class="w"> </span><span class="nf">infer_model_signature</span><span class="p">(</span><span class="n">input_example</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">infer_model_signature</span><span class="p">(</span><span class="n">input_example</span><span class="p">):</span>
             <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="s2">&quot;predict&quot;</span><span class="p">):</span>
                 <span class="c1"># Copy the input example so that it is not mutated by the call to</span>
                 <span class="c1"># predict() prior to signature inference</span>
@@ -1747,30 +1797,13 @@
 
             <span class="k">return</span> <span class="n">infer_signature</span><span class="p">(</span><span class="n">input_example</span><span class="p">,</span> <span class="n">model_output</span><span class="p">)</span>
 
-        <span class="c1"># log common metrics and artifacts for estimators (classifier, regressor)</span>
-        <span class="n">logged_metrics</span> <span class="o">=</span> <span class="n">_log_estimator_content</span><span class="p">(</span>
-            <span class="n">autologging_client</span><span class="o">=</span><span class="n">autologging_client</span><span class="p">,</span>
-            <span class="n">estimator</span><span class="o">=</span><span class="n">estimator</span><span class="p">,</span>
-            <span class="n">prefix</span><span class="o">=</span><span class="n">_TRAINING_PREFIX</span><span class="p">,</span>
-            <span class="n">run_id</span><span class="o">=</span><span class="n">mlflow</span><span class="o">.</span><span class="n">active_run</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">run_id</span><span class="p">,</span>
-            <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span>
-            <span class="n">y_true</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>
-            <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weight</span><span class="p">,</span>
-            <span class="n">pos_label</span><span class="o">=</span><span class="n">pos_label</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="k">if</span> <span class="n">y</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">logged_metrics</span><span class="p">:</span>
-            <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                <span class="s2">&quot;Training metrics will not be recorded because training labels were not specified.&quot;</span>
-                <span class="s2">&quot; To automatically record training metrics, provide training labels as inputs to&quot;</span>
-                <span class="s2">&quot; the model training function.&quot;</span>
-            <span class="p">)</span>
-
-        <span class="k">def</span><span class="w"> </span><span class="nf">_log_model_with_except_handling</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">_log_model_with_except_handling</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">log_model</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
             <span class="k">except</span> <span class="n">_SklearnCustomModelPicklingError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
 
+        <span class="n">model_id</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">log_models</span><span class="p">:</span>
             <span class="c1"># Will only resolve `input_example` and `signature` if `log_models` is `True`.</span>
             <span class="n">input_example</span><span class="p">,</span> <span class="n">signature</span> <span class="o">=</span> <span class="n">resolve_input_example_and_signature</span><span class="p">(</span>
@@ -1783,29 +1816,73 @@
             <span class="n">registered_model_name</span> <span class="o">=</span> <span class="n">get_autologging_config</span><span class="p">(</span>
                 <span class="n">FLAVOR_NAME</span><span class="p">,</span> <span class="s2">&quot;registered_model_name&quot;</span><span class="p">,</span> <span class="kc">None</span>
             <span class="p">)</span>
-            <span class="n">_log_model_with_except_handling</span><span class="p">(</span>
+            <span class="n">should_log_params_deeply</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">_is_parameter_search_estimator</span><span class="p">(</span><span class="n">estimator</span><span class="p">)</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">get_params</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="n">should_log_params_deeply</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="s2">&quot;best_params_&quot;</span><span class="p">):</span>
+                <span class="n">params</span> <span class="o">|=</span> <span class="p">{</span>
+                    <span class="sa">f</span><span class="s2">&quot;best_</span><span class="si">{</span><span class="n">param_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">param_value</span>
+                    <span class="k">for</span> <span class="n">param_name</span><span class="p">,</span> <span class="n">param_value</span> <span class="ow">in</span> <span class="n">estimator</span><span class="o">.</span><span class="n">best_params_</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                <span class="p">}</span>
+            <span class="k">if</span> <span class="n">logged_model</span> <span class="o">:=</span> <span class="n">_log_model_with_except_handling</span><span class="p">(</span>
                 <span class="n">estimator</span><span class="p">,</span>
-                <span class="s2">&quot;model&quot;</span><span class="p">,</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;model&quot;</span><span class="p">,</span>
                 <span class="n">signature</span><span class="o">=</span><span class="n">signature</span><span class="p">,</span>
                 <span class="n">input_example</span><span class="o">=</span><span class="n">input_example</span><span class="p">,</span>
                 <span class="n">serialization_format</span><span class="o">=</span><span class="n">serialization_format</span><span class="p">,</span>
                 <span class="n">registered_model_name</span><span class="o">=</span><span class="n">registered_model_name</span><span class="p">,</span>
+                <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
+            <span class="p">):</span>
+                <span class="n">model_id</span> <span class="o">=</span> <span class="n">logged_model</span><span class="o">.</span><span class="n">model_id</span>
+                <span class="n">_AUTOLOGGING_METRICS_MANAGER</span><span class="o">.</span><span class="n">record_model_id</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="n">logged_model</span><span class="o">.</span><span class="n">model_id</span><span class="p">)</span>
+
+        <span class="c1"># log common metrics and artifacts for estimators (classifier, regressor)</span>
+        <span class="n">context_tags</span> <span class="o">=</span> <span class="n">context_registry</span><span class="o">.</span><span class="n">resolve_tags</span><span class="p">()</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="n">CodeDatasetSource</span><span class="p">(</span><span class="n">context_tags</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">_create_dataset</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Failed to create dataset for logging.&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">logged_metrics</span> <span class="o">=</span> <span class="n">_log_estimator_content</span><span class="p">(</span>
+            <span class="n">autologging_client</span><span class="o">=</span><span class="n">autologging_client</span><span class="p">,</span>
+            <span class="n">estimator</span><span class="o">=</span><span class="n">estimator</span><span class="p">,</span>
+            <span class="n">prefix</span><span class="o">=</span><span class="n">_TRAINING_PREFIX</span><span class="p">,</span>
+            <span class="n">run_id</span><span class="o">=</span><span class="n">mlflow</span><span class="o">.</span><span class="n">active_run</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">run_id</span><span class="p">,</span>
+            <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span>
+            <span class="n">y_true</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>
+            <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weight</span><span class="p">,</span>
+            <span class="n">pos_label</span><span class="o">=</span><span class="n">pos_label</span><span class="p">,</span>
+            <span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span>
+            <span class="n">model_id</span><span class="o">=</span><span class="n">model_id</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">y</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">logged_metrics</span><span class="p">:</span>
+            <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">&quot;Training metrics will not be recorded because training labels were not specified.&quot;</span>
+                <span class="s2">&quot; To automatically record training metrics, provide training labels as inputs to&quot;</span>
+                <span class="s2">&quot; the model training function.&quot;</span>
             <span class="p">)</span>
 
+        <span class="n">best_estimator_model_id</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">best_estimator_params</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">_is_parameter_search_estimator</span><span class="p">(</span><span class="n">estimator</span><span class="p">):</span>
             <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="s2">&quot;best_estimator_&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">log_models</span><span class="p">:</span>
-                <span class="n">_log_model_with_except_handling</span><span class="p">(</span>
+                <span class="n">best_estimator_params</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">best_estimator_</span><span class="o">.</span><span class="n">get_params</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">model_info</span> <span class="o">:=</span> <span class="n">_log_model_with_except_handling</span><span class="p">(</span>
                     <span class="n">estimator</span><span class="o">.</span><span class="n">best_estimator_</span><span class="p">,</span>
-                    <span class="s2">&quot;best_estimator&quot;</span><span class="p">,</span>
+                    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;best_estimator&quot;</span><span class="p">,</span>
                     <span class="n">signature</span><span class="o">=</span><span class="n">signature</span><span class="p">,</span>
                     <span class="n">input_example</span><span class="o">=</span><span class="n">input_example</span><span class="p">,</span>
                     <span class="n">serialization_format</span><span class="o">=</span><span class="n">serialization_format</span><span class="p">,</span>
-                <span class="p">)</span>
+                    <span class="n">params</span><span class="o">=</span><span class="n">best_estimator_params</span><span class="p">,</span>
+                <span class="p">):</span>
+                    <span class="n">best_estimator_model_id</span> <span class="o">=</span> <span class="n">model_info</span><span class="o">.</span><span class="n">model_id</span>
 
             <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="s2">&quot;best_score_&quot;</span><span class="p">):</span>
                 <span class="n">autologging_client</span><span class="o">.</span><span class="n">log_metrics</span><span class="p">(</span>
                     <span class="n">run_id</span><span class="o">=</span><span class="n">mlflow</span><span class="o">.</span><span class="n">active_run</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">run_id</span><span class="p">,</span>
                     <span class="n">metrics</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;best_cv_score&quot;</span><span class="p">:</span> <span class="n">estimator</span><span class="o">.</span><span class="n">best_score_</span><span class="p">},</span>
+                    <span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span>
+                    <span class="n">model_id</span><span class="o">=</span><span class="n">model_id</span><span class="p">,</span>
                 <span class="p">)</span>
 
             <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="s2">&quot;best_params_&quot;</span><span class="p">):</span>
@@ -1830,6 +1907,9 @@
                         <span class="n">parent_run</span><span class="o">=</span><span class="n">mlflow</span><span class="o">.</span><span class="n">active_run</span><span class="p">(),</span>
                         <span class="n">max_tuning_runs</span><span class="o">=</span><span class="n">max_tuning_runs</span><span class="p">,</span>
                         <span class="n">child_tags</span><span class="o">=</span><span class="n">child_tags</span><span class="p">,</span>
+                        <span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span>
+                        <span class="n">best_estimator_params</span><span class="o">=</span><span class="n">best_estimator_params</span><span class="p">,</span>
+                        <span class="n">best_estimator_model_id</span><span class="o">=</span><span class="n">best_estimator_model_id</span><span class="p">,</span>
                     <span class="p">)</span>
                 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                     <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
@@ -1847,7 +1927,7 @@
                         <span class="sa">f</span><span class="s2">&quot;Failed to log parameter search results as an artifact. Exception: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span>
                     <span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">patched_fit</span><span class="p">(</span><span class="n">fit_impl</span><span class="p">,</span> <span class="n">allow_children_patch</span><span class="p">,</span> <span class="n">original</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">patched_fit</span><span class="p">(</span><span class="n">fit_impl</span><span class="p">,</span> <span class="n">allow_children_patch</span><span class="p">,</span> <span class="n">original</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Autologging patch function to be applied to a sklearn model class that defines a `fit`</span>
 <span class="sd">        method and inherits from `BaseEstimator` (thereby defining the `get_params()` method)</span>
@@ -1883,7 +1963,7 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">original</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">patched_predict</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">patched_predict</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        In `patched_predict`, register the prediction result instance with the run id and</span>
 <span class="sd">         eval dataset name. e.g.</span>
@@ -1907,7 +1987,10 @@
                 <span class="bp">self</span><span class="p">,</span> <span class="n">eval_dataset</span>
             <span class="p">)</span>
             <span class="n">_AUTOLOGGING_METRICS_MANAGER</span><span class="o">.</span><span class="n">register_prediction_result</span><span class="p">(</span>
-                <span class="n">run_id</span><span class="p">,</span> <span class="n">eval_dataset_name</span><span class="p">,</span> <span class="n">predict_result</span>
+                <span class="n">run_id</span><span class="p">,</span>
+                <span class="n">eval_dataset_name</span><span class="p">,</span>
+                <span class="n">predict_result</span><span class="p">,</span>
+                <span class="n">model_id</span><span class="o">=</span><span class="n">_AUTOLOGGING_METRICS_MANAGER</span><span class="o">.</span><span class="n">get_model_id_for_model</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">log_datasets</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
@@ -1934,7 +2017,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">original</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">patched_metric_api</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">patched_metric_api</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">_AUTOLOGGING_METRICS_MANAGER</span><span class="o">.</span><span class="n">should_log_post_training_metrics</span><span class="p">():</span>
             <span class="c1"># one metric api may call another metric api,</span>
             <span class="c1"># to avoid this, call disable_log_post_training_metrics to avoid nested patch</span>
@@ -1947,18 +2030,15 @@
                     <span class="kc">None</span><span class="p">,</span> <span class="n">original</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
                 <span class="p">)</span>
 
-                <span class="p">(</span>
-                    <span class="n">run_id</span><span class="p">,</span>
-                    <span class="n">dataset_name</span><span class="p">,</span>
-                <span class="p">)</span> <span class="o">=</span> <span class="n">_AUTOLOGGING_METRICS_MANAGER</span><span class="o">.</span><span class="n">get_run_id_and_dataset_name_for_metric_api_call</span><span class="p">(</span>
-                    <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span>
+                <span class="p">(</span><span class="n">run_id</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">,</span> <span class="n">model_id</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">_AUTOLOGGING_METRICS_MANAGER</span><span class="o">.</span><span class="n">get_info_for_metric_api_call</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
                 <span class="p">)</span>
                 <span class="k">if</span> <span class="n">run_id</span> <span class="ow">and</span> <span class="n">dataset_name</span><span class="p">:</span>
                     <span class="n">metric_key</span> <span class="o">=</span> <span class="n">_AUTOLOGGING_METRICS_MANAGER</span><span class="o">.</span><span class="n">register_metric_api_call</span><span class="p">(</span>
                         <span class="n">run_id</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">,</span> <span class="n">call_command</span>
                     <span class="p">)</span>
                     <span class="n">_AUTOLOGGING_METRICS_MANAGER</span><span class="o">.</span><span class="n">log_post_training_metric</span><span class="p">(</span>
-                        <span class="n">run_id</span><span class="p">,</span> <span class="n">metric_key</span><span class="p">,</span> <span class="n">metric</span>
+                        <span class="n">run_id</span><span class="p">,</span> <span class="n">metric_key</span><span class="p">,</span> <span class="n">metric</span><span class="p">,</span> <span class="n">model_id</span><span class="o">=</span><span class="n">model_id</span>
                     <span class="p">)</span>
 
             <span class="k">return</span> <span class="n">metric</span>
@@ -1969,7 +2049,7 @@
     <span class="c1">#  some model.score() implementation won&#39;t call metric APIs in `sklearn.metrics`</span>
     <span class="c1">#  e.g.</span>
     <span class="c1">#  https://github.com/scikit-learn/scikit-learn/blob/82df48934eba1df9a1ed3be98aaace8eada59e6e/sklearn/covariance/_empirical_covariance.py#L220</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">patched_model_score</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">patched_model_score</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">run_id</span> <span class="o">=</span> <span class="n">_AUTOLOGGING_METRICS_MANAGER</span><span class="o">.</span><span class="n">get_run_id_for_model</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">_AUTOLOGGING_METRICS_MANAGER</span><span class="o">.</span><span class="n">should_log_post_training_metrics</span><span class="p">()</span> <span class="ow">and</span> <span class="n">run_id</span><span class="p">:</span>
             <span class="c1"># `model.score` may call metric APIs internally, in order to prevent nested metric call</span>
@@ -1990,24 +2070,25 @@
                 <span class="n">metric_key</span> <span class="o">=</span> <span class="n">_AUTOLOGGING_METRICS_MANAGER</span><span class="o">.</span><span class="n">register_metric_api_call</span><span class="p">(</span>
                     <span class="n">run_id</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">eval_dataset_name</span><span class="p">,</span> <span class="n">call_command</span>
                 <span class="p">)</span>
+                <span class="n">model_id</span> <span class="o">=</span> <span class="n">_AUTOLOGGING_METRICS_MANAGER</span><span class="o">.</span><span class="n">get_model_id_for_model</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
                 <span class="n">_AUTOLOGGING_METRICS_MANAGER</span><span class="o">.</span><span class="n">log_post_training_metric</span><span class="p">(</span>
-                    <span class="n">run_id</span><span class="p">,</span> <span class="n">metric_key</span><span class="p">,</span> <span class="n">score_value</span>
+                    <span class="n">run_id</span><span class="p">,</span> <span class="n">metric_key</span><span class="p">,</span> <span class="n">score_value</span><span class="p">,</span> <span class="n">model_id</span><span class="o">=</span><span class="n">model_id</span>
                 <span class="p">)</span>
 
             <span class="k">return</span> <span class="n">score_value</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">original</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_apply_sklearn_descriptor_unbound_method_call_fix</span><span class="p">():</span>
-        <span class="kn">import</span><span class="w"> </span><span class="nn">sklearn</span>
+    <span class="k">def</span> <span class="nf">_apply_sklearn_descriptor_unbound_method_call_fix</span><span class="p">():</span>
+        <span class="kn">import</span> <span class="nn">sklearn</span>
 
         <span class="k">if</span> <span class="n">Version</span><span class="p">(</span><span class="n">sklearn</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">Version</span><span class="p">(</span><span class="s2">&quot;0.24.2&quot;</span><span class="p">):</span>
-            <span class="kn">import</span><span class="w"> </span><span class="nn">sklearn.utils.metaestimators</span>
+            <span class="kn">import</span> <span class="nn">sklearn.utils.metaestimators</span>
 
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">sklearn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">metaestimators</span><span class="p">,</span> <span class="s2">&quot;_IffHasAttrDescriptor&quot;</span><span class="p">):</span>
                 <span class="k">return</span>
 
-            <span class="k">def</span><span class="w"> </span><span class="nf">patched_IffHasAttrDescriptor__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+            <span class="k">def</span> <span class="nf">patched_IffHasAttrDescriptor__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">                For sklearn version &lt;= 0.24.2, `_IffHasAttrDescriptor.__get__` method does not</span>
 <span class="sd">                support unbound method call.</span>
@@ -2030,13 +2111,13 @@
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">sklearn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">metaestimators</span><span class="o">.</span><span class="n">attrgetter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">delegate_names</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])(</span><span class="n">obj</span><span class="p">)</span>
 
-                    <span class="k">def</span><span class="w"> </span><span class="nf">out</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+                    <span class="k">def</span> <span class="nf">out</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
                         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fn</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
                 <span class="k">else</span><span class="p">:</span>
                     <span class="c1"># This makes it possible to use the decorated method as an unbound method,</span>
                     <span class="c1"># for instance when monkeypatching.</span>
-                    <span class="k">def</span><span class="w"> </span><span class="nf">out</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+                    <span class="k">def</span> <span class="nf">out</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
                         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
                 <span class="c1"># update the docstring of the returned function</span>
@@ -2114,7 +2195,7 @@
             <span class="k">for</span> <span class="n">scorer</span> <span class="ow">in</span> <span class="n">sklearn</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">SCORERS</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
                 <span class="n">safe_patch</span><span class="p">(</span><span class="n">flavor_name</span><span class="p">,</span> <span class="n">scorer</span><span class="p">,</span> <span class="s2">&quot;_score_func&quot;</span><span class="p">,</span> <span class="n">patched_metric_api</span><span class="p">,</span> <span class="n">manage_run</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">patched_fn_with_autolog_disabled</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">patched_fn_with_autolog_disabled</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">with</span> <span class="n">disable_autologging</span><span class="p">():</span>
             <span class="k">return</span> <span class="n">original</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
@@ -2127,9 +2208,9 @@
             <span class="n">manage_run</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_create_dataset</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dataset_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_create_dataset</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dataset_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="c1"># create a dataset</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.sparse</span><span class="w"> </span><span class="kn">import</span> <span class="n">issparse</span>
+        <span class="kn">from</span> <span class="nn">scipy.sparse</span> <span class="kn">import</span> <span class="n">issparse</span>
 
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
             <span class="n">dataset</span> <span class="o">=</span> <span class="n">from_pandas</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">)</span>
@@ -2183,7 +2264,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../',
-      VERSION:'2.22.1',
+      VERSION:'3.1.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

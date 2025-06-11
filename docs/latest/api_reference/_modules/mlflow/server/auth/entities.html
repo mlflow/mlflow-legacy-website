@@ -71,7 +71,7 @@
         <link rel="index" title="Index"
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="MLflow 2.22.1 documentation" href="../../../../index.html"/>
+    <link rel="top" title="MLflow 3.1.0 documentation" href="../../../../index.html"/>
         <link rel="up" title="mlflow.server" href="../../server.html"/> 
 
   
@@ -103,8 +103,10 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      padding-left: 12px;
-      padding-right: 12px;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
     }
 
     .logo-container {
@@ -112,21 +114,37 @@
       gap: 12px;
       flex-direction: row;
       white-space: nowrap;
+      align-items: center;
+      justify-content: center;
     }
 
     a:hover {
-      text-decoration: underline;
+      text-decoration: none;
+      color: #0194e2;
     }
   </style>
   <div class="logo-container">
-    <i data-toggle="wy-nav-top" class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"></i>
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
     <a href="../../../../index.html" class="wy-nav-top-logo">
-      <img src="../../../../_static/MLflow-logo-final-black.png" alt="MLflow"/>
+      <img
+        src="../../../../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
     </a>
-    <b style="overflow: hidden; text-overflow: ellipsis;">API Documentation</b>
-    <a style="overflow: hidden; text-overflow: ellipsis;" href="/docs/latest">Main Docs</a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
   </div>
-  <span class="version">2.22.1</span>
+  <span class="header-link">3.1.0</span>
 </div>
   </nav>
   <page>
@@ -222,8 +240,8 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.server.auth.entities</h1><div class="highlight"><pre>
-<div class="viewcode-block" id="User"><a class="viewcode-back" href="../../../../auth/python-api.html#mlflow.server.auth.entities.User">[docs]</a><span></span><span class="k">class</span><span class="w"> </span><span class="nc">User</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+<div class="viewcode-block" id="User"><a class="viewcode-back" href="../../../../auth/python-api.html#mlflow.server.auth.entities.User">[docs]</a><span></span><span class="k">class</span> <span class="nc">User</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">id_</span><span class="p">,</span>
         <span class="n">username</span><span class="p">,</span>
@@ -240,42 +258,42 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_registered_model_permissions</span> <span class="o">=</span> <span class="n">registered_model_permissions</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_id</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">username</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">username</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_username</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">password_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">password_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_password_hash</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">is_admin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">is_admin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_admin</span>
 
     <span class="nd">@is_admin</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">is_admin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">is_admin</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">is_admin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">is_admin</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_is_admin</span> <span class="o">=</span> <span class="n">is_admin</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">experiment_permissions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">experiment_permissions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_experiment_permissions</span>
 
     <span class="nd">@experiment_permissions</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">experiment_permissions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">experiment_permissions</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">experiment_permissions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">experiment_permissions</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_experiment_permissions</span> <span class="o">=</span> <span class="n">experiment_permissions</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">registered_model_permissions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">registered_model_permissions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_registered_model_permissions</span>
 
     <span class="nd">@registered_model_permissions</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">registered_model_permissions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">registered_model_permissions</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">registered_model_permissions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">registered_model_permissions</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_registered_model_permissions</span> <span class="o">=</span> <span class="n">registered_model_permissions</span>
 
-<div class="viewcode-block" id="User.to_json"><a class="viewcode-back" href="../../../../auth/python-api.html#mlflow.server.auth.entities.User.to_json">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="User.to_json"><a class="viewcode-back" href="../../../../auth/python-api.html#mlflow.server.auth.entities.User.to_json">[docs]</a>    <span class="k">def</span> <span class="nf">to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">{</span>
             <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
             <span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">username</span><span class="p">,</span>
@@ -287,7 +305,7 @@
         <span class="p">}</span></div>
 
 <div class="viewcode-block" id="User.from_json"><a class="viewcode-back" href="../../../../auth/python-api.html#mlflow.server.auth.entities.User.from_json">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">from_json</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dictionary</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dictionary</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
             <span class="n">id_</span><span class="o">=</span><span class="n">dictionary</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
             <span class="n">username</span><span class="o">=</span><span class="n">dictionary</span><span class="p">[</span><span class="s2">&quot;username&quot;</span><span class="p">],</span>
@@ -303,8 +321,8 @@
         <span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="ExperimentPermission"><a class="viewcode-back" href="../../../../auth/python-api.html#mlflow.server.auth.entities.ExperimentPermission">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ExperimentPermission</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+<div class="viewcode-block" id="ExperimentPermission"><a class="viewcode-back" href="../../../../auth/python-api.html#mlflow.server.auth.entities.ExperimentPermission">[docs]</a><span class="k">class</span> <span class="nc">ExperimentPermission</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">experiment_id</span><span class="p">,</span>
         <span class="n">user_id</span><span class="p">,</span>
@@ -315,22 +333,22 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_permission</span> <span class="o">=</span> <span class="n">permission</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">experiment_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">experiment_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_experiment_id</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">user_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">user_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user_id</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">permission</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">permission</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_permission</span>
 
     <span class="nd">@permission</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">permission</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">permission</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">permission</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">permission</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_permission</span> <span class="o">=</span> <span class="n">permission</span>
 
-<div class="viewcode-block" id="ExperimentPermission.to_json"><a class="viewcode-back" href="../../../../auth/python-api.html#mlflow.server.auth.entities.ExperimentPermission.to_json">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ExperimentPermission.to_json"><a class="viewcode-back" href="../../../../auth/python-api.html#mlflow.server.auth.entities.ExperimentPermission.to_json">[docs]</a>    <span class="k">def</span> <span class="nf">to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">{</span>
             <span class="s2">&quot;experiment_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">experiment_id</span><span class="p">,</span>
             <span class="s2">&quot;user_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span>
@@ -338,7 +356,7 @@
         <span class="p">}</span></div>
 
 <div class="viewcode-block" id="ExperimentPermission.from_json"><a class="viewcode-back" href="../../../../auth/python-api.html#mlflow.server.auth.entities.ExperimentPermission.from_json">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">from_json</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dictionary</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dictionary</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
             <span class="n">experiment_id</span><span class="o">=</span><span class="n">dictionary</span><span class="p">[</span><span class="s2">&quot;experiment_id&quot;</span><span class="p">],</span>
             <span class="n">user_id</span><span class="o">=</span><span class="n">dictionary</span><span class="p">[</span><span class="s2">&quot;user_id&quot;</span><span class="p">],</span>
@@ -346,8 +364,8 @@
         <span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="RegisteredModelPermission"><a class="viewcode-back" href="../../../../auth/python-api.html#mlflow.server.auth.entities.RegisteredModelPermission">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">RegisteredModelPermission</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+<div class="viewcode-block" id="RegisteredModelPermission"><a class="viewcode-back" href="../../../../auth/python-api.html#mlflow.server.auth.entities.RegisteredModelPermission">[docs]</a><span class="k">class</span> <span class="nc">RegisteredModelPermission</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">name</span><span class="p">,</span>
         <span class="n">user_id</span><span class="p">,</span>
@@ -358,22 +376,22 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_permission</span> <span class="o">=</span> <span class="n">permission</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">user_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">user_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user_id</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">permission</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">permission</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_permission</span>
 
     <span class="nd">@permission</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">permission</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">permission</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">permission</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">permission</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_permission</span> <span class="o">=</span> <span class="n">permission</span>
 
-<div class="viewcode-block" id="RegisteredModelPermission.to_json"><a class="viewcode-back" href="../../../../auth/python-api.html#mlflow.server.auth.entities.RegisteredModelPermission.to_json">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="RegisteredModelPermission.to_json"><a class="viewcode-back" href="../../../../auth/python-api.html#mlflow.server.auth.entities.RegisteredModelPermission.to_json">[docs]</a>    <span class="k">def</span> <span class="nf">to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">{</span>
             <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
             <span class="s2">&quot;user_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span>
@@ -381,7 +399,7 @@
         <span class="p">}</span></div>
 
 <div class="viewcode-block" id="RegisteredModelPermission.from_json"><a class="viewcode-back" href="../../../../auth/python-api.html#mlflow.server.auth.entities.RegisteredModelPermission.from_json">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">from_json</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dictionary</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dictionary</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
             <span class="n">name</span><span class="o">=</span><span class="n">dictionary</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span>
             <span class="n">user_id</span><span class="o">=</span><span class="n">dictionary</span><span class="p">[</span><span class="s2">&quot;user_id&quot;</span><span class="p">],</span>
@@ -417,7 +435,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../../',
-      VERSION:'2.22.1',
+      VERSION:'3.1.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

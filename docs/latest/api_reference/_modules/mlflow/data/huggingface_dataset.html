@@ -71,7 +71,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 2.22.1 documentation" href="../../../index.html"/>
+    <link rel="top" title="MLflow 3.1.0 documentation" href="../../../index.html"/>
         <link rel="up" title="mlflow.data" href="../data.html"/> 
 
   
@@ -103,8 +103,10 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      padding-left: 12px;
-      padding-right: 12px;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
     }
 
     .logo-container {
@@ -112,21 +114,37 @@
       gap: 12px;
       flex-direction: row;
       white-space: nowrap;
+      align-items: center;
+      justify-content: center;
     }
 
     a:hover {
-      text-decoration: underline;
+      text-decoration: none;
+      color: #0194e2;
     }
   </style>
   <div class="logo-container">
-    <i data-toggle="wy-nav-top" class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"></i>
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
     <a href="../../../index.html" class="wy-nav-top-logo">
-      <img src="../../../_static/MLflow-logo-final-black.png" alt="MLflow"/>
+      <img
+        src="../../../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
     </a>
-    <b style="overflow: hidden; text-overflow: ellipsis;">API Documentation</b>
-    <a style="overflow: hidden; text-overflow: ellipsis;" href="/docs/latest">Main Docs</a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
   </div>
-  <span class="version">2.22.1</span>
+  <span class="header-link">3.1.0</span>
 </div>
   </nav>
   <page>
@@ -222,35 +240,36 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.data.huggingface_dataset</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">cached_property</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Union</span>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cached_property</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.data.dataset</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dataset</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.data.digest_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_pandas_digest</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.data.evaluation_dataset</span><span class="w"> </span><span class="kn">import</span> <span class="n">EvaluationDataset</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.data.huggingface_dataset_source</span><span class="w"> </span><span class="kn">import</span> <span class="n">HuggingFaceDatasetSource</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.data.pyfunc_dataset_mixin</span><span class="w"> </span><span class="kn">import</span> <span class="n">PyFuncConvertibleDatasetMixin</span><span class="p">,</span> <span class="n">PyFuncInputsOutputs</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.protos.databricks_pb2</span><span class="w"> </span><span class="kn">import</span> <span class="n">INTERNAL_ERROR</span><span class="p">,</span> <span class="n">INVALID_PARAMETER_VALUE</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">Schema</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.types.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">_infer_schema</span>
+<span class="kn">from</span> <span class="nn">mlflow.data.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
+<span class="kn">from</span> <span class="nn">mlflow.data.dataset_source</span> <span class="kn">import</span> <span class="n">DatasetSource</span>
+<span class="kn">from</span> <span class="nn">mlflow.data.digest_utils</span> <span class="kn">import</span> <span class="n">compute_pandas_digest</span>
+<span class="kn">from</span> <span class="nn">mlflow.data.evaluation_dataset</span> <span class="kn">import</span> <span class="n">EvaluationDataset</span>
+<span class="kn">from</span> <span class="nn">mlflow.data.huggingface_dataset_source</span> <span class="kn">import</span> <span class="n">HuggingFaceDatasetSource</span>
+<span class="kn">from</span> <span class="nn">mlflow.data.pyfunc_dataset_mixin</span> <span class="kn">import</span> <span class="n">PyFuncConvertibleDatasetMixin</span><span class="p">,</span> <span class="n">PyFuncInputsOutputs</span>
+<span class="kn">from</span> <span class="nn">mlflow.exceptions</span> <span class="kn">import</span> <span class="n">MlflowException</span>
+<span class="kn">from</span> <span class="nn">mlflow.protos.databricks_pb2</span> <span class="kn">import</span> <span class="n">INTERNAL_ERROR</span><span class="p">,</span> <span class="n">INVALID_PARAMETER_VALUE</span>
+<span class="kn">from</span> <span class="nn">mlflow.types</span> <span class="kn">import</span> <span class="n">Schema</span>
+<span class="kn">from</span> <span class="nn">mlflow.types.utils</span> <span class="kn">import</span> <span class="n">_infer_schema</span>
 
 <span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 <span class="n">_MAX_ROWS_FOR_DIGEST_COMPUTATION_AND_SCHEMA_INFERENCE</span> <span class="o">=</span> <span class="mi">10000</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">datasets</span>
+    <span class="kn">import</span> <span class="nn">datasets</span>
 
 
-<div class="viewcode-block" id="HuggingFaceDataset"><a class="viewcode-back" href="../../../python_api/mlflow.data.html#mlflow.data.huggingface_dataset.HuggingFaceDataset">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">HuggingFaceDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">PyFuncConvertibleDatasetMixin</span><span class="p">):</span>
+<div class="viewcode-block" id="HuggingFaceDataset"><a class="viewcode-back" href="../../../python_api/mlflow.data.html#mlflow.data.huggingface_dataset.HuggingFaceDataset">[docs]</a><span class="k">class</span> <span class="nc">HuggingFaceDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">PyFuncConvertibleDatasetMixin</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents a HuggingFace dataset for use with MLflow Tracking.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>  <span class="c1"># noqa: D417</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>  <span class="c1"># noqa: D417</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">ds</span><span class="p">:</span> <span class="s2">&quot;datasets.Dataset&quot;</span><span class="p">,</span>
         <span class="n">source</span><span class="p">:</span> <span class="n">HuggingFaceDatasetSource</span><span class="p">,</span>
@@ -279,7 +298,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_targets</span> <span class="o">=</span> <span class="n">targets</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">digest</span><span class="o">=</span><span class="n">digest</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_compute_digest</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_compute_digest</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Computes a digest for the dataset. Called if the user doesn&#39;t supply</span>
 <span class="sd">        a digest when constructing the dataset.</span>
@@ -291,7 +310,7 @@
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">compute_pandas_digest</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 
-<div class="viewcode-block" id="HuggingFaceDataset.to_dict"><a class="viewcode-back" href="../../../python_api/mlflow.data.html#mlflow.data.huggingface_dataset.HuggingFaceDataset.to_dict">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<div class="viewcode-block" id="HuggingFaceDataset.to_dict"><a class="viewcode-back" href="../../../python_api/mlflow.data.html#mlflow.data.huggingface_dataset.HuggingFaceDataset.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create config dictionary for the dataset.</span>
 
 <span class="sd">        Returns a string dictionary containing the following fields: name, digest, source, source</span>
@@ -308,7 +327,7 @@
         <span class="k">return</span> <span class="n">config</span></div>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">ds</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;datasets.Dataset&quot;</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">ds</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;datasets.Dataset&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The Hugging Face ``datasets.Dataset`` instance.</span>
 
 <span class="sd">        Returns:</span>
@@ -318,7 +337,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ds</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">targets</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">targets</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The name of the Hugging Face dataset column containing targets (labels) for supervised</span>
 <span class="sd">        learning.</span>
@@ -329,7 +348,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_targets</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">source</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HuggingFaceDatasetSource</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">source</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HuggingFaceDatasetSource</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Hugging Face dataset source information.</span>
 
 <span class="sd">        Returns:</span>
@@ -338,7 +357,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_source</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">profile</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">profile</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Summary statistics for the Hugging Face dataset, including the number of rows,</span>
 <span class="sd">        size, and size in bytes.</span>
@@ -350,7 +369,7 @@
         <span class="p">}</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">schema</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Schema</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">schema</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Schema</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The MLflow ColSpec schema of the Hugging Face dataset.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -365,7 +384,7 @@
             <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Failed to infer schema for Hugging Face dataset. Exception: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">to_pyfunc</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PyFuncInputsOutputs</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">to_pyfunc</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PyFuncInputsOutputs</span><span class="p">:</span>
         <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ds</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_targets</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_targets</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
@@ -383,7 +402,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">PyFuncInputsOutputs</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
-<div class="viewcode-block" id="HuggingFaceDataset.to_evaluation_dataset"><a class="viewcode-back" href="../../../python_api/mlflow.data.html#mlflow.data.huggingface_dataset.HuggingFaceDataset.to_evaluation_dataset">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_evaluation_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EvaluationDataset</span><span class="p">:</span>
+<div class="viewcode-block" id="HuggingFaceDataset.to_evaluation_dataset"><a class="viewcode-back" href="../../../python_api/mlflow.data.html#mlflow.data.huggingface_dataset.HuggingFaceDataset.to_evaluation_dataset">[docs]</a>    <span class="k">def</span> <span class="nf">to_evaluation_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EvaluationDataset</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Converts the dataset to an EvaluationDataset for model evaluation. Required</span>
 <span class="sd">        for use with mlflow.evaluate().</span>
@@ -393,10 +412,12 @@
             <span class="n">targets</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_targets</span><span class="p">,</span>
             <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span>
             <span class="n">feature_names</span><span class="o">=</span><span class="n">feature_names</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">digest</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">digest</span><span class="p">,</span>
         <span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="from_huggingface"><a class="viewcode-back" href="../../../python_api/mlflow.data.html#mlflow.data.huggingface_dataset.from_huggingface">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">from_huggingface</span><span class="p">(</span>
+<div class="viewcode-block" id="from_huggingface"><a class="viewcode-back" href="../../../python_api/mlflow.data.html#mlflow.data.huggingface_dataset.from_huggingface">[docs]</a><span class="k">def</span> <span class="nf">from_huggingface</span><span class="p">(</span>
     <span class="n">ds</span><span class="p">,</span>
     <span class="n">path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">targets</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -406,6 +427,7 @@
     <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">digest</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">trust_remote_code</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">source</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DatasetSource</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HuggingFaceDataset</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create a `mlflow.data.huggingface_dataset.HuggingFaceDataset` from a Hugging Face dataset.</span>
@@ -438,11 +460,13 @@
 <span class="sd">        digest: The digest (hash, fingerprint) of the dataset. If unspecified, a digest is</span>
 <span class="sd">            automatically computed.</span>
 <span class="sd">        trust_remote_code: Whether to trust remote code from the dataset repo.</span>
+<span class="sd">        source: The source of the dataset, e.g. a S3 URI, an HTTPS URL etc.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">datasets</span>
+    <span class="kn">import</span> <span class="nn">datasets</span>
 
-    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.data.code_dataset_source</span><span class="w"> </span><span class="kn">import</span> <span class="n">CodeDatasetSource</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracking.context</span><span class="w"> </span><span class="kn">import</span> <span class="n">registry</span>
+    <span class="kn">from</span> <span class="nn">mlflow.data.code_dataset_source</span> <span class="kn">import</span> <span class="n">CodeDatasetSource</span>
+    <span class="kn">from</span> <span class="nn">mlflow.data.dataset_source_registry</span> <span class="kn">import</span> <span class="n">resolve_dataset_source</span>
+    <span class="kn">from</span> <span class="nn">mlflow.tracking.context</span> <span class="kn">import</span> <span class="n">registry</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">datasets</span><span class="o">.</span><span class="n">Dataset</span><span class="p">):</span>
         <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
@@ -453,7 +477,14 @@
 
     <span class="c1"># Set the source to a `HuggingFaceDatasetSource` if a path is specified, otherwise set it to a</span>
     <span class="c1"># `CodeDatasetSource`.</span>
-    <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">source</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+            <span class="s2">&quot;Both &#39;source&#39; and &#39;path&#39; are provided.&quot;</span>
+            <span class="s2">&quot;&#39;source&#39; will take precedence, and &#39;path&#39; will be ignored.&quot;</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="n">source</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="n">source</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">DatasetSource</span><span class="p">)</span> <span class="k">else</span> <span class="n">resolve_dataset_source</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">source</span> <span class="o">=</span> <span class="n">HuggingFaceDatasetSource</span><span class="p">(</span>
             <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span>
             <span class="n">config_name</span><span class="o">=</span><span class="n">ds</span><span class="o">.</span><span class="n">config_name</span><span class="p">,</span>
@@ -497,7 +528,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'2.22.1',
+      VERSION:'3.1.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

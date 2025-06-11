@@ -71,7 +71,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="MLflow 2.22.1 documentation" href="../../index.html"/>
+    <link rel="top" title="MLflow 3.1.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -103,8 +103,10 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      padding-left: 12px;
-      padding-right: 12px;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
     }
 
     .logo-container {
@@ -112,21 +114,37 @@
       gap: 12px;
       flex-direction: row;
       white-space: nowrap;
+      align-items: center;
+      justify-content: center;
     }
 
     a:hover {
-      text-decoration: underline;
+      text-decoration: none;
+      color: #0194e2;
     }
   </style>
   <div class="logo-container">
-    <i data-toggle="wy-nav-top" class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"></i>
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
     <a href="../../index.html" class="wy-nav-top-logo">
-      <img src="../../_static/MLflow-logo-final-black.png" alt="MLflow"/>
+      <img
+        src="../../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
     </a>
-    <b style="overflow: hidden; text-overflow: ellipsis;">API Documentation</b>
-    <a style="overflow: hidden; text-overflow: ellipsis;" href="/docs/latest">Main Docs</a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
   </div>
-  <span class="version">2.22.1</span>
+  <span class="header-link">3.1.0</span>
 </div>
   </nav>
   <page>
@@ -220,11 +238,11 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.metrics</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">genai</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.metrics.base</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span></span><span class="kn">from</span> <span class="nn">mlflow.metrics</span> <span class="kn">import</span> <span class="n">genai</span>
+<span class="kn">from</span> <span class="nn">mlflow.metrics.base</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">MetricValue</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.metrics.metric_definitions</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">mlflow.metrics.metric_definitions</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">_accuracy_eval_fn</span><span class="p">,</span>
     <span class="n">_ari_eval_fn</span><span class="p">,</span>
     <span class="n">_bleu_eval_fn</span><span class="p">,</span>
@@ -248,15 +266,14 @@
     <span class="n">_token_count_eval_fn</span><span class="p">,</span>
     <span class="n">_toxicity_eval_fn</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.models</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">mlflow.models</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">EvaluationMetric</span><span class="p">,</span>
     <span class="n">make_metric</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">experimental</span>
+<span class="kn">from</span> <span class="nn">mlflow.utils.annotations</span> <span class="kn">import</span> <span class="n">experimental</span>
 
 
-<div class="viewcode-block" id="latency"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.latency">[docs]</a><span class="nd">@experimental</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">latency</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
+<div class="viewcode-block" id="latency"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.latency">[docs]</a><span class="k">def</span> <span class="nf">latency</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function will create a metric for calculating latency. Latency is determined by the time</span>
 <span class="sd">    it takes to generate a prediction for a given input. Note that computing latency requires</span>
@@ -270,8 +287,7 @@
 
 
 <span class="c1"># general text metrics</span>
-<div class="viewcode-block" id="token_count"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.token_count">[docs]</a><span class="nd">@experimental</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">token_count</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
+<div class="viewcode-block" id="token_count"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.token_count">[docs]</a><span class="k">def</span> <span class="nf">token_count</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function will create a metric for calculating token_count. Token count is calculated</span>
 <span class="sd">    using tiktoken by using the `cl100k_base` tokenizer.</span>
@@ -283,8 +299,7 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="toxicity"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.toxicity">[docs]</a><span class="nd">@experimental</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">toxicity</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
+<div class="viewcode-block" id="toxicity"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.toxicity">[docs]</a><span class="k">def</span> <span class="nf">toxicity</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function will create a metric for evaluating `toxicity`_ using the model</span>
 <span class="sd">    `roberta-hate-speech-dynabench-r4`_, which defines hate as &quot;abusive speech targeting</span>
@@ -309,8 +324,7 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="flesch_kincaid_grade_level"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.flesch_kincaid_grade_level">[docs]</a><span class="nd">@experimental</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">flesch_kincaid_grade_level</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
+<div class="viewcode-block" id="flesch_kincaid_grade_level"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.flesch_kincaid_grade_level">[docs]</a><span class="k">def</span> <span class="nf">flesch_kincaid_grade_level</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function will create a metric for calculating `flesch kincaid grade level`_ using</span>
 <span class="sd">    `textstat`_.</span>
@@ -333,8 +347,7 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="ari_grade_level"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.ari_grade_level">[docs]</a><span class="nd">@experimental</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">ari_grade_level</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
+<div class="viewcode-block" id="ari_grade_level"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.ari_grade_level">[docs]</a><span class="k">def</span> <span class="nf">ari_grade_level</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function will create a metric for calculating `automated readability index`_ using</span>
 <span class="sd">    `textstat`_.</span>
@@ -358,8 +371,7 @@
 
 
 <span class="c1"># question answering metrics</span>
-<div class="viewcode-block" id="exact_match"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.exact_match">[docs]</a><span class="nd">@experimental</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">exact_match</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
+<div class="viewcode-block" id="exact_match"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.exact_match">[docs]</a><span class="k">def</span> <span class="nf">exact_match</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function will create a metric for calculating `accuracy`_ using sklearn.</span>
 
@@ -373,8 +385,7 @@
 
 
 <span class="c1"># text summarization metrics</span>
-<div class="viewcode-block" id="rouge1"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.rouge1">[docs]</a><span class="nd">@experimental</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">rouge1</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
+<div class="viewcode-block" id="rouge1"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.rouge1">[docs]</a><span class="k">def</span> <span class="nf">rouge1</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function will create a metric for evaluating `rouge1`_.</span>
 
@@ -394,8 +405,7 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="rouge2"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.rouge2">[docs]</a><span class="nd">@experimental</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">rouge2</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
+<div class="viewcode-block" id="rouge2"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.rouge2">[docs]</a><span class="k">def</span> <span class="nf">rouge2</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function will create a metric for evaluating `rouge2`_.</span>
 
@@ -415,8 +425,7 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="rougeL"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.rougeL">[docs]</a><span class="nd">@experimental</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">rougeL</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
+<div class="viewcode-block" id="rougeL"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.rougeL">[docs]</a><span class="k">def</span> <span class="nf">rougeL</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function will create a metric for evaluating `rougeL`_.</span>
 
@@ -436,8 +445,7 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="rougeLsum"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.rougeLsum">[docs]</a><span class="nd">@experimental</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">rougeLsum</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
+<div class="viewcode-block" id="rougeLsum"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.rougeLsum">[docs]</a><span class="k">def</span> <span class="nf">rougeLsum</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function will create a metric for evaluating `rougeLsum`_.</span>
 
@@ -457,8 +465,7 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="precision_at_k"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.precision_at_k">[docs]</a><span class="nd">@experimental</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">precision_at_k</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
+<div class="viewcode-block" id="precision_at_k"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.precision_at_k">[docs]</a><span class="k">def</span> <span class="nf">precision_at_k</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function will create a metric for calculating ``precision_at_k`` for retriever models.</span>
 
@@ -476,8 +483,7 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="recall_at_k"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.recall_at_k">[docs]</a><span class="nd">@experimental</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">recall_at_k</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
+<div class="viewcode-block" id="recall_at_k"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.recall_at_k">[docs]</a><span class="k">def</span> <span class="nf">recall_at_k</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function will create a metric for calculating ``recall_at_k`` for retriever models.</span>
 
@@ -497,8 +503,7 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="ndcg_at_k"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.ndcg_at_k">[docs]</a><span class="nd">@experimental</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">ndcg_at_k</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
+<div class="viewcode-block" id="ndcg_at_k"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.ndcg_at_k">[docs]</a><span class="k">def</span> <span class="nf">ndcg_at_k</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function will create a metric for evaluating `NDCG@k`_ for retriever models.</span>
 
@@ -527,7 +532,7 @@
 
 
 <span class="c1"># General Regression Metrics</span>
-<div class="viewcode-block" id="mae"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.mae">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">mae</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
+<div class="viewcode-block" id="mae"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.mae">[docs]</a><span class="k">def</span> <span class="nf">mae</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function will create a metric for evaluating `mae`_.</span>
 
@@ -542,7 +547,7 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="mse"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.mse">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">mse</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
+<div class="viewcode-block" id="mse"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.mse">[docs]</a><span class="k">def</span> <span class="nf">mse</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function will create a metric for evaluating `mse`_.</span>
 
@@ -557,7 +562,7 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="rmse"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.rmse">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">rmse</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
+<div class="viewcode-block" id="rmse"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.rmse">[docs]</a><span class="k">def</span> <span class="nf">rmse</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function will create a metric for evaluating the square root of `mse`_.</span>
 
@@ -573,7 +578,7 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="r2_score"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.r2_score">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">r2_score</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
+<div class="viewcode-block" id="r2_score"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.r2_score">[docs]</a><span class="k">def</span> <span class="nf">r2_score</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function will create a metric for evaluating `r2_score`_.</span>
 
@@ -590,7 +595,7 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="max_error"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.max_error">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">max_error</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
+<div class="viewcode-block" id="max_error"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.max_error">[docs]</a><span class="k">def</span> <span class="nf">max_error</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function will create a metric for evaluating `max_error`_.</span>
 
@@ -605,7 +610,7 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="mape"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.mape">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">mape</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
+<div class="viewcode-block" id="mape"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.mape">[docs]</a><span class="k">def</span> <span class="nf">mape</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function will create a metric for evaluating `mape`_.</span>
 
@@ -623,7 +628,7 @@
 <span class="c1"># Binary Classification Metrics</span>
 
 
-<div class="viewcode-block" id="recall_score"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.recall_score">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">recall_score</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
+<div class="viewcode-block" id="recall_score"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.recall_score">[docs]</a><span class="k">def</span> <span class="nf">recall_score</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function will create a metric for evaluating `recall`_ for classification.</span>
 
@@ -634,7 +639,7 @@
     <span class="k">return</span> <span class="n">make_metric</span><span class="p">(</span><span class="n">eval_fn</span><span class="o">=</span><span class="n">_recall_eval_fn</span><span class="p">,</span> <span class="n">greater_is_better</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;recall_score&quot;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="precision_score"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.precision_score">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">precision_score</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
+<div class="viewcode-block" id="precision_score"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.precision_score">[docs]</a><span class="k">def</span> <span class="nf">precision_score</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function will create a metric for evaluating `precision`_ for classification.</span>
 
@@ -646,7 +651,7 @@
     <span class="k">return</span> <span class="n">make_metric</span><span class="p">(</span><span class="n">eval_fn</span><span class="o">=</span><span class="n">_precision_eval_fn</span><span class="p">,</span> <span class="n">greater_is_better</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;precision_score&quot;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="f1_score"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.f1_score">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">f1_score</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
+<div class="viewcode-block" id="f1_score"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.f1_score">[docs]</a><span class="k">def</span> <span class="nf">f1_score</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function will create a metric for evaluating `f1_score`_ for binary classification.</span>
 
@@ -659,7 +664,7 @@
 
 
 <div class="viewcode-block" id="bleu"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.bleu">[docs]</a><span class="nd">@experimental</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">bleu</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">bleu</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function will create a metric for evaluating `bleu`_.</span>
 
@@ -739,7 +744,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../',
-      VERSION:'2.22.1',
+      VERSION:'3.1.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

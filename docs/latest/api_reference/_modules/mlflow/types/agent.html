@@ -71,7 +71,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 2.22.1 documentation" href="../../../index.html"/>
+    <link rel="top" title="MLflow 3.1.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -103,8 +103,10 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      padding-left: 12px;
-      padding-right: 12px;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
     }
 
     .logo-container {
@@ -112,21 +114,37 @@
       gap: 12px;
       flex-direction: row;
       white-space: nowrap;
+      align-items: center;
+      justify-content: center;
     }
 
     a:hover {
-      text-decoration: underline;
+      text-decoration: none;
+      color: #0194e2;
     }
   </style>
   <div class="logo-container">
-    <i data-toggle="wy-nav-top" class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"></i>
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
     <a href="../../../index.html" class="wy-nav-top-logo">
-      <img src="../../../_static/MLflow-logo-final-black.png" alt="MLflow"/>
+      <img
+        src="../../../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
     </a>
-    <b style="overflow: hidden; text-overflow: ellipsis;">API Documentation</b>
-    <a style="overflow: hidden; text-overflow: ellipsis;" href="/docs/latest">Main Docs</a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
   </div>
-  <span class="version">2.22.1</span>
+  <span class="header-link">3.1.0</span>
 </div>
   </nav>
   <page>
@@ -220,17 +238,17 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.types.agent</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConfigDict</span>
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">ConfigDict</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.types.chat</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">ChatUsage</span><span class="p">,</span> <span class="n">ToolCall</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.types.llm</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">mlflow.types.chat</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">ChatUsage</span><span class="p">,</span> <span class="n">ToolCall</span>
+<span class="kn">from</span> <span class="nn">mlflow.types.llm</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">_custom_inputs_col_spec</span><span class="p">,</span>
     <span class="n">_custom_outputs_col_spec</span><span class="p">,</span>
     <span class="n">_token_usage_stats_col_spec</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.types.schema</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">mlflow.types.schema</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">Array</span><span class="p">,</span>
     <span class="n">ColSpec</span><span class="p">,</span>
     <span class="n">DataType</span><span class="p">,</span>
@@ -239,10 +257,10 @@
     <span class="n">Property</span><span class="p">,</span>
     <span class="n">Schema</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.pydantic_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">IS_PYDANTIC_V2_OR_NEWER</span><span class="p">,</span> <span class="n">model_validator</span>
+<span class="kn">from</span> <span class="nn">mlflow.utils.pydantic_utils</span> <span class="kn">import</span> <span class="n">IS_PYDANTIC_V2_OR_NEWER</span><span class="p">,</span> <span class="n">model_validator</span>
 
 
-<div class="viewcode-block" id="ChatAgentMessage"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.agent.ChatAgentMessage">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ChatAgentMessage</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="ChatAgentMessage"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.agent.ChatAgentMessage">[docs]</a><span class="k">class</span> <span class="nc">ChatAgentMessage</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A message in a ChatAgent model request or response.</span>
 
@@ -271,7 +289,7 @@
     <span class="n">attachments</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="ChatAgentMessage.check_content_and_tool_calls"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.agent.ChatAgentMessage.check_content_and_tool_calls">[docs]</a>    <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">check_content_and_tool_calls</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">check_content_and_tool_calls</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Ensure at least one of &#39;content&#39; or &#39;tool_calls&#39; is set.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -287,7 +305,7 @@
         <span class="k">return</span> <span class="n">values</span></div>
 
 <div class="viewcode-block" id="ChatAgentMessage.check_tool_messages"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.agent.ChatAgentMessage.check_tool_messages">[docs]</a>    <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">check_tool_messages</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">check_tool_messages</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Ensure that the &#39;name&#39; and &#39;tool_call_id&#39; fields are set for tool messages.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -305,7 +323,7 @@
         <span class="k">return</span> <span class="n">values</span></div></div>
 
 
-<div class="viewcode-block" id="ChatContext"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.agent.ChatContext">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ChatContext</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="ChatContext"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.agent.ChatContext">[docs]</a><span class="k">class</span> <span class="nc">ChatContext</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Context to be used in a ChatAgent endpoint.</span>
 
@@ -318,7 +336,7 @@
     <span class="n">user_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="ChatAgentRequest"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.agent.ChatAgentRequest">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ChatAgentRequest</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="ChatAgentRequest"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.agent.ChatAgentRequest">[docs]</a><span class="k">class</span> <span class="nc">ChatAgentRequest</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Format of a ChatAgent interface request.</span>
 
@@ -339,7 +357,7 @@
     <span class="n">stream</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span></div>
 
 
-<div class="viewcode-block" id="ChatAgentResponse"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.agent.ChatAgentResponse">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ChatAgentResponse</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="ChatAgentResponse"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.agent.ChatAgentResponse">[docs]</a><span class="k">class</span> <span class="nc">ChatAgentResponse</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents the response of a ChatAgent.</span>
 
@@ -357,7 +375,7 @@
         <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">validate_assignment</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
 
-        <span class="k">class</span><span class="w"> </span><span class="nc">Config</span><span class="p">:</span>
+        <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
             <span class="n">validate_assignment</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="n">messages</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ChatAgentMessage</span><span class="p">]</span>
@@ -367,7 +385,7 @@
     <span class="n">usage</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ChatUsage</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="ChatAgentResponse.check_message_ids"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.agent.ChatAgentResponse.check_message_ids">[docs]</a>    <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">check_message_ids</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">check_message_ids</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Ensure that all messages have an ID and it is unique.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -389,7 +407,7 @@
         <span class="k">return</span> <span class="n">values</span></div></div>
 
 
-<div class="viewcode-block" id="ChatAgentChunk"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.agent.ChatAgentChunk">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ChatAgentChunk</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="ChatAgentChunk"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.agent.ChatAgentChunk">[docs]</a><span class="k">class</span> <span class="nc">ChatAgentChunk</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents a single chunk within the streaming response of a ChatAgent.</span>
 
@@ -411,7 +429,7 @@
         <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">validate_assignment</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
 
-        <span class="k">class</span><span class="w"> </span><span class="nc">Config</span><span class="p">:</span>
+        <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
             <span class="n">validate_assignment</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="n">delta</span><span class="p">:</span> <span class="n">ChatAgentMessage</span>
@@ -421,7 +439,7 @@
     <span class="n">usage</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ChatUsage</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="ChatAgentChunk.check_message_id"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.agent.ChatAgentChunk.check_message_id">[docs]</a>    <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">check_message_id</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">check_message_id</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Ensure that the message ID is unique.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -520,7 +538,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'2.22.1',
+      VERSION:'3.1.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

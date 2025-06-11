@@ -71,7 +71,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MLflow 2.22.1 documentation" href="../index.html"/>
+    <link rel="top" title="MLflow 3.1.0 documentation" href="../index.html"/>
         <link rel="up" title="Python API" href="index.html"/>
         <link rel="next" title="mlflow.statsmodels" href="/mlflow.statsmodels.html"/>
         <link rel="prev" title="mlflow.spacy" href="/mlflow.spacy.html"/> 
@@ -104,8 +104,10 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      padding-left: 12px;
-      padding-right: 12px;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
     }
 
     .logo-container {
@@ -113,21 +115,37 @@
       gap: 12px;
       flex-direction: row;
       white-space: nowrap;
+      align-items: center;
+      justify-content: center;
     }
 
     a:hover {
-      text-decoration: underline;
+      text-decoration: none;
+      color: #0194e2;
     }
   </style>
   <div class="logo-container">
-    <i data-toggle="wy-nav-top" class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"></i>
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
     <a href="../index.html" class="wy-nav-top-logo">
-      <img src="../_static/MLflow-logo-final-black.png" alt="MLflow"/>
+      <img
+        src="../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
     </a>
-    <b style="overflow: hidden; text-overflow: ellipsis;">API Documentation</b>
-    <a style="overflow: hidden; text-overflow: ellipsis;" href="/docs/latest">Main Docs</a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
   </div>
-  <span class="version">2.22.1</span>
+  <span class="header-link">3.1.0</span>
 </div>
   </nav>
   <page>
@@ -166,6 +184,8 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Python API</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="mlflow.html">mlflow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.html#mlflow-tracing-apis">MLflow Tracing APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.html#mlflow-logged-model-apis">MLflow Logged Model APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.ag2.html">mlflow.ag2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.anthropic.html">mlflow.anthropic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.artifacts.html">mlflow.artifacts</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.autogen.html">mlflow.autogen</a></li>
@@ -180,9 +200,9 @@
 <li class="toctree-l2"><a class="reference internal" href="mlflow.dspy.html">mlflow.dspy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.entities.html">mlflow.entities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.environment_variables.html">mlflow.environment_variables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mlflow.fastai.html">mlflow.fastai</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.gateway.html">mlflow.gateway</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.gemini.html">mlflow.gemini</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.genai.html">mlflow.genai</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.groq.html">mlflow.groq</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.h2o.html">mlflow.h2o</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.johnsnowlabs.html">mlflow.johnsnowlabs</a></li>
@@ -193,7 +213,6 @@
 <li class="toctree-l2"><a class="reference internal" href="mlflow.llama_index.html">mlflow.llama_index</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.metrics.html">mlflow.metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.mistral.html">mlflow.mistral</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mlflow.mleap.html">mlflow.mleap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.models.html">mlflow.models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.onnx.html">mlflow.onnx</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.openai.html">mlflow.openai</a></li>
@@ -202,15 +221,16 @@
 <li class="toctree-l2"><a class="reference internal" href="mlflow.projects.html">mlflow.projects</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.promptflow.html">mlflow.promptflow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.prophet.html">mlflow.prophet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.pydantic_ai.html">mlflow.pydantic_ai</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.pyfunc.html">mlflow.pyfunc</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.pyspark.ml.html">mlflow.pyspark.ml</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.pytorch.html">mlflow.pytorch</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mlflow.recipes.html">mlflow.recipes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.sagemaker.html">mlflow.sagemaker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.sentence_transformers.html">mlflow.sentence_transformers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.server.html">mlflow.server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.shap.html">mlflow.shap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.sklearn.html">mlflow.sklearn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.smolagents.html">mlflow.smolagents</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.spacy.html">mlflow.spacy</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">mlflow.spark</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mlflow.statsmodels.html">mlflow.statsmodels</a></li>
@@ -294,19 +314,13 @@ input data as a Spark DataFrame prior to scoring. Also supports deployment in Sp
 as a Spark UDF. Models with this flavor can be loaded as Python functions
 for performing inference. This flavor is always produced.</p>
 </dd>
-<dt><a class="reference internal" href="mlflow.mleap.html#module-mlflow.mleap" title="mlflow.mleap"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mlflow.mleap</span></code></a></dt><dd><p>Enables high-performance deployment outside of Spark by leveraging MLeap’s
-custom dataframe and pipeline representations. Models with this flavor <em>cannot</em> be loaded
-back as Python objects. Rather, they must be deserialized in Java using the
-<code class="docutils literal notranslate"><span class="pre">mlflow/java</span></code> package. This flavor is produced only if you specify
-MLeap-compatible arguments.</p>
-</dd>
 </dl>
 <dl class="py function">
 <dt id="mlflow.spark.autolog">
 <code class="sig-prename descclassname"><span class="pre">mlflow.spark.</span></code><code class="sig-name descname"><span class="pre">autolog</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">disable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">silent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/spark.html#autolog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.spark.autolog" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Autologging is known to be compatible with the following package versions: <code class="docutils literal notranslate"><span class="pre">3.1.2</span></code> &lt;= <code class="docutils literal notranslate"><span class="pre">pyspark</span></code> &lt;= <code class="docutils literal notranslate"><span class="pre">3.5.5</span></code>. Autologging may not succeed when used with package versions outside of this range.</p>
+<p>Autologging is known to be compatible with the following package versions: <code class="docutils literal notranslate"><span class="pre">3.2.1</span></code> &lt;= <code class="docutils literal notranslate"><span class="pre">pyspark</span></code> &lt;= <code class="docutils literal notranslate"><span class="pre">4.0.0</span></code>. Autologging may not succeed when used with package versions outside of this range.</p>
 </div>
 <p>Enables (or disables) and configures logging of Spark datasource paths, versions
 (if applicable), and formats when they are read. This method is not threadsafe and assumes a
@@ -332,10 +346,10 @@ Spark, so logs relevant to debugging may show up amongst the Spark logs.</p>
 </div>
 <div class="literal-block-wrapper docutils container" id="id3">
 <div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id3" title="Permalink to this code"> </a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">mlflow.spark</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyspark.sql</span><span class="w"> </span><span class="kn">import</span> <span class="n">SparkSession</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mlflow.spark</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
 
 <span class="c1"># Create and persist some dummy data</span>
 <span class="c1"># Note: the 2.12 in &#39;org.mlflow:mlflow-spark_2.12:2.16.2&#39; below indicates the Scala</span>
@@ -355,7 +369,7 @@ Spark, so logs relevant to debugging may show up amongst the Spark logs.</p>
     <span class="p">[(</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;spark i j k&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;l m n&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;spark hadoop spark&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="s2">&quot;apache hadoop&quot;</span><span class="p">)],</span>
     <span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">],</span>
 <span class="p">)</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
 
 <span class="n">tempdir</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span>
 <span class="n">df</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tempdir</span><span class="p">,</span> <span class="s2">&quot;my-data-path&quot;</span><span class="p">),</span> <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -446,7 +460,7 @@ path will be created.</p></li>
 </dl>
 <div class="literal-block-wrapper docutils container" id="id4">
 <div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id4" title="Permalink to this code"> </a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">spark</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow</span> <span class="kn">import</span> <span class="n">spark</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">spark</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s2">&quot;spark-model&quot;</span><span class="p">)</span>
 <span class="c1"># Prepare test documents, which are unlabeled (id, text) tuples.</span>
@@ -463,7 +477,7 @@ path will be created.</p></li>
 
 <dl class="py function">
 <dt id="mlflow.spark.log_model">
-<code class="sig-prename descclassname"><span class="pre">mlflow.spark.</span></code><code class="sig-name descname"><span class="pre">log_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spark_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artifact_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conda_env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code_paths</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dfs_tmpdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_input</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">registered_model_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signature</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">mlflow.models.signature.ModelSignature</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_example</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">dict</span><span class="p"><span class="pre">,</span> </span><span class="pre">list</span><span class="p"><span class="pre">,</span> </span><span class="pre">csr_matrix</span><span class="p"><span class="pre">,</span> </span><span class="pre">csc_matrix</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">bytes</span><span class="p"><span class="pre">,</span> </span><span class="pre">tuple</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">await_registration_for</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pip_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_pip_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/spark.html#log_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.spark.log_model" title="Permalink to this definition"> </a></dt>
+<code class="sig-prename descclassname"><span class="pre">mlflow.spark.</span></code><code class="sig-name descname"><span class="pre">log_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spark_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artifact_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conda_env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code_paths</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dfs_tmpdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">registered_model_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signature</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">mlflow.models.signature.ModelSignature</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_example</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">dict</span><span class="p"><span class="pre">,</span> </span><span class="pre">list</span><span class="p"><span class="pre">,</span> </span><span class="pre">csr_matrix</span><span class="p"><span class="pre">,</span> </span><span class="pre">csc_matrix</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">bytes</span><span class="p"><span class="pre">,</span> </span><span class="pre">tuple</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">await_registration_for</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pip_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_pip_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/spark.html#log_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.spark.log_model" title="Permalink to this definition"> </a></dt>
 <dd><p>Log a Spark MLlib model as an MLflow artifact for the current run. This uses the
 MLlib persistence format and produces an MLflow Model with the Spark flavor.</p>
 <p>Note: If no run is active, it will instantiate a run to obtain a run_id.</p>
@@ -490,11 +504,11 @@ and set “predictionCol” param to “”.
 <li><p><strong>artifact_path</strong> – Run relative artifact path.</p></li>
 <li><p><strong>conda_env</strong> – <p>Either a dictionary representation of a Conda environment or the path to a conda
 environment yaml file. If provided, this describes the environment this model should be run in.
-At a minimum, it should specify the dependencies contained in <a class="reference internal" href="#mlflow.spark.get_default_conda_env" title="mlflow.spark.get_default_conda_env"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_default_conda_env()</span></code></a>.
+At a minimum, it should specify the dependencies contained in <cite>get_default_conda_env()</cite>.
 If <code class="docutils literal notranslate"><span class="pre">None</span></code>, a conda environment with pip requirements inferred by
 <a class="reference internal" href="mlflow.models.html#mlflow.models.infer_pip_requirements" title="mlflow.models.infer_pip_requirements"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.models.infer_pip_requirements()</span></code></a> is added
 to the model. If the requirement inference fails, it falls back to using
-<a class="reference internal" href="#mlflow.spark.get_default_pip_requirements" title="mlflow.spark.get_default_pip_requirements"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_default_pip_requirements()</span></code></a>. pip requirements from <code class="docutils literal notranslate"><span class="pre">conda_env</span></code> are written to a pip
+<cite>get_default_pip_requirements</cite>. pip requirements from <code class="docutils literal notranslate"><span class="pre">conda_env</span></code> are written to a pip
 <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> file and the full conda environment is written to <code class="docutils literal notranslate"><span class="pre">conda.yaml</span></code>.
 The following is an <em>example</em> dictionary representation of a conda environment:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -528,9 +542,6 @@ necessary as Spark ML models read from and write to DFS if running on a
 cluster. If this operation completes successfully, all temporary files
 created on the DFS are removed. Defaults to <code class="docutils literal notranslate"><span class="pre">/tmp/mlflow</span></code>.
 For models defined in <cite>pyspark.ml.connect</cite> module, this param is ignored.</p></li>
-<li><p><strong>sample_input</strong> – A sample input used to add the MLeap flavor to the model.
-This must be a PySpark DataFrame that the model can evaluate. If
-<code class="docutils literal notranslate"><span class="pre">sample_input</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, the MLeap flavor is not added.</p></li>
 <li><p><strong>registered_model_name</strong> – If given, create a model version under
 <code class="docutils literal notranslate"><span class="pre">registered_model_name</span></code>, also creating a registered model if one
 with the given name does not exist.</p></li>
@@ -546,12 +557,12 @@ pyfunc model, it accepts <code class="docutils literal notranslate"><span class=
 the array into Spark ML vector and then invoke Spark model for inference. Similarly,
 if the model has vector type output, MLflow internally converts Spark ML vector
 output data into <code class="docutils literal notranslate"><span class="pre">Array[double]</span></code> type inference result.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">infer_signature</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyspark.sql.functions</span><span class="w"> </span><span class="kn">import</span> <span class="n">col</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyspark.ml.classification</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogisticRegression</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyspark.ml.functions</span><span class="w"> </span><span class="kn">import</span> <span class="n">array_to_vector</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">mlflow</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow.models</span> <span class="kn">import</span> <span class="n">infer_signature</span>
+<span class="kn">from</span> <span class="nn">pyspark.sql.functions</span> <span class="kn">import</span> <span class="n">col</span>
+<span class="kn">from</span> <span class="nn">pyspark.ml.classification</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">pyspark.ml.functions</span> <span class="kn">import</span> <span class="n">array_to_vector</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">mlflow</span>
 
 <span class="n">train_df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">(</span>
     <span class="p">[([</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span> <span class="p">([</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">],</span> <span class="mi">1</span><span class="p">)],</span> <span class="n">schema</span><span class="o">=</span><span class="s2">&quot;features array&lt;double&gt;, label long&quot;</span>
@@ -603,7 +614,7 @@ waits for five minutes. Specify 0 or None to skip waiting.</p></li>
 a pip requirements file on the local filesystem (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;requirements.txt&quot;</span></code>). If provided, this
 describes the environment this model should be run in. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, a default list of requirements
 is inferred by <a class="reference internal" href="mlflow.models.html#mlflow.models.infer_pip_requirements" title="mlflow.models.infer_pip_requirements"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.models.infer_pip_requirements()</span></code></a> from the current software environment.
-If the requirement inference fails, it falls back to using <a class="reference internal" href="#mlflow.spark.get_default_pip_requirements" title="mlflow.spark.get_default_pip_requirements"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_default_pip_requirements()</span></code></a>.
+If the requirement inference fails, it falls back to using <cite>get_default_pip_requirements</cite>.
 Both requirements and constraints are automatically parsed and written to <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> and
 <code class="docutils literal notranslate"><span class="pre">constraints.txt</span></code> files, respectively, and stored as part of the model. Requirements are also
 written to the <code class="docutils literal notranslate"><span class="pre">pip</span></code> section of the model’s conda environment (<code class="docutils literal notranslate"><span class="pre">conda.yaml</span></code>) file.</p></li>
@@ -638,9 +649,9 @@ metadata of the logged model.</p>
 </dl>
 <div class="literal-block-wrapper docutils container" id="id5">
 <div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id5" title="Permalink to this code"> </a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyspark.ml</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyspark.ml.classification</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogisticRegression</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyspark.ml.feature</span><span class="w"> </span><span class="kn">import</span> <span class="n">HashingTF</span><span class="p">,</span> <span class="n">Tokenizer</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.ml</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span> <span class="nn">pyspark.ml.classification</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">pyspark.ml.feature</span> <span class="kn">import</span> <span class="n">HashingTF</span><span class="p">,</span> <span class="n">Tokenizer</span>
 
 <span class="n">training</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">(</span>
     <span class="p">[</span>
@@ -664,11 +675,9 @@ metadata of the logged model.</p>
 
 <dl class="py function">
 <dt id="mlflow.spark.save_model">
-<code class="sig-prename descclassname"><span class="pre">mlflow.spark.</span></code><code class="sig-name descname"><span class="pre">save_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spark_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mlflow_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conda_env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code_paths</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dfs_tmpdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_input</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signature</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">mlflow.models.signature.ModelSignature</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_example</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">dict</span><span class="p"><span class="pre">,</span> </span><span class="pre">list</span><span class="p"><span class="pre">,</span> </span><span class="pre">csr_matrix</span><span class="p"><span class="pre">,</span> </span><span class="pre">csc_matrix</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">bytes</span><span class="p"><span class="pre">,</span> </span><span class="pre">tuple</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pip_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_pip_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/spark.html#save_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.spark.save_model" title="Permalink to this definition"> </a></dt>
+<code class="sig-prename descclassname"><span class="pre">mlflow.spark.</span></code><code class="sig-name descname"><span class="pre">save_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spark_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mlflow_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conda_env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code_paths</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dfs_tmpdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signature</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">mlflow.models.signature.ModelSignature</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_example</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">dict</span><span class="p"><span class="pre">,</span> </span><span class="pre">list</span><span class="p"><span class="pre">,</span> </span><span class="pre">csr_matrix</span><span class="p"><span class="pre">,</span> </span><span class="pre">csc_matrix</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">bytes</span><span class="p"><span class="pre">,</span> </span><span class="pre">tuple</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pip_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_pip_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/spark.html#save_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.spark.save_model" title="Permalink to this definition"> </a></dt>
 <dd><p>Save a Spark MLlib Model to a local path.</p>
-<p>By default, this function saves models using the Spark MLlib persistence mechanism.
-Additionally, if a sample input is specified using the <code class="docutils literal notranslate"><span class="pre">sample_input</span></code> parameter, the model
-is also serialized in MLeap format and the MLeap flavor is added.</p>
+<p>By default, this function saves models using the Spark MLlib persistence mechanism.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -679,11 +688,11 @@ MLReadable and MLWritable.</p></li>
 <li><p><strong>mlflow_model</strong> – MLflow model config this flavor is being added to.</p></li>
 <li><p><strong>conda_env</strong> – <p>Either a dictionary representation of a Conda environment or the path to a conda
 environment yaml file. If provided, this describes the environment this model should be run in.
-At a minimum, it should specify the dependencies contained in <a class="reference internal" href="#mlflow.spark.get_default_conda_env" title="mlflow.spark.get_default_conda_env"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_default_conda_env()</span></code></a>.
+At a minimum, it should specify the dependencies contained in <cite>get_default_conda_env()</cite>.
 If <code class="docutils literal notranslate"><span class="pre">None</span></code>, a conda environment with pip requirements inferred by
 <a class="reference internal" href="mlflow.models.html#mlflow.models.infer_pip_requirements" title="mlflow.models.infer_pip_requirements"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.models.infer_pip_requirements()</span></code></a> is added
 to the model. If the requirement inference fails, it falls back to using
-<a class="reference internal" href="#mlflow.spark.get_default_pip_requirements" title="mlflow.spark.get_default_pip_requirements"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_default_pip_requirements()</span></code></a>. pip requirements from <code class="docutils literal notranslate"><span class="pre">conda_env</span></code> are written to a pip
+<cite>get_default_pip_requirements</cite>. pip requirements from <code class="docutils literal notranslate"><span class="pre">conda_env</span></code> are written to a pip
 <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> file and the full conda environment is written to <code class="docutils literal notranslate"><span class="pre">conda.yaml</span></code>.
 The following is an <em>example</em> dictionary representation of a conda environment:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -716,9 +725,6 @@ destination and then copied to the requested local path. This is necessary
 as Spark ML models read from and write to DFS if running on a cluster. All
 temporary files created on the DFS are removed if this operation
 completes successfully. Defaults to <code class="docutils literal notranslate"><span class="pre">/tmp/mlflow</span></code>.</p></li>
-<li><p><strong>sample_input</strong> – A sample input that is used to add the MLeap flavor to the model.
-This must be a PySpark DataFrame that the model can evaluate. If
-<code class="docutils literal notranslate"><span class="pre">sample_input</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, the MLeap flavor is not added.</p></li>
 <li><p><strong>signature</strong> – See the document of argument <code class="docutils literal notranslate"><span class="pre">signature</span></code> in <a class="reference internal" href="#mlflow.spark.log_model" title="mlflow.spark.log_model"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.spark.log_model()</span></code></a>.</p></li>
 <li><p><strong>input_example</strong> – one or several instances of valid model input. The input example is used
 as a hint of what data to feed the model. It will be converted to a Pandas
@@ -731,7 +737,7 @@ by converting it to a list. Bytes are base64-encoded. When the <code class="docu
 a pip requirements file on the local filesystem (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;requirements.txt&quot;</span></code>). If provided, this
 describes the environment this model should be run in. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, a default list of requirements
 is inferred by <a class="reference internal" href="mlflow.models.html#mlflow.models.infer_pip_requirements" title="mlflow.models.infer_pip_requirements"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.models.infer_pip_requirements()</span></code></a> from the current software environment.
-If the requirement inference fails, it falls back to using <a class="reference internal" href="#mlflow.spark.get_default_pip_requirements" title="mlflow.spark.get_default_pip_requirements"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_default_pip_requirements()</span></code></a>.
+If the requirement inference fails, it falls back to using <cite>get_default_pip_requirements</cite>.
 Both requirements and constraints are automatically parsed and written to <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> and
 <code class="docutils literal notranslate"><span class="pre">constraints.txt</span></code> files, respectively, and stored as part of the model. Requirements are also
 written to the <code class="docutils literal notranslate"><span class="pre">pip</span></code> section of the model’s conda environment (<code class="docutils literal notranslate"><span class="pre">conda.yaml</span></code>) file.</p></li>
@@ -762,8 +768,8 @@ section of the model’s conda environment (<code class="docutils literal notran
 </dl>
 <div class="literal-block-wrapper docutils container" id="id6">
 <div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id6" title="Permalink to this code"> </a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">spark</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyspark.ml.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">PipelineModel</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlflow</span> <span class="kn">import</span> <span class="n">spark</span>
+<span class="kn">from</span> <span class="nn">pyspark.ml.pipeline</span> <span class="kn">import</span> <span class="n">PipelineModel</span>
 
 <span class="c1"># your pyspark.ml.pipeline.PipelineModel type</span>
 <span class="n">model</span> <span class="o">=</span> <span class="o">...</span>
@@ -813,7 +819,7 @@ section of the model’s conda environment (<code class="docutils literal notran
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../',
-      VERSION:'2.22.1',
+      VERSION:'3.1.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

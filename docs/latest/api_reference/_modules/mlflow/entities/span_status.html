@@ -71,7 +71,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 2.22.1 documentation" href="../../../index.html"/>
+    <link rel="top" title="MLflow 3.1.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -103,8 +103,10 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      padding-left: 12px;
-      padding-right: 12px;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
     }
 
     .logo-container {
@@ -112,21 +114,37 @@
       gap: 12px;
       flex-direction: row;
       white-space: nowrap;
+      align-items: center;
+      justify-content: center;
     }
 
     a:hover {
-      text-decoration: underline;
+      text-decoration: none;
+      color: #0194e2;
     }
   </style>
   <div class="logo-container">
-    <i data-toggle="wy-nav-top" class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"></i>
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
     <a href="../../../index.html" class="wy-nav-top-logo">
-      <img src="../../../_static/MLflow-logo-final-black.png" alt="MLflow"/>
+      <img
+        src="../../../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
     </a>
-    <b style="overflow: hidden; text-overflow: ellipsis;">API Documentation</b>
-    <a style="overflow: hidden; text-overflow: ellipsis;" href="/docs/latest">Main Docs</a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
   </div>
-  <span class="version">2.22.1</span>
+  <span class="header-link">3.1.0</span>
 </div>
   </nav>
   <page>
@@ -220,28 +238,50 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.entities.span_status</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">opentelemetry</span><span class="w"> </span><span class="kn">import</span> <span class="n">trace</span> <span class="k">as</span> <span class="n">trace_api</span>
+<span class="kn">from</span> <span class="nn">opentelemetry</span> <span class="kn">import</span> <span class="n">trace</span> <span class="k">as</span> <span class="n">trace_api</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.protos.databricks_pb2</span><span class="w"> </span><span class="kn">import</span> <span class="n">INVALID_PARAMETER_VALUE</span>
+<span class="kn">from</span> <span class="nn">mlflow.exceptions</span> <span class="kn">import</span> <span class="n">MlflowException</span>
+<span class="kn">from</span> <span class="nn">mlflow.protos.databricks_pb2</span> <span class="kn">import</span> <span class="n">INVALID_PARAMETER_VALUE</span>
 
 
-<div class="viewcode-block" id="SpanStatusCode"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.SpanStatusCode">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">SpanStatusCode</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<div class="viewcode-block" id="SpanStatusCode"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.SpanStatusCode">[docs]</a><span class="k">class</span> <span class="nc">SpanStatusCode</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Enum for status code of a span&quot;&quot;&quot;</span>
 
     <span class="c1"># Uses the same set of status codes as OpenTelemetry</span>
     <span class="n">UNSET</span> <span class="o">=</span> <span class="s2">&quot;UNSET&quot;</span>
     <span class="n">OK</span> <span class="o">=</span> <span class="s2">&quot;OK&quot;</span>
-    <span class="n">ERROR</span> <span class="o">=</span> <span class="s2">&quot;ERROR&quot;</span></div>
+    <span class="n">ERROR</span> <span class="o">=</span> <span class="s2">&quot;ERROR&quot;</span>
+
+<div class="viewcode-block" id="SpanStatusCode.from_proto_status_code"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.SpanStatusCode.from_proto_status_code">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">from_proto_status_code</span><span class="p">(</span><span class="n">status_code</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpanStatusCode</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert a string status code to the corresponding SpanStatusCode enum value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">mlflow.protos.databricks_trace_server_pb2</span> <span class="kn">import</span> <span class="n">Span</span> <span class="k">as</span> <span class="n">ProtoSpan</span>
+
+        <span class="n">proto_code</span> <span class="o">=</span> <span class="n">ProtoSpan</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">StatusCode</span>
+        <span class="n">status_code_mapping</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">proto_code</span><span class="o">.</span><span class="n">Name</span><span class="p">(</span><span class="n">proto_code</span><span class="o">.</span><span class="n">STATUS_CODE_UNSET</span><span class="p">):</span> <span class="n">SpanStatusCode</span><span class="o">.</span><span class="n">UNSET</span><span class="p">,</span>
+            <span class="n">proto_code</span><span class="o">.</span><span class="n">Name</span><span class="p">(</span><span class="n">proto_code</span><span class="o">.</span><span class="n">STATUS_CODE_OK</span><span class="p">):</span> <span class="n">SpanStatusCode</span><span class="o">.</span><span class="n">OK</span><span class="p">,</span>
+            <span class="n">proto_code</span><span class="o">.</span><span class="n">Name</span><span class="p">(</span><span class="n">proto_code</span><span class="o">.</span><span class="n">STATUS_CODE_ERROR</span><span class="p">):</span> <span class="n">SpanStatusCode</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">status_code_mapping</span><span class="p">[</span><span class="n">status_code</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Invalid status code: </span><span class="si">{</span><span class="n">status_code</span><span class="si">}</span><span class="s2">. &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Valid values are: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">status_code_mapping</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">error_code</span><span class="o">=</span><span class="n">INVALID_PARAMETER_VALUE</span><span class="p">,</span>
+            <span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="SpanStatus"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.SpanStatus">[docs]</a><span class="nd">@dataclass</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">SpanStatus</span><span class="p">:</span>
+<span class="k">class</span> <span class="nc">SpanStatus</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Status of the span or the trace.</span>
 
@@ -256,7 +296,7 @@
     <span class="n">status_code</span><span class="p">:</span> <span class="n">SpanStatusCode</span>
     <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        If user provides a string status code, validate it and convert to</span>
 <span class="sd">        the corresponding enum value.</span>
@@ -271,7 +311,7 @@
                     <span class="n">error_code</span><span class="o">=</span><span class="n">INVALID_PARAMETER_VALUE</span><span class="p">,</span>
                 <span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">to_otel_status</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">trace_api</span><span class="o">.</span><span class="n">Status</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">to_otel_status</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">trace_api</span><span class="o">.</span><span class="n">Status</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convert :py:class:`mlflow.entities.SpanStatus` object to OpenTelemetry status object.</span>
 
@@ -286,7 +326,7 @@
         <span class="k">return</span> <span class="n">trace_api</span><span class="o">.</span><span class="n">Status</span><span class="p">(</span><span class="n">status_code</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">from_otel_status</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">otel_status</span><span class="p">:</span> <span class="n">trace_api</span><span class="o">.</span><span class="n">Status</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpanStatus</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">from_otel_status</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">otel_status</span><span class="p">:</span> <span class="n">trace_api</span><span class="o">.</span><span class="n">Status</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpanStatus</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convert OpenTelemetry status object to our status object.</span>
 
@@ -330,7 +370,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'2.22.1',
+      VERSION:'3.1.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

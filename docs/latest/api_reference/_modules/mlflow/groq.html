@@ -71,7 +71,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="MLflow 2.22.1 documentation" href="../../index.html"/>
+    <link rel="top" title="MLflow 3.1.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -103,8 +103,10 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      padding-left: 12px;
-      padding-right: 12px;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
     }
 
     .logo-container {
@@ -112,21 +114,37 @@
       gap: 12px;
       flex-direction: row;
       white-space: nowrap;
+      align-items: center;
+      justify-content: center;
     }
 
     a:hover {
-      text-decoration: underline;
+      text-decoration: none;
+      color: #0194e2;
     }
   </style>
   <div class="logo-container">
-    <i data-toggle="wy-nav-top" class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"></i>
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
     <a href="../../index.html" class="wy-nav-top-logo">
-      <img src="../../_static/MLflow-logo-final-black.png" alt="MLflow"/>
+      <img
+        src="../../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
     </a>
-    <b style="overflow: hidden; text-overflow: ellipsis;">API Documentation</b>
-    <a style="overflow: hidden; text-overflow: ellipsis;" href="/docs/latest">Main Docs</a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
   </div>
-  <span class="version">2.22.1</span>
+  <span class="header-link">3.1.0</span>
 </div>
   </nav>
   <page>
@@ -224,16 +242,16 @@
 <span class="sd">The ``mlflow.groq`` module provides an API for logging and loading Groq models.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.groq._groq_autolog</span><span class="w"> </span><span class="kn">import</span> <span class="n">patched_call</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">experimental</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.autologging_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">autologging_integration</span><span class="p">,</span> <span class="n">safe_patch</span>
+<span class="kn">from</span> <span class="nn">mlflow.groq._groq_autolog</span> <span class="kn">import</span> <span class="n">patched_call</span>
+<span class="kn">from</span> <span class="nn">mlflow.utils.annotations</span> <span class="kn">import</span> <span class="n">experimental</span>
+<span class="kn">from</span> <span class="nn">mlflow.utils.autologging_utils</span> <span class="kn">import</span> <span class="n">autologging_integration</span><span class="p">,</span> <span class="n">safe_patch</span>
 
 <span class="n">FLAVOR_NAME</span> <span class="o">=</span> <span class="s2">&quot;groq&quot;</span>
 
 
 <div class="viewcode-block" id="autolog"><a class="viewcode-back" href="../../python_api/mlflow.groq.html#mlflow.groq.autolog">[docs]</a><span class="nd">@experimental</span>
 <span class="nd">@autologging_integration</span><span class="p">(</span><span class="n">FLAVOR_NAME</span><span class="p">)</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">autolog</span><span class="p">(</span>
+<span class="k">def</span> <span class="nf">autolog</span><span class="p">(</span>
     <span class="n">log_traces</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">disable</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">silent</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -250,10 +268,10 @@
 <span class="sd">            autologging. If ``False``, show all events and warnings.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="kn">from</span><span class="w"> </span><span class="nn">groq.resources.audio.transcriptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Transcriptions</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">groq.resources.audio.translations</span><span class="w"> </span><span class="kn">import</span> <span class="n">Translations</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">groq.resources.chat.completions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Completions</span> <span class="k">as</span> <span class="n">ChatCompletions</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">groq.resources.embeddings</span><span class="w"> </span><span class="kn">import</span> <span class="n">Embeddings</span>
+    <span class="kn">from</span> <span class="nn">groq.resources.audio.transcriptions</span> <span class="kn">import</span> <span class="n">Transcriptions</span>
+    <span class="kn">from</span> <span class="nn">groq.resources.audio.translations</span> <span class="kn">import</span> <span class="n">Translations</span>
+    <span class="kn">from</span> <span class="nn">groq.resources.chat.completions</span> <span class="kn">import</span> <span class="n">Completions</span> <span class="k">as</span> <span class="n">ChatCompletions</span>
+    <span class="kn">from</span> <span class="nn">groq.resources.embeddings</span> <span class="kn">import</span> <span class="n">Embeddings</span>
 
     <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="p">(</span><span class="n">ChatCompletions</span><span class="p">,</span> <span class="n">Translations</span><span class="p">,</span> <span class="n">Transcriptions</span><span class="p">,</span> <span class="n">Embeddings</span><span class="p">):</span>
         <span class="n">safe_patch</span><span class="p">(</span>
@@ -292,7 +310,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../',
-      VERSION:'2.22.1',
+      VERSION:'3.1.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

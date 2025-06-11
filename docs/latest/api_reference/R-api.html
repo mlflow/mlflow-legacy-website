@@ -71,7 +71,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="MLflow 2.22.1 documentation" href="index.html"/>
+    <link rel="top" title="MLflow 3.1.0 documentation" href="index.html"/>
         <link rel="next" title="Java API" href="/java_api/index.html"/>
         <link rel="prev" title="MLflow Authentication REST API" href="/auth/rest-api.html"/> 
 
@@ -103,8 +103,10 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      padding-left: 12px;
-      padding-right: 12px;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
     }
 
     .logo-container {
@@ -112,21 +114,37 @@
       gap: 12px;
       flex-direction: row;
       white-space: nowrap;
+      align-items: center;
+      justify-content: center;
     }
 
     a:hover {
-      text-decoration: underline;
+      text-decoration: none;
+      color: #0194e2;
     }
   </style>
   <div class="logo-container">
-    <i data-toggle="wy-nav-top" class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"></i>
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
     <a href="index.html" class="wy-nav-top-logo">
-      <img src="_static/MLflow-logo-final-black.png" alt="MLflow"/>
+      <img
+        src="_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
     </a>
-    <b style="overflow: hidden; text-overflow: ellipsis;">API Documentation</b>
-    <a style="overflow: hidden; text-overflow: ellipsis;" href="/docs/latest">Main Docs</a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
   </div>
-  <span class="version">2.22.1</span>
+  <span class="header-link">3.1.0</span>
 </div>
   </nav>
   <page>
@@ -1886,7 +1904,7 @@ ignored.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">mlflow</span><span class="p">)</span>
 
 <span class="n">observer</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">structure</span><span class="p">(</span><span class="nf">list</span><span class="p">())</span>
-<span class="n">observer</span><span class="o">$</span><span class="n">register_tracking_event</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kr">function</span><span class="p">(</span><span class="n">event_name</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="n">observer</span><span class="o">$</span><span class="n">register_tracking_event</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">event_name</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">event_name</span><span class="p">)</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="p">}</span>
@@ -2153,7 +2171,7 @@ Documentation at
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">mlflow</span><span class="p">)</span>
 
 <span class="c1"># save simple model with constant prediction</span>
-<span class="nf">mlflow_save_model</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;mlflow_constant&quot;</span><span class="p">)</span>
+<span class="nf">mlflow_save_model</span><span class="p">(</span><span class="nf">function</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;mlflow_constant&quot;</span><span class="p">)</span>
 
 <span class="c1"># serve an existing model over a web interface</span>
 <span class="nf">mlflow_rfunc_serve</span><span class="p">(</span><span class="s">&quot;mlflow_constant&quot;</span><span class="p">)</span>
@@ -3149,7 +3167,7 @@ the current tracking URI.</p></td>
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'./',
-      VERSION:'2.22.1',
+      VERSION:'3.1.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',
