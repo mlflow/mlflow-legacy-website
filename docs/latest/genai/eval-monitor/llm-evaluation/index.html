@@ -19,9 +19,9 @@
 
 
 
-<script src="/docs/latest/js/runllm.js" defer="defer"></script><link rel="stylesheet" href="/docs/latest/assets/css/styles.91e9ee82.css">
-<script src="/docs/latest/assets/js/runtime~main.f4784298.js" defer="defer"></script>
-<script src="/docs/latest/assets/js/main.84915266.js" defer="defer"></script>
+<script src="/docs/latest/js/runllm.js" defer="defer"></script><link rel="stylesheet" href="/docs/latest/assets/css/styles.28952779.css">
+<script src="/docs/latest/assets/js/runtime~main.ce6436f7.js" defer="defer"></script>
+<script src="/docs/latest/assets/js/main.8e48b207.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6WMTTJ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -136,7 +136,7 @@ for LLM evaluation in MLflow. You can specify a custom list of metrics in the <c
 <p>This is very similar to creating custom traditional metrics, with the exception of returning a <a href="/docs/latest/api_reference/python_api/mlflow.metrics.html#mlflow.metrics.MetricValue" target="_blank"><code>mlflow.metrics.MetricValue<!-- -->()</code></a> instance.
 Basically you need to:</p>
 <ol>
-<li>Implement An <code>eval_fn</code> to define your scoring logic. This function must take in 2 args: <code>predictions</code> and <code>target``. </code>eval_fn` must return a <a href="/docs/latest/api_reference/python_api/mlflow.metrics.html#mlflow.metrics.MetricValue" target="_blank"><code>mlflow.metrics.MetricValue<!-- -->()</code></a> instance.</li>
+<li>Implement An <code>eval_fn</code> to define your scoring logic. This function must take in 2 args: <code>predictions</code> and <code>target</code>. <code>eval_fn</code> must return a <a href="/docs/latest/api_reference/python_api/mlflow.metrics.html#mlflow.metrics.MetricValue" target="_blank"><code>mlflow.metrics.MetricValue<!-- -->()</code></a> instance.</li>
 <li>Pass <code>eval_fn</code> and other arguments to the <code>mlflow.metrics.make_metric</code> API to create the metric.</li>
 </ol>
 <p>The following code creates a dummy per-row metric called <code>&quot;over_10_chars&quot;</code>; if the model output is greater than 10,
@@ -228,8 +228,8 @@ general we call that MLflow model. The</p>
 </li>
 <li>
 <p>A python function that takes in string inputs and outputs a single string. Your callable must match the signature of</p>
-<p><a href="/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PyFuncModel.predict" target="_blank"><code>mlflow.pyfunc.PyFuncModel.predict<!-- -->()</code></a> (without <code>params</code> argument),
-briefly it should:</p>
+<p><a href="/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PyFuncModel.predict" target="_blank"><code>mlflow.pyfunc.PyFuncModel.predict<!-- -->()</code></a> (without <code>params</code> argument),</p>
+<p>briefly it should:</p>
 <ul>
 <li>Has <code>data</code> as the only argument, which can be a <code>pandas.Dataframe</code>, <code>numpy.ndarray</code>, python list, dictionary or scipy matrix.</li>
 <li>Returns one of <code>pandas.DataFrame</code>, <code>pandas.Series</code>, <code>numpy.ndarray</code> or list.</li>

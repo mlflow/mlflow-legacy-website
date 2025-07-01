@@ -19,9 +19,9 @@
 
 
 
-<script src="/docs/latest/js/runllm.js" defer="defer"></script><link rel="stylesheet" href="/docs/latest/assets/css/styles.91e9ee82.css">
-<script src="/docs/latest/assets/js/runtime~main.f4784298.js" defer="defer"></script>
-<script src="/docs/latest/assets/js/main.84915266.js" defer="defer"></script>
+<script src="/docs/latest/js/runllm.js" defer="defer"></script><link rel="stylesheet" href="/docs/latest/assets/css/styles.28952779.css">
+<script src="/docs/latest/assets/js/runtime~main.ce6436f7.js" defer="defer"></script>
+<script src="/docs/latest/assets/js/main.8e48b207.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6WMTTJ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -80,8 +80,8 @@ page of your registered model, such as the one below.</p>
 <p>In this page, you can inspect model version details like the model signature, MLflow source run, and creation timestamp. You can also view and configure the version&#x27;s aliases,
 tags, and description.</p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="api-workflow">API Workflow<a href="#api-workflow" class="hash-link" aria-label="Direct link to API Workflow" title="Direct link to API Workflow">​</a></h2>
-<p>An alternative way to interact with Model Registry is using the <a href="/docs/latest/api_reference/python_api/index.html" target="\_blank">MLflow model flavor</a>
-o <a href="/docs/latest/api_reference/python_api/mlflow.client.html" target="\_blank">MLflow Client Tracking API</a> interface. In particular, you can register a model during an
+<p>An alternative way to interact with Model Registry is using the <a href="/docs/latest/api_reference/python_api/index.html" target="_blank">MLflow model flavor</a>
+o <a href="/docs/latest/api_reference/python_api/mlflow.client.html" target="_blank">MLflow Client Tracking API</a> interface. In particular, you can register a model during an
 MLflow experiment run or after all your experiment runs.</p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="adding-an-mlflow-model-to-the-model-registry">Adding an MLflow Model to the Model Registry<a href="#adding-an-mlflow-model-to-the-model-registry" class="hash-link" aria-label="Direct link to Adding an MLflow Model to the Model Registry" title="Direct link to Adding an MLflow Model to the Model Registry">​</a></h3>
 <p>There are three programmatic ways to add a model to the registry. First, you can use the <code>mlflow.&lt;model_flavor&gt;.log_model()</code> method. For example, in your code:</p>
@@ -220,7 +220,7 @@ for sentiment analysis. Since it lacks a built-in MLflow Model flavor, you canno
 using MLflow Model fluent APIs.</p>
 <p>To work around this problem, you can create an instance of a <a href="/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc" target="_blank"><code>mlflow.pyfunc</code></a>
 model flavor and embed your NLP model inside it, allowing you to save, log or register the model. Once registered,
-load the model from the Model Registry and score using the <a href="/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PyFuncModel.predict" target="\_blank"><code>predict</code></a>
+load the model from the Model Registry and score using the <a href="/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PyFuncModel.predict" target="_blank"><code>predict</code></a>
 function.</p>
 <p>The code sections below demonstrate how to create a <code>PythonFuncModel</code> class with a <code>vaderSentiment</code> model embedded in it,
 save, log, register, and load from the Model Registry and score.</p>

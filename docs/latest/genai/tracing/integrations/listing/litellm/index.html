@@ -19,9 +19,9 @@
 
 
 
-<script src="/docs/latest/js/runllm.js" defer="defer"></script><link rel="stylesheet" href="/docs/latest/assets/css/styles.91e9ee82.css">
-<script src="/docs/latest/assets/js/runtime~main.f4784298.js" defer="defer"></script>
-<script src="/docs/latest/assets/js/main.84915266.js" defer="defer"></script>
+<script src="/docs/latest/js/runllm.js" defer="defer"></script><link rel="stylesheet" href="/docs/latest/assets/css/styles.28952779.css">
+<script src="/docs/latest/assets/js/runtime~main.ce6436f7.js" defer="defer"></script>
+<script src="/docs/latest/assets/js/main.8e48b207.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6WMTTJ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -34,7 +34,7 @@
 <p><img decoding="async" loading="lazy" alt="LiteLLM Tracing via autolog" src="/docs/latest/assets/images/litellm-tracing-39a2a3e58fdb3d8cce0ecdba1f4f70e8.png" width="1586" height="830" class="img_ev3q"></p>
 <p><a href="https://www.litellm.ai/" target="_blank" rel="noopener noreferrer">LiteLLM</a> is an open-source LLM Gateway that allow accessing 100+ LLMs in the unified interface.</p>
 <p><a href="/docs/latest/genai/tracing/integrations/">MLflow Tracing</a> provides automatic tracing capability for LiteLLM. By enabling auto tracing
-for LiteLLM by calling the <a href="/docs/latest/api_reference/python_api/mlflow.litellm.html#mlflow.litellm.autolog" target="_blank"><code>mlflow.litellm.autolog<!-- -->()</code></a> function,  MLflow will capture traces for LLM invocation and log them to the active MLflow Experiment.</p>
+for LiteLLM by calling the <a href="/docs/latest/api_reference/python_api/mlflow.litellm.html#mlflow.litellm.autolog" target="_blank"><code>mlflow.litellm.autolog<!-- -->()</code></a> function, MLflow will capture traces for LLM invocation and log them to the active MLflow Experiment.</p>
 <div class="language-python codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-python codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#F8F8F2"><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">import</span><span class="token plain"> mlflow</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">mlflow</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token plain">litellm</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token plain">autolog</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><br></span></code></pre></div></div>
 <p>MLflow trace automatically captures the following information about LiteLLM calls:</p>
 <ul>
