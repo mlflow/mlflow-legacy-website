@@ -19,9 +19,9 @@
 
 
 
-<script src="/docs/latest/js/runllm.js" defer="defer"></script><link rel="stylesheet" href="/docs/latest/assets/css/styles.4bfc27eb.css">
-<script src="/docs/latest/assets/js/runtime~main.1e1468a4.js" defer="defer"></script>
-<script src="/docs/latest/assets/js/main.ad5d128d.js" defer="defer"></script>
+<script src="/docs/latest/js/runllm.js" defer="defer"></script><link rel="stylesheet" href="/docs/latest/assets/css/styles.d76489f0.css">
+<script src="/docs/latest/assets/js/runtime~main.ecfd0980.js" defer="defer"></script>
+<script src="/docs/latest/assets/js/main.c9d4eb84.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6WMTTJ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -34,12 +34,14 @@
 <p>The <code>mlflow.data</code> module is a comprehensive solution for dataset management throughout the machine learning lifecycle. It enables you to track, version, and manage datasets used in training, validation, and evaluation, providing complete lineage from raw data to model predictions.</p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="why-dataset-tracking-matters">Why Dataset Tracking Matters<a href="#why-dataset-tracking-matters" class="hash-link" aria-label="Direct link to Why Dataset Tracking Matters" title="Direct link to Why Dataset Tracking Matters">​</a></h2>
 <p>Dataset tracking is essential for reproducible machine learning and provides several key benefits:</p>
-<p><strong>• Data Lineage</strong>: Track the complete journey from raw data sources to model inputs
-<strong>• Reproducibility</strong>: Ensure experiments can be reproduced with identical datasets
-<strong>• Version Control</strong>: Manage different versions of datasets as they evolve
-<strong>• Collaboration</strong>: Share datasets and their metadata across teams
-<strong>• Evaluation Integration</strong>: Seamlessly integrate with MLflow&#x27;s evaluation capabilities
-<strong>• Production Monitoring</strong>: Track datasets used in production inference and evaluation</p>
+<ul>
+<li><strong>Data Lineage</strong>: Track the complete journey from raw data sources to model inputs</li>
+<li><strong>Reproducibility</strong>: Ensure experiments can be reproduced with identical datasets</li>
+<li><strong>Version Control</strong>: Manage different versions of datasets as they evolve</li>
+<li><strong>Collaboration</strong>: Share datasets and their metadata across teams</li>
+<li><strong>Evaluation Integration</strong>: Seamlessly integrate with MLflow&#x27;s evaluation capabilities</li>
+<li><strong>Production Monitoring</strong>: Track datasets used in production inference and evaluation</li>
+</ul>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="core-components">Core Components<a href="#core-components" class="hash-link" aria-label="Direct link to Core Components" title="Direct link to Core Components">​</a></h2>
 <p>MLflow&#x27;s dataset tracking revolves around two main abstractions:</p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="dataset">Dataset<a href="#dataset" class="hash-link" aria-label="Direct link to Dataset" title="Direct link to Dataset">​</a></h3>
@@ -57,6 +59,7 @@
 <li><a href="/docs/latest/api_reference/python_api/mlflow.data.html/#mlflow.data.pandas_dataset.PandasDataset" target="_blank"><code>PandasDataset</code></a> - For Pandas DataFrames</li>
 <li><a href="/docs/latest/api_reference/python_api/mlflow.data.html/#mlflow.data.spark_dataset.SparkDataset" target="_blank"><code>SparkDataset</code></a> - For Apache Spark DataFrames</li>
 <li><a href="/docs/latest/api_reference/python_api/mlflow.data.html/#mlflow.data.numpy_dataset.NumpyDataset" target="_blank"><code>NumpyDataset</code></a> - For NumPy arrays</li>
+<li><a href="/docs/latest/api_reference/python_api/mlflow.data.html/#mlflow.data.polars_dataset.PolarsDataset" target="_blank"><code>PolarsDataset</code></a> - For Polars DataFrames</li>
 <li><a href="/docs/latest/api_reference/python_api/mlflow.data.html/#mlflow.data.huggingface_dataset.HuggingFaceDataset" target="_blank"><code>HuggingFaceDataset</code></a> - For Hugging Face datasets</li>
 <li><a href="/docs/latest/api_reference/python_api/mlflow.data.html/#mlflow.data.tensorflow_dataset.TensorFlowDataset" target="_blank"><code>TensorFlowDataset</code></a> - For TensorFlow datasets</li>
 <li><a href="/docs/latest/api_reference/python_api/mlflow.data.html/#mlflow.data.meta_dataset.MetaDataset" target="_blank"><code>MetaDataset</code></a> - For metadata-only datasets (no actual data storage)</li>
