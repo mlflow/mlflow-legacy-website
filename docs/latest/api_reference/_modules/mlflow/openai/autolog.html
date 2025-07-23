@@ -359,8 +359,18 @@
     <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="p">(</span><span class="n">ChatCompletions</span><span class="p">,</span> <span class="n">Completions</span><span class="p">,</span> <span class="n">Embeddings</span><span class="p">):</span>
         <span class="n">safe_patch</span><span class="p">(</span><span class="n">FLAVOR_NAME</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="s2">&quot;create&quot;</span><span class="p">,</span> <span class="n">patched_call</span><span class="p">)</span>
 
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">ChatCompletions</span><span class="p">,</span> <span class="s2">&quot;parse&quot;</span><span class="p">):</span>
+        <span class="c1"># In openai&gt;=1.92.0, `ChatCompletions` has a `parse` method:</span>
+        <span class="c1"># https://github.com/openai/openai-python/commit/0e358ed66b317038705fb38958a449d284f3cb88</span>
+        <span class="n">safe_patch</span><span class="p">(</span><span class="n">FLAVOR_NAME</span><span class="p">,</span> <span class="n">ChatCompletions</span><span class="p">,</span> <span class="s2">&quot;parse&quot;</span><span class="p">,</span> <span class="n">patched_call</span><span class="p">)</span>
+
     <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="p">(</span><span class="n">AsyncChatCompletions</span><span class="p">,</span> <span class="n">AsyncCompletions</span><span class="p">,</span> <span class="n">AsyncEmbeddings</span><span class="p">):</span>
         <span class="n">safe_patch</span><span class="p">(</span><span class="n">FLAVOR_NAME</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="s2">&quot;create&quot;</span><span class="p">,</span> <span class="n">async_patched_call</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">AsyncChatCompletions</span><span class="p">,</span> <span class="s2">&quot;parse&quot;</span><span class="p">):</span>
+        <span class="c1"># In openai&gt;=1.92.0, `AsyncChatCompletions` has a `parse` method:</span>
+        <span class="c1"># https://github.com/openai/openai-python/commit/0e358ed66b317038705fb38958a449d284f3cb88</span>
+        <span class="n">safe_patch</span><span class="p">(</span><span class="n">FLAVOR_NAME</span><span class="p">,</span> <span class="n">AsyncChatCompletions</span><span class="p">,</span> <span class="s2">&quot;parse&quot;</span><span class="p">,</span> <span class="n">async_patched_call</span><span class="p">)</span>
 
     <span class="k">try</span><span class="p">:</span>
         <span class="kn">from</span><span class="w"> </span><span class="nn">openai.resources.beta.chat.completions</span><span class="w"> </span><span class="kn">import</span> <span class="n">AsyncCompletions</span><span class="p">,</span> <span class="n">Completions</span>
@@ -433,7 +443,9 @@
         <span class="n">span_type_mapping</span><span class="p">[</span><span class="n">BetaChatCompletions</span><span class="p">]</span> <span class="o">=</span> <span class="n">SpanType</span><span class="o">.</span><span class="n">CHAT_MODEL</span>
         <span class="n">span_type_mapping</span><span class="p">[</span><span class="n">BetaAsyncChatCompletions</span><span class="p">]</span> <span class="o">=</span> <span class="n">SpanType</span><span class="o">.</span><span class="n">CHAT_MODEL</span>
     <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-        <span class="k">pass</span>
+        <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s2">&quot;Failed to import `BetaChatCompletions` or `BetaAsyncChatCompletions`&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
 
     <span class="k">try</span><span class="p">:</span>
         <span class="c1"># Responses API only available in openai&gt;=1.66.0</span>

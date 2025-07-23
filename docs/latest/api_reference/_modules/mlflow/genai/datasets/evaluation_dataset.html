@@ -248,11 +248,14 @@
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.data.dataset_source</span><span class="w"> </span><span class="kn">import</span> <span class="n">DatasetSource</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.data.digest_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_pandas_digest</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.data.evaluation_dataset</span><span class="w"> </span><span class="kn">import</span> <span class="n">EvaluationDataset</span> <span class="k">as</span> <span class="n">LegacyEvaluationDataset</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.data.pyfunc_dataset_mixin</span><span class="w"> </span><span class="kn">import</span> <span class="n">PyFuncConvertibleDatasetMixin</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.data.spark_dataset_source</span><span class="w"> </span><span class="kn">import</span> <span class="n">SparkDatasetSource</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dataset</span> <span class="k">as</span> <span class="n">DatasetEntity</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.datasets.databricks_evaluation_dataset_source</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">DatabricksEvaluationDatasetSource</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
@@ -303,11 +306,11 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span><span class="o">.</span><span class="n">profile</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">source</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">source</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DatasetSource</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Source information for the dataset.&quot;&quot;&quot;</span>
-        <span class="c1"># NB: The managed Dataset entity in Agent SDK doesn&#39;t propagate the source</span>
-        <span class="c1"># information. So we use the table name as the fallback source.</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span><span class="o">.</span><span class="n">source</span> <span class="ow">or</span> <span class="n">SparkDatasetSource</span><span class="p">(</span><span class="n">table_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="n">DatasetSource</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span><span class="o">.</span><span class="n">source</span>
+        <span class="k">return</span> <span class="n">DatabricksEvaluationDatasetSource</span><span class="p">(</span><span class="n">table_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">dataset_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_id</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">source_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
