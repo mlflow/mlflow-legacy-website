@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 3.1.3 documentation" href="../../../index.html"/>
+    <link rel="top" title="MLflow 3.2.0rc0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -149,7 +149,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link">3.1.3</span>
+  <span class="header-link">3.2.0rc0</span>
 </div>
   </nav>
   <page>
@@ -186,6 +186,7 @@
       
         <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../python_api/index.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../typescript_api/index.html">TypeScript API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../cli.html">Command-Line Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../auth/python-api.html">MLflow Authentication Python API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../auth/rest-api.html">MLflow Authentication REST API</a></li>
@@ -356,7 +357,7 @@
 <div class="viewcode-block" id="Trace.to_pandas_dataframe_row"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.Trace.to_pandas_dataframe_row">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_pandas_dataframe_row</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
         <span class="k">return</span> <span class="p">{</span>
             <span class="s2">&quot;trace_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">trace_id</span><span class="p">,</span>
-            <span class="s2">&quot;trace&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="p">,</span>
+            <span class="s2">&quot;trace&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_json</span><span class="p">(),</span>  <span class="c1"># json string to be compatible with Spark DataFrame</span>
             <span class="s2">&quot;client_request_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">client_request_id</span><span class="p">,</span>
             <span class="s2">&quot;state&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">state</span><span class="p">,</span>
             <span class="s2">&quot;request_time&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">request_time</span><span class="p">,</span>
@@ -366,7 +367,7 @@
             <span class="s2">&quot;trace_metadata&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">trace_metadata</span><span class="p">,</span>
             <span class="s2">&quot;tags&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">tags</span><span class="p">,</span>
             <span class="s2">&quot;spans&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">span</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">span</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">spans</span><span class="p">],</span>
-            <span class="s2">&quot;assessments&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">assessments</span><span class="p">,</span>
+            <span class="s2">&quot;assessments&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">assessment</span><span class="o">.</span><span class="n">to_dictionary</span><span class="p">()</span> <span class="k">for</span> <span class="n">assessment</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">assessments</span><span class="p">],</span>
         <span class="p">}</span></div>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_deserialize_json_attr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
@@ -590,7 +591,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'3.1.3',
+      VERSION:'3.2.0rc0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

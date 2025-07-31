@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="MLflow 3.1.3 documentation" href="../../index.html"/>
+    <link rel="top" title="MLflow 3.2.0rc0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -149,7 +149,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link">3.1.3</span>
+  <span class="header-link">3.2.0rc0</span>
 </div>
   </nav>
   <page>
@@ -186,6 +186,7 @@
       
         <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../python_api/index.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../typescript_api/index.html">TypeScript API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../cli.html">Command-Line Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../auth/python-api.html">MLflow Authentication Python API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../auth/rest-api.html">MLflow Authentication REST API</a></li>
@@ -262,9 +263,8 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">string</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">namedtuple</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">types</span><span class="w"> </span><span class="kn">import</span> <span class="n">MappingProxyType</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">NamedTuple</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">urllib.parse</span><span class="w"> </span><span class="kn">import</span> <span class="n">urlparse</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -508,6 +508,15 @@
 <span class="sd">        flavor, based on the model instance framework type of the model to be logged.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">_mlflow_conda_env</span><span class="p">(</span><span class="n">additional_pip_deps</span><span class="o">=</span><span class="n">get_default_pip_requirements</span><span class="p">(</span><span class="n">model</span><span class="p">))</span></div>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">_DummyModel</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+    <span class="n">name_or_path</span><span class="p">:</span> <span class="nb">str</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">_DummyPipeline</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+    <span class="n">task</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">_DummyModel</span>
 
 
 <div class="viewcode-block" id="save_model"><a class="viewcode-back" href="../../python_api/mlflow.transformers.html#mlflow.transformers.save_model">[docs]</a><span class="nd">@docstring_version_compatibility_warning</span><span class="p">(</span><span class="n">integration_name</span><span class="o">=</span><span class="n">FLAVOR_NAME</span><span class="p">)</span>
@@ -762,9 +771,9 @@
             <span class="p">)</span>
 
         <span class="c1"># Create a dummy pipeline object to be used for saving the model</span>
-        <span class="n">DummyModel</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;DummyModel&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;name_or_path&quot;</span><span class="p">])</span>
-        <span class="n">DummyPipeline</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;DummyPipeline&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;task&quot;</span><span class="p">,</span> <span class="s2">&quot;model&quot;</span><span class="p">])</span>
-        <span class="n">built_pipeline</span> <span class="o">=</span> <span class="n">DummyPipeline</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">DummyModel</span><span class="p">(</span><span class="n">name_or_path</span><span class="o">=</span><span class="n">transformers_model</span><span class="p">))</span>
+        <span class="n">built_pipeline</span> <span class="o">=</span> <span class="n">_DummyPipeline</span><span class="p">(</span>
+            <span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">_DummyModel</span><span class="p">(</span><span class="n">name_or_path</span><span class="o">=</span><span class="n">transformers_model</span><span class="p">)</span>
+        <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
             <span class="s2">&quot;The `transformers_model` must be one of the following types: </span><span class="se">\n</span><span class="s2">&quot;</span>
@@ -1138,8 +1147,7 @@
 <span class="sd">                    must be &gt;=0.10.0</span>
 
 <span class="sd">        code_paths: {{ code_paths }}</span>
-<span class="sd">        registered_model_name: This argument may change or be removed in a</span>
-<span class="sd">            future release without warning. If given, create a model</span>
+<span class="sd">        registered_model_name: If given, create a model</span>
 <span class="sd">            version under ``registered_model_name``, also creating a</span>
 <span class="sd">            registered model if one with the given name does not exist.</span>
 <span class="sd">        signature: A Model Signature object that describes the input and output Schema of the</span>
@@ -3256,7 +3264,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../',
-      VERSION:'3.1.3',
+      VERSION:'3.2.0rc0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

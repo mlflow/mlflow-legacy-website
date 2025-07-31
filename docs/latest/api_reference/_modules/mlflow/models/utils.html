@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 3.1.3 documentation" href="../../../index.html"/>
+    <link rel="top" title="MLflow 3.2.0rc0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -149,7 +149,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link">3.1.3</span>
+  <span class="header-link">3.2.0rc0</span>
 </div>
   </nav>
   <page>
@@ -186,6 +186,7 @@
       
         <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../python_api/index.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../typescript_api/index.html">TypeScript API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../cli.html">Command-Line Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../auth/python-api.html">MLflow Authentication Python API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../auth/rest-api.html">MLflow Authentication REST API</a></li>
@@ -266,6 +267,7 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">mlflow</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities</span><span class="w"> </span><span class="kn">import</span> <span class="n">LoggedModel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.environment_variables</span><span class="w"> </span><span class="kn">import</span> <span class="n">MLFLOW_DISABLE_SCHEMA_DETAILS</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">INVALID_PARAMETER_VALUE</span><span class="p">,</span> <span class="n">MlflowException</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Model</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.models.model_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">_set_model_config</span>
@@ -280,7 +282,6 @@
     <span class="n">clean_tensor_type</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">IS_PYDANTIC_V2_OR_NEWER</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">experimental</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.databricks_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_in_databricks_runtime</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.file_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_tmp_dir</span><span class="p">,</span> <span class="n">get_local_path_or_none</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.mlflow_tags</span><span class="w"> </span><span class="kn">import</span> <span class="n">MLFLOW_MODEL_IS_EXTERNAL</span>
@@ -408,7 +409,7 @@
         <span class="k">return</span> <span class="n">x</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_handle_ndarray_input</span><span class="p">(</span><span class="n">input_array</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_handle_ndarray_input</span><span class="p">(</span><span class="n">input_array</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]):</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_array</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">input_array</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
@@ -713,8 +714,7 @@
     <span class="k">return</span> <span class="n">input_example</span><span class="p">,</span> <span class="kc">None</span>
 
 
-<div class="viewcode-block" id="convert_input_example_to_serving_input"><a class="viewcode-back" href="../../../python_api/mlflow.models.html#mlflow.models.convert_input_example_to_serving_input">[docs]</a><span class="nd">@experimental</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">convert_input_example_to_serving_input</span><span class="p">(</span><span class="n">input_example</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<div class="viewcode-block" id="convert_input_example_to_serving_input"><a class="viewcode-back" href="../../../python_api/mlflow.models.html#mlflow.models.convert_input_example_to_serving_input">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">convert_input_example_to_serving_input</span><span class="p">(</span><span class="n">input_example</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Helper function to convert a model&#39;s input example to a serving input example that</span>
 <span class="sd">    can be used for model inference in the scoring server.</span>
@@ -734,7 +734,7 @@
     <span class="k">return</span> <span class="n">example</span><span class="o">.</span><span class="n">json_serving_input</span></div>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_save_example</span><span class="p">(</span>  <span class="c1"># noqa: D417</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_save_example</span><span class="p">(</span>
     <span class="n">mlflow_model</span><span class="p">:</span> <span class="n">Model</span><span class="p">,</span> <span class="n">input_example</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ModelInputExample</span><span class="p">],</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">_Example</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -766,7 +766,9 @@
     <span class="k">return</span> <span class="n">example</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_get_mlflow_model_input_example_dict</span><span class="p">(</span><span class="n">mlflow_model</span><span class="p">:</span> <span class="n">Model</span><span class="p">,</span> <span class="n">uri_or_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_mlflow_model_input_example_dict</span><span class="p">(</span>
+    <span class="n">mlflow_model</span><span class="p">:</span> <span class="n">Model</span><span class="p">,</span> <span class="n">uri_or_path</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Args:</span>
 <span class="sd">        mlflow_model: Model metadata.</span>
@@ -1040,7 +1042,13 @@
         <span class="c1"># NB: datetime values have variable precision denoted by brackets, e.g. datetime64[ns]</span>
         <span class="c1"># denotes nanosecond precision. Since MLflow datetime type is precision agnostic, we</span>
         <span class="c1"># ignore precision when matching datetime columns.</span>
-        <span class="k">return</span> <span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">&quot;datetime64[ns]&quot;</span><span class="p">))</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">&quot;datetime64[ns]&quot;</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
+                <span class="s2">&quot;Please ensure that the input data of datetime column only contains timezone-naive &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;datetime objects. Error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
 
     <span class="k">if</span> <span class="n">t</span> <span class="o">==</span> <span class="n">DataType</span><span class="o">.</span><span class="n">datetime</span> <span class="ow">and</span> <span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="nb">object</span> <span class="ow">or</span> <span class="n">values</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">t</span><span class="o">.</span><span class="n">to_python</span><span class="p">()):</span>
         <span class="c1"># NB: Pyspark date columns get converted to object when converted to a pandas</span>
@@ -1494,10 +1502,17 @@
         <span class="n">missing_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">input_names</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">missing_cols</span><span class="p">]</span>
         <span class="n">extra_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">actual_cols</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">extra_cols</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">missing_cols</span><span class="p">:</span>
-            <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Model is missing inputs </span><span class="si">{</span><span class="n">missing_cols</span><span class="si">}</span><span class="s2">.&quot;</span>
-            <span class="k">if</span> <span class="n">extra_cols</span><span class="p">:</span>
-                <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; Note that there were extra inputs: </span><span class="si">{</span><span class="n">extra_cols</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="c1"># If the user has set MLFLOW_DISABLE_SCHEMA_DETAILS to true, we raise a generic error</span>
+            <span class="k">if</span> <span class="n">MLFLOW_DISABLE_SCHEMA_DETAILS</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Input schema validation failed. Mismatched or missing input(s).&quot;</span>
+                <span class="k">if</span> <span class="n">extra_cols</span><span class="p">:</span>
+                    <span class="n">message</span> <span class="o">+=</span> <span class="s2">&quot; Note that there were extra inputs provided.&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Model is missing inputs </span><span class="si">{</span><span class="n">missing_cols</span><span class="si">}</span><span class="s2">.&quot;</span>
+                <span class="k">if</span> <span class="n">extra_cols</span><span class="p">:</span>
+                    <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; Note that there were extra inputs: </span><span class="si">{</span><span class="n">extra_cols</span><span class="si">}</span><span class="s2">.&quot;</span>
             <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="n">extra_cols</span><span class="p">:</span>
             <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
                 <span class="s2">&quot;Found extra inputs in the model input that are not defined in the model &quot;</span>
@@ -2023,7 +2038,7 @@
     <span class="k">return</span> <span class="n">data</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_convert_llm_input_data</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_convert_llm_input_data</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert input data to a format that can be passed to the model with GenAI flavors such as</span>
 <span class="sd">    LangChain and LLamaIndex.</span>
@@ -2223,8 +2238,7 @@
 
 <span class="c1"># NB: this function should always be kept in sync with the serving</span>
 <span class="c1"># process in scoring_server invocations.</span>
-<div class="viewcode-block" id="validate_serving_input"><a class="viewcode-back" href="../../../python_api/mlflow.models.html#mlflow.models.validate_serving_input">[docs]</a><span class="nd">@experimental</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">validate_serving_input</span><span class="p">(</span><span class="n">model_uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">serving_input</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]):</span>
+<div class="viewcode-block" id="validate_serving_input"><a class="viewcode-back" href="../../../python_api/mlflow.models.html#mlflow.models.validate_serving_input">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">validate_serving_input</span><span class="p">(</span><span class="n">model_uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">serving_input</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Helper function to validate the model can be served and provided input is valid</span>
 <span class="sd">    prior to serving the model.</span>
@@ -2319,7 +2333,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'3.1.3',
+      VERSION:'3.2.0rc0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

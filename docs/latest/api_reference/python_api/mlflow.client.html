@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MLflow 3.1.3 documentation" href="../index.html"/>
+    <link rel="top" title="MLflow 3.2.0rc0 documentation" href="../index.html"/>
         <link rel="up" title="Python API" href="index.html"/>
         <link rel="next" title="mlflow.config" href="/mlflow.config.html"/>
         <link rel="prev" title="mlflow.catboost" href="/mlflow.catboost.html"/> 
@@ -150,7 +150,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link">3.1.3</span>
+  <span class="header-link">3.2.0rc0</span>
 </div>
   </nav>
   <page>
@@ -249,6 +249,7 @@
 <li class="toctree-l2"><a class="reference internal" href="index.html#log-levels">Log Levels</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../typescript_api/index.html">TypeScript API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cli.html">Command-Line Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../auth/python-api.html">MLflow Authentication Python API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../auth/rest-api.html">MLflow Authentication REST API</a></li>
@@ -593,7 +594,7 @@ when used with Unity Catalog registries.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlflow.client.MlflowClient.create_prompt_version">
-<span class="sig-name descname"><span class="pre">create_prompt_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="mlflow.entities.html#mlflow.entities.model_registry.PromptVersion" title="mlflow.entities.model_registry.PromptVersion"><span class="pre">PromptVersion</span></a></span></span><a class="reference internal" href="../_modules/mlflow/tracking/client.html#MlflowClient.create_prompt_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.client.MlflowClient.create_prompt_version" title="Permalink to this definition"> </a></dt>
+<span class="sig-name descname"><span class="pre">create_prompt_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">typing.Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response_format</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">pydantic.main.BaseModel</span><span class="p"><span class="pre">,</span> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">typing.Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="mlflow.entities.html#mlflow.entities.model_registry.PromptVersion" title="mlflow.entities.model_registry.PromptVersion"><span class="pre">PromptVersion</span></a></span></span><a class="reference internal" href="../_modules/mlflow/tracking/client.html#MlflowClient.create_prompt_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.client.MlflowClient.create_prompt_version" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Experimental: This function may change or be removed in a future release without warning.</p>
@@ -605,9 +606,12 @@ when used with Unity Catalog registries.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>name</strong> – Name of the prompt.</p></li>
-<li><p><strong>template</strong> – Template text of the prompt version.</p></li>
+<li><p><strong>template</strong> – The prompt template content for this version.</p></li>
 <li><p><strong>description</strong> – Optional description of the prompt version.</p></li>
 <li><p><strong>tags</strong> – Optional dictionary of prompt version tags.</p></li>
+<li><p><strong>response_format</strong> – Optional Pydantic class or dictionary defining the expected response
+structure. This can be used to specify the schema for structured
+outputs from LLM calls.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -737,11 +741,6 @@ status: RUNNING
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="mlflow.client.MlflowClient.delete_assessment">
-<span class="sig-name descname"><span class="pre">delete_assessment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trace_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assessment_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/mlflow/tracking/client.html#MlflowClient.delete_assessment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.client.MlflowClient.delete_assessment" title="Permalink to this definition"> </a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="mlflow.client.MlflowClient.delete_experiment">
 <span class="sig-name descname"><span class="pre">delete_experiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/mlflow/tracking/client.html#MlflowClient.delete_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.client.MlflowClient.delete_experiment" title="Permalink to this definition"> </a></dt>
 <dd><p>Delete an experiment from the backend store.</p>
@@ -776,6 +775,38 @@ Artifact Location: file:///.../mlruns/1
 Lifecycle_stage: deleted
 </pre></div>
 </div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.client.MlflowClient.delete_experiment_tag">
+<span class="sig-name descname"><span class="pre">delete_experiment_tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/mlflow/tracking/client.html#MlflowClient.delete_experiment_tag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.client.MlflowClient.delete_experiment_tag" title="Permalink to this definition"> </a></dt>
+<dd><p>Delete a tag from the experiment with the specified ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>experiment_id</strong> – String ID of the experiment.</p></li>
+<li><p><strong>key</strong> – Name of the tag to be deleted.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowClient</span>
+
+<span class="c1"># Create an experiment and set its tag</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">MlflowClient</span><span class="p">()</span>
+<span class="n">experiment_id</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_experiment</span><span class="p">(</span><span class="s2">&quot;Social Media NLP Experiments&quot;</span><span class="p">)</span>
+<span class="n">client</span><span class="o">.</span><span class="n">set_experiment_tag</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">,</span> <span class="s2">&quot;nlp.framework&quot;</span><span class="p">,</span> <span class="s2">&quot;Spark NLP&quot;</span><span class="p">)</span>
+
+<span class="c1"># Fetch experiment metadata information, validate that tag is set</span>
+<span class="n">experiment</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_experiment</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">experiment</span><span class="o">.</span><span class="n">tags</span> <span class="o">==</span> <span class="p">{</span><span class="s2">&quot;nlp.framework&quot;</span><span class="p">:</span> <span class="s2">&quot;Spark NLP&quot;</span><span class="p">}</span>
+
+<span class="n">client</span><span class="o">.</span><span class="n">delete_experiment_tag</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">,</span> <span class="s2">&quot;nlp.framework&quot;</span><span class="p">)</span>
+
+<span class="c1"># Fetch experiment metadata information, validate that tag is deleted</span>
+<span class="n">experiment</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_experiment</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">experiment</span><span class="o">.</span><span class="n">tags</span> <span class="o">==</span> <span class="p">{}</span>
+</pre></div>
 </div>
 </dd></dl>
 
@@ -2777,11 +2808,6 @@ is_dir: True
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="mlflow.client.MlflowClient.log_assessment">
-<span class="sig-name descname"><span class="pre">log_assessment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trace_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="mlflow.entities.html#mlflow.entities.AssessmentSource" title="mlflow.entities.AssessmentSource"><span class="pre">AssessmentSource</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">expectation</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="mlflow.entities.html#mlflow.entities.Expectation" title="mlflow.entities.Expectation"><span class="pre">Expectation</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feedback</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="mlflow.entities.html#mlflow.entities.Feedback" title="mlflow.entities.Feedback"><span class="pre">Feedback</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rationale</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">typing.Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">span_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="mlflow.entities.html#mlflow.entities.Assessment" title="mlflow.entities.Assessment"><span class="pre">Assessment</span></a></span></span><a class="reference internal" href="../_modules/mlflow/tracking/client.html#MlflowClient.log_assessment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.client.MlflowClient.log_assessment" title="Permalink to this definition"> </a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="mlflow.client.MlflowClient.log_batch">
 <span class="sig-name descname"><span class="pre">log_batch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">run_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="mlflow.entities.html#mlflow.entities.Metric" title="mlflow.entities.Metric"><span class="pre">Metric</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="mlflow.entities.html#mlflow.entities.Param" title="mlflow.entities.Param"><span class="pre">Param</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="mlflow.entities.html#mlflow.entities.RunTag" title="mlflow.entities.RunTag"><span class="pre">RunTag</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">synchronous</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="mlflow.utils.html#mlflow.utils.async_logging.run_operations.RunOperations" title="mlflow.utils.async_logging.run_operations.RunOperations"><span class="pre">mlflow.utils.async_logging.run_operations.RunOperations</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/mlflow/tracking/client.html#MlflowClient.log_batch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.client.MlflowClient.log_batch" title="Permalink to this definition"> </a></dt>
 <dd><p>Log multiple metrics, params, and/or tags.</p>
@@ -3445,31 +3471,43 @@ the text is saved (e.g. “dir/file.txt”).</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlflow.client.MlflowClient.register_prompt">
-<span class="sig-name descname"><span class="pre">register_prompt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">commit_message</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="mlflow.entities.html#mlflow.entities.model_registry.PromptVersion" title="mlflow.entities.model_registry.PromptVersion"><span class="pre">PromptVersion</span></a></span></span><a class="reference internal" href="../_modules/mlflow/tracking/client.html#MlflowClient.register_prompt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.client.MlflowClient.register_prompt" title="Permalink to this definition"> </a></dt>
+<span class="sig-name descname"><span class="pre">register_prompt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">typing.Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">commit_message</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response_format</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">pydantic.main.BaseModel</span><span class="p"><span class="pre">,</span> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">typing.Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="mlflow.entities.html#mlflow.entities.model_registry.PromptVersion" title="mlflow.entities.model_registry.PromptVersion"><span class="pre">PromptVersion</span></a></span></span><a class="reference internal" href="../_modules/mlflow/tracking/client.html#MlflowClient.register_prompt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.client.MlflowClient.register_prompt" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Experimental: This function may change or be removed in a future release without warning.</p>
 </div>
 <p>Register a new <a class="reference internal" href="mlflow.entities.html#mlflow.entities.Prompt" title="mlflow.entities.Prompt"><code class="xref py py-class docutils literal notranslate"><span class="pre">Prompt</span></code></a> in the MLflow Prompt Registry.</p>
 <p>A <a class="reference internal" href="mlflow.entities.html#mlflow.entities.Prompt" title="mlflow.entities.Prompt"><code class="xref py py-class docutils literal notranslate"><span class="pre">Prompt</span></code></a> is a pair of name
-and template text at minimum. With MLflow Prompt Registry, you can create, manage,
+and template content at minimum. With MLflow Prompt Registry, you can create, manage,
 and version control prompts with the MLflow’s robust model tracking framework.</p>
 <p>If there is no registered prompt with the given name, a new prompt will be created.
 Otherwise, a new version of the existing prompt will be created.</p>
 <p>Example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowClient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span>
 
 <span class="c1"># Your prompt registry URI</span>
 <span class="n">client</span> <span class="o">=</span> <span class="n">MlflowClient</span><span class="p">(</span><span class="n">registry_uri</span><span class="o">=</span><span class="s2">&quot;sqlite:///prompt_registry.db&quot;</span><span class="p">)</span>
 
-<span class="c1"># Register a new prompt</span>
+<span class="c1"># Register a text prompt</span>
 <span class="n">client</span><span class="o">.</span><span class="n">register_prompt</span><span class="p">(</span>
-    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;my_prompt&quot;</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;greeting_prompt&quot;</span><span class="p">,</span>
     <span class="n">template</span><span class="o">=</span><span class="s2">&quot;Respond to the user&#39;s message as a {{style}} AI.&quot;</span><span class="p">,</span>
+    <span class="n">response_format</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A friendly response&quot;</span><span class="p">},</span>
+<span class="p">)</span>
+
+<span class="c1"># Register a chat prompt with multiple messages</span>
+<span class="n">client</span><span class="o">.</span><span class="n">register_prompt</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;assistant_prompt&quot;</span><span class="p">,</span>
+    <span class="n">template</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;You are a helpful {{style}} assistant.&quot;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;{{question}}&quot;</span><span class="p">},</span>
+    <span class="p">],</span>
+    <span class="n">response_format</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span> <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;answer&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">}}},</span>
 <span class="p">)</span>
 
 <span class="c1"># Load the prompt from the registry</span>
-<span class="n">prompt</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">load_prompt</span><span class="p">(</span><span class="s2">&quot;my_prompt&quot;</span><span class="p">)</span>
+<span class="n">prompt</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">load_prompt</span><span class="p">(</span><span class="s2">&quot;greeting_prompt&quot;</span><span class="p">)</span>
 
 <span class="c1"># Use the prompt in your application</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">openai</span>
@@ -3485,7 +3523,7 @@ Otherwise, a new version of the existing prompt will be created.</p>
 
 <span class="c1"># Update the prompt with a new version</span>
 <span class="n">prompt</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">register_prompt</span><span class="p">(</span>
-    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;my_prompt&quot;</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;greeting_prompt&quot;</span><span class="p">,</span>
     <span class="n">template</span><span class="o">=</span><span class="s2">&quot;Respond to the user&#39;s message as a {{style}} AI. {{greeting}}&quot;</span><span class="p">,</span>
     <span class="n">commit_message</span><span class="o">=</span><span class="s2">&quot;Add a greeting to the prompt.&quot;</span><span class="p">,</span>
     <span class="n">tags</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;author&quot;</span><span class="p">:</span> <span class="s2">&quot;Bob&quot;</span><span class="p">},</span>
@@ -3496,14 +3534,23 @@ Otherwise, a new version of the existing prompt will be created.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>name</strong> – The name of the prompt.</p></li>
-<li><p><strong>template</strong> – The template text of the prompt. It can contain variables enclosed in
-double curly braces, e.g. {{variable}}, which will be replaced with actual values
-by the <cite>format</cite> method.</p></li>
+<li><p><strong>template</strong> – <p>The template content of the prompt. Can be either:</p>
+<ul>
+<li><p>A string containing text with variables enclosed in double curly braces,
+e.g. {{variable}}, which will be replaced with actual values by the <cite>format</cite>
+method.</p></li>
+<li><p>A list of dictionaries representing chat messages, where each message has
+‘role’ and ‘content’ keys (e.g., [{“role”: “user”, “content”: “Hello {{name}}”}])</p></li>
+</ul>
+</p></li>
 <li><p><strong>commit_message</strong> – A message describing the changes made to the prompt, similar to a
 Git commit message. Optional.</p></li>
 <li><p><strong>tags</strong> – A dictionary of tags associated with the <strong>prompt version</strong>.
 This is useful for storing version-specific information, such as the author of
 the changes. Optional.</p></li>
+<li><p><strong>response_format</strong> – Optional Pydantic class or dictionary defining the expected response
+structure. This can be used to specify the schema for structured outputs from LLM
+calls.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -4044,7 +4091,7 @@ further restrict results via a standard registry filter expression.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>filter_string</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – An additional registry‐search expression to apply (e.g.
+<li><p><strong>filter_string</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – An additional registry-search expression to apply (e.g.
 <cite>“name LIKE ‘my_prompt%’”</cite>).  For Unity Catalog registries, must include
 catalog and schema: “catalog = ‘catalog_name’ AND schema = ‘schema_name’”.</p></li>
 <li><p><strong>max_results</strong> (<em>int</em>) – The maximum number of prompts to return in one page.  Defaults
@@ -5035,11 +5082,6 @@ Stage: Staging
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="mlflow.client.MlflowClient.update_assessment">
-<span class="sig-name descname"><span class="pre">update_assessment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trace_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assessment_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expectation</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="mlflow.entities.html#mlflow.entities.Expectation" title="mlflow.entities.Expectation"><span class="pre">Expectation</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feedback</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="mlflow.entities.html#mlflow.entities.Feedback" title="mlflow.entities.Feedback"><span class="pre">Feedback</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rationale</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">typing.Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="mlflow.entities.html#mlflow.entities.Assessment" title="mlflow.entities.Assessment"><span class="pre">Assessment</span></a></span></span><a class="reference internal" href="../_modules/mlflow/tracking/client.html#MlflowClient.update_assessment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.client.MlflowClient.update_assessment" title="Permalink to this definition"> </a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="mlflow.client.MlflowClient.update_model_version">
 <span class="sig-name descname"><span class="pre">update_model_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="mlflow.entities.html#mlflow.entities.model_registry.ModelVersion" title="mlflow.entities.model_registry.ModelVersion"><span class="pre">ModelVersion</span></a></span></span><a class="reference internal" href="../_modules/mlflow/tracking/client.html#MlflowClient.update_model_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.client.MlflowClient.update_model_version" title="Permalink to this definition"> </a></dt>
 <dd><p>Update metadata associated with a model version in backend.</p>
@@ -5264,7 +5306,7 @@ status: FINISHED
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../',
-      VERSION:'3.1.3',
+      VERSION:'3.2.0rc0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

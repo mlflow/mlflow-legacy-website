@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 3.1.3 documentation" href="../../../index.html"/>
+    <link rel="top" title="MLflow 3.2.0rc0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -149,7 +149,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link">3.1.3</span>
+  <span class="header-link">3.2.0rc0</span>
 </div>
   </nav>
   <page>
@@ -186,6 +186,7 @@
       
         <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../python_api/index.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../typescript_api/index.html">TypeScript API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../cli.html">Command-Line Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../auth/python-api.html">MLflow Authentication Python API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../auth/rest-api.html">MLflow Authentication REST API</a></li>
@@ -454,7 +455,7 @@
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">get_dependencies_from_conda_yaml</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_mlflow_conda_env</span><span class="p">(</span>  <span class="c1"># noqa: D417</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_mlflow_conda_env</span><span class="p">(</span>
     <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">additional_conda_deps</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">additional_pip_deps</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -770,11 +771,15 @@
         <span class="n">in_file</span> <span class="o">=</span> <span class="n">tmp_dir_path</span> <span class="o">/</span> <span class="s2">&quot;requirements.in&quot;</span>
         <span class="n">in_file</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">requirements</span><span class="p">))</span>
         <span class="n">out_file</span> <span class="o">=</span> <span class="n">tmp_dir_path</span> <span class="o">/</span> <span class="s2">&quot;requirements.out&quot;</span>
-        <span class="n">constraints_opt</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">constraints_opt</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="n">constraints</span><span class="p">:</span>
             <span class="n">constraints_file</span> <span class="o">=</span> <span class="n">tmp_dir_path</span> <span class="o">/</span> <span class="s2">&quot;constraints.txt&quot;</span>
             <span class="n">constraints_file</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">constraints</span><span class="p">))</span>
             <span class="n">constraints_opt</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;--constraints=</span><span class="si">{</span><span class="n">constraints_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">pip_constraint</span> <span class="o">:=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;PIP_CONSTRAINT&quot;</span><span class="p">):</span>
+            <span class="c1"># If PIP_CONSTRAINT is set, use it as a constraint file</span>
+            <span class="n">constraints_opt</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;--constraints=</span><span class="si">{</span><span class="n">pip_constraint</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span>
+
         <span class="k">try</span><span class="p">:</span>
             <span class="n">uv_options</span><span class="p">,</span> <span class="n">uv_envs</span> <span class="o">=</span> <span class="n">_get_uv_options_for_databricks</span><span class="p">()</span>
             <span class="n">out</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span>
@@ -849,7 +854,11 @@
     <span class="k">try</span><span class="p">:</span>
         <span class="c1"># `Requirement` throws an `InvalidRequirement` exception if `requirement_string` doesn&#39;t</span>
         <span class="c1"># conform to PEP 508 (https://www.python.org/dev/peps/pep-0508).</span>
-        <span class="k">return</span> <span class="n">Requirement</span><span class="p">(</span><span class="n">requirement_string</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;mlflow&quot;</span><span class="p">,</span> <span class="s2">&quot;mlflow-skinny&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">Requirement</span><span class="p">(</span><span class="n">requirement_string</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span>
+            <span class="s2">&quot;mlflow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;mlflow-skinny&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;mlflow-tracing&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
     <span class="k">except</span> <span class="n">InvalidRequirement</span><span class="p">:</span>
         <span class="c1"># A local file path or URL falls into this branch.</span>
 
@@ -895,9 +904,7 @@
     <span class="c1"># is always a micro-version ahead of the latest release (unless it&#39;s manually modified)</span>
     <span class="c1"># and can&#39;t be installed from PyPI. We therefore subtract 1 from the micro version when running</span>
     <span class="c1"># tests.</span>
-    <span class="c1"># TODO: Remove this hardcoded version once we released the stable 3.0.0 version.</span>
-    <span class="k">return</span> <span class="s2">&quot;mlflow@git+https://github.com/mlflow/mlflow.git&quot;</span>
-    <span class="c1"># return f&quot;mlflow=={version.major}.{version.minor}.{version.micro - 1}&quot;</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;mlflow==</span><span class="si">{</span><span class="n">version</span><span class="o">.</span><span class="n">major</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">version</span><span class="o">.</span><span class="n">minor</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">version</span><span class="o">.</span><span class="n">micro</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_contains_mlflow_requirement</span><span class="p">(</span><span class="n">requirements</span><span class="p">):</span>
@@ -1284,7 +1291,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'3.1.3',
+      VERSION:'3.2.0rc0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

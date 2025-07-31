@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="MLflow 3.1.3 documentation" href="../../../../index.html"/>
+    <link rel="top" title="MLflow 3.2.0rc0 documentation" href="../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../index.html"/> 
 
   
@@ -149,7 +149,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link">3.1.3</span>
+  <span class="header-link">3.2.0rc0</span>
 </div>
   </nav>
   <page>
@@ -186,6 +186,7 @@
       
         <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../python_api/index.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../typescript_api/index.html">TypeScript API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../cli.html">Command-Line Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../auth/python-api.html">MLflow Authentication Python API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../auth/rest-api.html">MLflow Authentication REST API</a></li>
@@ -247,7 +248,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">OrderedDict</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">contextmanager</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">lru_cache</span><span class="p">,</span> <span class="n">partial</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">Union</span>
 
@@ -260,7 +261,11 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.credentials</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_default_host_creds</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.databricks_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_databricks_host_creds</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.file_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">path_to_local_file_uri</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.uri</span><span class="w"> </span><span class="kn">import</span> <span class="n">_DATABRICKS_UNITY_CATALOG_SCHEME</span><span class="p">,</span> <span class="n">_OSS_UNITY_CATALOG_SCHEME</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.uri</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">_DATABRICKS_UNITY_CATALOG_SCHEME</span><span class="p">,</span>
+    <span class="n">_OSS_UNITY_CATALOG_SCHEME</span><span class="p">,</span>
+    <span class="n">get_uri_scheme</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 <span class="n">_tracking_uri</span> <span class="o">=</span> <span class="kc">None</span>
@@ -456,6 +461,26 @@
     <span class="k">return</span> <span class="n">_tracking_store_registry</span><span class="o">.</span><span class="n">get_store</span><span class="p">(</span><span class="n">store_uri</span><span class="p">,</span> <span class="n">artifact_uri</span><span class="p">)</span>
 
 
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_tracking_scheme</span><span class="p">(</span><span class="n">store_uri</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">resolved_store_uri</span> <span class="o">=</span> <span class="n">_resolve_tracking_uri</span><span class="p">(</span><span class="n">store_uri</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_get_tracking_scheme_with_resolved_uri</span><span class="p">(</span><span class="n">resolved_store_uri</span><span class="p">)</span>
+
+
+<span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_tracking_scheme_with_resolved_uri</span><span class="p">(</span><span class="n">resolved_store_uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">scheme</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">resolved_store_uri</span>
+        <span class="k">if</span> <span class="n">resolved_store_uri</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;databricks&quot;</span><span class="p">,</span> <span class="s2">&quot;databricks-uc&quot;</span><span class="p">,</span> <span class="s2">&quot;uc&quot;</span><span class="p">}</span>
+        <span class="k">else</span> <span class="n">get_uri_scheme</span><span class="p">(</span><span class="n">resolved_store_uri</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">builder</span> <span class="o">=</span> <span class="n">_tracking_store_registry</span><span class="o">.</span><span class="n">_registry</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">scheme</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">builder</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;None&quot;</span>
+    <span class="k">if</span> <span class="n">builder</span><span class="o">.</span><span class="vm">__module__</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;mlflow&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;custom_scheme&quot;</span>
+    <span class="k">return</span> <span class="n">scheme</span>
+
+
 <span class="n">_artifact_repos_cache</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
 
 
@@ -535,7 +560,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../../',
-      VERSION:'3.1.3',
+      VERSION:'3.2.0rc0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',
