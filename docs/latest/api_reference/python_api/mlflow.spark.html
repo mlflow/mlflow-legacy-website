@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MLflow 3.1.3 documentation" href="../index.html"/>
+    <link rel="top" title="MLflow 3.2.0rc0 documentation" href="../index.html"/>
         <link rel="up" title="Python API" href="index.html"/>
         <link rel="next" title="mlflow.statsmodels" href="/mlflow.statsmodels.html"/>
         <link rel="prev" title="mlflow.spacy" href="/mlflow.spacy.html"/> 
@@ -150,7 +150,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link">3.1.3</span>
+  <span class="header-link">3.2.0rc0</span>
 </div>
   </nav>
   <page>
@@ -249,6 +249,7 @@
 <li class="toctree-l2"><a class="reference internal" href="index.html#log-levels">Log Levels</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../typescript_api/index.html">TypeScript API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cli.html">Command-Line Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../auth/python-api.html">MLflow Authentication Python API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../auth/rest-api.html">MLflow Authentication REST API</a></li>
@@ -325,7 +326,7 @@ for performing inference. This flavor is always produced.</p>
 <span class="sig-prename descclassname"><span class="pre">mlflow.spark.</span></span><span class="sig-name descname"><span class="pre">autolog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">disable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">silent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/spark.html#autolog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.spark.autolog" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Autologging is known to be compatible with the following package versions: <code class="docutils literal notranslate"><span class="pre">3.2.1</span></code> &lt;= <code class="docutils literal notranslate"><span class="pre">pyspark</span></code> &lt;= <code class="docutils literal notranslate"><span class="pre">4.0.0</span></code>. Autologging may not succeed when used with package versions outside of this range.</p>
+<p>Autologging is known to be compatible with the following package versions: <code class="docutils literal notranslate"><span class="pre">3.3.0</span></code> &lt;= <code class="docutils literal notranslate"><span class="pre">pyspark</span></code> &lt;= <code class="docutils literal notranslate"><span class="pre">4.0.0</span></code>. Autologging may not succeed when used with package versions outside of this range.</p>
 </div>
 <p>Enables (or disables) and configures logging of Spark datasource paths, versions
 (if applicable), and formats when they are read. This method is not threadsafe and assumes a
@@ -465,7 +466,7 @@ path will be created.</p></li>
 </dl>
 <div class="literal-block-wrapper docutils container" id="id4">
 <div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id4" title="Permalink to this code"> </a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">spark</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">mlflow</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">spark</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s2">&quot;spark-model&quot;</span><span class="p">)</span>
 <span class="c1"># Prepare test documents, which are unlabeled (id, text) tuples.</span>
@@ -824,7 +825,7 @@ section of the model’s conda environment (<code class="docutils literal notran
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../',
-      VERSION:'3.1.3',
+      VERSION:'3.2.0rc0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

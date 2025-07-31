@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MLflow 3.1.3 documentation" href="../index.html"/>
+    <link rel="top" title="MLflow 3.2.0rc0 documentation" href="../index.html"/>
         <link rel="up" title="Python API" href="index.html"/>
         <link rel="next" title="mlflow.sagemaker" href="/mlflow.sagemaker.html"/>
         <link rel="prev" title="mlflow.pyspark.ml" href="/mlflow.pyspark.ml.html"/> 
@@ -150,7 +150,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link">3.1.3</span>
+  <span class="header-link">3.2.0rc0</span>
 </div>
   </nav>
   <page>
@@ -249,6 +249,7 @@
 <li class="toctree-l2"><a class="reference internal" href="index.html#log-levels">Log Levels</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../typescript_api/index.html">TypeScript API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cli.html">Command-Line Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../auth/python-api.html">MLflow Authentication Python API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../auth/rest-api.html">MLflow Authentication REST API</a></li>
@@ -315,6 +316,107 @@ exports PyTorch models with the following flavors:</p>
 <dt><a class="reference internal" href="mlflow.pyfunc.html#module-mlflow.pyfunc" title="mlflow.pyfunc"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mlflow.pyfunc</span></code></a></dt><dd><p>Produced for use by generic pyfunc-based deployment tools and batch inference.</p>
 </dd>
 </dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="mlflow.pytorch.MlflowModelCheckpointCallback">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.pytorch.</span></span><span class="sig-name descname"><span class="pre">MlflowModelCheckpointCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">monitor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'val_loss'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'min'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_best_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_weights_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_freq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'epoch'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/pytorch/_lightning_autolog.html#MlflowModelCheckpointCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.pytorch.MlflowModelCheckpointCallback" title="Permalink to this definition"> </a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pytorch_lightning.callbacks.callback.Callback</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">mlflow.utils.checkpoint_utils.MlflowModelCheckpointCallbackBase</span></code></p>
+<p>Callback for auto-logging pytorch-lightning model checkpoints to MLflow.
+This callback implementation only supports pytorch-lightning &gt;= 1.6.0.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>monitor</strong> – In automatic model checkpointing, the metric name to monitor if
+you set <cite>model_checkpoint_save_best_only</cite> to True.</p></li>
+<li><p><strong>save_best_only</strong> – If True, automatic model checkpointing only saves when
+the model is considered the “best” model according to the quantity
+monitored and previous checkpoint model is overwritten.</p></li>
+<li><p><strong>mode</strong> – one of {“min”, “max”}. In automatic model checkpointing,
+if save_best_only=True, the decision to overwrite the current save file is made
+based on either the maximization or the minimization of the monitored quantity.</p></li>
+<li><p><strong>save_weights_only</strong> – In automatic model checkpointing, if True, then
+only the model’s weights will be saved. Otherwise, the optimizer states,
+lr-scheduler states, etc are added in the checkpoint too.</p></li>
+<li><p><strong>save_freq</strong> – <cite>“epoch”</cite> or integer. When using <cite>“epoch”</cite>, the callback
+saves the model after each epoch. When using integer, the callback
+saves the model at end of this many batches. Note that if the saving isn’t
+aligned to epochs, the monitored metric may potentially be less reliable (it
+could reflect as little as 1 batch, since the metrics get reset
+every epoch). Defaults to <cite>“epoch”</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id3" title="Permalink to this code"> </a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">mlflow</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.pytorch</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowModelCheckpointCallback</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pytorch_lightning</span><span class="w"> </span><span class="kn">import</span> <span class="n">Trainer</span>
+
+<span class="n">mlflow</span><span class="o">.</span><span class="n">pytorch</span><span class="o">.</span><span class="n">autolog</span><span class="p">(</span><span class="n">checkpoint</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">MyLightningModuleNet</span><span class="p">()</span>  <span class="c1"># A custom-pytorch lightning model</span>
+<span class="n">train_loader</span> <span class="o">=</span> <span class="n">create_train_dataset_loader</span><span class="p">()</span>
+
+<span class="n">mlflow_checkpoint_callback</span> <span class="o">=</span> <span class="n">MlflowModelCheckpointCallback</span><span class="p">()</span>
+
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">mlflow_checkpoint_callback</span><span class="p">])</span>
+
+<span class="k">with</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">start_run</span><span class="p">()</span> <span class="k">as</span> <span class="n">run</span><span class="p">:</span>
+    <span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">train_loader</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.pytorch.MlflowModelCheckpointCallback.on_fit_start">
+<span class="sig-name descname"><span class="pre">on_fit_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pytorch_lightning.trainer.trainer.Trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pytorch_lightning.core.module.LightningModule</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/mlflow/pytorch/_lightning_autolog.html#MlflowModelCheckpointCallback.on_fit_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.pytorch.MlflowModelCheckpointCallback.on_fit_start" title="Permalink to this definition"> </a></dt>
+<dd><p>Called when fit begins.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.pytorch.MlflowModelCheckpointCallback.on_train_batch_end">
+<span class="sig-name descname"><span class="pre">on_train_batch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pytorch_lightning.trainer.trainer.Trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pytorch_lightning.core.module.LightningModule</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_idx</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/mlflow/pytorch/_lightning_autolog.html#MlflowModelCheckpointCallback.on_train_batch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.pytorch.MlflowModelCheckpointCallback.on_train_batch_end" title="Permalink to this definition"> </a></dt>
+<dd><p>Called when the train batch ends.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The value <code class="docutils literal notranslate"><span class="pre">outputs[&quot;loss&quot;]</span></code> here will be the normalized value w.r.t <code class="docutils literal notranslate"><span class="pre">accumulate_grad_batches</span></code> of the
+loss returned from <code class="docutils literal notranslate"><span class="pre">training_step</span></code>.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.pytorch.MlflowModelCheckpointCallback.on_train_epoch_end">
+<span class="sig-name descname"><span class="pre">on_train_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pytorch_lightning.trainer.trainer.Trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pytorch_lightning.core.module.LightningModule</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/mlflow/pytorch/_lightning_autolog.html#MlflowModelCheckpointCallback.on_train_epoch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.pytorch.MlflowModelCheckpointCallback.on_train_epoch_end" title="Permalink to this definition"> </a></dt>
+<dd><p>Called when the train epoch ends.</p>
+<p>To access all batch outputs at the end of the epoch, you can cache step outputs as an attribute of the
+<code class="xref py py-class docutils literal notranslate"><span class="pre">pytorch_lightning.core.LightningModule</span></code> and access them in this hook:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyLightningModule</span><span class="p">(</span><span class="n">L</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">training_step_outputs</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="o">...</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">training_step_outputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">loss</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MyCallback</span><span class="p">(</span><span class="n">L</span><span class="o">.</span><span class="n">Callback</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_train_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">):</span>
+        <span class="c1"># do something with all training_step outputs, for example:</span>
+        <span class="n">epoch_mean</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">pl_module</span><span class="o">.</span><span class="n">training_step_outputs</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="n">pl_module</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;training_epoch_mean&quot;</span><span class="p">,</span> <span class="n">epoch_mean</span><span class="p">)</span>
+        <span class="c1"># free up the memory</span>
+        <span class="n">pl_module</span><span class="o">.</span><span class="n">training_step_outputs</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.pytorch.MlflowModelCheckpointCallback.save_checkpoint">
+<span class="sig-name descname"><span class="pre">save_checkpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/pytorch/_lightning_autolog.html#MlflowModelCheckpointCallback.save_checkpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.pytorch.MlflowModelCheckpointCallback.save_checkpoint" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="mlflow.pytorch.autolog">
 <span class="sig-prename descclassname"><span class="pre">mlflow.pytorch.</span></span><span class="sig-name descname"><span class="pre">autolog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_every_n_epoch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_every_n_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_models</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_datasets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclusive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disable_for_unsupported_versions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">silent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">registered_model_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_tags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint_monitor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'val_loss'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'min'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint_save_best_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint_save_weights_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint_save_freq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'epoch'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/pytorch.html#autolog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.pytorch.autolog" title="Permalink to this definition"> </a></dt>
@@ -387,8 +489,8 @@ every epoch). Defaults to <cite>“epoch”</cite>.</p></li>
 </ul>
 </dd>
 </dl>
-<div class="literal-block-wrapper docutils container" id="id3">
-<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id3" title="Permalink to this code"> </a></div>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id4" title="Permalink to this code"> </a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">lightning</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">L</span>
@@ -476,8 +578,8 @@ every epoch). Defaults to <cite>“epoch”</cite>.</p></li>
 <a class="reference internal" href="#mlflow.pytorch.save_model" title="mlflow.pytorch.save_model"><code class="xref py py-func docutils literal notranslate"><span class="pre">save_model()</span></code></a> and <a class="reference internal" href="#mlflow.pytorch.log_model" title="mlflow.pytorch.log_model"><code class="xref py py-func docutils literal notranslate"><span class="pre">log_model()</span></code></a>.</p>
 </dd>
 </dl>
-<div class="literal-block-wrapper docutils container" id="id4">
-<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id4" title="Permalink to this code"> </a></div>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id5" title="Permalink to this code"> </a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">mlflow</span>
 
 <span class="c1"># Log PyTorch model</span>
@@ -490,8 +592,8 @@ every epoch). Defaults to <cite>“epoch”</cite>.</p></li>
 </pre></div>
 </div>
 </div>
-<div class="literal-block-wrapper docutils container" id="id5">
-<div class="code-block-caption"><span class="caption-text">Output</span><a class="headerlink" href="#id5" title="Permalink to this code"> </a></div>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">Output</span><a class="headerlink" href="#id6" title="Permalink to this code"> </a></div>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>conda env {&#39;name&#39;: &#39;mlflow-env&#39;,
            &#39;channels&#39;: [&#39;conda-forge&#39;],
            &#39;dependencies&#39;: [&#39;python=3.8.15&#39;,
@@ -546,8 +648,8 @@ you set “checkpoint_save_freq” to an integer.</p></li>
 <dd class="field-even"><p>The instance of a pytorch-lightning model restored from the specified checkpoint.</p>
 </dd>
 </dl>
-<div class="literal-block-wrapper docutils container" id="id6">
-<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id6" title="Permalink to this code"> </a></div>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id7" title="Permalink to this code"> </a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">mlflow</span>
 
 <span class="n">mlflow</span><span class="o">.</span><span class="n">pytorch</span><span class="o">.</span><span class="n">autolog</span><span class="p">(</span><span class="n">checkpoint</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -598,8 +700,8 @@ This directory must already exist. If unspecified, a local output path will be c
 <dd class="field-even"><p>A PyTorch model.</p>
 </dd>
 </dl>
-<div class="literal-block-wrapper docutils container" id="id7">
-<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id7" title="Permalink to this code"> </a></div>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id8" title="Permalink to this code"> </a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">mlflow.pytorch</span>
 
@@ -620,8 +722,8 @@ This directory must already exist. If unspecified, a local output path will be c
 </pre></div>
 </div>
 </div>
-<div class="literal-block-wrapper docutils container" id="id8">
-<div class="code-block-caption"><span class="caption-text">Output</span><a class="headerlink" href="#id8" title="Permalink to this code"> </a></div>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">Output</span><a class="headerlink" href="#id9" title="Permalink to this code"> </a></div>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>predict X: 4.0, y_pred: 7.57
 predict X: 6.0, y_pred: 11.64
 predict X: 30.0, y_pred: 60.48
@@ -781,8 +883,8 @@ section of the model’s conda environment (<code class="docutils literal notran
 metadata of the logged model.</p>
 </dd>
 </dl>
-<div class="literal-block-wrapper docutils container" id="id9">
-<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id9" title="Permalink to this code"> </a></div>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id10" title="Permalink to this code"> </a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">mlflow</span>
@@ -833,8 +935,8 @@ metadata of the logged model.</p>
 </pre></div>
 </div>
 </div>
-<div class="literal-block-wrapper docutils container" id="id10">
-<div class="code-block-caption"><span class="caption-text">Output</span><a class="headerlink" href="#id10" title="Permalink to this code"> </a></div>
+<div class="literal-block-wrapper docutils container" id="id11">
+<div class="code-block-caption"><span class="caption-text">Output</span><a class="headerlink" href="#id11" title="Permalink to this code"> </a></div>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>run_id: 1a1ec9e413ce48e9abf9aec20efd6f71
 artifacts: [&#39;model/data/model.pth&#39;,
             &#39;model/data/pickle_module_info.txt&#39;]
@@ -843,9 +945,9 @@ artifacts: [&#39;scripted_model/data/model.pth&#39;,
 </pre></div>
 </div>
 </div>
-<div class="figure align-default" id="id11">
+<div class="figure align-default" id="id12">
 <img alt="../_images/pytorch_logged_models.png" src="../_images/pytorch_logged_models.png" />
-<p class="caption"><span class="caption-text">PyTorch logged models</span><a class="headerlink" href="#id11" title="Permalink to this image"> </a></p>
+<p class="caption"><span class="caption-text">PyTorch logged models</span><a class="headerlink" href="#id12" title="Permalink to this image"> </a></p>
 </div>
 </dd></dl>
 
@@ -974,8 +1076,8 @@ section of the model’s conda environment (<code class="docutils literal notran
 </ul>
 </dd>
 </dl>
-<div class="literal-block-wrapper docutils container" id="id12">
-<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id12" title="Permalink to this code"> </a></div>
+<div class="literal-block-wrapper docutils container" id="id13">
+<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id13" title="Permalink to this code"> </a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">mlflow</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
@@ -1004,8 +1106,8 @@ section of the model’s conda environment (<code class="docutils literal notran
 </pre></div>
 </div>
 </div>
-<div class="literal-block-wrapper docutils container" id="id13">
-<div class="code-block-caption"><span class="caption-text">Output</span><a class="headerlink" href="#id13" title="Permalink to this code"> </a></div>
+<div class="literal-block-wrapper docutils container" id="id14">
+<div class="code-block-caption"><span class="caption-text">Output</span><a class="headerlink" href="#id14" title="Permalink to this code"> </a></div>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Loaded model:
 predict X: 6.0, y_pred: 11.90
 predict X: 8.0, y_pred: 15.92
@@ -1062,7 +1164,7 @@ predict X: 30.0, y_pred: 60.13
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../',
-      VERSION:'3.1.3',
+      VERSION:'3.2.0rc0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

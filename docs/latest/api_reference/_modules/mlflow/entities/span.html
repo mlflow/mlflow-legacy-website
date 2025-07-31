@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 3.1.3 documentation" href="../../../index.html"/>
+    <link rel="top" title="MLflow 3.2.0rc0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -149,7 +149,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link">3.1.3</span>
+  <span class="header-link">3.2.0rc0</span>
 </div>
   </nav>
   <page>
@@ -186,6 +186,7 @@
       
         <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../python_api/index.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../typescript_api/index.html">TypeScript API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../cli.html">Command-Line Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../auth/python-api.html">MLflow Authentication Python API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../auth/rest-api.html">MLflow Authentication REST API</a></li>
@@ -271,6 +272,7 @@
     <span class="n">encode_span_id</span><span class="p">,</span>
     <span class="n">encode_trace_id</span><span class="p">,</span>
 <span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.utils.processor</span><span class="w"> </span><span class="kn">import</span> <span class="n">apply_span_processors</span>
 
 <span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -718,7 +720,12 @@
                 <span class="n">INVALID_PARAMETER_VALUE</span><span class="p">,</span>
             <span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_status</span><span class="p">(</span><span class="n">SpanStatusCode</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_status</span><span class="p">(</span>
+            <span class="n">SpanStatus</span><span class="p">(</span>
+                <span class="n">status_code</span><span class="o">=</span><span class="n">SpanStatusCode</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                <span class="n">description</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">exception</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">exception</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">end</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -758,6 +765,9 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="n">SpanStatusCode</span><span class="o">.</span><span class="n">ERROR</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">set_status</span><span class="p">(</span><span class="n">SpanStatus</span><span class="p">(</span><span class="n">SpanStatusCode</span><span class="o">.</span><span class="n">OK</span><span class="p">))</span>
 
+            <span class="c1"># Apply span processors</span>
+            <span class="n">apply_span_processors</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
             <span class="bp">self</span><span class="o">.</span><span class="n">_span</span><span class="o">.</span><span class="n">end</span><span class="p">(</span><span class="n">end_time</span><span class="o">=</span><span class="n">end_time_ns</span><span class="p">)</span>
 
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
@@ -785,6 +795,7 @@
         <span class="n">span</span><span class="p">:</span> <span class="n">Span</span><span class="p">,</span>
         <span class="n">parent_span_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">trace_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">experiment_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">otel_trace_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">end_trace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;LiveSpan&quot;</span><span class="p">:</span>
@@ -803,6 +814,8 @@
 <span class="sd">                If it is None, the span will be created as a root span.</span>
 <span class="sd">            trace_id: The trace ID to be set on the new span. Specify this if you want to</span>
 <span class="sd">                create the new span with a particular trace ID.</span>
+<span class="sd">            experiment_id: The experiment ID to be set on the new span. If not specified, the</span>
+<span class="sd">                experiment ID will be set to the current experiment ID.</span>
 <span class="sd">            otel_trace_id: The OpenTelemetry trace ID of the new span in hex encoded format.</span>
 <span class="sd">                If not specified, the newly generated trace ID will be used.</span>
 <span class="sd">            end_trace: Whether to end the trace after cloning the span. Default is True.</span>
@@ -822,6 +835,7 @@
             <span class="n">name</span><span class="o">=</span><span class="n">span</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
             <span class="n">parent</span><span class="o">=</span><span class="n">parent_span</span><span class="o">.</span><span class="n">_span</span> <span class="k">if</span> <span class="n">parent_span</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">start_time_ns</span><span class="o">=</span><span class="n">span</span><span class="o">.</span><span class="n">start_time_ns</span><span class="p">,</span>
+            <span class="n">experiment_id</span><span class="o">=</span><span class="n">experiment_id</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="c1"># The latter one from attributes is the newly generated trace ID by the span processor.</span>
         <span class="n">trace_id</span> <span class="o">=</span> <span class="n">trace_id</span> <span class="ow">or</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">otel_span</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">SpanAttributeKey</span><span class="o">.</span><span class="n">REQUEST_ID</span><span class="p">))</span>
@@ -832,8 +846,10 @@
         <span class="n">clone_span</span><span class="o">.</span><span class="n">set_attributes</span><span class="p">(</span>
             <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">span</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="n">SpanAttributeKey</span><span class="o">.</span><span class="n">REQUEST_ID</span><span class="p">}</span>
         <span class="p">)</span>
-        <span class="n">clone_span</span><span class="o">.</span><span class="n">set_inputs</span><span class="p">(</span><span class="n">span</span><span class="o">.</span><span class="n">inputs</span><span class="p">)</span>
-        <span class="n">clone_span</span><span class="o">.</span><span class="n">set_outputs</span><span class="p">(</span><span class="n">span</span><span class="o">.</span><span class="n">outputs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">span</span><span class="o">.</span><span class="n">inputs</span><span class="p">:</span>
+            <span class="n">clone_span</span><span class="o">.</span><span class="n">set_inputs</span><span class="p">(</span><span class="n">span</span><span class="o">.</span><span class="n">inputs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">span</span><span class="o">.</span><span class="n">outputs</span><span class="p">:</span>
+            <span class="n">clone_span</span><span class="o">.</span><span class="n">set_outputs</span><span class="p">(</span><span class="n">span</span><span class="o">.</span><span class="n">outputs</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">span</span><span class="o">.</span><span class="n">events</span><span class="p">:</span>
             <span class="n">clone_span</span><span class="o">.</span><span class="n">add_event</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
 
@@ -1037,7 +1053,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'3.1.3',
+      VERSION:'3.2.0rc0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',
