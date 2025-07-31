@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 3.1.3 documentation" href="../../../index.html"/>
+    <link rel="top" title="MLflow 3.2.0rc0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -149,7 +149,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link">3.1.3</span>
+  <span class="header-link">3.2.0rc0</span>
 </div>
   </nav>
   <page>
@@ -186,6 +186,7 @@
       
         <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../python_api/index.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../typescript_api/index.html">TypeScript API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../cli.html">Command-Line Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../auth/python-api.html">MLflow Authentication Python API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../auth/rest-api.html">MLflow Authentication REST API</a></li>
@@ -245,7 +246,9 @@
   <h1>Source code for mlflow.genai.prompts</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">contextmanager</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">mlflow.tracking._model_registry.fluent</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">registry_api</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.model_registry.prompt</span><span class="w"> </span><span class="kn">import</span> <span class="n">Prompt</span>
@@ -267,30 +270,34 @@
         <span class="k">yield</span>
 
 
-<div class="viewcode-block" id="register_prompt"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.register_prompt">[docs]</a><span class="nd">@experimental</span>
+<div class="viewcode-block" id="register_prompt"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.register_prompt">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.0.0&quot;</span><span class="p">)</span>
 <span class="nd">@require_prompt_registry</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">register_prompt</span><span class="p">(</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">template</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">template</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]],</span>
     <span class="n">commit_message</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">response_format</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">BaseModel</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PromptVersion</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Register a new :py:class:`Prompt &lt;mlflow.entities.Prompt&gt;` in the MLflow Prompt Registry.</span>
 
 <span class="sd">    A :py:class:`Prompt &lt;mlflow.entities.Prompt&gt;` is a pair of name and</span>
-<span class="sd">    template text at minimum. With MLflow Prompt Registry, you can create, manage, and</span>
+<span class="sd">    template content at minimum. With MLflow Prompt Registry, you can create, manage, and</span>
 <span class="sd">    version control prompts with the MLflow&#39;s robust model tracking framework.</span>
 
 <span class="sd">    If there is no registered prompt with the given name, a new prompt will be created.</span>
 <span class="sd">    Otherwise, a new version of the existing prompt will be created.</span>
 
-
 <span class="sd">    Args:</span>
 <span class="sd">        name: The name of the prompt.</span>
-<span class="sd">        template: The template text of the prompt. It can contain variables enclosed in</span>
-<span class="sd">            double curly braces, e.g. {variable}, which will be replaced with actual values</span>
-<span class="sd">            by the `format` method.</span>
+<span class="sd">        template: The template content of the prompt. Can be either:</span>
+
+<span class="sd">            - A string containing text with variables enclosed in double curly braces,</span>
+<span class="sd">              e.g. {{variable}}, which will be replaced with actual values by the `format` method.</span>
+<span class="sd">            - A list of dictionaries representing chat messages, where each message has</span>
+<span class="sd">              &#39;role&#39; and &#39;content&#39; keys (e.g., [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Hello {{name}}&quot;}])</span>
+
 
 <span class="sd">            .. note::</span>
 
@@ -308,6 +315,8 @@
 <span class="sd">        tags: A dictionary of tags associated with the **prompt version**.</span>
 <span class="sd">            This is useful for storing version-specific information, such as the author of</span>
 <span class="sd">            the changes. Optional.</span>
+<span class="sd">        response_format: Optional Pydantic class or dictionary defining the expected response</span>
+<span class="sd">            structure. This can be used to specify the schema for structured outputs from LLM calls.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        A :py:class:`Prompt &lt;mlflow.entities.Prompt&gt;` object that was created.</span>
@@ -318,14 +327,24 @@
 
 <span class="sd">        import mlflow</span>
 
-<span class="sd">        # Register a new prompt</span>
+<span class="sd">        # Register a text prompt</span>
 <span class="sd">        mlflow.genai.register_prompt(</span>
-<span class="sd">            name=&quot;my_prompt&quot;,</span>
+<span class="sd">            name=&quot;greeting_prompt&quot;,</span>
 <span class="sd">            template=&quot;Respond to the user&#39;s message as a {{style}} AI.&quot;,</span>
 <span class="sd">        )</span>
 
-<span class="sd">        # Load the prompt from the registry</span>
-<span class="sd">        prompt = mlflow.genai.load_prompt(&quot;my_prompt&quot;)</span>
+<span class="sd">        # Register a chat prompt with multiple messages</span>
+<span class="sd">        mlflow.genai.register_prompt(</span>
+<span class="sd">            name=&quot;assistant_prompt&quot;,</span>
+<span class="sd">            template=[</span>
+<span class="sd">                {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You are a helpful {{style}} assistant.&quot;},</span>
+<span class="sd">                {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;{{question}}&quot;},</span>
+<span class="sd">            ],</span>
+<span class="sd">            response_format={&quot;type&quot;: &quot;object&quot;, &quot;properties&quot;: {&quot;answer&quot;: {&quot;type&quot;: &quot;string&quot;}}},</span>
+<span class="sd">        )</span>
+
+<span class="sd">        # Load and use the prompt</span>
+<span class="sd">        prompt = mlflow.genai.load_prompt(&quot;greeting_prompt&quot;)</span>
 
 <span class="sd">        # Use the prompt in your application</span>
 <span class="sd">        import openai</span>
@@ -341,11 +360,12 @@
 
 <span class="sd">        # Update the prompt with a new version</span>
 <span class="sd">        prompt = mlflow.genai.register_prompt(</span>
-<span class="sd">            name=&quot;my_prompt&quot;,</span>
+<span class="sd">            name=&quot;greeting_prompt&quot;,</span>
 <span class="sd">            template=&quot;Respond to the user&#39;s message as a {{style}} AI. {{greeting}}&quot;,</span>
 <span class="sd">            commit_message=&quot;Add a greeting to the prompt.&quot;,</span>
 <span class="sd">            tags={&quot;author&quot;: &quot;Bob&quot;},</span>
 <span class="sd">        )</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">with</span> <span class="n">suppress_genai_migration_warning</span><span class="p">():</span>
         <span class="k">return</span> <span class="n">registry_api</span><span class="o">.</span><span class="n">register_prompt</span><span class="p">(</span>
@@ -353,10 +373,11 @@
             <span class="n">template</span><span class="o">=</span><span class="n">template</span><span class="p">,</span>
             <span class="n">commit_message</span><span class="o">=</span><span class="n">commit_message</span><span class="p">,</span>
             <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">,</span>
+            <span class="n">response_format</span><span class="o">=</span><span class="n">response_format</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="search_prompts"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.search_prompts">[docs]</a><span class="nd">@experimental</span>
+<div class="viewcode-block" id="search_prompts"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.search_prompts">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.0.0&quot;</span><span class="p">)</span>
 <span class="nd">@require_prompt_registry</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">search_prompts</span><span class="p">(</span>
     <span class="n">filter_string</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -366,10 +387,12 @@
         <span class="k">return</span> <span class="n">registry_api</span><span class="o">.</span><span class="n">search_prompts</span><span class="p">(</span><span class="n">filter_string</span><span class="o">=</span><span class="n">filter_string</span><span class="p">,</span> <span class="n">max_results</span><span class="o">=</span><span class="n">max_results</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="load_prompt"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.load_prompt">[docs]</a><span class="nd">@experimental</span>
+<div class="viewcode-block" id="load_prompt"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.load_prompt">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.0.0&quot;</span><span class="p">)</span>
 <span class="nd">@require_prompt_registry</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">load_prompt</span><span class="p">(</span>
-    <span class="n">name_or_uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">allow_missing</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">name_or_uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">version</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">allow_missing</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PromptVersion</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Load a :py:class:`Prompt &lt;mlflow.entities.Prompt&gt;` from the MLflow Prompt Registry.</span>
@@ -392,7 +415,7 @@
 <span class="sd">        prompt = mlflow.genai.load_prompt(&quot;my_prompt&quot;, version=1)</span>
 
 <span class="sd">        # Load a specific version of the prompt by URI</span>
-<span class="sd">        prompt = mlflow.genai.load_prompt(uri=&quot;prompts:/my_prompt/1&quot;)</span>
+<span class="sd">        prompt = mlflow.genai.load_prompt(&quot;prompts:/my_prompt/1&quot;)</span>
 
 <span class="sd">        # Load a prompt version with an alias &quot;production&quot;</span>
 <span class="sd">        prompt = mlflow.genai.load_prompt(&quot;prompts:/my_prompt@production&quot;)</span>
@@ -404,7 +427,7 @@
         <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="set_prompt_alias"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.set_prompt_alias">[docs]</a><span class="nd">@experimental</span>
+<div class="viewcode-block" id="set_prompt_alias"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.set_prompt_alias">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.0.0&quot;</span><span class="p">)</span>
 <span class="nd">@require_prompt_registry</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">set_prompt_alias</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -437,7 +460,7 @@
         <span class="k">return</span> <span class="n">registry_api</span><span class="o">.</span><span class="n">set_prompt_alias</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">,</span> <span class="n">alias</span><span class="o">=</span><span class="n">alias</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="delete_prompt_alias"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.delete_prompt_alias">[docs]</a><span class="nd">@experimental</span>
+<div class="viewcode-block" id="delete_prompt_alias"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.delete_prompt_alias">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.0.0&quot;</span><span class="p">)</span>
 <span class="nd">@require_prompt_registry</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">delete_prompt_alias</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -479,7 +502,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'3.1.3',
+      VERSION:'3.2.0rc0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

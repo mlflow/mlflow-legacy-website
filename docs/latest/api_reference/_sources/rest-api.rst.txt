@@ -889,6 +889,49 @@ Request Structure
 
 
 
+.. _mlflowMlflowServicedeleteExperimentTag:
+
+Delete Experiment Tag
+=====================
+
+
++--------------------------------------------------+-------------+
+|                     Endpoint                     | HTTP Method |
++==================================================+=============+
+| ``2.0/mlflow/experiments/delete-experiment-tag`` | ``POST``    |
++--------------------------------------------------+-------------+
+
+Delete a tag on an experiment.
+
+
+
+
+.. _mlflowDeleteExperimentTag:
+
+Request Structure
+-----------------
+
+
+
+
+
+
++---------------+------------+-----------------------------------------------------------------------+
+|  Field Name   |    Type    |                              Description                              |
++===============+============+=======================================================================+
+| experiment_id | ``STRING`` | ID of the experiment that the tag was logged under. Must be provided. |
+|               |            | This field is required.                                               |
+|               |            |                                                                       |
++---------------+------------+-----------------------------------------------------------------------+
+| key           | ``STRING`` | Name of the tag. Maximum size is 255 bytes. Must be provided.         |
+|               |            | This field is required.                                               |
+|               |            |                                                                       |
++---------------+------------+-----------------------------------------------------------------------+
+
+===========================
+
+
+
 .. _mlflowMlflowServicesetTag:
 
 Set Tag

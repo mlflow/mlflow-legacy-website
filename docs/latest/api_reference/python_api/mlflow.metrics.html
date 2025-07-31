@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MLflow 3.1.3 documentation" href="../index.html"/>
+    <link rel="top" title="MLflow 3.2.0rc0 documentation" href="../index.html"/>
         <link rel="up" title="Python API" href="index.html"/>
         <link rel="next" title="mlflow.mistral" href="/mlflow.mistral.html"/>
         <link rel="prev" title="mlflow.llama_index" href="/mlflow.llama_index.html"/> 
@@ -150,7 +150,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link">3.1.3</span>
+  <span class="header-link">3.2.0rc0</span>
 </div>
   </nav>
   <page>
@@ -257,6 +257,7 @@
 <li class="toctree-l2"><a class="reference internal" href="index.html#log-levels">Log Levels</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../typescript_api/index.html">TypeScript API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cli.html">Command-Line Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../auth/python-api.html">MLflow Authentication Python API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../auth/rest-api.html">MLflow Authentication REST API</a></li>
@@ -630,6 +631,8 @@ for a text to be considered “toxic” is 0.5.</p>
 <span class="sig-prename descclassname"><span class="pre">mlflow.metrics.</span></span><span class="sig-name descname"><span class="pre">token_count</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mlflow.metrics.EvaluationMetric" title="mlflow.models.evaluation.base.EvaluationMetric"><span class="pre">mlflow.models.evaluation.base.EvaluationMetric</span></a></span></span><a class="reference internal" href="../_modules/mlflow/metrics.html#token_count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.metrics.token_count" title="Permalink to this definition"> </a></dt>
 <dd><p>This function will create a metric for calculating token_count. Token count is calculated
 using tiktoken by using the <cite>cl100k_base</cite> tokenizer.</p>
+<p>Note: For air-gapped environments, you can set the TIKTOKEN_CACHE_DIR environment variable
+to specify a local cache directory for tiktoken to avoid downloading the tokenizer files.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -643,11 +646,7 @@ each row to be predicted sequentially, which will likely slow down the evaluatio
 <dl class="py function">
 <dt class="sig sig-object py" id="mlflow.metrics.bleu">
 <span class="sig-prename descclassname"><span class="pre">mlflow.metrics.</span></span><span class="sig-name descname"><span class="pre">bleu</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mlflow.metrics.EvaluationMetric" title="mlflow.models.evaluation.base.EvaluationMetric"><span class="pre">mlflow.models.evaluation.base.EvaluationMetric</span></a></span></span><a class="reference internal" href="../_modules/mlflow/metrics.html#bleu"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.metrics.bleu" title="Permalink to this definition"> </a></dt>
-<dd><div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Experimental: This function may change or be removed in a future release without warning.</p>
-</div>
-<p>This function will create a metric for evaluating <a class="reference external" href="https://huggingface.co/spaces/evaluate-metric/bleu">bleu</a>.</p>
+<dd><p>This function will create a metric for evaluating <a class="reference external" href="https://huggingface.co/spaces/evaluate-metric/bleu">bleu</a>.</p>
 <p>The BLEU scores range from 0 to 1, with higher scores indicating greater similarity to
 reference texts. BLEU considers n-gram precision and brevity penalty. While adding more
 references can boost the score, perfect scores are rare and not essential for effective
@@ -1022,11 +1021,7 @@ Defaults to 10 workers.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="mlflow.metrics.genai.make_genai_metric_from_prompt">
 <span class="sig-prename descclassname"><span class="pre">mlflow.metrics.genai.</span></span><span class="sig-name descname"><span class="pre">make_genai_metric_from_prompt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">judge_prompt</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'openai:/gpt-4'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">typing.Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aggregations</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">greater_is_better</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_workers</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric_metadata</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">typing.Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_headers</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxy_url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mlflow.metrics.EvaluationMetric" title="mlflow.models.evaluation.base.EvaluationMetric"><span class="pre">mlflow.models.evaluation.base.EvaluationMetric</span></a></span></span><a class="reference internal" href="../_modules/mlflow/metrics/genai/genai_metric.html#make_genai_metric_from_prompt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.metrics.genai.make_genai_metric_from_prompt" title="Permalink to this definition"> </a></dt>
-<dd><div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Experimental: This function may change or be removed in a future release without warning.</p>
-</div>
-<p>Create a genai metric used to evaluate LLM using LLM as a judge in MLflow. This produces
+<dd><p>Create a genai metric used to evaluate LLM using LLM as a judge in MLflow. This produces
 a metric using only the supplied judge prompt without any pre-written system prompt.
 This can be useful for use cases that are not covered by the full grading prompt in any
 <code class="docutils literal notranslate"><span class="pre">EvaluationModel</span></code> version.</p>
@@ -1333,7 +1328,7 @@ or a single grading context string.</p></li>
 </dl>
 <div class="literal-block-wrapper docutils container" id="id12">
 <div class="code-block-caption"><span class="caption-text">Example for creating an EvaluationExample</span><a class="headerlink" href="#id12" title="Permalink to this code"> </a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.metrics.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">EvaluationExample</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.metrics.genai</span><span class="w"> </span><span class="kn">import</span> <span class="n">EvaluationExample</span>
 
 <span class="n">example</span> <span class="o">=</span> <span class="n">EvaluationExample</span><span class="p">(</span>
     <span class="nb">input</span><span class="o">=</span><span class="s2">&quot;What is MLflow?&quot;</span><span class="p">,</span>
@@ -1421,7 +1416,7 @@ Users do not need to set these environment variables if they are using a gateway
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../',
-      VERSION:'3.1.3',
+      VERSION:'3.2.0rc0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

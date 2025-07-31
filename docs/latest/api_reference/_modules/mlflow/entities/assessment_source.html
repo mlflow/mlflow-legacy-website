@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 3.1.3 documentation" href="../../../index.html"/>
+    <link rel="top" title="MLflow 3.2.0rc0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -149,7 +149,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link">3.1.3</span>
+  <span class="header-link">3.2.0rc0</span>
 </div>
   </nav>
   <page>
@@ -186,6 +186,7 @@
       
         <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../python_api/index.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../typescript_api/index.html">TypeScript API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../cli.html">Command-Line Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../auth/python-api.html">MLflow Authentication Python API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../auth/rest-api.html">MLflow Authentication REST API</a></li>
@@ -254,7 +255,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">experimental</span>
 
 
-<div class="viewcode-block" id="AssessmentSource"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.AssessmentSource">[docs]</a><span class="nd">@experimental</span>
+<div class="viewcode-block" id="AssessmentSource"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.AssessmentSource">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;2.21.0&quot;</span><span class="p">)</span>
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">AssessmentSource</span><span class="p">(</span><span class="n">_MlflowObject</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -265,9 +266,15 @@
 
 <span class="sd">    Args:</span>
 <span class="sd">        source_type: The type of the assessment source. Must be one of the values in</span>
-<span class="sd">            the AssessmentSourceType enum.</span>
+<span class="sd">            the AssessmentSourceType enum or an instance of the enumerator value.</span>
 <span class="sd">        source_id: An identifier for the source, e.g. user ID or LLM judge ID. If not</span>
 <span class="sd">            provided, the default value &quot;default&quot; is used.</span>
+
+<span class="sd">    Note:</span>
+
+<span class="sd">    The legacy AssessmentSourceType &quot;AI_JUDGE&quot; is deprecated and will be resolved as</span>
+<span class="sd">    &quot;LLM_JUDGE&quot;. You will receive a warning if using this deprecated value. This legacy</span>
+<span class="sd">    term will be removed in a future version of MLflow.</span>
 
 <span class="sd">    Example:</span>
 
@@ -279,7 +286,7 @@
 <span class="sd">        from mlflow.entities.assessment import AssessmentSource, AssessmentSourceType</span>
 
 <span class="sd">        source = AssessmentSource(</span>
-<span class="sd">            source_type=AssessmentSourceType.HUMAN,</span>
+<span class="sd">            source_type=AssessmentSourceType.HUMAN,  # or &quot;HUMAN&quot;</span>
 <span class="sd">            source_id=&quot;bob@example.com&quot;,</span>
 <span class="sd">        )</span>
 
@@ -291,7 +298,7 @@
 <span class="sd">        from mlflow.entities.assessment import AssessmentSource, AssessmentSourceType</span>
 
 <span class="sd">        source = AssessmentSource(</span>
-<span class="sd">            source_type=AssessmentSourceType.LLM_JUDGE,</span>
+<span class="sd">            source_type=AssessmentSourceType.LLM_JUDGE,  # or &quot;LLM_JUDGE&quot;</span>
 <span class="sd">            source_id=&quot;gpt-4o-mini&quot;,</span>
 <span class="sd">        )</span>
 
@@ -303,7 +310,7 @@
 <span class="sd">        from mlflow.entities.assessment import AssessmentSource, AssessmentSourceType</span>
 
 <span class="sd">        source = AssessmentSource(</span>
-<span class="sd">            source_type=AssessmentSourceType.CODE,</span>
+<span class="sd">            source_type=AssessmentSourceType.CODE,  # or &quot;CODE&quot;</span>
 <span class="sd">            source_id=&quot;repo/evaluation_script.py&quot;,</span>
 <span class="sd">        )</span>
 
@@ -340,8 +347,58 @@
         <span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="AssessmentSourceType"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.AssessmentSourceType">[docs]</a><span class="nd">@experimental</span>
+<div class="viewcode-block" id="AssessmentSourceType"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.AssessmentSourceType">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;2.21.0&quot;</span><span class="p">)</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">AssessmentSourceType</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Enumeration and validator for assessment source types.</span>
+
+<span class="sd">    This class provides constants for valid assessment source types and handles validation</span>
+<span class="sd">    and standardization of source type values. It supports both direct constant access and</span>
+<span class="sd">    instance creation with string validation.</span>
+
+<span class="sd">    The class automatically handles:</span>
+<span class="sd">    - Case-insensitive string inputs (converts to uppercase)</span>
+<span class="sd">    - Deprecation warnings for legacy values (AI_JUDGE → LLM_JUDGE)</span>
+<span class="sd">    - Validation of source type values</span>
+
+<span class="sd">    Available source types:</span>
+<span class="sd">        - HUMAN: Assessment performed by a human evaluator</span>
+<span class="sd">        - LLM_JUDGE: Assessment performed by an LLM-as-a-judge (e.g., GPT-4)</span>
+<span class="sd">        - CODE: Assessment performed by deterministic code/heuristics</span>
+<span class="sd">        - SOURCE_TYPE_UNSPECIFIED: Default when source type is not specified</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        The legacy &quot;AI_JUDGE&quot; type is deprecated and automatically converted to &quot;LLM_JUDGE&quot;</span>
+<span class="sd">        with a deprecation warning. This ensures backward compatibility while encouraging</span>
+<span class="sd">        migration to the new terminology.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        Using class constants directly:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            from mlflow.entities.assessment import AssessmentSource, AssessmentSourceType</span>
+
+<span class="sd">            # Direct constant usage</span>
+<span class="sd">            source = AssessmentSource(source_type=AssessmentSourceType.LLM_JUDGE, source_id=&quot;gpt-4&quot;)</span>
+
+<span class="sd">        String validation through instance creation:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            # String input - case insensitive</span>
+<span class="sd">            source = AssessmentSource(</span>
+<span class="sd">                source_type=&quot;llm_judge&quot;,  # Will be standardized to &quot;LLM_JUDGE&quot;</span>
+<span class="sd">                source_id=&quot;gpt-4&quot;,</span>
+<span class="sd">            )</span>
+
+<span class="sd">            # Deprecated value - triggers warning</span>
+<span class="sd">            source = AssessmentSource(</span>
+<span class="sd">                source_type=&quot;AI_JUDGE&quot;,  # Warning: converts to &quot;LLM_JUDGE&quot;</span>
+<span class="sd">                source_id=&quot;gpt-4&quot;,</span>
+<span class="sd">            )</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">SOURCE_TYPE_UNSPECIFIED</span> <span class="o">=</span> <span class="s2">&quot;SOURCE_TYPE_UNSPECIFIED&quot;</span>
     <span class="n">LLM_JUDGE</span> <span class="o">=</span> <span class="s2">&quot;LLM_JUDGE&quot;</span>
     <span class="n">AI_JUDGE</span> <span class="o">=</span> <span class="s2">&quot;AI_JUDGE&quot;</span>  <span class="c1"># Deprecated, use LLM_JUDGE instead</span>
@@ -414,7 +471,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'3.1.3',
+      VERSION:'3.2.0rc0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

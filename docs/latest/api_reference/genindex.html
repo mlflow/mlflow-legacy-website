@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="#"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="MLflow 3.1.3 documentation" href="index.html"/> 
+    <link rel="top" title="MLflow 3.2.0rc0 documentation" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -148,7 +148,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link">3.1.3</span>
+  <span class="header-link">3.2.0rc0</span>
 </div>
   </nav>
   <page>
@@ -185,6 +185,7 @@
       
         <ul>
 <li class="toctree-l1"><a class="reference internal" href="python_api/index.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="typescript_api/index.html">TypeScript API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cli.html">Command-Line Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="auth/python-api.html">MLflow Authentication Python API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="auth/rest-api.html">MLflow Authentication REST API</a></li>
@@ -1564,14 +1565,14 @@
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.RunInfo.artifact_uri">artifact_uri (mlflow.entities.RunInfo property)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.models.html#mlflow.models.EvaluationResult.artifacts">artifacts (mlflow.models.EvaluationResult property)</a>
 
       <ul>
         <li><a href="python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModelContext.artifacts">(mlflow.pyfunc.PythonModelContext property)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.types.html#mlflow.types.Schema.as_spark_schema">as_spark_schema() (mlflow.types.Schema method)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.Assessment">Assessment (class in mlflow.entities)</a>
@@ -1581,11 +1582,7 @@
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.AssessmentError">AssessmentError (class in mlflow.entities)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfo.assessments">assessments (mlflow.entities.TraceInfo attribute)</a>
-
-      <ul>
-        <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfoV2.assessments">(mlflow.entities.TraceInfoV2 attribute)</a>
 </li>
-      </ul></li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.AssessmentSource">AssessmentSource (class in mlflow.entities)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.AssessmentSourceType">AssessmentSourceType (class in mlflow.entities)</a>
@@ -1834,6 +1831,8 @@
 </li>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.base_models.ConfigModel">ConfigModel (class in mlflow.gateway.base_models)</a>
 </li>
+      <li><a href="python_api/mlflow.tracing.html#mlflow.tracing.configure">configure() (in module mlflow.tracing)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.RegisteredModelDeploymentJobState.CONNECTED">CONNECTED (mlflow.entities.model_registry.RegisteredModelDeploymentJobState attribute)</a>
@@ -1843,6 +1842,8 @@
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.NoOpSpan.context">context (mlflow.entities.NoOpSpan property)</a>
 </li>
       <li><a href="python_api/mlflow.models.html#mlflow.models.convert_input_example_to_serving_input">convert_input_example_to_serving_input() (in module mlflow.models)</a>
+</li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.PromptVersion.convert_response_format_to_dict">convert_response_format_to_dict() (mlflow.entities.model_registry.PromptVersion static method)</a>
 </li>
       <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.copy_model_version">copy_model_version() (mlflow.client.MlflowClient method)</a>
 </li>
@@ -1999,11 +2000,7 @@
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.Experiment.DEFAULT_EXPERIMENT_NAME">DEFAULT_EXPERIMENT_NAME (mlflow.entities.Experiment attribute)</a>
 </li>
       <li><a href="python_api/mlflow.html#mlflow.delete_assessment">delete_assessment() (in module mlflow)</a>
-
-      <ul>
-        <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.delete_assessment">(mlflow.client.MlflowClient method)</a>
 </li>
-      </ul></li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.delete_dataset">delete_dataset() (in module mlflow.genai)</a>
 
       <ul>
@@ -2042,6 +2039,12 @@
       </ul></li>
       <li><a href="auth/python-api.html#mlflow.server.auth.client.AuthServiceClient.delete_experiment_permission">delete_experiment_permission() (mlflow.server.auth.client.AuthServiceClient method)</a>
 </li>
+      <li><a href="python_api/mlflow.html#mlflow.delete_experiment_tag">delete_experiment_tag() (in module mlflow)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.delete_experiment_tag">(mlflow.client.MlflowClient method)</a>
+</li>
+      </ul></li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.delete_label_schema">delete_label_schema() (in module mlflow.genai.label_schemas)</a>
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.delete_labeling_session">delete_labeling_session() (in module mlflow.genai)</a>
@@ -2070,10 +2073,10 @@
 </li>
       <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.delete_prompt_version">delete_prompt_version() (mlflow.client.MlflowClient method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.delete_prompt_version_tag">delete_prompt_version_tag() (mlflow.client.MlflowClient method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.delete_registered_model">delete_registered_model() (mlflow.client.MlflowClient method)</a>
 </li>
       <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.delete_registered_model_alias">delete_registered_model_alias() (mlflow.client.MlflowClient method)</a>
@@ -2147,6 +2150,8 @@
       <li><a href="python_api/mlflow.data.html#mlflow.data.pandas_dataset.PandasDataset.df">df (mlflow.data.pandas_dataset.PandasDataset property)</a>
 
       <ul>
+        <li><a href="python_api/mlflow.data.html#mlflow.data.polars_dataset.PolarsDataset.df">(mlflow.data.polars_dataset.PolarsDataset property)</a>
+</li>
         <li><a href="python_api/mlflow.data.html#mlflow.data.spark_dataset.SparkDataset.df">(mlflow.data.spark_dataset.SparkDataset property)</a>
 </li>
       </ul></li>
@@ -2154,6 +2159,8 @@
 
       <ul>
         <li><a href="python_api/mlflow.data.html#mlflow.data.evaluation_dataset.EvaluationDataset.digest">(mlflow.data.evaluation_dataset.EvaluationDataset property)</a>
+</li>
+        <li><a href="python_api/mlflow.data.html#mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetConfig.digest">(mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetConfig attribute)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.Dataset.digest">(mlflow.entities.Dataset property)</a>
 </li>
@@ -2276,10 +2283,10 @@
         <li><a href="python_api/mlflow.models.html#mlflow.models.evaluate">(in module mlflow.models)</a>
 </li>
       </ul></li>
-      <li><a href="python_api/mlflow.models.html#mlflow.models.EvaluationArtifact">EvaluationArtifact (class in mlflow.models)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python_api/mlflow.models.html#mlflow.models.EvaluationArtifact">EvaluationArtifact (class in mlflow.models)</a>
+</li>
       <li><a href="python_api/mlflow.data.html#mlflow.data.evaluation_dataset.EvaluationDataset">EvaluationDataset (class in mlflow.data.evaluation_dataset)</a>
 
       <ul>
@@ -2299,11 +2306,7 @@
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfo.execution_duration">execution_duration (mlflow.entities.TraceInfo attribute)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfo.execution_time_ms">execution_time_ms (mlflow.entities.TraceInfo property)</a>
-
-      <ul>
-        <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfoV2.execution_time_ms">(mlflow.entities.TraceInfoV2 attribute)</a>
 </li>
-      </ul></li>
       <li><a href="python_api/exceptions/mlflow.exceptions.html#mlflow.exceptions.ExecutionException">ExecutionException</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.Expectation">Expectation (class in mlflow.entities)</a>
@@ -2326,8 +2329,6 @@
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.RunInfo.experiment_id">(mlflow.entities.RunInfo property)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfo.experiment_id">(mlflow.entities.TraceInfo property)</a>
-</li>
-        <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfoV2.experiment_id">(mlflow.entities.TraceInfoV2 attribute)</a>
 </li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.LabelingSession.experiment_id">(mlflow.genai.LabelingSession property)</a>
 </li>
@@ -2441,8 +2442,6 @@
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfo.from_dict">(mlflow.entities.TraceInfo class method)</a>
 </li>
-        <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfoV2.from_dict">(mlflow.entities.TraceInfoV2 class method)</a>
-</li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceLocation.from_dict">(mlflow.entities.TraceLocation class method)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceLocationType.from_dict">(mlflow.entities.TraceLocationType class method)</a>
@@ -2522,6 +2521,8 @@
 </li>
       <li><a href="python_api/mlflow.data.html#mlflow.data.from_pandas">from_pandas() (in module mlflow.data)</a>
 </li>
+      <li><a href="python_api/mlflow.data.html#mlflow.data.from_polars">from_polars() (in module mlflow.data)</a>
+</li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.Assessment.from_proto">from_proto() (mlflow.entities.Assessment class method)</a>
 
       <ul>
@@ -2592,8 +2593,6 @@
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.RunTag.from_proto">(mlflow.entities.RunTag class method)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfo.from_proto">(mlflow.entities.TraceInfo class method)</a>
-</li>
-        <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfoV2.from_proto">(mlflow.entities.TraceInfoV2 class method)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceLocation.from_proto">(mlflow.entities.TraceLocation class method)</a>
 </li>
@@ -3030,8 +3029,6 @@
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputNumeric">InputNumeric (class in mlflow.genai.label_schemas)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.Run.inputs">inputs (mlflow.entities.Run property)</a>
 
       <ul>
@@ -3040,6 +3037,8 @@
         <li><a href="python_api/mlflow.types.html#mlflow.types.Schema.inputs">(mlflow.types.Schema property)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.InputTag">InputTag (class in mlflow.entities)</a>
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputText">InputText (class in mlflow.genai.label_schemas)</a>
@@ -3077,6 +3076,8 @@
       <li><a href="python_api/mlflow.types.html#mlflow.types.Schema.is_tensor_spec">is_tensor_spec() (mlflow.types.Schema method)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.RunStatus.is_terminated">is_terminated() (mlflow.entities.RunStatus static method)</a>
+</li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.PromptVersion.is_text_prompt">is_text_prompt (mlflow.entities.model_registry.PromptVersion property)</a>
 </li>
       <li><a href="python_api/mlflow.html#mlflow.is_tracking_uri_set">is_tracking_uri_set() (in module mlflow)</a>
 
@@ -3395,11 +3396,7 @@
 </li>
       </ul></li>
       <li><a href="python_api/mlflow.html#mlflow.log_assessment">log_assessment() (in module mlflow)</a>
-
-      <ul>
-        <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.log_assessment">(mlflow.client.MlflowClient method)</a>
 </li>
-      </ul></li>
       <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.log_batch">log_batch() (mlflow.client.MlflowClient method)</a>
 </li>
       <li><a href="python_api/mlflow.html#mlflow.log_dict">log_dict() (in module mlflow)</a>
@@ -3408,9 +3405,13 @@
         <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.log_dict">(mlflow.client.MlflowClient method)</a>
 </li>
       </ul></li>
+      <li><a href="python_api/mlflow.html#mlflow.log_expectation">log_expectation() (in module mlflow)</a>
+</li>
       <li><a href="python_api/mlflow.shap.html#mlflow.shap.log_explainer">log_explainer() (in module mlflow.shap)</a>
 </li>
       <li><a href="python_api/mlflow.shap.html#mlflow.shap.log_explanation">log_explanation() (in module mlflow.shap)</a>
+</li>
+      <li><a href="python_api/mlflow.html#mlflow.log_feedback">log_feedback() (in module mlflow)</a>
 </li>
       <li><a href="python_api/mlflow.html#mlflow.log_figure">log_figure() (in module mlflow)</a>
 
@@ -4551,8 +4552,6 @@
         <li><a href="python_api/mlflow.entities.html#module-mlflow.entities">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     mlflow.entities.model_registry
 
@@ -4574,6 +4573,8 @@
         <li><a href="python_api/exceptions/mlflow.exceptions.html#module-mlflow.exceptions">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/exceptions/mlflow.exceptions.html#mlflow.exceptions.MlflowException">mlflow.exceptions.MlflowException</a>
 </li>
       <li>
@@ -5056,6 +5057,10 @@
 </li>
       <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_DISABLE_ENV_MANAGER_CONDA_WARNING">MLFLOW_DISABLE_ENV_MANAGER_CONDA_WARNING (in module mlflow.environment_variables)</a>
 </li>
+      <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_DISABLE_SCHEMA_DETAILS">MLFLOW_DISABLE_SCHEMA_DETAILS (in module mlflow.environment_variables)</a>
+</li>
+      <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_DISABLE_TELEMETRY">MLFLOW_DISABLE_TELEMETRY (in module mlflow.environment_variables)</a>
+</li>
       <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_DOCKER_OPENJDK_VERSION">MLFLOW_DOCKER_OPENJDK_VERSION (in module mlflow.environment_variables)</a>
 </li>
       <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_DOWNLOAD_CHUNK_TIMEOUT">MLFLOW_DOWNLOAD_CHUNK_TIMEOUT (in module mlflow.environment_variables)</a>
@@ -5073,6 +5078,8 @@
       <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_ENABLE_PROXY_MULTIPART_UPLOAD">MLFLOW_ENABLE_PROXY_MULTIPART_UPLOAD (in module mlflow.environment_variables)</a>
 </li>
       <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_ENABLE_SYSTEM_METRICS_LOGGING">MLFLOW_ENABLE_SYSTEM_METRICS_LOGGING (in module mlflow.environment_variables)</a>
+</li>
+      <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_ENABLE_THREAD_LOCAL_TRACING_DESTINATION">MLFLOW_ENABLE_THREAD_LOCAL_TRACING_DESTINATION (in module mlflow.environment_variables)</a>
 </li>
       <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_ENABLE_UC_FUNCTIONS">MLFLOW_ENABLE_UC_FUNCTIONS (in module mlflow.environment_variables)</a>
 </li>
@@ -5200,6 +5207,8 @@
 </li>
       <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_SYSTEM_METRICS_SAMPLING_INTERVAL">MLFLOW_SYSTEM_METRICS_SAMPLING_INTERVAL (in module mlflow.environment_variables)</a>
 </li>
+      <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_TRACE_SAMPLING_RATIO">MLFLOW_TRACE_SAMPLING_RATIO (in module mlflow.environment_variables)</a>
+</li>
       <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_TRACE_TIMEOUT_CHECK_INTERVAL_SECONDS">MLFLOW_TRACE_TIMEOUT_CHECK_INTERVAL_SECONDS (in module mlflow.environment_variables)</a>
 </li>
       <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_TRACE_TIMEOUT_SECONDS">MLFLOW_TRACE_TIMEOUT_SECONDS (in module mlflow.environment_variables)</a>
@@ -5249,6 +5258,8 @@
       <li><a href="python_api/mlflow.tracing.html#mlflow.tracing.destination.MlflowExperiment">MlflowExperiment (class in mlflow.tracing.destination)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.MlflowExperimentLocation">MlflowExperimentLocation (class in mlflow.entities)</a>
+</li>
+      <li><a href="python_api/mlflow.pytorch.html#mlflow.pytorch.MlflowModelCheckpointCallback">MlflowModelCheckpointCallback (class in mlflow.pytorch)</a>
 </li>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.MlflowModelServingConfig">MlflowModelServingConfig (class in mlflow.gateway.config)</a>
 </li>
@@ -5368,6 +5379,26 @@
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.RunOutputs.model_outputs">model_outputs (mlflow.entities.RunOutputs property)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.Scorer.model_post_init">model_post_init() (mlflow.genai.Scorer method)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.Correctness.model_post_init">(mlflow.genai.scorers.Correctness method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ExpectationsGuidelines.model_post_init">(mlflow.genai.scorers.ExpectationsGuidelines method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.Guidelines.model_post_init">(mlflow.genai.scorers.Guidelines method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.RelevanceToQuery.model_post_init">(mlflow.genai.scorers.RelevanceToQuery method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.RetrievalGroundedness.model_post_init">(mlflow.genai.scorers.RetrievalGroundedness method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.RetrievalRelevance.model_post_init">(mlflow.genai.scorers.RetrievalRelevance method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.RetrievalSufficiency.model_post_init">(mlflow.genai.scorers.RetrievalSufficiency method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.Safety.model_post_init">(mlflow.genai.scorers.Safety method)</a>
+</li>
+      </ul></li>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.MlflowModelServingConfig.model_server_url">model_server_url (mlflow.gateway.config.MlflowModelServingConfig attribute)</a>
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.Agent.model_serving_endpoint">model_serving_endpoint (mlflow.genai.Agent property)</a>
@@ -5588,6 +5619,8 @@
       <ul>
         <li><a href="python_api/mlflow.data.html#mlflow.data.evaluation_dataset.EvaluationDataset.name">(mlflow.data.evaluation_dataset.EvaluationDataset property)</a>
 </li>
+        <li><a href="python_api/mlflow.data.html#mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetConfig.name">(mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetConfig attribute)</a>
+</li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.Assessment.name">(mlflow.entities.Assessment attribute)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.Dataset.name">(mlflow.entities.Dataset property)</a>
@@ -5671,7 +5704,11 @@
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.SourceType.NOTEBOOK">NOTEBOOK (mlflow.entities.SourceType attribute)</a>
 </li>
+      <li><a href="python_api/mlflow.data.html#mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetProfile.num_elements">num_elements (mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetProfile attribute)</a>
+</li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.optimize.OptimizerConfig.num_instruction_candidates">num_instruction_candidates (mlflow.genai.optimize.OptimizerConfig attribute)</a>
+</li>
+      <li><a href="python_api/mlflow.data.html#mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetProfile.num_rows">num_rows (mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetProfile attribute)</a>
 </li>
       <li><a href="python_api/mlflow.data.html#mlflow.data.evaluation_dataset.EvaluationDataset.NUM_SAMPLE_ROWS_FOR_HASH">NUM_SAMPLE_ROWS_FOR_HASH (mlflow.data.evaluation_dataset.EvaluationDataset attribute)</a>
 </li>
@@ -5707,18 +5744,24 @@
         <li><a href="python_api/mlflow.tensorflow.html#mlflow.tensorflow.MlflowCallback.on_epoch_end">(mlflow.tensorflow.MlflowCallback method)</a>
 </li>
       </ul></li>
+      <li><a href="python_api/mlflow.pytorch.html#mlflow.pytorch.MlflowModelCheckpointCallback.on_fit_start">on_fit_start() (mlflow.pytorch.MlflowModelCheckpointCallback method)</a>
+</li>
       <li><a href="python_api/mlflow.keras.html#mlflow.keras.callback.MlflowCallback.on_test_end">on_test_end() (mlflow.keras.callback.MlflowCallback method)</a>
 
       <ul>
         <li><a href="python_api/mlflow.tensorflow.html#mlflow.tensorflow.MlflowCallback.on_test_end">(mlflow.tensorflow.MlflowCallback method)</a>
 </li>
       </ul></li>
+      <li><a href="python_api/mlflow.pytorch.html#mlflow.pytorch.MlflowModelCheckpointCallback.on_train_batch_end">on_train_batch_end() (mlflow.pytorch.MlflowModelCheckpointCallback method)</a>
+</li>
       <li><a href="python_api/mlflow.keras.html#mlflow.keras.callback.MlflowCallback.on_train_begin">on_train_begin() (mlflow.keras.callback.MlflowCallback method)</a>
 
       <ul>
         <li><a href="python_api/mlflow.tensorflow.html#mlflow.tensorflow.MlflowCallback.on_train_begin">(mlflow.tensorflow.MlflowCallback method)</a>
 </li>
       </ul></li>
+      <li><a href="python_api/mlflow.pytorch.html#mlflow.pytorch.MlflowModelCheckpointCallback.on_train_epoch_end">on_train_epoch_end() (mlflow.pytorch.MlflowModelCheckpointCallback method)</a>
+</li>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.OpenAIAPIType.OPENAI">OPENAI (mlflow.gateway.config.OpenAIAPIType attribute)</a>
 
       <ul>
@@ -5731,10 +5774,10 @@
 </li>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.OpenAIConfig.openai_api_type">openai_api_type (mlflow.gateway.config.OpenAIConfig attribute)</a>
 </li>
-      <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.OpenAIConfig.openai_api_version">openai_api_version (mlflow.gateway.config.OpenAIConfig attribute)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.OpenAIConfig.openai_api_version">openai_api_version (mlflow.gateway.config.OpenAIConfig attribute)</a>
+</li>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.OpenAIConfig.openai_deployment_name">openai_deployment_name (mlflow.gateway.config.OpenAIConfig attribute)</a>
 </li>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.OpenAIConfig.openai_organization">openai_organization (mlflow.gateway.config.OpenAIConfig attribute)</a>
@@ -5864,6 +5907,12 @@
       </ul></li>
       <li><a href="python_api/mlflow.transformers.html#mlflow.transformers.persist_pretrained_model">persist_pretrained_model() (in module mlflow.transformers)</a>
 </li>
+      <li><a href="python_api/mlflow.data.html#mlflow.data.polars_dataset.PolarsDataset">PolarsDataset (class in mlflow.data.polars_dataset)</a>
+</li>
+      <li><a href="python_api/mlflow.data.html#mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetConfig">PolarsDataset.PolarsDatasetConfig (class in mlflow.data.polars_dataset)</a>
+</li>
+      <li><a href="python_api/mlflow.data.html#mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetProfile">PolarsDataset.PolarsDatasetProfile (class in mlflow.data.polars_dataset)</a>
+</li>
       <li><a href="python_api/mlflow.metrics.html#mlflow.metrics.precision_at_k">precision_at_k() (in module mlflow.metrics)</a>
 </li>
       <li><a href="python_api/mlflow.metrics.html#mlflow.metrics.precision_score">precision_score() (in module mlflow.metrics)</a>
@@ -5919,6 +5968,8 @@
       <li><a href="python_api/mlflow.data.html#mlflow.data.pandas_dataset.PandasDataset.predictions">predictions (mlflow.data.pandas_dataset.PandasDataset property)</a>
 
       <ul>
+        <li><a href="python_api/mlflow.data.html#mlflow.data.polars_dataset.PolarsDataset.predictions">(mlflow.data.polars_dataset.PolarsDataset property)</a>
+</li>
         <li><a href="python_api/mlflow.data.html#mlflow.data.spark_dataset.SparkDataset.predictions">(mlflow.data.spark_dataset.SparkDataset property)</a>
 </li>
       </ul></li>
@@ -5938,6 +5989,10 @@
         <li><a href="python_api/mlflow.data.html#mlflow.data.numpy_dataset.NumpyDataset.profile">(mlflow.data.numpy_dataset.NumpyDataset property)</a>
 </li>
         <li><a href="python_api/mlflow.data.html#mlflow.data.pandas_dataset.PandasDataset.profile">(mlflow.data.pandas_dataset.PandasDataset property)</a>
+</li>
+        <li><a href="python_api/mlflow.data.html#mlflow.data.polars_dataset.PolarsDataset.profile">(mlflow.data.polars_dataset.PolarsDataset property)</a>
+</li>
+        <li><a href="python_api/mlflow.data.html#mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetConfig.profile">(mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetConfig attribute)</a>
 </li>
         <li><a href="python_api/mlflow.data.html#mlflow.data.spark_dataset.SparkDataset.profile">(mlflow.data.spark_dataset.SparkDataset property)</a>
 </li>
@@ -6049,15 +6104,9 @@
       <ul>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfo.request_id">(mlflow.entities.TraceInfo property)</a>
 </li>
-        <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfoV2.request_id">(mlflow.entities.TraceInfoV2 attribute)</a>
-</li>
       </ul></li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfo.request_metadata">request_metadata (mlflow.entities.TraceInfo property)</a>
-
-      <ul>
-        <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfoV2.request_metadata">(mlflow.entities.TraceInfoV2 attribute)</a>
 </li>
-      </ul></li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfo.request_preview">request_preview (mlflow.entities.TraceInfo attribute)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfo.request_time">request_time (mlflow.entities.TraceInfo attribute)</a>
@@ -6111,11 +6160,15 @@
 </li>
       <li><a href="python_api/mlflow.models.html#mlflow.models.ResourceType">ResourceType (class in mlflow.models)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceData.response">response (mlflow.entities.TraceData property)</a>
 </li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.PromptVersion.response_format">response_format (mlflow.entities.model_registry.PromptVersion property)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfo.response_preview">response_preview (mlflow.entities.TraceInfo attribute)</a>
+</li>
+      <li><a href="python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent.responses_agent_output_reducer">responses_agent_output_reducer() (mlflow.pyfunc.ResponsesAgent static method)</a>
 </li>
       <li><a href="python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent">ResponsesAgent (class in mlflow.pyfunc)</a>
 </li>
@@ -6183,9 +6236,11 @@
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.Scorer.run">(mlflow.genai.Scorer method)</a>
 </li>
       </ul></li>
-      <li><a href="python_api/mlflow.entities.html#mlflow.entities.Metric.run_id">run_id (mlflow.entities.Metric property)</a>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.Assessment.run_id">run_id (mlflow.entities.Assessment attribute)</a>
 
       <ul>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.Metric.run_id">(mlflow.entities.Metric property)</a>
+</li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.ModelVersion.run_id">(mlflow.entities.model_registry.ModelVersion property)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.ModelVersionDeploymentJobState.run_id">(mlflow.entities.model_registry.ModelVersionDeploymentJobState property)</a>
@@ -6247,6 +6302,8 @@
         <li><a href="python_api/mlflow.models.html#mlflow.models.Model.save">(mlflow.models.Model method)</a>
 </li>
       </ul></li>
+      <li><a href="python_api/mlflow.pytorch.html#mlflow.pytorch.MlflowModelCheckpointCallback.save_checkpoint">save_checkpoint() (mlflow.pytorch.MlflowModelCheckpointCallback method)</a>
+</li>
       <li><a href="python_api/mlflow.shap.html#mlflow.shap.save_explainer">save_explainer() (in module mlflow.shap)</a>
 </li>
       <li><a href="python_api/mlflow.catboost.html#mlflow.catboost.save_model">save_model() (in module mlflow.catboost)</a>
@@ -6321,6 +6378,10 @@
         <li><a href="python_api/mlflow.data.html#mlflow.data.numpy_dataset.NumpyDataset.schema">(mlflow.data.numpy_dataset.NumpyDataset property)</a>
 </li>
         <li><a href="python_api/mlflow.data.html#mlflow.data.pandas_dataset.PandasDataset.schema">(mlflow.data.pandas_dataset.PandasDataset property)</a>
+</li>
+        <li><a href="python_api/mlflow.data.html#mlflow.data.polars_dataset.PolarsDataset.schema">(mlflow.data.polars_dataset.PolarsDataset property)</a>
+</li>
+        <li><a href="python_api/mlflow.data.html#mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetConfig.schema">(mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetConfig attribute)</a>
 </li>
         <li><a href="python_api/mlflow.data.html#mlflow.data.spark_dataset.SparkDataset.schema">(mlflow.data.spark_dataset.SparkDataset property)</a>
 </li>
@@ -6459,14 +6520,14 @@
       </ul></li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset.set_profile">set_profile() (mlflow.genai.datasets.EvaluationDataset method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.set_prompt_alias">set_prompt_alias() (in module mlflow.genai)</a>
 
       <ul>
         <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.set_prompt_alias">(mlflow.client.MlflowClient method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.set_prompt_tag">set_prompt_tag() (mlflow.client.MlflowClient method)</a>
 </li>
       <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.set_prompt_version_tag">set_prompt_version_tag() (mlflow.client.MlflowClient method)</a>
@@ -6486,8 +6547,6 @@
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.set_scheduled_scorers">set_scheduled_scorers() (in module mlflow.genai)</a>
 </li>
       <li><a href="python_api/mlflow.models.html#mlflow.models.set_signature">set_signature() (in module mlflow.models)</a>
-</li>
-      <li><a href="python_api/mlflow.tracing.html#mlflow.tracing.set_span_chat_messages">set_span_chat_messages() (in module mlflow.tracing)</a>
 </li>
       <li><a href="python_api/mlflow.tracing.html#mlflow.tracing.set_span_chat_tools">set_span_chat_tools() (in module mlflow.tracing)</a>
 </li>
@@ -6568,6 +6627,10 @@
 </li>
         <li><a href="python_api/mlflow.data.html#mlflow.data.pandas_dataset.PandasDataset.source">(mlflow.data.pandas_dataset.PandasDataset property)</a>
 </li>
+        <li><a href="python_api/mlflow.data.html#mlflow.data.polars_dataset.PolarsDataset.source">(mlflow.data.polars_dataset.PolarsDataset property)</a>
+</li>
+        <li><a href="python_api/mlflow.data.html#mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetConfig.source">(mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetConfig attribute)</a>
+</li>
         <li><a href="python_api/mlflow.data.html#mlflow.data.spark_dataset.SparkDataset.source">(mlflow.data.spark_dataset.SparkDataset property)</a>
 </li>
         <li><a href="python_api/mlflow.data.html#mlflow.data.tensorflow_dataset.TensorFlowDataset.source">(mlflow.data.tensorflow_dataset.TensorFlowDataset property)</a>
@@ -6585,9 +6648,11 @@
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.LoggedModel.source_run_id">source_run_id (mlflow.entities.LoggedModel property)</a>
 </li>
-      <li><a href="python_api/mlflow.entities.html#mlflow.entities.AssessmentSource.source_type">source_type (mlflow.entities.AssessmentSource attribute)</a>
+      <li><a href="python_api/mlflow.data.html#mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetConfig.source_type">source_type (mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetConfig attribute)</a>
 
       <ul>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.AssessmentSource.source_type">(mlflow.entities.AssessmentSource attribute)</a>
+</li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.Dataset.source_type">(mlflow.entities.Dataset property)</a>
 </li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset.source_type">(mlflow.genai.datasets.EvaluationDataset property)</a>
@@ -6670,8 +6735,6 @@
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfo.status">(mlflow.entities.TraceInfo property)</a>
 </li>
-        <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfoV2.status">(mlflow.entities.TraceInfoV2 attribute)</a>
-</li>
       </ul></li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.SpanStatus.status_code">status_code (mlflow.entities.SpanStatus attribute)</a>
 </li>
@@ -6722,8 +6785,6 @@
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfo.tags">(mlflow.entities.TraceInfo attribute)</a>
 </li>
-        <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfoV2.tags">(mlflow.entities.TraceInfoV2 attribute)</a>
-</li>
         <li><a href="python_api/mlflow.models.html#mlflow.models.model.ModelInfo.tags">(mlflow.models.model.ModelInfo property)</a>
 </li>
       </ul></li>
@@ -6743,6 +6804,8 @@
         <li><a href="python_api/mlflow.data.html#mlflow.data.numpy_dataset.NumpyDataset.targets">(mlflow.data.numpy_dataset.NumpyDataset property)</a>
 </li>
         <li><a href="python_api/mlflow.data.html#mlflow.data.pandas_dataset.PandasDataset.targets">(mlflow.data.pandas_dataset.PandasDataset property)</a>
+</li>
+        <li><a href="python_api/mlflow.data.html#mlflow.data.polars_dataset.PolarsDataset.targets">(mlflow.data.polars_dataset.PolarsDataset property)</a>
 </li>
         <li><a href="python_api/mlflow.data.html#mlflow.data.spark_dataset.SparkDataset.targets">(mlflow.data.spark_dataset.SparkDataset property)</a>
 </li>
@@ -6772,11 +6835,7 @@
 </li>
       </ul></li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfo.timestamp_ms">timestamp_ms (mlflow.entities.TraceInfo property)</a>
-
-      <ul>
-        <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfoV2.timestamp_ms">(mlflow.entities.TraceInfoV2 attribute)</a>
 </li>
-      </ul></li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.LabelSchema.title">title (mlflow.genai.label_schemas.LabelSchema attribute)</a>
 </li>
       <li><a href="python_api/mlflow.html#mlflow.Image.to_array">to_array() (mlflow.Image method)</a>
@@ -6802,6 +6861,8 @@
 </li>
         <li><a href="python_api/mlflow.data.html#mlflow.data.pandas_dataset.PandasDataset.to_dict">(mlflow.data.pandas_dataset.PandasDataset method)</a>
 </li>
+        <li><a href="python_api/mlflow.data.html#mlflow.data.polars_dataset.PolarsDataset.to_dict">(mlflow.data.polars_dataset.PolarsDataset method)</a>
+</li>
         <li><a href="python_api/mlflow.data.html#mlflow.data.spark_dataset.SparkDataset.to_dict">(mlflow.data.spark_dataset.SparkDataset method)</a>
 </li>
         <li><a href="python_api/mlflow.data.html#mlflow.data.spark_dataset_source.SparkDatasetSource.to_dict">(mlflow.data.spark_dataset_source.SparkDatasetSource method)</a>
@@ -6821,8 +6882,6 @@
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceData.to_dict">(mlflow.entities.TraceData method)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfo.to_dict">(mlflow.entities.TraceInfo method)</a>
-</li>
-        <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfoV2.to_dict">(mlflow.entities.TraceInfoV2 method)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceLocation.to_dict">(mlflow.entities.TraceLocation method)</a>
 </li>
@@ -6907,14 +6966,14 @@
         <li><a href="python_api/mlflow.types.html#mlflow.types.Schema.to_json">(mlflow.types.Schema method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.html#mlflow.Image.to_list">to_list() (mlflow.Image method)</a>
 
       <ul>
         <li><a href="python_api/mlflow.entities.html#mlflow.store.entities.PagedList.to_list">(mlflow.store.entities.PagedList method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.types.html#mlflow.types.DataType.to_numpy">to_numpy() (mlflow.types.DataType method)</a>
 </li>
       <li><a href="python_api/mlflow.types.html#mlflow.types.DataType.to_pandas">to_pandas() (mlflow.types.DataType method)</a>
@@ -6996,8 +7055,6 @@
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfo.to_proto">(mlflow.entities.TraceInfo method)</a>
 </li>
-        <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfoV2.to_proto">(mlflow.entities.TraceInfoV2 method)</a>
-</li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceLocation.to_proto">(mlflow.entities.TraceLocation method)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceLocationType.to_proto">(mlflow.entities.TraceLocationType method)</a>
@@ -7024,8 +7081,6 @@
 </li>
       </ul></li>
       <li><a href="python_api/mlflow.types.html#mlflow.types.llm.FunctionToolDefinition.to_tool_definition">to_tool_definition() (mlflow.types.llm.FunctionToolDefinition method)</a>
-</li>
-      <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfoV2.to_v3">to_v3() (mlflow.entities.TraceInfoV2 method)</a>
 </li>
       <li><a href="python_api/mlflow.models.html#mlflow.models.Model.to_yaml">to_yaml() (mlflow.models.Model method)</a>
 </li>
@@ -7072,8 +7127,6 @@
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfo.trace_id">(mlflow.entities.TraceInfo attribute)</a>
 </li>
-        <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfoV2.trace_id">(mlflow.entities.TraceInfoV2 property)</a>
-</li>
       </ul></li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfo.trace_location">trace_location (mlflow.entities.TraceInfo attribute)</a>
 </li>
@@ -7087,8 +7140,6 @@
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfo">TraceInfo (class in mlflow.entities)</a>
 </li>
-      <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfoV2">TraceInfoV2 (class in mlflow.entities)</a>
-</li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceLocation">TraceLocation (class in mlflow.entities)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceLocationType">TraceLocationType (class in mlflow.entities)</a>
@@ -7096,11 +7147,7 @@
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceState">TraceState (class in mlflow.entities)</a>
 </li>
       <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.tracking_uri">tracking_uri (mlflow.client.MlflowClient property)</a>
-
-      <ul>
-        <li><a href="python_api/mlflow.tracing.html#mlflow.tracing.destination.MlflowExperiment.tracking_uri">(mlflow.tracing.destination.MlflowExperiment attribute)</a>
 </li>
-      </ul></li>
       <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.transition_model_version_stage">transition_model_version_stage() (mlflow.client.MlflowClient method)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceLocation.type">type (mlflow.entities.TraceLocation attribute)</a>
@@ -7144,11 +7191,7 @@
       <li><a href="python_api/mlflow.pyfunc.html#mlflow.pyfunc.PyFuncModel.unwrap_python_model">unwrap_python_model() (mlflow.pyfunc.PyFuncModel method)</a>
 </li>
       <li><a href="python_api/mlflow.html#mlflow.update_assessment">update_assessment() (in module mlflow)</a>
-
-      <ul>
-        <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.update_assessment">(mlflow.client.MlflowClient method)</a>
 </li>
-      </ul></li>
       <li><a href="python_api/mlflow.html#mlflow.update_current_trace">update_current_trace() (in module mlflow)</a>
 </li>
       <li><a href="python_api/mlflow.deployments.html#mlflow.deployments.BaseDeploymentClient.update_deployment">update_deployment() (mlflow.deployments.BaseDeploymentClient method)</a>
@@ -7187,10 +7230,10 @@
 </li>
       <li><a href="python_api/mlflow.models.html#mlflow.models.update_model_requirements">update_model_requirements() (in module mlflow.models)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.update_model_version">update_model_version() (mlflow.client.MlflowClient method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.update_registered_model">update_registered_model() (mlflow.client.MlflowClient method)</a>
 </li>
       <li><a href="auth/python-api.html#mlflow.server.auth.client.AuthServiceClient.update_registered_model_permission">update_registered_model_permission() (mlflow.server.auth.client.AuthServiceClient method)</a>
@@ -7416,7 +7459,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'./',
-      VERSION:'3.1.3',
+      VERSION:'3.2.0rc0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

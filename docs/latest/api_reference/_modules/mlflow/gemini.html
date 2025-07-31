@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="MLflow 3.1.3 documentation" href="../../index.html"/>
+    <link rel="top" title="MLflow 3.2.0rc0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -149,7 +149,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link">3.1.3</span>
+  <span class="header-link">3.2.0rc0</span>
 </div>
   </nav>
   <page>
@@ -186,6 +186,7 @@
       
         <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../python_api/index.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../typescript_api/index.html">TypeScript API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../cli.html">Command-Line Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../auth/python-api.html">MLflow Authentication Python API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../auth/rest-api.html">MLflow Authentication REST API</a></li>
@@ -248,17 +249,16 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.gemini.autolog</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">async_patched_class_call</span><span class="p">,</span>
     <span class="n">patched_class_call</span><span class="p">,</span>
     <span class="n">patched_module_call</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">experimental</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.autologging_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">autologging_integration</span><span class="p">,</span> <span class="n">safe_patch</span>
 
 <span class="n">FLAVOR_NAME</span> <span class="o">=</span> <span class="s2">&quot;gemini&quot;</span>
 
 
-<div class="viewcode-block" id="autolog"><a class="viewcode-back" href="../../python_api/mlflow.gemini.html#mlflow.gemini.autolog">[docs]</a><span class="nd">@experimental</span>
-<span class="nd">@autologging_integration</span><span class="p">(</span><span class="n">FLAVOR_NAME</span><span class="p">)</span>
+<div class="viewcode-block" id="autolog"><a class="viewcode-back" href="../../python_api/mlflow.gemini.html#mlflow.gemini.autolog">[docs]</a><span class="nd">@autologging_integration</span><span class="p">(</span><span class="n">FLAVOR_NAME</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">autolog</span><span class="p">(</span>
     <span class="n">log_traces</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">disable</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -267,7 +267,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Enables (or disables) and configures autologging from Gemini to MLflow.</span>
 <span class="sd">    Currently, both legacy SDK google-generativeai and new SDK google-genai are supported.</span>
-<span class="sd">    Only synchronous calls are supported. Asynchnorous APIs and streaming are not recorded.</span>
+<span class="sd">    Both synchronous and asynchronous calls are supported for the new SDK.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        log_traces: If ``True``, traces are logged for Gemini models.</span>
@@ -315,12 +315,24 @@
                 <span class="n">method</span><span class="p">,</span>
                 <span class="n">patched_class_call</span><span class="p">,</span>
             <span class="p">)</span>
+            <span class="n">safe_patch</span><span class="p">(</span>
+                <span class="n">FLAVOR_NAME</span><span class="p">,</span>
+                <span class="n">genai</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">AsyncModels</span><span class="p">,</span>
+                <span class="n">method</span><span class="p">,</span>
+                <span class="n">async_patched_class_call</span><span class="p">,</span>
+            <span class="p">)</span>
 
         <span class="n">safe_patch</span><span class="p">(</span>
             <span class="n">FLAVOR_NAME</span><span class="p">,</span>
             <span class="n">genai</span><span class="o">.</span><span class="n">chats</span><span class="o">.</span><span class="n">Chat</span><span class="p">,</span>
             <span class="s2">&quot;send_message&quot;</span><span class="p">,</span>
             <span class="n">patched_class_call</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">safe_patch</span><span class="p">(</span>
+            <span class="n">FLAVOR_NAME</span><span class="p">,</span>
+            <span class="n">genai</span><span class="o">.</span><span class="n">chats</span><span class="o">.</span><span class="n">AsyncChat</span><span class="p">,</span>
+            <span class="s2">&quot;send_message&quot;</span><span class="p">,</span>
+            <span class="n">async_patched_class_call</span><span class="p">,</span>
         <span class="p">)</span>
     <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
         <span class="k">pass</span></div>
@@ -354,7 +366,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../',
-      VERSION:'3.1.3',
+      VERSION:'3.2.0rc0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

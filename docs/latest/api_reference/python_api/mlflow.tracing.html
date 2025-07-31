@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MLflow 3.1.3 documentation" href="../index.html"/>
+    <link rel="top" title="MLflow 3.2.0rc0 documentation" href="../index.html"/>
         <link rel="up" title="Python API" href="index.html"/>
         <link rel="next" title="mlflow.transformers" href="/mlflow.transformers.html"/>
         <link rel="prev" title="mlflow.tensorflow" href="/mlflow.tensorflow.html"/> 
@@ -150,7 +150,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link">3.1.3</span>
+  <span class="header-link">3.2.0rc0</span>
 </div>
   </nav>
   <page>
@@ -249,6 +249,7 @@
 <li class="toctree-l2"><a class="reference internal" href="index.html#log-levels">Log Levels</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../typescript_api/index.html">TypeScript API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cli.html">Command-Line Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../auth/python-api.html">MLflow Authentication Python API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../auth/rest-api.html">MLflow Authentication REST API</a></li>
@@ -314,6 +315,69 @@ Tracing is <a class="reference internal" href="mlflow.html#mlflow-tracing-fluent
 <a class="reference internal" href="mlflow.html#module-mlflow" title="mlflow"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mlflow</span></code></a> namespace, or the low-level <a class="reference external" href="../llms/tracing/index.html#tracing-client-apis">Tracing Client APIs</a></p>
 </div>
 <span class="target" id="module-mlflow.tracing"></span><dl class="py function">
+<dt class="sig sig-object py" id="mlflow.tracing.configure">
+<span class="sig-prename descclassname"><span class="pre">mlflow.tracing.</span></span><span class="sig-name descname"><span class="pre">configure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">span_processors</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional[list[typing.Callable[[ForwardRef('LiveSpan')],</span> <span class="pre">NoneType]]]</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">mlflow.tracing.config.TracingConfigContext</span></span></span><a class="reference internal" href="../_modules/mlflow/tracing/config.html#configure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.tracing.configure" title="Permalink to this definition"> </a></dt>
+<dd><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Experimental: This function may change or be removed in a future release without warning.</p>
+</div>
+<p>Configure MLflow tracing. Can be used as function or context manager.</p>
+<p>Only updates explicitly provided arguments, leaving others unchanged.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>span_processors</strong> – List of functions to process spans before export.
+This is helpful for filtering/masking particular attributes from the span to
+prevent sensitive data from being logged or for reducing the size of the span.
+Each function must accept a single argument of type LiveSpan and should not
+return any value. When multiple functions are provided, they are applied
+sequentially in the order they are provided.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Context manager for temporary configuration changes.</dt><dd><p>When used as a function, the configuration changes persist.
+When used as a context manager, changes are reverted on exit.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>TracingConfigContext</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">pii_filter</span><span class="p">(</span><span class="n">span</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Example PII filter that masks sensitive data in span attributes.&quot;&quot;&quot;</span>
+    <span class="c1"># Mask sensitive inputs</span>
+    <span class="k">if</span> <span class="n">inputs</span> <span class="o">:=</span> <span class="n">span</span><span class="o">.</span><span class="n">inputs</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">inputs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="s2">&quot;password&quot;</span> <span class="ow">in</span> <span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">or</span> <span class="s2">&quot;token&quot;</span> <span class="ow">in</span> <span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                <span class="n">span</span><span class="o">.</span><span class="n">set_inputs</span><span class="p">({</span><span class="o">**</span><span class="n">inputs</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="s2">&quot;[REDACTED]&quot;</span><span class="p">})</span>
+
+    <span class="c1"># Mask sensitive outputs</span>
+    <span class="k">if</span> <span class="n">outputs</span> <span class="o">:=</span> <span class="n">span</span><span class="o">.</span><span class="n">outputs</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s2">&quot;secret&quot;</span> <span class="ow">in</span> <span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                    <span class="n">outputs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;[REDACTED]&quot;</span>
+            <span class="n">span</span><span class="o">.</span><span class="n">set_outputs</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span>
+
+    <span class="c1"># Mask sensitive attributes</span>
+    <span class="k">for</span> <span class="n">attr_key</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">span</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+        <span class="k">if</span> <span class="s2">&quot;api_key&quot;</span> <span class="ow">in</span> <span class="n">attr_key</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+            <span class="n">span</span><span class="o">.</span><span class="n">set_attribute</span><span class="p">(</span><span class="n">attr_key</span><span class="p">,</span> <span class="s2">&quot;[REDACTED]&quot;</span><span class="p">)</span>
+
+<span class="c1"># Permanent configuration change</span>
+<span class="n">mlflow</span><span class="o">.</span><span class="n">tracing</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">span_processors</span><span class="o">=</span><span class="p">[</span><span class="n">pii_filter</span><span class="p">])</span>
+
+<span class="c1"># Temporary configuration change</span>
+<span class="k">with</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">tracing</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">span_processors</span><span class="o">=</span><span class="p">[</span><span class="n">pii_filter</span><span class="p">]):</span>
+    <span class="c1"># PII filtering enabled only in this block</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="mlflow.tracing.disable">
 <span class="sig-prename descclassname"><span class="pre">mlflow.tracing.</span></span><span class="sig-name descname"><span class="pre">disable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/tracing/provider.html#disable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.tracing.disable" title="Permalink to this definition"> </a></dt>
 <dd><p>Disable tracing.</p>
@@ -414,6 +478,9 @@ operation is performed.</p>
 <p>Set a custom span destination to which MLflow will export the traces.</p>
 <p>A destination specified by this function will take precedence over
 other configurations, such as tracking URI, OTLP environment variables.</p>
+<p>By default, the specified destination is applied globally. To set different destinations
+per thread in multi-threaded application, set the environment variable
+‘MLFLOW_ENABLE_THREAD_LOCAL_TRACING_DESTINATION’ to ‘true’,</p>
 <p>To reset the destination, call the <a class="reference internal" href="#mlflow.tracing.reset" title="mlflow.tracing.reset"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.tracing.reset()</span></code></a> function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -434,44 +501,6 @@ other configurations, such as tracking URI, OTLP environment variables.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="mlflow.tracing.set_span_chat_messages">
-<span class="sig-prename descclassname"><span class="pre">mlflow.tracing.</span></span><span class="sig-name descname"><span class="pre">set_span_chat_messages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">span</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">LiveSpan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">messages</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">,</span> </span><span class="pre">ChatMessage</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">append</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/tracing/utils.html#set_span_chat_messages"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.tracing.set_span_chat_messages" title="Permalink to this definition"> </a></dt>
-<dd><p>Set the <cite>mlflow.chat.messages</cite> attribute on the specified span. This
-attribute is used in the UI, and also by downstream applications that
-consume trace data, such as MLflow evaluate.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>span</strong> – The LiveSpan to add the attribute to</p></li>
-<li><p><strong>messages</strong> – A list of standardized chat messages (refer to the
-<a class="reference external" href="../llms/tracing/tracing-schema.html#chat-completion-spans">spec</a>
-for details)</p></li>
-<li><p><strong>append</strong> – If True, the messages will be appended to the existing messages. Otherwise,
-the attribute will be overwritten entirely. Default is False.
-This is useful when you want to record messages incrementally, e.g., log
-input messages first, and then log output messages later.</p></li>
-</ul>
-</dd>
-</dl>
-<p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">mlflow</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing</span><span class="w"> </span><span class="kn">import</span> <span class="n">set_span_chat_messages</span>
-
-
-<span class="nd">@mlflow</span><span class="o">.</span><span class="n">trace</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">():</span>
-    <span class="n">messages</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;hello&quot;</span><span class="p">}]</span>
-    <span class="n">span</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">get_current_active_span</span><span class="p">()</span>
-    <span class="n">set_span_chat_messages</span><span class="p">(</span><span class="n">span</span><span class="p">,</span> <span class="n">messages</span><span class="p">)</span>
-    <span class="k">return</span> <span class="mi">0</span>
-
-
-<span class="n">f</span><span class="p">()</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="mlflow.tracing.set_span_chat_tools">
 <span class="sig-prename descclassname"><span class="pre">mlflow.tracing.</span></span><span class="sig-name descname"><span class="pre">set_span_chat_tools</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">span</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">LiveSpan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tools</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">ChatTool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/tracing/utils.html#set_span_chat_tools"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.tracing.set_span_chat_tools" title="Permalink to this definition"> </a></dt>
 <dd><p>Set the <cite>mlflow.chat.tools</cite> attribute on the specified span. This
@@ -481,10 +510,9 @@ consume trace data, such as MLflow evaluate.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>span</strong> – The LiveSpan to add the attribute to</p></li>
-<li><p><strong>tools</strong> – <p>A list of standardized chat tool definitions (refer to the
+<li><p><strong>tools</strong> – A list of standardized chat tool definitions (refer to the
 <a class="reference external" href="../llms/tracing/tracing-schema.html#chat-completion-spans">spec</a>
-for details)</p>
-</p></li>
+for details)</p></li>
 </ul>
 </dd>
 </dl>
@@ -568,7 +596,7 @@ If both are specified, they must refer to the same experiment.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="mlflow.tracing.destination.MlflowExperiment">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.tracing.destination.</span></span><span class="sig-name descname"><span class="pre">MlflowExperiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_uri</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/tracing/destination.html#MlflowExperiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.tracing.destination.MlflowExperiment" title="Permalink to this definition"> </a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.tracing.destination.</span></span><span class="sig-name descname"><span class="pre">MlflowExperiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/tracing/destination.html#MlflowExperiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.tracing.destination.MlflowExperiment" title="Permalink to this definition"> </a></dt>
 <dd><div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Experimental: This class may change or be removed in a future release without warning.</p>
@@ -581,18 +609,6 @@ MLflow will log traces to the specified experiment.</p>
 <span class="sig-name descname"><span class="pre">experiment_id</span></span><a class="headerlink" href="#mlflow.tracing.destination.MlflowExperiment.experiment_id" title="Permalink to this definition"> </a></dt>
 <dd><p>The ID of the experiment to log traces to. If not specified,
 the current active experiment will be used.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optional[str]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="mlflow.tracing.destination.MlflowExperiment.tracking_uri">
-<span class="sig-name descname"><span class="pre">tracking_uri</span></span><a class="headerlink" href="#mlflow.tracing.destination.MlflowExperiment.tracking_uri" title="Permalink to this definition"> </a></dt>
-<dd><p>The tracking URI of the MLflow server to log traces to.
-If not specified, the current tracking URI will be used.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>Optional[str]</p>
@@ -664,7 +680,7 @@ If not specified, the current tracking URI will be used.</p>
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../',
-      VERSION:'3.1.3',
+      VERSION:'3.2.0rc0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

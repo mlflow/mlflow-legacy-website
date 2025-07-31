@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="MLflow 3.1.3 documentation" href="../../index.html"/>
+    <link rel="top" title="MLflow 3.2.0rc0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -149,7 +149,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link">3.1.3</span>
+  <span class="header-link">3.2.0rc0</span>
 </div>
   </nav>
   <page>
@@ -186,6 +186,7 @@
       
         <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../python_api/index.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../typescript_api/index.html">TypeScript API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../cli.html">Command-Line Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../auth/python-api.html">MLflow Authentication Python API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../auth/rest-api.html">MLflow Authentication REST API</a></li>
@@ -275,7 +276,6 @@
     <span class="n">EvaluationMetric</span><span class="p">,</span>
     <span class="n">make_metric</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">experimental</span>
 
 
 <div class="viewcode-block" id="latency"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.latency">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">latency</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
@@ -296,6 +296,9 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function will create a metric for calculating token_count. Token count is calculated</span>
 <span class="sd">    using tiktoken by using the `cl100k_base` tokenizer.</span>
+
+<span class="sd">    Note: For air-gapped environments, you can set the TIKTOKEN_CACHE_DIR environment variable</span>
+<span class="sd">    to specify a local cache directory for tiktoken to avoid downloading the tokenizer files.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">make_metric</span><span class="p">(</span>
         <span class="n">eval_fn</span><span class="o">=</span><span class="n">_token_count_eval_fn</span><span class="p">,</span>
@@ -668,8 +671,7 @@
     <span class="k">return</span> <span class="n">make_metric</span><span class="p">(</span><span class="n">eval_fn</span><span class="o">=</span><span class="n">_f1_score_eval_fn</span><span class="p">,</span> <span class="n">greater_is_better</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;f1_score&quot;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="bleu"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.bleu">[docs]</a><span class="nd">@experimental</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">bleu</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
+<div class="viewcode-block" id="bleu"><a class="viewcode-back" href="../../python_api/mlflow.metrics.html#mlflow.metrics.bleu">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">bleu</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EvaluationMetric</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function will create a metric for evaluating `bleu`_.</span>
 
@@ -749,7 +751,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../',
-      VERSION:'3.1.3',
+      VERSION:'3.2.0rc0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

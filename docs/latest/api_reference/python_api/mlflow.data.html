@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MLflow 3.1.3 documentation" href="../index.html"/>
+    <link rel="top" title="MLflow 3.2.0rc0 documentation" href="../index.html"/>
         <link rel="up" title="Python API" href="index.html"/>
         <link rel="next" title="mlflow.deployments" href="/mlflow.deployments.html"/>
         <link rel="prev" title="mlflow.crewai" href="/mlflow.crewai.html"/> 
@@ -150,7 +150,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link">3.1.3</span>
+  <span class="header-link">3.2.0rc0</span>
 </div>
   </nav>
   <page>
@@ -205,6 +205,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#spark">Spark</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#hugging-face">Hugging Face</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#tensorflow">TensorFlow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#polars">polars</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#dataset-sources">Dataset Sources</a></li>
 </ul>
 </li>
@@ -257,6 +258,7 @@
 <li class="toctree-l2"><a class="reference internal" href="index.html#log-levels">Log Levels</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../typescript_api/index.html">TypeScript API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cli.html">Command-Line Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../auth/python-api.html">MLflow Authentication Python API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../auth/rest-api.html">MLflow Authentication REST API</a></li>
@@ -326,7 +328,7 @@ the <a class="reference internal" href="mlflow.html#mlflow.log_input" title="mlf
 <a class="reference internal" href="#mlflow.data.dataset.Dataset" title="mlflow.data.dataset.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datasets</span></code></a> from a variety of Python data objects, including
 Pandas DataFrames (<a class="reference internal" href="#mlflow.data.from_pandas" title="mlflow.data.from_pandas"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.data.from_pandas()</span></code></a>), NumPy arrays
 (<a class="reference internal" href="#mlflow.data.from_numpy" title="mlflow.data.from_numpy"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.data.from_numpy()</span></code></a>), Spark DataFrames (<a class="reference internal" href="#mlflow.data.from_spark" title="mlflow.data.from_spark"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.data.from_spark()</span></code></a>
-/ <a class="reference internal" href="#mlflow.data.load_delta" title="mlflow.data.load_delta"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.data.load_delta()</span></code></a>), and more.</p></li>
+/ <a class="reference internal" href="#mlflow.data.load_delta" title="mlflow.data.load_delta"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.data.load_delta()</span></code></a>), Polars DataFrames (<a class="reference internal" href="#mlflow.data.from_polars" title="mlflow.data.from_polars"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.data.from_polars()</span></code></a>), and more.</p></li>
 <li><p><a class="reference internal" href="#mlflow.data.dataset_source.DatasetSource" title="mlflow.data.dataset_source.DatasetSource"><code class="xref py py-func docutils literal notranslate"><span class="pre">DatasetSource</span></code></a>: Represents the source of a
 dataset. For example, this may be a directory of files stored in S3, a Delta Table, or a web URL.
 Each <a class="reference internal" href="#mlflow.data.dataset.Dataset" title="mlflow.data.dataset.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> references the source from which it was
@@ -1131,6 +1133,153 @@ name.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="polars">
+<h2>polars<a class="headerlink" href="#polars" title="Permalink to this headline"> </a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="mlflow.data.from_polars">
+<span class="sig-prename descclassname"><span class="pre">mlflow.data.</span></span><span class="sig-name descname"><span class="pre">from_polars</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">polars.dataframe.frame.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><a class="reference internal" href="#mlflow.data.dataset_source.DatasetSource" title="mlflow.data.dataset_source.DatasetSource"><span class="pre">mlflow.data.dataset_source.DatasetSource</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targets</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">digest</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictions</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mlflow.data.polars_dataset.PolarsDataset" title="mlflow.data.polars_dataset.PolarsDataset"><span class="pre">mlflow.data.polars_dataset.PolarsDataset</span></a></span></span><a class="reference internal" href="../_modules/mlflow/data/polars_dataset.html#from_polars"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.data.from_polars" title="Permalink to this definition"> </a></dt>
+<dd><p>Construct a <a class="reference internal" href="#mlflow.data.polars_dataset.PolarsDataset" title="mlflow.data.polars_dataset.PolarsDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">PolarsDataset</span></code></a> instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> – A polars DataFrame.</p></li>
+<li><p><strong>source</strong> – Source from which the DataFrame was derived, e.g. a filesystem
+path, an S3 URI, an HTTPS URL, a delta table name with version, or
+spark table etc. <code class="docutils literal notranslate"><span class="pre">source</span></code> may be specified as a URI, a path-like string,
+or an instance of
+<a class="reference internal" href="#mlflow.data.dataset_source.DatasetSource" title="mlflow.data.dataset_source.DatasetSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetSource</span></code></a>.
+If unspecified, the source is assumed to be the code location
+(e.g. notebook cell, script, etc.) where
+<a class="reference internal" href="#mlflow.data.from_polars" title="mlflow.data.from_polars"><code class="xref py py-func docutils literal notranslate"><span class="pre">from_polars</span></code></a> is being called.</p></li>
+<li><p><strong>targets</strong> – An optional target column name for supervised training. This column
+must be present in <code class="docutils literal notranslate"><span class="pre">df</span></code>.</p></li>
+<li><p><strong>name</strong> – Name of the dataset. If unspecified, a name is generated.</p></li>
+<li><p><strong>digest</strong> – Dataset digest (hash). If unspecified, a digest is computed
+automatically.</p></li>
+<li><p><strong>predictions</strong> – An optional predictions column name for model evaluation. This column
+must be present in <code class="docutils literal notranslate"><span class="pre">df</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id4" title="Permalink to this code"> </a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">mlflow</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">polars</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pl</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">[[</span><span class="s2">&quot;tom&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;nick&quot;</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;julie&quot;</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span>
+    <span class="n">schema</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Name&quot;</span><span class="p">,</span> <span class="s2">&quot;Age&quot;</span><span class="p">,</span> <span class="s2">&quot;Label&quot;</span><span class="p">,</span> <span class="s2">&quot;ModelOutput&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">from_polars</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="s2">&quot;Label&quot;</span><span class="p">,</span> <span class="n">predictions</span><span class="o">=</span><span class="s2">&quot;ModelOutput&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mlflow.data.polars_dataset.PolarsDataset">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.data.polars_dataset.</span></span><span class="sig-name descname"><span class="pre">PolarsDataset</span></span><a class="reference internal" href="../_modules/mlflow/data/polars_dataset.html#PolarsDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.data.polars_dataset.PolarsDataset" title="Permalink to this definition"> </a></dt>
+<dd><p>A polars DataFrame for use with MLflow Tracking.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetConfig">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">PolarsDatasetConfig</span></span><a class="reference internal" href="../_modules/mlflow/data/polars_dataset.html#PolarsDataset.PolarsDatasetConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetConfig" title="Permalink to this definition"> </a></dt>
+<dd><dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetConfig.digest">
+<span class="sig-name descname"><span class="pre">digest</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetConfig.digest" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetConfig.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetConfig.name" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetConfig.profile">
+<span class="sig-name descname"><span class="pre">profile</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetConfig.profile" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetConfig.schema">
+<span class="sig-name descname"><span class="pre">schema</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetConfig.schema" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetConfig.source">
+<span class="sig-name descname"><span class="pre">source</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetConfig.source" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetConfig.source_type">
+<span class="sig-name descname"><span class="pre">source_type</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetConfig.source_type" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetProfile">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">PolarsDatasetProfile</span></span><a class="reference internal" href="../_modules/mlflow/data/polars_dataset.html#PolarsDataset.PolarsDatasetProfile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetProfile" title="Permalink to this definition"> </a></dt>
+<dd><dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetProfile.num_elements">
+<span class="sig-name descname"><span class="pre">num_elements</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetProfile.num_elements" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetProfile.num_rows">
+<span class="sig-name descname"><span class="pre">num_rows</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetProfile.num_rows" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mlflow.data.polars_dataset.PolarsDataset.df">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">df</span></span><em class="property"><span class="pre">:</span> <span class="pre">polars.dataframe.frame.DataFrame</span></em><a class="headerlink" href="#mlflow.data.polars_dataset.PolarsDataset.df" title="Permalink to this definition"> </a></dt>
+<dd><p>Underlying DataFrame.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mlflow.data.polars_dataset.PolarsDataset.predictions">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">predictions</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mlflow.data.polars_dataset.PolarsDataset.predictions" title="Permalink to this definition"> </a></dt>
+<dd><p>Name of the predictions column.</p>
+<p>May be <code class="docutils literal notranslate"><span class="pre">None</span></code> if no predictions column is available.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mlflow.data.polars_dataset.PolarsDataset.profile">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">profile</span></span><em class="property"><span class="pre">:</span> <a class="reference internal" href="#mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetProfile" title="mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetProfile"><span class="pre">mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetProfile</span></a></em><a class="headerlink" href="#mlflow.data.polars_dataset.PolarsDataset.profile" title="Permalink to this definition"> </a></dt>
+<dd><p>Profile of the dataset.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mlflow.data.polars_dataset.PolarsDataset.schema">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">schema</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="mlflow.types.html#mlflow.types.Schema" title="mlflow.types.schema.Schema"><span class="pre">mlflow.types.schema.Schema</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mlflow.data.polars_dataset.PolarsDataset.schema" title="Permalink to this definition"> </a></dt>
+<dd><p>Instance of <a class="reference internal" href="mlflow.types.html#mlflow.types.Schema" title="mlflow.types.Schema"><code class="xref py py-class docutils literal notranslate"><span class="pre">mlflow.types.Schema</span></code></a> representing the tabular dataset.</p>
+<p>May be <code class="docutils literal notranslate"><span class="pre">None</span></code> if the schema cannot be inferred from the dataset.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mlflow.data.polars_dataset.PolarsDataset.source">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">source</span></span><em class="property"><span class="pre">:</span> <a class="reference internal" href="#mlflow.data.dataset_source.DatasetSource" title="mlflow.data.dataset_source.DatasetSource"><span class="pre">mlflow.data.dataset_source.DatasetSource</span></a></em><a class="headerlink" href="#mlflow.data.polars_dataset.PolarsDataset.source" title="Permalink to this definition"> </a></dt>
+<dd><p>Source of the dataset.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mlflow.data.polars_dataset.PolarsDataset.targets">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">targets</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mlflow.data.polars_dataset.PolarsDataset.targets" title="Permalink to this definition"> </a></dt>
+<dd><p>Name of the target column.</p>
+<p>May be <code class="docutils literal notranslate"><span class="pre">None</span></code> if no target column is available.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.data.polars_dataset.PolarsDataset.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetConfig" title="mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetConfig"><span class="pre">mlflow.data.polars_dataset.PolarsDataset.PolarsDatasetConfig</span></a></span></span><a class="reference internal" href="../_modules/mlflow/data/polars_dataset.html#PolarsDataset.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.data.polars_dataset.PolarsDataset.to_dict" title="Permalink to this definition"> </a></dt>
+<dd><p>Create config dictionary for the dataset.</p>
+<p>Return a string dictionary containing the following fields: name, digest, source,
+source type, schema, and profile.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="dataset-sources">
 <h2>Dataset Sources<a class="headerlink" href="#dataset-sources" title="Permalink to this headline"> </a></h2>
 <dl class="py class">
@@ -1410,7 +1559,7 @@ directory on the local filesystem.</p>
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../',
-      VERSION:'3.1.3',
+      VERSION:'3.2.0rc0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

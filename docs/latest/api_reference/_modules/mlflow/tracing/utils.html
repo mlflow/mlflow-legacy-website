@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 3.1.3 documentation" href="../../../index.html"/>
+    <link rel="top" title="MLflow 3.2.0rc0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -149,7 +149,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link">3.1.3</span>
+  <span class="header-link">3.2.0rc0</span>
 </div>
   </nav>
   <page>
@@ -186,6 +186,7 @@
       
         <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../python_api/index.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../typescript_api/index.html">TypeScript API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../cli.html">Command-Line Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../auth/python-api.html">MLflow Authentication Python API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../auth/rest-api.html">MLflow Authentication REST API</a></li>
@@ -254,7 +255,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">contextmanager</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">asdict</span><span class="p">,</span> <span class="n">is_dataclass</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">lru_cache</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">opentelemetry</span><span class="w"> </span><span class="kn">import</span> <span class="n">trace</span> <span class="k">as</span> <span class="n">trace_api</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">opentelemetry.sdk.trace</span><span class="w"> </span><span class="kn">import</span> <span class="n">Span</span> <span class="k">as</span> <span class="n">OTelSpan</span>
@@ -262,6 +263,7 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">BAD_REQUEST</span><span class="p">,</span> <span class="n">MlflowTracingException</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.constant</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ASSESSMENT_ID_PREFIX</span><span class="p">,</span>
     <span class="n">TRACE_REQUEST_ID_PREFIX</span><span class="p">,</span>
     <span class="n">SpanAttributeKey</span><span class="p">,</span>
     <span class="n">TokenUsageKey</span><span class="p">,</span>
@@ -278,7 +280,7 @@
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities</span><span class="w"> </span><span class="kn">import</span> <span class="n">LiveSpan</span><span class="p">,</span> <span class="n">Trace</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.pyfunc.context</span><span class="w"> </span><span class="kn">import</span> <span class="n">Context</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.types.chat</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatMessage</span><span class="p">,</span> <span class="n">ChatTool</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.types.chat</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatTool</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">capture_function_input_args</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
@@ -445,7 +447,9 @@
 
 <span class="k">def</span><span class="w"> </span><span class="nf">aggregate_usage_from_spans</span><span class="p">(</span><span class="n">spans</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">LiveSpan</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Aggregate token usage information from all spans in the trace.&quot;&quot;&quot;</span>
-    <span class="n">input_tokens</span><span class="p">,</span> <span class="n">output_tokens</span><span class="p">,</span> <span class="n">total_tokens</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="n">input_tokens</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">output_tokens</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">total_tokens</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">has_usage_data</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="n">span_id_to_spans</span> <span class="o">=</span> <span class="p">{</span><span class="n">span</span><span class="o">.</span><span class="n">span_id</span><span class="p">:</span> <span class="n">span</span> <span class="k">for</span> <span class="n">span</span> <span class="ow">in</span> <span class="n">spans</span><span class="p">}</span>
@@ -501,7 +505,7 @@
     <span class="c1">#     relies on numpy, which is not installed in skinny.</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.pyfunc.context</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_prediction_context</span>
-    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="ne">KeyError</span><span class="p">):</span>
         <span class="k">return</span>
 
     <span class="k">return</span> <span class="n">get_prediction_context</span><span class="p">()</span>
@@ -524,7 +528,7 @@
     <span class="k">return</span> <span class="n">context</span><span class="o">.</span><span class="n">request_id</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">maybe_get_dependencies_schemas</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">maybe_get_dependencies_schemas</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
     <span class="n">context</span> <span class="o">=</span> <span class="n">_try_get_prediction_context</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">context</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">context</span><span class="o">.</span><span class="n">dependencies_schemas</span>
@@ -593,66 +597,6 @@
         <span class="k">yield</span>
 
 
-<div class="viewcode-block" id="set_span_chat_messages"><a class="viewcode-back" href="../../../python_api/mlflow.tracing.html#mlflow.tracing.set_span_chat_messages">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">set_span_chat_messages</span><span class="p">(</span>
-    <span class="n">span</span><span class="p">:</span> <span class="n">LiveSpan</span><span class="p">,</span>
-    <span class="n">messages</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="n">ChatMessage</span><span class="p">]],</span>
-    <span class="n">append</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-<span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Set the `mlflow.chat.messages` attribute on the specified span. This</span>
-<span class="sd">    attribute is used in the UI, and also by downstream applications that</span>
-<span class="sd">    consume trace data, such as MLflow evaluate.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        span: The LiveSpan to add the attribute to</span>
-<span class="sd">        messages: A list of standardized chat messages (refer to the</span>
-<span class="sd">                 `spec &lt;../llms/tracing/tracing-schema.html#chat-completion-spans&gt;`_</span>
-<span class="sd">                 for details)</span>
-<span class="sd">        append: If True, the messages will be appended to the existing messages. Otherwise,</span>
-<span class="sd">                the attribute will be overwritten entirely. Default is False.</span>
-<span class="sd">                This is useful when you want to record messages incrementally, e.g., log</span>
-<span class="sd">                input messages first, and then log output messages later.</span>
-
-<span class="sd">    Example:</span>
-
-<span class="sd">    .. code-block:: python</span>
-<span class="sd">        :test:</span>
-
-<span class="sd">        import mlflow</span>
-<span class="sd">        from mlflow.tracing import set_span_chat_messages</span>
-
-
-<span class="sd">        @mlflow.trace</span>
-<span class="sd">        def f():</span>
-<span class="sd">            messages = [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;hello&quot;}]</span>
-<span class="sd">            span = mlflow.get_current_active_span()</span>
-<span class="sd">            set_span_chat_messages(span, messages)</span>
-<span class="sd">            return 0</span>
-
-
-<span class="sd">        f()</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.types.chat</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatMessage</span>
-
-    <span class="n">sanitized_messages</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">messages</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-            <span class="n">ChatMessage</span><span class="o">.</span><span class="n">validate_compat</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-            <span class="n">sanitized_messages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">ChatMessage</span><span class="p">):</span>
-            <span class="c1"># NB: ChatMessage is used for both request and response messages. In OpenAI&#39;s API spec,</span>
-            <span class="c1">#   some fields are only present in either the request or response (e.g., tool_call_id).</span>
-            <span class="c1">#   Those fields should not be recorded unless set explicitly, so we set</span>
-            <span class="c1">#   exclude_unset=True here to avoid recording unset fields.</span>
-            <span class="n">sanitized_messages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">model_dump_compat</span><span class="p">(</span><span class="n">exclude_unset</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
-
-    <span class="k">if</span> <span class="n">append</span><span class="p">:</span>
-        <span class="n">existing_messages</span> <span class="o">=</span> <span class="n">span</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="n">SpanAttributeKey</span><span class="o">.</span><span class="n">CHAT_MESSAGES</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[]</span>
-        <span class="n">sanitized_messages</span> <span class="o">=</span> <span class="n">existing_messages</span> <span class="o">+</span> <span class="n">sanitized_messages</span>
-
-    <span class="n">span</span><span class="o">.</span><span class="n">set_attribute</span><span class="p">(</span><span class="n">SpanAttributeKey</span><span class="o">.</span><span class="n">CHAT_MESSAGES</span><span class="p">,</span> <span class="n">sanitized_messages</span><span class="p">)</span></div>
-
-
 <div class="viewcode-block" id="set_span_chat_tools"><a class="viewcode-back" href="../../../python_api/mlflow.tracing.html#mlflow.tracing.set_span_chat_tools">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">set_span_chat_tools</span><span class="p">(</span><span class="n">span</span><span class="p">:</span> <span class="n">LiveSpan</span><span class="p">,</span> <span class="n">tools</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ChatTool</span><span class="p">]):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Set the `mlflow.chat.tools` attribute on the specified span. This</span>
@@ -718,42 +662,6 @@
             <span class="n">sanitized_tools</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tool</span><span class="o">.</span><span class="n">model_dump_compat</span><span class="p">(</span><span class="n">exclude_unset</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
 
     <span class="n">span</span><span class="o">.</span><span class="n">set_attribute</span><span class="p">(</span><span class="n">SpanAttributeKey</span><span class="o">.</span><span class="n">CHAT_TOOLS</span><span class="p">,</span> <span class="n">sanitized_tools</span><span class="p">)</span></div>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">set_chat_attributes_special_case</span><span class="p">(</span><span class="n">span</span><span class="p">:</span> <span class="n">LiveSpan</span><span class="p">,</span> <span class="n">inputs</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">outputs</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Set the `mlflow.chat.messages` and `mlflow.chat.tools` attributes on the specified span</span>
-<span class="sd">    based on the inputs and outputs of the function.</span>
-
-<span class="sd">    Usually those attributes are set by autologging integrations. This utility function handles</span>
-<span class="sd">    special cases where we want to set chat attributes for manually created spans via @mlflow.trace</span>
-<span class="sd">    decorator, such as ResponsesAgent tracing spans.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.openai.utils.chat_schema</span><span class="w"> </span><span class="kn">import</span> <span class="n">set_span_chat_attributes</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.types.responses</span><span class="w"> </span><span class="kn">import</span> <span class="n">ResponsesAgentResponse</span><span class="p">,</span> <span class="n">ResponsesAgentStreamEvent</span>
-
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">ResponsesAgentResponse</span><span class="p">):</span>
-            <span class="n">inputs</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;request&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">model_dump_compat</span><span class="p">()</span>
-            <span class="n">set_span_chat_attributes</span><span class="p">(</span><span class="n">span</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span>
-            <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">ResponsesAgentStreamEvent</span><span class="p">)</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">outputs</span>
-        <span class="p">):</span>
-            <span class="n">inputs</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;request&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">model_dump_compat</span><span class="p">()</span>
-            <span class="n">output_items</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="n">custom_outputs</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">o</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;response.output_item.done&quot;</span><span class="p">:</span>
-                    <span class="n">output_items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">item</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">o</span><span class="o">.</span><span class="n">custom_outputs</span><span class="p">:</span>
-                    <span class="n">custom_outputs</span> <span class="o">=</span> <span class="n">o</span><span class="o">.</span><span class="n">custom_outputs</span>
-            <span class="n">output</span> <span class="o">=</span> <span class="n">ResponsesAgentResponse</span><span class="p">(</span>
-                <span class="n">output</span><span class="o">=</span><span class="n">output_items</span><span class="p">,</span>
-                <span class="n">custom_outputs</span><span class="o">=</span><span class="n">custom_outputs</span><span class="p">,</span>
-            <span class="p">)</span>
-            <span class="n">set_span_chat_attributes</span><span class="p">(</span><span class="n">span</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-        <span class="k">pass</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_calculate_percentile</span><span class="p">(</span><span class="n">sorted_data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">percentile</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
@@ -857,6 +765,17 @@
     <span class="c1"># and we should preserve it</span>
     <span class="k">if</span> <span class="n">trace</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">TraceState</span><span class="o">.</span><span class="n">IN_PROGRESS</span><span class="p">:</span>
         <span class="n">trace</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">TraceState</span><span class="o">.</span><span class="n">from_otel_status</span><span class="p">(</span><span class="n">root_span</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_assessment_id</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates an assessment ID of the form &#39;a-&lt;uuid4&gt;&#39; in hex string format.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A unique identifier for an assessment that will be logged to a trace tag.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span><span class="o">.</span><span class="n">hex</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ASSESSMENT_ID_PREFIX</span><span class="si">}{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&quot;</span>
 </pre></div>
 
               </div>
@@ -887,7 +806,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'3.1.3',
+      VERSION:'3.2.0rc0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

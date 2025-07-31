@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MLflow 3.1.3 documentation" href="../index.html"/>
+    <link rel="top" title="MLflow 3.2.0rc0 documentation" href="../index.html"/>
         <link rel="up" title="Python API" href="index.html"/>
         <link rel="next" title="mlflow.pyspark.ml" href="/mlflow.pyspark.ml.html"/>
         <link rel="prev" title="mlflow.pydantic_ai" href="/mlflow.pydantic_ai.html"/> 
@@ -150,7 +150,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link">3.1.3</span>
+  <span class="header-link">3.2.0rc0</span>
 </div>
   </nav>
   <page>
@@ -267,6 +267,7 @@
 <li class="toctree-l2"><a class="reference internal" href="index.html#log-levels">Log Levels</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../typescript_api/index.html">TypeScript API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cli.html">Command-Line Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../auth/python-api.html">MLflow Authentication Python API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../auth/rest-api.html">MLflow Authentication REST API</a></li>
@@ -485,10 +486,10 @@ should be activated prior to running the model.</p>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>├── MLmodel
 ├── code
-│   ├── sklearn_iris.py
+│   ├── sklearn_iris.py
 │
 ├── data
-│   └── model.pkl
+│   └── model.pkl
 └── mlflow_env.yml
 </pre></div>
 </div>
@@ -715,11 +716,7 @@ returned by invoking the model’s <code class="docutils literal notranslate"><s
 <dl class="py method">
 <dt class="sig sig-object py" id="mlflow.pyfunc.PyFuncModel.get_raw_model">
 <span class="sig-name descname"><span class="pre">get_raw_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/pyfunc.html#PyFuncModel.get_raw_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.pyfunc.PyFuncModel.get_raw_model" title="Permalink to this definition"> </a></dt>
-<dd><div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Experimental: This function may change or be removed in a future release without warning.</p>
-</div>
-<p>Get the underlying raw model if the model wrapper implemented <cite>get_raw_model</cite> function.</p>
+<dd><p>Get the underlying raw model if the model wrapper implemented <cite>get_raw_model</cite> function.</p>
 </dd></dl>
 
 <dl class="py property">
@@ -859,7 +856,7 @@ Values must be YAML-serializable.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="mlflow.pyfunc.build_model_env">
-<span class="sig-prename descclassname"><span class="pre">mlflow.pyfunc.</span></span><span class="sig-name descname"><span class="pre">build_model_env</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/pyfunc.html#build_model_env"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.pyfunc.build_model_env" title="Permalink to this definition"> </a></dt>
+<span class="sig-prename descclassname"><span class="pre">mlflow.pyfunc.</span></span><span class="sig-name descname"><span class="pre">build_model_env</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env_manager</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'virtualenv'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/pyfunc.html#build_model_env"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.pyfunc.build_model_env" title="Permalink to this definition"> </a></dt>
 <dd><p>Prebuild model python environment and generate an archive file saved to provided
 <cite>save_path</cite>.</p>
 <dl class="simple">
@@ -907,6 +904,9 @@ archive file path.
 The path can be either local directory path or
 mounted DBFS path such as ‘/dbfs/…’ or
 mounted UC volume path such as ‘/Volumes/…’.</p></li>
+<li><p><strong>env_manager</strong> – The environment manager to use in order to create the python environment
+for model inference, the value can be either ‘virtualenv’ or ‘uv’, the default
+value is ‘virtualenv’.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -1223,8 +1223,7 @@ For example, consider the following <code class="docutils literal notranslate"><
 path via <code class="docutils literal notranslate"><span class="pre">context.artifacts[&quot;my_file&quot;]</span></code>.</p>
 <p>If <code class="docutils literal notranslate"><span class="pre">None</span></code>, no artifacts are added to the model.</p>
 </p></li>
-<li><p><strong>registered_model_name</strong> – This argument may change or be removed in a
-future release without warning. If given, create a model
+<li><p><strong>registered_model_name</strong> – If given, create a model
 version under <code class="docutils literal notranslate"><span class="pre">registered_model_name</span></code>, also creating a
 registered model if one with the given name does not exist.</p></li>
 <li><p><strong>signature</strong> – <p><a class="reference internal" href="mlflow.models.html#mlflow.models.ModelSignature" title="mlflow.models.ModelSignature"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModelSignature</span></code></a>
@@ -1772,8 +1771,11 @@ unaffected. If <cite>prebuilt_env_uri</cite> parameter is not set, the default v
 is <code class="docutils literal notranslate"><span class="pre">local</span></code>, and the following values are supported:</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">virtualenv</span></code>: Use virtualenv to restore the python environment that
+was used to train the model. This is the default option if <code class="docutils literal notranslate"><span class="pre">env_manager</span></code>
+is not set.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uv</span></code> : Use uv to restore the python environment that
 was used to train the model.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">conda</span></code>: (Recommended) Use Conda to restore the software environment
+<li><p><code class="docutils literal notranslate"><span class="pre">conda</span></code>: Use Conda to restore the software environment
 that was used to train the model.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">local</span></code>: Use the current Python environment for model inference, which
 may differ from the environment used to train the model and may lead to
@@ -2497,6 +2499,11 @@ streaming.</p>
 <a class="reference external" href="https://www.mlflow.org/docs/latest/llms/responses-agent-intro#tool-calling-example">https://www.mlflow.org/docs/latest/llms/responses-agent-intro#tool-calling-example</a>.</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.pyfunc.ResponsesAgent.responses_agent_output_reducer">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">responses_agent_output_reducer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chunks</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">typing.Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="mlflow.types.html#mlflow.types.responses.ResponsesAgentStreamEvent" title="mlflow.types.responses.ResponsesAgentStreamEvent"><span class="pre">mlflow.types.responses.ResponsesAgentStreamEvent</span></a><span class="p"><span class="pre">,</span> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">typing.Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/pyfunc/model.html#ResponsesAgent.responses_agent_output_reducer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.pyfunc.ResponsesAgent.responses_agent_output_reducer" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 </div>
@@ -2539,7 +2546,7 @@ streaming.</p>
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../',
-      VERSION:'3.1.3',
+      VERSION:'3.2.0rc0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

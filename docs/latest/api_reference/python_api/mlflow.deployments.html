@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MLflow 3.1.3 documentation" href="../index.html"/>
+    <link rel="top" title="MLflow 3.2.0rc0 documentation" href="../index.html"/>
         <link rel="up" title="Python API" href="index.html"/>
         <link rel="next" title="mlflow.diviner" href="/mlflow.diviner.html"/>
         <link rel="prev" title="mlflow.data" href="/mlflow.data.html"/> 
@@ -150,7 +150,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link">3.1.3</span>
+  <span class="header-link">3.2.0rc0</span>
 </div>
   </nav>
   <page>
@@ -249,6 +249,7 @@
 <li class="toctree-l2"><a class="reference internal" href="index.html#log-levels">Log Levels</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../typescript_api/index.html">TypeScript API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cli.html">Command-Line Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../auth/python-api.html">MLflow Authentication Python API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../auth/rest-api.html">MLflow Authentication REST API</a></li>
@@ -1047,11 +1048,7 @@ request/response schema.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="mlflow.deployments.DatabricksDeploymentClient.update_endpoint_ai_gateway">
 <span class="sig-name descname"><span class="pre">update_endpoint_ai_gateway</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.update_endpoint_ai_gateway"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.update_endpoint_ai_gateway" title="Permalink to this definition"> </a></dt>
-<dd><div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Experimental: This function may change or be removed in a future release without warning.</p>
-</div>
-<p>Update the AI Gateway configuration of a specified serving endpoint.</p>
+<dd><p>Update the AI Gateway configuration of a specified serving endpoint.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1100,11 +1097,7 @@ request/response schema.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="mlflow.deployments.DatabricksDeploymentClient.update_endpoint_config">
 <span class="sig-name descname"><span class="pre">update_endpoint_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.update_endpoint_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.update_endpoint_config" title="Permalink to this definition"> </a></dt>
-<dd><div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Experimental: This function may change or be removed in a future release without warning.</p>
-</div>
-<p>Update the configuration of a specified serving endpoint. See
+<dd><p>Update the configuration of a specified serving endpoint. See
 <a class="reference external" href="https://docs.databricks.com/api/workspace/servingendpoints/updateconfig">https://docs.databricks.com/api/workspace/servingendpoints/updateconfig</a> for request/response
 request/response schema.</p>
 <dl class="field-list simple">
@@ -1162,11 +1155,7 @@ request/response schema.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="mlflow.deployments.DatabricksDeploymentClient.update_endpoint_rate_limits">
 <span class="sig-name descname"><span class="pre">update_endpoint_rate_limits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.update_endpoint_rate_limits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.update_endpoint_rate_limits" title="Permalink to this definition"> </a></dt>
-<dd><div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Experimental: This function may change or be removed in a future release without warning.</p>
-</div>
-<p>Update the rate limits of a specified serving endpoint.
+<dd><p>Update the rate limits of a specified serving endpoint.
 See <a class="reference external" href="https://docs.databricks.com/api/workspace/servingendpoints/put">https://docs.databricks.com/api/workspace/servingendpoints/put</a> for request/response
 schema.</p>
 <dl class="field-list simple">
@@ -1201,11 +1190,7 @@ schema.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="mlflow.deployments.DatabricksDeploymentClient.update_endpoint_tags">
 <span class="sig-name descname"><span class="pre">update_endpoint_tags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/deployments/databricks.html#DatabricksDeploymentClient.update_endpoint_tags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.deployments.DatabricksDeploymentClient.update_endpoint_tags" title="Permalink to this definition"> </a></dt>
-<dd><div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Experimental: This function may change or be removed in a future release without warning.</p>
-</div>
-<p>Update the tags of a specified serving endpoint. See
+<dd><p>Update the tags of a specified serving endpoint. See
 <a class="reference external" href="https://docs.databricks.com/api/workspace/servingendpoints/patch">https://docs.databricks.com/api/workspace/servingendpoints/patch</a> for request/response
 schema.</p>
 <dl class="field-list simple">
@@ -1772,7 +1757,7 @@ Response. Else, None.</p>
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../',
-      VERSION:'3.1.3',
+      VERSION:'3.2.0rc0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',
