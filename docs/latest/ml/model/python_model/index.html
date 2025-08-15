@@ -21,8 +21,8 @@
 
 
 <script src="/docs/latest/js/runllm.js" defer="defer"></script><link rel="stylesheet" href="/docs/latest/assets/css/styles.c354a916.css">
-<script src="/docs/latest/assets/js/runtime~main.8d6e55f7.js" defer="defer"></script>
-<script src="/docs/latest/assets/js/main.60bc2cde.js" defer="defer"></script>
+<script src="/docs/latest/assets/js/runtime~main.9536e1fb.js" defer="defer"></script>
+<script src="/docs/latest/assets/js/main.6a2d47b6.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6WMTTJ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -84,6 +84,7 @@ Utilizing type hints introduces the following benefits:</p>
 <li><strong>Data validation</strong>: MLflow validates the input data based on the type hints defined in the model. No matter if the model is a PythonModel instance or a loaded PyFunc model, the input data is consistently validated.</li>
 <li><strong>Type hint inference</strong>: MLflow infers the input and output schema of the model based on the type hints defined in the model, and sets that inferred structure as the logged model signature.</li>
 </ul>
+<div class="theme-admonition theme-admonition-important admonition_xJq3 alert alert--info"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>important</div><div class="admonitionContent_BuS1"><p>Using type hints can also improve performance by skipping the conversion of data to a pandas DataFrame and instead validating the data directly against the type hints.</p></div></div>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="supported-type-hints">Supported type hints<a href="#supported-type-hints" class="hash-link" aria-label="Direct link to Supported type hints" title="Direct link to Supported type hints">​</a></h3>
 <p><strong>Type hints used within the PythonModel&#x27;s input signature must be of type <code>list[...]</code></strong> because PythonModel&#x27;s predict function expects batch input data.
 The following type hints are supported as the element type of <code>list[...]</code>:</p>
