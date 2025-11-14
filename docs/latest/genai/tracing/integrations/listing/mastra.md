@@ -9,7 +9,8 @@
 bash
 
 ```
-npm create mastra@laster
+npm create mastra@latest
+npm install @mastra/otel-exporter
 ```
 
 This will create a new TypeScript project with a simple tool calling agent implementation.
@@ -35,6 +36,8 @@ Open the `src/mastra/index.ts` file and add the `observability` configuration to
 typescript
 
 ```
+import { OtelExporter } from "@mastra/otel-exporter";
+
 export const mastra = new Mastra({
   workflows: { weatherWorkflow },
   ...
