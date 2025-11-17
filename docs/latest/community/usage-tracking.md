@@ -76,6 +76,7 @@ MLflow collects only non-sensitive, anonymized data to help us better understand
 | make\_judge                  | Model provider (extracted from model string if format is provider<!-- -->:model<!-- -->)                                                                                                                                            | `{"model_provider": "openai"}`                                            |
 | align\_judge                 | Number of traces provided and optimizer type                                                                                                                                                                                        | `{"trace_count": 100, "optimizer_type": "AlignmentOptimizer"}`            |
 | autologging                  | Flavor and metadata                                                                                                                                                                                                                 | `{"flavor": "openai", "log_traces": True, "disable": False}`              |
+| ai\_command\_run             | Command key and invocation context (cli or mcp)                                                                                                                                                                                     | `{"command_key": "genai/analyze_experiment", "context": "cli"}`           |
 
 ## Why is MLflow Telemetry Opt-Out?[​](#why-is-mlflow-telemetry-opt-out "Direct link to Why is MLflow Telemetry Opt-Out?")
 
