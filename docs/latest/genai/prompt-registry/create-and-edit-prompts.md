@@ -42,7 +42,7 @@ initial_template = [
 from pydantic import BaseModel, Field
 
 
-class ResponseFormat:
+class ResponseFormat(BaseModel):
     summary: str = Field(..., description="Summary of the content")
 
 
