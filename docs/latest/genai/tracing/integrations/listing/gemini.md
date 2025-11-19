@@ -2,7 +2,10 @@
 
 ![OpenAI Tracing via autolog](/docs/latest/assets/images/gemini-tracing-fd066260b1e75fa44bfdd89dd000f76d.png)
 
-[MLflow Tracing](/docs/latest/genai/tracing/integrations.md) provides automatic tracing capability for Google Gemini. By enabling auto tracing for Gemini by calling the [`mlflow.gemini.autolog()`](/docs/latest/api_reference/python_api/mlflow.gemini.html#mlflow.gemini.autolog) function, MLflow will capture nested traces and log them to the active MLflow Experiment upon invocation of Gemini Python SDK.
+[MLflow Tracing](/docs/latest/genai/tracing/integrations.md) provides automatic tracing capability for Google Gemini. By enabling auto tracing for Gemini by calling the [`mlflow.gemini.autolog()`](/docs/latest/api_reference/python_api/mlflow.gemini.html#mlflow.gemini.autolog) function, MLflow will capture nested traces and log them to the active MLflow Experiment upon invocation of Gemini Python SDK. In Typescript, you can instead use the `tracedGemini` function to wrap the Gemini client.
+
+* Python
+* JS / TS
 
 python
 
@@ -10,6 +13,15 @@ python
 import mlflow
 
 mlflow.gemini.autolog()
+```
+
+typescript
+
+```
+import { GoogleGenAI } from "@google/genai";
+import { tracedGemini } from "mlflow-gemini";
+
+const client = tracedGemini(new GoogleGenAI());
 ```
 
 note
@@ -28,7 +40,9 @@ MLflow trace automatically captures the following information about Gemini calls
 
 ## Supported APIs[​](#supported-apis "Direct link to Supported APIs")
 
-MLflow supports automatic tracing for the following Anthropic APIs:
+MLflow supports automatic tracing for the following Gemini APIs:
+
+### Python[​](#python "Direct link to Python")
 
 | Text Generation | Chat | Function Calling | Streaming | Async    | Image | Video |
 | --------------- | ---- | ---------------- | --------- | -------- | ----- | ----- |
@@ -36,9 +50,20 @@ MLflow supports automatic tracing for the following Anthropic APIs:
 
 (\*1) Async support was added in MLflow 3.2.0.
 
+### TypeScript / JavaScript[​](#typescript--javascript "Direct link to TypeScript / JavaScript")
+
+| Content Generation | Chat | Function Calling | Streaming | Async |
+| ------------------ | ---- | ---------------- | --------- | ----- |
+| ✅                 | -    | ✅ (\*2)         | -         | ✅    |
+
+(\*2) Only `models.generateContent()` is supported. Function calls in responses are captured and can be rendered in the MLflow UI. The TypeScript SDK is natively async.
+
 To request support for additional APIs, please open a [feature request](https://github.com/mlflow/mlflow/issues) on GitHub.
 
-### Basic Example[​](#basic-example "Direct link to Basic Example")
+## Basic Example[​](#basic-example "Direct link to Basic Example")
+
+* Python
+* JS / TS
 
 python
 
@@ -64,27 +89,48 @@ response = client.models.generate_content(
 )
 ```
 
-### Multi-turn chat interactions[​](#multi-turn-chat-interactions "Direct link to Multi-turn chat interactions")
+typescript
+
+```
+import { GoogleGenAI } from "@google/genai";
+import { tracedGemini } from "mlflow-gemini";
+
+const client = tracedGemini(new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY }));
+
+const response = await client.models.generateContent({
+    model: "gemini-2.5-flash",
+    contents: "What is the capital of France?"
+});
+```
+
+## Multi-turn chat interactions[​](#multi-turn-chat-interactions "Direct link to Multi-turn chat interactions")
 
 MLflow support tracing multi-turn conversations with Gemini:
 
-text
+python
 
 ```
 import mlflow
 
 mlflow.gemini.autolog()
 
-chat = client.chats.create(model='gemini-1.5-flash')
-response = chat.send_message("In one sentence, explain how a computer works to a young child.")
+chat = client.chats.create(model="gemini-1.5-flash")
+response = chat.send_message(
+    "In one sentence, explain how a computer works to a young child."
+)
 print(response.text)
-response = chat.send_message("Okay, how about a more detailed explanation to a high schooler?")
+response = chat.send_message(
+    "Okay, how about a more detailed explanation to a high schooler?"
+)
 print(response.text)
 ```
 
-### Async[​](#async "Direct link to Async")
+## Async[​](#async "Direct link to Async")
 
 MLflow Tracing supports asynchronous API of the Gemini SDK since MLflow 3.2.0. The usage is same as the synchronous API.
+
+* Python
+* JS / TS
 
 python
 
@@ -98,9 +144,11 @@ response = await client.aio.models.generate_content(
 )
 ```
 
-### Embeddings[​](#embeddings "Direct link to Embeddings")
+Gemini Typescript / Javascript SDK is natively async. See the basic example above.
 
-MLflow Tracing for Gemini SDK supports embeddings API:
+## Embeddings[​](#embeddings "Direct link to Embeddings")
+
+MLflow Tracing for Gemini SDK supports embeddings API (Python only):
 
 python
 
@@ -196,6 +244,8 @@ Models._generate_content:
   Output tokens: 2
   Total tokens: 7
 ```
+
+Token usage tracking is supported for both Python and TypeScript/JavaScript implementations.
 
 ### Disable auto-tracing[​](#disable-auto-tracing "Direct link to Disable auto-tracing")
 
