@@ -1,6 +1,6 @@
 # Authentication with Username and Password
 
-MLflow supports basic HTTP authentication to enable access control over experiments and registered models. Once enabled, any visitor will be required to login before they can view any resource from the Tracking Server.
+MLflow supports basic HTTP authentication to enable access control over experiments, registered models, and scorers. Once enabled, any visitor will be required to login before they can view any resource from the Tracking Server.
 
 MLflow Authentication provides Python and REST API for managing users and permissions.
 
@@ -58,7 +58,7 @@ The available permissions are:
 
 The default permission for all users is `READ`. It can be changed in the [configuration](#configuration) file.
 
-Permissions can be granted on individual resources for each user. Supported resources include `Experiment` and `Registered Model`. To access an API endpoint, an user must have the required permission. Otherwise, a `403 Forbidden` response will be returned.
+Permissions can be granted on individual resources for each user. Supported resources include `Experiment`, `Registered Model`, and `Scorer`. To access an API endpoint, an user must have the required permission. Otherwise, a `403 Forbidden` response will be returned.
 
 Required Permissions for accessing experiments:
 
@@ -115,7 +115,17 @@ Required Permissions for accessing registered models:
 | [Set Model Version Tag](/docs/latest/api_reference/rest-api.html/#mlflowmodelregistryservicesetmodelversiontag)                   | `2.0/mlflow/model-versions/set-tag`                | `POST`   | can\_update         |
 | [Delete Model Version Tag](/docs/latest/api_reference/rest-api.html/#mlflowmodelregistryservicedeletemodelversiontag)             | `2.0/mlflow/model-versions/delete-tag`             | `DELETE` | can\_delete         |
 
-MLflow Authentication introduces several new API endpoints to manage users and permissions.
+Required Permissions for accessing scorers:
+
+| API                  | Endpoint                           | Method | Required permission         |
+| -------------------- | ---------------------------------- | ------ | --------------------------- |
+| Register Scorer      | `3.0/mlflow/scorers/register`      | `POST` | can\_update (on experiment) |
+| List Scorers         | `3.0/mlflow/scorers/list`          | `GET`  | can\_read (on experiment)   |
+| Get Scorer           | `3.0/mlflow/scorers/get`           | `GET`  | can\_read                   |
+| Delete Scorer        | `3.0/mlflow/scorers/delete`        | `POST` | can\_delete                 |
+| List Scorer Versions | `3.0/mlflow/scorers/list-versions` | `GET`  | can\_read                   |
+
+MLflow Authentication provides API endpoints to manage users and permissions.
 
 | API                                                                                                                              | Endpoint                                          | Method   | Required permission         |
 | -------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- | -------- | --------------------------- |
@@ -167,9 +177,9 @@ It is recommended that you update the default admin password as soon as possible
 
 The default admin user credentials are as follows:
 
-| Username | Password   |
-| -------- | ---------- |
-| `admin`  | `password` |
+| Username | Password       |
+| -------- | -------------- |
+| `admin`  | `password1234` |
 
 Multiple admin users can exist by promoting other users to admin, using the `2.0/mlflow/users/update-admin` endpoint.
 
