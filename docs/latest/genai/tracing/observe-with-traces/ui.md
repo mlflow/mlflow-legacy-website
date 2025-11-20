@@ -22,7 +22,7 @@ The UI supports bulk deletion of traces. Simply select the traces you want to de
 
 You can also edit key-value tags on your traces via the UI.
 
-![Traces tag update](/docs/latest/assets/images/trace-set-tag-c0cbad6b75c04328db03a8f1eb4c3a09.gif)
+![Traces tag update](/docs/latest/assets/images/trace-set-tag-9aaa2af0eb5ce6f8798c02a93f0664c7.gif)
 
 ## Browsing span data[​](#browsing-span-data "Direct link to Browsing span data")
 

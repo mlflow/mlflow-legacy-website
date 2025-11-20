@@ -130,9 +130,9 @@ The MLflow-TensorFlow integration excels in scenarios such as:
 
 Ready to supercharge your TensorFlow workflow with MLflow? Our comprehensive quickstart tutorial walks you through everything from basic logging to advanced callback customization.
 
-[Get Started with TensorFlow + MLflow](/docs/latest/ml/deep-learning/tensorflow/quickstart/quickstart-tensorflow.md)
+[Get Started with TensorFlow + MLflow](/docs/latest/ml/deep-learning/tensorflow/guide.md)
 
-[Master the fundamentals through a hands-on tutorial covering automatic logging, custom callbacks, advanced tracking techniques, and deployment strategies.](/docs/latest/ml/deep-learning/tensorflow/quickstart/quickstart-tensorflow.md)
+[Master the fundamentals through a hands-on tutorial covering automatic logging, custom callbacks, advanced tracking techniques, and deployment strategies.](/docs/latest/ml/deep-learning/tensorflow/guide.md)
 
 ## What You'll Master[​](#what-youll-master "Direct link to What You'll Master")
 

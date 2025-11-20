@@ -1,6 +1,6 @@
 # Track Users & Sessions
 
-![Traces with session IDs](/docs/latest/assets/images/chat-sessions-demo-6851f283db36f411076192cf6050cc47.gif)
+![Traces with session IDs](/docs/latest/images/llms/tracing/chat-sessions-demo.gif)
 
 Many real-world AI applications use session to maintain multi-turn user interactions. MLflow Tracing provides built-in support for associating traces with users and grouping them into sessions. Tracking users and sessions in your GenAI application provides essential context for understanding user behavior, analyzing conversation flows, and improving personalization.
 
