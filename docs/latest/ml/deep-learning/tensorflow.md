@@ -1,170 +1,309 @@
 # MLflow TensorFlow Integration
 
-**TensorFlow** is an end-to-end open source platform for machine learning that has revolutionized how developers build and deploy ML solutions. With its comprehensive ecosystem of tools, libraries, and community resources, TensorFlow enables researchers to push the boundaries of ML while giving developers a robust framework for production-ready applications.
+## Introduction[​](#introduction "Direct link to Introduction")
 
-TensorFlow's versatility spans from simple linear regression to complex neural networks, supporting everything from research prototypes to enterprise-scale deployments across diverse hardware platforms.
+**TensorFlow** is an end-to-end open source platform for machine learning developed by Google. It provides a comprehensive ecosystem for building and deploying ML models, from research prototypes to production systems. TensorFlow's Keras API offers an intuitive interface for building neural networks while its powerful backend enables efficient computation across CPUs, GPUs, and TPUs.
 
-Why TensorFlow is an Industry Standard
+MLflow's TensorFlow integration provides experiment tracking, model versioning, and deployment capabilities for deep learning workflows.
 
-#### Comprehensive ML Ecosystem[​](#comprehensive-ml-ecosystem "Direct link to Comprehensive ML Ecosystem")
-
-* 🏗️ **Production-Ready**: Battle-tested deployment options from edge devices to cloud infrastructure
-* 🔬 **Research-Friendly**: Flexible API design accommodating both high-level and low-level operations
-* 📱 **Multi-Platform**: Deploy models across web, mobile, edge, and server environments
-* 🧰 **Rich Tooling**: Extensive visualization, debugging, and optimization capabilities
-
-#### Powerful Design Philosophy[​](#powerful-design-philosophy "Direct link to Powerful Design Philosophy")
-
-* 🚀 **Scalable Performance**: Efficient graph-based execution for optimal hardware utilization
-* 🔄 **Eager Execution**: Intuitive imperative programming model for rapid development
-* 📊 **Data Pipelines**: Sophisticated data handling with tf.data for optimized preprocessing
-* 🌐 **Global Community**: Vast ecosystem of extensions, models, and learning resources
+![TensorFlow Training](/docs/latest/images/deep-learning/tensorflow-training-ui.gif)
 
 ## Why MLflow + TensorFlow?[​](#why-mlflow--tensorflow "Direct link to Why MLflow + TensorFlow?")
 
-The integration of MLflow with TensorFlow creates a powerful workflow for machine learning practitioners:
+#### Autologging
 
-* 📊 **Effortless Tracking**: Enable comprehensive experiment tracking with just `mlflow.tensorflow.autolog()` - no configuration required
-* ⚙️ **Zero-Code Integration**: Your existing TensorFlow training code works unchanged - autologging captures everything automatically
-* 🛠️ **Advanced Customization**: When you need more control, use MLflow's Keras callback system for specialized logging requirements
-* 🔬 **Complete Reproducibility**: Every parameter, metric, and artifact is captured automatically for perfect experiment reproduction
-* 👥 **Streamlined Collaboration**: Share comprehensive experiment results through MLflow's intuitive UI without any manual logging
-* 🏭 **Simplified Deployment**: Deploy TensorFlow models with simple API calls across a variety of production environments
+Enable comprehensive experiment tracking with one line: mlflow\.tensorflow\.autolog() automatically logs metrics, parameters, and models.
 
-## Key Features[​](#key-features "Direct link to Key Features")
+#### Experiment Tracking
 
-### One-Line Autologging[​](#one-line-autologging "Direct link to One-Line Autologging")
+Track training metrics, hyperparameters, model architectures, and artifacts across all TensorFlow experiments.
 
-The simplest way to get started with MLflow and TensorFlow is through **autologging** - just add one line of code and MLflow automatically captures everything you need:
+#### Model Registry
+
+Version, stage, and deploy TensorFlow models with MLflow's model registry and serving infrastructure.
+
+#### Reproducibility
+
+Capture model states, training configurations, and environments for reproducible experiments.
+
+## Autologging[​](#autologging "Direct link to Autologging")
+
+Enable comprehensive autologging with a single line:
 
 python
 
 ```
 import mlflow
+import numpy as np
+import tensorflow as tf
+from tensorflow import keras
 
-mlflow.tensorflow.autolog()  # That's it! 🎉
+# Enable autologging
+mlflow.tensorflow.autolog()
 
-# Your existing TensorFlow code works unchanged
-model.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=10)
+# Prepare sample data
+data = np.random.uniform(size=[20, 28, 28, 3])
+label = np.random.randint(2, size=20)
+
+# Define model
+model = keras.Sequential(
+    [
+        keras.Input([28, 28, 3]),
+        keras.layers.Conv2D(8, 2),
+        keras.layers.MaxPool2D(2),
+        keras.layers.Flatten(),
+        keras.layers.Dense(2),
+        keras.layers.Softmax(),
+    ]
+)
+
+model.compile(
+    loss=keras.losses.SparseCategoricalCrossentropy(),
+    optimizer=keras.optimizers.Adam(0.001),
+    metrics=[keras.metrics.SparseCategoricalAccuracy()],
+)
+
+# Training with automatic logging
+with mlflow.start_run():
+    model.fit(data, label, batch_size=5, epochs=2)
 ```
 
-What Gets Automatically Logged
+Autologging captures training metrics, model parameters, optimizer configuration, and model artifacts automatically. Requires TensorFlow >= 2.3.0 and the `model.fit()` Keras API.
 
-#### Metrics[​](#metrics "Direct link to Metrics")
-
-* 📈 **Training & Validation Loss**: Automatic tracking of loss functions across epochs
-* 🎯 **Custom Metrics**: Any metrics you specify (accuracy, F1-score, etc.) are logged automatically
-* 🛑 **Early Stopping Metrics**: When using `EarlyStopping`, MLflow logs `stopped_epoch`, `restored_epoch`, and restoration details
-
-#### Parameters[​](#parameters "Direct link to Parameters")
-
-* ⚙️ **Training Configuration**: All `fit()` parameters including batch size, epochs, and validation split
-* 🧠 **Optimizer Details**: Optimizer name, learning rate, momentum, and other hyperparameters
-* 🔄 **Callback Parameters**: Early stopping, learning rate scheduling, and other callback configurations
-
-#### Artifacts[​](#artifacts "Direct link to Artifacts")
-
-* 📋 **Model Summary**: Complete architecture overview logged at training start
-* 🤖 **MLflow Model**: Full TensorFlow model saved for easy deployment and inference
-* 📊 **TensorBoard Logs**: Complete training history for detailed visualization
-* 📱 **SavedModel Format**: Export-ready model for deployment across environments
-
-#### Smart Run Management[​](#smart-run-management "Direct link to Smart Run Management")
-
-* 🚀 **Automatic Run Creation**: If no run exists, MLflow creates one automatically
-* 🔄 **Flexible Run Handling**: Works with existing runs or creates new ones as needed
-* ⏹️ **Intelligent Run Ending**: Automatically closes runs when training completes
-
-### Advanced Logging with MLflow Keras Callback[​](#advanced-logging-with-mlflow-keras-callback "Direct link to Advanced Logging with MLflow Keras Callback")
-
-For users who need more control, MLflow's TensorFlow integration also provides the powerful `MlflowCallback` that offers fine-grained customization:
-
-Advanced Callback Capabilities
-
-* 📋 **Custom Parameter Logging**: Selectively log specific parameters and hyperparameters
-* 📈 **Granular Metrics Tracking**: Log metrics at custom intervals (per batch, per epoch, or custom frequencies)
-* ⏱️ **Flexible Logging Frequency**: Choose between epoch-based or batch-based logging to match your monitoring needs
-* 🎛️ **Custom Callback Extensions**: Subclass the callback to implement specialized logging for your unique requirements
-* 🏷️ **Advanced Artifact Management**: Control exactly which artifacts get saved and when
-* 🔍 **Performance Monitoring**: Add custom tracking for training time, memory usage, and convergence patterns
-
-### Comprehensive Model Management[​](#comprehensive-model-management "Direct link to Comprehensive Model Management")
+Configure autologging behavior:
 
 python
 
 ```
-# Log your TensorFlow model with MLflow
-model_info = mlflow.tensorflow.log_model(model, name="tensorflow_model")
-
-# Later, load your model for inference
-loaded_model = mlflow.tensorflow.load_model(
-    model_info.model_uri
-)  # The 'model_uri' attribute is in the format 'models:/<model_id>'
-predictions = loaded_model.predict(test_data)
+mlflow.tensorflow.autolog(
+    log_models=True,
+    log_input_examples=True,
+    log_model_signatures=True,
+    log_every_n_steps=1,
+)
 ```
 
-### Advanced Experiment Management[​](#advanced-experiment-management "Direct link to Advanced Experiment Management")
+## Manual Logging with Keras Callback[​](#manual-logging-with-keras-callback "Direct link to Manual Logging with Keras Callback")
 
-Enterprise-Grade ML Operations
+For more control, use [`mlflow.tensorflow.MlflowCallback()`](/docs/latest/api_reference/python_api/mlflow.tensorflow.html#mlflow.tensorflow.MlflowCallback):
 
-* 📝 **Model Versioning**: Track different model architectures and their performance over time
-* 🎯 **Hyperparameter Optimization**: Log and compare results from hyperparameter sweeps with tools like Optuna
-* 📦 **Artifact Management**: Store model checkpoints, training plots, and custom visualizations
-* 👥 **Collaborative Development**: Share experiment results with team members through MLflow's UI
-* 🔄 **Reproducibility**: Capture exact environments and dependencies for perfect experiment reproduction
-* 📊 **Performance Analytics**: Detailed insights into training dynamics and model behavior
-* 🏭 **Deployment Workflows**: Streamlined paths from experimentation to production
+python
 
-## Real-World Applications[​](#real-world-applications "Direct link to Real-World Applications")
+```
+import mlflow
+import numpy as np
+from tensorflow import keras
 
-The MLflow-TensorFlow integration excels in scenarios such as:
+# Prepare sample data
+data = np.random.uniform(size=[100, 28, 28, 3])
+labels = np.random.randint(2, size=100)
 
-* 🖼️ **Computer Vision Projects**: Track CNN architectures, data augmentation strategies, and training dynamics for image classification, object detection, and segmentation tasks
-* 📝 **Natural Language Processing**: Log transformer models, tokenization strategies, and sequence-to-sequence performance for text generation and understanding
-* 📊 **Time Series Analysis**: Monitor LSTM, GRU, and transformer models for forecasting and anomaly detection
-* 🏭 **Production Pipelines**: Version control models from experimentation through deployment with full lineage tracking
-* 🎓 **Educational Projects**: Demonstrate clear progression from simple models to complex deep architectures
-* 🤖 **Reinforcement Learning**: Track agent performance, environment interactions, and reward optimization over time
+# Define and compile your model
+model = keras.Sequential(
+    [
+        keras.Input([28, 28, 3]),
+        keras.layers.Conv2D(8, 3),
+        keras.layers.MaxPool2D(2),
+        keras.layers.Flatten(),
+        keras.layers.Dense(2, activation="softmax"),
+    ]
+)
 
-## Get Started in 5 Minutes[​](#get-started-in-5-minutes "Direct link to Get Started in 5 Minutes")
+model.compile(
+    loss="sparse_categorical_crossentropy",
+    optimizer=keras.optimizers.Adam(0.001),
+    metrics=["accuracy"],
+)
 
-Ready to supercharge your TensorFlow workflow with MLflow? Our comprehensive quickstart tutorial walks you through everything from basic logging to advanced callback customization.
+# Create an MLflow run and add the callback
+with mlflow.start_run() as run:
+    model.fit(
+        data,
+        labels,
+        batch_size=32,
+        epochs=10,
+        callbacks=[mlflow.tensorflow.MlflowCallback(run)],
+    )
+```
 
-[Get Started with TensorFlow + MLflow](/docs/latest/ml/deep-learning/tensorflow/quickstart/quickstart-tensorflow.md)
+### Custom Callback[​](#custom-callback "Direct link to Custom Callback")
 
-[Master the fundamentals through a hands-on tutorial covering automatic logging, custom callbacks, advanced tracking techniques, and deployment strategies.](/docs/latest/ml/deep-learning/tensorflow/quickstart/quickstart-tensorflow.md)
+Create custom logging logic by subclassing `keras.callbacks.Callback`:
 
-## What You'll Master[​](#what-youll-master "Direct link to What You'll Master")
+python
 
-In our comprehensive guide, you'll discover how to:
+```
+from tensorflow import keras
+import math
+import mlflow
 
-Complete Learning Path
 
-#### Foundation Skills[​](#foundation-skills "Direct link to Foundation Skills")
+class CustomMlflowCallback(keras.callbacks.Callback):
+    def on_epoch_begin(self, epoch, logs=None):
+        mlflow.log_metric("current_epoch", epoch)
 
-* 🚀 Set up MLflow tracking for TensorFlow workflows
-* ⚡ Enable comprehensive autologging with a single line of code: `mlflow.tensorflow.autolog()`
-* 📊 Use `MlflowCallback` for advanced experiment logging and customization
-* 📈 Implement custom logging strategies for both batch-level and epoch-level tracking
-* 🎛️ Create specialized callback subclasses for advanced logging requirements
+    def on_epoch_end(self, epoch, logs=None):
+        logs = logs or {}
+        # Log metrics in log scale
+        for k, v in logs.items():
+            if v > 0:
+                mlflow.log_metric(f"log_{k}", math.log(v), step=epoch)
+            mlflow.log_metric(k, v, step=epoch)
 
-#### Advanced Techniques[​](#advanced-techniques "Direct link to Advanced Techniques")
+    def on_train_end(self, logs=None):
+        # Log final model weights statistics
+        weights = self.model.get_weights()
+        mlflow.log_metric("total_parameters", sum(w.size for w in weights))
+```
 
-* 📊 Visualize and compare training results in the MLflow UI with custom metrics
-* 📦 Log and manage TensorFlow models for reproducible inference
-* 🎯 Optimize hyperparameters while automatically logging all trial results
-* 🔄 Integrate with TensorBoard for enhanced visualization capabilities
+## Model Logging[​](#model-logging "Direct link to Model Logging")
 
-#### Production Readiness[​](#production-readiness "Direct link to Production Readiness")
+Save TensorFlow models with [`mlflow.tensorflow.log_model()`](/docs/latest/api_reference/python_api/mlflow.tensorflow.html#mlflow.tensorflow.log_model):
 
-* 🏭 Apply enterprise-grade tracking to your production deep learning projects
-* 👥 Set up collaborative workflows for team-based model development
-* 🔍 Monitor model performance and training dynamics at scale
-* 📋 Implement model governance and approval workflows
-* 🚀 Deploy TensorFlow models across diverse environments
+python
 
-To learn more about the nuances of the `tensorflow` flavor in MLflow, delve into the comprehensive guide below.
+```
+import mlflow
+import tensorflow as tf
+from tensorflow import keras
 
-[View the Developer Guide](/docs/latest/ml/deep-learning/tensorflow/guide.md)
+# Define model
+model = keras.Sequential(
+    [
+        keras.Input([28, 28, 3]),
+        keras.layers.Conv2D(8, 2),
+        keras.layers.MaxPool2D(2),
+        keras.layers.Flatten(),
+        keras.layers.Dense(2),
+        keras.layers.Softmax(),
+    ]
+)
 
-Whether you're building your first machine learning model or optimizing complex architectures for production, the MLflow-TensorFlow integration provides the foundation for organized, reproducible, and scalable experimentation that grows with your needs.
+# Train model (code omitted for brevity)
+
+# Log the model to MLflow
+model_info = mlflow.tensorflow.log_model(model, name="model")
+
+# Later, load the model for inference
+loaded_model = mlflow.tensorflow.load_model(model_info.model_uri)
+predictions = loaded_model.predict(tf.random.uniform([1, 28, 28, 3]))
+```
+
+## Hyperparameter Optimization[​](#hyperparameter-optimization "Direct link to Hyperparameter Optimization")
+
+Track hyperparameter tuning with MLflow:
+
+python
+
+```
+import mlflow
+import tensorflow as tf
+from tensorflow import keras
+import optuna
+
+
+def objective(trial, x_train, y_train, x_val, y_val):
+    """Optuna objective for TensorFlow hyperparameter tuning."""
+    with mlflow.start_run(nested=True):
+        # Define hyperparameter search space
+        params = {
+            "learning_rate": trial.suggest_float("learning_rate", 1e-5, 1e-1, log=True),
+            "units": trial.suggest_int("units", 32, 512),
+            "dropout": trial.suggest_float("dropout", 0.1, 0.5),
+        }
+
+        # Create model with hyperparameters
+        model = keras.Sequential(
+            [
+                keras.layers.Input(shape=(28, 28, 3)),
+                keras.layers.Flatten(),
+                keras.layers.Dense(params["units"], activation="relu"),
+                keras.layers.Dropout(params["dropout"]),
+                keras.layers.Dense(10, activation="softmax"),
+            ]
+        )
+
+        model.compile(
+            optimizer=keras.optimizers.Adam(learning_rate=params["learning_rate"]),
+            loss="sparse_categorical_crossentropy",
+            metrics=["accuracy"],
+        )
+
+        # Train and evaluate
+        history = model.fit(
+            x_train, y_train, validation_data=(x_val, y_val), epochs=5, verbose=0
+        )
+
+        val_accuracy = max(history.history["val_accuracy"])
+        mlflow.log_metric("val_accuracy", val_accuracy)
+
+        return val_accuracy
+
+
+# Main experiment run
+with mlflow.start_run(run_name="tensorflow_hyperparameter_optimization"):
+    study = optuna.create_study(direction="maximize")
+    study.optimize(
+        lambda trial: objective(trial, x_train, y_train, x_val, y_val), n_trials=20
+    )
+
+    # Log best parameters and results
+    mlflow.log_params({f"best_{k}": v for k, v in study.best_params.items()})
+    mlflow.log_metric("best_val_accuracy", study.best_value)
+```
+
+## Model Registry Integration[​](#model-registry-integration "Direct link to Model Registry Integration")
+
+Register TensorFlow models for version control and deployment:
+
+python
+
+```
+import mlflow
+from tensorflow import keras
+from mlflow import MlflowClient
+
+client = MlflowClient()
+
+with mlflow.start_run():
+    # Create model for demonstration
+    model = keras.Sequential(
+        [
+            keras.layers.Conv2D(32, 3, activation="relu", input_shape=(224, 224, 3)),
+            keras.layers.MaxPooling2D(2),
+            keras.layers.Flatten(),
+            keras.layers.Dense(10, activation="softmax"),
+        ]
+    )
+
+    # Log model to registry
+    model_info = mlflow.tensorflow.log_model(
+        model, name="tensorflow_model", registered_model_name="ImageClassifier"
+    )
+
+    # Tag for tracking
+    mlflow.set_tags(
+        {"model_type": "cnn", "dataset": "imagenet", "framework": "tensorflow"}
+    )
+
+# Set model alias for deployment
+client.set_registered_model_alias(
+    name="ImageClassifier",
+    alias="champion",
+    version=model_info.registered_model_version,
+)
+```
+
+## Learn More[​](#learn-more "Direct link to Learn More")
+
+### [Model Registry](/docs/latest/ml/model-registry.md)
+
+[Version and manage TensorFlow models](/docs/latest/ml/model-registry.md)
+
+[Learn more →](/docs/latest/ml/model-registry.md)
+
+### [MLflow Tracking](/docs/latest/ml/tracking.md)
+
+[Track experiments, parameters, and metrics](/docs/latest/ml/tracking.md)
+
+[Learn more →](/docs/latest/ml/tracking.md)
