@@ -20,12 +20,16 @@ In these tutorials, the topics cover applied interactions with OpenAI models, le
 
 [OpenAI ChatCompletions](/docs/latest/genai/flavors/openai/notebooks/openai-chat-completions.md)
 
-[Learn how to leverage the ChatCompletions endpoint in the OpenAI flavor to create a useful text messaging screening tool within MLflow.](/docs/latest/genai/flavors/openai/notebooks/openai-chat-completions.md)
+[Learn how to leverage the ChatCompletions endpoint in the OpenAI flavor to create a useful text messaging screening tool within MLflow.](/docs/latest/genai/flavors/openai/notebooks/openai-chat-completions.md)[](/docs/latest/genai/flavors/openai/notebooks/openai-code-helper.md)
 
 [OpenAI Custom Python Model - Code Helper](/docs/latest/genai/flavors/openai/notebooks/openai-code-helper.md)
 
-[Learn how to leverage Custom Python Models with a useful Code Helper application that leverages OpenAI Models and MLflow.](/docs/latest/genai/flavors/openai/notebooks/openai-code-helper.md)
+[](/docs/latest/genai/flavors/openai/notebooks/openai-code-helper.md)
+
+[Learn how to leverage Custom Python Models with a useful Code Helper application that leverages OpenAI Models and MLflow.](/docs/latest/genai/flavors/openai/notebooks/openai-code-helper.md)[](/docs/latest/genai/flavors/openai/notebooks/openai-embeddings-generation.md)
 
 [OpenAI Embeddings - Document Comparison](/docs/latest/genai/flavors/openai/notebooks/openai-embeddings-generation.md)
+
+[](/docs/latest/genai/flavors/openai/notebooks/openai-embeddings-generation.md)
 
 [Explore the application of embeddings with document comparison using an OpenAI model with MLflow.](/docs/latest/genai/flavors/openai/notebooks/openai-embeddings-generation.md)

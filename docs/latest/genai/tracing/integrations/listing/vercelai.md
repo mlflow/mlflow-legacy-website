@@ -1,6 +1,6 @@
 # Tracing Vercel AI SDK
 
-![Vercel AI SDK tracing via MLflow](/docs/latest/images/llms/tracing/vercel-ai-tracing.gif)
+[](/docs/latest/images/llms/tracing/vercel-ai-tracing.mp4)
 
 [MLflow Tracing](/docs/latest/genai/tracing.md) provides automatic tracing for applications built with the [Vercel AI SDK](https://ai-sdk.dev/) (the `ai` package), unlocking powerful observability capabilities for TypeScript and Javascript application developers.
 
