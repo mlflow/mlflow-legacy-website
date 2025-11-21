@@ -47,7 +47,7 @@ A program is a a set of modules connected into a pipeline to perform complex tas
 
 ## Automatic Tracing[​](#automatic-tracing "Direct link to Automatic Tracing")
 
-![DSPy Tracing via autolog](/docs/latest/assets/images/dspy-tracing-957d61580cca35522155c70e79cdbe42.gif)
+[](/docs/latest/images/llms/tracing/dspy-tracing.mp4)
 
 [MLflow Tracing](/docs/latest/genai/tracing.md) tracing is a powerful feature that allows you to monitor and debug your DSPy programs. With MLflow, you can enable auto tracing just by calling the [`mlflow.dspy.autolog()`](/docs/latest/api_reference/python_api/mlflow.dspy.html#mlflow.dspy.autolog) function in your code.
 

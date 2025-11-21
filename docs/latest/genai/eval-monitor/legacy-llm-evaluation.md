@@ -230,7 +230,7 @@ mlflow.genai.evaluate(
 
 To view the evaluation results, click the link in the console output, or navigate to the **Evaluations** tab in the MLflow UI.
 
-![Prompt Evaluation](/docs/latest/images/mlflow-3/eval-monitor/evaluation-result-video.gif)
+[](/docs/latest/images/mlflow-3/eval-monitor/evaluation-result-video.mp4)
 
 ## Other Changes[​](#other-changes "Direct link to Other Changes")
 

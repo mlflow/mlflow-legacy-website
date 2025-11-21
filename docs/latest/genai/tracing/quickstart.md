@@ -185,7 +185,7 @@ View them in the MLflow UI at: http://127.0.0.1:5000
 
 5. **Explore the trace details** including input messages, system prompts, model parameters (temperature, max\_tokens, etc.), output responses, execution time, token usage, and the complete request/response flow
 
-![MLflow Traces UI](/docs/latest/assets/images/tracing-top-dcca046565ab33be6afe0447dd328c22.gif)
+[](/docs/latest/images/llms/tracing/tracing-top.mp4)
 
 ## Step 5: Add custom tracing (Optional)[​](#step-5-add-custom-tracing-optional "Direct link to Step 5: Add custom tracing (Optional)")
 

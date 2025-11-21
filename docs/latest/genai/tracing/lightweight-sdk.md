@@ -91,7 +91,7 @@ In self-hosting mode, you will be responsible for running the tracking server in
 
 Refer to the [tracking server setup guide](/docs/latest/ml/tracking.md#tracking-setup) for detailed guidance.
 
-![OSS Tracing](/docs/latest/assets/images/tracing-top-dcca046565ab33be6afe0447dd328c22.gif)
+[](/docs/latest/images/llms/tracing/tracing-top.mp4)
 
 [Databricks Lakehouse Monitoring for GenAI](https://docs.databricks.com/aws/en/generative-ai/agent-evaluation/monitoring) is a go-to solution for monitoring your GenAI application with MLflow Tracing. It provides access to a robust, fully functional monitoring dashboard for operational excellence and quality analysis.
 
@@ -99,7 +99,7 @@ Lakehouse Monitoring for GenAI can be used regardless of whether your applicatio
 
 [Sign up for free](https://signup.databricks.com/?destination_url=/ml/experiments-signup?source=OSS_DOCS\&dbx_source=TRY_MLFLOW\&signup_experience_step=EXPRESS\&provider=MLFLOW\&utm_source=OSS_DOCS) and [get started in a minute](https://docs.databricks.com/aws/en/generative-ai/agent-evaluation/monitoring) to run your GenAI application with complete observability.
 
-![Monitoring](https://assets.docs.databricks.com/_static/images/generative-ai/monitoring/monitoring-hero.gif)
+[](https://assets.docs.databricks.com/_static/images/generative-ai/monitoring/monitoring-hero.mp4)
 
 MLflow Tracing is **built on the OpenTelemetry tracing spec**, an industry-standard framework for observability, making it a vendor-neutral solution for monitoring your GenAI applications.
 

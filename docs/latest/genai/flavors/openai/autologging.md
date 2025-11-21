@@ -99,7 +99,7 @@ Viewing the logged model and the trace used when invoking the OpenAI client with
 
 <!-- -->
 
-![OpenAI Autologging artifacts and traces](/docs/latest/assets/images/openai-autolog-bb60103a751343c4c1fa27f464e4f333.gif)
+[](/docs/latest/images/tutorials/llms/openai-autolog.mp4)
 
 ## FAQ[​](#faq "Direct link to FAQ")
 

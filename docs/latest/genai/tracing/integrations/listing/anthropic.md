@@ -1,8 +1,11 @@
 # Tracing Anthropic
 
-![OpenAI Tracing via autolog](/docs/latest/assets/images/anthropic-tracing-7b02a80b9cdd323dafdb413542b2b70b.png)
+![Anthropic Tracing via autolog](/docs/latest/assets/images/anthropic-tracing-7b02a80b9cdd323dafdb413542b2b70b.png)
 
-[MLflow Tracing](/docs/latest/genai/tracing.md) provides automatic tracing capability for Anthropic LLMs. By enabling auto tracing for Anthropic by calling the [`mlflow.anthropic.autolog()`](/docs/latest/api_reference/python_api/mlflow.anthropic.html#mlflow.anthropic.autolog) function, MLflow will capture nested traces and log them to the active MLflow Experiment upon invocation of Anthropic Python SDK.
+[MLflow Tracing](/docs/latest/genai/tracing.md) provides automatic tracing capability for Anthropic LLMs. By enabling auto tracing for Anthropic by calling the [`mlflow.anthropic.autolog()`](/docs/latest/api_reference/python_api/mlflow.anthropic.html#mlflow.anthropic.autolog) function, MLflow will capture nested traces and log them to the active MLflow Experiment upon invocation of Anthropic Python SDK. In Typescript, you can instead use the `tracedAnthropic` function to wrap the Anthropic client.
+
+* Python
+* JS / TS
 
 python
 
@@ -12,6 +15,15 @@ import mlflow
 mlflow.anthropic.autolog()
 ```
 
+typescript
+
+```
+import Anthropic from "@anthropic-ai/sdk";
+import { tracedAnthropic } from "mlflow-anthropic";
+
+const client = tracedAnthropic(new Anthropic());
+```
+
 MLflow trace automatically captures the following information about Anthropic calls:
 
 * Prompts and completion responses
@@ -19,11 +31,14 @@ MLflow trace automatically captures the following information about Anthropic ca
 * Model name
 * Additional metadata such as `temperature`, `max_tokens`, if specified.
 * Function calling if returned in the response
+* Token usage information
 * Any exception if raised
 
 ## Supported APIs[​](#supported-apis "Direct link to Supported APIs")
 
 MLflow supports automatic tracing for the following Anthropic APIs:
+
+### Python[​](#python "Direct link to Python")
 
 | Chat Completion | Function Calling | Streaming | Async    | Image | Batch |
 | --------------- | ---------------- | --------- | -------- | ----- | ----- |
@@ -31,9 +46,20 @@ MLflow supports automatic tracing for the following Anthropic APIs:
 
 (\*1) Async support was added in MLflow 2.21.0.
 
+### TypeScript / JavaScript[​](#typescript--javascript "Direct link to TypeScript / JavaScript")
+
+| Chat Completion | Function Calling | Streaming | Async |
+| --------------- | ---------------- | --------- | ----- |
+| ✅              | ✅ (\*2)         | -         | ✅    |
+
+(\*2) Function calls in responses are captured and can be rendered in the MLflow UI. The TypeScript SDK is natively async.
+
 To request support for additional APIs, please open a [feature request](https://github.com/mlflow/mlflow/issues) on GitHub.
 
 ## Basic Example[​](#basic-example "Direct link to Basic Example")
+
+* Python
+* JS / TS
 
 python
 
@@ -61,9 +87,31 @@ message = client.messages.create(
 )
 ```
 
+typescript
+
+```
+import Anthropic from "@anthropic-ai/sdk";
+import { tracedAnthropic } from "mlflow-anthropic";
+
+// Wrap the Anthropic client with the tracedAnthropic function
+const client = tracedAnthropic(new Anthropic());
+
+// Invoke the client as usual
+const message = await client.messages.create({
+    model: "claude-3-7-sonnet-20250219",
+    max_tokens: 1024,
+    messages: [
+        {"role": "user", "content": "Hello, Claude"},
+    ],
+});
+```
+
 ## Async[​](#async "Direct link to Async")
 
 MLflow Tracing has supported the asynchronous API of the Anthropic SDK since MLflow 2.21.0. Its usage is the same as the synchronous API.
+
+* Python
+* JS / TS
 
 python
 
@@ -83,6 +131,8 @@ response = await client.messages.create(
     ],
 )
 ```
+
+Anthropic Typescript / Javascript SDK is natively async. See the basic example above.
 
 ## Advanced Example: Tool Calling Agent[​](#advanced-example-tool-calling-agent "Direct link to Advanced Example: Tool Calling Agent")
 
