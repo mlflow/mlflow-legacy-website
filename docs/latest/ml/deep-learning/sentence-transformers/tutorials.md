@@ -12,12 +12,16 @@ Below, you will find a number of guides that focus on different ways that you ca
 
 [Semantic Similarity Tutorial](/docs/latest/ml/deep-learning/sentence-transformers/tutorials/semantic-similarity/semantic-similarity-sentence-transformers.md)
 
-[Learn how to leverage sentence embeddings to determine similarity scores between two sentences.](/docs/latest/ml/deep-learning/sentence-transformers/tutorials/semantic-similarity/semantic-similarity-sentence-transformers.md)
+[Learn how to leverage sentence embeddings to determine similarity scores between two sentences.](/docs/latest/ml/deep-learning/sentence-transformers/tutorials/semantic-similarity/semantic-similarity-sentence-transformers.md)[](/docs/latest/ml/deep-learning/sentence-transformers/tutorials/semantic-search/semantic-search-sentence-transformers.md)
 
 [Semantic Search Tutorial](/docs/latest/ml/deep-learning/sentence-transformers/tutorials/semantic-search/semantic-search-sentence-transformers.md)
 
-[Learn how to use sentence embeddings to find the most similar embedding within a corpus of text.](/docs/latest/ml/deep-learning/sentence-transformers/tutorials/semantic-search/semantic-search-sentence-transformers.md)
+[](/docs/latest/ml/deep-learning/sentence-transformers/tutorials/semantic-search/semantic-search-sentence-transformers.md)
+
+[Learn how to use sentence embeddings to find the most similar embedding within a corpus of text.](/docs/latest/ml/deep-learning/sentence-transformers/tutorials/semantic-search/semantic-search-sentence-transformers.md)[](/docs/latest/ml/deep-learning/sentence-transformers/tutorials/paraphrase-mining/paraphrase-mining-sentence-transformers.md)
 
 [Paraphrase Mining Tutorial](/docs/latest/ml/deep-learning/sentence-transformers/tutorials/paraphrase-mining/paraphrase-mining-sentence-transformers.md)
+
+[](/docs/latest/ml/deep-learning/sentence-transformers/tutorials/paraphrase-mining/paraphrase-mining-sentence-transformers.md)
 
 [Explore the power of paraphrase mining to identify semantically similar sentences in a corpus of text.](/docs/latest/ml/deep-learning/sentence-transformers/tutorials/paraphrase-mining/paraphrase-mining-sentence-transformers.md)

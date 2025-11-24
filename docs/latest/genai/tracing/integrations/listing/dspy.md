@@ -1,6 +1,6 @@
 # Tracing DSPy🧩
 
-![DSPy Tracing via autolog](/docs/latest/assets/images/dspy-tracing-957d61580cca35522155c70e79cdbe42.gif)
+[](/docs/latest/images/llms/tracing/dspy-tracing.mp4)
 
 [DSPy](https://dspy.ai/) is an open-source framework for building modular AI systems and offers algorithms for optimizing their prompts and weights.
 

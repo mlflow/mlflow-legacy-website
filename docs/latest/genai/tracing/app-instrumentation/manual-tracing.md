@@ -234,7 +234,7 @@ By setting `request_preview` and `response_preview` on the trace (typically the 
 
 If an `Exception` is raised during processing of a trace-instrumented operation, an indication will be shown within the UI that the invocation was not successful and a partial capture of data will be available to aid in debugging. Additionally, details about the Exception that was raised will be included within `Events` of the partially completed span, further aiding the identification of where issues are occurring within your code.
 
-![Trace Error](/docs/latest/assets/images/trace-exception-d23766aa1c06b25b252c98d5d98cfef5.gif)
+[](/docs/latest/images/llms/tracing/trace-exception.mp4)
 
 ### Combining with Auto-Tracing[​](#combining-with-auto-tracing "Direct link to Combining with Auto-Tracing")
 
