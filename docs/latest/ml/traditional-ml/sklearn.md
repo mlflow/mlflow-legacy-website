@@ -2,157 +2,213 @@
 
 ## Introduction[​](#introduction "Direct link to Introduction")
 
-**Scikit-learn** is the gold standard for machine learning in Python, providing simple and efficient tools for predictive data analysis. Built on NumPy, SciPy, and matplotlib, scikit-learn has become the go-to library for both beginners learning their first ML concepts and experts building production systems.
+Scikit-learn is a comprehensive machine learning library for Python, providing tools for classification, regression, clustering, and preprocessing. Built on NumPy, SciPy, and matplotlib, scikit-learn offers a consistent API across all estimators with unified `fit()`, `predict()`, and `transform()` methods.
 
-Scikit-learn's philosophy of "ease of use without sacrificing flexibility" makes it perfect for rapid prototyping, educational projects, and robust production deployments. From simple linear regression to complex ensemble methods, scikit-learn provides consistent APIs that make machine learning accessible to everyone.
-
-Why Scikit-learn Dominates ML Workflows
-
-#### Production-Proven Algorithms[​](#production-proven-algorithms "Direct link to Production-Proven Algorithms")
-
-* 📊 **Comprehensive Coverage**: Classification, regression, clustering, dimensionality reduction, and preprocessing
-* 🔧 **Consistent API**: Unified `fit()`, `predict()`, and `transform()` methods across all estimators
-* 🎯 **Battle-Tested**: Decades of optimization and real-world validation
-* 📈 **Scalable Implementation**: Efficient algorithms optimized for performance
-
-#### Developer Experience Excellence[​](#developer-experience-excellence "Direct link to Developer Experience Excellence")
-
-* 🚀 **Intuitive Design**: Clean, Pythonic APIs that feel natural to use
-* 📚 **World-Class Documentation**: Comprehensive guides, examples, and API references
-* 🔬 **Educational Focus**: Perfect for learning ML concepts with clear, well-documented examples
-* 🛠️ **Extensive Ecosystem**: Seamless integration with pandas, NumPy, and visualization libraries
+MLflow's integration with scikit-learn provides automatic experiment tracking, model management, and deployment capabilities for traditional machine learning workflows.
 
 ## Why MLflow + Scikit-learn?[​](#why-mlflow--scikit-learn "Direct link to Why MLflow + Scikit-learn?")
 
-The integration of MLflow with scikit-learn creates a powerful combination for the complete ML lifecycle:
+#### Automatic Logging
 
-* ⚡ **Zero-Configuration Autologging**: Enable comprehensive experiment tracking with just `mlflow.sklearn.autolog()` - no setup required
-* 🎛️ **Granular Control**: Choose between automatic logging or manual instrumentation for complete flexibility
-* 📊 **Complete Experiment Capture**: Automatically log model parameters, training metrics, cross-validation results, and artifacts
-* 🔄 **Hyperparameter Tracking**: Built-in support for GridSearchCV and RandomizedSearchCV with child run creation
-* 🚀 **Production-Ready Deployment**: Convert experiments to deployable models with MLflow's serving capabilities
-* 👥 **Team Collaboration**: Share scikit-learn experiments and models through MLflow's intuitive interface
-* 📈 **Post-Training Metrics**: Automatic logging of evaluation metrics after model training
+Single line of code (mlflow\.sklearn.autolog()) captures all parameters, metrics, cross-validation results, and models without manual instrumentation.
 
-## Key Features[​](#key-features "Direct link to Key Features")
+#### Complete Model Recording
 
-### Effortless Autologging[​](#effortless-autologging "Direct link to Effortless Autologging")
+Logs trained models with serialization format, input/output signatures, model dependencies, and Python environment for reproducible deployments.
 
-MLflow's scikit-learn integration offers the most comprehensive autologging experience for traditional ML:
+#### Hyperparameter Tuning
+
+Built-in support for GridSearchCV and RandomizedSearchCV with automatic child run creation for each parameter combination.
+
+#### Post-Training Metrics
+
+Automatically captures evaluation metrics computed after training, including sklearn.metrics function calls and model.score() evaluations.
+
+## Getting Started[​](#getting-started "Direct link to Getting Started")
+
+Get started with scikit-learn and MLflow in just a few lines of code:
 
 python
 
 ```
 import mlflow
-import mlflow.sklearn
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.datasets import load_iris
+from sklearn.datasets import load_wine
+from sklearn.model_selection import train_test_split
 
-# Enable complete experiment tracking with one line
+# Enable autologging
 mlflow.sklearn.autolog()
 
-# Your existing scikit-learn code works unchanged
-iris = load_iris()
-model = RandomForestClassifier(n_estimators=100, max_depth=3)
-model.fit(iris.data, iris.target)
+# Load and prepare data
+wine = load_wine()
+X_train, X_test, y_train, y_test = train_test_split(
+    wine.data, wine.target, test_size=0.2, random_state=42
+)
+
+# Train model - MLflow automatically logs everything!
+with mlflow.start_run():
+    model = RandomForestClassifier(n_estimators=100, max_depth=3, random_state=42)
+    model.fit(X_train, y_train)
+
+    # Evaluation metrics are automatically captured
+    train_score = model.score(X_train, y_train)
+    test_score = model.score(X_test, y_test)
+
+    print(f"Train accuracy: {train_score:.3f}, Test accuracy: {test_score:.3f}")
 ```
 
-What Gets Automatically Captured
+Autologging captures all model parameters, training metrics, the trained model, and model signatures.
 
-#### Comprehensive Parameter Tracking[​](#comprehensive-parameter-tracking "Direct link to Comprehensive Parameter Tracking")
+Tracking Server Setup
 
-* ⚙️ **Model Parameters**: All parameters from `estimator.get_params(deep=True)`
-* 🔍 **Hyperparameter Search**: Best parameters from GridSearchCV and RandomizedSearchCV
-* 📊 **Cross-Validation Results**: Complete CV metrics and parameter combinations
+Running locally? MLflow stores experiments in the current directory by default. For team collaboration or remote tracking, **[set up a tracking server](/docs/latest/ml/tracking/tutorials/remote-server.md)**.
 
-#### Training and Evaluation Metrics[​](#training-and-evaluation-metrics "Direct link to Training and Evaluation Metrics")
+## Autologging[​](#autologging "Direct link to Autologging")
 
-* 📈 **Training Score**: Automatic logging of training performance via `estimator.score()`
-* 🎯 **Classification Metrics**: Precision, recall, F1-score, accuracy, log loss, ROC AUC
-* 📉 **Regression Metrics**: MSE, RMSE, MAE, R² score
-* 🔄 **Cross-Validation**: Best CV score and detailed results for parameter search
+Enable autologging to automatically track scikit-learn experiments:
 
-#### Production-Ready Artifacts[​](#production-ready-artifacts "Direct link to Production-Ready Artifacts")
+python
 
-* 🤖 **Serialized Models**: Support for both pickle and cloudpickle formats
-* 📋 **Model Signatures**: Automatic input/output schema inference
-* 📊 **Parameter Search Results**: Detailed CV results as artifacts
-* 📄 **Metric Information**: JSON artifacts with metric call details
+```
+import mlflow
+from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
 
-### Advanced Hyperparameter Optimization[​](#advanced-hyperparameter-optimization "Direct link to Advanced Hyperparameter Optimization")
+# Load data
+cancer = load_breast_cancer()
+X_train, X_test, y_train, y_test = train_test_split(
+    cancer.data, cancer.target, test_size=0.2, random_state=42
+)
 
-MLflow provides deep integration with scikit-learn's parameter search capabilities:
+# Enable autologging
+mlflow.sklearn.autolog()
 
-Parameter Search Integration
+with mlflow.start_run():
+    model = GradientBoostingClassifier(n_estimators=100, random_state=42)
+    model.fit(X_train, y_train)
 
-* 🔍 **GridSearchCV Support**: Automatic child run creation for parameter combinations
-* 🎲 **RandomizedSearchCV Support**: Efficient random parameter exploration tracking
-* 📊 **Cross-Validation Metrics**: Complete CV results logged as artifacts
-* 🏆 **Best Model Logging**: Separate logging of best estimator with optimal parameters
-* 🎛️ **Configurable Tracking**: Control the number of child runs with `max_tuning_runs`
+    # Model scoring is automatically captured
+    train_score = model.score(X_train, y_train)
+    test_score = model.score(X_test, y_test)
+```
 
-### Intelligent Post-Training Metrics[​](#intelligent-post-training-metrics "Direct link to Intelligent Post-Training Metrics")
+### What Gets Logged[​](#what-gets-logged "Direct link to What Gets Logged")
 
-Beyond training metrics, MLflow automatically captures evaluation metrics from your analysis workflow:
+When autologging is enabled, MLflow automatically captures:
 
-Automatic Evaluation Tracking
+* **Parameters**: All model parameters from `estimator.get_params(deep=True)`
+* **Metrics**: Training scores, classification/regression metrics, cross-validation results
+* **Models**: Serialized models with signatures and input examples
+* **Artifacts**: Cross-validation results, metric information, model metadata
 
-#### Smart Metric Detection[​](#smart-metric-detection "Direct link to Smart Metric Detection")
+For GridSearchCV and RandomizedSearchCV, MLflow creates child runs for parameter combinations and logs the best estimator separately.
 
-* 🔍 **Sklearn Metrics Integration**: Automatic logging of `sklearn.metrics` function calls
-* 📊 **Model Score Tracking**: Capture `model.score()` calls with dataset context
-* 📝 **Dataset Naming**: Intelligent variable name detection for metric organization
-* 🔄 **Multiple Evaluations**: Support for multiple datasets with automatic indexing
+## Hyperparameter Tuning[​](#hyperparameter-tuning "Direct link to Hyperparameter Tuning")
 
-#### Comprehensive Coverage[​](#comprehensive-coverage "Direct link to Comprehensive Coverage")
+### Grid Search[​](#grid-search "Direct link to Grid Search")
 
-* 📈 **All Sklearn Metrics**: Classification, regression, clustering metrics automatically logged
-* 🎯 **Custom Scorers**: Integration with sklearn's scorer system
-* 📊 **Evaluation Context**: Metrics linked to specific datasets and model versions
-* 📋 **Metric Documentation**: JSON artifacts documenting metric calculation details
+MLflow automatically creates child runs for hyperparameter tuning:
 
-## Real-World Applications[​](#real-world-applications "Direct link to Real-World Applications")
+python
 
-The MLflow-scikit-learn integration excels across diverse ML use cases:
+```
+import mlflow
+from sklearn.datasets import load_digits
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import GridSearchCV, train_test_split
 
-* 📊 **Tabular Data Analysis**: Track feature engineering pipelines, model comparisons, and performance metrics for structured data problems
-* 🔍 **Classification Tasks**: Monitor precision, recall, F1-scores, and ROC curves for binary and multi-class classification
-* 📈 **Regression Analysis**: Log MSE, MAE, R² scores, and residual analysis for continuous target prediction
-* 🔄 **Hyperparameter Tuning**: Track extensive grid searches and random parameter exploration with organized child runs
-* 📊 **Ensemble Methods**: Log individual estimator performance alongside ensemble metrics for Random Forest, Gradient Boosting
-* 🔬 **Cross-Validation Studies**: Capture comprehensive CV results with statistical significance testing
-* 🧠 **Feature Selection**: Track feature importance, selection algorithms, and dimensionality reduction experiments
-* 📋 **Model Comparison**: Systematically compare multiple algorithms with consistent evaluation metrics
+# Load data
+digits = load_digits()
+X_train, X_test, y_train, y_test = train_test_split(
+    digits.data, digits.target, test_size=0.2, random_state=42
+)
 
-## Detailed Documentation[​](#detailed-documentation "Direct link to Detailed Documentation")
+# Enable autologging
+mlflow.sklearn.autolog(max_tuning_runs=10)
 
-Our comprehensive developer guide covers the complete spectrum of scikit-learn-MLflow integration:
+# Define parameter grid
+param_grid = {
+    "n_estimators": [50, 100, 200],
+    "max_depth": [5, 10, 15, None],
+    "min_samples_split": [2, 5, 10],
+}
 
-Complete Learning Journey
+with mlflow.start_run(run_name="RF Hyperparameter Tuning"):
+    rf = RandomForestClassifier(random_state=42)
+    grid_search = GridSearchCV(rf, param_grid, cv=5, scoring="accuracy", n_jobs=-1)
+    grid_search.fit(X_train, y_train)
 
-#### Foundation Skills[​](#foundation-skills "Direct link to Foundation Skills")
+    best_score = grid_search.score(X_test, y_test)
+    print(f"Best params: {grid_search.best_params_}")
+    print(f"Best CV score: {grid_search.best_score_:.3f}")
+    print(f"Test score: {best_score:.3f}")
+```
 
-* ⚡ Set up one-line autologging for immediate experiment tracking across any scikit-learn workflow
-* 🎛️ Master both automatic and manual logging approaches for different use cases
-* 📊 Understand parameter tracking for simple estimators and complex meta-estimators
-* 🔧 Configure advanced logging parameters for custom training scenarios
+### Optuna Integration[​](#optuna-integration "Direct link to Optuna Integration")
 
-#### Advanced Techniques[​](#advanced-techniques "Direct link to Advanced Techniques")
+For advanced hyperparameter optimization:
 
-* 🔍 Implement comprehensive hyperparameter tuning with GridSearchCV and RandomizedSearchCV
-* 📈 Leverage post-training metrics for automatic evaluation tracking
-* 🚀 Deploy scikit-learn models with MLflow's serving infrastructure
-* 📦 Work with different serialization formats and understand their trade-offs
+python
 
-#### Production Excellence[​](#production-excellence "Direct link to Production Excellence")
+```
+import mlflow
+import optuna
+from sklearn.datasets import load_breast_cancer
+from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.model_selection import train_test_split
 
-* 🏭 Build production-ready ML pipelines with proper experiment tracking and model governance
-* 👥 Implement team collaboration workflows for shared scikit-learn model development
-* 🔍 Set up model monitoring and performance tracking in production environments
-* 📋 Establish model registry workflows for staging, approval, and deployment processes
+# Load data
+cancer = load_breast_cancer()
+X_train, X_test, y_train, y_test = train_test_split(
+    cancer.data, cancer.target, test_size=0.2, random_state=42
+)
 
-To learn more about the nuances of the `sklearn` flavor in MLflow, dive into the comprehensive guide below.
+mlflow.sklearn.autolog()
 
-[View the Comprehensive Guide](/docs/latest/ml/traditional-ml/sklearn/guide.md)
 
-Whether you're building your first machine learning model or optimizing enterprise-scale ML systems, the MLflow-scikit-learn integration provides the robust foundation needed for reproducible, scalable, and collaborative machine learning development.
+def objective(trial):
+    params = {
+        "n_estimators": trial.suggest_int("n_estimators", 50, 200),
+        "max_depth": trial.suggest_int("max_depth", 3, 10),
+        "learning_rate": trial.suggest_float("learning_rate", 0.01, 0.3),
+    }
+
+    with mlflow.start_run(nested=True):
+        model = GradientBoostingClassifier(**params, random_state=42)
+        model.fit(X_train, y_train)
+        accuracy = model.score(X_test, y_test)
+        return accuracy
+
+
+with mlflow.start_run():
+    study = optuna.create_study(direction="maximize")
+    study.optimize(objective, n_trials=20)
+
+    mlflow.log_params({f"best_{k}": v for k, v in study.best_params.items()})
+    mlflow.log_metric("best_accuracy", study.best_value)
+```
+
+Nested Runs
+
+The `nested=True` parameter creates child runs for each trial under the parent run, enabling hierarchical organization of hyperparameter tuning experiments. Learn more about **[hierarchical runs](/docs/latest/ml/tracking/tracking-api.md#hierarchical-runs-with-parent-child-relationships)**.
+
+## Learn More[​](#learn-more "Direct link to Learn More")
+
+### [Model Registry](/docs/latest/ml/model-registry.md)
+
+[Register and manage scikit-learn model versions with aliases for deployment workflows.](/docs/latest/ml/model-registry.md)
+
+[Learn more →](/docs/latest/ml/model-registry.md)
+
+### [Model Deployment](/docs/latest/ml/deployment.md)
+
+[Deploy scikit-learn models to production using MLflow's serving capabilities and cloud integrations.](/docs/latest/ml/deployment.md)
+
+[Learn more →](/docs/latest/ml/deployment.md)
+
+### [Model Evaluation](/docs/latest/ml/evaluation.md)
+
+[Evaluate scikit-learn models using MLflow's comprehensive evaluation framework with built-in metrics.](/docs/latest/ml/evaluation.md)
+
+[Learn more →](/docs/latest/ml/evaluation.md)

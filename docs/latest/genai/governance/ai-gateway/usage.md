@@ -314,11 +314,11 @@ except requests.RequestException as e:
 
 [Learn integrations →](/docs/latest/genai/governance/ai-gateway/integration.md)
 
-### [Tutorial](/docs/latest/genai/governance/ai-gateway/guides.md)
+### [Tutorial](/docs/latest/genai/governance/ai-gateway.md)
 
-[Complete step-by-step walkthrough from setup to deployment](/docs/latest/genai/governance/ai-gateway/guides.md)
+[Complete step-by-step walkthrough from setup to deployment](/docs/latest/genai/governance/ai-gateway.md)
 
-[Follow tutorial →](/docs/latest/genai/governance/ai-gateway/guides.md)
+[Follow tutorial →](/docs/latest/genai/governance/ai-gateway.md)
 
 ### [Configuration Guide](/docs/latest/genai/governance/ai-gateway/configuration.md)
 

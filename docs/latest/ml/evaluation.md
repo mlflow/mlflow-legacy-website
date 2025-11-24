@@ -136,25 +136,31 @@ Our comprehensive evaluation framework is organized into specialized areas, each
 
 [Model Evaluation](/docs/latest/ml/evaluation/model-eval.md)
 
-[Core model evaluation workflows for classification and regression tasks with automated metrics, visualizations, and performance assessment.](/docs/latest/ml/evaluation/model-eval.md)
+[Core model evaluation workflows for classification and regression tasks with automated metrics, visualizations, and performance assessment.](/docs/latest/ml/evaluation/model-eval.md)[](/docs/latest/ml/evaluation/dataset-eval.md)
 
 [Dataset Evaluation](/docs/latest/ml/evaluation/dataset-eval.md)
+
+[](/docs/latest/ml/evaluation/dataset-eval.md)
 
 [Evaluate static datasets and pre-computed predictions without re-running models, perfect for batch processing and historical analysis.](/docs/latest/ml/evaluation/dataset-eval.md)
 
 [Function Evaluation](/docs/latest/ml/evaluation/function-eval.md)
 
-[Lightweight evaluation of Python functions and custom prediction logic without the overhead of model logging and registration.](/docs/latest/ml/evaluation/function-eval.md)
+[Lightweight evaluation of Python functions and custom prediction logic without the overhead of model logging and registration.](/docs/latest/ml/evaluation/function-eval.md)[](/docs/latest/ml/evaluation/metrics-visualizations.md)
 
 [Custom Metrics & Visualizations](/docs/latest/ml/evaluation/metrics-visualizations.md)
+
+[](/docs/latest/ml/evaluation/metrics-visualizations.md)
 
 [Define domain-specific evaluation criteria, custom metrics, and specialized visualizations tailored to your business requirements.](/docs/latest/ml/evaluation/metrics-visualizations.md)
 
 [SHAP Integration](/docs/latest/ml/evaluation/shap.md)
 
-[Deep model interpretation with SHAP values, feature importance analysis, and explainable AI capabilities for transparent ML.](/docs/latest/ml/evaluation/shap.md)
+[Deep model interpretation with SHAP values, feature importance analysis, and explainable AI capabilities for transparent ML.](/docs/latest/ml/evaluation/shap.md)[](/docs/latest/ml/evaluation/plugin-evaluators.md)
 
 [Plugin Evaluators](/docs/latest/ml/evaluation/plugin-evaluators.md)
+
+[](/docs/latest/ml/evaluation/plugin-evaluators.md)
 
 [Extend evaluation capabilities with specialized plugins like Giskard for vulnerability scanning and Trubrics for advanced validation.](/docs/latest/ml/evaluation/plugin-evaluators.md)
 

@@ -354,8 +354,8 @@ Now that your providers are configured, learn how to use and integrate your gate
 
 [Learn integrations →](/docs/latest/genai/governance/ai-gateway/integration.md)
 
-### [Tutorial](/docs/latest/genai/governance/ai-gateway/guides.md)
+### [Tutorial](/docs/latest/genai/governance/ai-gateway.md)
 
-[Step-by-step walkthrough with examples](/docs/latest/genai/governance/ai-gateway/guides.md)
+[Step-by-step walkthrough with examples](/docs/latest/genai/governance/ai-gateway.md)
 
-[Follow tutorial →](/docs/latest/genai/governance/ai-gateway/guides.md)
+[Follow tutorial →](/docs/latest/genai/governance/ai-gateway.md)
