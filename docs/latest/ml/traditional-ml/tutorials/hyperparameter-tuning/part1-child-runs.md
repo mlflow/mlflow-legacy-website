@@ -122,7 +122,7 @@ consume(starmap(execute_tuning, ((x,) for x in range(5))))
 
 After executing this, we can navigate to the MLflow UI to see the results of the iterations and compare each run's error metrics to the parameters that were selected.
 
-![Hyperparameter tuning no child runs](/docs/latest/assets/images/no-child-first-ac9b59845a4d7aa095ec913220cc5913.gif)
+[](/docs/latest/images/guides/introductory/hyperparameter-tuning-with-child-runs/no-child-first.mp4)
 
 Initial Hyperparameter tuning execution
 
@@ -151,7 +151,7 @@ This may become a serious problem for analysis if we:
 
 Let's take a look at the UI and see if it is clear which iteration a particular run is a member of.
 
-![Adding more runs](/docs/latest/assets/images/no-child-more-be952d9e9b8c849bf5b05290d49ce24a.gif)
+[](/docs/latest/images/guides/introductory/hyperparameter-tuning-with-child-runs/no-child-more.mp4)
 
 Challenges with iterative tuning without child run encapsulation
 
@@ -272,7 +272,7 @@ consume(
 
 Once we execute these three tuning run tests, we can view the results in the UI:
 
-![Using child runs](/docs/latest/assets/images/child-runs-3a77b805cd47d1e997c3268c47b6d22d.gif)
+[](/docs/latest/images/guides/introductory/hyperparameter-tuning-with-child-runs/child-runs.mp4)
 
 Encapsulating tests with child runs
 
@@ -294,7 +294,7 @@ The notebook contains an example implementation of this, but it is recommended t
 
 The results in the UI for this challenge are shown below.
 
-![Challenge](/docs/latest/assets/images/parent-child-challenge-b7198bdf22d9b91c5bff5de671e5f629.gif)
+[](/docs/latest/images/guides/introductory/hyperparameter-tuning-with-child-runs/parent-child-challenge.mp4)
 
 Adding best child run data to parent run
 

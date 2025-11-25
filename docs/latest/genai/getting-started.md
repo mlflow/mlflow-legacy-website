@@ -4,7 +4,7 @@
 
 MLflow transforms how software engineers build, evaluate, and deploy GenAI applications. Get complete observability, systematic evaluation, and deployment confidence—all while maintaining the flexibility to use any framework or model provider.
 
-![MLflow Tracing UI showing detailed GenAI observability](/docs/latest/images/llms/tracing/tracing-top.gif)
+[](/docs/latest/images/llms/tracing/tracing-top.mp4)
 
 ## The GenAI Development Lifecycle[​](#the-genai-development-lifecycle "Direct link to The GenAI Development Lifecycle")
 

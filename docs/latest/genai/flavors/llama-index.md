@@ -21,9 +21,11 @@ In these introductory tutorials, you will learn the most fundamental components 
 
 [LlamaIndex Workflows with MLflow](/docs/latest/genai/flavors/llama-index/notebooks/llama_index_workflow_tutorial.md)
 
-[Get started with MLflow and LLamaIndex by building a simple agentic Workflow. Learn how to log and load the Workflow for inference, as well as enable tracing for observability.](/docs/latest/genai/flavors/llama-index/notebooks/llama_index_workflow_tutorial.md)
+[Get started with MLflow and LLamaIndex by building a simple agentic Workflow. Learn how to log and load the Workflow for inference, as well as enable tracing for observability.](/docs/latest/genai/flavors/llama-index/notebooks/llama_index_workflow_tutorial.md)[](/docs/latest/genai/flavors/llama-index/notebooks/llama_index_quickstart.md)
 
 [Building Index with MLflow](/docs/latest/genai/flavors/llama-index/notebooks/llama_index_quickstart.md)
+
+[](/docs/latest/genai/flavors/llama-index/notebooks/llama_index_quickstart.md)
 
 [Get started with MLflow and LlamaIndex by exploring the simplest possible index configuration of a VectorStoreIndex.](/docs/latest/genai/flavors/llama-index/notebooks/llama_index_quickstart.md)
 

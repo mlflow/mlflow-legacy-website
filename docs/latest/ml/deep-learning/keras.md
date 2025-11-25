@@ -1,163 +1,192 @@
 # MLflow Keras 3.0 Integration
 
-**Keras 3.0** represents a revolutionary leap in deep learning accessibility and flexibility. As a high-level neural networks API, Keras empowers everyone from machine learning beginners to seasoned researchers to build, train, and deploy sophisticated models with unprecedented ease.
+## Introduction[​](#introduction "Direct link to Introduction")
 
-What makes Keras 3.0 truly special is its **multi-backend architecture**. Unlike previous versions, Keras 3.0 can seamlessly run on top of TensorFlow, JAX, and PyTorch - giving you the freedom to choose the best backend for your specific use case without changing your code.
+**Keras 3.0** is a high-level neural networks API that runs on TensorFlow, JAX, and PyTorch backends. It provides a user-friendly interface for building and training deep learning models with the flexibility to switch backends without changing your code.
 
-Why Keras 3.0 is a Game Changer
+MLflow's Keras integration provides experiment tracking, model versioning, and deployment capabilities for deep learning workflows.
 
-#### Multi-Backend Freedom[​](#multi-backend-freedom "Direct link to Multi-Backend Freedom")
+## Why MLflow + Keras?[​](#why-mlflow--keras "Direct link to Why MLflow + Keras?")
 
-* 🔧 **TensorFlow**: Production-ready ecosystem with robust deployment options
-* ⚡ **JAX**: High-performance computing with automatic differentiation and JIT compilation
-* 🔬 **PyTorch**: Research-friendly interface with dynamic computation graphs
-* 🔄 **Seamless Switching**: Change backends without rewriting your model code
+#### Autologging
 
-#### Universal Design Philosophy[​](#universal-design-philosophy "Direct link to Universal Design Philosophy")
+Enable comprehensive experiment tracking with one line: mlflow\.tensorflow\.autolog() automatically logs metrics, parameters, and models.
 
-* 🎯 **Beginner-Friendly**: Simple, intuitive APIs that make deep learning accessible
-* 🚀 **Research-Ready**: Advanced features for cutting-edge experimentation
-* 🏗️ **Production-Proven**: Battle-tested in enterprise environments worldwide
-* 📚 **Comprehensive**: From basic neural networks to complex architectures
+#### Experiment Tracking
 
-## Why MLflow + Keras 3.0?[​](#why-mlflow--keras-30 "Direct link to Why MLflow + Keras 3.0?")
+Track training metrics, hyperparameters, model architectures, and artifacts across all Keras experiments.
 
-The combination of MLflow's experiment tracking capabilities with Keras 3.0's flexibility creates a powerful synergy for deep learning practitioners:
+#### Model Registry
 
-* 📊 **One-Line Setup**: Enable comprehensive experiment tracking with just `mlflow.tensorflow.autolog()` - no configuration required
-* 🔄 **Multi-Backend Consistency**: Track experiments consistently across TensorFlow, JAX, and PyTorch backends
-* ⚙️ **Zero-Code Integration**: Your existing Keras training code works unchanged - autologging captures everything automatically
-* 🛠️ **Advanced Customization**: When you need more control, use the [`mlflow.keras.callback.MlflowCallback()`](/docs/latest/api_reference/python_api/mlflow.keras.html#mlflow.keras.callback.MlflowCallback) API for specialized logging requirements
-* 🔬 **Complete Reproducibility**: Every parameter, metric, and artifact is captured automatically for perfect experiment reproduction
-* 👥 **Effortless Collaboration**: Share comprehensive experiment results through MLflow's intuitive UI without any manual logging
+Version, stage, and deploy Keras models with MLflow's model registry and serving infrastructure.
 
-## Key Features[​](#key-features "Direct link to Key Features")
+#### Multi-Backend Support
 
-### One-Line Autologging Magic[​](#one-line-autologging-magic "Direct link to One-Line Autologging Magic")
+Track experiments consistently across TensorFlow, JAX, and PyTorch backends.
 
-The easiest way to get started with MLflow and Keras is through **autologging** - just add one line of code and MLflow automatically captures everything you need:
+## Autologging[​](#autologging "Direct link to Autologging")
+
+Enable comprehensive autologging with a single line:
 
 python
 
 ```
 import mlflow
+import numpy as np
+from tensorflow import keras
 
-mlflow.tensorflow.autolog()  # That's it! 🎉
+# Enable autologging
+mlflow.tensorflow.autolog()
 
-# Your existing Keras code works unchanged
-model.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=10)
+# Prepare sample data
+X_train = np.random.rand(1000, 20)
+y_train = np.random.randint(0, 2, 1000)
+
+# Define model
+model = keras.Sequential(
+    [
+        keras.layers.Dense(64, activation="relu", input_shape=(20,)),
+        keras.layers.Dense(32, activation="relu"),
+        keras.layers.Dense(1, activation="sigmoid"),
+    ]
+)
+
+model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
+
+# Training with automatic logging
+with mlflow.start_run():
+    model.fit(X_train, y_train, epochs=10, batch_size=32, validation_split=0.2)
 ```
 
-What Gets Automatically Logged
+Autologging captures training metrics, model parameters, optimizer configuration, and model artifacts automatically.
 
-#### Metrics[​](#metrics "Direct link to Metrics")
-
-* 📊 **Training & Validation Loss**: Automatic tracking of loss functions across epochs
-* 🎯 **Custom Metrics**: Any metrics you specify (accuracy, F1-score, etc.) are logged automatically
-* 🛑 **Early Stopping Metrics**: When using `EarlyStopping`, MLflow logs `stopped_epoch`, `restored_epoch`, and restoration details
-
-#### Parameters[​](#parameters "Direct link to Parameters")
-
-* ⚙️ **Training Configuration**: All `fit()` parameters including batch size, epochs, and validation split
-* 🧠 **Optimizer Details**: Optimizer name, learning rate, epsilon, and other hyperparameters
-* 🛑 **Callback Parameters**: Early stopping settings like `min_delta`, `patience`, and `restore_best_weights`
-
-#### Artifacts[​](#artifacts "Direct link to Artifacts")
-
-* 📋 **Model Summary**: Complete architecture overview logged at training start
-* 🤖 **MLflow Model**: Full Keras model saved for easy deployment and inference
-* 📊 **TensorBoard Logs**: Complete training history for detailed visualization
-
-#### Smart Run Management[​](#smart-run-management "Direct link to Smart Run Management")
-
-* 🚀 **Automatic Run Creation**: If no run exists, MLflow creates one automatically
-* 🔄 **Flexible Run Handling**: Works with existing runs or creates new ones as needed
-* ⏹️ **Intelligent Run Ending**: Automatically closes runs when training completes
-
-### Advanced Logging with MlflowCallback[​](#advanced-logging-with-mlflowcallback "Direct link to Advanced Logging with MlflowCallback")
-
-For users who need more control, MLflow's Keras integration also provides the powerful `MlflowCallback` that offers fine-grained customization:
-
-Advanced Callback Capabilities
-
-* 📋 **Custom Parameter Logging**: Selectively log specific parameters and hyperparameters
-* 📈 **Granular Metrics Tracking**: Log metrics at custom intervals (per batch, per epoch, or custom frequencies)
-* ⏱️ **Flexible Logging Frequency**: Choose between epoch-based or batch-based logging to match your monitoring needs
-* 🎛️ **Custom Callback Extensions**: Subclass the callback to implement specialized logging for your unique requirements
-* 🏷️ **Advanced Artifact Management**: Control exactly which artifacts get saved and when
-* 🔍 **Performance Monitoring**: Add custom tracking for training time, memory usage, and convergence patterns
-
-### Multi-Backend Support[​](#multi-backend-support "Direct link to Multi-Backend Support")
-
-Run the same MLflow tracking code across different Keras backends:
+Configure autologging behavior:
 
 python
 
 ```
-# Switch backends without changing your MLflow code
-os.environ["KERAS_BACKEND"] = "tensorflow"  # or "jax" or "torch"
+mlflow.tensorflow.autolog(
+    log_models=True,
+    log_input_examples=True,
+    log_model_signatures=True,
+    log_every_n_steps=1,
+)
 ```
 
-### Advanced Experiment Management[​](#advanced-experiment-management "Direct link to Advanced Experiment Management")
+## Manual Logging with Keras Callback[​](#manual-logging-with-keras-callback "Direct link to Manual Logging with Keras Callback")
 
-Enterprise-Grade ML Operations
+For more control, use [`mlflow.tensorflow.MlflowCallback()`](/docs/latest/api_reference/python_api/mlflow.tensorflow.html#mlflow.tensorflow.MlflowCallback):
 
-* 📝 **Model Versioning**: Track different model architectures and their performance over time
-* 🎯 **Hyperparameter Optimization**: Log and compare results from hyperparameter sweeps with tools like Optuna
-* 📦 **Artifact Management**: Store model checkpoints, training plots, and custom visualizations
-* 👥 **Collaborative Development**: Share experiment results with team members through MLflow's UI
-* 🔄 **Reproducibility**: Capture exact environments and dependencies for perfect experiment reproduction
-* 📊 **Performance Analytics**: Detailed insights into training dynamics and model behavior
+python
 
-## Real-World Applications[​](#real-world-applications "Direct link to Real-World Applications")
+```
+import mlflow
+import numpy as np
+from tensorflow import keras
 
-The MLflow-Keras 3.0 integration excels in scenarios such as:
+# Prepare sample data
+X_train = np.random.rand(100, 20)
+y_train = np.random.randint(0, 2, 100)
 
-* 🖼️ **Computer Vision Projects**: Track CNN architectures, data augmentation strategies, and training dynamics for image classification, object detection, and segmentation tasks
-* 📝 **Natural Language Processing**: Log transformer models, tokenization strategies, and sequence-to-sequence performance for text generation and understanding
-* 🔬 **Research Experiments**: Maintain detailed records of ablation studies, architecture comparisons, and novel technique validation
-* 🏭 **Production Pipelines**: Version control models from experimentation through deployment with full lineage tracking
-* 🎓 **Educational Projects**: Demonstrate clear progression from simple perceptrons to complex deep architectures
-* 📊 **Time Series Analysis**: Track LSTM, GRU, and transformer models for forecasting and anomaly detection
+# Define and compile model
+model = keras.Sequential(
+    [
+        keras.layers.Dense(64, activation="relu", input_shape=(20,)),
+        keras.layers.Dense(1, activation="sigmoid"),
+    ]
+)
 
-## Get Started in 5 Minutes[​](#get-started-in-5-minutes "Direct link to Get Started in 5 Minutes")
+model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
 
-Ready to supercharge your Keras workflow with MLflow? Our comprehensive quickstart tutorial walks you through everything from basic logging to advanced callback customization using a practical MNIST classification example.
+# Create an MLflow run and add the callback
+with mlflow.start_run() as run:
+    model.fit(
+        X_train,
+        y_train,
+        epochs=10,
+        batch_size=32,
+        validation_split=0.2,
+        callbacks=[mlflow.tensorflow.MlflowCallback(run)],
+    )
+```
 
-[Get Started with Keras 3.0 + MLflow](/docs/latest/ml/deep-learning/keras/quickstart/quickstart-keras.md)
+## Model Logging[​](#model-logging "Direct link to Model Logging")
 
-[Master the fundamentals through a hands-on MNIST tutorial covering automatic logging, custom callbacks, multi-backend experimentation, and advanced tracking techniques.](/docs/latest/ml/deep-learning/keras/quickstart/quickstart-keras.md)
+Save Keras models with [`mlflow.tensorflow.log_model()`](/docs/latest/api_reference/python_api/mlflow.tensorflow.html#mlflow.tensorflow.log_model):
 
-## What You'll Master[​](#what-youll-master "Direct link to What You'll Master")
+python
 
-In our comprehensive tutorial, you'll discover how to:
+```
+import mlflow
+from tensorflow import keras
 
-Complete Learning Path
+# Define model
+model = keras.Sequential(
+    [
+        keras.layers.Dense(64, activation="relu", input_shape=(20,)),
+        keras.layers.Dense(1, activation="sigmoid"),
+    ]
+)
 
-#### Foundation Skills[​](#foundation-skills "Direct link to Foundation Skills")
+# Train model (code omitted for brevity)
 
-* 🚀 Set up MLflow tracking for Keras 3.0 workflows across TensorFlow, JAX, and PyTorch backends
-* ⚡ Enable comprehensive autologging with a single line of code: `mlflow.tensorflow.autolog()`
-* 📊 Use `MlflowCallback` for advanced experiment logging and customization
-* 📈 Implement custom logging strategies for both batch-level and epoch-level tracking
-* 🎛️ Create specialized callback subclasses for advanced logging requirements
+# Log the model to MLflow
+model_info = mlflow.tensorflow.log_model(model, name="model")
 
-#### Advanced Techniques[​](#advanced-techniques "Direct link to Advanced Techniques")
+# Later, load the model for inference
+loaded_model = mlflow.tensorflow.load_model(model_info.model_uri)
+predictions = loaded_model.predict(X_test)
+```
 
-* 📊 Visualize and compare training results in the MLflow UI with custom metrics
-* 🔄 Switch between backends while maintaining consistent experiment tracking
-* 🎯 Optimize hyperparameters while automatically logging all trial results
-* 📦 Package and version your models for seamless deployment
+## Model Registry Integration[​](#model-registry-integration "Direct link to Model Registry Integration")
 
-#### Production Readiness[​](#production-readiness "Direct link to Production Readiness")
+Register Keras models for version control and deployment:
 
-* 🏭 Apply enterprise-grade tracking to your production deep learning projects
-* 👥 Set up collaborative workflows for team-based model development
-* 🔍 Monitor model performance and training dynamics at scale
-* 📋 Implement model governance and approval workflows
+python
 
-To learn more about the nuances of the `keras` flavor in MLflow, delve into the comprehensive guide below.
+```
+import mlflow
+from tensorflow import keras
+from mlflow import MlflowClient
 
-[View the Comprehensive Guide](/docs/latest/ml/deep-learning/keras/guide.md)
+with mlflow.start_run():
+    # Create a simple model for demonstration
+    model = keras.Sequential(
+        [
+            keras.layers.Conv2D(32, 3, activation="relu", input_shape=(28, 28, 1)),
+            keras.layers.MaxPooling2D(2),
+            keras.layers.Flatten(),
+            keras.layers.Dense(10, activation="softmax"),
+        ]
+    )
 
-Whether you're building your first neural network or optimizing complex architectures for production, the MLflow-Keras 3.0 integration provides the foundation for organized, reproducible, and scalable deep learning experimentation that grows with your needs.
+    # Log model to registry
+    model_info = mlflow.tensorflow.log_model(
+        model, name="keras_model", registered_model_name="ImageClassifier"
+    )
+
+    # Tag for tracking
+    mlflow.set_tags({"model_type": "cnn", "dataset": "mnist", "framework": "keras"})
+
+# Set alias for production deployment
+client = MlflowClient()
+client.set_registered_model_alias(
+    name="ImageClassifier",
+    alias="champion",
+    version=model_info.registered_model_version,
+)
+```
+
+## Learn More[​](#learn-more "Direct link to Learn More")
+
+### [Model Registry](/docs/latest/ml/model-registry.md)
+
+[Version and manage Keras models](/docs/latest/ml/model-registry.md)
+
+[Learn more →](/docs/latest/ml/model-registry.md)
+
+### [MLflow Tracking](/docs/latest/ml/tracking.md)
+
+[Track experiments, parameters, and metrics](/docs/latest/ml/tracking.md)
+
+[Learn more →](/docs/latest/ml/tracking.md)

@@ -2,7 +2,7 @@
 
 MLflow Tracing is a fully **OpenTelemetry-compatible** LLM observability solution for your applications. It captures the inputs, outputs, and metadata associated with each intermediate step of a request, enabling you to easily pinpoint the source of bugs and unexpected behaviors.
 
-![Tracing Gateway Video](/docs/latest/images/llms/tracing/tracing-top.gif)
+[](/docs/latest/images/llms/tracing/tracing-top.mp4)
 
 ## Use Cases Throughout the ML Lifecycle[​](#use-cases-throughout-the-ml-lifecycle "Direct link to Use Cases Throughout the ML Lifecycle")
 
