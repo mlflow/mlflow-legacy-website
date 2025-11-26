@@ -14,21 +14,21 @@ This table includes high-level information about the traces, such as the trace I
 
 Using the search bar in the UI, you can easily filter your traces based on name, tags, or other metadata. Check out the [search docs](/docs/latest/genai/tracing/search-traces.md) for details about the query string format.
 
-![Searching traces](/docs/latest/assets/images/trace-session-id-ff53d036ab1d8fdc14b703fc5f0bc107.gif)
+[](/docs/latest/images/llms/tracing/trace-session-id.mp4)
 
 The UI supports bulk deletion of traces. Simply select the traces you want to delete by checking the checkboxes, and then pressing the "Delete" button.
 
-![Deleting traces](/docs/latest/assets/images/trace-delete-07f75d2aa0b7ea03c14d35fe3ec0bad3.gif)
+[](/docs/latest/images/llms/tracing/trace-delete.mp4)
 
 You can also edit key-value tags on your traces via the UI.
 
-![Traces tag update](/docs/latest/assets/images/trace-set-tag-c0cbad6b75c04328db03a8f1eb4c3a09.gif)
+[](/docs/latest/images/llms/tracing/trace-set-tag.mp4)
 
 ## Browsing span data[​](#browsing-span-data "Direct link to Browsing span data")
 
 In order to browse the span data of an individual trace, simply click on the link in the "Trace ID" or "Trace name" columns to open the trace viewer:
 
-![Trace Browser](/docs/latest/assets/images/tracing-top-dcca046565ab33be6afe0447dd328c22.gif)
+[](/docs/latest/images/llms/tracing/tracing-top.mp4)
 
 ## Jupyter Notebook integration[​](#jupyter-notebook-integration "Direct link to Jupyter Notebook integration")
 

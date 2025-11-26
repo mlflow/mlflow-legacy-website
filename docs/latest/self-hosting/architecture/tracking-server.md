@@ -13,7 +13,7 @@ Starting the tracking server is as simple as running the following command:
 bash
 
 ```
-mlflow server --host 127.0.0.1 --port 8080 --backend-store-uri sqlite:///mlflow.db
+mlflow server --host 127.0.0.1 --port 8080
 ```
 
 Once the server starts running, you should see the following output:
@@ -28,10 +28,6 @@ INFO:     Uvicorn running on http://127.0.0.1:8080 (Press CTRL+C to quit)
 ```
 
 There are many options to configure the server, refer to [Configure Server](#configure-server) for more details.
-
-info
-
-The `--backend-store-uri` option is not mandatory, but highly recommended. MLflow uses a local filesystem for storing the metadata by default. The above option overrides this to uses a database backend, which provides much better performance and reliability in general. The file backend is in Keep-the-Light-On (KTLO) mode and will not receive most of the new features in MLflow. For different database type such as PostgreSQL, check out [Backend Store](/docs/latest/self-hosting/architecture/backend-store.md).
 
 important
 
@@ -121,22 +117,24 @@ This section describes how to configure the tracking server for some common use 
 
 ### Backend Store[​](#backend-store "Direct link to Backend Store")
 
-By default, the tracking server logs runs metadata to the local filesystem under `./mlruns` directory. You can configure the different backend store by adding `--backend-store-uri` option:
+By default, the tracking server uses SQLite database (`sqlite:///mlflow.db`) to store runs metadata. You can configure a different backend store by adding the `--backend-store-uri` option:
 
 Example
 
 bash
 
 ```
-# Default: local file system
+# Default: SQLite database (mlflow.db in current directory)
 mlflow server
-# SQLite: create a SQLite database `my.db` in the current directory
-mlflow server --backend-store-uri sqlite:///my.db
+
 # PostgreSQL: connect to an existing PostgreSQL database
 mlflow server --backend-store-uri postgresql://username:password@host:port/database
+
+# File-based (legacy): use local filesystem under ./mlruns directory
+mlflow server --backend-store-uri ./mlruns
 ```
 
-We **recommend using a database backend** in general, because it provides better performance and reliability than the default file backend.
+SQLite is the default backend and provides good performance and reliability for most use cases. For production deployments with high concurrency, consider using PostgreSQL or MySQL.
 
 ### Remote artifacts store[​](#tracking-server-artifact-store "Direct link to Remote artifacts store")
 
@@ -181,7 +179,7 @@ bash
 mlflow server --no-serve-artifacts --default-artifact-root s3://my-bucket
 ```
 
-With this setting, the MLflow client still makes minimum HTTP requests to the tracking server for fetching proper remote storage URI, but can directly upload artifacts to / download artifacts from the remote storage. While this might not be a good practice for access and secury governance, it could be useful when you want to avoid the overhead of proxying artifacts through the tracking server.
+With this setting, the MLflow client still makes minimum HTTP requests to the tracking server for fetching proper remote storage URI, but can directly upload artifacts to / download artifacts from the remote storage. While this might not be a good practice for access and security governance, it could be useful when you want to avoid the overhead of proxying artifacts through the tracking server.
 
 note
 
