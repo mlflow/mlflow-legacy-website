@@ -2,7 +2,7 @@
 
 MLflow Tracing is integrated with various GenAI libraries and provides **one-line automatic tracing** experience for each library (and the combination of them!). This page shows detailed examples to integrate MLflow with popular GenAI libraries.
 
-![Tracing Gateway Video](/docs/latest/images/llms/tracing/tracing-top.gif)
+[](/docs/latest/images/llms/tracing/tracing-top.mp4)
 
 ## Supported Integrations[​](#supported-integrations "Direct link to Supported Integrations")
 

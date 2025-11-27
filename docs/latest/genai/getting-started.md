@@ -4,7 +4,7 @@
 
 MLflow transforms how software engineers build, evaluate, and deploy GenAI applications. Get complete observability, systematic evaluation, and deployment confidence—all while maintaining the flexibility to use any framework or model provider.
 
-![MLflow Tracing UI showing detailed GenAI observability](/docs/latest/images/llms/tracing/tracing-top.gif)
+[](/docs/latest/images/llms/tracing/tracing-top.mp4)
 
 ## The GenAI Development Lifecycle[​](#the-genai-development-lifecycle "Direct link to The GenAI Development Lifecycle")
 
@@ -158,11 +158,11 @@ Master these core capabilities to build robust GenAI applications with MLflow. S
 
 [Start setup →](/docs/latest/genai/getting-started/connect-environment.md)
 
-### [Observability with Tracing](/docs/latest/genai/tracing/quickstart.md)
+### [Observability with Tracing](/docs/latest/genai/tracing/quickstart/python-openai.md)
 
-[Auto-instrument your GenAI application to capture every LLM call, prompt, and tool interaction for complete visibility](/docs/latest/genai/tracing/quickstart.md)
+[Auto-instrument your GenAI application to capture every LLM call, prompt, and tool interaction for complete visibility](/docs/latest/genai/tracing/quickstart/python-openai.md)
 
-[Learn tracing →](/docs/latest/genai/tracing/quickstart.md)
+[Learn tracing →](/docs/latest/genai/tracing/quickstart/python-openai.md)
 
 ### [Systematic Evaluation](/docs/latest/genai/eval-monitor.md)
 

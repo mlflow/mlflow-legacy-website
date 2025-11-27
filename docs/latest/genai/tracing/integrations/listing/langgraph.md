@@ -1,6 +1,6 @@
 # Tracing LangGraph🦜🕸️
 
-![LangChain Tracing via autolog](/docs/latest/assets/images/langgraph-tracing-de19faf75490081f4df76705b9a508ff.gif)
+[](/docs/latest/images/llms/tracing/langgraph-tracing.mp4)
 
 [LangGraph](https://www.langchain.com/langgraph) is an open-source library for building stateful, multi-actor applications with LLMs, used to create agent and multi-agent workflows.
 

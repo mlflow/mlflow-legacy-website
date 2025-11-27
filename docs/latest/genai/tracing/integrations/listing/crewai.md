@@ -1,6 +1,6 @@
 # Tracing CrewAI
 
-![CrewAI Tracing via autolog](/docs/latest/assets/images/crewai-tracing-91ffc6888df3527199ebf2e25cf697d8.gif)
+[](/docs/latest/images/llms/crewai/crewai-tracing.mp4)
 
 [CrewAI](https://www.crewai.com/) is an open-source framework for orchestrating role-playing, autonomous AI agent.
 

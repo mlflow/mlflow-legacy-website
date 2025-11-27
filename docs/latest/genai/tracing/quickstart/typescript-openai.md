@@ -63,8 +63,6 @@ MLflow logs Traces in a tracking server. Connect your application to the trackin
 
 * Local (pip)
 * Local (docker)
-* Remote MLflow Server
-* Databricks
 
 For the fastest setup, you can install the [mlflow](https://pypi.org/project/mlflow/) Python package and run MLflow locally:
 
@@ -109,36 +107,6 @@ mlflow.set_tracking_uri("http://localhost:5000")
 
 Refer to the [instruction](https://github.com/mlflow/mlflow/tree/master/docker-compose/README.md) for more details, e.g., overriding the default environment variables.
 
-If you have a remote MLflow tracking server, configure the connection:
-
-python
-
-```
-import os
-import mlflow
-
-# Set your MLflow tracking URI
-os.environ["MLFLOW_TRACKING_URI"] = "http://your-mlflow-server:5000"
-# Or directly in code
-mlflow.set_tracking_uri("http://your-mlflow-server:5000")
-```
-
-If you have a Databricks account, configure the connection:
-
-python
-
-```
-import mlflow
-
-mlflow.login()
-```
-
-This will prompt you for your configuration details (Databricks Host url and a PAT).
-
-tip
-
-If you are unsure about how to set up an MLflow tracking server, you can start with the cloud-based MLflow powered by Databricks: [Sign up for free →](https://login.databricks.com/?destination_url=%2Fml%2Fexperiments-signup%3Fsource%3DTRY_MLFLOW\&dbx_source=TRY_MLFLOW\&signup_experience_step=EXPRESS\&provider=MLFLOW\&utm_source=mlflow_org\&tuuid=a9534f33-78bf-4b81-becc-4334e993251d\&rl_aid=e6685d78-9f85-4fed-b64f-08e247f53547\&intent=SIGN_UP)
-
 ### Create a new MLflow Experiment[​](#create-a-new-mlflow-experiment "Direct link to Create a new MLflow Experiment")
 
 Create a new MLflow experiment in the MLflow UI, or choose an existing experiment.
@@ -159,7 +127,6 @@ Create a new MLflow experiment in the MLflow UI, or choose an existing experimen
 
 * Self Host
 * Remote MLflow Server
-* Databricks
 
 Call the `init` function with the tracking URI (e.g., `http://127.0.0.1:5000`) and the experiment ID. You can find the experiment ID by hovering over the
 
@@ -222,65 +189,6 @@ init({
     experimentId: "<your-experiment-id>",
     trackingServerUsername: "<remote-tracking-server-username>",
     trackingServerPassword: "<remote-tracking-server-password>",
-});
-```
-
-Call the `init` function with the URI of your remote MLflow server and the experiment ID. You can find the experiment ID by hovering over the
-
-!
-
-icon next to the experiment name within the MLflow UI.
-
-**Method 1: Use Databricks config file for authentication.**
-
-typescript
-
-```
-import { init } from "mlflow-tracing";
-
-init({
-    trackingUri: "databricks",
-    experimentId: "<your-experiment-id>",
-    // Optional: Set the Databricks config file path if it is not in the default location
-    configPath: "<your-databricks-config-file-path>",
-});
-```
-
-**Method 2: Use environment variables**
-
-bash
-
-```
-export DATABRICKS_HOST=<your-databricks-host>
-export DATABRICKS_TOKEN=<your-databricks-personal-access-token>
-```
-
-or create a `.env` file in the root directory of your project and add the following:
-
-bash
-
-```
-DATABRICKS_HOST=<your-databricks-host>
-DATABRICKS_TOKEN=<your-databricks-personal-access-token>
-```
-
-typescript
-
-```
-// Load environment variables from .env file
-import 'dotenv/config';
-```
-
-The `init` function will automatically load the above environment variables when tracking URI is set to `databricks`.
-
-typescript
-
-```
-import { init } from "mlflow-tracing";
-
-init({
-    trackingUri: "databricks",
-    experimentId: "<your-experiment-id>",
 });
 ```
 

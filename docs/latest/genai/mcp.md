@@ -49,7 +49,7 @@ json
   "servers": {
     "mlflow-mcp": {
       "command": "uv",
-      "args": ["run", "--with", "mlflow>=3.5.1", "--extra", "mcp", "mlflow", "mcp", "run"],
+      "args": ["run", "--with", "mlflow[mcp]>=3.5.1", "mlflow", "mcp", "run"],
       "env": {
         "MLFLOW_TRACKING_URI": "<MLFLOW_TRACKING_URI>"
       }
@@ -67,7 +67,7 @@ json
   "mcpServers": {
     "mlflow-mcp": {
       "command": "uv",
-      "args": ["run", "--with", "mlflow>=3.5.1", "--extra", "mcp", "mlflow", "mcp", "run"],
+      "args": ["run", "--with", "mlflow[mcp]>=3.5.1", "mlflow", "mcp", "run"],
       "env": {
         "MLFLOW_TRACKING_URI": "<MLFLOW_TRACKING_URI>"
       }
@@ -85,7 +85,7 @@ json
   "mcpServers": {
     "mlflow-mcp": {
       "command": "uv",
-      "args": ["run", "--with", "mlflow>=3.5.1", "--extra", "mcp", "mlflow", "mcp", "run"],
+      "args": ["run", "--with", "mlflow[mcp]>=3.5.1", "mlflow", "mcp", "run"],
       "env": {
         "MLFLOW_TRACKING_URI": "<MLFLOW_TRACKING_URI>"
       }
@@ -251,6 +251,6 @@ For Databricks environments, ensure you have appropriate authentication configur
 
 ## Related Documentation[​](#related-documentation "Direct link to Related Documentation")
 
-* [MLflow Tracing Overview](/docs/latest/genai/tracing/quickstart.md)
+* [MLflow Tracing Overview](/docs/latest/genai/tracing/quickstart/python-openai.md)
 * [Collecting User Feedback](/docs/latest/genai/tracing/collect-user-feedback.md)
 * [Model Context Protocol Specification](https://modelcontextprotocol.io/)

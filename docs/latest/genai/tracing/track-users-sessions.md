@@ -1,6 +1,6 @@
 # Track Users & Sessions
 
-![Traces with session IDs](/docs/latest/assets/images/chat-sessions-demo-6851f283db36f411076192cf6050cc47.gif)
+[](/docs/latest/images/llms/tracing/chat-sessions-demo.mp4)
 
 Many real-world AI applications use session to maintain multi-turn user interactions. MLflow Tracing provides built-in support for associating traces with users and grouping them into sessions. Tracking users and sessions in your GenAI application provides essential context for understanding user behavior, analyzing conversation flows, and improving personalization.
 
@@ -73,7 +73,7 @@ const chatCompletion = mlflow.trace(
 ## Web Application Example[​](#web-application-example "Direct link to Web Application Example")
 
 * Python (FastAPI)
-* Typescript (Node.js)
+* Typescript (express)
 
 python
 
@@ -87,8 +87,8 @@ from openai import OpenAI
 app = FastAPI()
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-mlflow.set_tracking_uri("databricks")
-mlflow.set_experiment(experiment_id="3044868363145534")
+mlflow.set_tracking_uri("http://localhost:5000")
+mlflow.set_experiment(experiment_id="<your-experiment-id>")
 mlflow.openai.autolog()
 
 
@@ -136,33 +136,81 @@ if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
 ```
 
+typescript
+
+```
+import express, { Request, Response } from 'express';
+import bodyParser from 'body-parser';
+import * as mlflow from 'mlflow-tracing';
+import { tracedOpenAI } from "mlflow-openai";
+import OpenAI from 'openai';
+
+const app = express();
+app.use(bodyParser.json());
+
+const openai = tracedOpenAI(new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+}));
+
+mlflow.init({
+  trackingUri: "http://localhost:5000",
+  experimentId: "<your-experiment-id>",
+});
+
+class Chat {
+  @mlflow.trace({ spanType: mlflow.SpanType.LLM })
+  static async process(message: string, userId: string, sessionId: string) {
+    // Update MLflow trace metadata for this user and session
+    await mlflow.updateCurrentTrace({
+      metadata: {
+        'mlflow.trace.session': sessionId,
+        'mlflow.trace.user': userId,
+      },
+    });
+
+    const response = await openai.responses.create({
+      model: 'gpt-4.1-mini',
+      instructions: 'You are a helpful assistant.',
+      input: message,
+    });
+    return response.output_text;
+  }
+}
+
+app.post('/chat', async (req: Request, res: Response) => {
+  const sessionId = req.header('X-Session-ID') || 'default-session';
+  const userId = req.header('X-User-ID') || 'default-user';
+  const message = req.body.message;
+
+  try {
+    const response = await Chat.process(message, userId, sessionId);
+    res.json({ response: response });
+  } catch (err) {
+    res.status(500).json({ error: 'OpenAI request failed.' });
+  }
+});
+
+app.get('/', (req: Request, res: Response) => {
+  res.json({ message: 'Express MLflow Tracing Example' });
+});
+
+if (require.main === module) {
+  app.listen(8000, () => {
+    console.log('Server listening on http://localhost:8000');
+  });
+}
+```
+
 **Example request:**
 
 bash
 
 ```
-python app.py
-
 curl -X POST http://localhost:8000/chat \
     -H "Content-Type: application/json" \
     -H "X-Session-ID: session-123" \
     -H "X-User-ID: user-456" \
     -d '{"message": "Hello, how are you?"}'
-```
-
-```
-```
-
-**Example request:**
-
-bash
-
-```
-curl -X POST "http://127.0.0.1:8000/chat" \
-     -H "Content-Type: application/json" \
-     -H "X-Session-ID: session-def-456" \
-     -H "X-User-ID: user-jane-doe-12345" \
-     -d '{"message": "What is my account balance?"}'
 ```
 
 ## Querying[​](#querying "Direct link to Querying")
