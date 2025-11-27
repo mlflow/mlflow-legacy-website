@@ -1,6 +1,6 @@
 # Tracing OpenAI
 
-![OpenAI Tracing via autolog](/docs/latest/images/llms/tracing/openai-tracing.gif)
+[](/docs/latest/images/llms/tracing/openai-tracing.mp4)
 
 [MLflow Tracing](/docs/latest/genai/tracing.md) provides automatic tracing capability for OpenAI. By enabling auto tracing for OpenAI by calling the [`mlflow.openai.autolog()`](/docs/latest/api_reference/python_api/mlflow.openai.html#mlflow.openai.autolog) function, MLflow will capture traces for LLM invocation and log them to the active MLflow Experiment. In Typescript, you can instead use the `tracedOpenAI` function to wrap the OpenAI client.
 

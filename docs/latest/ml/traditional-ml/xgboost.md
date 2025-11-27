@@ -2,54 +2,171 @@
 
 ## Introduction[​](#introduction "Direct link to Introduction")
 
-**XGBoost** (eXtreme Gradient Boosting) is the world's most successful machine learning algorithm for structured data, powering more Kaggle competition wins than any other technique. This optimized distributed gradient boosting library is designed to be highly efficient, flexible, and portable, making it the go-to choice for data scientists and ML engineers worldwide.
+**XGBoost** (eXtreme Gradient Boosting) is a popular gradient boosting library for structured data. MLflow provides native integration with XGBoost for experiment tracking, model management, and deployment.
 
-XGBoost's revolutionary approach to gradient boosting has redefined what's possible in machine learning competitions and production systems. With its state-of-the-art performance on tabular data, built-in regularization, and exceptional scalability, XGBoost consistently delivers winning results across industries and use cases.
-
-Why XGBoost Dominates Machine Learning
-
-#### Performance Excellence[​](#performance-excellence "Direct link to Performance Excellence")
-
-* 🏆 **Competition Proven**: Most Kaggle competition wins of any ML algorithm
-* ⚡ **Blazing Fast**: Optimized C++ implementation with parallel processing
-* 🎯 **Superior Accuracy**: Advanced regularization and tree pruning techniques
-* 📊 **Handles Everything**: Missing values, categorical features, and imbalanced datasets natively
-
-#### Production-Ready Architecture[​](#production-ready-architecture "Direct link to Production-Ready Architecture")
-
-* 🚀 **Scalable by Design**: Built-in distributed training across multiple machines
-* 💾 **Memory Efficient**: Advanced memory management and sparse data optimization
-* 🔧 **Flexible Deployment**: Support for multiple platforms and programming languages
-* 📈 **Incremental Learning**: Continue training with new data without starting over
+This integration supports both the native XGBoost API and scikit-learn compatible interface, making it easy to track experiments and deploy models regardless of which API you prefer.
 
 ## Why MLflow + XGBoost?[​](#why-mlflow--xgboost "Direct link to Why MLflow + XGBoost?")
 
-The integration of MLflow with XGBoost creates a powerful combination for gradient boosting excellence:
+#### Automatic Logging
 
-* ⚡ **One-Line Autologging**: Enable comprehensive experiment tracking with just `mlflow.xgboost.autolog()` - zero configuration required
-* 📊 **Complete Training Insights**: Automatically log boosting parameters, training metrics, feature importance, and model artifacts
-* 🎛️ **Dual API Support**: Seamless integration with both native XGBoost API and scikit-learn compatible interface
-* 🔄 **Advanced Callback System**: Deep integration with XGBoost's callback infrastructure for real-time monitoring
-* 📈 **Feature Importance Visualization**: Automatic generation and logging of feature importance plots and JSON artifacts
-* 🚀 **Production-Ready Deployment**: Convert experiments to deployable models with MLflow's serving capabilities
-* 👥 **Competition-Grade Tracking**: Share winning models and reproduce championship results with comprehensive metadata
+Single line of code (mlflow\.xgboost.autolog()) captures all parameters, metrics per boosting round, and feature importance without manual instrumentation.
 
-## Key Features[​](#key-features "Direct link to Key Features")
+#### Complete Model Recording
 
-### Effortless Autologging[​](#effortless-autologging "Direct link to Effortless Autologging")
+Logs trained models with serialization format, input/output signatures, model dependencies, and Python environment for reproducible deployments.
 
-MLflow's XGBoost integration offers the most comprehensive autologging experience for gradient boosting:
+#### Hyperparameter Tuning
+
+Automatically creates child runs for GridSearchCV and RandomizedSearchCV, tracking all parameter combinations and their performance metrics.
+
+#### Dual API Support
+
+Works with both native XGBoost API (xgb.train) and scikit-learn compatible estimators (XGBClassifier, XGBRegressor) with the same autologging functionality.
+
+## Getting Started[​](#getting-started "Direct link to Getting Started")
+
+Get started with XGBoost and MLflow in just a few lines of code:
 
 python
 
 ```
 import mlflow
 import xgboost as xgb
-from sklearn.datasets import load_breast_cancer
+from sklearn.datasets import load_diabetes
 from sklearn.model_selection import train_test_split
 
-# Enable complete experiment tracking with one line
+# Enable autologging - captures everything automatically
 mlflow.xgboost.autolog()
+
+# Load and prepare data
+data = load_diabetes()
+X_train, X_test, y_train, y_test = train_test_split(
+    data.data, data.target, test_size=0.2, random_state=42
+)
+
+# Prepare data in XGBoost format
+dtrain = xgb.DMatrix(X_train, label=y_train)
+dtest = xgb.DMatrix(X_test, label=y_test)
+
+# Train model - MLflow automatically logs everything!
+with mlflow.start_run():
+    model = xgb.train(
+        params={
+            "objective": "reg:squarederror",
+            "max_depth": 6,
+            "learning_rate": 0.1,
+        },
+        dtrain=dtrain,
+        num_boost_round=100,
+        evals=[(dtrain, "train"), (dtest, "test")],
+    )
+```
+
+Autologging captures parameters, metrics per iteration, feature importance with visualizations, and the trained model.
+
+Tracking Server Setup
+
+Running locally? MLflow stores experiments in the current directory by default. For team collaboration or remote tracking, **[set up a tracking server](/docs/latest/ml/tracking/tutorials/remote-server.md)**.
+
+## Autologging[​](#autologging "Direct link to Autologging")
+
+Enable autologging to automatically track XGBoost experiments with a single line of code:
+
+* Native XGBoost API
+* Scikit-learn API
+
+python
+
+```
+import mlflow
+import xgboost as xgb
+from sklearn.datasets import load_diabetes
+from sklearn.model_selection import train_test_split
+
+# Load data
+data = load_diabetes()
+X_train, X_test, y_train, y_test = train_test_split(
+    data.data, data.target, test_size=0.2, random_state=42
+)
+
+# Enable autologging
+mlflow.xgboost.autolog()
+
+# Train with native API
+with mlflow.start_run():
+    dtrain = xgb.DMatrix(X_train, label=y_train)
+    model = xgb.train(
+        params={"objective": "reg:squarederror", "max_depth": 6},
+        dtrain=dtrain,
+        num_boost_round=100,
+    )
+```
+
+python
+
+```
+import mlflow
+from sklearn.datasets import load_diabetes
+from sklearn.model_selection import train_test_split
+from xgboost import XGBRegressor
+
+# Load data
+data = load_diabetes()
+X_train, X_test, y_train, y_test = train_test_split(
+    data.data, data.target, test_size=0.2, random_state=42
+)
+
+# Enable sklearn autologging (works with XGBoost estimators)
+mlflow.sklearn.autolog()
+
+# Train with sklearn-compatible API
+with mlflow.start_run():
+    model = XGBRegressor(n_estimators=100, max_depth=6)
+    model.fit(X_train, y_train)
+```
+
+### What Gets Logged[​](#what-gets-logged "Direct link to What Gets Logged")
+
+When autologging is enabled, MLflow automatically captures:
+
+* **Parameters**: All booster parameters and training configuration
+* **Metrics**: Training and validation metrics for each boosting round
+* **Feature Importance**: Multiple importance types (weight, gain, cover) with visualizations
+* **Model**: The trained model with proper serialization format
+* **Artifacts**: Feature importance plots and JSON data
+
+### Autolog Configuration[​](#autolog-configuration "Direct link to Autolog Configuration")
+
+Customize autologging behavior:
+
+python
+
+```
+mlflow.xgboost.autolog(
+    log_input_examples=True,
+    log_model_signatures=True,
+    log_models=True,
+    log_datasets=True,
+    model_format="json",  # Recommended for portability
+    registered_model_name="XGBoostModel",
+    extra_tags={"team": "data-science"},
+)
+```
+
+## Hyperparameter Tuning[​](#hyperparameter-tuning "Direct link to Hyperparameter Tuning")
+
+### Grid Search[​](#grid-search "Direct link to Grid Search")
+
+MLflow automatically creates child runs for hyperparameter tuning:
+
+python
+
+```
+import mlflow
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import GridSearchCV, train_test_split
+from xgboost import XGBClassifier
 
 # Load data
 data = load_breast_cancer()
@@ -57,137 +174,234 @@ X_train, X_test, y_train, y_test = train_test_split(
     data.data, data.target, test_size=0.2, random_state=42
 )
 
-# Your existing XGBoost code works unchanged
-dtrain = xgb.DMatrix(X_train, label=y_train)
-dtest = xgb.DMatrix(X_test, label=y_test)
+# Enable autologging
+mlflow.sklearn.autolog()
 
-params = {
-    "objective": "binary:logistic",
-    "max_depth": 6,
-    "learning_rate": 0.1,
-    "subsample": 0.8,
-    "colsample_bytree": 0.8,
+# Define parameter grid
+param_grid = {
+    "n_estimators": [50, 100, 200],
+    "max_depth": [3, 6, 9],
+    "learning_rate": [0.01, 0.1, 0.3],
 }
 
-# Train model - everything is automatically logged
-model = xgb.train(
-    params=params,
-    dtrain=dtrain,
-    num_boost_round=100,
-    evals=[(dtrain, "train"), (dtest, "eval")],
-    early_stopping_rounds=10,
-    verbose_eval=False,
-)
+# Run grid search - MLflow logs each combination as a child run
+with mlflow.start_run():
+    model = XGBClassifier(random_state=42)
+    grid_search = GridSearchCV(model, param_grid, cv=5, scoring="roc_auc", n_jobs=-1)
+    grid_search.fit(X_train, y_train)
+
+    print(f"Best score: {grid_search.best_score_}")
 ```
 
-What Gets Automatically Captured
+### Optuna Integration[​](#optuna-integration "Direct link to Optuna Integration")
 
-#### Comprehensive Parameter Tracking[​](#comprehensive-parameter-tracking "Direct link to Comprehensive Parameter Tracking")
+For more advanced hyperparameter optimization:
 
-* ⚙️ **Boosting Parameters**: Learning rate, max depth, regularization parameters, objective function
-* 🎯 **Training Configuration**: Number of boosting rounds, early stopping settings, evaluation metrics
-* 🔧 **Advanced Settings**: Subsample ratios, column sampling, tree construction parameters
+python
 
-#### Real-Time Training Metrics[​](#real-time-training-metrics "Direct link to Real-Time Training Metrics")
+```
+import mlflow
+import optuna
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from xgboost import XGBClassifier
 
-* 📈 **Training Progress**: Loss and custom metrics tracked across all boosting iterations
-* 📊 **Validation Metrics**: Complete evaluation dataset performance throughout training
-* 🛑 **Early Stopping Integration**: Best iteration tracking and stopping criteria logging
-* 🎯 **Custom Metrics**: Any user-defined evaluation functions automatically captured
+# Load data
+data = load_breast_cancer()
+X_train, X_test, y_train, y_test = train_test_split(
+    data.data, data.target, test_size=0.2, random_state=42
+)
 
-### Advanced Scikit-learn API Support[​](#advanced-scikit-learn-api-support "Direct link to Advanced Scikit-learn API Support")
+mlflow.xgboost.autolog()
 
-MLflow seamlessly integrates with XGBoost's scikit-learn compatible estimators:
 
-Sklearn-Style XGBoost Integration
+def objective(trial):
+    params = {
+        "n_estimators": trial.suggest_int("n_estimators", 50, 300),
+        "max_depth": trial.suggest_int("max_depth", 3, 10),
+        "learning_rate": trial.suggest_float("learning_rate", 0.01, 0.3, log=True),
+        "subsample": trial.suggest_float("subsample", 0.6, 1.0),
+        "colsample_bytree": trial.suggest_float("colsample_bytree", 0.6, 1.0),
+    }
 
-* 🔧 **XGBClassifier & XGBRegressor**: Full support for scikit-learn style estimators
-* 🔄 **Pipeline Integration**: Works seamlessly with scikit-learn pipelines and preprocessing
-* 🎯 **Hyperparameter Tuning**: GridSearchCV and RandomizedSearchCV with child run creation
-* 📊 **Cross-Validation**: Built-in support for sklearn's cross-validation framework
-* 🏷️ **Model Registry**: Automatic model registration with staging and approval workflows
+    with mlflow.start_run(nested=True):
+        model = XGBClassifier(**params, random_state=42)
+        model.fit(X_train, y_train)
+        score = model.score(X_test, y_test)
+        return score
 
-### Production-Grade Feature Importance[​](#production-grade-feature-importance "Direct link to Production-Grade Feature Importance")
 
-XGBoost's multiple feature importance measures are automatically captured and visualized:
+with mlflow.start_run():
+    study = optuna.create_study(direction="maximize")
+    study.optimize(objective, n_trials=50)
 
-Comprehensive Importance Analysis
+    mlflow.log_params({f"best_{k}": v for k, v in study.best_params.items()})
+    mlflow.log_metric("best_score", study.best_value)
+```
 
-#### Multiple Importance Metrics[​](#multiple-importance-metrics "Direct link to Multiple Importance Metrics")
+## Model Management[​](#model-management "Direct link to Model Management")
 
-* **Weight**: Number of times a feature is used to split data across all trees
-* **Gain**: Average gain when splitting on a feature (most commonly used)
-* **Cover**: Average coverage of a feature when splitting (relative sample count)
-* **Total Gain**: Total gain when splitting on a feature across all splits
+Log models with specific configurations:
 
-#### Automatic Visualization[​](#automatic-visualization "Direct link to Automatic Visualization")
+python
 
-* 📊 **Publication-Ready Plots**: Professional feature importance charts with customizable styling
-* 🎨 **Multi-Class Support**: Proper handling of importance across multiple output classes
-* 📱 **Responsive Design**: Charts optimized for different display sizes and formats
-* 💾 **Artifact Storage**: Both plots and raw data automatically saved to MLflow
+```
+import mlflow.xgboost
+import xgboost as xgb
+from sklearn.datasets import load_diabetes
+from sklearn.model_selection import train_test_split
 
-## Real-World Applications[​](#real-world-applications "Direct link to Real-World Applications")
+# Load data
+data = load_diabetes()
+X_train, X_test, y_train, y_test = train_test_split(
+    data.data, data.target, test_size=0.2, random_state=42
+)
 
-The MLflow-XGBoost integration excels across the most demanding ML applications:
+dtrain = xgb.DMatrix(X_train, label=y_train)
 
-* 📊 **Financial Modeling**: Credit scoring, fraud detection, and algorithmic trading with comprehensive model governance and regulatory compliance tracking
-* 🛒 **E-commerce Optimization**: Recommendation systems, price optimization, and demand forecasting with real-time performance monitoring
-* 🏥 **Healthcare Analytics**: Clinical decision support, drug discovery, and patient outcome prediction with detailed feature importance analysis
-* 🏭 **Manufacturing Intelligence**: Predictive maintenance, quality control, and supply chain optimization with production-ready model deployment
-* 🎯 **Digital Marketing**: Customer lifetime value prediction, ad targeting, and conversion optimization with A/B testing integration
-* 🏆 **Competition Machine Learning**: Kaggle competitions and data science challenges with reproducible winning solutions
-* 🌐 **Large-Scale Analytics**: Big data processing, real-time scoring, and distributed training with enterprise-grade MLOps integration
+with mlflow.start_run():
+    params = {"objective": "reg:squarederror", "max_depth": 6}
+    model = xgb.train(params, dtrain, num_boost_round=100)
 
-## Advanced Integration Features[​](#advanced-integration-features "Direct link to Advanced Integration Features")
+    mlflow.xgboost.log_model(
+        xgb_model=model,
+        name="model",
+        model_format="json",  # Recommended for portability
+        registered_model_name="production_model",
+    )
+```
 
-### Early Stopping and Model Selection[​](#early-stopping-and-model-selection "Direct link to Early Stopping and Model Selection")
+Model Format
 
-Intelligent Training Control
+Use `model_format="json"` for the best portability across XGBoost versions. The `json` format is human-readable and cross-platform compatible.
 
-* 🛑 **Smart Early Stopping**: Automatic logging of stopped iteration and best iteration metrics
-* 📈 **Validation Curves**: Complete training and validation metric progression tracking
-* 🎯 **Best Model Extraction**: Automatic identification and logging of optimal model state
-* 📊 **Training Diagnostics**: Overfitting detection and training stability analysis
+Load models for inference:
 
-### Multi-Format Model Support[​](#multi-format-model-support "Direct link to Multi-Format Model Support")
+python
 
-Flexible Model Serialization
+```
+# Load as native XGBoost model
+model = mlflow.xgboost.load_model("runs:/<run_id>/model")
 
-* 📦 **Native XGBoost Format**: Optimal performance with `.json`, `.ubj`, and legacy formats
-* 🔄 **Cross-Platform Compatibility**: Models that work across different XGBoost versions
-* 🚀 **PyFunc Integration**: Generic Python function interface for deployment flexibility
-* 📋 **Model Signatures**: Automatic input/output schema inference for production safety
+# Load as PyFunc for generic interface
+pyfunc_model = mlflow.pyfunc.load_model("runs:/<run_id>/model")
 
-## Detailed Documentation[​](#detailed-documentation "Direct link to Detailed Documentation")
+# Load from model registry using alias
+model = mlflow.pyfunc.load_model("models:/XGBoostModel@champion")
+```
 
-Our comprehensive developer guide covers the complete spectrum of XGBoost-MLflow integration:
+## Model Registry Integration[​](#model-registry-integration "Direct link to Model Registry Integration")
 
-Complete Learning Journey
+Register and manage model versions:
 
-#### Foundation Skills[​](#foundation-skills "Direct link to Foundation Skills")
+python
 
-* ⚡ Set up one-line autologging for immediate experiment tracking across native and sklearn APIs
-* 🎛️ Master both XGBoost native API and scikit-learn compatible estimators
-* 📊 Understand parameter logging for simple models and complex ensemble configurations
-* 🔧 Configure advanced logging parameters for custom training scenarios and callbacks
+```
+import mlflow.xgboost
+import xgboost as xgb
+from mlflow import MlflowClient
+from sklearn.datasets import load_diabetes
+from sklearn.model_selection import train_test_split
 
-#### Advanced Techniques[​](#advanced-techniques "Direct link to Advanced Techniques")
+# Load and prepare data
+data = load_diabetes()
+X_train, X_test, y_train, y_test = train_test_split(
+    data.data, data.target, test_size=0.2, random_state=42
+)
+dtrain = xgb.DMatrix(X_train, label=y_train)
 
-* 🔍 Implement comprehensive hyperparameter tuning with Optuna, GridSearchCV, and custom optimization
-* 📈 Leverage feature importance visualization for model interpretation and feature selection
-* 🚀 Deploy XGBoost models with MLflow's serving infrastructure for production use
-* 📦 Work with different model formats and understand their performance trade-offs
+# Register model during training
+with mlflow.start_run():
+    params = {"objective": "reg:squarederror", "max_depth": 6}
+    model = xgb.train(params, dtrain, num_boost_round=100)
 
-#### Production Excellence[​](#production-excellence "Direct link to Production Excellence")
+    mlflow.xgboost.log_model(
+        xgb_model=model,
+        name="model",
+        registered_model_name="XGBoostModel",
+    )
 
-* 🏭 Build production-ready ML pipelines with proper experiment tracking and model governance
-* 👥 Implement team collaboration workflows for shared XGBoost model development
-* 🔍 Set up distributed training and model monitoring in production environments
-* 📋 Establish model registry workflows for staging, approval, and deployment processes
+# Set alias for deployment
+client = MlflowClient()
+client.set_registered_model_alias(
+    name="XGBoostModel",
+    alias="champion",
+    version=1,
+)
 
-To learn more about the nuances of the `xgboost` flavor in MLflow, explore the comprehensive guide below.
+# Load model by alias
+model = mlflow.pyfunc.load_model("models:/XGBoostModel@champion")
+```
 
-[View the Comprehensive Guide](/docs/latest/ml/traditional-ml/xgboost/guide.md)
+## Model Serving[​](#model-serving "Direct link to Model Serving")
 
-Whether you're competing in your first Kaggle competition or deploying enterprise-scale gradient boosting systems, the MLflow-XGBoost integration provides the championship-grade foundation needed for winning machine learning development that scales with your ambitions.
+Serve models locally for testing:
+
+bash
+
+```
+mlflow models serve -m "models:/XGBoostModel@champion" -p 5000
+```
+
+Make predictions via REST API:
+
+python
+
+```
+import requests
+import pandas as pd
+
+data = pd.DataFrame(
+    {
+        "feature1": [1.2, 2.3],
+        "feature2": [0.8, 1.5],
+        "feature3": [3.4, 4.2],
+    }
+)
+
+response = requests.post(
+    "http://localhost:5000/invocations",
+    headers={"Content-Type": "application/json"},
+    json={"dataframe_split": data.to_dict(orient="split")},
+)
+
+predictions = response.json()
+```
+
+Deploy to cloud platforms:
+
+bash
+
+```
+# Deploy to AWS SageMaker
+mlflow deployments create \
+    -t sagemaker \
+    --name xgboost-endpoint \
+    -m models:/XGBoostModel@champion
+
+# Deploy to Azure ML
+mlflow deployments create \
+    -t azureml \
+    --name xgboost-service \
+    -m models:/XGBoostModel@champion
+```
+
+## Learn More[​](#learn-more "Direct link to Learn More")
+
+### [Tracking Server Setup](/docs/latest/ml/tracking/tutorials/remote-server.md)
+
+[Set up a self-hosted MLflow tracking server for team collaboration and remote experiment tracking.](/docs/latest/ml/tracking/tutorials/remote-server.md)
+
+[Learn more →](/docs/latest/ml/tracking/tutorials/remote-server.md)
+
+### [Model Evaluation](/docs/latest/ml/evaluation.md)
+
+[Evaluate XGBoost models using MLflow's comprehensive evaluation framework with built-in metrics and custom evaluators.](/docs/latest/ml/evaluation.md)
+
+[Learn more →](/docs/latest/ml/evaluation.md)
+
+### [Model Deployment](/docs/latest/ml/deployment.md)
+
+[Deploy XGBoost models locally, to Kubernetes, AWS SageMaker, or other cloud platforms using MLflow's deployment tools.](/docs/latest/ml/deployment.md)
+
+[Learn more →](/docs/latest/ml/deployment.md)
