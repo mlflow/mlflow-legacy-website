@@ -74,6 +74,8 @@ MLflow currently supports automatic tracing for the following TypeScript/JavaScr
 
 [![Mastra Logo](/docs/latest/assets/images/mastra-logo-f45b221fd666470a981d99b1f1356548.png)](/docs/latest/genai/tracing/integrations/listing/mastra.md)
 
+[![Voltagent Logo](/docs/latest/assets/images/voltagent-logo-892743e01e158b2499cd2e820ee0836a.png)](/docs/latest/genai/tracing/integrations/listing/voltagent.md)
+
 ## Basic Usage[​](#basic-usage "Direct link to Basic Usage")
 
 * Simple Function
