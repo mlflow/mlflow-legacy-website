@@ -242,7 +242,7 @@ There are multiple possible reasons why a trace may not be viewable in the MLflo
    bash
 
    ```
-   mlflow ui --host 0.0.0.0 --port 5000
+   mlflow server --host 0.0.0.0 --port 5000
    ```
 
 4. **Experiment permissions**: Verify you have access to the experiment containing the trace.
@@ -499,7 +499,7 @@ Read more about [trace deletion](/docs/latest/genai/tracing/observe-with-traces/
 
 Traces are stored in your MLflow tracking backend:
 
-**Local filesystem**: When using `mlflow ui` locally, traces are stored in the `mlruns` directory
+**Local filesystem**: When using `mlflow server` locally, traces are stored in the `mlruns` directory
 
 **Remote tracking server**: When using a remote MLflow server, traces are stored in the configured backend (database + artifact store)
 

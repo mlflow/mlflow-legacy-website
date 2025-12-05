@@ -86,7 +86,7 @@ cd ~/my-project
 claude "help me refactor this Python function to be more efficient"
 
 # View traces in MLflow UI
-mlflow ui
+mlflow server
 ```
 
 ### SDK Tracing Setup[​](#sdk-tracing-setup "Direct link to SDK Tracing Setup")

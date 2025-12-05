@@ -111,7 +111,7 @@ Now you have trained a model, let's check if the parameters and metrics are logg
 bash
 
 ```
-mlflow ui --port 5000
+mlflow server --port 5000
 ```
 
 Then visit <http://localhost:5000> to open the UI.

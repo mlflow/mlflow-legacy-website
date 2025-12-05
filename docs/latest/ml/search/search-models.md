@@ -21,7 +21,7 @@ Before running the script, let's start the MLflow UI on a local host:
 bash
 
 ```
-mlflow ui
+mlflow server
 ```
 
 Visit `http://localhost:5000/` in your web browser. Let's create some example models:

@@ -91,7 +91,7 @@ To see the results of training, you can access the MLflow UI by navigating to th
 bash
 
 ```
-mlflow ui --port 5000
+mlflow server --port 5000
 ```
 
 When opening the site, you will see a screen similar to the following:

@@ -166,7 +166,7 @@ System metrics are available within the MLflow UI under the metrics section. In 
 bash
 
 ```
-mlflow ui
+mlflow server
 ```
 
 python

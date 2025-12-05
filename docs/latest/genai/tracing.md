@@ -150,6 +150,8 @@ Click on the logos below to learn more about the individual integration:
 
 [![Mastra Logo](/docs/latest/images/logos/mastra-logo.png)](/docs/latest/genai/tracing/integrations/listing/mastra.md)
 
+[![VoltAgent Logo](/docs/latest/images/logos/voltagent-logo.png)](/docs/latest/genai/tracing/integrations/listing/voltagent.md)
+
 [![Agno Logo](/docs/latest/images/logos/agno-logo.png)](/docs/latest/genai/tracing/integrations/listing/agno.md)
 
 [![Smolagents Logo](/docs/latest/images/logos/smolagents-logo.png)](/docs/latest/genai/tracing/integrations/listing/smolagents.md)
