@@ -62,19 +62,42 @@ results = mlflow.genai.evaluate(
 
 ## Available Scorers[​](#available-scorers "Direct link to Available Scorers")
 
-| Scorer                                                                                                                        | What does it evaluate?                                       | Requires ground-truth? | Requires traces?      |
-| ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ | ---------------------- | --------------------- |
-| [RelevanceToQuery](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.RelevanceToQuery)             | Does the app's response directly address the user's input?   | No                     | No                    |
-| [Correctness](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Correctness)                       | Is the app's response correct compared to ground-truth?      | Yes\*                  | No                    |
-| [Guidelines](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Guidelines)                         | Does the response adhere to provided guidelines?             | Yes\*                  | No                    |
-| [ExpectationsGuidelines](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ExpectationsGuidelines) | Does the response meet specific expectations and guidelines? | Yes\*                  | No                    |
-| [Safety](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Safety)                                 | Does the app's response avoid harmful or toxic content?      | No                     | No                    |
-| [Equivalence](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Equivalence)                       | Is the app's response equivalent to the expected output?     | Yes                    | No                    |
-| [RetrievalGroundedness](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.RetrievalGroundedness)   | Is the app's response grounded in retrieved information?     | No                     | ⚠️ **Trace Required** |
-| [RetrievalRelevance](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.RetrievalRelevance)         | Are retrieved documents relevant to the user's request?      | No                     | ⚠️ **Trace Required** |
-| [RetrievalSufficiency](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.RetrievalSufficiency)     | Do retrieved documents contain all necessary information?    | Yes                    | ⚠️ **Trace Required** |
+### Single-Turn Scorers[​](#single-turn-scorers "Direct link to Single-Turn Scorers")
+
+| Scorer                                                                                                                        | What does it evaluate?                                        | Requires ground-truth? | Requires traces?      |
+| ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- | ---------------------- | --------------------- |
+| [RelevanceToQuery](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.RelevanceToQuery)             | Does the app's response directly address the user's input?    | No                     | No                    |
+| [Correctness](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Correctness)                       | Is the app's response correct compared to ground-truth?       | Yes\*                  | No                    |
+| [Completeness](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Completeness)\*\*                 | Does the agent address all questions in a single user prompt? | No                     | No                    |
+| [Guidelines](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Guidelines)                         | Does the response adhere to provided guidelines?              | Yes\*                  | No                    |
+| [ExpectationsGuidelines](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ExpectationsGuidelines) | Does the response meet specific expectations and guidelines?  | Yes\*                  | No                    |
+| [Safety](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Safety)                                 | Does the app's response avoid harmful or toxic content?       | No                     | No                    |
+| [Equivalence](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Equivalence)                       | Is the app's response equivalent to the expected output?      | Yes                    | No                    |
+| [RetrievalGroundedness](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.RetrievalGroundedness)   | Is the app's response grounded in retrieved information?      | No                     | ⚠️ **Trace Required** |
+| [RetrievalRelevance](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.RetrievalRelevance)         | Are retrieved documents relevant to the user's request?       | No                     | ⚠️ **Trace Required** |
+| [RetrievalSufficiency](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.RetrievalSufficiency)     | Do retrieved documents contain all necessary information?     | Yes                    | ⚠️ **Trace Required** |
 
 \*Can extract expectations from trace assessments if available.
+
+\*\*Indicates experimental features that may change in future releases.
+
+### Multi-Turn Scorers[​](#multi-turn-scorers "Direct link to Multi-Turn Scorers")
+
+Multi-turn scorers evaluate entire conversation sessions rather than individual turns. They require traces with session IDs and are experimental in MLflow 3.7.0.
+
+| Scorer                                                                                                                                | What does it evaluate?                                                 | Requires Session? |
+| ------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ----------------- |
+| [ConversationCompleteness](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ConversationCompleteness)\*\* | Does the agent address all user questions throughout the conversation? | Yes               |
+| [UserFrustration](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.UserFrustration)\*\*                   | Is the user frustrated? Was the frustration resolved?                  | Yes               |
+
+Multi-Turn Evaluation Requirements
+
+Multi-turn scorers require:
+
+1. **Session IDs**: Traces must have `mlflow.trace.session` metadata
+2. **List or DataFrame input**: Currently only supports pre-collected traces (no `predict_fn` support yet)
+
+See the [Evaluate Conversations](#evaluate-conversations) section below for detailed usage examples.
 
 Availability
 
@@ -156,6 +179,10 @@ source: AssessmentSource(
 Why Binary Scores?
 
 Binary scoring provides clearer, more consistent evaluations compared to numeric scales (1-5). Research shows that LLMs produce more reliable judgments when asked to make binary decisions rather than rating on a scale. Binary outputs also simplify threshold-based decision making in production systems.
+
+## Evaluate Conversations[​](#evaluate-conversations "Direct link to Evaluate Conversations")
+
+Multi-turn scorers evaluate entire conversation sessions rather than individual turns. For detailed information on how to use conversation evaluation, including setup, examples, and best practices, see the [Evaluate Conversations](/docs/latest/genai/eval-monitor/running-evaluation/multi-turn.md) guide.
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 

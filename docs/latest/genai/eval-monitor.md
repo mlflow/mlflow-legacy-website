@@ -155,7 +155,7 @@ Open the MLflow UI to review the evaluation results. If you are using OSS MLflow
 bash
 
 ```
-mlflow ui --port 5000
+mlflow server --port 5000
 ```
 
 If you are using cloud-based MLflow, open the experiment page in the platform. You should see a new evaluation run is created under the "Runs" tab. Click on the run name to view the evaluation results.

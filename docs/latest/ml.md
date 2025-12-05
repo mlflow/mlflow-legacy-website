@@ -146,9 +146,9 @@ Spark MLlib
 
 Learn how to [evaluate your ML models](/docs/latest/ml/evaluation.md) with MLflow
 
-Discover [custom evaluation metrics](/docs/latest/ml/evaluation/metrics-visualizations.md) and functions
+Discover [custom evaluation metrics](/docs/latest/ml/evaluation.md#custom-metrics--visualizations) and functions
 
-Compare models with [MLflow Model Comparison](/docs/latest/ml/evaluation/model-eval.md)
+Compare models with [MLflow Model Validation](/docs/latest/ml/evaluation.md#model-validation)
 
 ![MLflow Evaluation](/docs/latest/assets/images/evaluate_metrics-bee252801c0dd3bc77ff472f8e7d4a48.png)
 

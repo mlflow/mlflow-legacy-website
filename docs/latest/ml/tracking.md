@@ -247,7 +247,7 @@ If you log runs to a local `mlruns` directory, run the following command in the 
 bash
 
 ```
-mlflow ui --port 5000
+mlflow server --port 5000
 ```
 
 Alternatively, the [MLflow Tracking Server](#tracking_server) serves the same UI and enables remote storage of run artifacts. In that case, you can view the UI at `http://<IP address of your MLflow tracking server>:5000` from any machine that can connect to your tracking server.

@@ -119,9 +119,9 @@ bash
 
 ```
 # For Option A
-mlflow ui --backend-store-uri sqlite:///mlflow.db --port 5000
+mlflow server --backend-store-uri sqlite:///mlflow.db --port 5000
 # For Option B
-mlflow ui --port 5000
+mlflow server --port 5000
 ```
 
 If you have the remote tracking server running (option C), access the MLflow UI at the same URI.

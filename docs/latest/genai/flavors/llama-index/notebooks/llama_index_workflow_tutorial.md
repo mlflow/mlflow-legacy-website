@@ -369,7 +369,7 @@ await agent.run(input="What is (123 + 456) * 789?")
 
 The generated traces are automatically recorded to your MLflow Experiment.
 
-1. Open a terminal, run `mlflow ui --port 5000` within the current directory (and keep it running).
+1. Open a terminal, run `mlflow server --port 5000` within the current directory (and keep it running).
 2. Navigate to `http://127.0.0.1:5000` in your browser.
 3. Open the experiment "MLflow LlamaIndex Workflow Tutorial".
 4. Navigate to the "Trace" tab below the experiment name header.
