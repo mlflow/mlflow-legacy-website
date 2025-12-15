@@ -1,6 +1,10 @@
 # MLflow GenAI Packaging Integrations
 
-MLflow 3 delivers built-in support for packaging and deploying applications written with the GenAI frameworks you depend on. Whether you're calling OpenAI directly, orchestrating chains with LangChain or LangGraph, indexing documents in LlamaIndex, wiring up agent patterns via ChatModel and ResponseAgent, or rolling your own with a PythonModel, MLflow provides native packaging and deployment APIs ("flavors") to streamline your path to production.
+MLflow 3 delivers built-in support for packaging and deploying applications written with the GenAI frameworks you depend on. Whether you're orchestrating chains with LangChain or LangGraph, indexing documents in LlamaIndex, wiring up agent patterns via ChatModel and ResponseAgent, or rolling your own with a PythonModel, MLflow provides native packaging and deployment APIs ("flavors") to streamline your path to production.
+
+OpenAI Model Logging Deprecated
+
+The `mlflow.openai.log_model()` API has been deprecated. If you were using it to save prompts, please migrate to the [MLflow Prompt Registry](/docs/latest/genai/prompt-registry.md), which provides superior versioning, aliasing, lineage tracking, and collaboration features for managing prompts separately from models.
 
 ## Why MLflow Integrations?[​](#why-mlflow-integrations "Direct link to Why MLflow Integrations?")
 
@@ -30,8 +34,6 @@ Pick your integration from the list below and follow the concise guide—each on
 ## Integration Guides[​](#integration-guides "Direct link to Integration Guides")
 
 MLflow supports first-party flavors for these GenAI frameworks and patterns. Click to explore:
-
-[![OpenAI Logo](/docs/latest/assets/images/openai-logo-84ce36fa9f59f4df880cee88c0335586.png)](/docs/latest/genai/flavors/openai.md)
 
 [![LangChain Logo](/docs/latest/assets/images/langchain-logo-39d51f94cc9aebac2c191cca0e8189de.png)](/docs/latest/genai/flavors/langchain.md)
 

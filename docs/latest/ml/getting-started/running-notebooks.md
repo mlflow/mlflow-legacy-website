@@ -128,7 +128,7 @@ If you have the remote tracking server running (option C), access the MLflow UI 
 
 ACCESS DENIED?
 
-When using the remove tracking server, you may hit an access denied error when accessing the MLflow UI from a browser.
+When using the remote tracking server, you may hit an access denied error when accessing the MLflow UI from a browser.
 
 > Invalid Host header - possible DNS rebinding attack detected
 

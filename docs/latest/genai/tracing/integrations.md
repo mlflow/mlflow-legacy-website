@@ -13,13 +13,14 @@ Click any integration below to get started with detailed setup instructions.
 
 <!-- -->
 
+* Python
+* TypeScript
+
 ## Agent Frameworks
 
 [![LangChain Logo](/docs/latest/images/logos/langchain-logo.png)](/docs/latest/genai/tracing/integrations/listing/langchain.md)
 
 [![LangGraph Logo](/docs/latest/images/logos/langgraph-logo.png)](/docs/latest/genai/tracing/integrations/listing/langgraph.md)
-
-[![Vercel AI SDK Logo](/docs/latest/images/logos/vercel-logo.svg)](/docs/latest/genai/tracing/integrations/listing/vercelai.md)
 
 [![OpenAI Agent Logo](/docs/latest/images/logos/openai-agent-logo.png)](/docs/latest/genai/tracing/integrations/listing/openai-agent.md)
 
@@ -38,10 +39,6 @@ Click any integration below to get started with detailed setup instructions.
 [![AutoGen Logo](/docs/latest/images/logos/autogen-logo.png)](/docs/latest/genai/tracing/integrations/listing/autogen.md)
 
 [![Strands Agent SDK Logo](/docs/latest/images/logos/strands-logo.png)](/docs/latest/genai/tracing/integrations/listing/strands.md)
-
-[![Mastra Logo](/docs/latest/images/logos/mastra-logo.png)](/docs/latest/genai/tracing/integrations/listing/mastra.md)
-
-[![VoltAgent Logo](/docs/latest/images/logos/voltagent-logo.png)](/docs/latest/genai/tracing/integrations/listing/voltagent.md)
 
 [![Agno Logo](/docs/latest/images/logos/agno-logo.png)](/docs/latest/genai/tracing/integrations/listing/agno.md)
 
@@ -82,6 +79,26 @@ Click any integration below to get started with detailed setup instructions.
 [![Instructor Logo](/docs/latest/images/logos/instructor-logo.svg)](/docs/latest/genai/tracing/integrations/listing/instructor.md)
 
 [![Claude Code Logo](/docs/latest/images/logos/claude-code-logo.svg)](/docs/latest/genai/tracing/integrations/listing/claude_code.md)
+
+## Agent Frameworks
+
+[![LangChain Logo](/docs/latest/images/logos/langchain-logo.png)](/docs/latest/genai/tracing/integrations/listing/langchain.md)
+
+[![LangGraph Logo](/docs/latest/images/logos/langgraph-logo.png)](/docs/latest/genai/tracing/integrations/listing/langgraph.md)
+
+[![Vercel AI SDK Logo](/docs/latest/images/logos/vercel-logo.svg)](/docs/latest/genai/tracing/integrations/listing/vercelai.md)
+
+[![Mastra Logo](/docs/latest/images/logos/mastra-logo.png)](/docs/latest/genai/tracing/integrations/listing/mastra.md)
+
+[![VoltAgent Logo](/docs/latest/images/logos/voltagent-logo.png)](/docs/latest/genai/tracing/integrations/listing/voltagent.md)
+
+## Model Providers
+
+[![OpenAI Logo](/docs/latest/images/logos/openai-logo.png)](/docs/latest/genai/tracing/integrations/listing/openai.md)
+
+[![Anthropic Logo](/docs/latest/images/logos/anthropic-logo.svg)](/docs/latest/genai/tracing/integrations/listing/anthropic.md)
+
+[![Gemini Logo](/docs/latest/images/logos/google-gemini-logo.svg)](/docs/latest/genai/tracing/integrations/listing/gemini.md)
 
 <br />
 

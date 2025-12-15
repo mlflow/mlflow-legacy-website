@@ -2,7 +2,7 @@
 
 tip
 
-New to MLflow Tracing? Checkout the [Quick Start Guide](/docs/latest/genai/tracing/quickstart/python-openai.md) to get started.
+New to MLflow Tracing? Checkout the [Quick Start Guide](/docs/latest/genai/tracing/quickstart.md) to get started.
 
 ## Three Steps to Trace Your App/Agents[​](#three-steps-to-trace-your-appagents "Direct link to Three Steps to Trace Your App/Agents")
 

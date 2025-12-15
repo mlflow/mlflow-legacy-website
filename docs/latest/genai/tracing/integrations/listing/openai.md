@@ -34,9 +34,7 @@ MLflow trace automatically captures the following information about OpenAI calls
 * Built-in tools such as web search, file search, computer use, etc.
 * Any exception if raised
 
-tip
-
-MLflow OpenAI integration is not only about tracing. MLflow offers full tracking experience for OpenAI, including model tracking, prompt management, and evaluation. Please checkout the **[MLflow OpenAI Flavor](/docs/latest/genai/flavors/openai.md)** to learn more!
+:::
 
 ## Supported APIs[​](#supported-apis "Direct link to Supported APIs")
 
@@ -429,7 +427,7 @@ question = "What's the weather like in Paris today?"
 answer = run_tool_agent(question)
 ```
 
-Refer to the [Typescript OpenAI Quickstart](/docs/latest/genai/tracing/quickstart/typescript-openai.md) for the example of function calling agent in Typescript SDK.
+Refer to the [Typescript OpenAI Quickstart](/docs/latest/genai/tracing/quickstart.md) for the example of function calling agent in Typescript SDK.
 
 ## Token usage[​](#token-usage "Direct link to Token usage")
 

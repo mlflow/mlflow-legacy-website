@@ -158,11 +158,11 @@ Master these core capabilities to build robust GenAI applications with MLflow. S
 
 [Start setup →](/docs/latest/genai/getting-started/connect-environment.md)
 
-### [Observability with Tracing](/docs/latest/genai/tracing/quickstart/python-openai.md)
+### [Observability with Tracing](/docs/latest/genai/tracing/quickstart.md)
 
-[Auto-instrument your GenAI application to capture every LLM call, prompt, and tool interaction for complete visibility](/docs/latest/genai/tracing/quickstart/python-openai.md)
+[Auto-instrument your GenAI application to capture every LLM call, prompt, and tool interaction for complete visibility](/docs/latest/genai/tracing/quickstart.md)
 
-[Learn tracing →](/docs/latest/genai/tracing/quickstart/python-openai.md)
+[Learn tracing →](/docs/latest/genai/tracing/quickstart.md)
 
 ### [Systematic Evaluation](/docs/latest/genai/eval-monitor.md)
 
@@ -219,14 +219,6 @@ MLflow provides deep integrations with popular GenAI frameworks. Choose your fra
 [Instrument RAG pipelines and document processing workflows with LlamaIndex support](/docs/latest/genai/flavors/llama-index.md)
 
 [Use LlamaIndex →](/docs/latest/genai/flavors/llama-index.md)
-
-[![OpenAI Integration](/docs/latest/images/logos/openai-logo.svg)](/docs/latest/genai/flavors/openai.md)
-
-### [OpenAI Integration](/docs/latest/genai/flavors/openai.md)
-
-[Track completions, embeddings, and function calls with native OpenAI instrumentation](/docs/latest/genai/flavors/openai.md)
-
-[Use OpenAI →](/docs/latest/genai/flavors/openai.md)
 
 ### [DSPy Integration](/docs/latest/genai/flavors/dspy.md)
 

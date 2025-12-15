@@ -49,7 +49,7 @@ mlflow.set_tracking_uri("http://localhost:5000")
 
 Now, you are ready to start your experiment!
 
-* [Tracing QuickStart](/docs/latest/genai/tracing/quickstart/python-openai.md)
+* [Tracing QuickStart](/docs/latest/genai/tracing/quickstart.md)
 * [LLM Evaluation Quickstart](/docs/latest/genai/eval-monitor/quickstart.md)
 * [Prompt Management Quickstart](/docs/latest/genai/prompt-registry.md#getting-started)
 * [Model Training Quickstart](/docs/latest/ml/tracking/quickstart.md)
@@ -114,3 +114,27 @@ Need highly secure MLflow server? Check out [Databricks Managed MLflow](https://
 ## FAQs[​](#faqs "Direct link to FAQs")
 
 See [Troubleshooting & FAQs](/docs/latest/self-hosting/troubleshooting.md) for more information.
+
+ACCESS DENIED?
+
+When using the remote tracking server, you may hit an access denied error when accessing the MLflow UI from a browser.
+
+> Invalid Host header - possible DNS rebinding attack detected
+
+This error typically indicates that the tracking server's network security settings need to be configured. The most common causes are:
+
+* **Host validation**: The `--allowed-hosts` flag restricts which Host headers are accepted
+* **CORS restrictions**: The `--cors-allowed-origins` flag controls which origins can make API requests
+
+To resolve this, configure your tracking server with the appropriate flags. For example:
+
+bash
+
+```
+mlflow server --allowed-hosts "mlflow.company.com,localhost:*" \
+              --cors-allowed-origins "https://app.company.com"
+```
+
+**Note**: These security options are only available with the default FastAPI-based server (uvicorn). They are not supported when using Flask directly or with `--gunicorn-opts` or `--waitress-opts`.
+
+Refer to the [Network Security Guide](/docs/latest/self-hosting/security/network.md) for detailed configuration options.

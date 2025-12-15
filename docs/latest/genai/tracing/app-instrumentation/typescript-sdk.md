@@ -10,13 +10,13 @@ MLflow Typescript SDK is an experimental package. We are actively working on it 
 
 If you are new to MLflow Tracing, please start with the following quickstart guide:
 
-[![Quickstart (JS/TS)](/docs/latest/images/logos/javascript-typescript-logo.png)](/docs/latest/genai/tracing/quickstart/typescript-openai.md)
+[![Quickstart (JS/TS)](/docs/latest/images/logos/javascript-typescript-logo.png)](/docs/latest/genai/tracing/quickstart.md)
 
-### [Quickstart (JS/TS)](/docs/latest/genai/tracing/quickstart/typescript-openai.md)
+### [Quickstart (JS/TS)](/docs/latest/genai/tracing/quickstart.md)
 
-[Get started with MLflow in JavaScript or TypeScript](/docs/latest/genai/tracing/quickstart/typescript-openai.md)
+[Get started with MLflow in JavaScript or TypeScript](/docs/latest/genai/tracing/quickstart.md)
 
-[Start building →](/docs/latest/genai/tracing/quickstart/typescript-openai.md)
+[Start building →](/docs/latest/genai/tracing/quickstart.md)
 
 ## Installation[​](#installation "Direct link to Installation")
 
