@@ -24,11 +24,11 @@ You can navigate traces seamlessly within your preferred IDE, notebook, or the M
 
 ![Trace Debugging](/docs/latest/assets/images/genai-trace-debug-405f9c8b61d5f89fb1d3891242fcd265.png)
 
-#### Track Annotation and Human Feedbacks[​](#track-annotation-and-human-feedbacks "Direct link to Track Annotation and Human Feedbacks")
+#### Track Annotation and Human Feedback[​](#track-annotation-and-human-feedback "Direct link to Track Annotation and Human Feedback")
 
 Human feedback is essential for building high-quality GenAI applications that meet user expectations. MLflow supports collecting, managing, and utilizing feedback from end-users and domain experts.
 
-Feedbacks are attached to traces and recorded with metadata, including user, timestamp, revisions, etc.
+Feedback are attached to traces and recorded with metadata, including user, timestamp, revisions, etc.
 
 [Learn more →](/docs/latest/genai/tracing/collect-user-feedback.md)
 
@@ -86,21 +86,21 @@ MLflow boasts a vibrant Open Source community as a part of the Linux Foundation,
 
 ## Getting Started[​](#getting-started "Direct link to Getting Started")
 
-[![Quickstart (Python)](/docs/latest/images/logos/python-logo.png)](/docs/latest/genai/tracing/quickstart/python-openai.md)
+[![Quickstart (Python)](/docs/latest/images/logos/python-logo.png)](/docs/latest/genai/tracing/quickstart.md)
 
-### [Quickstart (Python)](/docs/latest/genai/tracing/quickstart/python-openai.md)
+### [Quickstart (Python)](/docs/latest/genai/tracing/quickstart.md)
 
-[Get started with MLflow Tracing in Python](/docs/latest/genai/tracing/quickstart/python-openai.md)
+[Get started with MLflow Tracing in Python](/docs/latest/genai/tracing/quickstart.md)
 
-[Start building →](/docs/latest/genai/tracing/quickstart/python-openai.md)
+[Start building →](/docs/latest/genai/tracing/quickstart.md)
 
-[![Quickstart (JS/TS)](/docs/latest/images/logos/javascript-typescript-logo.png)](/docs/latest/genai/tracing/quickstart/typescript-openai.md)
+[![Quickstart (JS/TS)](/docs/latest/images/logos/javascript-typescript-logo.png)](/docs/latest/genai/tracing/quickstart.md)
 
-### [Quickstart (JS/TS)](/docs/latest/genai/tracing/quickstart/typescript-openai.md)
+### [Quickstart (JS/TS)](/docs/latest/genai/tracing/quickstart.md)
 
-[Get started with MLflow Tracing in JavaScript or TypeScript](/docs/latest/genai/tracing/quickstart/typescript-openai.md)
+[Get started with MLflow Tracing in JavaScript or TypeScript](/docs/latest/genai/tracing/quickstart.md)
 
-[Start building →](/docs/latest/genai/tracing/quickstart/typescript-openai.md)
+[Start building →](/docs/latest/genai/tracing/quickstart.md)
 
 [![Quickstart (Otel)](/docs/latest/images/logos/opentelemetry-logo.svg)](/docs/latest/genai/tracing/app-instrumentation/opentelemetry.md)
 
@@ -124,11 +124,12 @@ mlflow.openai.autolog()  # or replace 'openai' with other library names, e.g., "
 
 Click on the logos below to learn more about the individual integration:
 
+* Python
+* TypeScript
+
 [![LangChain Logo](/docs/latest/images/logos/langchain-logo.png)](/docs/latest/genai/tracing/integrations/listing/langchain.md)
 
 [![LangGraph Logo](/docs/latest/images/logos/langgraph-logo.png)](/docs/latest/genai/tracing/integrations/listing/langgraph.md)
-
-[![Vercel AI SDK Logo](/docs/latest/images/logos/vercel-logo.svg)](/docs/latest/genai/tracing/integrations/listing/vercelai.md)
 
 [![OpenAI Agent Logo](/docs/latest/images/logos/openai-agent-logo.png)](/docs/latest/genai/tracing/integrations/listing/openai-agent.md)
 
@@ -147,10 +148,6 @@ Click on the logos below to learn more about the individual integration:
 [![AutoGen Logo](/docs/latest/images/logos/autogen-logo.png)](/docs/latest/genai/tracing/integrations/listing/autogen.md)
 
 [![Strands Agent SDK Logo](/docs/latest/images/logos/strands-logo.png)](/docs/latest/genai/tracing/integrations/listing/strands.md)
-
-[![Mastra Logo](/docs/latest/images/logos/mastra-logo.png)](/docs/latest/genai/tracing/integrations/listing/mastra.md)
-
-[![VoltAgent Logo](/docs/latest/images/logos/voltagent-logo.png)](/docs/latest/genai/tracing/integrations/listing/voltagent.md)
 
 [![Agno Logo](/docs/latest/images/logos/agno-logo.png)](/docs/latest/genai/tracing/integrations/listing/agno.md)
 
@@ -188,6 +185,22 @@ Click on the logos below to learn more about the individual integration:
 
 [![Claude Code Logo](/docs/latest/images/logos/claude-code-logo.svg)](/docs/latest/genai/tracing/integrations/listing/claude_code.md)
 
+[![LangChain Logo](/docs/latest/images/logos/langchain-logo.png)](/docs/latest/genai/tracing/integrations/listing/langchain.md)
+
+[![LangGraph Logo](/docs/latest/images/logos/langgraph-logo.png)](/docs/latest/genai/tracing/integrations/listing/langgraph.md)
+
+[![Vercel AI SDK Logo](/docs/latest/images/logos/vercel-logo.svg)](/docs/latest/genai/tracing/integrations/listing/vercelai.md)
+
+[![Mastra Logo](/docs/latest/images/logos/mastra-logo.png)](/docs/latest/genai/tracing/integrations/listing/mastra.md)
+
+[![VoltAgent Logo](/docs/latest/images/logos/voltagent-logo.png)](/docs/latest/genai/tracing/integrations/listing/voltagent.md)
+
+[![OpenAI Logo](/docs/latest/images/logos/openai-logo.png)](/docs/latest/genai/tracing/integrations/listing/openai.md)
+
+[![Anthropic Logo](/docs/latest/images/logos/anthropic-logo.svg)](/docs/latest/genai/tracing/integrations/listing/anthropic.md)
+
+[![Gemini Logo](/docs/latest/images/logos/google-gemini-logo.svg)](/docs/latest/genai/tracing/integrations/listing/gemini.md)
+
 <br />
 
 ## Flexible and Customizable[​](#flexible-and-customizable "Direct link to Flexible and Customizable")
@@ -195,7 +208,7 @@ Click on the logos below to learn more about the individual integration:
 In addition to the one-line auto tracing experience, MLflow offers Python SDK for manually instrumenting your code and manipulating traces:
 
 * [Trace a function with `@mlflow.trace` decorator](/docs/latest/genai/tracing/app-instrumentation/manual-tracing.md#decorator)
-* [Trace any block of code using context manager](/docs/latest/genai/tracing/app-instrumentation/manual-tracing.md#context-manager)
+* [Trace any block of code](/docs/latest/genai/tracing/app-instrumentation/manual-tracing.md#code-block)
 * [Combine multiple auto-tracing integrations](/docs/latest/genai/tracing/app-instrumentation/automatic.md#multi-framework-example)
 * [Instrument multi-threaded applications](/docs/latest/genai/tracing/app-instrumentation/manual-tracing.md#multi-threading)
 * [Native async support](/docs/latest/genai/tracing/app-instrumentation/manual-tracing.md#async-support)

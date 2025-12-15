@@ -39,7 +39,9 @@ MLflow stores evaluation results in a tracking server. Connect your local enviro
 * Local (pip)
 * Local (docker)
 
-For the fastest setup, you can install the [mlflow](https://pypi.org/project/mlflow/) Python package and run MLflow locally:
+**Python Environment**: Python 3.10+
+
+For the fastest setup, you can install the `mlflow` Python package via `pip` and start the MLflow server locally.
 
 bash
 
@@ -48,37 +50,17 @@ pip install --upgrade mlflow
 mlflow server
 ```
 
-This will start the server at port 5000 on your local machine. Connect your notebook/IDE to the server by setting the tracking URI. You can also access to the MLflow UI at <http://localhost:5000>.
-
-python
-
-```
-import mlflow
-
-mlflow.set_tracking_uri("http://localhost:5000")
-```
-
-You can also brows the MLflow UI at <http://localhost:5000>.
-
 MLflow provides a Docker Compose file to start a local MLflow server with a postgres database and a minio server.
 
 bash
 
 ```
-git clone https://github.com/mlflow/mlflow.git
+git clone --depth 1 --filter=blob:none --sparse https://github.com/mlflow/mlflow.git
+cd mlflow
+git sparse-checkout set docker-compose
 cd docker-compose
 cp .env.dev.example .env
 docker compose up -d
-```
-
-This will start the server at port 5000 on your local machine. Connect your notebook/IDE to the server by setting the tracking URI. You can also access to the MLflow UI at <http://localhost:5000>.
-
-python
-
-```
-import mlflow
-
-mlflow.set_tracking_uri("http://localhost:5000")
 ```
 
 Refer to the [instruction](https://github.com/mlflow/mlflow/tree/master/docker-compose/README.md) for more details, e.g., overriding the default environment variables.
@@ -147,6 +129,33 @@ from openai import OpenAI
 
 def predict_fn(question: str) -> str:
     return Runner.run_sync(agent, question).final_output
+```
+
+tip
+
+**Async Functions are Supported!**
+
+If your agent library provides an async API, you can use it directly without converting to sync. MLflow automatically detects and handles async functions:
+
+python
+
+```
+async def predict_fn(question: str) -> str:
+    result = await Runner.run(agent, question)
+    return result.final_output
+
+
+mlflow.genai.evaluate(
+    data=eval_dataset, predict_fn=predict_fn, scorers=[exact_match, uses_correct_tools]
+)
+```
+
+By default, async functions have a 5-minute timeout. Configure this using the `MLFLOW_GENAI_EVAL_ASYNC_TIMEOUT` environment variable:
+
+bash
+
+```
+export MLFLOW_GENAI_EVAL_ASYNC_TIMEOUT=600  # 10 minutes
 ```
 
 ### Step 2: Create evaluation dataset[​](#step-2-create-evaluation-dataset "Direct link to Step 2: Create evaluation dataset")

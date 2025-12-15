@@ -4,7 +4,7 @@
 
 ## Using the MLflow Tracing SDK[​](#using-the-mlflow-tracing-sdk "Direct link to Using the MLflow Tracing SDK")
 
-The MLflow Tracing SDK is built on top of the OpenTelemetry SDK. If you want to instrument your AI applications with minimal effort, use the [MLflow Tracing SDK](/docs/latest/genai/tracing/quickstart/python-openai.md).
+The MLflow Tracing SDK is built on top of the OpenTelemetry SDK. If you want to instrument your AI applications with minimal effort, use the [MLflow Tracing SDK](/docs/latest/genai/tracing/quickstart.md).
 
 python
 

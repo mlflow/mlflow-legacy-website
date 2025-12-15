@@ -251,6 +251,6 @@ For Databricks environments, ensure you have appropriate authentication configur
 
 ## Related Documentation[​](#related-documentation "Direct link to Related Documentation")
 
-* [MLflow Tracing Overview](/docs/latest/genai/tracing/quickstart/python-openai.md)
+* [MLflow Tracing Overview](/docs/latest/genai/tracing/quickstart.md)
 * [Collecting User Feedback](/docs/latest/genai/tracing/collect-user-feedback.md)
 * [Model Context Protocol Specification](https://modelcontextprotocol.io/)

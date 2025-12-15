@@ -1,90 +1,68 @@
-# Build with MLflow GenAI
+# MLflow GenAI: Ship High-quality GenAI, Fast
 
-Learn how to get started with MLflow for building production-ready GenAI applications.
-
-What do you want to know about MLflow?
-
-![MLflow GenAI Platform](/docs/latest/assets/images/mlflow-3-trace-ui-be096b13c40e7433a7cc3ae46e9b861c.png)
-
-### [Get Started](/docs/latest/genai/getting-started.md)
-
-[Build your first GenAI app with MLflow](/docs/latest/genai/getting-started.md)
-
-[Start building →](/docs/latest/genai/getting-started.md)
-
-### [Environment Setup](/docs/latest/genai/getting-started/connect-environment.md)
-
-[Install and configure MLflow](/docs/latest/genai/getting-started/connect-environment.md)
-
-[Setup guide →](/docs/latest/genai/getting-started/connect-environment.md)
-
-### [API Reference](https://mlflow.org/docs/latest/api_reference/index.html)
-
-[Complete API documentation](https://mlflow.org/docs/latest/api_reference/index.html)
-
-[Browse APIs →](https://mlflow.org/docs/latest/api_reference/index.html)
-
-### [Tracing & Debug](/docs/latest/genai/tracing.md)
-
-[Observe AI application flows](/docs/latest/genai/tracing.md)
-
-[Start tracing →](/docs/latest/genai/tracing.md)
-
-### [Evaluation](/docs/latest/genai/eval-monitor.md)
-
-[Test and improve AI quality](/docs/latest/genai/eval-monitor.md)
-
-[Evaluate apps →](/docs/latest/genai/eval-monitor.md)
-
-### [Prompt Engineering](/docs/latest/genai/prompt-registry.md)
-
-[Design and version prompts](/docs/latest/genai/prompt-registry.md)
-
-[Engineer prompts →](/docs/latest/genai/prompt-registry.md)
-
-### [Deploy & Serve](/docs/latest/genai/serving.md)
-
-[Production deployment guide](/docs/latest/genai/serving.md)
-
-[Deploy apps →](/docs/latest/genai/serving.md)
-
-### [AI Gateway](/docs/latest/genai/governance/ai-gateway.md)
-
-[Unified API for AI providers](/docs/latest/genai/governance/ai-gateway.md)
-
-[Learn more →](/docs/latest/genai/governance/ai-gateway.md)
-
-### [Integrations](/docs/latest/genai/tracing/integrations.md)
-
-[Framework connections](/docs/latest/genai/tracing/integrations.md)
-
-[View integrations →](/docs/latest/genai/tracing/integrations.md)
-
-## Why choose MLflow?[​](#why-choose-mlflow "Direct link to Why choose MLflow?")
+MLflow GenAI is an open-source, all-in-one integrated platform that helps enhance your Agent & GenAI applications with end-to-end observability, evaluations, AI gateway, prompt management & optimization and tracking.
 
 #### Open Source
 
-Join thousands of teams building GenAI with MLflow. As part of the Linux Foundation, MLflow ensures your AI infrastructure remains open and vendor-neutral.
+Join thousands of teams building GenAI with MLflow - with 20K+ GitHub Stars and 50M+ monthly downloads. As part of the Linux Foundation, MLflow ensures your AI infrastructure remains open and vendor-neutral.
 
-#### Production-Ready Platform
+#### OpenTelemetry
 
-Deploy anywhere with confidence. From local servers to cloud platforms, MLflow handles the complexity of GenAI deployment, monitoring, and optimization.
+MLflow Tracing is fully compatible with OpenTelemetry, making it free from vendor lock-in and easy to integrate with your existing observability stack.
 
-#### End-to-End Lifecycle
+#### All-in-one Platform
 
 Manage the complete GenAI journey from experimentation to production. Track prompts, evaluate quality, deploy models, and monitor performance in one platform.
-
-#### Framework Integration
-
-Use any GenAI framework or model provider. With 20+ native integrations and extensible APIs, MLflow adapts to your tech stack, not the other way around.
 
 #### Complete Observability
 
 See inside every AI decision with comprehensive tracing that captures prompts, retrievals, tool calls, and model responses. Debug complex workflows with confidence.
 
-#### Automated Quality Assurance
+#### Evaluation & Monitoring
 
 Stop manual testing with LLM judges and custom metrics. Systematically evaluate every change to ensure consistent improvements in your AI applications.
+
+#### Framework Integration
+
+Use any GenAI framework or model provider. With 30+ integrations and extensible APIs, MLflow adapts to your tech stack, not the other way around.
+
+## Observability[​](#observability "Direct link to Observability")
+
+Debug and iterate on GenAI applications using MLflow's tracing, which captures your app's entire execution, including prompts, retrievals and tool calls. MLflow's open-source, OpenTelemetry-compatible tracing SDK helps avoid vendor lock-in.
+
+[![](/docs/latest/images/llms/tracing/tracing-top-poster.png)](/docs/latest/images/llms/tracing/tracing-top.mp4)
+
+[Observability Quickstart →](/docs/latest/genai/tracing/quickstart.md)
+
+***
+
+[This quickstart will guide you through enabling tracing in your GenAI application and sending your first trace to MLflow.](/docs/latest/genai/tracing/quickstart.md)
+
+## Evaluations[​](#evaluations "Direct link to Evaluations")
+
+Accurately measure free-form language with LLM judges by utilizing LLM-as-a-judge metrics, mimicking human expertise, to assess and enhance GenAI quality. Access pre-built judges for common metrics like hallucination or relevance, or develop custom judges tailored to your business needs and expert insights.
+
+[![](/docs/latest/images/mlflow-3/eval-monitor/evaluation-result-video-poster.png)](/docs/latest/images/mlflow-3/eval-monitor/evaluation-result-video.mp4)
+
+[Evaluations Quickstart →](/docs/latest/genai/eval-monitor/quickstart.md)
+
+***
+
+[This quickstart will walk you through preparing a dataset, configuring a scorer, and running your first evaluation in just a few steps.](/docs/latest/genai/eval-monitor/quickstart.md)
+
+## Prompt Management & Optimization[​](#prompt-management--optimization "Direct link to Prompt Management & Optimization")
+
+Version, compare, iterate on, and discover prompt templates directly through the MLflow UI. Reuse prompts across multiple versions of your agent or application code, and view rich lineage identifying which versions are using each prompt.
+
+[![](/docs/latest/images/llms/prompt-registry/prompt-management-poster.png)](/docs/latest/images/llms/prompt-registry/prompt-management.mp4)
+
+[Prompt Management Quickstart →](/docs/latest/genai/prompt-registry/create-and-edit-prompts.md)
+
+***
+
+[This quickstart will guide you through creating, editing and versioning prompts for your GenAI application.](/docs/latest/genai/prompt-registry/create-and-edit-prompts.md)
+
+***
 
 ## Running Anywhere[​](#running-anywhere "Direct link to Running Anywhere")
 
@@ -100,10 +78,12 @@ MLflow can be used in a variety of environments, including your local environmen
 
 [![Kubernetes Logo](/docs/latest/assets/images/kubernetes-logo-0728374966fe59ee08e213e966513d00.png)](/docs/latest/ml/tracking.md)
 
-## Requesting Features[​](#requesting-features "Direct link to Requesting Features")
+## Ask AI About MLflow[​](#ask-ai-about-mlflow "Direct link to Ask AI About MLflow")
 
-Your feedback drives our roadmap! Vote on the most requested features (👍) and share your ideas to help us build what matters most to you.
+What do you want to know about MLflow?
 
-### Feature requests
+## Community[​](#community "Direct link to Community")
 
-Loading feature requests...
+Connect with fellow builders, ask questions, and stay up to date — join our vibrant MLflow community on Slack, GitHub, LinkedIn, and more!
+
+Learn how to get involved and discover all our channels on the [Community Page](/docs/latest/community.md).

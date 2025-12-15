@@ -22,7 +22,7 @@ When you use these standard metadata fields, MLflow automatically enables filter
 To record user and session information in your application, use the [`mlflow.update_current_trace()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.update_current_trace) API and pass the user and session IDs in the metadata.
 
 * Python
-* Typescript
+* TypeScript
 
 Here's how to add user and session tracking to your application:
 
@@ -73,7 +73,7 @@ const chatCompletion = mlflow.trace(
 ## Web Application Example[​](#web-application-example "Direct link to Web Application Example")
 
 * Python (FastAPI)
-* Typescript (express)
+* TypeScript (express)
 
 python
 

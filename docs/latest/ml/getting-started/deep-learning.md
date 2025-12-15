@@ -136,7 +136,7 @@ with mlflow.start_run() as run:
 
     for epoch in range(params["epochs"]):
         model.train()
-        train_loss = correct, total = 0, 0, 0
+        train_loss, correct, total = 0, 0, 0
 
         for batch_idx, (data, target) in enumerate(train_loader):
             data, target = data.to(device), target.to(device)
@@ -251,8 +251,8 @@ python
 model = mlflow.pytorch.load_model("runs:/<run_id>/final_model")
 # or load a checkpoint
 # model = mlflow.pytorch.load_model("runs:/<run_id>/checkpoint_<epoch>")
-loaded_model.to(device)
-loaded_model.eval()
+model.to(device)
+model.eval()
 
 # Resume the previous run to log test metrics
 with mlflow.start_run(run_id=run.info.run_id) as run:
