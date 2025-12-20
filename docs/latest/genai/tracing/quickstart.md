@@ -84,6 +84,7 @@ Once your experiment is created, you're ready to connect to the MLflow server an
 
 * Python(OpenAI)
 * TypeScript(OpenAI)
+* OpenTelemetry
 
 python
 
@@ -138,6 +139,42 @@ client.chat.completions.create({
 })
 ```
 
+MLflow Server exposes an OTLP endpoint at `/v1/traces` ([OTLP](https://opentelemetry.io/docs/specs/otlp/)). This endpoint accepts traces from any native OpenTelemetry instrumentation, allowing you to trace applications written in other languages such as Java, Go, Rust, etc.
+
+The following example shows how to collect traces from a FastAPI application using OpenTelemetry FastAPI instrumentation.
+
+python
+
+```
+import os
+import uvicorn
+from fastapi import FastAPI
+from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
+
+# Set the endpoint and header
+MLFLOW_TRACKING_URI = "http://localhost:5000"
+MLFLOW_EXPERIMENT_ID = "123"
+
+os.environ["OTEL_EXPORTER_OTLP_TRACES_ENDPOINT"] = f"{MLFLOW_TRACKING_URI}/v1/traces"
+os.environ[
+    "OTEL_EXPORTER_OTLP_TRACES_HEADERS"
+] = f"x-mlflow-experiment-id={MLFLOW_EXPERIMENT_ID}"
+
+app = FastAPI()
+FastAPIInstrumentor.instrument_app(app)
+
+
+@app.get("/")
+async def root():
+    return {"message": "Hello, World!"}
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+```
+
+For a deeper dive into using MLflow together with OpenTelemetry, see the [OpenTelemetry guide](/docs/latest/genai/tracing/opentelemetry.md).
+
 ## View Your Traces on the MLflow UI[​](#view-your-traces-on-the-mlflow-ui "Direct link to View Your Traces on the MLflow UI")
 
 After running the code above, go to the MLflow UI and select the "My Application" experiment, and then select the "Traces" tab. It should show the newly created trace.
@@ -146,12 +183,12 @@ After running the code above, go to the MLflow UI and select the "My Application
 
 ![Single Trace](/docs/latest/images/llms/tracing/quickstart/single-openai-trace-detail.png)
 
-## Next Steps[​](#next-steps "Direct link to Next Steps")
+## Next Step[​](#next-step "Direct link to Next Step")
 
-Congrats on sending your first trace with MLflow! Now that you've got the basics working, here are some recommended next steps to deepen your understanding of tracing and get the most out of MLflow Tracing:
+Congrats on sending your first trace with MLflow! Now that you've got the basics working, here is the recommended next step to deepen your understanding of tracing:
 
-* **Explore More Integrations:** MLflow supports a wide range of LLM providers and agent frameworks. See the full list in the [Integrations Overview](/docs/latest/genai/tracing/integrations.md).
+[Automatic and Manual Tracing →](/docs/latest/genai/tracing/app-instrumentation/automatic.md)
 
-* **Manual Tracing & Custom Spans:** Discover how to instrument your GenAI code with manual tracing and custom spans to capture additional details in your traces. Check out [Manual Tracing](/docs/latest/genai/tracing/app-instrumentation/manual-tracing.md) for more details.
+***
 
-* **Attach Feedback & Evaluate Quality:** Add human or automated feedback to your traces. See how in [Attaching Feedback](/docs/latest/genai/tracing/collect-user-feedback.md) or try [automated evaluation](/docs/latest/genai/eval-monitor.md) for scoring conversation responses.
+[Explore how MLflow supports both automatic tracing and manual tracing for custom logic, plus how you can combine the two to get more insightful traces.](/docs/latest/genai/tracing/app-instrumentation/automatic.md)
