@@ -30,7 +30,7 @@ Human feedback is essential for building high-quality GenAI applications that me
 
 Feedback are attached to traces and recorded with metadata, including user, timestamp, revisions, etc.
 
-[Learn more →](/docs/latest/genai/tracing/collect-user-feedback.md)
+[Learn more →](/docs/latest/genai/assessments/feedback.md)
 
 ![Trace Feedback](/docs/latest/assets/images/genai-human-feedback-9a8ea2ba10a5f7c7bb192aea22345b19.png)
 

@@ -67,8 +67,9 @@ results = mlflow.genai.evaluate(
 | Scorer                                                                                                                        | What does it evaluate?                                        | Requires ground-truth? | Requires traces?      |
 | ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- | ---------------------- | --------------------- |
 | [RelevanceToQuery](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.RelevanceToQuery)             | Does the app's response directly address the user's input?    | No                     | No                    |
-| [Correctness](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Correctness)                       | Is the app's response correct compared to ground-truth?       | Yes\*                  | No                    |
+| [Correctness](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Correctness)                       | Are the expected facts supported by the app's response?       | Yes\*                  | No                    |
 | [Completeness](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Completeness)\*\*                 | Does the agent address all questions in a single user prompt? | No                     | No                    |
+| [Fluency](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Fluency)                               | Is the response grammatically correct and naturally flowing?  | No                     | No                    |
 | [Guidelines](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Guidelines)                         | Does the response adhere to provided guidelines?              | Yes\*                  | No                    |
 | [ExpectationsGuidelines](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ExpectationsGuidelines) | Does the response meet specific expectations and guidelines?  | Yes\*                  | No                    |
 | [Safety](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Safety)                                 | Does the app's response avoid harmful or toxic content?       | No                     | No                    |
@@ -85,12 +86,14 @@ results = mlflow.genai.evaluate(
 
 Multi-turn scorers evaluate entire conversation sessions rather than individual turns. They require traces with session IDs and are experimental in MLflow 3.7.0.
 
-| Scorer                                                                                                                                                | What does it evaluate?                                                 | Requires Session? |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ----------------- |
-| [ConversationCompleteness](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ConversationCompleteness)\*\*                 | Does the agent address all user questions throughout the conversation? | Yes               |
-| [ConversationalSafety](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ConversationalSafety)\*\*                         | Are the assistant's responses safe and free of harmful content?        | Yes               |
-| [ConversationalToolCallEfficiency](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ConversationalToolCallEfficiency)\*\* | Was tool usage across the conversation efficient and appropriate?      | Yes               |
-| [UserFrustration](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.UserFrustration)\*\*                                   | Is the user frustrated? Was the frustration resolved?                  | Yes               |
+| Scorer                                                                                                                                                | What does it evaluate?                                                     | Requires Session? |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ----------------- |
+| [ConversationCompleteness](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ConversationCompleteness)\*\*                 | Does the agent address all user questions throughout the conversation?     | Yes               |
+| [ConversationalRoleAdherence](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ConversationalRoleAdherence)\*\*           | Does the assistant maintain its assigned role throughout the conversation? | Yes               |
+| [ConversationalSafety](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ConversationalSafety)\*\*                         | Are the assistant's responses safe and free of harmful content?            | Yes               |
+| [ConversationalToolCallEfficiency](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ConversationalToolCallEfficiency)\*\* | Was tool usage across the conversation efficient and appropriate?          | Yes               |
+| [KnowledgeRetention](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.KnowledgeRetention)\*\*                             | Does the assistant correctly retain information from earlier user inputs?  | Yes               |
+| [UserFrustration](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.UserFrustration)\*\*                                   | Is the user frustrated? Was the frustration resolved?                      | Yes               |
 
 Multi-Turn Evaluation Requirements
 
