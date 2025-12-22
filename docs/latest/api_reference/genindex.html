@@ -2042,6 +2042,8 @@
 </li>
       <li><a href="python_api/mlflow.metrics.html#mlflow.metrics.genai.answer_similarity">answer_similarity() (in module mlflow.metrics.genai)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.AnswerRelevancy">AnswerRelevancy (class in mlflow.genai.scorers.deepeval)</a>
+</li>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.Provider.ANTHROPIC">ANTHROPIC (mlflow.gateway.config.Provider attribute)</a>
 </li>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.AnthropicConfig.anthropic_api_key">anthropic_api_key (mlflow.gateway.config.AnthropicConfig attribute)</a>
@@ -2054,10 +2056,12 @@
 </li>
       <li><a href="python_api/mlflow.models.html#mlflow.models.ResourceType.APP">APP (mlflow.models.ResourceType attribute)</a>
 </li>
-      <li><a href="python_api/mlflow.metrics.html#mlflow.metrics.ari_grade_level">ari_grade_level() (in module mlflow.metrics)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.ArgumentCorrectness">ArgumentCorrectness (class in mlflow.genai.scorers.deepeval)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python_api/mlflow.metrics.html#mlflow.metrics.ari_grade_level">ari_grade_level() (in module mlflow.metrics)</a>
+</li>
       <li><a href="python_api/mlflow.types.html#mlflow.types.schema.Array">Array (class in mlflow.types.schema)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.Experiment.artifact_location">artifact_location (mlflow.entities.Experiment property)</a>
@@ -2077,6 +2081,8 @@
 </li>
       </ul></li>
       <li><a href="python_api/mlflow.types.html#mlflow.types.Schema.as_spark_schema">as_spark_schema() (mlflow.types.Schema method)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.AspectCritic">AspectCritic (class in mlflow.genai.scorers.ragas)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.Assessment">Assessment (class in mlflow.entities)</a>
 </li>
@@ -2212,11 +2218,15 @@
       </ul></li>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.Provider.BEDROCK">BEDROCK (mlflow.gateway.config.Provider attribute)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.Bias">Bias (class in mlflow.genai.scorers.deepeval)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.types.html#mlflow.types.DataType.binary">binary (mlflow.types.DataType attribute)</a>
 </li>
       <li><a href="python_api/mlflow.metrics.html#mlflow.metrics.bleu">bleu() (in module mlflow.metrics)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.BleuScore">BleuScore (class in mlflow.genai.scorers.ragas)</a>
 </li>
       <li><a href="python_api/mlflow.types.html#mlflow.types.DataType.boolean">boolean (mlflow.types.DataType attribute)</a>
 </li>
@@ -2326,6 +2336,8 @@
 </li>
       <li><a href="python_api/mlflow.types.html#mlflow.types.agent.ChatAgentMessage.check_tool_messages">check_tool_messages() (mlflow.types.agent.ChatAgentMessage method)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.ChrfScore">ChrfScore (class in mlflow.genai.scorers.ragas)</a>
+</li>
       <li><a href="python_api/mlflow.html#mlflow.clear_active_model">clear_active_model() (in module mlflow)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfo.client_request_id">client_request_id (mlflow.entities.TraceInfo attribute)</a>
@@ -2364,6 +2376,18 @@
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.NoOpSpan.context">context (mlflow.entities.NoOpSpan property)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.ContextEntityRecall">ContextEntityRecall (class in mlflow.genai.scorers.ragas)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.ContextPrecision">ContextPrecision (class in mlflow.genai.scorers.ragas)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.ContextRecall">ContextRecall (class in mlflow.genai.scorers.ragas)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.ContextualPrecision">ContextualPrecision (class in mlflow.genai.scorers.deepeval)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.ContextualRecall">ContextualRecall (class in mlflow.genai.scorers.deepeval)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.ContextualRelevancy">ContextualRelevancy (class in mlflow.genai.scorers.deepeval)</a>
+</li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ConversationalRoleAdherence">ConversationalRoleAdherence (class in mlflow.genai.scorers)</a>
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ConversationalSafety">ConversationalSafety (class in mlflow.genai.scorers)</a>
@@ -2371,15 +2395,19 @@
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ConversationalToolCallEfficiency">ConversationalToolCallEfficiency (class in mlflow.genai.scorers)</a>
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ConversationCompleteness">ConversationCompleteness (class in mlflow.genai.scorers)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.ConversationCompleteness">(class in mlflow.genai.scorers.deepeval)</a>
 </li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.models.html#mlflow.models.convert_input_example_to_serving_input">convert_input_example_to_serving_input() (in module mlflow.models)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.PromptVersion.convert_response_format_to_dict">convert_response_format_to_dict() (mlflow.entities.model_registry.PromptVersion static method)</a>
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.optimize.OptimizerConfig.convert_to_single_text">convert_to_single_text (mlflow.genai.optimize.OptimizerConfig attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.copy_model_version">copy_model_version() (mlflow.client.MlflowClient method)</a>
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.Correctness">Correctness (class in mlflow.genai.scorers)</a>
@@ -2995,12 +3023,12 @@
       </ul></li>
       <li><a href="python_api/mlflow.metrics.html#mlflow.metrics.genai.EvaluationExample">EvaluationExample (class in mlflow.metrics.genai)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.metrics.html#mlflow.metrics.EvaluationMetric">EvaluationMetric (class in mlflow.metrics)</a>
 </li>
       <li><a href="python_api/mlflow.models.html#mlflow.models.EvaluationResult">EvaluationResult (class in mlflow.models)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.SpanType.EVALUATOR">EVALUATOR (mlflow.entities.SpanType attribute)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.Span.events">events (mlflow.entities.Span property)</a>
@@ -3011,6 +3039,12 @@
       </ul></li>
       <li><a href="python_api/mlflow.metrics.html#mlflow.metrics.exact_match">exact_match() (in module mlflow.metrics)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.ExactMatch">ExactMatch (class in mlflow.genai.scorers.deepeval)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.ExactMatch">(class in mlflow.genai.scorers.ragas)</a>
+</li>
+      </ul></li>
       <li><a href="python_api/mlflow.webhooks.html#mlflow.webhooks.ModelVersionAliasCreatedPayload.example">example() (mlflow.webhooks.ModelVersionAliasCreatedPayload class method)</a>
 
       <ul>
@@ -3087,6 +3121,8 @@
 </li>
       <li><a href="auth/python-api.html#mlflow.server.auth.entities.User.experiment_permissions">experiment_permissions (mlflow.server.auth.entities.User property)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.experimental">experimental() (in module mlflow.genai.scorers.deepeval)</a>
+</li>
       <li><a href="auth/python-api.html#mlflow.server.auth.entities.ExperimentPermission">ExperimentPermission (class in mlflow.server.auth.entities)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.ExperimentTag">ExperimentTag (class in mlflow.entities)</a>
@@ -3109,10 +3145,18 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.metrics.html#mlflow.metrics.f1_score">f1_score() (in module mlflow.metrics)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.FactualCorrectness">FactualCorrectness (class in mlflow.genai.scorers.ragas)</a>
+</li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.LoggedModelStatus.FAILED">FAILED (mlflow.entities.LoggedModelStatus attribute)</a>
 
       <ul>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.RunStatus.FAILED">(mlflow.entities.RunStatus attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.Faithfulness">Faithfulness (class in mlflow.genai.scorers.deepeval)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.Faithfulness">(class in mlflow.genai.scorers.ragas)</a>
 </li>
       </ul></li>
       <li><a href="python_api/mlflow.metrics.html#mlflow.metrics.genai.faithfulness">faithfulness() (in module mlflow.metrics.genai)</a>
@@ -3629,10 +3673,10 @@
         <li><a href="python_api/mlflow.sagemaker.html#mlflow.sagemaker.SageMakerDeploymentClient.get_endpoint">(mlflow.sagemaker.SageMakerDeploymentClient method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/exceptions/mlflow.exceptions.html#mlflow.exceptions.get_error_code">get_error_code() (in module mlflow.exceptions)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.html#mlflow.get_experiment">get_experiment() (in module mlflow)</a>
 
       <ul>
@@ -3772,7 +3816,13 @@
 </li>
       </ul></li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.get_scorer">get_scorer() (in module mlflow.genai.scorers)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.get_scorer">(in module mlflow.genai.scorers.deepeval)</a>
 </li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.get_scorer">(in module mlflow.genai.scorers.ragas)</a>
+</li>
+      </ul></li>
       <li><a href="auth/python-api.html#mlflow.server.auth.client.AuthServiceClient.get_scorer_permission">get_scorer_permission() (mlflow.server.auth.client.AuthServiceClient method)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.RunInfo.get_searchable_attributes">get_searchable_attributes() (mlflow.entities.RunInfo class method)</a>
@@ -3805,6 +3855,8 @@
 </li>
       <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.get_webhook">get_webhook() (mlflow.client.MlflowClient method)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.GoalAccuracy">GoalAccuracy (class in mlflow.genai.scorers.deepeval)</a>
+</li>
       <li><a href="python_api/mlflow.models.html#mlflow.models.MetricThreshold.greater_is_better">greater_is_better (mlflow.models.MetricThreshold property)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.SpanType.GUARDRAIL">GUARDRAIL (mlflow.entities.SpanType attribute)</a>
@@ -3819,6 +3871,8 @@
 <h2 id="H">H</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.Hallucination">Hallucination (class in mlflow.genai.scorers.deepeval)</a>
+</li>
       <li><a href="python_api/mlflow.types.html#mlflow.types.Schema.has_input_names">has_input_names() (mlflow.types.Schema method)</a>
 </li>
       <li><a href="python_api/mlflow.data.html#mlflow.data.evaluation_dataset.EvaluationDataset.has_predictions">has_predictions (mlflow.data.evaluation_dataset.EvaluationDataset property)</a>
@@ -3933,6 +3987,8 @@
 </li>
       <li><a href="python_api/mlflow.types.html#mlflow.types.responses_helpers.InputTokensDetails">InputTokensDetails (class in mlflow.types.responses_helpers)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.InstanceRubrics">InstanceRubrics (class in mlflow.genai.scorers.ragas)</a>
+</li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.LabelSchema.instruction">instruction (mlflow.genai.label_schemas.LabelSchema attribute)</a>
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.judges.Judge.instructions">instructions (mlflow.genai.judges.Judge property)</a>
@@ -4033,11 +4089,13 @@
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.ModelVersionDeploymentJobState.job_id">job_id (mlflow.entities.model_registry.ModelVersionDeploymentJobState property)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.ModelVersionDeploymentJobState.job_state">job_state (mlflow.entities.model_registry.ModelVersionDeploymentJobState property)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.SpanEvent.json">json() (mlflow.entities.SpanEvent method)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.JsonCorrectness">JsonCorrectness (class in mlflow.genai.scorers.deepeval)</a>
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.judges.Judge">Judge (class in mlflow.genai.judges)</a>
 </li>
@@ -4108,6 +4166,8 @@
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.Guidelines.kind">(mlflow.genai.scorers.Guidelines property)</a>
 </li>
       </ul></li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.KnowledgeRetention">KnowledgeRetention (class in mlflow.genai.scorers.deepeval)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -4604,6 +4664,104 @@
       </ul></li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.Metric">Metric (class in mlflow.entities)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.AnswerRelevancy.metric_name">metric_name (mlflow.genai.scorers.deepeval.AnswerRelevancy attribute)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.ArgumentCorrectness.metric_name">(mlflow.genai.scorers.deepeval.ArgumentCorrectness attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.Bias.metric_name">(mlflow.genai.scorers.deepeval.Bias attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.ContextualPrecision.metric_name">(mlflow.genai.scorers.deepeval.ContextualPrecision attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.ContextualRecall.metric_name">(mlflow.genai.scorers.deepeval.ContextualRecall attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.ContextualRelevancy.metric_name">(mlflow.genai.scorers.deepeval.ContextualRelevancy attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.ConversationCompleteness.metric_name">(mlflow.genai.scorers.deepeval.ConversationCompleteness attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.ExactMatch.metric_name">(mlflow.genai.scorers.deepeval.ExactMatch attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.Faithfulness.metric_name">(mlflow.genai.scorers.deepeval.Faithfulness attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.GoalAccuracy.metric_name">(mlflow.genai.scorers.deepeval.GoalAccuracy attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.Hallucination.metric_name">(mlflow.genai.scorers.deepeval.Hallucination attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.JsonCorrectness.metric_name">(mlflow.genai.scorers.deepeval.JsonCorrectness attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.KnowledgeRetention.metric_name">(mlflow.genai.scorers.deepeval.KnowledgeRetention attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.Misuse.metric_name">(mlflow.genai.scorers.deepeval.Misuse attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.NonAdvice.metric_name">(mlflow.genai.scorers.deepeval.NonAdvice attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.PatternMatch.metric_name">(mlflow.genai.scorers.deepeval.PatternMatch attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.PIILeakage.metric_name">(mlflow.genai.scorers.deepeval.PIILeakage attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.PlanAdherence.metric_name">(mlflow.genai.scorers.deepeval.PlanAdherence attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.PlanQuality.metric_name">(mlflow.genai.scorers.deepeval.PlanQuality attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.PromptAlignment.metric_name">(mlflow.genai.scorers.deepeval.PromptAlignment attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.RoleAdherence.metric_name">(mlflow.genai.scorers.deepeval.RoleAdherence attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.RoleViolation.metric_name">(mlflow.genai.scorers.deepeval.RoleViolation attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.StepEfficiency.metric_name">(mlflow.genai.scorers.deepeval.StepEfficiency attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.Summarization.metric_name">(mlflow.genai.scorers.deepeval.Summarization attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.TaskCompletion.metric_name">(mlflow.genai.scorers.deepeval.TaskCompletion attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.ToolCorrectness.metric_name">(mlflow.genai.scorers.deepeval.ToolCorrectness attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.ToolUse.metric_name">(mlflow.genai.scorers.deepeval.ToolUse attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.TopicAdherence.metric_name">(mlflow.genai.scorers.deepeval.TopicAdherence attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.Toxicity.metric_name">(mlflow.genai.scorers.deepeval.Toxicity attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.TurnRelevancy.metric_name">(mlflow.genai.scorers.deepeval.TurnRelevancy attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.AspectCritic.metric_name">(mlflow.genai.scorers.ragas.AspectCritic attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.BleuScore.metric_name">(mlflow.genai.scorers.ragas.BleuScore attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.ChrfScore.metric_name">(mlflow.genai.scorers.ragas.ChrfScore attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.ContextEntityRecall.metric_name">(mlflow.genai.scorers.ragas.ContextEntityRecall attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.ContextPrecision.metric_name">(mlflow.genai.scorers.ragas.ContextPrecision attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.ContextRecall.metric_name">(mlflow.genai.scorers.ragas.ContextRecall attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.ExactMatch.metric_name">(mlflow.genai.scorers.ragas.ExactMatch attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.FactualCorrectness.metric_name">(mlflow.genai.scorers.ragas.FactualCorrectness attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.Faithfulness.metric_name">(mlflow.genai.scorers.ragas.Faithfulness attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.InstanceRubrics.metric_name">(mlflow.genai.scorers.ragas.InstanceRubrics attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.NoiseSensitivity.metric_name">(mlflow.genai.scorers.ragas.NoiseSensitivity attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.NonLLMContextPrecisionWithReference.metric_name">(mlflow.genai.scorers.ragas.NonLLMContextPrecisionWithReference attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.NonLLMContextRecall.metric_name">(mlflow.genai.scorers.ragas.NonLLMContextRecall attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.NonLLMStringSimilarity.metric_name">(mlflow.genai.scorers.ragas.NonLLMStringSimilarity attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.RougeScore.metric_name">(mlflow.genai.scorers.ragas.RougeScore attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.RubricsScore.metric_name">(mlflow.genai.scorers.ragas.RubricsScore attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.StringPresence.metric_name">(mlflow.genai.scorers.ragas.StringPresence attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.SummarizationScore.metric_name">(mlflow.genai.scorers.ragas.SummarizationScore attribute)</a>
+</li>
+      </ul></li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.LoggedModel.metrics">metrics (mlflow.entities.LoggedModel property)</a>
 
       <ul>
@@ -4633,6 +4791,8 @@
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.MistralConfig.mistral_api_key">mistral_api_key (mlflow.gateway.config.MistralConfig attribute)</a>
 </li>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.MistralConfig">MistralConfig (class in mlflow.gateway.config)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.Misuse">Misuse (class in mlflow.genai.scorers.deepeval)</a>
 </li>
       <li>
     mlflow
@@ -5819,8 +5979,6 @@
         <li><a href="python_api/mlflow.artifacts.html#module-mlflow.artifacts">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     mlflow.autogen
 
@@ -5914,6 +6072,8 @@
         <li><a href="python_api/mlflow.gateway.html#module-mlflow.gateway">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     mlflow.gateway.base_models
 
@@ -5982,6 +6142,20 @@
 
       <ul>
         <li><a href="python_api/mlflow.genai.html#module-mlflow.genai.scorers">module</a>
+</li>
+      </ul></li>
+      <li>
+    mlflow.genai.scorers.deepeval
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#module-mlflow.genai.scorers.deepeval">module</a>
+</li>
+      </ul></li>
+      <li>
+    mlflow.genai.scorers.ragas
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#module-mlflow.genai.scorers.ragas">module</a>
 </li>
       </ul></li>
       <li>
@@ -6807,11 +6981,107 @@
 </li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.Correctness.model_config">(mlflow.genai.scorers.Correctness attribute)</a>
 </li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.AnswerRelevancy.model_config">(mlflow.genai.scorers.deepeval.AnswerRelevancy attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.ArgumentCorrectness.model_config">(mlflow.genai.scorers.deepeval.ArgumentCorrectness attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.Bias.model_config">(mlflow.genai.scorers.deepeval.Bias attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.ContextualPrecision.model_config">(mlflow.genai.scorers.deepeval.ContextualPrecision attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.ContextualRecall.model_config">(mlflow.genai.scorers.deepeval.ContextualRecall attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.ContextualRelevancy.model_config">(mlflow.genai.scorers.deepeval.ContextualRelevancy attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.ConversationCompleteness.model_config">(mlflow.genai.scorers.deepeval.ConversationCompleteness attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.ExactMatch.model_config">(mlflow.genai.scorers.deepeval.ExactMatch attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.Faithfulness.model_config">(mlflow.genai.scorers.deepeval.Faithfulness attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.GoalAccuracy.model_config">(mlflow.genai.scorers.deepeval.GoalAccuracy attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.Hallucination.model_config">(mlflow.genai.scorers.deepeval.Hallucination attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.JsonCorrectness.model_config">(mlflow.genai.scorers.deepeval.JsonCorrectness attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.KnowledgeRetention.model_config">(mlflow.genai.scorers.deepeval.KnowledgeRetention attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.Misuse.model_config">(mlflow.genai.scorers.deepeval.Misuse attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.NonAdvice.model_config">(mlflow.genai.scorers.deepeval.NonAdvice attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.PatternMatch.model_config">(mlflow.genai.scorers.deepeval.PatternMatch attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.PIILeakage.model_config">(mlflow.genai.scorers.deepeval.PIILeakage attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.PlanAdherence.model_config">(mlflow.genai.scorers.deepeval.PlanAdherence attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.PlanQuality.model_config">(mlflow.genai.scorers.deepeval.PlanQuality attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.PromptAlignment.model_config">(mlflow.genai.scorers.deepeval.PromptAlignment attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.RoleAdherence.model_config">(mlflow.genai.scorers.deepeval.RoleAdherence attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.RoleViolation.model_config">(mlflow.genai.scorers.deepeval.RoleViolation attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.StepEfficiency.model_config">(mlflow.genai.scorers.deepeval.StepEfficiency attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.Summarization.model_config">(mlflow.genai.scorers.deepeval.Summarization attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.TaskCompletion.model_config">(mlflow.genai.scorers.deepeval.TaskCompletion attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.ToolCorrectness.model_config">(mlflow.genai.scorers.deepeval.ToolCorrectness attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.ToolUse.model_config">(mlflow.genai.scorers.deepeval.ToolUse attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.TopicAdherence.model_config">(mlflow.genai.scorers.deepeval.TopicAdherence attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.Toxicity.model_config">(mlflow.genai.scorers.deepeval.Toxicity attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.TurnRelevancy.model_config">(mlflow.genai.scorers.deepeval.TurnRelevancy attribute)</a>
+</li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.Equivalence.model_config">(mlflow.genai.scorers.Equivalence attribute)</a>
 </li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ExpectationsGuidelines.model_config">(mlflow.genai.scorers.ExpectationsGuidelines attribute)</a>
 </li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.Guidelines.model_config">(mlflow.genai.scorers.Guidelines attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.AspectCritic.model_config">(mlflow.genai.scorers.ragas.AspectCritic attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.BleuScore.model_config">(mlflow.genai.scorers.ragas.BleuScore attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.ChrfScore.model_config">(mlflow.genai.scorers.ragas.ChrfScore attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.ContextEntityRecall.model_config">(mlflow.genai.scorers.ragas.ContextEntityRecall attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.ContextPrecision.model_config">(mlflow.genai.scorers.ragas.ContextPrecision attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.ContextRecall.model_config">(mlflow.genai.scorers.ragas.ContextRecall attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.ExactMatch.model_config">(mlflow.genai.scorers.ragas.ExactMatch attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.FactualCorrectness.model_config">(mlflow.genai.scorers.ragas.FactualCorrectness attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.Faithfulness.model_config">(mlflow.genai.scorers.ragas.Faithfulness attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.InstanceRubrics.model_config">(mlflow.genai.scorers.ragas.InstanceRubrics attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.NoiseSensitivity.model_config">(mlflow.genai.scorers.ragas.NoiseSensitivity attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.NonLLMContextPrecisionWithReference.model_config">(mlflow.genai.scorers.ragas.NonLLMContextPrecisionWithReference attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.NonLLMContextRecall.model_config">(mlflow.genai.scorers.ragas.NonLLMContextRecall attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.NonLLMStringSimilarity.model_config">(mlflow.genai.scorers.ragas.NonLLMStringSimilarity attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.RougeScore.model_config">(mlflow.genai.scorers.ragas.RougeScore attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.RubricsScore.model_config">(mlflow.genai.scorers.ragas.RubricsScore attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.StringPresence.model_config">(mlflow.genai.scorers.ragas.StringPresence attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.SummarizationScore.model_config">(mlflow.genai.scorers.ragas.SummarizationScore attribute)</a>
 </li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.RelevanceToQuery.model_config">(mlflow.genai.scorers.RelevanceToQuery attribute)</a>
 </li>
@@ -6891,11 +7161,107 @@
 </li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.Correctness.model_post_init">(mlflow.genai.scorers.Correctness method)</a>
 </li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.AnswerRelevancy.model_post_init">(mlflow.genai.scorers.deepeval.AnswerRelevancy method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.ArgumentCorrectness.model_post_init">(mlflow.genai.scorers.deepeval.ArgumentCorrectness method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.Bias.model_post_init">(mlflow.genai.scorers.deepeval.Bias method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.ContextualPrecision.model_post_init">(mlflow.genai.scorers.deepeval.ContextualPrecision method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.ContextualRecall.model_post_init">(mlflow.genai.scorers.deepeval.ContextualRecall method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.ContextualRelevancy.model_post_init">(mlflow.genai.scorers.deepeval.ContextualRelevancy method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.ConversationCompleteness.model_post_init">(mlflow.genai.scorers.deepeval.ConversationCompleteness method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.ExactMatch.model_post_init">(mlflow.genai.scorers.deepeval.ExactMatch method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.Faithfulness.model_post_init">(mlflow.genai.scorers.deepeval.Faithfulness method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.GoalAccuracy.model_post_init">(mlflow.genai.scorers.deepeval.GoalAccuracy method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.Hallucination.model_post_init">(mlflow.genai.scorers.deepeval.Hallucination method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.JsonCorrectness.model_post_init">(mlflow.genai.scorers.deepeval.JsonCorrectness method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.KnowledgeRetention.model_post_init">(mlflow.genai.scorers.deepeval.KnowledgeRetention method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.Misuse.model_post_init">(mlflow.genai.scorers.deepeval.Misuse method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.NonAdvice.model_post_init">(mlflow.genai.scorers.deepeval.NonAdvice method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.PatternMatch.model_post_init">(mlflow.genai.scorers.deepeval.PatternMatch method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.PIILeakage.model_post_init">(mlflow.genai.scorers.deepeval.PIILeakage method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.PlanAdherence.model_post_init">(mlflow.genai.scorers.deepeval.PlanAdherence method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.PlanQuality.model_post_init">(mlflow.genai.scorers.deepeval.PlanQuality method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.PromptAlignment.model_post_init">(mlflow.genai.scorers.deepeval.PromptAlignment method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.RoleAdherence.model_post_init">(mlflow.genai.scorers.deepeval.RoleAdherence method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.RoleViolation.model_post_init">(mlflow.genai.scorers.deepeval.RoleViolation method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.StepEfficiency.model_post_init">(mlflow.genai.scorers.deepeval.StepEfficiency method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.Summarization.model_post_init">(mlflow.genai.scorers.deepeval.Summarization method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.TaskCompletion.model_post_init">(mlflow.genai.scorers.deepeval.TaskCompletion method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.ToolCorrectness.model_post_init">(mlflow.genai.scorers.deepeval.ToolCorrectness method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.ToolUse.model_post_init">(mlflow.genai.scorers.deepeval.ToolUse method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.TopicAdherence.model_post_init">(mlflow.genai.scorers.deepeval.TopicAdherence method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.Toxicity.model_post_init">(mlflow.genai.scorers.deepeval.Toxicity method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.TurnRelevancy.model_post_init">(mlflow.genai.scorers.deepeval.TurnRelevancy method)</a>
+</li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.Equivalence.model_post_init">(mlflow.genai.scorers.Equivalence method)</a>
 </li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ExpectationsGuidelines.model_post_init">(mlflow.genai.scorers.ExpectationsGuidelines method)</a>
 </li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.Guidelines.model_post_init">(mlflow.genai.scorers.Guidelines method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.AspectCritic.model_post_init">(mlflow.genai.scorers.ragas.AspectCritic method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.BleuScore.model_post_init">(mlflow.genai.scorers.ragas.BleuScore method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.ChrfScore.model_post_init">(mlflow.genai.scorers.ragas.ChrfScore method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.ContextEntityRecall.model_post_init">(mlflow.genai.scorers.ragas.ContextEntityRecall method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.ContextPrecision.model_post_init">(mlflow.genai.scorers.ragas.ContextPrecision method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.ContextRecall.model_post_init">(mlflow.genai.scorers.ragas.ContextRecall method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.ExactMatch.model_post_init">(mlflow.genai.scorers.ragas.ExactMatch method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.FactualCorrectness.model_post_init">(mlflow.genai.scorers.ragas.FactualCorrectness method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.Faithfulness.model_post_init">(mlflow.genai.scorers.ragas.Faithfulness method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.InstanceRubrics.model_post_init">(mlflow.genai.scorers.ragas.InstanceRubrics method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.NoiseSensitivity.model_post_init">(mlflow.genai.scorers.ragas.NoiseSensitivity method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.NonLLMContextPrecisionWithReference.model_post_init">(mlflow.genai.scorers.ragas.NonLLMContextPrecisionWithReference method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.NonLLMContextRecall.model_post_init">(mlflow.genai.scorers.ragas.NonLLMContextRecall method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.NonLLMStringSimilarity.model_post_init">(mlflow.genai.scorers.ragas.NonLLMStringSimilarity method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.RougeScore.model_post_init">(mlflow.genai.scorers.ragas.RougeScore method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.RubricsScore.model_post_init">(mlflow.genai.scorers.ragas.RubricsScore method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.StringPresence.model_post_init">(mlflow.genai.scorers.ragas.StringPresence method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.SummarizationScore.model_post_init">(mlflow.genai.scorers.ragas.SummarizationScore method)</a>
 </li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.RelevanceToQuery.model_post_init">(mlflow.genai.scorers.RelevanceToQuery method)</a>
 </li>
@@ -7019,6 +7385,10 @@
         <li><a href="python_api/mlflow.genai.html#module-mlflow.genai.optimize">mlflow.genai.optimize</a>
 </li>
         <li><a href="python_api/mlflow.genai.html#module-mlflow.genai.scorers">mlflow.genai.scorers</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#module-mlflow.genai.scorers.deepeval">mlflow.genai.scorers.deepeval</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#module-mlflow.genai.scorers.ragas">mlflow.genai.scorers.ragas</a>
 </li>
         <li><a href="python_api/mlflow.groq.html#module-mlflow.groq">mlflow.groq</a>
 </li>
@@ -7281,6 +7651,16 @@
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.judges.CategoricalRating.NO">NO (mlflow.genai.judges.CategoricalRating attribute)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.NoiseSensitivity">NoiseSensitivity (class in mlflow.genai.scorers.ragas)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.NonAdvice">NonAdvice (class in mlflow.genai.scorers.deepeval)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.NonLLMContextPrecisionWithReference">NonLLMContextPrecisionWithReference (class in mlflow.genai.scorers.ragas)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.NonLLMContextRecall">NonLLMContextRecall (class in mlflow.genai.scorers.ragas)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.NonLLMStringSimilarity">NonLLMStringSimilarity (class in mlflow.genai.scorers.ragas)</a>
+</li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.NoOpSpan">NoOpSpan (class in mlflow.entities)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.RegisteredModelDeploymentJobState.NOT_FOUND">NOT_FOUND (mlflow.entities.model_registry.RegisteredModelDeploymentJobState attribute)</a>
@@ -7512,6 +7892,8 @@
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.FileInfo.path">(mlflow.entities.FileInfo property)</a>
 </li>
       </ul></li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.PatternMatch">PatternMatch (class in mlflow.genai.scorers.deepeval)</a>
+</li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.LoggedModelStatus.PENDING">PENDING (mlflow.entities.LoggedModelStatus attribute)</a>
 </li>
       <li><a href="auth/python-api.html#mlflow.server.auth.entities.ExperimentPermission.permission">permission (mlflow.server.auth.entities.ExperimentPermission property)</a>
@@ -7523,6 +7905,12 @@
 </li>
       </ul></li>
       <li><a href="python_api/mlflow.transformers.html#mlflow.transformers.persist_pretrained_model">persist_pretrained_model() (in module mlflow.transformers)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.PIILeakage">PIILeakage (class in mlflow.genai.scorers.deepeval)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.PlanAdherence">PlanAdherence (class in mlflow.genai.scorers.deepeval)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.PlanQuality">PlanQuality (class in mlflow.genai.scorers.deepeval)</a>
 </li>
       <li><a href="python_api/mlflow.data.html#mlflow.data.polars_dataset.PolarsDataset">PolarsDataset (class in mlflow.data.polars_dataset)</a>
 </li>
@@ -7633,6 +8021,8 @@
       <li><a href="python_api/mlflow.webhooks.html#mlflow.webhooks.PromptAliasCreatedPayload">PromptAliasCreatedPayload (class in mlflow.webhooks)</a>
 </li>
       <li><a href="python_api/mlflow.webhooks.html#mlflow.webhooks.PromptAliasDeletedPayload">PromptAliasDeletedPayload (class in mlflow.webhooks)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.PromptAlignment">PromptAlignment (class in mlflow.genai.scorers.deepeval)</a>
 </li>
       <li><a href="python_api/mlflow.webhooks.html#mlflow.webhooks.PromptCreatedPayload">PromptCreatedPayload (class in mlflow.webhooks)</a>
 </li>
@@ -7839,12 +8229,12 @@
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.PromptVersion.response_format">response_format (mlflow.entities.model_registry.PromptVersion property)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfo.response_preview">response_preview (mlflow.entities.TraceInfo attribute)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.WebhookTestResult.response_status">response_status (mlflow.entities.WebhookTestResult property)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.types.html#mlflow.types.responses_helpers.ResponseCompletedEvent">ResponseCompletedEvent (class in mlflow.types.responses_helpers)</a>
 </li>
       <li><a href="python_api/mlflow.types.html#mlflow.types.responses_helpers.ResponseError">ResponseError (class in mlflow.types.responses_helpers)</a>
@@ -7907,6 +8297,10 @@
 </li>
       <li><a href="python_api/mlflow.metrics.html#mlflow.metrics.rmse">rmse() (in module mlflow.metrics)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.RoleAdherence">RoleAdherence (class in mlflow.genai.scorers.deepeval)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.RoleViolation">RoleViolation (class in mlflow.genai.scorers.deepeval)</a>
+</li>
       <li><a href="python_api/mlflow.metrics.html#mlflow.metrics.rouge1">rouge1() (in module mlflow.metrics)</a>
 </li>
       <li><a href="python_api/mlflow.metrics.html#mlflow.metrics.rouge2">rouge2() (in module mlflow.metrics)</a>
@@ -7915,11 +8309,15 @@
 </li>
       <li><a href="python_api/mlflow.metrics.html#mlflow.metrics.rougeLsum">rougeLsum() (in module mlflow.metrics)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.RougeScore">RougeScore (class in mlflow.genai.scorers.ragas)</a>
+</li>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.RouteDestinationConfig">RouteDestinationConfig (class in mlflow.gateway.config)</a>
 </li>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.GatewayConfig.routes">routes (mlflow.gateway.config.GatewayConfig attribute)</a>
 </li>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.TrafficRouteConfig.routing_strategy">routing_strategy (mlflow.gateway.config.TrafficRouteConfig attribute)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.RubricsScore">RubricsScore (class in mlflow.genai.scorers.ragas)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.Run">Run (class in mlflow.entities)</a>
 </li>
@@ -8281,10 +8679,10 @@
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.NoOpSpan.set_outputs">(mlflow.entities.NoOpSpan method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset.set_profile">set_profile() (mlflow.genai.datasets.EvaluationDataset method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.set_prompt_alias">set_prompt_alias() (in module mlflow.genai)</a>
 
       <ul>
@@ -8547,6 +8945,8 @@
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.Metric.step">(mlflow.entities.Metric property)</a>
 </li>
       </ul></li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.StepEfficiency">StepEfficiency (class in mlflow.genai.scorers.deepeval)</a>
+</li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.Scorer.stop">stop() (mlflow.genai.Scorer method)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.PromptModelConfig.stop_sequences">stop_sequences (mlflow.entities.model_registry.PromptModelConfig attribute)</a>
@@ -8555,11 +8955,19 @@
 </li>
       <li><a href="python_api/mlflow.types.html#mlflow.types.DataType.string">string (mlflow.types.DataType attribute)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.StringPresence">StringPresence (class in mlflow.genai.scorers.ragas)</a>
+</li>
       <li><a href="python_api/mlflow.projects.html#mlflow.projects.SubmittedRun">SubmittedRun (class in mlflow.projects)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.WebhookTestResult.success">success (mlflow.entities.WebhookTestResult property)</a>
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.Summarization">Summarization (class in mlflow.genai.scorers)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.Summarization">(class in mlflow.genai.scorers.deepeval)</a>
+</li>
+      </ul></li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.SummarizationScore">SummarizationScore (class in mlflow.genai.scorers.ragas)</a>
 </li>
       <li><a href="python_api/mlflow.types.html#mlflow.types.responses_helpers.Summary">Summary (class in mlflow.types.responses_helpers)</a>
 </li>
@@ -8640,6 +9048,8 @@
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.SpanType.TASK">TASK (mlflow.entities.SpanType attribute)</a>
 </li>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.TrafficRouteConfig.task_type">task_type (mlflow.gateway.config.TrafficRouteConfig attribute)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.TaskCompletion">TaskCompletion (class in mlflow.genai.scorers.deepeval)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.PromptModelConfig.temperature">temperature (mlflow.entities.model_registry.PromptModelConfig attribute)</a>
 
@@ -8823,10 +9233,10 @@
         <li><a href="python_api/mlflow.entities.html#mlflow.store.entities.PagedList.to_list">(mlflow.store.entities.PagedList method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.types.html#mlflow.types.DataType.to_numpy">to_numpy() (mlflow.types.DataType method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.Span.to_otel_proto">to_otel_proto() (mlflow.entities.Span method)</a>
 
       <ul>
@@ -8997,15 +9407,23 @@
 </li>
       <li><a href="python_api/mlflow.types.html#mlflow.types.responses_helpers.ToolChoiceFunction">ToolChoiceFunction (class in mlflow.types.responses_helpers)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.ToolCorrectness">ToolCorrectness (class in mlflow.genai.scorers.deepeval)</a>
+</li>
       <li><a href="python_api/mlflow.types.html#mlflow.types.llm.ToolDefinition">ToolDefinition (class in mlflow.types.llm)</a>
 </li>
       <li><a href="python_api/mlflow.types.html#mlflow.types.llm.ToolParamsSchema">ToolParamsSchema (class in mlflow.types.llm)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.ToolUse">ToolUse (class in mlflow.genai.scorers.deepeval)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.PromptModelConfig.top_k">top_k (mlflow.entities.model_registry.PromptModelConfig attribute)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.PromptModelConfig.top_p">top_p (mlflow.entities.model_registry.PromptModelConfig attribute)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.TopicAdherence">TopicAdherence (class in mlflow.genai.scorers.deepeval)</a>
+</li>
       <li><a href="python_api/mlflow.types.html#mlflow.types.llm.TopTokenLogProb">TopTokenLogProb (class in mlflow.types.llm)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.Toxicity">Toxicity (class in mlflow.genai.scorers.deepeval)</a>
 </li>
       <li><a href="python_api/mlflow.metrics.html#mlflow.metrics.toxicity">toxicity() (in module mlflow.metrics)</a>
 </li>
@@ -9054,6 +9472,8 @@
       <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.transition_model_version_stage">transition_model_version_stage() (mlflow.client.MlflowClient method)</a>
 </li>
       <li><a href="python_api/mlflow.types.html#mlflow.types.responses_helpers.Truncation">Truncation (class in mlflow.types.responses_helpers)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.TurnRelevancy">TurnRelevancy (class in mlflow.genai.scorers.deepeval)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceLocation.type">type (mlflow.entities.TraceLocation attribute)</a>
 
