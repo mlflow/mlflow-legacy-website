@@ -77,6 +77,8 @@ results = mlflow.genai.evaluate(
 | [RetrievalGroundedness](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.RetrievalGroundedness)   | Is the app's response grounded in retrieved information?      | No                     | ⚠️ **Trace Required** |
 | [RetrievalRelevance](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.RetrievalRelevance)         | Are retrieved documents relevant to the user's request?       | No                     | ⚠️ **Trace Required** |
 | [RetrievalSufficiency](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.RetrievalSufficiency)     | Do retrieved documents contain all necessary information?     | Yes                    | ⚠️ **Trace Required** |
+| [ToolCallCorrectness](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ToolCallCorrectness)\*\*   | Are the tool calls and arguments correct for the user query?  | No                     | ⚠️ **Trace Required** |
+| [ToolCallEfficiency](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ToolCallEfficiency)\*\*     | Are the tool calls efficient without redundancy?              | No                     | ⚠️ **Trace Required** |
 
 \*Can extract expectations from trace assessments if available.
 

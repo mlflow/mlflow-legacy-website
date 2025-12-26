@@ -160,7 +160,7 @@ export MLFLOW_GENAI_EVAL_ASYNC_TIMEOUT=600  # 10 minutes
 
 ### Step 2: Create evaluation dataset[​](#step-2-create-evaluation-dataset "Direct link to Step 2: Create evaluation dataset")
 
-Design test cases as a list of dictionaries, each with an `inputs`, `expectations`, and an optional `tags` field. We would like to evaluate the correctness of the output, but also the tool calls used by the agent.
+Design test cases as a list of dictionaries, each with an `inputs`, `expectations`, and an optional `tags` field.
 
 python
 
@@ -168,66 +168,50 @@ python
 eval_dataset = [
     {
         "inputs": {"task": "What is 15% of 240?"},
-        "expectations": {"answer": 36, "tool_calls": ["multiply"]},
+        "expectations": {"answer": 36},
         "tags": {"topic": "math"},
     },
     {
         "inputs": {
             "task": "I have 8 cookies and 3 friends. How many more cookies should I buy to share equally?"
         },
-        "expectations": {"answer": 1, "tool_calls": ["modular", "add"]},
+        "expectations": {"answer": 1},
         "tags": {"topic": "math"},
     },
     {
         "inputs": {
             "task": "I bought 2 shares of stock at $100 each. It's now worth $150. How much profit did I make?"
         },
-        "expectations": {"answer": 100, "tool_calls": ["add", "multiply"]},
+        "expectations": {"answer": 100},
         "tags": {"topic": "math"},
     },
 ]
 ```
 
-### Step 3: Define agent-specific scorers[​](#step-3-define-agent-specific-scorers "Direct link to Step 3: Define agent-specific scorers")
+### Step 3: Define scorers[​](#step-3-define-scorers "Direct link to Step 3: Define scorers")
 
-Create scorers that evaluate agent-specific behaviors.
-
-tip
-
-MLflow's scorer can take the **Trace** from the agent execution. Trace is a powerful way to evaluate the agent's behavior precisely, not only the final output. For example, here we use the [`Trace.search_spans`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.Trace.search_spans) method to extract the order of tool calls and compare it with the expected tool calls.
-
-For more details, see the [Evaluate Traces](/docs/latest/genai/eval-monitor/running-evaluation/traces.md) guide.
+We'll define a custom scorer to evaluate the correctness of the final output.
 
 python
 
 ```
-from mlflow.entities import Feedback, SpanType, Trace
 from mlflow.genai import scorer
 
 
 @scorer
 def exact_match(outputs, expectations) -> bool:
     return int(outputs) == expectations["answer"]
-
-
-@scorer
-def uses_correct_tools(trace: Trace, expectations: dict) -> Feedback:
-    """Evaluate if agent used tools appropriately"""
-    expected_tools = expectations["tool_calls"]
-
-    # Parse the trace to get the actual tool calls
-    tool_spans = trace.search_spans(span_type=SpanType.TOOL)
-    tool_names = [span.name for span in tool_spans]
-
-    score = "yes" if tool_names == expected_tools else "no"
-    rationale = (
-        "The agent used the correct tools."
-        if tool_names == expected_tools
-        else f"The agent used the incorrect tools: {tool_names}"
-    )
-    # Return a Feedback object with the score and rationale
-    return Feedback(value=score, rationale=rationale)
 ```
+
+tip
+
+MLflow provides built-in scorers for evaluating agent tool usage:
+
+* [ToolCallEfficiency](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ToolCallEfficiency): Evaluates if tool calls are efficient without redundancy
+
+These scorers automatically analyze traces to assess tool usage patterns. See the [Predefined Scorers](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md) guide for more details.
+
+For custom evaluation patterns, you can create your own scorers that parse traces. See the [Custom Scorers](/docs/latest/genai/eval-monitor/scorers/custom.md) guide.
 
 ### Step 4: Run the evaluation[​](#step-4-run-the-evaluation "Direct link to Step 4: Run the evaluation")
 
@@ -236,8 +220,15 @@ Now we are ready to run the evaluation!
 python
 
 ```
+from mlflow.genai.scorers import ToolCallEfficiency
+
 results = mlflow.genai.evaluate(
-    data=eval_dataset, predict_fn=predict_fn, scorers=[exact_match, uses_correct_tools]
+    data=eval_dataset,
+    predict_fn=predict_fn,
+    scorers=[
+        exact_match,
+        ToolCallEfficiency(),
+    ],
 )
 ```
 
