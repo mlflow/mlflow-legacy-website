@@ -6,23 +6,34 @@ This quickstart guide will walk you through setting up a simple GenAI applicatio
 
 Make sure you have started the MLflow server. If you don't have the MLflow server running yet, just follow these simple steps to get it started.
 
+* Local (uv)
 * Local (pip)
 * Local (docker)
 
+Install the Python package manager [uv](https://docs.astral.sh/uv/getting-started/installation/) (that will also install [`uvx` command](https://docs.astral.sh/uv/guides/tools/) to invoke Python tools without installing them).
+
+Start a MLflow server locally.
+
+shell
+
+```
+uvx mlflow server
+```
+
 **Python Environment**: Python 3.10+
 
-For the fastest setup, you can install the `mlflow` Python package via `pip` and start the MLflow server locally.
+Install the `mlflow` Python package via `pip` and start a MLflow server locally.
 
-bash
+shell
 
 ```
 pip install --upgrade mlflow
 mlflow server
 ```
 
-MLflow provides a Docker Compose file to start a local MLflow server with a postgres database and a minio server.
+MLflow provides a Docker Compose file to start a local MLflow server with a PostgreSQL database and a MinIO server.
 
-bash
+shell
 
 ```
 git clone --depth 1 --filter=blob:none --sparse https://github.com/mlflow/mlflow.git
@@ -33,7 +44,7 @@ cp .env.dev.example .env
 docker compose up -d
 ```
 
-Refer to the [instruction](https://github.com/mlflow/mlflow/tree/master/docker-compose/README.md) for more details, e.g., overriding the default environment variables.
+Refer to the [instruction](https://github.com/mlflow/mlflow/tree/master/docker-compose/README.md) for more details (e.g., overriding the default environment variables).
 
 ## Create a MLflow Experiment[​](#create-a-mlflow-experiment "Direct link to Create a MLflow Experiment")
 
@@ -182,6 +193,61 @@ After running the code above, go to the MLflow UI and select the "My Application
 ![Single Trace](/docs/latest/images/llms/tracing/quickstart/single-openai-trace-list.png)
 
 ![Single Trace](/docs/latest/images/llms/tracing/quickstart/single-openai-trace-detail.png)
+
+## Track Multi-Turn Conversations with Sessions[​](#track-multi-turn-conversations-with-sessions "Direct link to Track Multi-Turn Conversations with Sessions")
+
+Many GenAI applications maintain multi-turn conversations with users. MLflow provides built-in support for tracking user sessions by using standard metadata fields. This allows you to group related traces together and analyze conversation flows.
+
+* Python
+* TypeScript
+
+Here's how to add user and session tracking to your application:
+
+python
+
+```
+import mlflow
+
+
+@mlflow.trace
+def chat_completion(message: list[dict], user_id: str, session_id: str):
+    """Process a chat message with user and session tracking."""
+
+    # Add user and session context to the current trace
+    mlflow.update_current_trace(
+        metadata={
+            "mlflow.trace.user": user_id,  # Links trace to specific user
+            "mlflow.trace.session": session_id,  # Groups trace with conversation
+        }
+    )
+
+    # Your chat logic here
+    return generate_response(message)
+```
+
+typescript
+
+```
+import * as mlflow from "mlflow-tracing";
+
+const chatCompletion = mlflow.trace(
+    (message: Array<Record<string, any>>, userId: string, sessionId: string) => {
+        // Add user and session context to the current trace
+        mlflow.updateCurrentTrace({
+            metadata: {
+                "mlflow.trace.user": userId,
+                "mlflow.trace.session": sessionId,
+            },
+        });
+
+        // Your chat logic here
+        return generateResponse(message);
+    },
+    { name: "chat_completion" }
+);
+```
+
+For more details on tracking users and sessions, see the [Track Users & Sessions guide](/docs/latest/genai/tracing/track-users-sessions.md).
 
 ## Next Step[​](#next-step "Direct link to Next Step")
 

@@ -15,15 +15,65 @@ MLflow automatically captures the following information about FireworksAI calls:
 * Tool Use if returned in the response
 * Any exception if raised
 
-## Supported APIs[​](#supported-apis "Direct link to Supported APIs")
+## Getting Started[​](#getting-started "Direct link to Getting Started")
 
-Since FireworksAI is OpenAI SDK compatible, all APIs supported by MLflow's OpenAI integration work seamlessly with FireworksAI. See [the model library](https://fireworks.ai/models) for a list of available models on FireworksAI.
+1
 
-| Normal | Tool Use | Structured Outputs | Streaming | Async |
-| ------ | -------- | ------------------ | --------- | ----- |
-| ✅     | ✅       | ✅                 | ✅        | ✅    |
+### Install Dependencies
 
-## Quick Start[​](#quick-start "Direct link to Quick Start")
+* Python
+* JS / TS
+
+bash
+
+```
+pip install mlflow openai
+```
+
+bash
+
+```
+npm install mlflow-openai openai
+```
+
+2
+
+### Start MLflow Server
+
+* Local (pip)
+* Local (docker)
+
+If you have a local Python environment >= 3.10, you can start the MLflow server locally using the `mlflow` CLI command.
+
+bash
+
+```
+mlflow server
+```
+
+MLflow also provides a Docker Compose file to start a local MLflow server with a postgres database and a minio server.
+
+bash
+
+```
+git clone --depth 1 --filter=blob:none --sparse https://github.com/mlflow/mlflow.git
+cd mlflow
+git sparse-checkout set docker-compose
+cd docker-compose
+cp .env.dev.example .env
+docker compose up -d
+```
+
+Refer to the [instruction](https://github.com/mlflow/mlflow/tree/master/docker-compose/README.md) for more details, e.g., overriding the default environment variables.
+
+3
+
+### Enable Tracing and Make API Calls
+
+* Python
+* JS / TS
+
+Enable tracing with `mlflow.openai.autolog()` and make API calls as usual.
 
 python
 
@@ -32,21 +82,21 @@ import mlflow
 import openai
 import os
 
-# Enable auto-tracing
+# Enable auto-tracing for FireworksAI (uses OpenAI SDK compatibility)
 mlflow.openai.autolog()
 
-# Optional: Set a tracking URI and an experiment
+# Set a tracking URI and an experiment
 mlflow.set_tracking_uri("http://localhost:5000")
 mlflow.set_experiment("FireworksAI")
 
 # Create an OpenAI client configured for FireworksAI
-openai_client = openai.OpenAI(
+client = openai.OpenAI(
     base_url="https://api.fireworks.ai/inference/v1",
     api_key=os.getenv("FIREWORKS_API_KEY"),
 )
 
 # Use the client as usual - traces will be automatically captured
-response = openai_client.chat.completions.create(
+response = client.chat.completions.create(
     model="accounts/fireworks/models/deepseek-v3-0324",  # For other models see: https://fireworks.ai/models
     messages=[
         {"role": "user", "content": "Why is open source better than closed source?"}
@@ -54,9 +104,53 @@ response = openai_client.chat.completions.create(
 )
 ```
 
+Wrap the OpenAI client with the `tracedOpenAI` function and make API calls as usual.
+
+typescript
+
+```
+import { OpenAI } from "openai";
+import { tracedOpenAI } from "mlflow-openai";
+
+// Wrap the OpenAI client and point to FireworksAI endpoint
+const client = tracedOpenAI(
+  new OpenAI({
+    baseURL: "https://api.fireworks.ai/inference/v1",
+    apiKey: process.env.FIREWORKS_API_KEY,
+  })
+);
+
+// Use the client as usual - traces will be automatically captured
+const response = await client.chat.completions.create({
+  model: "accounts/fireworks/models/deepseek-v3-0324",  // For other models see: https://fireworks.ai/models
+  messages: [
+    { role: "user", content: "Why is open source better than closed source?" }
+  ],
+});
+```
+
+4
+
+### View Traces in MLflow UI
+
+Browse to the MLflow UI at <http://localhost:5000> (or your MLflow server URL) and you should see the traces for the FireworksAI API calls.
+
+![FireworksAI Tracing in MLflow UI](/docs/latest/images/llms/tracing/fireworks-ai-tracing.png)
+
+→ View [Next Steps](#next-steps) for learning about more MLflow features like user feedback tracking, prompt management, and evaluation.
+
+## Supported APIs[​](#supported-apis "Direct link to Supported APIs")
+
+Since FireworksAI is OpenAI SDK compatible, all APIs supported by MLflow's OpenAI integration work seamlessly with FireworksAI. See [the model library](https://fireworks.ai/models) for a list of available models on FireworksAI.
+
+| Normal | Tool Use | Structured Outputs | Streaming | Async |
+| ------ | -------- | ------------------ | --------- | ----- |
+| ✅     | ✅       | ✅                 | ✅        | ✅    |
+
 ## Chat Completion API Examples[​](#chat-completion-api-examples "Direct link to Chat Completion API Examples")
 
 * Basic Example
+* JS / TS
 * Streaming
 * Async
 * Tool Use
@@ -95,6 +189,37 @@ response = openai_client.chat.completions.create(
     messages=messages,
     max_completion_tokens=100,
 )
+```
+
+typescript
+
+```
+import { OpenAI } from "openai";
+import { tracedOpenAI } from "mlflow-openai";
+
+// Configure OpenAI client for FireworksAI
+const client = tracedOpenAI(
+  new OpenAI({
+    baseURL: "https://api.fireworks.ai/inference/v1",
+    apiKey: process.env.FIREWORKS_API_KEY,
+  })
+);
+
+const messages = [
+  {
+    role: "user",
+    content: "What is the capital of France?",
+  }
+];
+
+// To use different models check out the model library at: https://fireworks.ai/models
+const response = await client.chat.completions.create({
+  model: "accounts/fireworks/models/deepseek-v3-0324",
+  messages: messages,
+  max_tokens: 100,
+});
+
+console.log(response.choices[0].message.content);
 ```
 
 MLflow Tracing supports streaming API outputs of FireworksAI endpoints through the OpenAI SDK. With the same setup of auto tracing, MLflow automatically traces the streaming response and renders the concatenated output in the span UI. The actual chunks in the response stream can be found in the `Event` tab as well.
@@ -295,3 +420,23 @@ Completions:
 ## Disable auto-tracing[​](#disable-auto-tracing "Direct link to Disable auto-tracing")
 
 Auto tracing for FireworksAI can be disabled globally by calling `mlflow.openai.autolog(disable=True)` or `mlflow.autolog(disable=True)`.
+
+## Next steps[​](#next-steps "Direct link to Next steps")
+
+### [Track User Feedback](/docs/latest/genai/tracing/collect-user-feedback.md)
+
+[Record user feedback on traces for tracking user satisfaction.](/docs/latest/genai/tracing/collect-user-feedback.md)
+
+[Learn about feedback →](/docs/latest/genai/tracing/collect-user-feedback.md)
+
+### [Manage Prompts](/docs/latest/genai/prompt-registry.md)
+
+[Learn how to manage prompts with MLflow's prompt registry.](/docs/latest/genai/prompt-registry.md)
+
+[Manage prompts →](/docs/latest/genai/prompt-registry.md)
+
+### [Evaluate Traces](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
+
+[Evaluate traces with LLM judges to understand and improve your AI application's behavior.](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
+
+[Evaluate traces →](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
