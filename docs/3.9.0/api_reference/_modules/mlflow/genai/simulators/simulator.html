@@ -1,0 +1,943 @@
+
+
+<!DOCTYPE html>
+<!-- source: docs/source/_modules/mlflow/genai/simulators/simulator -->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mlflow.genai.simulators.simulator</title>
+  
+   
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="canonical" href="https://mlflow.org/docs/latest/_modules/mlflow/genai/simulators/simulator.html">
+  
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+  
+
+  
+
+  
+    
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer',"GTM-N6WMTTJ");</script>
+        <!-- End Google Tag Manager -->
+    
+  
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16857946923"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-16857946923');
+  </script>
+  <!-- Eng gtag -->
+
+  
+
+  
+  <meta name="docsearch:docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_version" content="current" data-rh="true">
+  <meta name="docsearch:version" content="current" data-rh="true">
+  <meta name="docusaurus_locale" content="en" data-rh="true">
+  <meta name="docsearch:language" content="en" data-rh="true">
+
+  
+  
+    
+
+  
+
+  
+  
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600" rel="stylesheet">
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/css/custom.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/css/cards.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/css/grids.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/css/mobile.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/css/simple-cards.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/css/tabs.css" type="text/css" />
+    
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="MLflow 3.9.0 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+<script type="text/javascript" src="../../../../_static/documentation_options.js"></script>
+<script type="text/javascript" src="../../../../_static/jquery.js"></script>
+<script type="text/javascript" src="../../../../_static/underscore.js"></script>
+<script type="text/javascript" src="../../../../_static/doctools.js"></script>
+<script type="text/javascript" src="../../../../_static/tabs.js"></script>
+<script type="text/javascript" src="../../../../_static/languagesections.js"></script>
+<script type="text/javascript" src="../../../../_static/runllm.js"></script>
+
+<body class="wy-body-for-nav" role="document">
+  
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6WMTTJ"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  
+  <nav class="wy-nav-top header" role="navigation" aria-label="top navigation">
+    <div class="header-container">
+  <style scoped>
+    .header-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
+    }
+
+    .logo-container {
+      display: flex;
+      gap: 12px;
+      flex-direction: row;
+      white-space: nowrap;
+      align-items: center;
+      justify-content: center;
+    }
+
+    a:hover {
+      text-decoration: none;
+      color: #0194e2;
+    }
+  </style>
+  <div class="logo-container">
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
+    <a href="../../../../index.html" class="wy-nav-top-logo">
+      <img
+        src="../../../../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
+    </a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
+  </div>
+  <span class="header-link version">3.9.0</span>
+</div>
+  </nav>
+  <page>
+    
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side relative">
+      <div class="wy-side-scroll">
+  <div class="wy-side-nav-search">
+    
+
+    
+
+    
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+    
+  </div>
+
+  <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+    
+      <a href="../../../../index.html">Home</a>
+    
+
+    
+      
+
+      
+        <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../python_api/index.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../typescript_api/index.html">TypeScript API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cli.html">Command-Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../auth/python-api.html">MLflow Authentication Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../auth/rest-api.html">MLflow Authentication REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../R-api.html">R API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../java_api/index.html">Java API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rest-api.html">REST API</a></li>
+</ul>
+
+      
+    
+  </div>
+
+  <div role="contentinfo">
+    
+
+    <p>
+      <a id='feedbacklink' href="https://github.com/mlflow/mlflow/blob/master/CONTRIBUTING.md" target="_blank">Contribute</a>
+    </p>
+  </div>
+</div>
+    </nav>
+
+    <main class="wy-grid-for-nav">
+      <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+        <div class="wy-nav-content">
+          <div class="rst-content">
+            
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Documentation</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+        <li><a href="../../../index.html">Module code</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+    
+      <li>mlflow.genai.simulators.simulator</li>
+    
+    
+    <!-- <li class="wy-breadcrumbs-aside">
+      <a href="https://github.com/mlflow/mlflow/blob/master/docs/source/_modules/mlflow/genai/simulators/simulator" class="fa fa-github"> Edit on GitHub</a>
+    </li> -->
+    
+  </ul>
+</div>
+            <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+              <div itemprop="articleBody">
+                
+  <h1>Source code for mlflow.genai.simulators.simulator</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">concurrent.futures</span><span class="w"> </span><span class="kn">import</span> <span class="n">ThreadPoolExecutor</span><span class="p">,</span> <span class="n">as_completed</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">contextmanager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pydantic</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">mlflow</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.environment_variables</span><span class="w"> </span><span class="kn">import</span> <span class="n">MLFLOW_GENAI_EVAL_MAX_WORKERS</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">EvaluationDataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.judges.adapters.databricks_managed_judge_adapter</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">call_chat_completions</span><span class="p">,</span>
+    <span class="n">create_litellm_message_from_databricks_response</span><span class="p">,</span>
+    <span class="n">serialize_messages_to_databricks_prompts</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.judges.adapters.databricks_serving_endpoint_adapter</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">_invoke_databricks_serving_endpoint</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.judges.constants</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">_DATABRICKS_AGENTIC_JUDGE_MODEL</span><span class="p">,</span>
+    <span class="n">_DATABRICKS_DEFAULT_JUDGE_MODEL</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.judges.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_default_model</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.simulators.prompts</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">CHECK_GOAL_PROMPT</span><span class="p">,</span>
+    <span class="n">DEFAULT_PERSONA</span><span class="p">,</span>
+    <span class="n">FOLLOWUP_USER_PROMPT</span><span class="p">,</span>
+    <span class="n">INITIAL_USER_PROMPT</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.utils.trace_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_outputs_to_str</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.telemetry.events</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimulateConversationEvent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.telemetry.track</span><span class="w"> </span><span class="kn">import</span> <span class="n">record_usage_event</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.constant</span><span class="w"> </span><span class="kn">import</span> <span class="n">TraceMetadataKey</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">experimental</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.docstring_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">format_docstring</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">tqdm.auto</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">tqdm</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataFrame</span>
+
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.types.llm</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatMessage</span>
+
+<span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">_MAX_METADATA_LENGTH</span> <span class="o">=</span> <span class="mi">250</span>
+<span class="n">_EXPECTED_TEST_CASE_KEYS</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;goal&quot;</span><span class="p">,</span> <span class="s2">&quot;persona&quot;</span><span class="p">,</span> <span class="s2">&quot;context&quot;</span><span class="p">}</span>
+<span class="n">_REQUIRED_TEST_CASE_KEYS</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;goal&quot;</span><span class="p">}</span>
+
+<span class="n">_MODEL_API_DOC</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;&quot;Model to use for generating user messages. Must be one of:</span>
+
+<span class="s2">* `&quot;databricks&quot;` - Uses the Databricks managed LLM endpoint</span>
+<span class="s2">* `&quot;databricks:/&lt;endpoint-name&gt;&quot;` - Uses a Databricks model serving endpoint </span><span class="se">\</span>
+<span class="s2">(e.g., `&quot;databricks:/databricks-claude-sonnet-4-5&quot;`)</span>
+<span class="s2">* `&quot;&lt;provider&gt;:/&lt;model-name&gt;&quot;` - Uses LiteLLM (e.g., `&quot;openai:/gpt-4.1-mini&quot;`, </span><span class="se">\</span>
+<span class="s2">`&quot;anthropic:/claude-3.5-sonnet-20240620&quot;`)</span>
+
+<span class="s2">MLflow natively supports `[&quot;openai&quot;, &quot;anthropic&quot;, &quot;bedrock&quot;, &quot;mistral&quot;]`, and more </span><span class="se">\</span>
+<span class="s2">providers are supported through `LiteLLM &lt;https://docs.litellm.ai/docs/providers&gt;`_.</span>
+
+<span class="s2">Default model depends on the tracking URI setup:</span>
+
+<span class="s2">* Databricks: `&quot;databricks&quot;`</span>
+<span class="s2">* Otherwise: `&quot;openai:/gpt-4.1-mini&quot;`</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">GoalCheckResult</span><span class="p">(</span><span class="n">pydantic</span><span class="o">.</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Structured output for goal achievement check.&quot;&quot;&quot;</span>
+
+    <span class="n">rationale</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">pydantic</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Reason for the assessment explaining whether the goal has been achieved&quot;</span>
+    <span class="p">)</span>
+    <span class="n">result</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">pydantic</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;&#39;yes&#39; if goal achieved, &#39;no&#39; otherwise&quot;</span><span class="p">)</span>
+
+
+<span class="nd">@contextmanager</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_suppress_tracing_logging</span><span class="p">():</span>
+    <span class="c1"># Suppress INFO logs when flushing traces from the async trace export queue.</span>
+    <span class="n">async_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;mlflow.tracing.export.async_export_queue&quot;</span><span class="p">)</span>
+    <span class="c1"># Suppress WARNING logs when the tracing provider is automatically traced, but used in a</span>
+    <span class="c1"># tracing-disabled context (e.g., generating user messages).</span>
+    <span class="n">fluent_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;mlflow.tracing.fluent&quot;</span><span class="p">)</span>
+    <span class="n">original_async_level</span> <span class="o">=</span> <span class="n">async_logger</span><span class="o">.</span><span class="n">level</span>
+    <span class="n">original_fluent_level</span> <span class="o">=</span> <span class="n">fluent_logger</span><span class="o">.</span><span class="n">level</span>
+
+    <span class="n">async_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">)</span>
+    <span class="n">fluent_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">yield</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">async_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">original_async_level</span><span class="p">)</span>
+        <span class="n">fluent_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">original_fluent_level</span><span class="p">)</span>
+
+
+<span class="nd">@contextmanager</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_delete_trace_if_created</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Delete any trace created within this context to avoid polluting user traces.&quot;&quot;&quot;</span>
+    <span class="n">trace_id_before</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">get_last_active_trace_id</span><span class="p">(</span><span class="n">thread_local</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">yield</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">trace_id_after</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">get_last_active_trace_id</span><span class="p">(</span><span class="n">thread_local</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">trace_id_after</span> <span class="ow">and</span> <span class="n">trace_id_after</span> <span class="o">!=</span> <span class="n">trace_id_before</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">mlflow</span><span class="o">.</span><span class="n">delete_trace</span><span class="p">(</span><span class="n">trace_id_after</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to delete trace </span><span class="si">{</span><span class="n">trace_id_after</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># TODO: Refactor judges adapters to support returning raw responses, then use them here</span>
+<span class="c1">#       instead of reimplementing the invocation logic.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_invoke_model_without_tracing</span><span class="p">(</span>
+    <span class="n">model_uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">messages</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="s2">&quot;ChatMessage&quot;</span><span class="p">],</span>
+    <span class="n">num_retries</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="n">inference_params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Invoke a model without tracing. This method will delete the last trace created by the</span>
+<span class="sd">    invocation, if any.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">litellm</span>
+
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.metrics.genai.model_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">_parse_model_uri</span>
+
+    <span class="k">with</span> <span class="n">_delete_trace_if_created</span><span class="p">():</span>
+        <span class="c1"># Use Databricks managed endpoint with agentic model for the default &quot;databricks&quot; URI</span>
+        <span class="k">if</span> <span class="n">model_uri</span> <span class="o">==</span> <span class="n">_DATABRICKS_DEFAULT_JUDGE_MODEL</span><span class="p">:</span>
+            <span class="n">user_prompt</span><span class="p">,</span> <span class="n">system_prompt</span> <span class="o">=</span> <span class="n">serialize_messages_to_databricks_prompts</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span>
+
+            <span class="n">result</span> <span class="o">=</span> <span class="n">call_chat_completions</span><span class="p">(</span>
+                <span class="n">user_prompt</span><span class="o">=</span><span class="n">user_prompt</span><span class="p">,</span>
+                <span class="c1"># NB: We cannot use an empty system prompt here so we use a period.</span>
+                <span class="n">system_prompt</span><span class="o">=</span><span class="n">system_prompt</span> <span class="ow">or</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span>
+                <span class="n">model</span><span class="o">=</span><span class="n">_DATABRICKS_AGENTIC_JUDGE_MODEL</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="s2">&quot;error_code&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Failed to get chat completions result from Databricks managed endpoint: &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">error_code</span><span class="si">}</span><span class="s2">] </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">error_message</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+
+            <span class="n">output_json</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">output_json</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">output_json</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span><span class="s2">&quot;Empty response from Databricks managed endpoint&quot;</span><span class="p">)</span>
+
+            <span class="n">parsed_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">output_json</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">output_json</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">output_json</span>
+            <span class="k">return</span> <span class="n">create_litellm_message_from_databricks_response</span><span class="p">(</span><span class="n">parsed_json</span><span class="p">)</span><span class="o">.</span><span class="n">content</span>
+
+        <span class="n">provider</span><span class="p">,</span> <span class="n">model_name</span> <span class="o">=</span> <span class="n">_parse_model_uri</span><span class="p">(</span><span class="n">model_uri</span><span class="p">)</span>
+
+        <span class="c1"># Use Databricks serving endpoint for databricks:/&lt;endpoint&gt; URIs</span>
+        <span class="k">if</span> <span class="n">provider</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;databricks&quot;</span><span class="p">,</span> <span class="s2">&quot;endpoints&quot;</span><span class="p">}:</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">_invoke_databricks_serving_endpoint</span><span class="p">(</span>
+                <span class="n">model_name</span><span class="o">=</span><span class="n">model_name</span><span class="p">,</span>
+                <span class="n">prompt</span><span class="o">=</span><span class="n">messages</span><span class="p">,</span>
+                <span class="n">num_retries</span><span class="o">=</span><span class="n">num_retries</span><span class="p">,</span>
+                <span class="n">inference_params</span><span class="o">=</span><span class="n">inference_params</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="n">output</span><span class="o">.</span><span class="n">response</span>
+
+        <span class="c1"># Use LiteLLM for other providers</span>
+        <span class="n">litellm_messages</span> <span class="o">=</span> <span class="p">[</span><span class="n">litellm</span><span class="o">.</span><span class="n">Message</span><span class="p">(</span><span class="n">role</span><span class="o">=</span><span class="n">msg</span><span class="o">.</span><span class="n">role</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">msg</span><span class="o">.</span><span class="n">content</span><span class="p">)</span> <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">messages</span><span class="p">]</span>
+
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">provider</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;messages&quot;</span><span class="p">:</span> <span class="n">litellm_messages</span><span class="p">,</span>
+            <span class="s2">&quot;max_retries&quot;</span><span class="p">:</span> <span class="n">num_retries</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="n">inference_params</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">inference_params</span><span class="p">)</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="n">litellm</span><span class="o">.</span><span class="n">completion</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_last_response</span><span class="p">(</span><span class="n">conversation_history</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">conversation_history</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="n">last_msg</span> <span class="o">=</span> <span class="n">conversation_history</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="n">last_msg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">content</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">content</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">parse_outputs_to_str</span><span class="p">(</span><span class="n">last_msg</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">result</span> <span class="ow">and</span> <span class="n">result</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">last_msg</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_format_history</span><span class="p">(</span><span class="n">history</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">history</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">formatted</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">history</span><span class="p">:</span>
+        <span class="n">role</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;role&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">&quot;unknown&quot;</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">formatted</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">role</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">content</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">formatted</span><span class="p">)</span>
+
+
+<span class="nd">@format_docstring</span><span class="p">(</span><span class="n">_MODEL_API_DOC</span><span class="p">)</span>
+<span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.9.0&quot;</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SimulatedUserAgent</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An LLM-powered agent that simulates user behavior in conversations.</span>
+
+<span class="sd">    The agent generates realistic user messages based on a specified goal and persona,</span>
+<span class="sd">    enabling automated testing of conversational AI systems.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        goal: The objective the simulated user is trying to achieve in the conversation.</span>
+<span class="sd">        persona: Description of the user&#39;s personality and background. If None, uses a</span>
+<span class="sd">            default helpful user persona.</span>
+<span class="sd">        model: {{ model }}</span>
+<span class="sd">        **inference_params: Additional parameters passed to the LLM (e.g., temperature).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">goal</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">persona</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">inference_params</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">goal</span> <span class="o">=</span> <span class="n">goal</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">persona</span> <span class="o">=</span> <span class="n">persona</span> <span class="ow">or</span> <span class="n">DEFAULT_PERSONA</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span> <span class="ow">or</span> <span class="n">get_default_model</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inference_params</span> <span class="o">=</span> <span class="n">inference_params</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_message</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">conversation_history</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+        <span class="n">turn</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.types.llm</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatMessage</span>
+
+        <span class="k">if</span> <span class="n">turn</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">prompt</span> <span class="o">=</span> <span class="n">INITIAL_USER_PROMPT</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">persona</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">persona</span><span class="p">,</span> <span class="n">goal</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">last_response</span> <span class="o">=</span> <span class="n">_get_last_response</span><span class="p">(</span><span class="n">conversation_history</span><span class="p">)</span>
+            <span class="n">history_str</span> <span class="o">=</span> <span class="n">_format_history</span><span class="p">(</span><span class="n">conversation_history</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">prompt</span> <span class="o">=</span> <span class="n">FOLLOWUP_USER_PROMPT</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">persona</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">persona</span><span class="p">,</span>
+                <span class="n">goal</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="p">,</span>
+                <span class="n">conversation_history</span><span class="o">=</span><span class="n">history_str</span> <span class="k">if</span> <span class="n">history_str</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="n">last_response</span><span class="o">=</span><span class="n">last_response</span> <span class="k">if</span> <span class="n">last_response</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="n">messages</span> <span class="o">=</span> <span class="p">[</span><span class="n">ChatMessage</span><span class="p">(</span><span class="n">role</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">prompt</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="n">_invoke_model_without_tracing</span><span class="p">(</span>
+            <span class="n">model_uri</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
+            <span class="n">messages</span><span class="o">=</span><span class="n">messages</span><span class="p">,</span>
+            <span class="n">num_retries</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+            <span class="n">inference_params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">inference_params</span><span class="p">,</span>
+        <span class="p">)</span>
+
+
+<div class="viewcode-block" id="ConversationSimulator"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.ConversationSimulator">[docs]</a><span class="nd">@format_docstring</span><span class="p">(</span><span class="n">_MODEL_API_DOC</span><span class="p">)</span>
+<span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.9.0&quot;</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ConversationSimulator</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates multi-turn conversations by simulating user interactions with a target agent.</span>
+
+<span class="sd">    The simulator creates a simulated user agent that interacts with your agent&#39;s predict function.</span>
+<span class="sd">    Each conversation is traced in MLflow, allowing you to evaluate how your agent handles</span>
+<span class="sd">    various user goals and personas.</span>
+
+<span class="sd">    The predict function passed to the simulator must follow the OpenAI Responses API format</span>
+<span class="sd">    (https://platform.openai.com/docs/api-reference/responses):</span>
+
+<span class="sd">    - It must accept an ``input`` parameter containing the conversation history</span>
+<span class="sd">      as a list of message dictionaries (e.g., ``[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;...&quot;}]``)</span>
+<span class="sd">    - It may accept additional keyword arguments from the test case&#39;s ``context`` field</span>
+<span class="sd">    - It should return a response (the assistant&#39;s message content will be extracted)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        test_cases: List of test case dicts, a DataFrame, or an EvaluationDataset,</span>
+<span class="sd">            with the following fields:</span>
+
+<span class="sd">            - &quot;goal&quot;: Describing what the simulated user wants to achieve.</span>
+<span class="sd">            - &quot;persona&quot; (optional): Custom persona for the simulated user.</span>
+<span class="sd">            - &quot;context&quot; (optional): Dict of additional kwargs to pass to predict_fn.</span>
+
+<span class="sd">        max_turns: Maximum number of conversation turns before stopping. Default is 10.</span>
+<span class="sd">        user_model: {{ model }}</span>
+<span class="sd">        **user_llm_params: Additional parameters passed to the simulated user&#39;s LLM calls.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            import mlflow</span>
+<span class="sd">            from mlflow.genai.simulators import ConversationSimulator</span>
+<span class="sd">            from mlflow.genai.scorers import ConversationalSafety, Safety</span>
+
+
+<span class="sd">            def predict_fn(input: list[dict], **kwargs) -&gt; dict:</span>
+<span class="sd">                response = client.chat.completions.create(</span>
+<span class="sd">                    model=&quot;gpt-4o-mini&quot;,</span>
+<span class="sd">                    messages=input,</span>
+<span class="sd">                )</span>
+<span class="sd">                return response</span>
+
+
+<span class="sd">            # Each test case requires a &quot;goal&quot;. &quot;persona&quot; and &quot;context&quot; are optional.</span>
+<span class="sd">            simulator = ConversationSimulator(</span>
+<span class="sd">                test_cases=[</span>
+<span class="sd">                    {&quot;goal&quot;: &quot;Learn about MLflow tracking&quot;},</span>
+<span class="sd">                    {&quot;goal&quot;: &quot;Debug deployment issue&quot;, &quot;persona&quot;: &quot;A data scientist&quot;},</span>
+<span class="sd">                    {</span>
+<span class="sd">                        &quot;goal&quot;: &quot;Set up model registry&quot;,</span>
+<span class="sd">                        &quot;persona&quot;: &quot;A beginner&quot;,</span>
+<span class="sd">                        &quot;context&quot;: {&quot;user_id&quot;: &quot;123&quot;},</span>
+<span class="sd">                    },</span>
+<span class="sd">                ],</span>
+<span class="sd">                max_turns=5,</span>
+<span class="sd">            )</span>
+
+<span class="sd">            mlflow.genai.evaluate(</span>
+<span class="sd">                data=simulator,</span>
+<span class="sd">                predict_fn=predict_fn,</span>
+<span class="sd">                scorers=[ConversationalSafety(), Safety()],</span>
+<span class="sd">            )</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">test_cases</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">|</span> <span class="s2">&quot;DataFrame&quot;</span> <span class="o">|</span> <span class="n">EvaluationDataset</span><span class="p">,</span>
+        <span class="n">max_turns</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="n">user_model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">user_llm_params</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_cases</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalize_test_cases</span><span class="p">(</span><span class="n">test_cases</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_test_cases</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_turns</span> <span class="o">=</span> <span class="n">max_turns</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user_model</span> <span class="o">=</span> <span class="n">user_model</span> <span class="ow">or</span> <span class="n">get_default_model</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user_llm_params</span> <span class="o">=</span> <span class="n">user_llm_params</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_normalize_test_cases</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">test_cases</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">|</span> <span class="s2">&quot;DataFrame&quot;</span> <span class="o">|</span> <span class="n">EvaluationDataset</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataFrame</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">test_cases</span><span class="p">,</span> <span class="n">EvaluationDataset</span><span class="p">):</span>
+            <span class="n">records</span> <span class="o">=</span> <span class="n">test_cases</span><span class="o">.</span><span class="n">to_df</span><span class="p">()[</span><span class="s2">&quot;inputs&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">records</span> <span class="ow">or</span> <span class="ow">not</span> <span class="p">(</span><span class="n">records</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">_REQUIRED_TEST_CASE_KEYS</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;EvaluationDataset passed to ConversationSimulator must contain &quot;</span>
+                    <span class="s2">&quot;conversational test cases with a &#39;goal&#39; field in the &#39;inputs&#39; column&quot;</span>
+                <span class="p">)</span>
+            <span class="k">return</span> <span class="n">records</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">test_cases</span><span class="p">,</span> <span class="n">DataFrame</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">test_cases</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s2">&quot;records&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">test_cases</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_validate_test_cases</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_cases</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;test_cases cannot be empty&quot;</span><span class="p">)</span>
+
+        <span class="n">missing_goal_indices</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">test_case</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">test_cases</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">test_case</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;goal&quot;</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">missing_goal_indices</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test cases at indices </span><span class="si">{</span><span class="n">missing_goal_indices</span><span class="si">}</span><span class="s2"> must have &#39;goal&#39; field&quot;</span><span class="p">)</span>
+
+        <span class="n">indices_with_extra_keys</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">i</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">test_case</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">test_cases</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="n">test_case</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">-</span> <span class="n">_EXPECTED_TEST_CASE_KEYS</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">indices_with_extra_keys</span><span class="p">:</span>
+            <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Test cases at indices </span><span class="si">{</span><span class="n">indices_with_extra_keys</span><span class="si">}</span><span class="s2"> contain unexpected keys &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;which will be ignored. Expected keys: </span><span class="si">{</span><span class="n">_EXPECTED_TEST_CASE_KEYS</span><span class="si">}</span><span class="s2">.&quot;</span>
+            <span class="p">)</span>
+
+    <span class="nd">@record_usage_event</span><span class="p">(</span><span class="n">SimulateConversationEvent</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_simulate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">predict_fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+        <span class="n">num_test_cases</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">test_cases</span><span class="p">)</span>
+        <span class="n">all_trace_ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_test_cases</span><span class="p">)]</span>
+        <span class="n">max_workers</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">num_test_cases</span><span class="p">,</span> <span class="n">MLFLOW_GENAI_EVAL_MAX_WORKERS</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+
+        <span class="n">progress_bar</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">tqdm</span><span class="p">(</span>
+                <span class="n">total</span><span class="o">=</span><span class="n">num_test_cases</span><span class="p">,</span>
+                <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Simulating conversations&quot;</span><span class="p">,</span>
+                <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;conversation&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">tqdm</span>
+            <span class="k">else</span> <span class="kc">None</span>
+        <span class="p">)</span>
+
+        <span class="k">with</span> <span class="p">(</span>
+            <span class="n">_suppress_tracing_logging</span><span class="p">(),</span>
+            <span class="n">ThreadPoolExecutor</span><span class="p">(</span>
+                <span class="n">max_workers</span><span class="o">=</span><span class="n">max_workers</span><span class="p">,</span>
+                <span class="n">thread_name_prefix</span><span class="o">=</span><span class="s2">&quot;MlflowConversationSimulator&quot;</span><span class="p">,</span>
+            <span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">,</span>
+        <span class="p">):</span>
+            <span class="n">futures</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_run_conversation</span><span class="p">,</span> <span class="n">test_case</span><span class="p">,</span> <span class="n">predict_fn</span><span class="p">):</span> <span class="n">i</span>
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">test_case</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">test_cases</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">future</span> <span class="ow">in</span> <span class="n">as_completed</span><span class="p">(</span><span class="n">futures</span><span class="p">):</span>
+                    <span class="n">idx</span> <span class="o">=</span> <span class="n">futures</span><span class="p">[</span><span class="n">future</span><span class="p">]</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">all_trace_ids</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+                    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                        <span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;Failed to run conversation for test case &quot;</span>
+                            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">test_cases</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;goal&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span>
+                        <span class="p">)</span>
+                    <span class="k">if</span> <span class="n">progress_bar</span><span class="p">:</span>
+                        <span class="n">progress_bar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">finally</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">progress_bar</span><span class="p">:</span>
+                    <span class="n">progress_bar</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">all_trace_ids</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_run_conversation</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">test_case</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">predict_fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="n">goal</span> <span class="o">=</span> <span class="n">test_case</span><span class="p">[</span><span class="s2">&quot;goal&quot;</span><span class="p">]</span>
+        <span class="n">persona</span> <span class="o">=</span> <span class="n">test_case</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;persona&quot;</span><span class="p">)</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="n">test_case</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;context&quot;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="n">trace_session_id</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;sim-</span><span class="si">{</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span><span class="o">.</span><span class="n">hex</span><span class="p">[:</span><span class="mi">16</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="n">user_agent</span> <span class="o">=</span> <span class="n">SimulatedUserAgent</span><span class="p">(</span>
+            <span class="n">goal</span><span class="o">=</span><span class="n">goal</span><span class="p">,</span>
+            <span class="n">persona</span><span class="o">=</span><span class="n">persona</span><span class="p">,</span>
+            <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">user_model</span><span class="p">,</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">user_llm_params</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">conversation_history</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">trace_ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">turn</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_turns</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># Generate a user message using the simulated user agent.</span>
+                <span class="n">user_message_content</span> <span class="o">=</span> <span class="n">user_agent</span><span class="o">.</span><span class="n">generate_message</span><span class="p">(</span><span class="n">conversation_history</span><span class="p">,</span> <span class="n">turn</span><span class="p">)</span>
+                <span class="n">user_message</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">user_message_content</span><span class="p">}</span>
+                <span class="n">conversation_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">user_message</span><span class="p">)</span>
+
+                <span class="c1"># Invoke the predict_fn with the user message and context.</span>
+                <span class="n">response</span><span class="p">,</span> <span class="n">trace_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_invoke_predict_fn</span><span class="p">(</span>
+                    <span class="n">predict_fn</span><span class="o">=</span><span class="n">predict_fn</span><span class="p">,</span>
+                    <span class="n">input_messages</span><span class="o">=</span><span class="n">conversation_history</span><span class="p">,</span>
+                    <span class="n">trace_session_id</span><span class="o">=</span><span class="n">trace_session_id</span><span class="p">,</span>
+                    <span class="n">goal</span><span class="o">=</span><span class="n">goal</span><span class="p">,</span>
+                    <span class="n">persona</span><span class="o">=</span><span class="n">persona</span><span class="p">,</span>
+                    <span class="n">turn</span><span class="o">=</span><span class="n">turn</span><span class="p">,</span>
+                    <span class="o">**</span><span class="n">context</span><span class="p">,</span>
+                <span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">trace_id</span><span class="p">:</span>
+                    <span class="n">trace_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">trace_id</span><span class="p">)</span>
+
+                <span class="c1"># Parse the assistant&#39;s response and check if the goal has been achieved.</span>
+                <span class="n">assistant_content</span> <span class="o">=</span> <span class="n">parse_outputs_to_str</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">assistant_content</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">assistant_content</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+                    <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Stopping conversation: empty response at turn </span><span class="si">{</span><span class="n">turn</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">break</span>
+                <span class="n">conversation_history</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;assistant&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">assistant_content</span><span class="p">})</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_goal_achieved</span><span class="p">(</span><span class="n">conversation_history</span><span class="p">,</span> <span class="n">assistant_content</span><span class="p">,</span> <span class="n">goal</span><span class="p">):</span>
+                    <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Stopping conversation: goal achieved at turn </span><span class="si">{</span><span class="n">turn</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">break</span>
+
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error during turn </span><span class="si">{</span><span class="n">turn</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="k">break</span>
+
+        <span class="k">return</span> <span class="n">trace_ids</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_invoke_predict_fn</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">predict_fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+        <span class="n">input_messages</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+        <span class="n">trace_session_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">goal</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">persona</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">turn</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">context</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="c1"># NB: We trace the predict_fn call to add session and simulation metadata to the trace.</span>
+        <span class="c1">#     This adds a new root span to the trace, with the same inputs and outputs as the</span>
+        <span class="c1">#     predict_fn call. The goal/persona/turn metadata is used for trace comparison UI</span>
+        <span class="c1">#     since message content may differ between simulation runs.</span>
+        <span class="nd">@mlflow</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;simulation_turn_</span><span class="si">{</span><span class="n">turn</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">span_type</span><span class="o">=</span><span class="s2">&quot;CHAIN&quot;</span><span class="p">)</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">traced_predict</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span> <span class="o">**</span><span class="n">ctx</span><span class="p">):</span>
+            <span class="n">mlflow</span><span class="o">.</span><span class="n">update_current_trace</span><span class="p">(</span>
+                <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+                    <span class="n">TraceMetadataKey</span><span class="o">.</span><span class="n">TRACE_SESSION</span><span class="p">:</span> <span class="n">trace_session_id</span><span class="p">,</span>
+                    <span class="s2">&quot;mlflow.simulation.goal&quot;</span><span class="p">:</span> <span class="n">goal</span><span class="p">[:</span><span class="n">_MAX_METADATA_LENGTH</span><span class="p">],</span>
+                    <span class="s2">&quot;mlflow.simulation.persona&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">persona</span> <span class="ow">or</span> <span class="n">DEFAULT_PERSONA</span><span class="p">)[</span>
+                        <span class="p">:</span><span class="n">_MAX_METADATA_LENGTH</span>
+                    <span class="p">],</span>
+                    <span class="s2">&quot;mlflow.simulation.turn&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">turn</span><span class="p">),</span>
+                <span class="p">},</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="n">predict_fn</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="nb">input</span><span class="p">,</span> <span class="o">**</span><span class="n">ctx</span><span class="p">)</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="n">traced_predict</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">input_messages</span><span class="p">,</span> <span class="o">**</span><span class="n">context</span><span class="p">)</span>
+        <span class="n">trace_id</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">get_last_active_trace_id</span><span class="p">(</span><span class="n">thread_local</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span><span class="p">,</span> <span class="n">trace_id</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_goal_achieved</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">conversation_history</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+        <span class="n">last_response</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">goal</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.types.llm</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatMessage</span>
+
+        <span class="n">history_str</span> <span class="o">=</span> <span class="n">_format_history</span><span class="p">(</span><span class="n">conversation_history</span><span class="p">)</span>
+        <span class="n">eval_prompt</span> <span class="o">=</span> <span class="n">CHECK_GOAL_PROMPT</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">goal</span><span class="o">=</span><span class="n">goal</span><span class="p">,</span>
+            <span class="n">conversation_history</span><span class="o">=</span><span class="n">history_str</span> <span class="k">if</span> <span class="n">history_str</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="n">last_response</span><span class="o">=</span><span class="n">last_response</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">messages</span> <span class="o">=</span> <span class="p">[</span><span class="n">ChatMessage</span><span class="p">(</span><span class="n">role</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">eval_prompt</span><span class="p">)]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">text_result</span> <span class="o">=</span> <span class="n">_invoke_model_without_tracing</span><span class="p">(</span>
+                <span class="n">model_uri</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">user_model</span><span class="p">,</span>
+                <span class="n">messages</span><span class="o">=</span><span class="n">messages</span><span class="p">,</span>
+                <span class="n">num_retries</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                <span class="n">inference_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">},</span>
+            <span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">GoalCheckResult</span><span class="o">.</span><span class="n">model_validate_json</span><span class="p">(</span><span class="n">text_result</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;yes&quot;</span>
+        <span class="k">except</span> <span class="n">pydantic</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">:</span>
+            <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not parse response for goal achievement check: </span><span class="si">{</span><span class="n">text_result</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Goal achievement check failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+</pre></div>
+
+              </div>
+            </div>
+            <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+      <p class="copyright">
+          &copy; MLflow Project, a Series of LF Projects, LLC. All rights reserved.
+      </p>
+
+  </div> 
+
+</footer>
+          </div>
+        </div>
+      </section>
+    </main>
+  </page>
+
+  
+
+
+  
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:'../../../../',
+      VERSION:'3.9.0',
+      COLLAPSE_INDEX:false,
+      FILE_SUFFIX:'.html',
+      LINK_SUFFIX: '.html',
+      HAS_SOURCE:  true
+    };
+  </script>
+
+  
+
+  <script type="text/javascript" src="../../../../_static/js/clipboard.min.js"></script>
+  <script type="text/javascript" src="../../../../_static/js/jquery.waypoints.min.js"></script>
+
+  
+  
+  
+  <script type="text/javascript">var CLIPPY_SVG_PATH = "../../../../_static/clippy.svg";</script>
+  <script type="text/javascript" src="../../../../_static/js/custom.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+    jQuery(function () {
+      SphinxRtdTheme.StickyNav.enable();
+    });
+
+  </script>
+  
+
+  
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
+        // Get the code block designator class entries
+        const allHighlights = document.querySelectorAll('.highlight');
+        // Disable copyable links for notebook cell numbering and for cell outputs
+        const highlights = Array.from(allHighlights).filter(highlight => !highlight.closest('.highlight-none') && 
+            !highlight.closest('.nboutput'));
+    
+        highlights.forEach(function(highlight) {
+            const copyIcon = document.createElement('span');
+            copyIcon.classList.add('copy-icon');
+            copyIcon.innerHTML = '&#xf0ea;';
+
+            copyIcon.addEventListener('click', function() {
+                const code = highlight.querySelector('pre').textContent;
+                copyToClipboard(code);
+
+                // Flash effect on click
+                this.style.color = '#0194E2';
+                setTimeout(() => {
+                    this.style.color = ''; 
+                }, 100);
+
+                // Display "Code copied to clipboard" near the clicked icon
+                const message = document.createElement('span');
+                message.textContent = "Copied!";
+                message.classList.add('copy-message'); 
+
+                // Append the message to the icon
+                this.appendChild(message);
+
+                setTimeout(() => {
+                    this.removeChild(message);
+                }, 500);
+            });
+
+            highlight.appendChild(copyIcon);
+        });
+    });
+  </script>
+
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        // Force download for notebook-download-btn
+        const downloadButtons = document.querySelectorAll('.notebook-download-btn');
+        downloadButtons.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default behavior
+
+                // Fetch the raw content of the notebook from GitHub
+                fetch(button.href)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const url = window.URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.style.display = 'none';
+                        link.href = url;
+                        const filename = button.href.split('/').pop();
+                        link.download = filename; 
+
+                        document.body.appendChild(link);
+                        link.click();
+
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(link);
+                    })
+                    .catch(err => console.error('Error fetching the notebook:', err));
+            });
+        });
+    });
+</script> 
+</body>
+</html>

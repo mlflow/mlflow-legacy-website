@@ -1,12 +1,10 @@
 # MLflow AI Gateway
 
-warning
-
-MLflow AI Gateway does not support Windows.
-
 MLflow AI Gateway provides a unified interface for deploying and managing multiple LLM providers within your organization. It simplifies interactions with services like OpenAI, Anthropic, and others through a single, secure endpoint.
 
-The gateway server excels in production environments where organizations need to manage multiple LLM providers securely while maintaining operational flexibility and developer productivity.
+The gateway excels in production environments where organizations need to manage multiple LLM providers securely while maintaining operational flexibility. Advanced routing capabilities enable traffic splitting for A/B testing and automatic failover chains for high availability.
+
+MLflow AI Gateway also offers passthrough endpoints, enabling requests to be forwarded in providers' native formats. This feature allows you to access provider-specific capabilities as soon as they become available.
 
 #### Unified Interface
 
@@ -16,9 +14,9 @@ Access multiple LLM providers through a single endpoint, eliminating the need to
 
 Store API keys in one secure location with request/response logging for audit trails and compliance.
 
-#### Provider Abstraction
+#### Advanced Routing
 
-Switch between OpenAI, Anthropic, Azure OpenAI, and other providers without changing your application code.
+Traffic splitting for A/B testing and automatic fallbacks ensure high availability across providers.
 
 #### Zero-Downtime Updates
 
@@ -32,152 +30,64 @@ Monitor usage across providers and optimize costs by routing requests to the mos
 
 Shared endpoint configurations and standardized access patterns across development teams.
 
-## Getting Started[​](#getting-started "Direct link to Getting Started")
-
-Choose your path to get up and running with MLflow AI Gateway:
-
-### [Setup](/docs/latest/genai/governance/ai-gateway/setup.md)
-
-[Install MLflow, configure environment, and start your gateway server](/docs/latest/genai/governance/ai-gateway/setup.md)
-
-[Start setup →](/docs/latest/genai/governance/ai-gateway/setup.md)
-
-### [Configuration](/docs/latest/genai/governance/ai-gateway/configuration.md)
-
-[Configure providers, endpoints, and advanced gateway settings](/docs/latest/genai/governance/ai-gateway/configuration.md)
-
-[Configure providers →](/docs/latest/genai/governance/ai-gateway/configuration.md)
-
-### [Usage](/docs/latest/genai/governance/ai-gateway/usage.md)
-
-[Query endpoints with Python client and REST APIs](/docs/latest/genai/governance/ai-gateway/usage.md)
-
-[Start using →](/docs/latest/genai/governance/ai-gateway/usage.md)
-
-### [Integration](/docs/latest/genai/governance/ai-gateway/integration.md)
-
-[Integrate with applications, frameworks, and production systems](/docs/latest/genai/governance/ai-gateway/integration.md)
-
-[Learn integrations →](/docs/latest/genai/governance/ai-gateway/integration.md)
-
 ## Quick Start[​](#quick-start "Direct link to Quick Start")
 
-Get your AI Gateway running with OpenAI in under 5 minutes:
+Get your AI Gateway running in minutes:
 
-* 1\. Install
-* 2\. Configure
-* 3\. Start Server
-* 4\. Test
-
-Install MLflow with gateway dependencies:
+**1. Install MLflow with GenAI dependencies:**
 
 bash
 
 ```
-pip install 'mlflow[gateway]'
+pip install 'mlflow[genai]'
 ```
 
-Set your OpenAI API key:
+**2. Start the MLflow Tracking Server:**
 
 bash
 
 ```
-export OPENAI_API_KEY=your_api_key_here
+mlflow server --port 5000
 ```
 
-Create a simple configuration file `config.yaml`:
+The AI Gateway runs within the MLflow Tracking Server itself and requires a SQL-based backend store with the FastAPI tracking server.
 
-yaml
+**3. Configure your first endpoint:**
 
-```
-endpoints:
-  - name: chat
-    endpoint_type: llm/v1/chat
-    model:
-      provider: openai
-      name: gpt-3.5-turbo
-      config:
-        openai_api_key: $OPENAI_API_KEY
-```
+Navigate to `http://localhost:5000/#/gateway` and create your first endpoint `my-chat-endpoint` through the web interface. Select your provider, model, and configure your API key. API keys are encrypted and stored securely in the MLflow backend.
 
-Start the gateway server:
+![Create Endpoint](/docs/latest/assets/images/create-endpoint-4b5244302954cd8e676b9f929168a048.png)
+
+**4. Test your endpoint:**
 
 bash
 
 ```
-mlflow gateway start --config-path config.yaml --port 5000
-```
-
-Your gateway is now running at `http://localhost:5000`
-
-Test your endpoint:
-
-bash
-
-```
-curl -X POST http://localhost:5000/gateway/chat/invocations \
+curl -X POST http://localhost:5000/gateway/my-chat-endpoint/mlflow/invocations \
   -H "Content-Type: application/json" \
   -d '{
     "messages": [{"role": "user", "content": "Hello!"}]
   }'
 ```
 
-## Supported Providers[​](#supported-providers "Direct link to Supported Providers")
-
-MLflow AI Gateway supports a comprehensive range of LLM providers:
-
-| Provider              | Chat | Chat function calling | Completions | Embeddings | Notes                                    |
-| --------------------- | ---- | --------------------- | ----------- | ---------- | ---------------------------------------- |
-| OpenAI                | ✅   | ✅                    | ✅          | ✅         | GPT-4, GPT-5, text-embedding models      |
-| Azure OpenAI          | ✅   | ✅                    | ✅          | ✅         | Enterprise OpenAI with Azure integration |
-| Anthropic             | ✅   | ✅                    | ✅          | ❌         | Claude models via Anthropic API          |
-| Gemini                | ✅   | ✅                    | ✅          | ✅         | Gemini models via Gemini API             |
-| AWS Bedrock Claude    | ✅   | ✅                    | ✅          | ✅         | Claude models provided by AWS Bedrock    |
-| AWS Bedrock Titan     | ❌   | ❌                    | ✅          | ❌         | Titan models provided by AWS Bedrock     |
-| AWS Bedrock AI21      | ❌   | ❌                    | ✅          | ❌         | AI21 models provided by AWS Bedrock      |
-| MLflow Models         | ✅   | ❌                    | ✅          | ✅         | Your own deployed MLflow models          |
-| Cohere (deprecated)   | ✅   | ❌                    | ✅          | ✅         | Command and embedding models             |
-| PaLM (deprecated)     | ✅   | ❌                    | ✅          | ✅         | Google's PaLM models                     |
-| MosaicML (deprecated) | ✅   | ❌                    | ✅          | ❌         | MPT models and custom deployments        |
-
-## Core Concepts[​](#core-concepts "Direct link to Core Concepts")
-
-Understanding these key concepts will help you effectively use the AI Gateway:
-
-### Endpoints[​](#endpoints "Direct link to Endpoints")
-
-Endpoints are named configurations that define how to access a specific model from a provider. Each endpoint specifies the model, provider settings, and access parameters.
-
-### Providers[​](#providers "Direct link to Providers")
-
-Providers are the underlying LLM services (OpenAI, Anthropic, etc.) that actually serve the models. The gateway abstracts away provider-specific details.
-
-### Routes[​](#routes "Direct link to Routes")
-
-Routes define the URL structure for accessing endpoints. The gateway automatically creates routes based on your endpoint configurations.
-
-### Dynamic Updates[​](#dynamic-updates "Direct link to Dynamic Updates")
-
-The gateway supports hot-reloading of configurations, allowing you to add, modify, or remove endpoints without restarting the server.
-
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-Ready to dive deeper? Explore these resources:
+Ready to dive deeper? Start with the setup guide or explore the legacy YAML-based configuration:
 
 ### [Setup Guide](/docs/latest/genai/governance/ai-gateway/setup.md)
 
-[Get started with installation, environment setup, and server configuration](/docs/latest/genai/governance/ai-gateway/setup.md)
+[Configure endpoints, API keys, and advanced routing features](/docs/latest/genai/governance/ai-gateway/setup.md)
 
-[Start setup →](/docs/latest/genai/governance/ai-gateway/setup.md)
+[Get started →](/docs/latest/genai/governance/ai-gateway/setup.md)
 
-### [Usage Guide](/docs/latest/genai/governance/ai-gateway/usage.md)
+### [Advanced Routing](/docs/latest/genai/governance/ai-gateway/routing.md)
 
-[Learn basic querying patterns with Python client and REST APIs](/docs/latest/genai/governance/ai-gateway/usage.md)
+[Configure traffic splitting and fallbacks for high availability](/docs/latest/genai/governance/ai-gateway/routing.md)
 
-[Learn usage →](/docs/latest/genai/governance/ai-gateway/usage.md)
+[Learn routing →](/docs/latest/genai/governance/ai-gateway/routing.md)
 
-### [Integration Guide](/docs/latest/genai/governance/ai-gateway/integration.md)
+### [Query Guide](/docs/latest/genai/governance/ai-gateway/query.md)
 
-[Integrate with applications, frameworks, and production systems](/docs/latest/genai/governance/ai-gateway/integration.md)
+[Learn how to call endpoints with unified and passthrough APIs](/docs/latest/genai/governance/ai-gateway/query.md)
 
-[View integrations →](/docs/latest/genai/governance/ai-gateway/integration.md)
+[View query guide →](/docs/latest/genai/governance/ai-gateway/query.md)

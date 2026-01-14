@@ -2,15 +2,7 @@
 
 MLflow supports automatic tracing for Amazon Bedrock, a fully managed service on AWS that provides high-performing foundations from leading AI providers such as Anthropic, Cohere, Meta, Mistral AI, and more. By enabling auto tracing for Amazon Bedrock by calling the [`mlflow.bedrock.autolog()`](/docs/latest/api_reference/python_api/mlflow.bedrock.html#mlflow.bedrock.autolog) function, MLflow will capture traces for LLM invocation and log them to the active MLflow Experiment.
 
-![Bedrock DIY Agent Tracing](/docs/latest/assets/images/bedrock-tracing-agent-cae1bcf40457074afa5bfde0b05b292e.png)
-
-python
-
-```
-import mlflow
-
-mlflow.bedrock.autolog()
-```
+![Bedrock DIY Agent Tracing](/docs/latest/images/llms/tracing/bedrock-tracing-agent.png)
 
 MLflow trace automatically captures the following information about Amazon Bedrock calls:
 
@@ -20,17 +12,55 @@ MLflow trace automatically captures the following information about Amazon Bedro
 * Additional metadata such as temperature, max\_tokens, if specified.
 * Function calling if returned in the response
 * Any exception if raised
+* and more...
 
-## Supported APIs[​](#supported-apis "Direct link to Supported APIs")
+## Getting Started[​](#getting-started "Direct link to Getting Started")
 
-MLflow supports automatic tracing for the following Amazon Bedrock APIs:
+1
 
-* [converse](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/bedrock-runtime/client/converse.html)
-* [converse\_stream](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/bedrock-runtime/client/converse_stream.html)
-* [invoke\_model](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/bedrock-runtime/client/invoke_model.html)
-* [invoke\_model\_with\_response\_stream](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/bedrock-runtime/client/invoke_model_with_response_stream.html)
+### Install Dependencies
 
-## Basic Example[​](#basic-example "Direct link to Basic Example")
+bash
+
+```
+pip install mlflow boto3
+```
+
+2
+
+### Start MLflow Server
+
+* Local (pip)
+* Local (docker)
+
+If you have a local Python environment >= 3.10, you can start the MLflow server locally using the `mlflow` CLI command.
+
+bash
+
+```
+mlflow server
+```
+
+MLflow also provides a Docker Compose file to start a local MLflow server with a postgres database and a minio server.
+
+bash
+
+```
+git clone --depth 1 --filter=blob:none --sparse https://github.com/mlflow/mlflow.git
+cd mlflow
+git sparse-checkout set docker-compose
+cd docker-compose
+cp .env.dev.example .env
+docker compose up -d
+```
+
+Refer to the [instruction](https://github.com/mlflow/mlflow/tree/master/docker-compose/README.md) for more details, e.g., overriding the default environment variables.
+
+3
+
+### Enable Tracing and Make API Calls
+
+Enable tracing with `mlflow.bedrock.autolog()` and invoke Bedrock as usual using the boto3 runtime client. Ensure your AWS credentials and region are configured (e.g., `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`).
 
 python
 
@@ -40,20 +70,23 @@ import mlflow
 
 # Enable auto-tracing for Amazon Bedrock
 mlflow.bedrock.autolog()
+mlflow.set_tracking_uri("http://localhost:5000")
 mlflow.set_experiment("Bedrock")
+
 # Create a boto3 client for invoking the Bedrock API
 bedrock = boto3.client(
     service_name="bedrock-runtime",
     region_name="<REPLACE_WITH_YOUR_AWS_REGION>",
 )
-# MLflow will log a trace for Bedrock API call in the "Bedrock" experiment created above
+
+# Make a standard Bedrock call
 response = bedrock.converse(
-    modelId="anthropic.claude-3-5-sonnet-20241022-v2:0",
+    modelId="anthropic.claude-3-7-sonnet-20250219-v1:0",
     messages=[
         {
             "role": "user",
             "content": "Describe the purpose of a 'hello world' program in one line.",
-        }
+        },
     ],
     inferenceConfig={
         "maxTokens": 512,
@@ -63,7 +96,22 @@ response = bedrock.converse(
 )
 ```
 
-The logged trace, associated with the `Bedrock` experiment, can be seen in the MLflow UI.
+4
+
+### View Traces in MLflow UI
+
+Open the MLflow UI at <http://localhost:5000> (or your MLflow server URL) to see the trace for your Bedrock API calls.
+
+![Bedrock Trace](/docs/latest/images/llms/tracing/bedrock-tracing-stream.png)
+
+## Supported APIs[​](#supported-apis "Direct link to Supported APIs")
+
+MLflow supports automatic tracing for the following Amazon Bedrock APIs:
+
+* [converse](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/bedrock-runtime/client/converse.html)
+* [converse\_stream](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/bedrock-runtime/client/converse_stream.html)
+* [invoke\_model](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/bedrock-runtime/client/invoke_model.html)
+* [invoke\_model\_with\_response\_stream](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/bedrock-runtime/client/invoke_model_with_response_stream.html)
 
 ## Raw Inputs and Outputs[​](#raw-inputs-and-outputs "Direct link to Raw Inputs and Outputs")
 
@@ -90,7 +138,7 @@ Token usage is extracted from the response for all major Bedrock providers, incl
 * Amazon Titan/Nova
 * Meta Llama
 
-### Supported APIs[​](#supported-apis-1 "Direct link to Supported APIs")
+#### Supported APIs[​](#supported-apis-1 "Direct link to Supported APIs")
 
 Token usage is logged for:
 
@@ -180,7 +228,7 @@ for chunk in response["stream"]:
     print(chunk)
 ```
 
-![Bedrock Stream Tracing](/docs/latest/assets/images/bedrock-tracing-stream-d7219a525c3716936e81512180dc0d69.png)
+![Bedrock Stream Tracing](/docs/latest/images/llms/tracing/bedrock-tracing-stream.png)
 
 warning
 
@@ -294,3 +342,23 @@ Executing the code above will create a single trace that involves all LLM invoca
 ## Disable auto-tracing[​](#disable-auto-tracing "Direct link to Disable auto-tracing")
 
 Auto tracing for Amazon Bedrock can be disabled globally by calling `mlflow.bedrock.autolog(disable=True)` or `mlflow.autolog(disable=True)`.
+
+## Next steps[​](#next-steps "Direct link to Next steps")
+
+### [Track User Feedback](/docs/latest/genai/tracing/collect-user-feedback.md)
+
+[Record user feedback on traces for tracking user satisfaction.](/docs/latest/genai/tracing/collect-user-feedback.md)
+
+[Learn about feedback →](/docs/latest/genai/tracing/collect-user-feedback.md)
+
+### [Manage Prompts](/docs/latest/genai/prompt-registry.md)
+
+[Learn how to manage prompts with MLflow's prompt registry.](/docs/latest/genai/prompt-registry.md)
+
+[Manage prompts →](/docs/latest/genai/prompt-registry.md)
+
+### [Evaluate Traces](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
+
+[Evaluate traces with LLM judges to understand and improve your AI application's behavior.](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
+
+[Evaluate traces →](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)

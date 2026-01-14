@@ -36,23 +36,34 @@ pip install --upgrade mlflow>=3.3 openai
 
 MLflow stores evaluation results in a tracking server. Connect your local environment to the tracking server by one of the following methods.
 
+* Local (uv)
 * Local (pip)
 * Local (docker)
 
+Install the Python package manager [uv](https://docs.astral.sh/uv/getting-started/installation/) (that will also install [`uvx` command](https://docs.astral.sh/uv/guides/tools/) to invoke Python tools without installing them).
+
+Start a MLflow server locally.
+
+shell
+
+```
+uvx mlflow server
+```
+
 **Python Environment**: Python 3.10+
 
-For the fastest setup, you can install the `mlflow` Python package via `pip` and start the MLflow server locally.
+Install the `mlflow` Python package via `pip` and start a MLflow server locally.
 
-bash
+shell
 
 ```
 pip install --upgrade mlflow
 mlflow server
 ```
 
-MLflow provides a Docker Compose file to start a local MLflow server with a postgres database and a minio server.
+MLflow provides a Docker Compose file to start a local MLflow server with a PostgreSQL database and a MinIO server.
 
-bash
+shell
 
 ```
 git clone --depth 1 --filter=blob:none --sparse https://github.com/mlflow/mlflow.git
@@ -63,7 +74,7 @@ cp .env.dev.example .env
 docker compose up -d
 ```
 
-Refer to the [instruction](https://github.com/mlflow/mlflow/tree/master/docker-compose/README.md) for more details, e.g., overriding the default environment variables.
+Refer to the [instruction](https://github.com/mlflow/mlflow/tree/master/docker-compose/README.md) for more details (e.g., overriding the default environment variables).
 
 ### Step 1: Build an agent[​](#step-1-build-an-agent "Direct link to Step 1: Build an agent")
 
@@ -207,6 +218,7 @@ tip
 
 MLflow provides built-in scorers for evaluating agent tool usage:
 
+* [ToolCallCorrectness](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ToolCallCorrectness): Evaluates if tool calls and arguments are correct for the user query
 * [ToolCallEfficiency](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ToolCallEfficiency): Evaluates if tool calls are efficient without redundancy
 
 These scorers automatically analyze traces to assess tool usage patterns. See the [Predefined Scorers](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md) guide for more details.
@@ -220,13 +232,14 @@ Now we are ready to run the evaluation!
 python
 
 ```
-from mlflow.genai.scorers import ToolCallEfficiency
+from mlflow.genai.scorers import ToolCallCorrectness, ToolCallEfficiency
 
 results = mlflow.genai.evaluate(
     data=eval_dataset,
     predict_fn=predict_fn,
     scorers=[
         exact_match,
+        ToolCallCorrectness(),
         ToolCallEfficiency(),
     ],
 )

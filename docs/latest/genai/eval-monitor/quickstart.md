@@ -6,7 +6,7 @@ This quickstart guide will walk you through evaluating your GenAI applications w
 
 ## Prerequisites[​](#prerequisites "Direct link to Prerequisites")
 
-Install the required packages by running the following command:
+Depending on your Python environment, you may want to install the required packages by running the following command:
 
 bash
 
@@ -20,27 +20,38 @@ The code examples in this guide use the OpenAI SDK; however, MLflow's evaluation
 
 ## Step 1: Set up your environment[​](#step-1-set-up-your-environment "Direct link to Step 1: Set up your environment")
 
-### Connect to MLflow[​](#connect-to-mlflow "Direct link to Connect to MLflow")
+MLflow stores evaluation results in a [MLflow Tracking Server](/docs/latest/self-hosting/architecture/tracking-server.md).
 
-MLflow stores evaluation results in a tracking server. Connect your local environment to the tracking server by one of the following methods.
+Start a local MLflow Tracking Server by executing one of the following methods.
 
+* Local (uv)
 * Local (pip)
 * Local (docker)
 
+Install the Python package manager [uv](https://docs.astral.sh/uv/getting-started/installation/) (that will also install [`uvx` command](https://docs.astral.sh/uv/guides/tools/) to invoke Python tools without installing them).
+
+Start a MLflow server locally.
+
+shell
+
+```
+uvx mlflow server
+```
+
 **Python Environment**: Python 3.10+
 
-For the fastest setup, you can install the `mlflow` Python package via `pip` and start the MLflow server locally.
+Install the `mlflow` Python package via `pip` and start a MLflow server locally.
 
-bash
+shell
 
 ```
 pip install --upgrade mlflow
 mlflow server
 ```
 
-MLflow provides a Docker Compose file to start a local MLflow server with a postgres database and a minio server.
+MLflow provides a Docker Compose file to start a local MLflow server with a PostgreSQL database and a MinIO server.
 
-bash
+shell
 
 ```
 git clone --depth 1 --filter=blob:none --sparse https://github.com/mlflow/mlflow.git
@@ -51,11 +62,11 @@ cp .env.dev.example .env
 docker compose up -d
 ```
 
-Refer to the [instruction](https://github.com/mlflow/mlflow/tree/master/docker-compose/README.md) for more details, e.g., overriding the default environment variables.
+Refer to the [instruction](https://github.com/mlflow/mlflow/tree/master/docker-compose/README.md) for more details (e.g., overriding the default environment variables).
 
 ## Step 2: Create an evaluation script[​](#step-2-create-an-evaluation-script "Direct link to Step 2: Create an evaluation script")
 
-Create a file named `quickstart_eval.py`. This script will contain your mock agent, evaluation dataset, scorers, and the evaluation execution. Alternatively, you may run this in a notebook.
+Create a file named `quickstart_eval.py`. This script will contain your mock agent, evaluation dataset, scorers, and the evaluation execution. Alternatively, you may run this in a [notebook](/docs/latest/genai/eval-monitor/notebooks/quickstart-eval.md).
 
 Start with the environment setup:
 
@@ -99,8 +110,8 @@ def my_agent(question: str) -> str:
     return response.choices[0].message.content
 
 
-# Wrapper function for evaluation
 def qa_predict_fn(question: str) -> str:
+    """Wrapper function for evaluation using ``my_agent``."""
     return my_agent(question)
 ```
 
@@ -209,7 +220,16 @@ if __name__ == "__main__":
 
 Now run your evaluation script:
 
-bash
+* uv
+* Python
+
+shell
+
+```
+uv run --with openai,mlflow quickstart_eval.py
+```
+
+shell
 
 ```
 python quickstart_eval.py
@@ -296,13 +316,17 @@ if __name__ == "__main__":
     )
 ```
 
-After running the code above, go to the MLflow UI and navigate to your experiment. You'll see the evaluation results with detailed metrics for each scorer.
+After running the code above, go to the MLflow UI and navigate to the "GenAI Evaluation Quickstart" experiment. You'll see the evaluation results with detailed metrics for each scorer.
 
 ![Detailed Evaluation Results](/docs/latest/images/mlflow-3/eval-monitor/quickstart-eval-result.png)
 
 By clicking on the each row in the table, you can see the detailed rationale behind the score and the trace of the prediction.
 
-![Detailed Evaluation Results](/docs/latest/images/mlflow-3/eval-monitor/quickstart-eval-trace.png)
+![Detailed Score Rationale](/docs/latest/images/mlflow-3/eval-monitor/quickstart-eval-trace.png)
+
+You can compare evaluation runs, too. Click on "Evaluation runs" menu (on the left) and select a run that you want to compare to a baseline run.
+
+![Compare Evaluation Runs](/docs/latest/images/mlflow-3/eval-monitor/quickstart-eval-runs-compare.png)
 
 ## Summary[​](#summary "Direct link to Summary")
 

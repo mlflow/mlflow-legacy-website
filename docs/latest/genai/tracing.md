@@ -112,7 +112,7 @@ MLflow boasts a vibrant Open Source community as a part of the Linux Foundation,
 
 ## One-line Auto Tracing Integrations[​](#one-line-auto-tracing-integrations "Direct link to One-line Auto Tracing Integrations")
 
-MLflow Tracing is integrated with various GenAI libraries and provides one-line automatic tracing experience for each library (and combinations of them!):
+MLflow Tracing is integrated with various GenAI libraries, such as OpenAI, LangChain, DSPy, Vercel AI, and provides one-line automatic tracing experience for each library (and combinations of them!):
 
 python
 
@@ -122,86 +122,7 @@ import mlflow
 mlflow.openai.autolog()  # or replace 'openai' with other library names, e.g., "anthropic"
 ```
 
-Click on the logos below to learn more about the individual integration:
-
-* Python
-* TypeScript
-
-[![LangChain Logo](/docs/latest/images/logos/langchain-logo.png)](/docs/latest/genai/tracing/integrations/listing/langchain.md)
-
-[![LangGraph Logo](/docs/latest/images/logos/langgraph-logo.png)](/docs/latest/genai/tracing/integrations/listing/langgraph.md)
-
-[![OpenAI Agent Logo](/docs/latest/images/logos/openai-agent-logo.png)](/docs/latest/genai/tracing/integrations/listing/openai-agent.md)
-
-[![DSPy Logo](/docs/latest/images/logos/dspy-logo.png)](/docs/latest/genai/tracing/integrations/listing/dspy.md)
-
-[![PydanticAI Logo](/docs/latest/images/logos/pydanticai-logo.png)](/docs/latest/genai/tracing/integrations/listing/pydantic_ai.md)
-
-[![Google ADK Logo](/docs/latest/images/logos/google-adk-logo.png)](/docs/latest/genai/tracing/integrations/listing/google-adk.md)
-
-[![Microsoft Agent Framework Logo](/docs/latest/images/logos/microsoft-agent-framework-logo.jpg)](/docs/latest/genai/tracing/integrations/listing/microsoft-agent-framework.md)
-
-[![CrewAI Logo](/docs/latest/images/logos/crewai-logo.png)](/docs/latest/genai/tracing/integrations/listing/crewai.md)
-
-[![LlamaIndex Logo](/docs/latest/images/logos/llamaindex-logo.svg)](/docs/latest/genai/tracing/integrations/listing/llama_index.md)
-
-[![AutoGen Logo](/docs/latest/images/logos/autogen-logo.png)](/docs/latest/genai/tracing/integrations/listing/autogen.md)
-
-[![Strands Agent SDK Logo](/docs/latest/images/logos/strands-logo.png)](/docs/latest/genai/tracing/integrations/listing/strands.md)
-
-[![Agno Logo](/docs/latest/images/logos/agno-logo.png)](/docs/latest/genai/tracing/integrations/listing/agno.md)
-
-[![Smolagents Logo](/docs/latest/images/logos/smolagents-logo.png)](/docs/latest/genai/tracing/integrations/listing/smolagents.md)
-
-[![Semantic Kernel Logo](/docs/latest/images/logos/semantic-kernel-logo.png)](/docs/latest/genai/tracing/integrations/listing/semantic_kernel.md)
-
-[![AG2 Logo](/docs/latest/images/logos/ag2-logo.png)](/docs/latest/genai/tracing/integrations/listing/ag2.md)
-
-[![Haystack Logo](/docs/latest/images/logos/haystack-logo.png)](/docs/latest/genai/tracing/integrations/listing/haystack.md)
-
-[![Instructor Logo](/docs/latest/images/logos/instructor-logo.svg)](/docs/latest/genai/tracing/integrations/listing/instructor.md)
-
-[![txtai Logo](/docs/latest/images/logos/txtai-logo.png)](/docs/latest/genai/tracing/integrations/listing/txtai.md)
-
-[![OpenAI Logo](/docs/latest/images/logos/openai-logo.png)](/docs/latest/genai/tracing/integrations/listing/openai.md)
-
-[![Anthropic Logo](/docs/latest/images/logos/anthropic-logo.svg)](/docs/latest/genai/tracing/integrations/listing/anthropic.md)
-
-[![Bedrock Logo](/docs/latest/images/logos/bedrock-logo.png)](/docs/latest/genai/tracing/integrations/listing/bedrock.md)
-
-[![Gemini Logo](/docs/latest/images/logos/google-gemini-logo.svg)](/docs/latest/genai/tracing/integrations/listing/gemini.md)
-
-[![Ollama Logo](/docs/latest/images/logos/ollama-logo.png)](/docs/latest/genai/tracing/integrations/listing/ollama.md)
-
-[![Groq Logo](/docs/latest/images/logos/groq-logo.svg)](/docs/latest/genai/tracing/integrations/listing/groq.md)
-
-[![Mistral Logo](/docs/latest/images/logos/mistral-ai-logo.svg)](/docs/latest/genai/tracing/integrations/listing/mistral.md)
-
-[![FireworksAI Logo](/docs/latest/images/logos/fireworks-ai-logo.svg)](/docs/latest/genai/tracing/integrations/listing/fireworksai.md)
-
-[![DeepSeek Logo](/docs/latest/images/logos/deepseek-logo.png)](/docs/latest/genai/tracing/integrations/listing/deepseek.md)
-
-[![LiteLLM Logo](/docs/latest/images/logos/litellm-logo.jpg)](/docs/latest/genai/tracing/integrations/listing/litellm.md)
-
-[![Claude Code Logo](/docs/latest/images/logos/claude-code-logo.svg)](/docs/latest/genai/tracing/integrations/listing/claude_code.md)
-
-[![LangChain Logo](/docs/latest/images/logos/langchain-logo.png)](/docs/latest/genai/tracing/integrations/listing/langchain.md)
-
-[![LangGraph Logo](/docs/latest/images/logos/langgraph-logo.png)](/docs/latest/genai/tracing/integrations/listing/langgraph.md)
-
-[![Vercel AI SDK Logo](/docs/latest/images/logos/vercel-logo.svg)](/docs/latest/genai/tracing/integrations/listing/vercelai.md)
-
-[![Mastra Logo](/docs/latest/images/logos/mastra-logo.png)](/docs/latest/genai/tracing/integrations/listing/mastra.md)
-
-[![VoltAgent Logo](/docs/latest/images/logos/voltagent-logo.png)](/docs/latest/genai/tracing/integrations/listing/voltagent.md)
-
-[![OpenAI Logo](/docs/latest/images/logos/openai-logo.png)](/docs/latest/genai/tracing/integrations/listing/openai.md)
-
-[![Anthropic Logo](/docs/latest/images/logos/anthropic-logo.svg)](/docs/latest/genai/tracing/integrations/listing/anthropic.md)
-
-[![Gemini Logo](/docs/latest/images/logos/google-gemini-logo.svg)](/docs/latest/genai/tracing/integrations/listing/gemini.md)
-
-<br />
+View the full list of supported libraries and detailed setup instructions on the [Integrations](/docs/latest/genai/tracing/integrations.md) page.
 
 ## Flexible and Customizable[​](#flexible-and-customizable "Direct link to Flexible and Customizable")
 
