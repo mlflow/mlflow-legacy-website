@@ -35,7 +35,7 @@ def my_function(input_data):
 
 ### Q: Which libraries does MLflow Tracing support automatically?[​](#q-which-libraries-does-mlflow-tracing-support-automatically "Direct link to Q: Which libraries does MLflow Tracing support automatically?")
 
-MLflow provides automatic tracing (autolog) for 20+ popular libraries. See the complete list at [Automatic Tracing Integrations](/docs/latest/genai/tracing/integrations.md).
+MLflow provides automatic tracing (autolog) for 40+ popular libraries. See the complete list at [Automatic Tracing Integrations](/docs/latest/genai/tracing/integrations.md).
 
 ## User Interface and Jupyter Integration[​](#user-interface-and-jupyter-integration "Direct link to User Interface and Jupyter Integration")
 

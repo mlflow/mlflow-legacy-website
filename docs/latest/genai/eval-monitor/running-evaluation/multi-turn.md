@@ -46,23 +46,34 @@ pip install --upgrade mlflow>=3.7
 
 MLflow stores evaluation results in a tracking server. Connect your local environment to the tracking server by one of the following methods.
 
+* Local (uv)
 * Local (pip)
 * Local (docker)
 
+Install the Python package manager [uv](https://docs.astral.sh/uv/getting-started/installation/) (that will also install [`uvx` command](https://docs.astral.sh/uv/guides/tools/) to invoke Python tools without installing them).
+
+Start a MLflow server locally.
+
+shell
+
+```
+uvx mlflow server
+```
+
 **Python Environment**: Python 3.10+
 
-For the fastest setup, you can install the `mlflow` Python package via `pip` and start the MLflow server locally.
+Install the `mlflow` Python package via `pip` and start a MLflow server locally.
 
-bash
+shell
 
 ```
 pip install --upgrade mlflow
 mlflow server
 ```
 
-MLflow provides a Docker Compose file to start a local MLflow server with a postgres database and a minio server.
+MLflow provides a Docker Compose file to start a local MLflow server with a PostgreSQL database and a MinIO server.
 
-bash
+shell
 
 ```
 git clone --depth 1 --filter=blob:none --sparse https://github.com/mlflow/mlflow.git
@@ -73,7 +84,7 @@ cp .env.dev.example .env
 docker compose up -d
 ```
 
-Refer to the [instruction](https://github.com/mlflow/mlflow/tree/master/docker-compose/README.md) for more details, e.g., overriding the default environment variables.
+Refer to the [instruction](https://github.com/mlflow/mlflow/tree/master/docker-compose/README.md) for more details (e.g., overriding the default environment variables).
 
 ## Quick Start[​](#quick-start "Direct link to Quick Start")
 
@@ -124,9 +135,10 @@ results = mlflow.genai.evaluate(
 
 MLflow provides built-in scorers for evaluating conversations:
 
-* **[ConversationCompleteness](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ConversationCompleteness)**: Evaluates whether the agent addressed all user questions throughout the conversation (returns "complete" or "incomplete")
+* **[ConversationCompleteness](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ConversationCompleteness)**: Evaluates whether the agent addressed all user questions throughout the conversation (returns "yes" or "no")
+* **[ConversationalGuidelines](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ConversationalGuidelines)**: Evaluates whether the assistant's responses throughout the conversation comply with provided guidelines (returns "yes" or "no")
 * **[KnowledgeRetention](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.KnowledgeRetention)**: Evaluates whether the assistant correctly retains information from earlier user inputs without contradiction or distortion (returns "yes" or "no")
-* **[UserFrustration](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.UserFrustration)**: Detects and tracks user frustration patterns (returns "no\_frustration", "frustration\_resolved", or "frustration\_not\_resolved")
+* **[UserFrustration](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.UserFrustration)**: Detects and tracks user frustration patterns (returns "none", "resolved", or "unresolved")
 
 See the [Predefined Scorers](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md#multi-turn-scorers) page for detailed usage examples and API documentation.
 

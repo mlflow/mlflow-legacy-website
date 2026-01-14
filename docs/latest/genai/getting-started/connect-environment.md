@@ -4,23 +4,34 @@ MLflow is open source, and you can set up the MLflow server using either `pip` o
 
 Before you can leverage MLflow for your GenAI application development, you must first start the MLflow server.
 
+* Local (uv)
 * Local (pip)
 * Local (docker)
 
+Install the Python package manager [uv](https://docs.astral.sh/uv/getting-started/installation/) (that will also install [`uvx` command](https://docs.astral.sh/uv/guides/tools/) to invoke Python tools without installing them).
+
+Start a MLflow server locally.
+
+shell
+
+```
+uvx mlflow server
+```
+
 **Python Environment**: Python 3.10+
 
-For the fastest setup, you can install the `mlflow` Python package via `pip` and start the MLflow server locally.
+Install the `mlflow` Python package via `pip` and start a MLflow server locally.
 
-bash
+shell
 
 ```
 pip install --upgrade mlflow
 mlflow server
 ```
 
-MLflow provides a Docker Compose file to start a local MLflow server with a postgres database and a minio server.
+MLflow provides a Docker Compose file to start a local MLflow server with a PostgreSQL database and a MinIO server.
 
-bash
+shell
 
 ```
 git clone --depth 1 --filter=blob:none --sparse https://github.com/mlflow/mlflow.git
@@ -31,7 +42,7 @@ cp .env.dev.example .env
 docker compose up -d
 ```
 
-Refer to the [instruction](https://github.com/mlflow/mlflow/tree/master/docker-compose/README.md) for more details, e.g., overriding the default environment variables.
+Refer to the [instruction](https://github.com/mlflow/mlflow/tree/master/docker-compose/README.md) for more details (e.g., overriding the default environment variables).
 
 This will start the server at port 5000 on your local machine and you can access the MLflow web UI at <http://localhost:5000>.
 
