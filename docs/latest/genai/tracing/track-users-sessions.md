@@ -6,10 +6,6 @@ Many real-world AI applications use session to maintain multi-turn user interact
 
 ## Store User and Session IDs in Metadata[​](#store-user-and-session-ids-in-metadata "Direct link to Store User and Session IDs in Metadata")
 
-New in MLflow 3
-
-The standard metadata for user and session tracking is only available in MLflow 3 and above. To upgrade, please run `pip install --upgrade mlflow`.
-
 MLflow provides two standard metadata fields for session and user tracking:
 
 * `mlflow.trace.user` - Associates traces with specific users
@@ -54,17 +50,17 @@ typescript
 import * as mlflow from "mlflow-tracing";
 
 const chatCompletion = mlflow.trace(
-    (message: list[dict], user_id: str, session_id: str) => {
+    (message: Array<Record<string, any>>, userId: string, sessionId: string) => {
         // Add user and session context to the current trace
         mlflow.updateCurrentTrace({
             metadata: {
-                "mlflow.trace.user": user_id,
-                "mlflow.trace.session": session_id,
+                "mlflow.trace.user": userId,
+                "mlflow.trace.session": sessionId,
             },
         });
 
         // Your chat logic here
-        return generate_response(message);
+        return generateResponse(message);
     },
     { name: "chat_completion" }
 );

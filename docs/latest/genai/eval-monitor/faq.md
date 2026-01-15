@@ -195,3 +195,59 @@ export MLFLOW_GENAI_EVAL_ENABLE_SCORER_TRACING=true
 When this is set to `true`, MLflow will trace scorer executions during the evaluation and allow you to inspect the input, output, and internal steps during the scorer execution.
 
 To view the scorer trace, you can open the assessment pane of the trace details page and click the "View trace" link.
+
+## How do I programmatically access evaluation results?[​](#how-do-i-programmatically-access-evaluation-results "Direct link to How do I programmatically access evaluation results?")
+
+The [`mlflow.genai.evaluate()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.evaluate) function returns an [`mlflow.genai.evaluation.entities.EvaluationResult()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.evaluation.entities.EvaluationResult) object that contains all evaluation results. Here's how to access different parts of the results:
+
+### Accessing Aggregated Metrics[​](#accessing-aggregated-metrics "Direct link to Accessing Aggregated Metrics")
+
+The `metrics` property returns a dictionary of aggregated metric values across all evaluated rows:
+
+python
+
+```
+result = mlflow.genai.evaluate(
+    data=eval_dataset,
+    predict_fn=my_predict_fn,
+    scorers=[Correctness(), Safety()],
+)
+
+# Access aggregated metrics
+print(result.metrics)
+# Output: {'correctness/mean': 0.85, 'safety/mean': 0.95}
+
+# Access a specific metric
+correctness_score = result.metrics.get("correctness/mean")
+```
+
+To get metrics for an existing evaluation run, you can use [`mlflow.get_run()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.get_run) API:
+
+python
+
+```
+run = mlflow.get_run(run_id="<run_id>")
+print(run.data.metrics)
+# Output: {'correctness/mean': 0.85, 'safety/mean': 0.95}
+```
+
+### Accessing the Results DataFrame[​](#accessing-the-results-dataframe "Direct link to Accessing the Results DataFrame")
+
+The `result_df` property returns a pandas DataFrame containing detailed per-row evaluation results:
+
+python
+
+```
+# Export to CSV for further analysis
+result.result_df.to_csv("evaluation_results.csv", index=False)
+```
+
+### Accessing Traces from Results[​](#accessing-traces-from-results "Direct link to Accessing Traces from Results")
+
+You can get the traces for the evaluation run by using [`mlflow.search_traces()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.search_traces) API:
+
+python
+
+```
+traces = mlflow.search_traces(run_id=result.run_id, return_type="list")
+```
