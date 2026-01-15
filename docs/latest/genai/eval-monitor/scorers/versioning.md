@@ -84,7 +84,7 @@ To load a registered scorer, use the `get_scorer` function.
 python
 
 ```
-from mlflow.genai.scorers import get_scorer
+from mlflow.genai import get_scorer
 
 # Get the latest version
 latest_judge = get_scorer(name="response_quality")
@@ -99,7 +99,7 @@ The `list_scorers` function returns a list of the scorers registered in the expe
 python
 
 ```
-from mlflow.genai.scorers import list_scorers
+from mlflow.genai import list_scorers
 
 all_scorers = list_scorers(experiment_id=experiment_id)
 for scorer in all_scorers:

@@ -35,6 +35,19 @@ The server listens on <http://localhost:5000> by default and only accepts connec
 
 MLflow 3.5.0+ includes built-in security middleware to protect against DNS rebinding and CORS attacks. When using `--host 0.0.0.0`, configure the `--allowed-hosts` option to specify which domains can access your server. See [Security Configuration](/docs/latest/self-hosting/security/network.md) for details.
 
+Read-only Filesystems
+
+When running in containers with read-only root filesystems (common in Kubernetes with `securityContext.readOnlyRootFilesystem: true`), configure remote artifact storage using `--artifacts-destination` (artifact serving is enabled by default). The tracking server does not create local directories at startup when using remote artifact storage, making it compatible with read-only environments.
+
+bash
+
+```
+mlflow server \
+    --host 0.0.0.0 \
+    --backend-store-uri postgresql://user:pass@host/db \
+    --artifacts-destination s3://my-bucket
+```
+
 ## Logging to a Tracking Server[​](#logging_to_a_tracking_server "Direct link to Logging to a Tracking Server")
 
 Once the tracking server is started, connect your local clients by setting the `MLFLOW_TRACKING_URI` environment variable to the server's URI, along with its scheme and port (for example, `http://10.0.0.1:5000`) or call [`mlflow.set_tracking_uri()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.set_tracking_uri).
