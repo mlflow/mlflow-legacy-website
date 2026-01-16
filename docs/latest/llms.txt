@@ -138,6 +138,7 @@
 - [Tracing Qwen (DashScope)](/docs/latest/genai/tracing/integrations/listing/qwen.md)
 - [Tracing Semantic Kernel](/docs/latest/genai/tracing/integrations/listing/semantic_kernel.md): Semantic Kernel is a lightweight, open-source SDK that functions as AI middleware, enabling you to integrate AI models into your C#, Python, or Java codebase via a uniform API layer. By abstracting model interactions, it lets you swap in new models without rewriting your application logic.
 - [Tracing Smolagents](/docs/latest/genai/tracing/integrations/listing/smolagents.md): Smolagents tracing via autolog
+- [Tracing Spring AI](/docs/latest/genai/tracing/integrations/listing/spring-ai.md): Spring AI Tracing
 - [Tracing Strands Agents SDK](/docs/latest/genai/tracing/integrations/listing/strands.md): Strands Agents SDK is an open‑source, model‑driven SDK developed by AWS that enables developers to create autonomous AI agents
 - [Tracing Together AI](/docs/latest/genai/tracing/integrations/listing/togetherai.md)
 - [Tracing txtai](/docs/latest/genai/tracing/integrations/listing/txtai.md): txtai Tracing via autolog
