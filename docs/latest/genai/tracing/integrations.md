@@ -109,6 +109,12 @@ Click any integration below to get started with detailed setup instructions.
 
 [VoltAgent](/docs/latest/genai/tracing/integrations/listing/voltagent.md)
 
+## Agent Frameworks (Java)[​](#agent-frameworks-java "Direct link to Agent Frameworks (Java)")
+
+[![Spring AI Logo](/docs/latest/images/logos/spring-ai-logo.png)](/docs/latest/genai/tracing/integrations/listing/spring-ai.md)
+
+[Spring AI](/docs/latest/genai/tracing/integrations/listing/spring-ai.md)
+
 ## Model Providers[​](#model-providers "Direct link to Model Providers")
 
 [![OpenAI Logo](/docs/latest/images/logos/openai-logo-only.png)](/docs/latest/genai/tracing/integrations/listing/openai.md)
