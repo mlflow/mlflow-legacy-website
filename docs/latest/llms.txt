@@ -25,6 +25,7 @@
 - [GenAI Evaluation Quickstart](/docs/latest/genai/eval-monitor/notebooks/quickstart-eval.md): Download this notebook
 - [GenAI Evaluation Quickstart](/docs/latest/genai/eval-monitor/quickstart.md): This quickstart guide will walk you through evaluating your GenAI applications with MLflow's comprehensive evaluation framework.
 - [Evaluating Agents](/docs/latest/genai/eval-monitor/running-evaluation/agents.md): AI Agents are an emerging pattern of GenAI applications that can use tools, make decisions, and execute multi-step workflows. However, evaluating the performance of those complex agents is challenging. MLflow provides a powerful toolkit to systematically evaluate the agent behavior precisely using traces and scorers.
+- [MLflow evaluation examples for GenAI](/docs/latest/genai/eval-monitor/running-evaluation/eval-examples.md): This page presents some common usage patterns for the evaluation harness, including data patterns and predict_fn patterns.
 - [Evaluate Conversations](/docs/latest/genai/eval-monitor/running-evaluation/multi-turn.md): Conversation evaluation enables you to assess entire conversation sessions rather than individual turns. This is essential for evaluating conversational AI systems where quality emerges over multiple interactions, such as user frustration patterns, conversation completeness, or overall dialogue coherence.
 - [Evaluating Prompts](/docs/latest/genai/eval-monitor/running-evaluation/prompts.md): Prompts are the core components of GenAI applications. However, iterating over prompts can be challenging because it is hard to know if the new prompt is better than the old one. MLflow provides a framework to systematically evaluate prompt templates and track performance over time.
 - [Evaluating (Production) Traces](/docs/latest/genai/eval-monitor/running-evaluation/traces.md): Traces are the core data of MLflow. They capture the complete execution flow of your LLM applications. Evaluating traces is a powerful way to understand the performance of your LLM applications and get insights for quality improvement.
@@ -109,6 +110,7 @@
 - [Tracing Anthropic](/docs/latest/genai/tracing/integrations/listing/anthropic.md): MLflow Tracing provides automatic tracing capability for Anthropic LLMs. By enabling auto tracing
 - [Tracing AutoGen](/docs/latest/genai/tracing/integrations/listing/autogen.md): AutoGen tracing via autolog
 - [Tracing Amazon Bedrock with MLflow](/docs/latest/genai/tracing/integrations/listing/bedrock.md): MLflow supports automatic tracing for Amazon Bedrock, a fully managed service on AWS that provides high-performing
+- [Tracing Amazon Bedrock AgentCore](/docs/latest/genai/tracing/integrations/listing/bedrock-agentcore.md): Enable OpenTelemetry in Amazon Bedrock AgentCore
 - [Tracing BytePlus](/docs/latest/genai/tracing/integrations/listing/byteplus.md)
 - [Tracing Claude Code](/docs/latest/genai/tracing/integrations/listing/claude_code.md): Claude Code Tracing via CLI autolog
 - [Tracing Cohere](/docs/latest/genai/tracing/integrations/listing/cohere.md)
@@ -121,10 +123,15 @@
 - [Tracing Google Agent Development Kit (ADK)](/docs/latest/genai/tracing/integrations/listing/google-adk.md): MLflow Tracing provides automatic tracing capability for Google ADK, a flexible and modular AI agents framework developed by Google. MLflow supports tracing for Google ADK through the OpenTelemetry integration.
 - [Tracing Groq](/docs/latest/genai/tracing/integrations/listing/groq.md): MLflow Tracing provides automatic tracing capability when using Groq.
 - [Tracing Haystack](/docs/latest/genai/tracing/integrations/listing/haystack.md): Haystack is an open-source AI orchestration framework developed by deepset, designed to help Python developers build production-ready LLM-powered applications.
+- [Tracing Helicone](/docs/latest/genai/tracing/integrations/listing/helicone.md)
 - [Tracing Instructor](/docs/latest/genai/tracing/integrations/listing/instructor.md): Instructor Tracing via autolog
+- [Tracing Kong AI Gateway](/docs/latest/genai/tracing/integrations/listing/kong.md)
+- [Tracing Koog](/docs/latest/genai/tracing/integrations/listing/koog.md): Enable OpenTelemetry in Koog
 - [Tracing LangChain🦜⛓️](/docs/latest/genai/tracing/integrations/listing/langchain.md): LangChain is an open-source framework for building LLM-powered applications.
+- [Tracing Langflow](/docs/latest/genai/tracing/integrations/listing/langflow.md): Enable OpenTelemetry in Langflow via Traceloop
 - [Tracing LangGraph🦜🕸️](/docs/latest/genai/tracing/integrations/listing/langgraph.md): LangGraph is an open-source library for building stateful, multi-actor applications with LLMs, used to create agent and multi-agent workflows.
 - [Tracing LiteLLM🚄](/docs/latest/genai/tracing/integrations/listing/litellm.md): LiteLLM is an open-source LLM Gateway that allow accessing 100+ LLMs in the unified interface.
+- [Tracing LiteLLM Proxy](/docs/latest/genai/tracing/integrations/listing/litellm-proxy.md): LiteLLM Proxy is a self-hosted LLM gateway that provides a unified OpenAI-compatible API to access 100+ LLM providers. It offers features like load balancing, spend tracking, and rate limiting across multiple providers.
 - [Tracing LlamaIndex🦙](/docs/latest/genai/tracing/integrations/listing/llama_index.md): LlamaIndex is an open-source framework for building agentic generative AI applications that allow large language models to work with your data in any format.
 - [Tracing Mastra](/docs/latest/genai/tracing/integrations/listing/mastra.md): MLflow Tracing provides automatic tracing capability for Mastra, a flexible and modular AI agents framework developed by Mastra. MLflow supports tracing for Mastra through the OpenTelemetry integration.
 - [Tracing Microsoft Agent Framework](/docs/latest/genai/tracing/integrations/listing/microsoft-agent-framework.md): MLflow Tracing provides automatic tracing capability for Microsoft Agent Framework, a flexible and modular AI agents framework developed by Microsoft. MLflow supports tracing for Microsoft Agent Framework through the OpenTelemetry integration.
@@ -134,15 +141,24 @@
 - [Tracing Ollama](/docs/latest/genai/tracing/integrations/listing/ollama.md): MLflow Tracing provides automatic tracing capability for Ollama models through the OpenAI SDK integration. Because Ollama exposes an OpenAI-compatible API, you can simply use mlflow.openai.autolog() to trace Ollama calls.
 - [Tracing OpenAI](/docs/latest/genai/tracing/integrations/listing/openai.md): MLflow Tracing provides automatic tracing capability for OpenAI. By enabling auto tracing
 - [Tracing OpenAI Agent🤖](/docs/latest/genai/tracing/integrations/listing/openai-agent.md): OpenAI Tracing via autolog
+- [Tracing OpenRouter](/docs/latest/genai/tracing/integrations/listing/openrouter.md)
+- [Tracing Pipecat](/docs/latest/genai/tracing/integrations/listing/pipecat.md): Enable OpenTelemetry in Pipecat
+- [Tracing Portkey](/docs/latest/genai/tracing/integrations/listing/portkey.md)
 - [Tracing PydanticAI](/docs/latest/genai/tracing/integrations/listing/pydantic_ai.md): PydanticAI Tracing via autolog
+- [Tracing Pydantic AI Gateway](/docs/latest/genai/tracing/integrations/listing/pydantic-ai-gateway.md): Pydantic AI Gateway is a unified interface for accessing multiple AI providers with a single key. It supports models from OpenAI, Anthropic, Google Vertex, Groq, AWS Bedrock, and more. Key features include spending limits, failover management, and zero translation—requests flow through directly in each provider's native format, giving you immediate access to new model features as soon as they are released.
+- [Tracing Quarkus LangChain4j](/docs/latest/genai/tracing/integrations/listing/quarkus-langchain4j.md): Enable OpenTelemetry in Quarkus LangChain4j
 - [Tracing Qwen (DashScope)](/docs/latest/genai/tracing/integrations/listing/qwen.md)
 - [Tracing Semantic Kernel](/docs/latest/genai/tracing/integrations/listing/semantic_kernel.md): Semantic Kernel is a lightweight, open-source SDK that functions as AI middleware, enabling you to integrate AI models into your C#, Python, or Java codebase via a uniform API layer. By abstracting model interactions, it lets you swap in new models without rewriting your application logic.
 - [Tracing Smolagents](/docs/latest/genai/tracing/integrations/listing/smolagents.md): Smolagents tracing via autolog
+- [Tracing Spring AI](/docs/latest/genai/tracing/integrations/listing/spring-ai.md): Spring AI Tracing
 - [Tracing Strands Agents SDK](/docs/latest/genai/tracing/integrations/listing/strands.md): Strands Agents SDK is an open‑source, model‑driven SDK developed by AWS that enables developers to create autonomous AI agents
 - [Tracing Together AI](/docs/latest/genai/tracing/integrations/listing/togetherai.md)
+- [Tracing TrueFoundry](/docs/latest/genai/tracing/integrations/listing/truefoundry.md)
 - [Tracing txtai](/docs/latest/genai/tracing/integrations/listing/txtai.md): txtai Tracing via autolog
+- [Tracing Vercel AI Gateway](/docs/latest/genai/tracing/integrations/listing/vercel-ai-gateway.md)
 - [Tracing Vercel AI SDK](/docs/latest/genai/tracing/integrations/listing/vercelai.md): MLflow Tracing provides automatic tracing for applications built with the Vercel AI SDK (the ai package) via OpenTelemetry, unlocking powerful observability capabilities for TypeScript and Javascript application developers.
 - [Tracing VoltAgent](/docs/latest/genai/tracing/integrations/listing/voltagent.md): MLflow Tracing provides automatic tracing capability for VoltAgent, an open-source TypeScript framework for building AI agents. MLflow supports tracing for VoltAgent through the OpenTelemetry integration.
+- [Tracing Watsonx Orchestrate](/docs/latest/genai/tracing/integrations/listing/watsonx-orchestrate.md): Reference
 - [Tracing xAI / Grok](/docs/latest/genai/tracing/integrations/listing/xai-grok.md)
 - [Lightweight Tracing SDK Optimized for Production Usage](/docs/latest/genai/tracing/lightweight-sdk.md): MLflow offers a lightweight tracing SDK package called mlflow-tracing that includes only the essential functionality for tracing and monitoring of your GenAI applications. This package is designed for production environments where minimizing dependencies and deployment size is critical.
 - [Delete Traces](/docs/latest/genai/tracing/observe-with-traces/delete-traces.md): You can delete traces based on specific criteria using the  method. This method allows you to delete traces by timestamp or trace IDs.
@@ -150,7 +166,8 @@
 - [MLflow Tracing UI](/docs/latest/genai/tracing/observe-with-traces/ui.md): Traces within MLflow Experiments
 - [OpenTelemetry Integration](/docs/latest/genai/tracing/opentelemetry.md): OpenTelemetry is a CNCF-backed project that provides vendor-neutral observability APIs and SDKs to instrument your applications and collect telemetry data in a consistent way. MLflow Tracing is fully compatible with OpenTelemetry, making it free from vendor lock-in.
 - [Export MLflow Traces/Metrics via OTLP](/docs/latest/genai/tracing/opentelemetry/export.md): Set Up OTLP Exporter
-- [Collect OpenTelemetry Traces into MLflow](/docs/latest/genai/tracing/opentelemetry/ingest.md): OpenTelemetry trace ingestion is supported in MLflow 3.6.0 and above.
+- [Collect OpenTelemetry Traces into MLflow](/docs/latest/genai/tracing/opentelemetry/ingest.md): Basic Example
+- [ingest-shared](/docs/latest/genai/tracing/opentelemetry/ingest-shared.md): OpenTelemetry trace ingestion is supported in MLflow 3.6.0 and above.
 - [Production Monitoring for GenAI Applications](/docs/latest/genai/tracing/prod-tracing.md): Machine learning projects don't conclude with their initial launch. Ongoing monitoring and incremental enhancements are critical for long-term success. MLflow Tracing offers comprehensive observability for your production applications, supporting the iterative process of continuous improvement while ensuring quality delivery to users.
 - [Tracing Quickstart](/docs/latest/genai/tracing/quickstart.md): This quickstart guide will walk you through setting up a simple GenAI application with MLflow Tracing. In less than 10 minutes, you'll enable tracing, run a basic application, and explore the generated traces in the MLflow UI.
 - [Search Traces](/docs/latest/genai/tracing/search-traces.md): This guide will walk you through how to search for traces in MLflow using both the MLflow UI and Python API. This resource will be valuable if you're interested in querying specific traces based on their metadata, tags, execution time, status, or other trace attributes.
