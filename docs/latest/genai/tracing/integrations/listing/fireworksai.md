@@ -27,7 +27,7 @@ MLflow automatically captures the following information about FireworksAI calls:
 bash
 
 ```
-pip install mlflow openai
+pip install 'mlflow[genai]' openai
 ```
 
 bash

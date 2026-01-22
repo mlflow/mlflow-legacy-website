@@ -36,7 +36,7 @@ Start the MLflow server following the [Self-Hosting Guide](/docs/latest/self-hos
 bash
 
 ```
-pip install langchain langchain-openai mlflow
+pip install langchain langchain-openai 'mlflow[genai]'
 ```
 
 ### 3. Enable tracing[​](#3-enable-tracing "Direct link to 3. Enable tracing")

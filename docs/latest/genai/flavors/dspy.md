@@ -72,7 +72,7 @@ The [Module](https://dspy.ai/learn/programming/modules) object is the centerpiec
 shell
 
 ```
-pip install mlflow dspy -U
+pip install 'mlflow[genai]' dspy -U
 ```
 
 python

@@ -27,7 +27,7 @@ Install the `mlflow` Python package via `pip` and start a MLflow server locally.
 shell
 
 ```
-pip install --upgrade mlflow
+pip install --upgrade 'mlflow[genai]'
 mlflow server
 ```
 
@@ -74,7 +74,7 @@ To connect your GenAI application to the MLflow server, you will need to install
 bash
 
 ```
-pip install --upgrade mlflow openai>=1.0.0
+pip install --upgrade 'mlflow[genai]' openai>=1.0.0
 ```
 
 bash

@@ -137,6 +137,7 @@ In addition to the one-line auto tracing experience, MLflow offers Python SDK fo
 * [Redact PII data from traces](/docs/latest/genai/tracing/observe-with-traces/masking.md)
 * [Disable tracing globally](/docs/latest/genai/tracing/app-instrumentation/automatic.md#disabling-tracing)
 * [Configure sampling ratio to control trace throughput](/docs/latest/genai/tracing/prod-tracing.md#sampling-traces)
+* [Propagate trace context across services](/docs/latest/genai/tracing/app-instrumentation/distributed-tracing.md)
 
 ## Production Readiness[​](#production-readiness "Direct link to Production Readiness")
 

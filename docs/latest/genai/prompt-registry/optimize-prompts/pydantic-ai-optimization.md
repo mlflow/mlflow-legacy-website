@@ -9,7 +9,7 @@ This guide demonstrates how to leverage [`mlflow.genai.optimize_prompts()`](/doc
 bash
 
 ```
-pip install -U pydantic-ai mlflow gepa litellm nest_asyncio
+pip install -U pydantic-ai 'mlflow[genai]' gepa litellm nest_asyncio
 ```
 
 Set your OpenAI API key:

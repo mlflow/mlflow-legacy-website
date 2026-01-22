@@ -45,7 +45,7 @@ Install the `mlflow` Python package via `pip` and start a MLflow server locally.
 shell
 
 ```
-pip install --upgrade mlflow
+pip install --upgrade 'mlflow[genai]'
 mlflow server
 ```
 

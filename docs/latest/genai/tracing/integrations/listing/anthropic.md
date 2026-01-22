@@ -27,7 +27,7 @@ MLflow trace automatically captures the following information about Anthropic ca
 bash
 
 ```
-pip install mlflow anthropic
+pip install 'mlflow[genai]' anthropic
 ```
 
 bash
