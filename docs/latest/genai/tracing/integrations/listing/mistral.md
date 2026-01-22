@@ -23,7 +23,7 @@ MLflow automatically captures the following information about Mistral calls:
 bash
 
 ```
-pip install mlflow mistralai
+pip install 'mlflow[genai]' mistralai
 ```
 
 2

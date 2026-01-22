@@ -18,7 +18,7 @@ First install MLflow and OpenAI SDK. If you use different LLM providers, install
 bash
 
 ```
-pip install mlflow>=2.21.0 openai -qU
+pip install 'mlflow[genai]>=2.21.0' openai -qU
 ```
 
 Also set OpenAI API key (or any other LLM providers e.g. Anthropic).

@@ -30,7 +30,7 @@ Install the dependencies for the example:
 bash
 
 ```
-pip install 'mlflow>=3.3' agno anthropic yfinance
+pip install 'mlflow[genai]>=3.3' agno anthropic yfinance
 ```
 
 Run a simple agent with `mlflow.agno.autolog()` enabled:

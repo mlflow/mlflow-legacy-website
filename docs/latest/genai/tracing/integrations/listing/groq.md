@@ -22,7 +22,7 @@ MLflow automatically captures the following information about Groq calls:
 bash
 
 ```
-pip install mlflow groq
+pip install 'mlflow[genai]' groq
 ```
 
 2

@@ -71,7 +71,7 @@ Run the following command in your dev environment to install dependencies.
 bash
 
 ```
-%pip install -q mlflow
+%pip install -q 'mlflow[genai]'
 ```
 
 #### Set Up Authentication to a Databricks Workspace[​](#set-up-authentication-to-a-databricks-workspace "Direct link to Set Up Authentication to a Databricks Workspace")

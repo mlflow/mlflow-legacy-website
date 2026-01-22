@@ -31,7 +31,7 @@ First, install the required packages by running the following command:
 bash
 
 ```
-pip install --upgrade mlflow>=3.3 openai
+pip install --upgrade 'mlflow[genai]>=3.3' openai
 ```
 
 MLflow stores evaluation results in a tracking server. Connect your local environment to the tracking server by one of the following methods.
@@ -57,7 +57,7 @@ Install the `mlflow` Python package via `pip` and start a MLflow server locally.
 shell
 
 ```
-pip install --upgrade mlflow
+pip install --upgrade 'mlflow[genai]'
 mlflow server
 ```
 

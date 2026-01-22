@@ -9,7 +9,7 @@ This guide demonstrates how to leverage [`mlflow.genai.optimize_prompts()`](/doc
 bash
 
 ```
-pip install openai-agents mlflow gepa nest_asyncio
+pip install openai-agents 'mlflow[genai]' gepa nest_asyncio
 ```
 
 Set your OpenAI API key:
