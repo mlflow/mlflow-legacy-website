@@ -24,7 +24,7 @@ This guide only covers how to trace Databricks Foundation Model APIs using MLflo
 bash
 
 ```
-pip install mlflow openai
+pip install 'mlflow[genai]' openai
 ```
 
 bash

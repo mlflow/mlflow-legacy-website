@@ -8,11 +8,28 @@ Scorers can be registered to MLflow experiments for version control and team col
 | ----------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
 | [Agent-as-a-Judge](/docs/latest/genai/eval-monitor/scorers/llm-judge/agentic-overview.md)       | ✅                                                                               |
 | [Template-based LLM Scorers](/docs/latest/genai/eval-monitor/scorers/llm-judge/make-judge.md)   | ✅                                                                               |
-| [Code-based Scorers](/docs/latest/genai/eval-monitor/scorers/custom.md)                         | ✅                                                                               |
+| [Code-based Scorers](/docs/latest/genai/eval-monitor/scorers/custom.md)                         | ❌                                                                               |
 | [Guidelines-based LLM Scorers](/docs/latest/genai/eval-monitor/scorers/llm-judge/guidelines.md) | ❌ (Use [MLflow Prompt Registry](/docs/latest/genai/prompt-registry.md) instead) |
-| [Predefined Scorers](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md)           | ❌ (Prompts are hard-coded in MLflow)                                            |
+| [Predefined Scorers](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md)           | ✅                                                                               |
 
-## Usage[​](#usage "Direct link to Usage")
+* UI
+* SDK
+
+### Registering a Scorer[​](#registering-a-scorer "Direct link to Registering a Scorer")
+
+When you create a judge using the [Judge Builder UI](/docs/latest/genai/eval-monitor/scorers/llm-judge/make-judge.md), it is automatically registered to the current experiment as version 1.
+
+### Updating a Scorer[​](#updating-a-scorer "Direct link to Updating a Scorer")
+
+1. Navigate to the **Judges** tab in your experiment
+2. Click the **Edit** button on the scorer you want to update
+3. Modify the scorer configuration (instructions, model, output type, etc.)
+4. Click **Save**. This will create a new version of the scorer.
+
+### Deleting a Scorer[​](#deleting-a-scorer "Direct link to Deleting a Scorer")
+
+1. Navigate to the **Judges** tab in your experiment
+2. Click the **Delete** button on the scorer you want to remove
 
 ### Prerequisite[​](#prerequisite "Direct link to Prerequisite")
 
@@ -42,7 +59,7 @@ quality_judge = make_judge(
 )
 ```
 
-### Registering a Scorer[​](#registering-a-scorer "Direct link to Registering a Scorer")
+### Registering a Scorer[​](#registering-a-scorer-1 "Direct link to Registering a Scorer")
 
 To register a judge to the experiment, call the `register` method on the judge instance.
 
@@ -55,7 +72,7 @@ registered = quality_judge.register()
 # registered = quality_judge.register(experiment_id=experiment_id)
 ```
 
-### Updating a Scorer[​](#updating-a-scorer "Direct link to Updating a Scorer")
+### Updating a Scorer[​](#updating-a-scorer-1 "Direct link to Updating a Scorer")
 
 Registering a new scorer with the same name will create a new version.
 
@@ -105,7 +122,3 @@ all_scorers = list_scorers(experiment_id=experiment_id)
 for scorer in all_scorers:
     print(f"Scorer: {scorer.name}, Model: {scorer.model}")
 ```
-
-## UI Support[​](#ui-support "Direct link to UI Support")
-
-Coming soon!

@@ -23,11 +23,7 @@ First, we must ensure we have the required dependecies and environment variables
 python
 
 ```
-%pip install mlflow>=2.15 llama-index>=0.10.44 -q
-```
-
-```
-Note: you may need to restart the kernel to use updated packages.
+%pip install 'mlflow[genai]>=2.15' llama-index>=0.10.44 -q
 ```
 
 python

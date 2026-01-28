@@ -1,5 +1,9 @@
 # Connect Your Development Environment to MLflow
 
+MLflow Assistant
+
+Need help setting up MLflow? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that can help you set up MLflow for your project.
+
 This guide shows you how to connect your development environment to an MLflow Experiment. You can run MLflow on your local machine, self-host the open source MLflow service, or use a managed offering, such as Databricks Managed MLflow.
 
 ## Prerequisites[​](#prerequisites "Direct link to Prerequisites")

@@ -1,5 +1,9 @@
 # Deep Learning Quickstart
 
+MLflow Assistant
+
+Need help setting up tracking? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that can help you set up MLflow tracking for your project.
+
 ![MLflow UI System metrics page](/docs/latest/images/tutorials/introductory/deep-learning/ui-system-metrics.png)
 
 In this tutorial, we demonstrate how to use MLflow to track deep learning experiments with Pytorch. By combining MLflow

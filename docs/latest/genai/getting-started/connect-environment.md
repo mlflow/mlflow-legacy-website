@@ -1,5 +1,9 @@
 # Set Up MLflow Server
 
+MLflow Assistant
+
+Need help with this setup? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that understands your codebase and can set up MLflow for you.
+
 MLflow is open source, and you can set up the MLflow server using either `pip` or `docker`.
 
 Before you can leverage MLflow for your GenAI application development, you must first start the MLflow server.
@@ -25,7 +29,7 @@ Install the `mlflow` Python package via `pip` and start a MLflow server locally.
 shell
 
 ```
-pip install --upgrade mlflow
+pip install --upgrade 'mlflow[genai]'
 mlflow server
 ```
 

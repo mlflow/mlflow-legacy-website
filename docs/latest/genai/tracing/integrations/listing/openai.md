@@ -28,7 +28,7 @@ MLflow trace automatically captures the following information about OpenAI calls
 bash
 
 ```
-pip install mlflow openai
+pip install 'mlflow[genai]' openai
 ```
 
 bash

@@ -67,6 +67,10 @@ Click any integration below to get started with detailed setup instructions.
 
 [Agno](/docs/latest/genai/tracing/integrations/listing/agno.md)
 
+[![Amazon Bedrock AgentCore Logo](/docs/latest/images/logos/bedrock-logo.png)](/docs/latest/genai/tracing/integrations/listing/bedrock-agentcore.md)
+
+[Amazon Bedrock AgentCore](/docs/latest/genai/tracing/integrations/listing/bedrock-agentcore.md)
+
 [![Smolagents Logo](/docs/latest/images/logos/smolagents-logo.png)](/docs/latest/genai/tracing/integrations/listing/smolagents.md)
 
 [Smolagents](/docs/latest/genai/tracing/integrations/listing/smolagents.md)
@@ -74,6 +78,10 @@ Click any integration below to get started with detailed setup instructions.
 [![Semantic Kernel Logo](/docs/latest/images/logos/semantic-kernel-logo.png)](/docs/latest/genai/tracing/integrations/listing/semantic_kernel.md)
 
 [Semantic Kernel](/docs/latest/genai/tracing/integrations/listing/semantic_kernel.md)
+
+[![LangChain DeepAgent Logo](/docs/latest/images/logos/deepagent-logo.svg)](/docs/latest/genai/tracing/integrations/listing/deepagent.md)
+
+[LangChain DeepAgent](/docs/latest/genai/tracing/integrations/listing/deepagent.md)
 
 [![AG2 Logo](/docs/latest/images/logos/ag2-logo.png)](/docs/latest/genai/tracing/integrations/listing/ag2.md)
 
@@ -83,9 +91,21 @@ Click any integration below to get started with detailed setup instructions.
 
 [Haystack](/docs/latest/genai/tracing/integrations/listing/haystack.md)
 
+[![Koog Logo](/docs/latest/images/logos/koog.png)](/docs/latest/genai/tracing/integrations/listing/koog.md)
+
+[Koog](/docs/latest/genai/tracing/integrations/listing/koog.md)
+
 [![txtai Logo](/docs/latest/images/logos/txtai-logo.png)](/docs/latest/genai/tracing/integrations/listing/txtai.md)
 
 [txtai](/docs/latest/genai/tracing/integrations/listing/txtai.md)
+
+[![Pipecat Logo](/docs/latest/images/logos/pipecat.png)](/docs/latest/genai/tracing/integrations/listing/pipecat.md)
+
+[Pipecat](/docs/latest/genai/tracing/integrations/listing/pipecat.md)
+
+[![Watsonx Orchestrate Logo](/docs/latest/images/logos/watsonx-orchestrate.png)](/docs/latest/genai/tracing/integrations/listing/watsonx-orchestrate.md)
+
+[Watsonx Orchestrate](/docs/latest/genai/tracing/integrations/listing/watsonx-orchestrate.md)
 
 ## Agent Frameworks (TypeScript)[​](#agent-frameworks-typescript "Direct link to Agent Frameworks (TypeScript)")
 
@@ -109,6 +129,16 @@ Click any integration below to get started with detailed setup instructions.
 
 [VoltAgent](/docs/latest/genai/tracing/integrations/listing/voltagent.md)
 
+## Agent Frameworks (Java)[​](#agent-frameworks-java "Direct link to Agent Frameworks (Java)")
+
+[![Spring AI Logo](/docs/latest/images/logos/spring-ai-logo.png)](/docs/latest/genai/tracing/integrations/listing/spring-ai.md)
+
+[Spring AI](/docs/latest/genai/tracing/integrations/listing/spring-ai.md)
+
+[![Quarkus LangChain4j Logo](/docs/latest/images/logos/langchain4j.svg)](/docs/latest/genai/tracing/integrations/listing/quarkus-langchain4j.md)
+
+[Quarkus LangChain4j](/docs/latest/genai/tracing/integrations/listing/quarkus-langchain4j.md)
+
 ## Model Providers[​](#model-providers "Direct link to Model Providers")
 
 [![OpenAI Logo](/docs/latest/images/logos/openai-logo-only.png)](/docs/latest/genai/tracing/integrations/listing/openai.md)
@@ -119,13 +149,17 @@ Click any integration below to get started with detailed setup instructions.
 
 [Anthropic](/docs/latest/genai/tracing/integrations/listing/anthropic.md)
 
-[![Amazon Bedrock Logo](/docs/latest/images/logos/bedrock-logo.png)](/docs/latest/genai/tracing/integrations/listing/bedrock.md)
+[![Databricks Logo](/docs/latest/images/logos/databricks-logo.png)](/docs/latest/genai/tracing/integrations/listing/databricks.md)
 
-[Amazon Bedrock](/docs/latest/genai/tracing/integrations/listing/bedrock.md)
+[Databricks](/docs/latest/genai/tracing/integrations/listing/databricks.md)
 
 [![Gemini Logo](/docs/latest/images/logos/google-gemini-logo.svg)](/docs/latest/genai/tracing/integrations/listing/gemini.md)
 
 [Gemini](/docs/latest/genai/tracing/integrations/listing/gemini.md)
+
+[![Amazon Bedrock Logo](/docs/latest/images/logos/bedrock-logo.png)](/docs/latest/genai/tracing/integrations/listing/bedrock.md)
+
+[Amazon Bedrock](/docs/latest/genai/tracing/integrations/listing/bedrock.md)
 
 [![LiteLLM Logo](/docs/latest/images/logos/litellm-logo.png)](/docs/latest/genai/tracing/integrations/listing/litellm.md)
 
@@ -138,10 +172,6 @@ Click any integration below to get started with detailed setup instructions.
 [![xAI / Grok Logo](/docs/latest/images/logos/grok-logo.png)](/docs/latest/genai/tracing/integrations/listing/xai-grok.md)
 
 [xAI / Grok](/docs/latest/genai/tracing/integrations/listing/xai-grok.md)
-
-[![Databricks Logo](/docs/latest/images/logos/databricks-logo.png)](/docs/latest/genai/tracing/integrations/listing/databricks.md)
-
-[Databricks](/docs/latest/genai/tracing/integrations/listing/databricks.md)
 
 [![Ollama Logo](/docs/latest/images/logos/ollama-logo.png)](/docs/latest/genai/tracing/integrations/listing/ollama.md)
 
@@ -192,6 +222,54 @@ Click any integration below to get started with detailed setup instructions.
 [![Claude Code Logo](/docs/latest/images/logos/claude-code-logo.png)](/docs/latest/genai/tracing/integrations/listing/claude_code.md)
 
 [Claude Code](/docs/latest/genai/tracing/integrations/listing/claude_code.md)
+
+## Gateways[​](#gateways "Direct link to Gateways")
+
+[![MLflow AI Gateway Logo](/docs/latest/images/logos/mlflow-logo.svg)](/docs/latest/genai/tracing/integrations/listing/mlflow-ai-gateway.md)
+
+[MLflow AI Gateway](/docs/latest/genai/tracing/integrations/listing/mlflow-ai-gateway.md)
+
+[![Databricks Logo](/docs/latest/images/logos/databricks-logo.png)](/docs/latest/genai/tracing/integrations/listing/databricks-ai-gateway.md)
+
+[Databricks](/docs/latest/genai/tracing/integrations/listing/databricks-ai-gateway.md)
+
+[![LiteLLM Proxy Logo](/docs/latest/images/logos/litellm-logo.png)](/docs/latest/genai/tracing/integrations/listing/litellm-proxy.md)
+
+[LiteLLM Proxy](/docs/latest/genai/tracing/integrations/listing/litellm-proxy.md)
+
+[![Vercel AI Gateway Logo](/docs/latest/images/logos/vercel-logo.svg)](/docs/latest/genai/tracing/integrations/listing/vercel-ai-gateway.md)
+
+[Vercel AI Gateway](/docs/latest/genai/tracing/integrations/listing/vercel-ai-gateway.md)
+
+[![OpenRouter Logo](/docs/latest/images/logos/openrouter-logo.png)](/docs/latest/genai/tracing/integrations/listing/openrouter.md)
+
+[OpenRouter](/docs/latest/genai/tracing/integrations/listing/openrouter.md)
+
+[![Portkey Logo](/docs/latest/images/logos/portkey-logo.png)](/docs/latest/genai/tracing/integrations/listing/portkey.md)
+
+[Portkey](/docs/latest/genai/tracing/integrations/listing/portkey.md)
+
+[![Helicone Logo](/docs/latest/images/logos/helicone-logo.png)](/docs/latest/genai/tracing/integrations/listing/helicone.md)
+
+[Helicone](/docs/latest/genai/tracing/integrations/listing/helicone.md)
+
+[![Kong AI Gateway Logo](/docs/latest/images/logos/kong-logo.png)](/docs/latest/genai/tracing/integrations/listing/kong.md)
+
+[Kong AI Gateway](/docs/latest/genai/tracing/integrations/listing/kong.md)
+
+[![Pydantic AI Gateway Logo](/docs/latest/images/logos/pydantic-ai-logo-only.png)](/docs/latest/genai/tracing/integrations/listing/pydantic-ai-gateway.md)
+
+[Pydantic AI Gateway](/docs/latest/genai/tracing/integrations/listing/pydantic-ai-gateway.md)
+
+[![TrueFoundry Logo](/docs/latest/images/logos/truefoundry-logo.png)](/docs/latest/genai/tracing/integrations/listing/truefoundry.md)
+
+[TrueFoundry](/docs/latest/genai/tracing/integrations/listing/truefoundry.md)
+
+## No-Code[​](#no-code "Direct link to No-Code")
+
+[![Langflow Logo](/docs/latest/images/logos/langflow.svg)](/docs/latest/genai/tracing/integrations/listing/langflow.md)
+
+[Langflow](/docs/latest/genai/tracing/integrations/listing/langflow.md)
 
 <br />
 

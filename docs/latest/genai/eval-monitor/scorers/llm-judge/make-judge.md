@@ -1,12 +1,58 @@
 # Template-based LLM Scorers
 
-The [make\_judge](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.judges.make_judge) API is the recommended way to create custom LLM judges in MLflow. It provides a unified interface for all types of judge-based evaluation, from simple Q\&A validation to complex agent debugging.
+Template-based scorers let you create custom LLM judges using natural language instructions with template variables. You can create these judges using either the **UI** or the **SDK**.
 
 Version Requirements
 
-The `make_judge` API requires **MLflow >= 3.4.0**. For earlier versions, use the deprecated [custom\_prompt\_judge](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.judges.custom_prompt_judge) instead.
+* **UI**: The Judge Builder UI requires **MLflow >= 3.9.0**.
+* **SDK**: The `make_judge` API requires **MLflow >= 3.4.0**. For earlier versions, use the deprecated [custom\_prompt\_judge](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.judges.custom_prompt_judge) instead.
 
-## Quick Start[​](#quick-start "Direct link to Quick Start")
+- UI
+- SDK
+
+The MLflow UI provides a visual Judge Builder that lets you create custom LLM judges without writing code.
+
+1. Install and start MLflow:
+
+bash
+
+```
+pip install 'mlflow[genai]'
+mlflow server
+```
+
+2. Navigate to your experiment and select the **Judges** tab, then click **New LLM judge**
+
+![Judges Tab](/docs/latest/images/mlflow-3/eval-monitor/scorers/judges-tab.png)
+
+3. **Select scope**: Choose what you want the judge to evaluate:
+
+   * **Traces**: Evaluate individual traces for quality and correctness
+   * **Sessions**: Evaluate entire multi-turn conversations for conversation quality and outcomes
+
+4. **Configure the judge**:
+
+   * **LLM judge**: Select a built-in judge or "Custom judge" to create your own. Selecting a built-in judge pre-populates the instructions, which you can then modify to customize the evaluation criteria.
+   * **Name**: A unique identifier for your judge
+   * **Instructions**: Define your evaluation criteria using [template variables](#template-format). Use the **Add variable** button to insert variables into your prompt.
+   * **Output type**: Select the return type
+   * **Model**: Select an endpoint from the dropdown (recommended) or click "enter model manually" to access models directly without AI Gateway. Endpoints can be configured using [AI Gateway](/docs/latest/genai/governance/ai-gateway.md), which centralizes API key management. Judges using direct model access require local API keys and cannot be run directly from the UI. See [Supported Models](/docs/latest/genai/eval-monitor/scorers/llm-judge.md#supported-models) for details.
+
+![Judge Builder Dialog](/docs/latest/images/mlflow-3/eval-monitor/scorers/judge-builder-dialog.png)
+
+5. **Test your judge** (optional): Click the trace selector dropdown and choose **Select traces** to pick specific traces, then click **Run judge** to preview the evaluation result
+
+![Test Judge Output](/docs/latest/images/mlflow-3/eval-monitor/scorers/test-judge-output.png)
+
+6. **Schedule automatic evaluation** (optional):
+
+   * **Automatically evaluate future traces**: Enable to run this judge on new traces automatically
+   * **Sample rate**: Percentage of traces to evaluate (0-100%)
+   * **Filter string**: Only evaluate traces matching this filter ([syntax](/docs/latest/genai/tracing/search-traces.md))
+
+7. Click **Create judge** to save your new LLM judge
+
+The [make\_judge](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.judges.make_judge) API is the recommended way to create custom LLM judges programmatically.
 
 First, create a simple agent to evaluate:
 
@@ -215,13 +261,26 @@ You can only use the reserved template variables shown above (`inputs`, `outputs
 
 ## Selecting Judge Models[​](#selecting-judge-models "Direct link to Selecting Judge Models")
 
-MLflow supports all major LLM providers, such as OpenAI, Anthropic, Google, xAI, and more.
+MLflow supports two ways to configure judge models:
+
+* **[AI Gateway](/docs/latest/genai/governance/ai-gateway.md) endpoints** (Recommended for UI) - AI Gateway centralizes LLM access, which provides key benefits for evaluation workflows:
+
+  * **Run judges directly from the UI** - Test and iterate on judges without configuring local API keys
+  * **Team collaboration** - Share judges across your team without each member needing their own API keys
+  * **Centralized cost tracking** - Monitor LLM usage across all judge executions in one place
+
+  Select an endpoint from the UI dropdown or use the `gateway:/` prefix in the SDK, e.g., `gateway:/my-chat-endpoint`.
+
+* **Direct model providers** - Call providers like OpenAI, Anthropic, Google, etc. directly. Requires API keys to be set locally via environment variables (e.g., `OPENAI_API_KEY`) and cannot be run from the UI.
 
 See [Supported Models](/docs/latest/genai/eval-monitor/scorers/llm-judge.md#supported-models) for more details.
 
 ## Specify Output Format[​](#specify-output-format "Direct link to Specify Output Format")
 
-You can specify the type of the judge result using the required `feedback_value_type` argument. The [make\_judge](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.judges.make_judge) API supports common types like `bool`, `int`, `float`, `str`, and `Literal` for categorical outcomes. This ensures judge LLMs produce structured outputs, making results reliable and easy to use.
+You can specify the type of value your judge returns. This ensures judge LLMs produce structured outputs, making results reliable and easy to use.
+
+* **UI**: Select from the **Output type** dropdown in the Judge Builder.
+* **SDK**: Use the `feedback_value_type` argument in [make\_judge](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.judges.make_judge). Supported types include `bool`, `int`, `float`, `str`, `Literal` for categorical outcomes, `dict[str, <primitive>]`, and `list[<primitive>]`.
 
 ## Versioning Scorers[​](#versioning-scorers "Direct link to Versioning Scorers")
 
@@ -229,7 +288,7 @@ To get reliable scorers, iterative refinement is necessary. [Tracking scorer ver
 
 ## Optimizing Instructions with Human Feedback[​](#optimizing-instructions-with-human-feedback "Direct link to Optimizing Instructions with Human Feedback")
 
-LLMs have biases and errors. Relying on biased evaluation will lead to incorrect decision making. Use [Automatic Judge Alignment](/docs/latest/genai/eval-monitor/scorers/llm-judge/alignment.md) feature to optimize the instruction to align with human feedback, powered by the state-of-the-art algorithm from [DSPy](https://dspy.ai/).
+LLMs have biases and errors. Relying on biased evaluation will lead to incorrect decision making. Use [Automatic Judge Alignment](/docs/latest/genai/eval-monitor/scorers/llm-judge/alignment.md) to optimize instructions using human feedback, powered by the state-of-the-art [SIMBA algorithm from DSPy](https://dspy.ai/api/optimizers/SIMBA/). For rapid iteration during development, the experimental [**MemAlign**](/docs/latest/genai/eval-monitor/scorers/llm-judge/memalign.md) optimizer achieves competitive quality with up to 100× faster and 10× cheaper alignment using just a handful of examples.
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 

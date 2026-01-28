@@ -24,7 +24,7 @@ MLflow trace automatically captures the following information about LiteLLM call
 bash
 
 ```
-pip install mlflow litellm
+pip install 'mlflow[genai]' litellm
 ```
 
 2

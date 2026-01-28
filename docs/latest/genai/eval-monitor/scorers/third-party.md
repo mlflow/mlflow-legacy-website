@@ -26,6 +26,12 @@ Click an integration below to get started with detailed setup instructions.
 
 [Learn more →](/docs/latest/genai/eval-monitor/scorers/third-party/ragas.md)
 
+[![Arize Phoenix](/docs/latest/images/logos/arize-phoenix-logo.png)](/docs/latest/genai/eval-monitor/scorers/third-party/phoenix.md)
+
+### [Arize Phoenix](/docs/latest/genai/eval-monitor/scorers/third-party/phoenix.md)
+
+[Learn more →](/docs/latest/genai/eval-monitor/scorers/third-party/phoenix.md)
+
 Missing an Integration?
 
 Is your favorite evaluation framework missing? Consider [submitting a feature request](https://github.com/mlflow/mlflow/issues/new?assignees=\&labels=enhancement\&projects=\&template=feature_request_template.yaml\&title=%5BFR%5D).

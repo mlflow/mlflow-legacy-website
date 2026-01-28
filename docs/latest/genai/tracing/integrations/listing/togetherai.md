@@ -27,7 +27,7 @@ MLflow trace automatically captures the following information about <!-- -->Toge
 bash
 
 ```
-pip install mlflow openai
+pip install 'mlflow[genai]' openai
 ```
 
 bash
