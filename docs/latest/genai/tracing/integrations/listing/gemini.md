@@ -26,7 +26,7 @@ MLflow trace automatically captures the following information about Gemini calls
 bash
 
 ```
-pip install mlflow google-generativeai
+pip install 'mlflow[genai]' google-generativeai
 ```
 
 bash

@@ -9,7 +9,7 @@
 bash
 
 ```
-pip install mlflow>=3.6.0 google-adk opentelemetry-exporter-otlp-proto-http
+pip install 'mlflow[genai]>=3.6.0' google-adk opentelemetry-exporter-otlp-proto-http
 ```
 
 ## Step 2: Start the MLflow Tracking Server[​](#step-2-start-the-mlflow-tracking-server "Direct link to Step 2: Start the MLflow Tracking Server")

@@ -23,7 +23,7 @@ MLflow trace automatically captures the following information about Amazon Bedro
 bash
 
 ```
-pip install mlflow boto3
+pip install 'mlflow[genai]' boto3
 ```
 
 2

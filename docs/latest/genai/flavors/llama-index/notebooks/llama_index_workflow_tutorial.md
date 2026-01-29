@@ -23,7 +23,7 @@ MLflow's integration with LlamaIndex's Workflow API is available in MLflow >= 2.
 python
 
 ```
-%pip install mlflow>=2.17.0 llama-index>=0.11.16 -qqqU
+%pip install 'mlflow[genai]>=2.17.0' llama-index>=0.11.16 -qqqU
 # Workflow util is required for rendering Workflow as HTML
 %pip install llama-index-utils-workflow -qqqU
 ```

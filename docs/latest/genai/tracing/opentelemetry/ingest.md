@@ -13,7 +13,7 @@ To use this endpoint, start MLflow Server with a SQL-based backend store. The fo
 bash
 
 ```
-mlflow server --backend-store-uri sqlite:///mlflow.db
+mlflow server
 ```
 
 To use other types of SQL databases such as PostgreSQL, MySQL, and MSSQL, change the store URI as described in the [backend store documentation](/docs/latest/self-hosting/architecture/backend-store.md).
@@ -29,7 +29,7 @@ export OTEL_EXPORTER_OTLP_TRACES_HEADERS=x-mlflow-experiment-id=123
 
 note
 
-As of MLflow 3.6.0, MLflow Server supports only the OTLP/HTTP endpoint. The OTLP/gRPC endpoint is not yet supported.
+Currently, MLflow Server supports only the OTLP/HTTP endpoint, and the OTLP/gRPC endpoint is not yet supported.
 
 ## Basic Example[​](#basic-example "Direct link to Basic Example")
 
