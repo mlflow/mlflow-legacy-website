@@ -298,3 +298,128 @@ response = client.models.generate_content(
 client.close()
 print(response.candidates[0].content.parts[0].text)
 ```
+
+## Framework Integrations[​](#framework-integrations "Direct link to Framework Integrations")
+
+The MLflow AI Gateway's OpenAI-compatible API makes it easy to integrate with popular LLM frameworks. Simply point your framework to the gateway's base URL and use your endpoint name as the model.
+
+* LiteLLM
+* LangChain
+* LangGraph
+* DSPy
+* OpenAI Agents SDK
+
+python
+
+```
+import litellm
+
+response = litellm.completion(
+    model="openai/my-endpoint",
+    messages=[{"role": "user", "content": "Hello!"}],
+    api_base="http://localhost:5000/gateway/mlflow/v1",
+    api_key="not-needed",
+)
+print(response.choices[0].message.content)
+```
+
+python
+
+```
+from langchain_openai import ChatOpenAI
+
+llm = ChatOpenAI(
+    model="my-endpoint",
+    base_url="http://localhost:5000/gateway/mlflow/v1",
+    api_key="not-needed",
+)
+response = llm.invoke("Hello!")
+print(response.content)
+```
+
+python
+
+```
+from langchain_openai import ChatOpenAI
+from langgraph.prebuilt import create_react_agent
+
+llm = ChatOpenAI(
+    model="my-endpoint",
+    base_url="http://localhost:5000/gateway/mlflow/v1",
+    api_key="not-needed",
+)
+graph = create_react_agent(llm, tools=[])
+result = graph.invoke({"messages": [{"role": "user", "content": "Hello!"}]})
+print(result["messages"][-1].content)
+```
+
+python
+
+```
+import dspy
+
+lm = dspy.LM(
+    model="openai/my-endpoint",
+    api_base="http://localhost:5000/gateway/mlflow/v1",
+    api_key="not-needed",
+)
+dspy.configure(lm=lm)
+program = dspy.Predict("question -> answer")
+print(program(question="What is MLflow?").answer)
+```
+
+python
+
+```
+import openai
+from agents import Agent, Runner, set_default_openai_client
+
+client = openai.AsyncOpenAI(
+    base_url="http://localhost:5000/gateway/openai/v1",
+    api_key="not-needed",
+)
+set_default_openai_client(client)
+
+agent = Agent(name="Assistant", instructions="You are helpful.", model="my-endpoint")
+result = await Runner.run(agent, input="Hello!")
+print(result.final_output)
+```
+
+## Using Gateway Endpoints with MLflow Judges[​](#using-gateway-endpoints-with-mlflow-judges "Direct link to Using Gateway Endpoints with MLflow Judges")
+
+AI Gateway endpoints can be used as the backing LLM for MLflow's [LLM-as-a-Judge scorers](/docs/latest/genai/eval-monitor/scorers/llm-judge.md). This allows you to run judge evaluations through the gateway, benefiting from centralized API key management and cost tracking.
+
+To use a gateway endpoint as a judge model, use the `gateway:/` prefix followed by your endpoint name:
+
+* Predefined Scorers
+* Custom Judges
+
+python
+
+```
+from mlflow.genai.scorers import Correctness
+
+# Use a gateway endpoint for the Correctness scorer
+scorer = Correctness(model="gateway:/my-chat-endpoint")
+```
+
+python
+
+```
+from mlflow.genai.judges import make_judge
+from typing import Literal
+
+# Create a custom judge using a gateway endpoint
+coherence_judge = make_judge(
+    name="coherence",
+    instructions=(
+        "Evaluate if the response is coherent and maintains a clear flow.\n"
+        "Question: {{ inputs }}\n"
+        "Response: {{ outputs }}\n"
+    ),
+    feedback_value_type=Literal["coherent", "somewhat coherent", "incoherent"],
+    model="gateway:/my-chat-endpoint",
+)
+```
+
+For more details on creating and using LLM judges, see the [LLM-as-a-Judge documentation](/docs/latest/genai/eval-monitor/scorers/llm-judge.md).

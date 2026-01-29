@@ -9,7 +9,7 @@ MLflow LangChain Autologging is verified to be compatible with LangChain version
 text
 
 ```
-pip install mlflow[langchain] --upgrade
+pip install 'mlflow[genai,langchain]' --upgrade
 ```
 
 ## Quickstart[​](#quickstart "Direct link to Quickstart")

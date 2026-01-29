@@ -9,7 +9,7 @@ This guide demonstrates how to leverage [`mlflow.genai.optimize_prompts()`](/doc
 bash
 
 ```
-pip install -U langchain langchain-openai mlflow gepa litellm
+pip install -U langchain langchain-openai 'mlflow[genai]' gepa litellm
 ```
 
 Set your OpenAI API key:

@@ -1,5 +1,9 @@
 # GenAI Evaluation Quickstart
 
+MLflow Assistant
+
+Need help setting up evaluation? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that can help you set up evaluation for your project.
+
 This quickstart guide will walk you through evaluating your GenAI applications with MLflow's comprehensive evaluation framework. In less than 5 minutes, you'll learn how to evaluate LLM outputs, use built-in and custom evaluation criteria, and analyze results in the MLflow UI.
 
 ![Simple Evaluation Results](/docs/latest/images/mlflow-3/eval-monitor/quickstart-eval-hero.png)
@@ -45,7 +49,7 @@ Install the `mlflow` Python package via `pip` and start a MLflow server locally.
 shell
 
 ```
-pip install --upgrade mlflow
+pip install --upgrade 'mlflow[genai]'
 mlflow server
 ```
 

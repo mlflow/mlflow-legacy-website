@@ -1,5 +1,9 @@
 # Tracing Quickstart
 
+MLflow Assistant
+
+Need help setting up tracing? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that can add MLflow tracing to your project automatically.
+
 This quickstart guide will walk you through setting up a simple GenAI application with MLflow Tracing. In less than 10 minutes, you'll enable tracing, run a basic application, and explore the generated traces in the MLflow UI.
 
 ## Prerequisites[​](#prerequisites "Direct link to Prerequisites")
@@ -27,7 +31,7 @@ Install the `mlflow` Python package via `pip` and start a MLflow server locally.
 shell
 
 ```
-pip install --upgrade mlflow
+pip install --upgrade 'mlflow[genai]'
 mlflow server
 ```
 
@@ -74,7 +78,7 @@ To connect your GenAI application to the MLflow server, you will need to install
 bash
 
 ```
-pip install --upgrade mlflow openai>=1.0.0
+pip install --upgrade 'mlflow[genai]' openai>=1.0.0
 ```
 
 bash
