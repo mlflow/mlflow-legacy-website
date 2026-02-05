@@ -60,6 +60,10 @@ Each integration automatically captures your application's logic and intermediat
 
 [Strands Agent SDK](/docs/latest/genai/tracing/integrations/listing/strands.md)
 
+[![LiveKit Agents Logo](/docs/latest/images/logos/livekit-logo.png)](/docs/latest/genai/tracing/integrations/listing/livekit.md)
+
+[LiveKit Agents](/docs/latest/genai/tracing/integrations/listing/livekit.md)
+
 [![Agno Logo](/docs/latest/images/logos/agno-logo.png)](/docs/latest/genai/tracing/integrations/listing/agno.md)
 
 [Agno](/docs/latest/genai/tracing/integrations/listing/agno.md)
@@ -379,10 +383,20 @@ To **enable** tracing (if it had been temporarily disabled), the [`mlflow.tracin
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-**[Manual Tracing](/docs/latest/genai/tracing/app-instrumentation/manual-tracing.md)**: Learn how to add custom tracing to your application logic
+### [Manual Tracing](/docs/latest/genai/tracing/app-instrumentation/manual-tracing.md)
 
-**[Integration Guides](/docs/latest/genai/tracing/integrations.md)**: Explore detailed guides for specific libraries and frameworks
+[Learn how to add custom tracing to your application logic](/docs/latest/genai/tracing/app-instrumentation/manual-tracing.md)
 
-**[Viewing Traces](/docs/latest/genai/tracing/observe-with-traces/ui.md)**: Learn how to explore and analyze your traces in the MLflow UI
+[Add custom spans →](/docs/latest/genai/tracing/app-instrumentation/manual-tracing.md)
 
-**[Querying Traces](/docs/latest/genai/tracing/search-traces.md)**: Programmatically search and retrieve trace data for analysis
+### [Viewing Traces](/docs/latest/genai/tracing/observe-with-traces/ui.md)
+
+[Explore and analyze your traces in the MLflow UI](/docs/latest/genai/tracing/observe-with-traces/ui.md)
+
+[View traces →](/docs/latest/genai/tracing/observe-with-traces/ui.md)
+
+### [Querying Traces](/docs/latest/genai/tracing/search-traces.md)
+
+[Programmatically search and retrieve trace data for analysis](/docs/latest/genai/tracing/search-traces.md)
+
+[Search traces →](/docs/latest/genai/tracing/search-traces.md)

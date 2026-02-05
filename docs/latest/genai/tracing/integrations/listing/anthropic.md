@@ -136,7 +136,7 @@ MLflow supports automatic tracing for the following Anthropic APIs:
 
 | Chat Completion | Function Calling | Streaming | Async    | Image | Batch |
 | --------------- | ---------------- | --------- | -------- | ----- | ----- |
-| ✅              | ✅               | -         | ✅ (\*1) | -     | -     |
+| ✅              | ✅               | ✅        | ✅ (\*1) | -     | -     |
 
 (\*1) Async support was added in MLflow 2.21.0.
 

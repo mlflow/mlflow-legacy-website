@@ -221,7 +221,7 @@ MLflow provides built-in scorers for evaluating agent tool usage:
 * [ToolCallCorrectness](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ToolCallCorrectness): Evaluates if tool calls and arguments are correct for the user query
 * [ToolCallEfficiency](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ToolCallEfficiency): Evaluates if tool calls are efficient without redundancy
 
-These scorers automatically analyze traces to assess tool usage patterns. See the [Predefined Scorers](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md) guide for more details.
+These scorers automatically analyze traces to assess tool usage patterns. See the [Built-in Judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md) guide for more details.
 
 For custom evaluation patterns, you can create your own scorers that parse traces. See the [Custom Scorers](/docs/latest/genai/eval-monitor/scorers/custom.md) guide.
 

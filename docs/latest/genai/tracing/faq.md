@@ -104,7 +104,7 @@ def predict(messages: list[dict]) -> str:
 
 Yes, MLflow Tracing is stable and designed to be used in production environments.
 
-When using MLflow Tracing in production environments, we recommend using the [MLflow Tracing SDK](https://pypi.org/project/mlflow-tracing/) (`mlflow-tracing`) to instrument your code/models/agents with a minimal set of dependencies and a smaller installation footprint. The SDK is designed to be a perfect fit for production environments where you want an efficient and lightweight tracing solution. Please refer to the [Production Monitoring](/docs/latest/genai/tracing/prod-tracing.md) section for more details.
+When using MLflow Tracing in production environments, we recommend using the [Production Tracing SDK](/docs/latest/genai/tracing/lightweight-sdk.md) (`mlflow-tracing`) to instrument your code/models/agents with a minimal set of dependencies and a smaller installation footprint. Please refer to the [Production Monitoring](/docs/latest/genai/tracing/prod-tracing.md) section for more details.
 
 ### Q: How do I enable asynchronous trace logging?[​](#q-how-do-i-enable-asynchronous-trace-logging "Direct link to Q: How do I enable asynchronous trace logging?")
 

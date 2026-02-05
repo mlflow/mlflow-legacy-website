@@ -89,6 +89,21 @@ Required Permissions for accessing experiments:
 | [List Artifacts](/docs/latest/api_reference/rest-api.html/#mlflowmlflowservicelistartifacts)               | `2.0/mlflow/artifacts/list`                 | `GET`  | can\_read           |
 | [Get Metric History](/docs/latest/api_reference/rest-api.html/#mlflowmlflowservicegetmetrichistory)        | `2.0/mlflow/metrics/get-history`            | `GET`  | can\_read           |
 
+Required Permissions for accessing prompt optimization jobs:
+
+note
+
+Prompt optimization jobs inherit permissions from their parent experiment. When you create a job within an experiment, the job's permissions are determined by your permissions on that experiment.
+
+| API                             | Endpoint                                              | Method   | Required permission         |
+| ------------------------------- | ----------------------------------------------------- | -------- | --------------------------- |
+| Create Prompt Optimization Job  | `3.0/mlflow/prompt-optimization/jobs`                 | `POST`   | can\_update (on experiment) |
+| Get Prompt Optimization Job     | `3.0/mlflow/prompt-optimization/jobs/{job_id}`        | `GET`    | can\_read                   |
+| Search Prompt Optimization Jobs | `3.0/mlflow/prompt-optimization/jobs/search`          | `POST`   | can\_read (on experiment)   |
+| Search Prompt Optimization Jobs | `3.0/mlflow/prompt-optimization/jobs/search`          | `GET`    | can\_read (on experiment)   |
+| Cancel Prompt Optimization Job  | `3.0/mlflow/prompt-optimization/jobs/{job_id}/cancel` | `POST`   | can\_update                 |
+| Delete Prompt Optimization Job  | `3.0/mlflow/prompt-optimization/jobs/{job_id}`        | `DELETE` | can\_delete                 |
+
 Required Permissions for accessing registered models:
 
 | API                                                                                                                               | Endpoint                                           | Method   | Required permission |
