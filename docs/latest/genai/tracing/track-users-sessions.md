@@ -267,3 +267,9 @@ print(f"Success rate: {success_rate}")
 [Set up comprehensive production observability with user context](/docs/latest/genai/tracing/prod-tracing.md)
 
 [Monitor production →](/docs/latest/genai/tracing/prod-tracing.md)
+
+### [Multi-turn Evaluation](/docs/latest/genai/eval-monitor/running-evaluation/multi-turn.md)
+
+[Evaluate the quality of multi-turn conversations in your application](/docs/latest/genai/eval-monitor/running-evaluation/multi-turn.md)
+
+[Evaluate sessions →](/docs/latest/genai/eval-monitor/running-evaluation/multi-turn.md)

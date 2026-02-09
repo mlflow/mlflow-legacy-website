@@ -1347,7 +1347,7 @@ mlflow.models.predict(
 
 The [`mlflow.models.predict()`](/docs/latest/api_reference/python_api/mlflow.models.html#mlflow.models.predict) API supports the following environment managers to create the virtual environment for prediction:
 
-* [virtualenv](https://virtualenv.pypa.io/en/latest/): The default environment manager.
+* `virtualenv`: The default environment manager. Uses Python's built-in [venv](https://docs.python.org/3/library/venv.html) module to create virtual environments.
 * [uv](https://docs.astral.sh/uv/): An **extremely fast** environment manager written in Rust. **This is an experimental feature since MLflow 2.20.0.**
 * [conda](https://docs.conda.io/projects/conda/): uses conda to create environment.
 * `local`: uses the current environment to run the model. Note that `pip_requirements_override` is not supported in this mode.
