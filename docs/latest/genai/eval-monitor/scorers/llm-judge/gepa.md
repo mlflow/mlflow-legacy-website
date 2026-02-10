@@ -13,7 +13,7 @@ For alignment to work:
 
 ## Basic Usage[​](#basic-usage "Direct link to Basic Usage")
 
-See [make\_judge documentation](/docs/latest/genai/eval-monitor/scorers/llm-judge/make-judge.md) for details on creating judges.
+See [make\_judge documentation](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md) for details on creating judges.
 
 python
 
