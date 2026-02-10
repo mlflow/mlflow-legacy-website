@@ -337,6 +337,33 @@ warning
 
 Dataset deletion is permanent and cannot be undone. All records will be deleted.
 
+## Deleting Specific Records from a Dataset[​](#deleting-specific-records-from-a-dataset "Direct link to Deleting Specific Records from a Dataset")
+
+Remove specific records from a dataset using [`mlflow.genai.datasets.EvaluationDataset.delete_records()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset.delete_records):
+
+python
+
+```
+from mlflow import MlflowClient
+
+client = MlflowClient()
+
+# Get the dataset and its records
+dataset = client.get_dataset(dataset_id="d-1a2b3c4d5e6f7890")
+df = dataset.to_df()
+
+# Get record IDs to delete
+record_ids_to_delete = df["dataset_record_id"].tolist()[:2]  # Delete first 2 records
+
+# Delete specific records
+deleted_count = dataset.delete_records(record_ids_to_delete)
+print(f"Deleted {deleted_count} records")
+```
+
+note
+
+Deleting records updates the dataset's profile (record count) automatically.
+
 ## Working with Dataset Records[​](#working-with-dataset-records "Direct link to Working with Dataset Records")
 
 The [`mlflow.entities.EvaluationDataset()`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.EvaluationDataset) object provides several ways to access and analyze records:

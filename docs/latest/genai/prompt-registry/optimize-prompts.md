@@ -1,4 +1,4 @@
-# Optimize Prompts (Experimental)
+# Optimize Prompts
 
 **The simple way to continuously improve your AI agents and prompts.**
 
@@ -348,7 +348,7 @@ def predict_fn(question: str) -> str:
 
 ### 3. Training Data[​](#3-training-data "Direct link to 3. Training Data")
 
-Provide a dataset with `inputs` and `expectations`. Both columns should have dictionary values. `inputs` values will be passed to the predict function as keyword arguments. Please refer to [Predefined LLM Scorers](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md) for the expected format of each built in scorers.
+Provide a dataset with `inputs` and `expectations`. Both columns should have dictionary values. `inputs` values will be passed to the predict function as keyword arguments. Please refer to [Built-in Judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md) for the expected format of each built in scorers.
 
 python
 
