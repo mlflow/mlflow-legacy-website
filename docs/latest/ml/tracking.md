@@ -278,7 +278,7 @@ Artifact store persists (typically large) artifacts for each run, such as model 
 
 For models which are logged as MLflow artifacts, you can refer the model through a model URI of format: `models:/<model_id>`, where 'model\_id' is the unique identifier assigned to the logged model. This replaces the older `runs:/<run_id>/<artifact_path>` format and provides more direct model referencing.
 
-If the model is registered in the [MLflow Model Registry](/docs/latest/ml/model-registry.md), you can also refer the the model through a model URI of format: `models:/<model-name>/<model-version>`, see [MLflow Model Registry](/docs/latest/ml/model-registry.md) for details.
+If the model is registered in the [MLflow Model Registry](/docs/latest/ml/model-registry.md), you can also refer to the model through a model URI of format: `models:/<model-name>/<model-version>`, see [MLflow Model Registry](/docs/latest/ml/model-registry.md) for details.
 
 #### [MLflow Tracking Server](/docs/latest/self-hosting/architecture/tracking-server.md) (Optional)[​](#tracking_server "Direct link to tracking_server")
 

@@ -256,6 +256,12 @@ print(f"Success rate: {success_rate}")
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
+### [Evaluate Conversations](/docs/latest/genai/eval-monitor/running-evaluation/multi-turn.md)
+
+[Assess multi-turn session quality with conversation-level scorers](/docs/latest/genai/eval-monitor/running-evaluation/multi-turn.md)
+
+[Evaluate sessions →](/docs/latest/genai/eval-monitor/running-evaluation/multi-turn.md)
+
 ### [Search Traces](/docs/latest/genai/tracing/search-traces.md)
 
 [Master advanced filtering techniques for user and session analysis](/docs/latest/genai/tracing/search-traces.md)

@@ -221,7 +221,7 @@ MLflow provides built-in scorers for evaluating agent tool usage:
 * [ToolCallCorrectness](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ToolCallCorrectness): Evaluates if tool calls and arguments are correct for the user query
 * [ToolCallEfficiency](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ToolCallEfficiency): Evaluates if tool calls are efficient without redundancy
 
-These scorers automatically analyze traces to assess tool usage patterns. See the [Predefined Scorers](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md) guide for more details.
+These scorers automatically analyze traces to assess tool usage patterns. See the [Built-in Judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md) guide for more details.
 
 For custom evaluation patterns, you can create your own scorers that parse traces. See the [Custom Scorers](/docs/latest/genai/eval-monitor/scorers/custom.md) guide.
 
@@ -289,6 +289,53 @@ mlflow.genai.evaluate(
 )
 ```
 
+## Evaluating Multi-Turn Agents[​](#evaluating-multi-turn-agents "Direct link to Evaluating Multi-Turn Agents")
+
+The examples above evaluate single-turn interactions where each input produces one response. For conversational agents that handle multi-turn dialogues, you can use **conversation simulation** to generate and evaluate complete conversations:
+
+python
+
+```
+from openai import OpenAI
+from mlflow.genai.simulators import ConversationSimulator
+from mlflow.genai.scorers import ConversationCompleteness, Safety
+
+client = OpenAI()
+
+
+# Define conversation scenarios to test
+simulator = ConversationSimulator(
+    test_cases=[
+        {"goal": "Get help calculating compound interest"},
+        {"goal": "Debug why a calculation is wrong", "persona": "Frustrated user"},
+    ],
+    max_turns=5,
+)
+
+
+# The predict function follows the Chat Completions API format
+def predict_fn(input: list[dict], **kwargs):
+    # input is a list of message dicts with "role" and "content" keys
+    response = client.chat.completions.create(
+        model="gpt-5-mini",
+        messages=input,
+    )
+    return response.choices[0].message.content
+
+
+# Evaluate with both conversation-level and turn-level scorers
+results = mlflow.genai.evaluate(
+    data=simulator,
+    predict_fn=predict_fn,
+    scorers=[
+        ConversationCompleteness(),  # Conversation-level
+        Safety(),  # Applied to each turn
+    ],
+)
+```
+
+For complete documentation on multi-turn evaluation, see [Evaluate Conversations](/docs/latest/genai/eval-monitor/running-evaluation/multi-turn.md) and [Conversation Simulation](/docs/latest/genai/eval-monitor/running-evaluation/conversation-simulation.md).
+
 ## Next steps[​](#next-steps "Direct link to Next steps")
 
 ### [Customize Scorers](/docs/latest/genai/eval-monitor/scorers.md)
@@ -303,8 +350,8 @@ mlflow.genai.evaluate(
 
 [Analyze traces →](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-### [Collect User Feedback](/docs/latest/genai/assessments/feedback.md)
+### [Evaluate Conversations](/docs/latest/genai/eval-monitor/running-evaluation/multi-turn.md)
 
-[Gather human feedback on agent performance to create training data and improve evaluation accuracy.](/docs/latest/genai/assessments/feedback.md)
+[Assess multi-turn conversations with specialized scorers for dialogue quality and user satisfaction.](/docs/latest/genai/eval-monitor/running-evaluation/multi-turn.md)
 
-[Start collecting →](/docs/latest/genai/assessments/feedback.md)
+[Evaluate conversations →](/docs/latest/genai/eval-monitor/running-evaluation/multi-turn.md)

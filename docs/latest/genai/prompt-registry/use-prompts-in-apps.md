@@ -105,6 +105,63 @@ response = chain.invoke({"num_sentences": 1, "sentences": "This is a test senten
 print(response)
 ```
 
+## Automatic Prompt Linking[​](#automatic-prompt-linking "Direct link to Automatic Prompt Linking")
+
+### Linking with Trace[​](#linking-with-trace "Direct link to Linking with Trace")
+
+When you load prompts (via `mlflow.genai.load_prompt()`) from the registry within traced functions, MLflow automatically tracks which prompts are being used and creates a linkage with the active trace that is visible in the MLflow UI. This provides immediate visibility into prompt usage and enables you to compare your agent's behavior across different prompt versions.
+
+python
+
+```
+from openai import OpenAI
+
+
+@mlflow.trace
+def question(name):
+    # Load the prompt - this creates an automatic link to the trace
+    prompt = mlflow.genai.load_prompt("prompts:/question@latest")
+    client = OpenAI()
+
+    messages = [{"role": "user", "content": prompt.format(name=name)}]
+
+    response = client.chat.completions.create(
+        model="gpt-5-mini",
+        messages=messages,
+    )
+    return response.choices[0].message.content
+
+
+question("1+1")  # The prompt is linked to the trace created for this call
+```
+
+![UI for Prompt-trace linkage](/docs/latest/assets/images/prompt-trace-linking-43d4316e252e9827f284e49e49d85494.png)
+
+### Linking with Run[​](#linking-with-run "Direct link to Linking with Run")
+
+Similarly, when you load prompts from the registry during an MLflow run (e.g., inside a `with mlflow.start_run():` block), MLflow automatically records which prompt versions are used in that run. This linkage appears in the run's metadata and the MLflow UI, making it easy to track prompt dependencies for reproducibility and auditability.
+
+python
+
+```
+from openai import OpenAI
+
+with mlflow.start_run():
+    # Load the prompt - this creates an automatic link to the run
+    prompt = mlflow.genai.load_prompt("prompts:/question@latest")
+    client = OpenAI()
+
+    messages = [{"role": "user", "content": prompt.format(name="1+1")}]
+
+    response = client.chat.completions.create(
+        model="gpt-5-mini",
+        messages=messages,
+    )
+    response.choices[0].message.content
+```
+
+![Prompt-run linking in run overview](/docs/latest/assets/images/prompt-run-linking-bb4b4223e592f314fc06c9c9194b91bb.png)
+
 ## Linking Prompts to Logged Models for Full Lineage[​](#linking-prompts-to-logged-models-for-full-lineage "Direct link to Linking Prompts to Logged Models for Full Lineage")
 
 For complete reproducibility and traceability, it is crucial to log which specific prompt versions your application (or model) uses. When you log your GenAI application as an MLflow Model (e.g., using `mlflow.pyfunc.log_model()`, `mlflow.langchain.log_model()`, etc.), you should include information about the prompts from the registry that it utilizes.
