@@ -262,3 +262,9 @@ Once your gateway is running, learn how to configure providers and endpoints:
 [Start querying endpoints with Python client and REST APIs](/docs/latest/genai/governance/ai-gateway/legacy/usage.md)
 
 [Start using →](/docs/latest/genai/governance/ai-gateway/legacy/usage.md)
+
+### [Main AI Gateway](/docs/latest/genai/governance/ai-gateway.md)
+
+[Explore the modern AI Gateway with enhanced features and UI management](/docs/latest/genai/governance/ai-gateway.md)
+
+[View AI Gateway →](/docs/latest/genai/governance/ai-gateway.md)

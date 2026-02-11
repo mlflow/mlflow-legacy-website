@@ -7,6 +7,8 @@ Automatic evaluation runs your LLM judges automatically on traces and multi-turn
 * **Streamlined Quality Iteration**: Seamlessly measure quality as you iterate on your agent or LLM application in development, getting immediate feedback and quality insights without extra evaluation steps
 * **Production Monitoring**: Continuously monitor for issues like hallucinations, PII leakage, or user frustration on live traffic (often referred to as online evaluation)
 
+[](/docs/latest/images/llms/tracing/automatic-evaluation-ui-setup.mp4)
+
 ## Automatic vs Offline Evaluation[​](#automatic-vs-offline-evaluation "Direct link to Automatic vs Offline Evaluation")
 
 |                  | Automatic Evaluation                                                                 | Offline Evaluation                                                                                                |
@@ -29,11 +31,11 @@ Before setting up automatic evaluation, ensure that:
 
 ## Setting Up Automatic Evaluation[​](#setting-up-automatic-evaluation "Direct link to Setting Up Automatic Evaluation")
 
-These examples show how to set up LLM judges that automatically evaluate traces and multi-turn conversations as they're logged to an [MLflow Experiment](/docs/latest/genai/tracing/quickstart.md#create-a-mlflow-experiment), and how to update or disable existing judges. For more details on creating LLM judges, see [LLM-as-a-Judge](/docs/latest/genai/eval-monitor/scorers/llm-judge.md).
+These examples show how to set up LLM judges that automatically evaluate traces and multi-turn conversations as they're logged to an [MLflow Experiment](/docs/latest/genai/tracing/quickstart.md#create-a-mlflow-experiment), and how to update or disable existing judges. For more details on creating LLM judges, see [LLM-as-a-Judge](/docs/latest/genai/eval-monitor/scorers.md#llms-as-judges).
 
 note
 
-* Automatic evaluation only supports [LLM judges](/docs/latest/genai/eval-monitor/scorers/llm-judge.md). Code-based scorers (using the [`@scorer` decorator](/docs/latest/genai/eval-monitor/scorers/custom.md)) are not supported. Use [built-in LLM judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md) or create custom judges with [`make_judge()`](/docs/latest/genai/eval-monitor/scorers/llm-judge/make-judge.md).
+* Automatic evaluation only supports [LLM judges](/docs/latest/genai/eval-monitor/scorers.md#llms-as-judges). Code-based scorers (using the [`@scorer` decorator](/docs/latest/genai/eval-monitor/scorers/custom.md)) are not supported. Use [built-in judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md) or create custom judges with [`make_judge()`](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges/create-custom-judge.md).
 * When a judge is created or enabled, it evaluates traces and sessions that are **at most one hour old**. Updating a judge's configuration does not trigger re-evaluation of previously assessed traces.
 
 - UI
@@ -207,11 +209,11 @@ For further debugging, enable debug logging on the MLflow server by setting the 
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [LLM-as-a-Judge](/docs/latest/genai/eval-monitor/scorers/llm-judge.md)
+### [LLM-as-a-Judge](/docs/latest/genai/eval-monitor/scorers.md#llms-as-judges)
 
-[Learn more about creating and customizing LLM judges for your specific quality criteria.](/docs/latest/genai/eval-monitor/scorers/llm-judge.md)
+[Learn more about creating and customizing LLM judges for your specific quality criteria.](/docs/latest/genai/eval-monitor/scorers.md#llms-as-judges)
 
-[Learn more →](/docs/latest/genai/eval-monitor/scorers/llm-judge.md)
+[Learn more →](/docs/latest/genai/eval-monitor/scorers.md#llms-as-judges)
 
 ### [Evaluate Conversations](/docs/latest/genai/eval-monitor/running-evaluation/multi-turn.md)
 
