@@ -114,8 +114,8 @@ feedback = scorer(
 
 [Learn more →](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-### [Predefined Scorers](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md)
+### [Built-in Judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md)
 
-[Explore MLflow's built-in evaluation scorers](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md)
+[Explore MLflow's built-in evaluation judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md)
 
 [Learn more →](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md)

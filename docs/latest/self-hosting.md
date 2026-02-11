@@ -101,6 +101,10 @@ Each component is designed to be pluggable, so you can customize it to meet your
 
 To learn more about the architecture and available backend options, see [Architecture](/docs/latest/self-hosting/architecture/overview.md).
 
+## Workspaces[​](#workspaces "Direct link to Workspaces")
+
+MLflow supports [workspaces](/docs/latest/self-hosting/workspaces.md) to organize experiments, registered models, prompts, and artifacts on a shared MLflow instance. Workspaces add logical separation and workspace-level permissions so teams can collaborate without running separate servers. Workspaces are opt-in and require a SQL database backend.
+
 ## Access Control & Security[​](#access-control--security "Direct link to Access Control & Security")
 
 MLflow support [username/password login](/docs/latest/self-hosting/security/basic-http-auth.md) via basic HTTP authentication, [SSO (Single Sign-On)](/docs/latest/self-hosting/security/sso.md), and [custom authentication plugins](/docs/latest/self-hosting/security/custom.md).

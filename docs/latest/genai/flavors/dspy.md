@@ -43,7 +43,7 @@ An [optimizer](https://dspy.ai/learn/optimization/optimizers) improves LM pipeli
 
 #### `Program`[​](#program "Direct link to program")
 
-A program is a a set of modules connected into a pipeline to perform complex tasks. DSPy programs are flexible, allowing you to optimize and adapt them using the compiler.
+A program is a set of modules connected into a pipeline to perform complex tasks. DSPy programs are flexible, allowing you to optimize and adapt them using the compiler.
 
 ## Automatic Tracing[​](#automatic-tracing "Direct link to Automatic Tracing")
 

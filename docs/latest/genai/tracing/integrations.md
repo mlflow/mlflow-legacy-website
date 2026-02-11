@@ -63,6 +63,10 @@ Click any integration below to get started with detailed setup instructions.
 
 [Strands Agent SDK](/docs/latest/genai/tracing/integrations/listing/strands.md)
 
+[![LiveKit Agents Logo](/docs/latest/images/logos/livekit-logo.png)](/docs/latest/genai/tracing/integrations/listing/livekit.md)
+
+[LiveKit Agents](/docs/latest/genai/tracing/integrations/listing/livekit.md)
+
 [![Agno Logo](/docs/latest/images/logos/agno-logo.png)](/docs/latest/genai/tracing/integrations/listing/agno.md)
 
 [Agno](/docs/latest/genai/tracing/integrations/listing/agno.md)
