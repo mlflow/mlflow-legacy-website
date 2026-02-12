@@ -96,8 +96,20 @@ You should receive a response from your configured model.
 
 Now that you have a working gateway, explore these features:
 
-* **[Create and Manage API Keys](/docs/latest/genai/governance/ai-gateway/api-keys/create-and-manage.md)** - Learn about credential management and best practices
-* **[Create and Manage Endpoints](/docs/latest/genai/governance/ai-gateway/endpoints/create-and-manage.md)** - Configure endpoints with multiple models
-* **[Query Endpoints](/docs/latest/genai/governance/ai-gateway/endpoints/query-endpoints.md)** - Explore unified and passthrough APIs
-* **[Model Providers](/docs/latest/genai/governance/ai-gateway/endpoints/model-providers.md)** - See all supported providers and models
-* **[Traffic Routing & Fallbacks](/docs/latest/genai/governance/ai-gateway/traffic-routing-fallbacks.md)** - Set up A/B testing and high availability
+### [API Keys](/docs/latest/genai/governance/ai-gateway/api-keys/create-and-manage.md)
+
+[Learn about credential management and best practices for API keys](/docs/latest/genai/governance/ai-gateway/api-keys/create-and-manage.md)
+
+[Manage API keys →](/docs/latest/genai/governance/ai-gateway/api-keys/create-and-manage.md)
+
+### [Endpoints](/docs/latest/genai/governance/ai-gateway/endpoints/create-and-manage.md)
+
+[Configure endpoints with multiple models and query options](/docs/latest/genai/governance/ai-gateway/endpoints/create-and-manage.md)
+
+[Configure endpoints →](/docs/latest/genai/governance/ai-gateway/endpoints/create-and-manage.md)
+
+### [Traffic Routing](/docs/latest/genai/governance/ai-gateway/traffic-routing-fallbacks.md)
+
+[Set up A/B testing, fallbacks, and high availability](/docs/latest/genai/governance/ai-gateway/traffic-routing-fallbacks.md)
+
+[Set up routing →](/docs/latest/genai/governance/ai-gateway/traffic-routing-fallbacks.md)

@@ -272,11 +272,11 @@ def test_alignment_improvement(
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [Create Custom Judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/make-judge.md)
+### [Create Custom Judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md)
 
-[Learn to create domain-specific judges with make\_judge.](/docs/latest/genai/eval-monitor/scorers/llm-judge/make-judge.md)
+[Learn to create domain-specific judges with make\_judge.](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md)
 
-[Create judges →](/docs/latest/genai/eval-monitor/scorers/llm-judge/make-judge.md)
+[Create judges →](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md)
 
 ### [Development Workflow](/docs/latest/genai/eval-monitor/scorers/llm-judge/workflow.md)
 

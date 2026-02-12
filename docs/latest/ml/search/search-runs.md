@@ -418,7 +418,7 @@ sql
 metrics.loss <= 0.15 AND metrics.loss >= 0.1
 ```
 
-Finally, before moving on it's important to revisit that that you cannot use the `OR` keyword in your queries.
+Finally, before moving on it's important to revisit that you cannot use the `OR` keyword in your queries.
 
 #### 8 - Non-None Queries[​](#8---non-none-queries "Direct link to 8 - Non-None Queries")
 

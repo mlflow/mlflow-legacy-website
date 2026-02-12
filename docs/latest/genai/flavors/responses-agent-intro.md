@@ -9,7 +9,7 @@
 * Ensure compatibility with MLflow logging, tracing, and model serving
 * Ensure your model is compatible with OpenAI Responses API, making it compatible with OpenAI's responses client and other downstream UIs/applications
 
-We recommend [`ResponsesAgent`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent) instead of [`ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) and [`ChatAgent`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatAgent), as it has all the benefits of `ChatAgent` and and supports additional features like annotations.
+We recommend [`ResponsesAgent`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent) instead of [`ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) and [`ChatAgent`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatAgent), as it has all the benefits of `ChatAgent` and supports additional features like annotations.
 
 ## Author a ResponsesAgent[​](#author-a-responsesagent "Direct link to Author a ResponsesAgent")
 
