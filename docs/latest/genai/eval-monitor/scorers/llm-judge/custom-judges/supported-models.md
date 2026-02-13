@@ -1,5 +1,12 @@
 # Supported Models
 
+When no model is specified, MLflow uses a default based on your environment:
+
+* **Databricks**: `"databricks"` (a [Databricks-hosted model](https://docs.databricks.com/aws/en/mlflow3/genai/eval-monitor/concepts/scorers#select-the-llm-that-powers-the-judge) designed for GenAI quality assessments)
+* **Other environments**: `"openai:/gpt-4o-mini"`
+
+You can also explicitly specify a model from any of the following sources:
+
 ## AI Gateway Endpoints[​](#ai-gateway-endpoints "Direct link to AI Gateway Endpoints")
 
 [AI Gateway](/docs/latest/genai/governance/ai-gateway.md) endpoints are the recommended way to configure judge models, especially when creating judges from the UI. Benefits include:
@@ -27,9 +34,13 @@ Judges configured with direct model providers require API keys to be set locally
 
 To use LiteLLM integrated models, install LiteLLM by running `pip install litellm` and specify the provider and model name in the same format as natively supported providers, e.g., `gemini:/gemini-2.0-flash`.
 
-info
+## Databricks-Hosted Models[​](#databricks-hosted-models "Direct link to Databricks-Hosted Models")
 
-In Databricks, the default model is set to [Databricks's research-backed LLM judges](https://docs.databricks.com/aws/en/mlflow3/genai/eval-monitor/concepts/judges/).
+When using MLflow in Databricks, you can use Databricks-hosted models using the following formats:
+
+* **`"databricks"`** (default): a [default Databricks-hosted model](https://docs.databricks.com/aws/en/mlflow3/genai/eval-monitor/concepts/scorers#select-the-llm-that-powers-the-judge) designed for GenAI quality assessments.
+* **`"databricks:/<model-name>"`**: Other Databricks-hosted models of your choice (e.g., `databricks:/databricks-gpt-5-mini`, `databricks:/databricks-claude-sonnet-4-5`). For a full list, see [LiteLLM Models](https://models.litellm.ai/) and select "databricks" as the provider.
+* **`"databricks:/<endpoint-name>"`** or **`"endpoints:/<endpoint-name>"`**: Custom model endpoints on Databricks (e.g., `databricks:/my-endpoint`).
 
 ## Choosing the Right LLM for Your Judge[​](#choosing-the-right-llm-for-your-judge "Direct link to Choosing the Right LLM for Your Judge")
 

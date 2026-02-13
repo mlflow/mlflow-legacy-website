@@ -56,6 +56,12 @@ Shared endpoint configurations and standardized access patterns across developme
 
 [Learn routing →](/docs/latest/genai/governance/ai-gateway/traffic-routing-fallbacks.md)
 
+### [Usage Tracking](/docs/latest/genai/governance/ai-gateway/usage-tracking.md)
+
+[Monitor endpoint usage, performance, token consumption, and costs](/docs/latest/genai/governance/ai-gateway/usage-tracking.md)
+
+[View metrics →](/docs/latest/genai/governance/ai-gateway/usage-tracking.md)
+
 ### [Authentication](/docs/latest/self-hosting/security/basic-http-auth.md#ai-gateway-permissions)
 
 [Configure HTTP Basic Authentication for AI Gateway resources](/docs/latest/self-hosting/security/basic-http-auth.md#ai-gateway-permissions)
