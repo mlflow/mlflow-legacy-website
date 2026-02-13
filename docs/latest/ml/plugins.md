@@ -512,13 +512,14 @@ bash
 pip install mlflow-elasticsearchstore
 ```
 
-| Plugin                | Target Platform | Installation                    |
-| --------------------- | --------------- | ------------------------------- |
-| **mlflow-redisai**    | RedisAI         | `pip install mlflow-redisai`    |
-| **mlflow-torchserve** | TorchServe      | `pip install mlflow-torchserve` |
-| **mlflow-ray-serve**  | Ray Serve       | `pip install mlflow-ray-serve`  |
-| **mlflow-azureml**    | Azure ML        | Built-in with Azure ML          |
-| **oci-mlflow**        | Oracle Cloud    | `pip install oci-mlflow`        |
+| Plugin                  | Target Platform | Installation                      |
+| ----------------------- | --------------- | --------------------------------- |
+| **mlflow-modal-deploy** | Modal           | `pip install mlflow-modal-deploy` |
+| **mlflow-redisai**      | RedisAI         | `pip install mlflow-redisai`      |
+| **mlflow-torchserve**   | TorchServe      | `pip install mlflow-torchserve`   |
+| **mlflow-ray-serve**    | Ray Serve       | `pip install mlflow-ray-serve`    |
+| **mlflow-azureml**      | Azure ML        | Built-in with Azure ML            |
+| **oci-mlflow**          | Oracle Cloud    | `pip install oci-mlflow`          |
 
 **Example deployment usage:**
 

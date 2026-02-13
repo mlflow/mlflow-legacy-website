@@ -513,11 +513,13 @@ The below documentation applies only to the MLflow Python SDK.
 
 ## Using `@mlflow.trace` with Other Decorators[​](#using-mlflowtrace-with-other-decorators "Direct link to using-mlflowtrace-with-other-decorators")
 
-When applying multiple decorators to a single function, it's crucial to place `@mlflow.trace` as the **outermost** decorator (the one at the very top). This ensures that MLflow can capture the entire execution of the function, including the behavior of any inner decorators.
+When applying multiple decorators to a single function, decorator order matters. For **custom decorators** (e.g., timing, logging), place `@mlflow.trace` as the **outermost** decorator (the one at the very top). This ensures that MLflow can capture the entire execution of the function, including the behavior of any inner decorators.
 
-If `@mlflow.trace` is not the outermost decorator, its visibility into the function's execution may be limited or incorrect, potentially leading to incomplete traces or misrepresentation of the function's inputs, outputs, and execution time.
+**Exception for framework route decorators:** For web frameworks (Flask, FastAPI, etc.), the order is **reversed**—the framework decorator (e.g., `@app.route`, `@app.post`) should be outermost, and `@mlflow.trace` should be the inner decorator. This ensures the framework registers the trace-instrumented function. See [Production Tracing](/docs/latest/genai/tracing/prod-tracing.md) for examples.
 
-Consider the following conceptual example:
+If `@mlflow.trace` is not in the correct position for your decorator type, its visibility into the function's execution may be limited or incorrect, potentially leading to incomplete traces or misrepresentation of the function's inputs, outputs, and execution time.
+
+Consider the following conceptual example for decorators:
 
 * Python
 
@@ -547,7 +549,6 @@ def simple_timing_decorator(func):
 # Correct order: @mlflow.trace is outermost
 @mlflow.trace(name="my_decorated_function_correct_order")
 @simple_timing_decorator
-# @another_framework_decorator # e.g., @app.route("/mypath") from Flask
 def my_complex_function(x, y):
     # Function logic here
     time.sleep(0.1)  # Simulate work
@@ -557,8 +558,24 @@ def my_complex_function(x, y):
 # Incorrect order: @mlflow.trace is NOT outermost
 @simple_timing_decorator
 @mlflow.trace(name="my_decorated_function_incorrect_order")
-# @another_framework_decorator
 def my_other_complex_function(x, y):
+    time.sleep(0.1)
+    return x * y
+
+
+# Correct order for web framework: @mlflow.trace is NOT outermost
+@another_web_framework_decorator  # e.g., @app.route("/mypath") from Flask
+@mlflow.trace(name="my_decorated_function_correct_order")
+def my_web_framework_function(x, y):
+    # Function logic here
+    time.sleep(0.1)  # Simulate work
+    return x + y
+
+
+# Incorrect order for web framework: @mlflow.trace is outermost
+@mlflow.trace(name="my_decorated_function_incorrect_order")
+@another_web_framework_decorator  # e.g., @app.route("/mypath") from Flask
+def my_other_web_framework_function(x, y):
     time.sleep(0.1)
     return x * y
 
@@ -572,7 +589,7 @@ if __name__ == "__main__":
     my_other_complex_function(5, 3)
 ```
 
-In the `my_complex_function` example (correct order), `@mlflow.trace` will capture the full execution, including the time added by `simple_timing_decorator`. In `my_other_complex_function` (incorrect order), the trace captured by MLflow might not accurately reflect the total execution time or could miss modifications to inputs/outputs made by `simple_timing_decorator` before `@mlflow.trace` sees them.
+In the `my_complex_function` example (correct order for custom decorators), `@mlflow.trace` will capture the full execution, including the time added by `simple_timing_decorator`. In `my_other_complex_function` (incorrect order), the trace captured by MLflow might not accurately reflect the total execution time or could miss modifications to inputs/outputs made by `simple_timing_decorator` before `@mlflow.trace` sees them. For web framework route decorators, in the `my_web_framework_function` example (correct order), the web framework registers the trace-instrumented function so requests will be properly traced. In `my_other_web_framework_function` (incorrect order), the web framework registers the raw function without MLflow tracing, so traces may not be captured.
 
 ## Streaming[​](#streaming "Direct link to Streaming")
 
