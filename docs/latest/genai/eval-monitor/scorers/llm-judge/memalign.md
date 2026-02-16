@@ -26,7 +26,7 @@ Combines generalizable guidelines (semantic memory) with concrete examples (epis
 
 For alignment to work:
 
-* Traces must contain human assessments (labels) with the same name as the judge
+* Traces must contain human assessments (labels) with the **same name** as the judge name
 * Natural language feedback (rationale) is highly recommended for better alignment
 * A mix of positive and negative labels is recommended
 
@@ -80,21 +80,30 @@ optimizer = MemAlignOptimizer(
 )
 
 # Retrieve traces with human feedback
-traces = mlflow.search_traces(return_type="list")
+all_traces = mlflow.search_traces(return_type="list")
+alignment_traces = [
+    trace
+    for trace in all_traces
+    if any(
+        feedback.name == "politeness"
+        for feedback in trace.info.assessments
+        # feedback name must match the judge name for alignment to work
+    )
+]
 
 # Align the judge
-aligned_judge = judge.align(traces=traces, optimizer=optimizer)
+aligned_judge = judge.align(traces=alignment_traces, optimizer=optimizer)
 ```
 
 ## Parameters[​](#parameters "Direct link to Parameters")
 
-| Parameter         | Type  | Default                            | Description                                                                        |
-| ----------------- | ----- | ---------------------------------- | ---------------------------------------------------------------------------------- |
-| `reflection_lm`   | `str` | Required                           | Model used for extracting guidelines from feedback.                                |
-| `retrieval_k`     | `int` | `5`                                | Number of relevant examples to retrieve from episodic memory during inference.     |
-| `embedding_model` | `str` | `"openai:/text-embedding-3-small"` | Model for episodic memory retrieval. Must be in `<provider>:/<model-name>` format. |
+| Parameter         | Type  | Default                                                                                                           | Description                                                                                                                                                                                                   |
+| ----------------- | ----- | ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `reflection_lm`   | `str` | See [Supported Judge Models](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges/supported-models.md) | Model used for extracting guidelines from feedback. See [Supported Judge Models](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges/supported-models.md) section for which models are supported. |
+| `retrieval_k`     | `int` | `5`                                                                                                               | Number of relevant examples to retrieve from episodic memory during inference.                                                                                                                                |
+| `embedding_model` | `str` | `"openai:/text-embedding-3-small"`                                                                                | Model for episodic memory retrieval. Must be in `<provider>:/<model-name>` format.                                                                                                                            |
 
-Note: The number of parallel threads for LLM calls during guideline distillation can be configured via the `MLFLOW_GENAI_OPTIMIZE_MAX_WORKERS` environment variable (default: 8).
+The number of parallel threads for LLM calls during guideline distillation can be configured via the `MLFLOW_GENAI_OPTIMIZE_MAX_WORKERS` environment variable (default: 8).
 
 ## Inspecting Learned Knowledge[​](#inspecting-learned-knowledge "Direct link to Inspecting Learned Knowledge")
 
