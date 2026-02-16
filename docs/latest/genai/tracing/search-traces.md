@@ -55,7 +55,6 @@ The `search_traces` API uses a SQL-like Domain Specific Language (DSL) for query
 | **String Fields**    | `trace.client_request_id`, `trace.name`                              | `=`, `!=`, `LIKE`, `ILIKE`, `RLIKE`                           | trace.name LIKE "%Generate%"        |
 | **Linked Prompts**   | `prompt`                                                             | `=` (format: `"name/version"`)                                | prompt = "qa-system-prompt/4"       |
 | **Span Name/Type**   | `span.name`, `span.type`                                             | `=`, `!=`, `LIKE`, `ILIKE`, `RLIKE`                           | span.type RLIKE "^LLM"              |
-| **Span Attributes**  | `span.attributes.<key>`                                              | `LIKE`, `ILIKE`                                               | span.attributes.model RLIKE "^gpt"  |
 | **Tags**             | `tag.<key>`                                                          | `=`, `!=`, `LIKE`, `ILIKE`, `RLIKE`                           | tag.key = "value"                   |
 | **Metadata**         | `metadata.<key>`                                                     | `=`, `!=`, `LIKE`, `ILIKE`, `RLIKE`, `IS NULL`, `IS NOT NULL` | metadata.user\_id LIKE "user%"      |
 | **Feedback**         | `feedback.<name>`                                                    | `=`, `!=`, `LIKE`, `ILIKE`, `RLIKE`                           | feedback.rating = "excellent"       |
@@ -221,7 +220,7 @@ note
 
 The `prompt` filter only supports exact match (`=`) operator with the format `"name/version"`.
 
-#### Filter by Span Attributes[​](#filter-by-span-attributes "Direct link to Filter by Span Attributes")
+#### Filter by Span Name and Type[​](#filter-by-span-name-and-type "Direct link to Filter by Span Name and Type")
 
 python
 
@@ -234,11 +233,6 @@ mlflow.search_traces(filter_string="span.name LIKE '%embedding%'")
 
 # Filter by span type
 mlflow.search_traces(filter_string="span.type = 'LLM'")
-
-# Filter by custom span attributes (requires wildcards with LIKE/ILIKE)
-mlflow.search_traces(filter_string="span.attributes.model_version LIKE '%v2%'")
-mlflow.search_traces(filter_string="span.attributes.temperature LIKE '%0.7%'")
-mlflow.search_traces(filter_string="span.attributes.model_version ILIKE '%V2%'")
 ```
 
 #### Filter by Feedback[​](#filter-by-feedback "Direct link to Filter by Feedback")
@@ -299,7 +293,7 @@ mlflow.search_traces(
     """
 )
 
-# Advanced query with span attributes and feedback
+# Advanced query with span name and feedback
 mlflow.search_traces(
     filter_string="""
         span.name LIKE '%llm%'
@@ -313,7 +307,7 @@ mlflow.search_traces(
     filter_string="""
         trace.name ILIKE '%inference%'
         AND trace.timestamp_ms > 1700000000000
-        AND span.attributes.model_version LIKE '%v2%'
+        AND span.name LIKE '%llm%'
     """
 )
 ```

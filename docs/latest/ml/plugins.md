@@ -37,15 +37,16 @@ Plugins let you integrate MLflow with your existing infrastructure without modif
 
 ## Plugin Types & Use Cases[​](#plugin-types--use-cases "Direct link to Plugin Types & Use Cases")
 
-MLflow supports eight types of plugins, each addressing different integration needs:
+MLflow supports several types of plugins, each addressing different integration needs:
 
 ### **Storage & Persistence**[​](#storage--persistence "Direct link to storage--persistence")
 
-| Plugin Type              | Purpose                        | Example Use Cases                                  |
-| ------------------------ | ------------------------------ | -------------------------------------------------- |
-| **Tracking Store**       | Custom experiment data storage | Enterprise databases, cloud data warehouses        |
-| **Artifact Repository**  | Custom artifact storage        | In-house blob storage, specialized file systems    |
-| **Model Registry Store** | Custom model registry backend  | Enterprise model catalogs, version control systems |
+| Plugin Type              | Purpose                           | Example Use Cases                                  |
+| ------------------------ | --------------------------------- | -------------------------------------------------- |
+| **Tracking Store**       | Custom experiment data storage    | Enterprise databases, cloud data warehouses        |
+| **Artifact Repository**  | Custom artifact storage           | In-house blob storage, specialized file systems    |
+| **Model Registry Store** | Custom model registry backend     | Enterprise model catalogs, version control systems |
+| **Workspace Provider**   | Custom workspace metadata backend | Kubernetes namespaces                              |
 
 ### **Authentication & Headers**[​](#authentication--headers "Direct link to authentication--headers")
 
@@ -88,6 +89,7 @@ setup(
         "mlflow.model_evaluator": "my-evaluator=my_plugin.evaluator:MyEvaluator",
         "mlflow.project_backend": "my-backend=my_plugin.backend:MyBackend",
         "mlflow.deployments": "my-target=my_plugin.deployment",
+        "mlflow.workspace_provider": "my-scheme=my_plugin.workspace:MyWorkspaceProvider",
         "mlflow.app": "my-app=my_plugin.app:create_app",
     },
 )
@@ -98,6 +100,7 @@ setup(
 * Tracking Store
 * Artifact Repository
 * Model Registry Store
+* Workspace Provider
 
 python
 
@@ -133,6 +136,8 @@ python
 
 ```
 # my_plugin/artifacts.py
+from __future__ import annotations
+
 from mlflow.store.artifact.artifact_repo import ArtifactRepository
 
 
@@ -158,6 +163,11 @@ class MyArtifactRepo(ArtifactRepository):
     def download_artifacts(self, artifact_path, dst_path=None):
         # Download artifacts from your storage system
         pass
+
+    def for_workspace(self, workspace_name: str | None) -> "ArtifactRepository":
+        # Optional: return a workspace-scoped repository instance.
+        # Only needed when workspace-specific artifact routing is required.
+        return self
 ```
 
 python
@@ -191,6 +201,60 @@ class MyModelRegistryStore(AbstractStore):
 
     # Implement other required AbstractStore methods...
 ```
+
+python
+
+```
+# my_plugin/workspace.py
+from __future__ import annotations
+
+from typing import Iterable
+
+from mlflow.entities import Workspace
+from mlflow.store.workspace.abstract_store import AbstractStore
+
+
+class MyWorkspaceProvider(AbstractStore):
+    """Custom workspace provider for scheme 'my-scheme://'"""
+
+    def __init__(self, workspace_uri):
+        super().__init__()
+        self.workspace_uri = workspace_uri
+        # Initialize your workspace metadata backend
+
+    def list_workspaces(self) -> Iterable[Workspace]:
+        # Return an iterable of Workspace entities
+        pass
+
+    def get_workspace(self, workspace_name: str) -> Workspace:
+        # Return a single Workspace by name
+        pass
+
+    def create_workspace(self, workspace: Workspace) -> Workspace:
+        # Provision a new workspace (raise NotImplementedError if read-only)
+        pass
+
+    def update_workspace(self, workspace: Workspace) -> Workspace:
+        # Update workspace metadata (raise NotImplementedError if read-only)
+        pass
+
+    def delete_workspace(self, workspace_name: str) -> None:
+        # Remove a workspace (raise NotImplementedError if read-only)
+        pass
+
+    def get_default_workspace(self) -> Workspace:
+        # Return the default workspace (raise NotImplementedError if not supported)
+        pass
+
+    def resolve_artifact_root(
+        self, default_artifact_root: str | None, workspace_name: str
+    ) -> tuple[str | None, bool]:
+        # Return (artifact_root, append_workspace_prefix). When the second value is
+        # True, MLflow automatically appends /workspaces/<workspace> to the root.
+        return default_artifact_root, True
+```
+
+For full details on workspace provider architecture, discovery, and configuration, see the [Workspace Providers](/docs/latest/self-hosting/workspaces/workspace-providers.md) documentation.
 
 ### Authentication Plugins[​](#authentication-plugins "Direct link to Authentication Plugins")
 
@@ -512,13 +576,14 @@ bash
 pip install mlflow-elasticsearchstore
 ```
 
-| Plugin                | Target Platform | Installation                    |
-| --------------------- | --------------- | ------------------------------- |
-| **mlflow-redisai**    | RedisAI         | `pip install mlflow-redisai`    |
-| **mlflow-torchserve** | TorchServe      | `pip install mlflow-torchserve` |
-| **mlflow-ray-serve**  | Ray Serve       | `pip install mlflow-ray-serve`  |
-| **mlflow-azureml**    | Azure ML        | Built-in with Azure ML          |
-| **oci-mlflow**        | Oracle Cloud    | `pip install oci-mlflow`        |
+| Plugin                  | Target Platform | Installation                      |
+| ----------------------- | --------------- | --------------------------------- |
+| **mlflow-modal-deploy** | Modal           | `pip install mlflow-modal-deploy` |
+| **mlflow-redisai**      | RedisAI         | `pip install mlflow-redisai`      |
+| **mlflow-torchserve**   | TorchServe      | `pip install mlflow-torchserve`   |
+| **mlflow-ray-serve**    | Ray Serve       | `pip install mlflow-ray-serve`    |
+| **mlflow-azureml**      | Azure ML        | Built-in with Azure ML            |
+| **oci-mlflow**          | Oracle Cloud    | `pip install oci-mlflow`          |
 
 **Example deployment usage:**
 
@@ -797,6 +862,7 @@ my-mlflow-plugin/
 │   ├── store.py               # Tracking store implementation
 │   ├── artifacts.py           # Artifact repository implementation
 │   ├── auth.py                # Authentication provider
+│   ├── workspace.py           # Workspace provider
 │   └── evaluator.py           # Model evaluator
 ├── tests/
 │   ├── test_store.py
