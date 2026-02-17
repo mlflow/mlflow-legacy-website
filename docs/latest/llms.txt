@@ -39,7 +39,7 @@
 - [Judge Alignment: Teaching AI to Match Human Preferences](/docs/latest/genai/eval-monitor/scorers/llm-judge/alignment.md): Transform Generic Judges into Domain Experts
 - [Custom Judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md): Custom LLM judges let you define complex and nuanced judging guidelines for GenAI applications using natural language.
 - [Create a custom judge using make_judge()](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges/create-custom-judge.md): Custom judges are LLM-based judges that evaluate your GenAI agents against specific quality criteria. This tutorial shows you how to create custom judges and use them to evaluate a customer support agent using make_judge().
-- [Supported Models](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges/supported-models.md): AI Gateway Endpoints
+- [Supported Models](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges/supported-models.md): When no model is specified, MLflow uses a default based on your environment:
 - [Custom Alignment Optimizers](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-optimizers.md): MLflow's alignment system is designed as a plugin architecture, allowing you to create custom optimizers for different alignment strategies. This extensibility enables you to implement domain-specific optimization approaches while leveraging MLflow's judge infrastructure.
 - [GEPA Alignment Optimizer](/docs/latest/genai/eval-monitor/scorers/llm-judge/gepa.md): MLflow provides the GEPA alignment optimizer using DSPy's implementation of GEPA (Genetic-Pareto). GEPA uses LLM-driven reflection to analyze execution traces and iteratively propose improved judge instructions based on human feedback.
 - [Create a guidelines LLM Judge](/docs/latest/genai/eval-monitor/scorers/llm-judge/guidelines.md): Guidelines LLM judges use pass/fail natural language criteria to evaluate GenAI outputs. They excel at evaluating:
@@ -96,6 +96,7 @@
 - [AI Gateway Server Usage](/docs/latest/genai/governance/ai-gateway/legacy/usage.md): Learn how to query your AI Gateway endpoints, integrate with applications, and leverage different APIs and tools.
 - [AI Gateway Quickstart](/docs/latest/genai/governance/ai-gateway/quickstart.md): Get your AI Gateway running in minutes with this simple walkthrough.
 - [Traffic Routing & Fallbacks](/docs/latest/genai/governance/ai-gateway/traffic-routing-fallbacks.md): Beyond basic endpoint configuration, MLflow AI Gateway supports advanced routing features that enable traffic splitting for A/B testing and automatic fallbacks for high availability.
+- [Usage Tracking](/docs/latest/genai/governance/ai-gateway/usage-tracking.md): AI Gateway usage tracking logs all requests to an endpoint as traces, allowing you to monitor request volume, latency, errors, token consumption, and costs.
 - [MLflow MCP Server](/docs/latest/genai/mcp.md): - This feature is experimental and may change in future releases.
 - [Prompt Registry](/docs/latest/genai/prompt-registry.md): MLflow Prompt Registry
 - [Create and Edit Prompts](/docs/latest/genai/prompt-registry/create-and-edit-prompts.md): Learn how to create new prompts and edit existing ones in the MLflow Prompt Registry using both the UI and Python APIs.
@@ -232,6 +233,7 @@
 - [Deploy MLflow Model as a Local Inference Server](/docs/latest/ml/deployment/deploy-model-locally.md): MLflow allows you to deploy your model locally using just a single command.
 - [Deploy MLflow Model to Kubernetes](/docs/latest/ml/deployment/deploy-model-to-kubernetes.md): Using MLServer as the Inference Server
 - [Develop ML model with MLflow and deploy to Kubernetes](/docs/latest/ml/deployment/deploy-model-to-kubernetes/tutorial.md): This tutorial assumes that you have access to a Kubernetes cluster. However, you can also complete this tutorial on your local machine
+- [Deploy MLflow Model to Modal](/docs/latest/ml/deployment/deploy-model-to-modal.md): Modal is a serverless cloud platform optimized for AI/ML workloads, offering on-demand GPU access
 - [Deploy MLflow Model to Amazon SageMaker](/docs/latest/ml/deployment/deploy-model-to-sagemaker.md): Amazon SageMaker is a fully managed service designed for scaling ML inference containers.
 - [Official MLflow Docker image](/docs/latest/ml/docker.md): The official MLflow Docker image is available on GitHub Container Registry at https://ghcr.io/mlflow/mlflow.
 - [Model Evaluation](/docs/latest/ml/evaluation.md): This documentation covers MLflow's classic evaluation system (mlflow.models.evaluate) which uses EvaluationMetric and make_metric for custom metrics.
