@@ -55,6 +55,10 @@ MLflow offers support for a variety of deployment targets. For detailed informat
 
 [MLflow Deployment integrates with Kubernetes-native ML serving frameworks such as Seldon Core and KServe (formerly KFServing).](/docs/latest/ml/deployment/deploy-model-to-kubernetes.md)
 
+[![Modal Logo](/docs/latest/assets/images/modal-logo-0852b21627992ced2a9cd059631015f4.png)](/docs/latest/ml/deployment/deploy-model-to-modal.md)
+
+[Modal is a serverless cloud platform for AI/ML with on-demand GPU access (T4 to H200), auto-scaling, and one-command deployment via the mlflow-modal-deploy plugin.](/docs/latest/ml/deployment/deploy-model-to-modal.md)
+
 [Community Supported Targets](/docs/latest/ml/plugins.md)
 
 [MLflow also supports more deployment targets such as Ray Serve, Redis AI, Torch Serve, Oracle Cloud Infrastructure (OCI), through community-supported plugins.](/docs/latest/ml/plugins.md)

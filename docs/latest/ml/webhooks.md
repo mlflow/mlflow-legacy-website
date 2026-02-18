@@ -211,6 +211,21 @@ client.delete_webhook(webhook.webhook_id)
 
 ## Security[​](#security "Direct link to Security")
 
+### URL Validation and SSRF Protection[​](#url-validation-and-ssrf-protection "Direct link to URL Validation and SSRF Protection")
+
+MLflow validates webhook URLs to prevent Server-Side Request Forgery (SSRF) attacks. By default:
+
+* Only **HTTPS** URLs are allowed
+* URLs that resolve to **private**, **loopback**, **link-local**, or **reserved** IP addresses are rejected
+
+This prevents webhooks from being used to probe internal services, cloud metadata endpoints (e.g., `169.254.169.254`), or localhost services.
+
+The validation is enforced both when creating/updating webhooks and when sending webhook requests (including test requests), so even webhooks created before this protection was added are validated at delivery time.
+
+note
+
+For local development, you can allow private IPs by setting `MLFLOW_WEBHOOK_ALLOW_PRIVATE_IPS=true`. Do not enable this in production.
+
 ### HMAC Signature Verification[​](#hmac-signature-verification "Direct link to HMAC Signature Verification")
 
 When you create a webhook with a secret, MLflow signs each request with an HMAC-SHA256 signature. This allows your endpoint to verify that the request genuinely comes from MLflow. The signature is included in the `X-MLflow-Signature` header with the format: `v1,<base64_encoded_signature>`. See the FastAPI example below for a complete implementation of signature verification.
@@ -225,6 +240,7 @@ To prevent replay attacks, it's recommended to verify that webhook timestamps ar
 * `MLFLOW_WEBHOOK_REQUEST_TIMEOUT`: Timeout in seconds for webhook HTTP requests (default: 30)
 * `MLFLOW_WEBHOOK_REQUEST_MAX_RETRIES`: Maximum number of retry attempts for failed webhook requests (default: 3)
 * `MLFLOW_WEBHOOK_DELIVERY_MAX_WORKERS`: Maximum number of worker threads for webhook delivery (default: 10)
+* `MLFLOW_WEBHOOK_ALLOW_PRIVATE_IPS`: Allow webhook URLs that resolve to private/internal IP addresses (default: `false`). Only enable for local development.
 
 ## Webhook Payload Structure[​](#webhook-payload-structure "Direct link to Webhook Payload Structure")
 
