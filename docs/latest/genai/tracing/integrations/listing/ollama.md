@@ -170,9 +170,13 @@ MLflow supports tracing for streaming and async Ollama APIs. Visit the [OpenAI T
 
 To control the tracing behavior more precisely, MLflow provides [Manual Tracing SDK](/docs/latest/genai/tracing/app-instrumentation/manual-tracing.md) to create spans for your custom code. Manual tracing can be used in conjunction with auto-tracing to create a custom trace while keeping the auto-tracing convenience. For more details, please refer to the [Combine with Manual Tracing](/docs/latest/genai/tracing/integrations/listing/openai.md#combine-with-manual-tracing) section in the OpenAI Tracing documentation.
 
-## Token usage[​](#token-usage "Direct link to Token usage")
+## Tracking Token Usage and Cost[​](#tracking-token-usage-and-cost "Direct link to Tracking Token Usage and Cost")
 
-MLflow >= 3.2.0 supports token usage tracking for Ollama models through the OpenAI SDK integration. The token usage for each LLM call will be logged in the `mlflow.chat.tokenUsage` attribute. The total token usage throughout the trace will be available in the `token_usage` field of the trace info object. See the [Token Usage](/docs/latest/genai/tracing/integrations/listing/openai.md#token-usage) documentation for more details.
+MLflow automatically tracks token usage and cost for Ollama models through the OpenAI SDK integration. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/latest/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
+
+note
+
+Cost may not be available for many local Ollama models as pricing data is not available.
 
 ## Disable auto-tracing[​](#disable-auto-tracing "Direct link to Disable auto-tracing")
 

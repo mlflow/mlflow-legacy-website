@@ -81,7 +81,7 @@ Before enabling workspaces, confirm that existing experiment artifact locations 
 
 ## Detecting Workspace Support Programmatically[​](#detecting-workspace-support-programmatically "Direct link to Detecting Workspace Support Programmatically")
 
-* Call `GET /api/3.0/mlflow/server-features` to check `workspaces_enabled`.
+* Call `GET /api/3.0/mlflow/server-info` to check `workspaces_enabled`.
 * The endpoint is reachable without a workspace header; a `404` indicates an older server without workspace support.
 
 ## Environment Variables[​](#environment-variables "Direct link to Environment Variables")

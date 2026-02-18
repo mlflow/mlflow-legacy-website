@@ -26,6 +26,26 @@ Stop manual testing with LLM judges and custom metrics. Systematically evaluate 
 
 Use any GenAI framework or model provider. With 30+ integrations and extensible APIs, MLflow adapts to your tech stack, not the other way around.
 
+<br />
+
+**Try MLflow GenAI Demo**<br />The quickest way to learn about MLflow GenAI is to try the demo. Click to see how to launch the demo ↓
+
+#### **Starting from UI**[​](#starting-from-ui "Direct link to starting-from-ui")
+
+To start the demo, click on the "Start Demo" button on the top page of the MLflow UI.
+
+![MLflow GenAI Demo UI](/docs/latest/images/llms/demo/demo.png)
+
+#### **Starting from CLI**[​](#starting-from-cli "Direct link to starting-from-cli")
+
+Alternatively, you can start the demo from the command line using the `mlflow demo` command. This option does not require you to have a running MLflow server.
+
+bash
+
+```
+uvx mlflow demo
+```
+
 ## Observability[​](#observability "Direct link to Observability")
 
 Debug and iterate on GenAI applications using MLflow's tracing, which captures your app's entire execution, including prompts, retrievals and tool calls. MLflow's open-source, OpenTelemetry-compatible tracing SDK helps avoid vendor lock-in.
