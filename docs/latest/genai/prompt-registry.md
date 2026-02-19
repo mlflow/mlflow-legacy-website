@@ -2,6 +2,24 @@
 
 **MLflow Prompt Registry** is a powerful tool that streamlines prompt engineering and management in your Generative AI (GenAI) applications. It enables you to version, track, and reuse prompts across your organization, helping maintain consistency and improving collaboration in prompt development.
 
+**Try MLflow GenAI Demo**<br />The quickest way to learn about MLflow GenAI is to try the demo. Click to see how to launch the demo ↓
+
+#### **Starting from UI**[​](#starting-from-ui "Direct link to starting-from-ui")
+
+To start the demo, click on the "Start Demo" button on the top page of the MLflow UI.
+
+![MLflow GenAI Demo UI](/docs/latest/images/llms/demo/demo.png)
+
+#### **Starting from CLI**[​](#starting-from-cli "Direct link to starting-from-cli")
+
+Alternatively, you can start the demo from the command line using the `mlflow demo` command. This option does not require you to have a running MLflow server.
+
+bash
+
+```
+uvx mlflow demo
+```
+
 ## Key Benefits[​](#key-benefits "Direct link to Key Benefits")
 
 #### Version Control

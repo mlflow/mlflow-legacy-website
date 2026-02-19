@@ -28,7 +28,7 @@ To use file-based storage, specify `--backend-store-uri ./mlruns` when starting 
 
 TO BE DEPRECATED SOON
 
-File system backend is in Keep-the-Light-On (KTLO) mode and is no longer receiving new feature updates. We strongly recommend using the database backend (now the default) for better performance and reliability.
+File system backend is in Keep-the-Light-On (KTLO) mode and is no longer receiving new feature updates. We strongly recommend using the database backend (now the default) for better performance and reliability. See [Migrate from File Store](/docs/latest/self-hosting/migrate-from-file-store.md) for how to migrate existing data.
 
 ## Configure Backend Store[​](#configure-backend-store "Direct link to Configure Backend Store")
 
