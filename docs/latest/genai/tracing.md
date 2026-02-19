@@ -4,6 +4,26 @@ MLflow Tracing is a fully **OpenTelemetry-compatible** LLM observability solutio
 
 [](/docs/latest/images/llms/tracing/tracing-top.mp4)
 
+<br />
+
+**Try MLflow GenAI Demo**<br />The quickest way to learn about MLflow GenAI is to try the demo. Click to see how to launch the demo ↓
+
+#### **Starting from UI**[​](#starting-from-ui "Direct link to starting-from-ui")
+
+To start the demo, click on the "Start Demo" button on the top page of the MLflow UI.
+
+![MLflow GenAI Demo UI](/docs/latest/images/llms/demo/demo.png)
+
+#### **Starting from CLI**[​](#starting-from-cli "Direct link to starting-from-cli")
+
+Alternatively, you can start the demo from the command line using the `mlflow demo` command. This option does not require you to have a running MLflow server.
+
+bash
+
+```
+uvx mlflow demo
+```
+
 ## Use Cases Throughout the ML Lifecycle[​](#use-cases-throughout-the-ml-lifecycle "Direct link to Use Cases Throughout the ML Lifecycle")
 
 MLflow Tracing empowers you throughout the end-to-end lifecycle of a machine learning project. Here's how it helps you at each step of the workflow, click on the tabs below to learn more:
