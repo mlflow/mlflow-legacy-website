@@ -1,0 +1,151 @@
+# SSO (Single Sign-On)
+
+You can use SSO (Single Sign-On) to authenticate users to your MLflow instance, by installing a custom plugin or using a reverse proxy.
+
+## Using OIDC Plugin[​](#using-oidc-plugin "Direct link to Using OIDC Plugin")
+
+MLflow supports SSO (Single Sign-On) with custom plugins for authentication. The [mlflow-oidc-auth](https://github.com/mlflow-oidc/mlflow-oidc-auth) plugin provides OIDC support for MLflow.
+
+**Features**:
+
+* OIDC-based authentication for MLflow UI and API
+* User management through OIDC provider
+* User-level access control
+* Group-based access control
+* Permissions management based on regular expressions (allows or denies access to specific MLflow resources based on regular expressions and assigns permissions to users or groups)
+* Support for session, JWT, and basic authentication methods
+* Compatible with mlflow-client authentication through MLflow basic auth protocol
+
+note
+
+This plugin is maintained by the community.
+
+To use MLflow with the OIDC plugin, we need to (1) configure OIDC provider (2) deploy MLflow server with OIDC plugin (3) configure mlflow client. Below are the configuration details.
+
+### Configure the OIDC provider[​](#configure-the-oidc-provider "Direct link to Configure the OIDC provider")
+
+The OIDC plugin requires an Identity Provider (IDP) service that supports the OIDC protocol. Popular cloud OIDC providers include [Okta Auth0](https://developer.okta.com/), [Azure AD](https://learn.microsoft.com/en-us/entra/identity-platform/v2-protocols-oidc), etc. Below is a configuration example using Okta:
+
+1. Register a [free Okta Auth0 account](https://developer.okta.com/signup/) and log in.
+
+2. Create an application for MLflow, select application type as "Regular Web Application". View the "Domain", "Client ID", "Client Secret" values of the application on the application basic information page, these values will be used when deploying the MLflow server with the OIDC plugin.
+
+![App basic information](/docs/3.10.0/assets/images/sso-okta-app-info-9365af0cc69abd2c1eaea6618f9cc4f1.png)
+
+3. Configure allowed callback URL for the Okta application, assuming the MLflow server is deployed at "<http://127.0.0.1:8080>", then the callback URL is "<http://127.0.0.1:8080/callback>"
+
+![callback setting](/docs/3.10.0/assets/images/sso-callback-setting-3124cf89e452a185873109970f304ed8.png)
+
+4. Configure and deploy a "post-login" trigger for assigning the user's group membership
+
+Your Okta account login username is used as the user in the MLflow server with OIDC plugin. You need to assign a group to it. MLflow OIDC plugin supports 2 kinds of groups: (1) administrator group (default group name is "mlflow-admin"), (2) plain group (default group name is "mlflow"). For the user that is assigned to the administrator group, the user automatically gets all entity access permissions, and can grant permissions to any other users. For the user that is assigned to the plain group, the user does not have permissions to MLflow entities until the user in the administrator group grants permission for the user.
+
+Below is an example to assign the administrator group to current Okta user:
+
+In Okta account sidebar menu: Actions -> Library -> Create Actions -> Create Custom Action, and fill in the code as follows:
+
+javascript
+
+```
+exports.onExecutePostLogin = async (event, api) => {
+  api.idToken.setCustomClaim(
+    'urn:mlflow:groups',
+    ['mlflow-admin']
+  );
+};
+```
+
+then click the "Deploy" button.
+
+![custom action setting](/docs/3.10.0/assets/images/sso-custom-action-574a3cb8aba9e4b4b4229fe01762180e.png)
+
+Then in Okta account sidebar menu: Actions -> Triggers -> Sign up & Login: post-login, install the trigger as follows:
+
+![custom action setting](/docs/3.10.0/assets/images/sso-install-trigger-d27a07510f656b6b28daa82ed0d5197a.png)
+
+### Deploy MLflow server with the OIDC plugin[​](#deploy-mlflow-server-with-the-oidc-plugin "Direct link to Deploy MLflow server with the OIDC plugin")
+
+Use the following commands to deploy the MLflow server with the OIDC plugin, note that we need to set a couple of environment variables correctly.
+
+bash
+
+```
+pip install "mlflow-oidc-auth[full]"
+
+# The ${Domain} is the domain value that you can view on the Okta application's basic information page.
+export OIDC_DISCOVERY_URL="https://${Domain}/.well-known/openid-configuration"
+
+# You can view the OIDC_CLIENT_ID and OIDC_CLIENT_SECRET values on the Okta application's basic information page.
+export OIDC_CLIENT_ID=...
+export OIDC_CLIENT_SECRET=...
+
+# this is the callback URL that is configured for the Okta application.
+export OIDC_REDIRECT_URI="http://127.0.0.1:8080/callback"
+
+# this must match the key used in the Okta post-login trigger action "api.idToken.setCustomClaim"
+export OIDC_GROUPS_ATTRIBUTE="urn:mlflow:groups"
+
+# NOTE: OAuth 2.0 and OIDC define the scope parameter as a space-separated list of scope values
+export OIDC_SCOPE="openid profile email"
+
+# Set a stable, secret value (e.g. 32+ random characters) and keep it the same across restarts and replicas.
+# If you don't set it, the app will use an auto-generated key that changes on server restart / UI page reloading
+# and breaks sessions.
+export SECRET_KEY="your-stable-secret-at-least-32-chars-long"
+
+mlflow server --app-name oidc-auth --host 0.0.0.0 --port 8080
+```
+
+Then you can open URL "<http://127.0.0.1:8080/>" and it will jump to the OIDC login page, use your Okta account to log in, after login, it will jump to the OIDC permission configuration page as follows:
+
+![custom action setting](/docs/3.10.0/assets/images/oidc-page-969e8ee4b1ef0c80bdbbfe0b2681b3c8.png)
+
+If the current login user is assigned to the administrator group, then you can configure the permissions for other users through the OIDC permission UI portal.
+
+After login via OIDC, open "<http://127.0.0.1:8080/>" again and then it will jump to the MLflow UI main page.
+
+### Configure MLflow client[​](#configure-mlflow-client "Direct link to Configure MLflow client")
+
+The MLflow OIDC plugin allows MLflow client to connect to the MLflow server via the MLflow basic auth protocol. First, you need to generate an "access token" on the OIDC permission page as follows:
+
+![custom action setting](/docs/3.10.0/assets/images/sso-access-token-e12e7c6c03cb5819c0ebb8de421ef7f4.png)
+
+Note: Each time you create a new access token, it invalidates the previous one. Only the latest generated token is valid.
+
+Then set the credentials for basic auth to environment variables:
+
+bash
+
+```
+# set the `MLFLOW_TRACKING_USERNAME` to the username that you use to log in the Okta
+export MLFLOW_TRACKING_USERNAME=...
+# set the `MLFLOW_TRACKING_PASSWORD` to the access token that is generated on the OIDC user permission page.
+export MLFLOW_TRACKING_PASSWORD=...
+```
+
+then, in MLflow client side, you can run code as follows:
+
+python
+
+```
+import os
+import mlflow
+
+mlflow.set_tracking_uri("http://127.0.0.1:8080")
+
+# Use MLflow
+with mlflow.start_run():
+    mlflow.log_param("key", "value")
+```
+
+## Reverse proxy pattern[​](#reverse-proxy-pattern "Direct link to Reverse proxy pattern")
+
+Another common approach is to place MLflow behind a proxy that handles SSO and forwards authenticated requests. The most popular way is to use [oauth2-proxy](https://github.com/oauth2-proxy/oauth2-proxy) reverse proxy.
+
+1. Configure your proxy (NGINX, Traefik, Envoy, or cloud gateways such as AWS ALB with OIDC) to authenticate users against your IdP (Okta, Azure AD, Google Workspace).
+2. After a successful login, inject user identity headers (for example, `X-Email` or `X-Forwarded-User`) and restrict access to authenticated sessions only.
+3. Run MLflow without the Basic Auth app and rely on the proxy as the enforcement layer, or map the incoming identity header to a Basic Auth user using a custom middleware.
+
+This pattern keeps MLflow stateless while deferring token validation and MFA enforcement to systems designed for it. You can find the reference implementation in [this repository](https://github.com/cloudacode/mlflow-oauth-sidecar).
+
+![Example](https://github.com/cloudacode/mlflow-oauth-sidecar/raw/main/mlflow-google-auth.gif)

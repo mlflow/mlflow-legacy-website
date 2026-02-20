@@ -135,50 +135,9 @@ reasoning_finance_team.print_response(
 
 ![Agno Tracing via autolog](/docs/latest/images/llms/agno/agno-tracing.png)
 
-## Token usage[​](#token-usage "Direct link to Token usage")
+## Tracking Token Usage and Cost[​](#tracking-token-usage-and-cost "Direct link to Tracking Token Usage and Cost")
 
-MLflow >= 3.3.0 supports token usage tracking for Agno. The token usage for each Agent call will be logged in the `mlflow.chat.tokenUsage` attribute. The total token usage throughout the trace will be available in the `token_usage` field of the trace info object.
-
-python
-
-```
-# Get the trace object just created
-last_trace_id = mlflow.get_last_active_trace_id()
-trace = mlflow.get_trace(trace_id=last_trace_id)
-
-# Print the token usage
-total_usage = trace.info.token_usage
-print("== Total token usage: ==")
-print(f"  Input tokens: {total_usage['input_tokens']}")
-print(f"  Output tokens: {total_usage['output_tokens']}")
-print(f"  Total tokens: {total_usage['total_tokens']}")
-
-# Print the token usage for each LLM call
-print("\n== Detailed usage for each LLM call: ==")
-for span in trace.data.spans:
-    if usage := span.get_attribute("mlflow.chat.tokenUsage"):
-        print(f"{span.name}:")
-        print(f"  Input tokens: {usage['input_tokens']}")
-        print(f"  Output tokens: {usage['output_tokens']}")
-        print(f"  Total tokens: {usage['total_tokens']}")
-```
-
-bash
-
-```
-== Total token usage: ==
-  Input tokens: 45710
-  Output tokens: 3844
-  Total tokens: 49554
-
-== Detailed usage for each LLM call: ==
-Team.run:
-  Input tokens: 45710
-  Output tokens: 3844
-  Total tokens: 49554
-
-... (other modules)
-```
+MLflow automatically tracks token usage and cost for Agno. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/latest/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
 
 ### Disable auto-tracing[​](#disable-auto-tracing "Direct link to Disable auto-tracing")
 
