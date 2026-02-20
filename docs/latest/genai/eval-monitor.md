@@ -1,18 +1,28 @@
 # Evaluating LLMs/Agents with MLflow
 
-Modern GenAI Evaluation
-
-This documentation covers MLflow's **GenAI evaluation system** which uses:
-
-* `mlflow.genai.evaluate()` for evaluation
-* `Scorer` objects for metrics
-* Built-in and custom LLM judges
-
-**Note**: This system is separate from the [classic ML evaluation](/docs/latest/ml/evaluation.md) system that uses `mlflow.evaluate()` and `EvaluationMetric`. The two systems serve different purposes and are not interoperable.
-
 MLflow's evaluation and monitoring capabilities help you systematically measure, improve, and maintain the quality of your GenAI applications throughout their lifecycle from development through production.
 
 [](/docs/latest/images/mlflow-3/eval-monitor/evaluation-result-video.mp4)
+
+<br />
+
+**Try MLflow GenAI Demo**<br />The quickest way to learn about MLflow GenAI is to try the demo. Click to see how to launch the demo ↓
+
+#### **Starting from UI**[​](#starting-from-ui "Direct link to starting-from-ui")
+
+To start the demo, click on the "Start Demo" button on the top page of the MLflow UI.
+
+![MLflow GenAI Demo UI](/docs/latest/images/llms/demo/demo.png)
+
+#### **Starting from CLI**[​](#starting-from-cli "Direct link to starting-from-cli")
+
+Alternatively, you can start the demo from the command line using the `mlflow demo` command. This option does not require you to have a running MLflow server.
+
+bash
+
+```
+uvx mlflow demo
+```
 
 A core tenet of MLflow's evaluation capabilities is **Evaluation-Driven Development**. This is an emerging practice to tackle the challenge of building high-quality LLM/Agentic applications. MLflow is an **end-to-end** platform that is designed to support this practice and help you deploy AI applications with confidence.
 
