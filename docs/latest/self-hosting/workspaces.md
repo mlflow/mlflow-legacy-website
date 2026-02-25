@@ -2,11 +2,6 @@
 
 Workspaces add an optional organizational layer and permission scheme for MLflow resources such as experiments, registered models, prompts, AI Gateway resources, and artifacts, letting teams share one deployment without running multiple servers.
 
-Known limitations
-
-* UI support for workspaces is not yet available (coming soon).
-* Disabling workspaces after creating resources in non-default workspaces currently requires manual database changes; helper tooling is planned.
-
 ## Key Capabilities[​](#key-capabilities "Direct link to Key Capabilities")
 
 **Resource scoping** : Each workspace keeps its own resources such as experiments, registered models, prompts, AI Gateway resources, and artifacts. Workspace-level permissions control who can see or modify those resources. All MLflow client and API usage remains the same otherwise.
