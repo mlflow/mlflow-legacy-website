@@ -25,7 +25,7 @@ Serve models with MLflow's generic Python function interface
 bash
 
 ```
-pip install mlflow[sentence-transformers]
+pip install 'mlflow[sentence-transformers]'
 ```
 
 ## Basic Usage[​](#basic-usage "Direct link to Basic Usage")

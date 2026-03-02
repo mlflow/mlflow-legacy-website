@@ -29,6 +29,10 @@ Requirements
 
 Workspaces require a SQL database backend store. File-based backends are not supported when workspaces are enabled.
 
+note
+
+If you are enabling workspaces on an existing instance with basic-auth, set `grant_default_workspace_access = true` in your [auth config](/docs/latest/self-hosting/workspaces/configuration.md#grant_default_workspace_access) for backwards compatibility. Otherwise, existing resources in the `default` workspace will become inaccessible to non-admin users.
+
 ## Workspace-Scoped Resources[​](#workspace-scoped-resources "Direct link to Workspace-Scoped Resources")
 
 When workspaces are enabled, the following top-level resources are workspace-scoped:
