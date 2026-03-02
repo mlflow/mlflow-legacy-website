@@ -62,7 +62,7 @@ For production deployments or custom backend configurations, see [Backend Store]
 
 ### Docker Compose[​](#docker-compose "Direct link to Docker Compose")
 
-The MLflow repository includes a ready-to-run Compose project under `docker-compose/` that provisions MLflow, PostgreSQL, and MinIO.
+The MLflow repository includes a ready-to-run Compose project under `docker-compose/` that provisions MLflow, PostgreSQL, and [RustFS](https://github.com/rustfs/rustfs).
 
 bash
 

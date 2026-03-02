@@ -26,7 +26,7 @@ To start MLflow server with AI Gateway, you need to install the `mlflow[genai]` 
 bash
 
 ```
-pip install mlflow[genai]
+pip install 'mlflow[genai]'
 ```
 
 Then start the MLflow server as usual, no additional configuration is needed.
