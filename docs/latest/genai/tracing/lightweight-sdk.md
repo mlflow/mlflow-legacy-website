@@ -72,7 +72,7 @@ In self-hosting mode, you will be responsible for running the tracking server in
 
 **Setup Steps:**
 
-1. Install MLflow server: `pip install mlflow[extras]`
+1. Install MLflow server: `pip install 'mlflow[extras]'`
 2. Configure backend store (PostgreSQL/MySQL recommended)
 3. Configure artifact store (S3, Azure Blob, GCS, etc.)
 4. Start server: `mlflow server --backend-store-uri postgresql://... --default-artifact-root s3://...`

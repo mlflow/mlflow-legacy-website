@@ -6,9 +6,9 @@ Once you've created an endpoint, you can call it through several different API s
 
 To see code examples for your endpoint, navigate to the Endpoints list and click either the Use button or the endpoint name itself. This opens a modal with comprehensive usage examples tailored to your specific endpoint.
 
-![Usage Modal](/docs/latest/assets/images/usage-modal-0e1b25b064247119b5494f8641452c88.png)
+![Usage Modal](/docs/latest/assets/images/usage-modal-d8b20f050157839fcbc443a603535b89.png)
 
-The usage modal organizes examples into two categories: unified APIs that work across any provider, and passthrough APIs that expose provider-specific features.
+The usage modal organizes examples into two categories: unified APIs that work across any provider, and passthrough APIs that expose provider-specific features. Within each category, the **Try it** tab lets you send a test request directly from the UI.
 
 ## Unified APIs[​](#unified-apis "Direct link to Unified APIs")
 
