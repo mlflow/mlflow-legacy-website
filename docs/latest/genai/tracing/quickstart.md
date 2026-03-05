@@ -84,7 +84,7 @@ pip install --upgrade 'mlflow[genai]' openai>=1.0.0
 bash
 
 ```
-npm install mlflow-openai
+npm install @mlflow/openai
 ```
 
 info
@@ -130,8 +130,8 @@ client.chat.completions.create(
 typescript
 
 ```
-import { init } from "mlflow-tracing";
-import { tracedOpenAI } from "mlflow-openai";
+import { init } from "@mlflow/core";
+import { tracedOpenAI } from "@mlflow/openai";
 import { OpenAI } from "openai";
 
 init({
@@ -232,7 +232,7 @@ def chat_completion(message: list[dict], user_id: str, session_id: str):
 typescript
 
 ```
-import * as mlflow from "mlflow-tracing";
+import * as mlflow from "@mlflow/core";
 
 const chatCompletion = mlflow.trace(
     (message: Array<Record<string, any>>, userId: string, sessionId: string) => {
