@@ -381,10 +381,11 @@
 
         <span class="n">trace_location</span> <span class="o">=</span> <span class="n">TraceLocation</span><span class="o">.</span><span class="n">from_proto</span><span class="p">(</span><span class="n">proto</span><span class="o">.</span><span class="n">trace_location</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">trace_location</span><span class="o">.</span><span class="n">uc_schema</span><span class="p">:</span>
-            <span class="n">trace_id</span> <span class="o">=</span> <span class="n">construct_trace_id_v4</span><span class="p">(</span>
-                <span class="n">location</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">trace_location</span><span class="o">.</span><span class="n">uc_schema</span><span class="o">.</span><span class="n">catalog_name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">trace_location</span><span class="o">.</span><span class="n">uc_schema</span><span class="o">.</span><span class="n">schema_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-                <span class="n">trace_id</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">trace_id</span><span class="p">,</span>
-            <span class="p">)</span>
+            <span class="n">location</span> <span class="o">=</span> <span class="n">trace_location</span><span class="o">.</span><span class="n">uc_schema</span><span class="o">.</span><span class="n">schema_location</span>
+            <span class="n">trace_id</span> <span class="o">=</span> <span class="n">construct_trace_id_v4</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="n">location</span><span class="p">,</span> <span class="n">trace_id</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">trace_id</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">trace_location</span><span class="o">.</span><span class="n">uc_table_prefix</span><span class="p">:</span>
+            <span class="n">location</span> <span class="o">=</span> <span class="n">trace_location</span><span class="o">.</span><span class="n">uc_table_prefix</span><span class="o">.</span><span class="n">full_table_prefix</span>
+            <span class="n">trace_id</span> <span class="o">=</span> <span class="n">construct_trace_id_v4</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="n">location</span><span class="p">,</span> <span class="n">trace_id</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">trace_id</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">trace_id</span> <span class="o">=</span> <span class="n">proto</span><span class="o">.</span><span class="n">trace_id</span>
 
@@ -503,7 +504,10 @@
         <span class="k">return</span> <span class="kc">None</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_is_v4</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">trace_location</span><span class="o">.</span><span class="n">uc_schema</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span></div>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trace_location</span><span class="o">.</span><span class="n">uc_schema</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">trace_location</span><span class="o">.</span><span class="n">uc_table_prefix</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="p">)</span></div>
 </pre></div>
 
               </div>

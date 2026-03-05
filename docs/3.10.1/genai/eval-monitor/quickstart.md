@@ -194,16 +194,21 @@ python
 # Anthropic
 Correctness(model="anthropic:/claude-sonnet-4-20250514")
 
-# Bedrock
+# Bedrock (Anthropic on Bedrock)
 Correctness(model="bedrock:/anthropic.claude-sonnet-4-20250514")
+
+# Bedrock (Amazon Nova)
+Correctness(model="bedrock:/amazon.nova-pro-v1:0")
+Correctness(model="bedrock:/amazon.nova-lite-v1:0")
+Correctness(model="bedrock:/amazon.nova-micro-v1:0")
 
 # Google
 # Run `pip install litellm` to use Google as the judge model
-Correctness(model="gemini/gemini-2.5-flash")
+Correctness(model="gemini:/gemini-2.5-flash")
 
 # xAI
 # Run `pip install litellm` to use xAI as the judge model
-Correctness(model="xai/grok-2-latest")
+Correctness(model="xai:/grok-2-latest")
 ```
 
 ## Step 6: Run the evaluation[​](#step-6-run-the-evaluation "Direct link to Step 6: Run the evaluation")

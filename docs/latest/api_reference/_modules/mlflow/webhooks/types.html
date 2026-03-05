@@ -249,7 +249,7 @@
 <span class="sd">that are sent when various model registry events occur.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TypeAlias</span><span class="p">,</span> <span class="n">TypedDict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">TypeAlias</span><span class="p">,</span> <span class="n">TypedDict</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.webhook</span><span class="w"> </span><span class="kn">import</span> <span class="n">WebhookAction</span><span class="p">,</span> <span class="n">WebhookEntity</span><span class="p">,</span> <span class="n">WebhookEvent</span>
 
@@ -705,6 +705,61 @@
         <span class="p">)</span></div></div>
 
 
+<span class="k">class</span><span class="w"> </span><span class="nc">BudgetPolicyExceededPayload</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Payload sent when a budget policy limit is exceeded.</span>
+
+<span class="sd">    Example payload:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        {</span>
+<span class="sd">            &quot;budget_policy_id&quot;: &quot;bp-abc123&quot;,</span>
+<span class="sd">            &quot;budget_unit&quot;: &quot;USD&quot;,</span>
+<span class="sd">            &quot;budget_amount&quot;: 100.0,</span>
+<span class="sd">            &quot;current_spend&quot;: 105.50,</span>
+<span class="sd">            &quot;duration_unit&quot;: &quot;MONTHS&quot;,</span>
+<span class="sd">            &quot;duration_value&quot;: 1,</span>
+<span class="sd">            &quot;target_scope&quot;: &quot;WORKSPACE&quot;,</span>
+<span class="sd">            &quot;workspace&quot;: &quot;default&quot;,</span>
+<span class="sd">            &quot;window_start&quot;: 1704067200000,</span>
+<span class="sd">        }</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">budget_policy_id</span><span class="p">:</span> <span class="nb">str</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The unique identifier of the budget policy.&quot;&quot;&quot;</span>
+    <span class="n">budget_unit</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;USD&quot;</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The budget measurement unit (e.g. USD).&quot;&quot;&quot;</span>
+    <span class="n">budget_amount</span><span class="p">:</span> <span class="nb">float</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The budget limit amount.&quot;&quot;&quot;</span>
+    <span class="n">current_spend</span><span class="p">:</span> <span class="nb">float</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The current cumulative spend when the limit was exceeded.&quot;&quot;&quot;</span>
+    <span class="n">duration_unit</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;MINUTES&quot;</span><span class="p">,</span> <span class="s2">&quot;HOURS&quot;</span><span class="p">,</span> <span class="s2">&quot;DAYS&quot;</span><span class="p">,</span> <span class="s2">&quot;MONTHS&quot;</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The duration unit (MINUTES, HOURS, DAYS, MONTHS).&quot;&quot;&quot;</span>
+    <span class="n">duration_value</span><span class="p">:</span> <span class="nb">int</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The duration value.&quot;&quot;&quot;</span>
+    <span class="n">target_scope</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;GLOBAL&quot;</span><span class="p">,</span> <span class="s2">&quot;WORKSPACE&quot;</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The target scope (GLOBAL or WORKSPACE).&quot;&quot;&quot;</span>
+    <span class="n">workspace</span><span class="p">:</span> <span class="nb">str</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The workspace this budget applies to.&quot;&quot;&quot;</span>
+    <span class="n">window_start</span><span class="p">:</span> <span class="nb">int</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The start timestamp (milliseconds) of the current budget window.&quot;&quot;&quot;</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">example</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;BudgetPolicyExceededPayload&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">budget_policy_id</span><span class="o">=</span><span class="s2">&quot;bp-abc123&quot;</span><span class="p">,</span>
+            <span class="n">budget_unit</span><span class="o">=</span><span class="s2">&quot;USD&quot;</span><span class="p">,</span>
+            <span class="n">budget_amount</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span>
+            <span class="n">current_spend</span><span class="o">=</span><span class="mf">105.50</span><span class="p">,</span>
+            <span class="n">duration_unit</span><span class="o">=</span><span class="s2">&quot;MONTHS&quot;</span><span class="p">,</span>
+            <span class="n">duration_value</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">target_scope</span><span class="o">=</span><span class="s2">&quot;WORKSPACE&quot;</span><span class="p">,</span>
+            <span class="n">workspace</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
+            <span class="n">window_start</span><span class="o">=</span><span class="mi">1704067200000</span><span class="p">,</span>
+        <span class="p">)</span>
+
+
 <span class="n">WebhookPayload</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">RegisteredModelCreatedPayload</span>
     <span class="o">|</span> <span class="n">ModelVersionCreatedPayload</span>
@@ -720,6 +775,7 @@
     <span class="o">|</span> <span class="n">PromptVersionTagDeletedPayload</span>
     <span class="o">|</span> <span class="n">PromptAliasCreatedPayload</span>
     <span class="o">|</span> <span class="n">PromptAliasDeletedPayload</span>
+    <span class="o">|</span> <span class="n">BudgetPolicyExceededPayload</span>
 <span class="p">)</span>
 
 <span class="c1"># Mapping of (entity, action) tuples to their corresponding payload classes</span>
@@ -738,6 +794,7 @@
     <span class="p">(</span><span class="n">WebhookEntity</span><span class="o">.</span><span class="n">PROMPT_VERSION_TAG</span><span class="p">,</span> <span class="n">WebhookAction</span><span class="o">.</span><span class="n">DELETED</span><span class="p">):</span> <span class="n">PromptVersionTagDeletedPayload</span><span class="p">,</span>
     <span class="p">(</span><span class="n">WebhookEntity</span><span class="o">.</span><span class="n">PROMPT_ALIAS</span><span class="p">,</span> <span class="n">WebhookAction</span><span class="o">.</span><span class="n">CREATED</span><span class="p">):</span> <span class="n">PromptAliasCreatedPayload</span><span class="p">,</span>
     <span class="p">(</span><span class="n">WebhookEntity</span><span class="o">.</span><span class="n">PROMPT_ALIAS</span><span class="p">,</span> <span class="n">WebhookAction</span><span class="o">.</span><span class="n">DELETED</span><span class="p">):</span> <span class="n">PromptAliasDeletedPayload</span><span class="p">,</span>
+    <span class="p">(</span><span class="n">WebhookEntity</span><span class="o">.</span><span class="n">BUDGET_POLICY</span><span class="p">,</span> <span class="n">WebhookAction</span><span class="o">.</span><span class="n">EXCEEDED</span><span class="p">):</span> <span class="n">BudgetPolicyExceededPayload</span><span class="p">,</span>
 <span class="p">}</span>
 
 

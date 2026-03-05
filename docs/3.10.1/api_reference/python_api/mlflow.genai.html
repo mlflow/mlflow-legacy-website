@@ -371,7 +371,9 @@ with the following fields:</p>
 <ul>
 <li><p>”goal”: Describing what the simulated user wants to achieve.</p></li>
 <li><p>”persona” (optional): Custom persona for the simulated user.</p></li>
-<li><p>”context” (optional): Dict of additional kwargs to pass to predict_fn.</p></li>
+<li><p>”context” (optional): Dict of additional kwargs to pass to predict_fn.
+Keys <code class="docutils literal notranslate"><span class="pre">input</span></code>, <code class="docutils literal notranslate"><span class="pre">messages</span></code>, and <code class="docutils literal notranslate"><span class="pre">mlflow_session_id</span></code> are reserved
+by the simulator and cannot be used.</p></li>
 <li><p>”expectations” (optional): Dict of expected values (ground truth) for
 session-level evaluation. These are logged to the first trace of the
 session with the session ID in metadata, allowing session-level scorers

@@ -32,7 +32,7 @@ pip install 'mlflow[genai]' google-generativeai
 bash
 
 ```
-npm install mlflow-gemini @google/generative-ai
+npm install @mlflow/gemini @google/generative-ai
 ```
 
 2
@@ -103,7 +103,7 @@ typescript
 
 ```
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { tracedGemini } from "mlflow-gemini";
+import { tracedGemini } from "@mlflow/gemini";
 
 // Wrap the Gemini client with the tracedGemini function
 const genAI = tracedGemini(new GoogleGenerativeAI(process.env.GOOGLE_API_KEY));
@@ -183,7 +183,7 @@ typescript
 
 ```
 import { GoogleGenAI } from "@google/genai";
-import { tracedGemini } from "mlflow-gemini";
+import { tracedGemini } from "@mlflow/gemini";
 
 const client = tracedGemini(new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY }));
 

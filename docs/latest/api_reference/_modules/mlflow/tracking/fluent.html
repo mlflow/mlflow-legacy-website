@@ -1131,7 +1131,13 @@
 <span class="sd">        terminate: If True, shut down the logging threads after flushing.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">_get_trace_exporter</span><span class="p">()</span><span class="o">.</span><span class="n">_async_queue</span><span class="o">.</span><span class="n">flush</span><span class="p">(</span><span class="n">terminate</span><span class="o">=</span><span class="n">terminate</span><span class="p">)</span>
+        <span class="n">trace_exporter</span> <span class="o">=</span> <span class="n">_get_trace_exporter</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to get trace exporter: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">trace_exporter</span><span class="p">,</span> <span class="s2">&quot;_async_queue&quot;</span><span class="p">):</span>
+            <span class="n">trace_exporter</span><span class="o">.</span><span class="n">_async_queue</span><span class="o">.</span><span class="n">flush</span><span class="p">(</span><span class="n">terminate</span><span class="o">=</span><span class="n">terminate</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to flush trace async logging: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 

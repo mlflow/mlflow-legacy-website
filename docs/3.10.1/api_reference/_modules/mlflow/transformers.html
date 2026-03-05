@@ -450,11 +450,12 @@
         <span class="n">engine</span> <span class="o">=</span> <span class="n">_get_engine_type</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
         <span class="n">packages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="n">packages</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">&quot;torch&quot;</span><span class="p">,</span> <span class="s2">&quot;tensorflow&quot;</span><span class="p">]</span>
+        <span class="n">packages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;torch&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">find_spec</span><span class="p">(</span><span class="s2">&quot;tensorflow&quot;</span><span class="p">):</span>
+            <span class="n">packages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;tensorflow&quot;</span><span class="p">)</span>
         <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-            <span class="s2">&quot;Could not infer model execution engine type due to huggingface_hub not &quot;</span>
-            <span class="s2">&quot;being installed or unable to connect in online mode. Adding both Pytorch&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;and Tensorflow to requirements.</span><span class="se">\n</span><span class="s2">Failure cause: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;Could not infer model execution engine type. Adding available deep learning &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;framework(s) to requirements.</span><span class="se">\n</span><span class="s2">Failure cause: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="p">)</span>
 
     <span class="k">if</span> <span class="s2">&quot;torch&quot;</span> <span class="ow">in</span> <span class="n">packages</span><span class="p">:</span>
@@ -1507,8 +1508,11 @@
     <span class="n">conf</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;task&quot;</span><span class="p">:</span> <span class="n">flavor_config</span><span class="p">[</span><span class="n">FlavorKey</span><span class="o">.</span><span class="n">TASK</span><span class="p">],</span>
     <span class="p">}</span>
-    <span class="k">if</span> <span class="n">framework</span> <span class="o">:=</span> <span class="n">flavor_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">FlavorKey</span><span class="o">.</span><span class="n">FRAMEWORK</span><span class="p">):</span>
-        <span class="n">conf</span><span class="p">[</span><span class="s2">&quot;framework&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">framework</span>
+    <span class="c1"># pipeline.framework was removed in transformers 5.x; passing it would cause</span>
+    <span class="c1"># &quot;model_kwargs are not used by the model&quot; errors during inference.</span>
+    <span class="k">if</span> <span class="n">Version</span><span class="p">(</span><span class="n">transformers</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span><span class="o">.</span><span class="n">major</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">framework</span> <span class="o">:=</span> <span class="n">flavor_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">FlavorKey</span><span class="o">.</span><span class="n">FRAMEWORK</span><span class="p">):</span>
+            <span class="n">conf</span><span class="p">[</span><span class="s2">&quot;framework&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">framework</span>
 
     <span class="c1"># Note that we don&#39;t set the device in the conf yet because device is</span>
     <span class="c1"># incompatible with device_map.</span>
@@ -1813,18 +1817,28 @@
 <span class="sd">    Determines the underlying execution engine for the model based on the 3 currently supported</span>
 <span class="sd">    deep learning framework backends: ``tensorflow``, ``torch``, or ``flax``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">FlaxPreTrainedModel</span><span class="p">,</span> <span class="n">PreTrainedModel</span><span class="p">,</span> <span class="n">TFPreTrainedModel</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">PreTrainedModel</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">transformers.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_torch_available</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">TFPreTrainedModel</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="n">TFPreTrainedModel</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">FlaxPreTrainedModel</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">FlaxPreTrainedModel</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">if</span> <span class="n">is_peft_model</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">get_peft_base_model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="bp">cls</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__mro__</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">TFPreTrainedModel</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">TFPreTrainedModel</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">issubclass</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">TFPreTrainedModel</span><span class="p">):</span>
             <span class="k">return</span> <span class="s2">&quot;tensorflow&quot;</span>
         <span class="k">elif</span> <span class="nb">issubclass</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">PreTrainedModel</span><span class="p">):</span>
             <span class="k">return</span> <span class="s2">&quot;torch&quot;</span>
-        <span class="k">elif</span> <span class="nb">issubclass</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">FlaxPreTrainedModel</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">FlaxPreTrainedModel</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">issubclass</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">FlaxPreTrainedModel</span><span class="p">):</span>
             <span class="k">return</span> <span class="s2">&quot;flax&quot;</span>
 
     <span class="c1"># As a fallback, we check current environment to determine the engine type</span>
@@ -1929,6 +1943,33 @@
         <span class="k">return</span> <span class="n">ConversationalPipeline</span>
     <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
         <span class="k">return</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_is_translation_pipeline</span><span class="p">(</span><span class="n">pipeline</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">TranslationPipeline</span>
+
+        <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">TranslationPipeline</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_is_summarization_pipeline</span><span class="p">(</span><span class="n">pipeline</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">SummarizationPipeline</span>
+
+        <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">SummarizationPipeline</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_is_text2text_generation_pipeline</span><span class="p">(</span><span class="n">pipeline</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Text2TextGenerationPipeline</span>
+
+        <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">Text2TextGenerationPipeline</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
 
 
 <div class="viewcode-block" id="generate_signature_output"><a class="viewcode-back" href="../../python_api/mlflow.transformers.html#mlflow.transformers.generate_signature_output">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">generate_signature_output</span><span class="p">(</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">model_config</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">flavor_config</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -2048,6 +2089,18 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">model_config</span><span class="p">)</span>
+            <span class="c1"># In transformers 5.x, QuestionAnsweringPipeline changed to keyword-only</span>
+            <span class="c1"># arguments. Transpose list-of-dicts to dict-of-lists so that the data</span>
+            <span class="c1"># can be passed as keyword arguments.</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">transformers</span><span class="o">.</span><span class="n">QuestionAnsweringPipeline</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="n">data</span>
+                <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">dict</span><span class="p">)</span>
+            <span class="p">):</span>
+                <span class="n">keys</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+                <span class="n">transposed</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="p">[</span><span class="n">d</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">}</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="p">(</span><span class="o">**</span><span class="n">transposed</span><span class="p">,</span> <span class="o">**</span><span class="n">model_config</span><span class="p">)</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">model_config</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">if</span> <span class="s2">&quot;The following `model_kwargs` are not used by the model&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
@@ -2136,14 +2189,15 @@
         <span class="c1"># NB: the ordering of these conditional statements matters. TranslationPipeline and</span>
         <span class="c1"># SummarizationPipeline both inherit from TextGenerationPipeline (they are subclasses)</span>
         <span class="c1"># in which the return data structure from their __call__ implementation is modified.</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">transformers</span><span class="o">.</span><span class="n">TranslationPipeline</span><span class="p">):</span>
+        <span class="c1"># These classes were removed in transformers 5.0, so we use try-import guards.</span>
+        <span class="k">if</span> <span class="n">_is_translation_pipeline</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_validate_str_or_list_str</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
             <span class="n">output_key</span> <span class="o">=</span> <span class="s2">&quot;translation_text&quot;</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">transformers</span><span class="o">.</span><span class="n">SummarizationPipeline</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">_is_summarization_pipeline</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_validate_str_or_list_str</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
             <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_prompt_template</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
             <span class="n">output_key</span> <span class="o">=</span> <span class="s2">&quot;summary_text&quot;</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">transformers</span><span class="o">.</span><span class="n">Text2TextGenerationPipeline</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">_is_text2text_generation_pipeline</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="p">):</span>
             <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_text2text_input</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
             <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_prompt_template</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
             <span class="n">output_key</span> <span class="o">=</span> <span class="s2">&quot;generated_text&quot;</span>
@@ -2298,15 +2352,17 @@
         <span class="k">elif</span> <span class="n">_is_conversational_pipeline</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_conversation_input</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="k">elif</span> <span class="p">(</span>  <span class="c1"># noqa: SIM114</span>
-            <span class="nb">isinstance</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="p">,</span>
-                <span class="p">(</span>
-                    <span class="n">transformers</span><span class="o">.</span><span class="n">FillMaskPipeline</span><span class="p">,</span>
-                    <span class="n">transformers</span><span class="o">.</span><span class="n">TextGenerationPipeline</span><span class="p">,</span>
-                    <span class="n">transformers</span><span class="o">.</span><span class="n">TranslationPipeline</span><span class="p">,</span>
-                    <span class="n">transformers</span><span class="o">.</span><span class="n">SummarizationPipeline</span><span class="p">,</span>
-                    <span class="n">transformers</span><span class="o">.</span><span class="n">TokenClassificationPipeline</span><span class="p">,</span>
-                <span class="p">),</span>
+            <span class="p">(</span>
+                <span class="nb">isinstance</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="p">,</span>
+                    <span class="p">(</span>
+                        <span class="n">transformers</span><span class="o">.</span><span class="n">FillMaskPipeline</span><span class="p">,</span>
+                        <span class="n">transformers</span><span class="o">.</span><span class="n">TextGenerationPipeline</span><span class="p">,</span>
+                        <span class="n">transformers</span><span class="o">.</span><span class="n">TokenClassificationPipeline</span><span class="p">,</span>
+                    <span class="p">),</span>
+                <span class="p">)</span>
+                <span class="ow">or</span> <span class="n">_is_translation_pipeline</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="p">)</span>
+                <span class="ow">or</span> <span class="n">_is_summarization_pipeline</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="p">)</span>
             <span class="p">)</span>
             <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
             <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">data</span><span class="p">)</span>
@@ -2335,7 +2391,7 @@
         <span class="c1"># In long-term, we should definitely change the upstream handling to avoid this</span>
         <span class="c1"># complexity, but here we just try to make it work by checking if the key is auto-generated.</span>
         <span class="k">elif</span> <span class="p">(</span>
-            <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">transformers</span><span class="o">.</span><span class="n">Text2TextGenerationPipeline</span><span class="p">)</span>
+            <span class="n">_is_text2text_generation_pipeline</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="p">)</span>
             <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
             <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">data</span><span class="p">)</span>
             <span class="c1"># Pandas Dataframe derived dictionary will have integer key (row index)</span>
@@ -3173,6 +3229,20 @@
         <span class="k">with</span> <span class="n">disable_discrete_autologging</span><span class="p">(</span><span class="n">DISABLED_ANCILLARY_FLAVOR_AUTOLOGGING</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">original</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
+    <span class="k">def</span><span class="w"> </span><span class="nf">train_with_mlflow_callback</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># In transformers 5.x, TrainingArguments.report_to defaults to &quot;none&quot; instead of</span>
+        <span class="c1"># auto-detecting all installed integrations. Ensure MLflowCallback is registered</span>
+        <span class="c1"># when autolog is active so that metrics and parameters are logged to MLflow.</span>
+        <span class="c1"># Only needed for 5.x+; on 4.x, auto-detection handles callback registration.</span>
+        <span class="k">if</span> <span class="n">Version</span><span class="p">(</span><span class="n">transformers</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span><span class="o">.</span><span class="n">major</span> <span class="o">&gt;=</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">transformers.integrations</span><span class="w"> </span><span class="kn">import</span> <span class="n">MLflowCallback</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">cb</span><span class="p">,</span> <span class="n">MLflowCallback</span><span class="p">)</span> <span class="k">for</span> <span class="n">cb</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">callback_handler</span><span class="o">.</span><span class="n">callbacks</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_callback</span><span class="p">(</span><span class="n">MLflowCallback</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="n">disable_discrete_autologging</span><span class="p">(</span><span class="n">DISABLED_ANCILLARY_FLAVOR_AUTOLOGGING</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">original</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
     <span class="k">with</span> <span class="n">contextlib</span><span class="o">.</span><span class="n">suppress</span><span class="p">(</span><span class="ne">ImportError</span><span class="p">):</span>
         <span class="kn">import</span><span class="w"> </span><span class="nn">setfit</span>
 
@@ -3191,7 +3261,13 @@
         <span class="n">methods</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">clazz</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">:</span>
-                <span class="n">safe_patch</span><span class="p">(</span><span class="n">FLAVOR_NAME</span><span class="p">,</span> <span class="n">clazz</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">train</span><span class="p">),</span> <span class="n">manage_run</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+                <span class="n">safe_patch</span><span class="p">(</span>
+                    <span class="n">FLAVOR_NAME</span><span class="p">,</span>
+                    <span class="n">clazz</span><span class="p">,</span>
+                    <span class="n">method</span><span class="p">,</span>
+                    <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">train_with_mlflow_callback</span><span class="p">),</span>
+                    <span class="n">manage_run</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="p">)</span></div>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_get_prompt_template</span><span class="p">(</span><span class="n">model_path</span><span class="p">):</span>

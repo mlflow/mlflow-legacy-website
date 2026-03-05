@@ -47,7 +47,7 @@ def chat_completion(message: list[dict], user_id: str, session_id: str):
 typescript
 
 ```
-import * as mlflow from "mlflow-tracing";
+import * as mlflow from "@mlflow/core";
 
 const chatCompletion = mlflow.trace(
     (message: Array<Record<string, any>>, userId: string, sessionId: string) => {
@@ -137,8 +137,8 @@ typescript
 ```
 import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
-import * as mlflow from 'mlflow-tracing';
-import { tracedOpenAI } from "mlflow-openai";
+import * as mlflow from '@mlflow/core';
+import { tracedOpenAI } from "@mlflow/openai";
 import OpenAI from 'openai';
 
 const app = express();

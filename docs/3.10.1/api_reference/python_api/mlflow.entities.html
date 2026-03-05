@@ -313,7 +313,7 @@
 <a class="reference external" href="../rest-api.html">REST API</a>.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="mlflow.entities.Assessment">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.entities.</span></span><span class="sig-name descname"><span class="pre">Assessment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#mlflow.entities.AssessmentSource" title="mlflow.entities.AssessmentSource"><span class="pre">AssessmentSource</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">trace_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rationale</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">span_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_time_ms</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_update_time_ms</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assessment_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#mlflow.entities.AssessmentError" title="mlflow.entities.AssessmentError"><span class="pre">AssessmentError</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expectation</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">mlflow.entities.assessment.ExpectationValue</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feedback</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">mlflow.entities.assessment.FeedbackValue</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overrides</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">valid</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/entities/assessment.html#Assessment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.Assessment" title="Permalink to this definition"> </a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.entities.</span></span><span class="sig-name descname"><span class="pre">Assessment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#mlflow.entities.AssessmentSource" title="mlflow.entities.AssessmentSource"><span class="pre">AssessmentSource</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">trace_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rationale</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">span_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_time_ms</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_update_time_ms</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assessment_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#mlflow.entities.AssessmentError" title="mlflow.entities.AssessmentError"><span class="pre">AssessmentError</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expectation</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">mlflow.entities.assessment.ExpectationValue</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feedback</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">mlflow.entities.assessment.FeedbackValue</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">issue</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">mlflow.entities.assessment.IssueReferenceValue</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overrides</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">valid</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/entities/assessment.html#Assessment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.Assessment" title="Permalink to this definition"> </a></dt>
 <dd><p>Base class for assessments that can be attached to a trace.
 An Assessment should be one of the following types:</p>
 <ul class="simple">
@@ -325,6 +325,11 @@ An Assessment should be one of the following types:</p>
 <li><dl class="simple">
 <dt>Feedback: A label that represents the feedback on the quality of the operation.</dt><dd><p>Feedback can come from different sources, such as human judges, heuristic scorers,
 or LLM-as-a-Judge.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>IssueReference: A reference to an issue associated with a trace, used to link traces</dt><dd><p>to discovered quality or operational problems.</p>
 </dd>
 </dl>
 </li>
@@ -362,6 +367,11 @@ or LLM-as-a-Judge.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="mlflow.entities.Assessment.from_proto">
 <em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_proto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proto</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/entities/assessment.html#Assessment.from_proto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.Assessment.from_proto" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.Assessment.issue">
+<span class="sig-name descname"><span class="pre">issue</span></span><em class="property"><span class="pre">:</span> <span class="pre">mlflow.entities.assessment.IssueReferenceValue</span> <span class="p"><span class="pre">|</span></span> <span class="pre">None</span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#mlflow.entities.Assessment.issue" title="Permalink to this definition"> </a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -657,6 +667,120 @@ migration to the new terminology.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="mlflow.entities.AssessmentSourceType.from_proto">
 <em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_proto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proto_source_type</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/mlflow/entities/assessment_source.html#AssessmentSourceType.from_proto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.AssessmentSourceType.from_proto" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mlflow.entities.BudgetAction">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.entities.</span></span><span class="sig-name descname"><span class="pre">BudgetAction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/entities/gateway_budget_policy.html#BudgetAction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.BudgetAction" title="Permalink to this definition"> </a></dt>
+<dd><p>Action to take when a budget is exceeded.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.BudgetAction.ALERT">
+<span class="sig-name descname"><span class="pre">ALERT</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'ALERT'</span></em><a class="headerlink" href="#mlflow.entities.BudgetAction.ALERT" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.BudgetAction.REJECT">
+<span class="sig-name descname"><span class="pre">REJECT</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'REJECT'</span></em><a class="headerlink" href="#mlflow.entities.BudgetAction.REJECT" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.entities.BudgetAction.from_proto">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_proto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proto</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">ProtoBudgetAction</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mlflow.entities.BudgetAction" title="mlflow.entities.BudgetAction"><span class="pre">BudgetAction</span></a> <span class="p"><span class="pre">|</span></span> <span class="pre">None</span></span></span><a class="reference internal" href="../_modules/mlflow/entities/gateway_budget_policy.html#BudgetAction.from_proto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.BudgetAction.from_proto" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.entities.BudgetAction.to_proto">
+<span class="sig-name descname"><span class="pre">to_proto</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ProtoBudgetAction</span></span></span><a class="reference internal" href="../_modules/mlflow/entities/gateway_budget_policy.html#BudgetAction.to_proto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.BudgetAction.to_proto" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mlflow.entities.BudgetDurationUnit">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.entities.</span></span><span class="sig-name descname"><span class="pre">BudgetDurationUnit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/entities/gateway_budget_policy.html#BudgetDurationUnit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.BudgetDurationUnit" title="Permalink to this definition"> </a></dt>
+<dd><p>Duration unit for budget policy fixed windows.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.BudgetDurationUnit.DAYS">
+<span class="sig-name descname"><span class="pre">DAYS</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'DAYS'</span></em><a class="headerlink" href="#mlflow.entities.BudgetDurationUnit.DAYS" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.BudgetDurationUnit.HOURS">
+<span class="sig-name descname"><span class="pre">HOURS</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'HOURS'</span></em><a class="headerlink" href="#mlflow.entities.BudgetDurationUnit.HOURS" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.BudgetDurationUnit.MINUTES">
+<span class="sig-name descname"><span class="pre">MINUTES</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'MINUTES'</span></em><a class="headerlink" href="#mlflow.entities.BudgetDurationUnit.MINUTES" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.BudgetDurationUnit.MONTHS">
+<span class="sig-name descname"><span class="pre">MONTHS</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'MONTHS'</span></em><a class="headerlink" href="#mlflow.entities.BudgetDurationUnit.MONTHS" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.BudgetDurationUnit.WEEKS">
+<span class="sig-name descname"><span class="pre">WEEKS</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'WEEKS'</span></em><a class="headerlink" href="#mlflow.entities.BudgetDurationUnit.WEEKS" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.entities.BudgetDurationUnit.from_proto">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_proto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proto</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">ProtoBudgetDurationUnit</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mlflow.entities.BudgetDurationUnit" title="mlflow.entities.BudgetDurationUnit"><span class="pre">BudgetDurationUnit</span></a> <span class="p"><span class="pre">|</span></span> <span class="pre">None</span></span></span><a class="reference internal" href="../_modules/mlflow/entities/gateway_budget_policy.html#BudgetDurationUnit.from_proto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.BudgetDurationUnit.from_proto" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.entities.BudgetDurationUnit.to_proto">
+<span class="sig-name descname"><span class="pre">to_proto</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ProtoBudgetDurationUnit</span></span></span><a class="reference internal" href="../_modules/mlflow/entities/gateway_budget_policy.html#BudgetDurationUnit.to_proto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.BudgetDurationUnit.to_proto" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mlflow.entities.BudgetTargetScope">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.entities.</span></span><span class="sig-name descname"><span class="pre">BudgetTargetScope</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/entities/gateway_budget_policy.html#BudgetTargetScope"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.BudgetTargetScope" title="Permalink to this definition"> </a></dt>
+<dd><p>Target scope for a budget policy.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.BudgetTargetScope.GLOBAL">
+<span class="sig-name descname"><span class="pre">GLOBAL</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'GLOBAL'</span></em><a class="headerlink" href="#mlflow.entities.BudgetTargetScope.GLOBAL" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.BudgetTargetScope.WORKSPACE">
+<span class="sig-name descname"><span class="pre">WORKSPACE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'WORKSPACE'</span></em><a class="headerlink" href="#mlflow.entities.BudgetTargetScope.WORKSPACE" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.entities.BudgetTargetScope.from_proto">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_proto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proto</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">ProtoBudgetTargetScope</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mlflow.entities.BudgetTargetScope" title="mlflow.entities.BudgetTargetScope"><span class="pre">BudgetTargetScope</span></a> <span class="p"><span class="pre">|</span></span> <span class="pre">None</span></span></span><a class="reference internal" href="../_modules/mlflow/entities/gateway_budget_policy.html#BudgetTargetScope.from_proto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.BudgetTargetScope.from_proto" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.entities.BudgetTargetScope.to_proto">
+<span class="sig-name descname"><span class="pre">to_proto</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ProtoBudgetTargetScope</span></span></span><a class="reference internal" href="../_modules/mlflow/entities/gateway_budget_policy.html#BudgetTargetScope.to_proto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.BudgetTargetScope.to_proto" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mlflow.entities.BudgetUnit">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.entities.</span></span><span class="sig-name descname"><span class="pre">BudgetUnit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/entities/gateway_budget_policy.html#BudgetUnit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.BudgetUnit" title="Permalink to this definition"> </a></dt>
+<dd><p>Budget measurement unit.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.BudgetUnit.USD">
+<span class="sig-name descname"><span class="pre">USD</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'USD'</span></em><a class="headerlink" href="#mlflow.entities.BudgetUnit.USD" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.entities.BudgetUnit.from_proto">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_proto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proto</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">ProtoBudgetUnit</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mlflow.entities.BudgetUnit" title="mlflow.entities.BudgetUnit"><span class="pre">BudgetUnit</span></a> <span class="p"><span class="pre">|</span></span> <span class="pre">None</span></span></span><a class="reference internal" href="../_modules/mlflow/entities/gateway_budget_policy.html#BudgetUnit.from_proto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.BudgetUnit.from_proto" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.entities.BudgetUnit.to_proto">
+<span class="sig-name descname"><span class="pre">to_proto</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ProtoBudgetUnit</span></span></span><a class="reference internal" href="../_modules/mlflow/entities/gateway_budget_policy.html#BudgetUnit.to_proto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.BudgetUnit.to_proto" title="Permalink to this definition"> </a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -1357,8 +1481,104 @@ If unset, the current time is used.</p></li>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="mlflow.entities.GatewayBudgetPolicy">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.entities.</span></span><span class="sig-name descname"><span class="pre">GatewayBudgetPolicy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">budget_policy_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">budget_unit</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#mlflow.entities.BudgetUnit" title="mlflow.entities.BudgetUnit"><span class="pre">BudgetUnit</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">budget_amount</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration_unit</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#mlflow.entities.BudgetDurationUnit" title="mlflow.entities.BudgetDurationUnit"><span class="pre">BudgetDurationUnit</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration_value</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_scope</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#mlflow.entities.BudgetTargetScope" title="mlflow.entities.BudgetTargetScope"><span class="pre">BudgetTargetScope</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">budget_action</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#mlflow.entities.BudgetAction" title="mlflow.entities.BudgetAction"><span class="pre">BudgetAction</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">created_at</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_updated_at</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created_by</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_updated_by</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workspace</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/entities/gateway_budget_policy.html#GatewayBudgetPolicy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.GatewayBudgetPolicy" title="Permalink to this definition"> </a></dt>
+<dd><p>Represents a budget policy for the AI Gateway.</p>
+<p>Budget policies set limits with fixed time windows,
+supporting global or per-workspace scoping.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>budget_policy_id</strong> – Unique identifier for this budget policy.</p></li>
+<li><p><strong>budget_unit</strong> – Budget measurement unit (e.g. USD).</p></li>
+<li><p><strong>budget_amount</strong> – Budget limit amount.</p></li>
+<li><p><strong>duration_unit</strong> – Unit of time window (MINUTES, HOURS, DAYS, WEEKS, MONTHS).</p></li>
+<li><p><strong>duration_value</strong> – Length of the window in units of duration_unit.</p></li>
+<li><p><strong>target_scope</strong> – Scope of the budget (GLOBAL or WORKSPACE).</p></li>
+<li><p><strong>budget_action</strong> – Action when budget is exceeded (ALERT, REJECT).</p></li>
+<li><p><strong>created_at</strong> – Timestamp (milliseconds) when the policy was created.</p></li>
+<li><p><strong>last_updated_at</strong> – Timestamp (milliseconds) when the policy was last updated.</p></li>
+<li><p><strong>created_by</strong> – User ID who created the policy.</p></li>
+<li><p><strong>last_updated_by</strong> – User ID who last updated the policy.</p></li>
+<li><p><strong>workspace</strong> – Workspace that owns the policy.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.GatewayBudgetPolicy.budget_action">
+<span class="sig-name descname"><span class="pre">budget_action</span></span><em class="property"><span class="pre">:</span> <a class="reference internal" href="#mlflow.entities.BudgetAction" title="mlflow.entities.BudgetAction"><span class="pre">BudgetAction</span></a></em><a class="headerlink" href="#mlflow.entities.GatewayBudgetPolicy.budget_action" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.GatewayBudgetPolicy.budget_amount">
+<span class="sig-name descname"><span class="pre">budget_amount</span></span><em class="property"><span class="pre">:</span> <span class="pre">float</span></em><a class="headerlink" href="#mlflow.entities.GatewayBudgetPolicy.budget_amount" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.GatewayBudgetPolicy.budget_policy_id">
+<span class="sig-name descname"><span class="pre">budget_policy_id</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.entities.GatewayBudgetPolicy.budget_policy_id" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.GatewayBudgetPolicy.budget_unit">
+<span class="sig-name descname"><span class="pre">budget_unit</span></span><em class="property"><span class="pre">:</span> <a class="reference internal" href="#mlflow.entities.BudgetUnit" title="mlflow.entities.BudgetUnit"><span class="pre">BudgetUnit</span></a></em><a class="headerlink" href="#mlflow.entities.GatewayBudgetPolicy.budget_unit" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.GatewayBudgetPolicy.created_at">
+<span class="sig-name descname"><span class="pre">created_at</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#mlflow.entities.GatewayBudgetPolicy.created_at" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.GatewayBudgetPolicy.created_by">
+<span class="sig-name descname"><span class="pre">created_by</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span> <span class="p"><span class="pre">|</span></span> <span class="pre">None</span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#mlflow.entities.GatewayBudgetPolicy.created_by" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.GatewayBudgetPolicy.duration_unit">
+<span class="sig-name descname"><span class="pre">duration_unit</span></span><em class="property"><span class="pre">:</span> <a class="reference internal" href="#mlflow.entities.BudgetDurationUnit" title="mlflow.entities.BudgetDurationUnit"><span class="pre">BudgetDurationUnit</span></a></em><a class="headerlink" href="#mlflow.entities.GatewayBudgetPolicy.duration_unit" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.GatewayBudgetPolicy.duration_value">
+<span class="sig-name descname"><span class="pre">duration_value</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#mlflow.entities.GatewayBudgetPolicy.duration_value" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.entities.GatewayBudgetPolicy.from_proto">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_proto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proto</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/entities/gateway_budget_policy.html#GatewayBudgetPolicy.from_proto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.GatewayBudgetPolicy.from_proto" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.GatewayBudgetPolicy.last_updated_at">
+<span class="sig-name descname"><span class="pre">last_updated_at</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#mlflow.entities.GatewayBudgetPolicy.last_updated_at" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.GatewayBudgetPolicy.last_updated_by">
+<span class="sig-name descname"><span class="pre">last_updated_by</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span> <span class="p"><span class="pre">|</span></span> <span class="pre">None</span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#mlflow.entities.GatewayBudgetPolicy.last_updated_by" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.GatewayBudgetPolicy.target_scope">
+<span class="sig-name descname"><span class="pre">target_scope</span></span><em class="property"><span class="pre">:</span> <a class="reference internal" href="#mlflow.entities.BudgetTargetScope" title="mlflow.entities.BudgetTargetScope"><span class="pre">BudgetTargetScope</span></a></em><a class="headerlink" href="#mlflow.entities.GatewayBudgetPolicy.target_scope" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.entities.GatewayBudgetPolicy.to_proto">
+<span class="sig-name descname"><span class="pre">to_proto</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/entities/gateway_budget_policy.html#GatewayBudgetPolicy.to_proto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.GatewayBudgetPolicy.to_proto" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.GatewayBudgetPolicy.workspace">
+<span class="sig-name descname"><span class="pre">workspace</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span> <span class="p"><span class="pre">|</span></span> <span class="pre">None</span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#mlflow.entities.GatewayBudgetPolicy.workspace" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="mlflow.entities.GatewayEndpoint">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.entities.</span></span><span class="sig-name descname"><span class="pre">GatewayEndpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">endpoint_id:</span> <span class="pre">str</span></em>, <em class="sig-param"><span class="pre">name:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">created_at:</span> <span class="pre">int</span></em>, <em class="sig-param"><span class="pre">last_updated_at:</span> <span class="pre">int</span></em>, <em class="sig-param"><span class="pre">model_mappings:</span> <span class="pre">list[mlflow.entities.gateway_endpoint.GatewayEndpointModelMapping]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></em>, <em class="sig-param"><span class="pre">tags:</span> <span class="pre">list['GatewayEndpointTag']</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></em>, <em class="sig-param"><span class="pre">created_by:</span> <span class="pre">Optional[str]</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">last_updated_by:</span> <span class="pre">Optional[str]</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">routing_strategy:</span> <span class="pre">Optional[mlflow.entities.gateway_endpoint.RoutingStrategy]</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">fallback_config:</span> <span class="pre">Optional[mlflow.entities.gateway_endpoint.FallbackConfig]</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">experiment_id:</span> <span class="pre">Optional[str]</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">usage_tracking:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></em>, <em class="sig-param"><span class="pre">workspace:</span> <span class="pre">Optional[str]</span> <span class="pre">=</span> <span class="pre">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/entities/gateway_endpoint.html#GatewayEndpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.GatewayEndpoint" title="Permalink to this definition"> </a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.entities.</span></span><span class="sig-name descname"><span class="pre">GatewayEndpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">endpoint_id:</span> <span class="pre">str</span></em>, <em class="sig-param"><span class="pre">name:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">created_at:</span> <span class="pre">int</span></em>, <em class="sig-param"><span class="pre">last_updated_at:</span> <span class="pre">int</span></em>, <em class="sig-param"><span class="pre">model_mappings:</span> <span class="pre">list[mlflow.entities.gateway_endpoint.GatewayEndpointModelMapping]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></em>, <em class="sig-param"><span class="pre">tags:</span> <span class="pre">list['GatewayEndpointTag']</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></em>, <em class="sig-param"><span class="pre">created_by:</span> <span class="pre">Optional[str]</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">last_updated_by:</span> <span class="pre">Optional[str]</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">routing_strategy:</span> <span class="pre">Optional[mlflow.entities.gateway_endpoint.RoutingStrategy]</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">fallback_config:</span> <span class="pre">Optional[mlflow.entities.gateway_endpoint.FallbackConfig]</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">experiment_id:</span> <span class="pre">Optional[str]</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">usage_tracking:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></em>, <em class="sig-param"><span class="pre">workspace:</span> <span class="pre">Optional[str]</span> <span class="pre">=</span> <span class="pre">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/entities/gateway_endpoint.html#GatewayEndpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.GatewayEndpoint" title="Permalink to this definition"> </a></dt>
 <dd><p>Represents an LLM gateway endpoint with its associated model configurations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1446,7 +1666,7 @@ If unset, the current time is used.</p></li>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mlflow.entities.GatewayEndpoint.usage_tracking">
-<span class="sig-name descname"><span class="pre">usage_tracking</span></span><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><em class="property"> <span class="pre">=</span> <span class="pre">False</span></em><a class="headerlink" href="#mlflow.entities.GatewayEndpoint.usage_tracking" title="Permalink to this definition"> </a></dt>
+<span class="sig-name descname"><span class="pre">usage_tracking</span></span><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><em class="property"> <span class="pre">=</span> <span class="pre">True</span></em><a class="headerlink" href="#mlflow.entities.GatewayEndpoint.usage_tracking" title="Permalink to this definition"> </a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1980,6 +2200,143 @@ the trace is stored, in the format of <cite>&lt;catalog&gt;.&lt;schema&gt;.&lt;t
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.entities.InputTag.value" title="Permalink to this definition"> </a></dt>
 <dd><p>String value of the input tag.</p>
 </dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mlflow.entities.Issue">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.entities.</span></span><span class="sig-name descname"><span class="pre">Issue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">issue_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experiment_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created_timestamp</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_updated_timestamp</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">confidence</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root_causes</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_run_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created_by</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/entities/issue.html#Issue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.Issue" title="Permalink to this definition"> </a></dt>
+<dd><p>An Issue represents a quality or operational problem discovered in traces.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.Issue.confidence">
+<span class="sig-name descname"><span class="pre">confidence</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span> <span class="p"><span class="pre">|</span></span> <span class="pre">None</span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#mlflow.entities.Issue.confidence" title="Permalink to this definition"> </a></dt>
+<dd><p>Confidence level indicator.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.Issue.created_by">
+<span class="sig-name descname"><span class="pre">created_by</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span> <span class="p"><span class="pre">|</span></span> <span class="pre">None</span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#mlflow.entities.Issue.created_by" title="Permalink to this definition"> </a></dt>
+<dd><p>Identifier for who created this issue.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.Issue.created_timestamp">
+<span class="sig-name descname"><span class="pre">created_timestamp</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#mlflow.entities.Issue.created_timestamp" title="Permalink to this definition"> </a></dt>
+<dd><p>Creation timestamp in milliseconds.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.Issue.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.entities.Issue.description" title="Permalink to this definition"> </a></dt>
+<dd><p>Detailed description of the issue.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.Issue.experiment_id">
+<span class="sig-name descname"><span class="pre">experiment_id</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.entities.Issue.experiment_id" title="Permalink to this definition"> </a></dt>
+<dd><p>Experiment ID.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.entities.Issue.from_dictionary">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_dictionary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">issue_dict</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">typing.Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mlflow.entities.Issue" title="mlflow.entities.Issue"><span class="pre">Issue</span></a></span></span><a class="reference internal" href="../_modules/mlflow/entities/issue.html#Issue.from_dictionary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.Issue.from_dictionary" title="Permalink to this definition"> </a></dt>
+<dd><p>Create Issue from dictionary representation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.entities.Issue.from_proto">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_proto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proto</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">issues_pb2.Issue</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mlflow.entities.Issue" title="mlflow.entities.Issue"><span class="pre">Issue</span></a></span></span><a class="reference internal" href="../_modules/mlflow/entities/issue.html#Issue.from_proto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.Issue.from_proto" title="Permalink to this definition"> </a></dt>
+<dd><p>Create Issue from protobuf representation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.Issue.issue_id">
+<span class="sig-name descname"><span class="pre">issue_id</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.entities.Issue.issue_id" title="Permalink to this definition"> </a></dt>
+<dd><p>Unique identifier for the issue.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.Issue.last_updated_timestamp">
+<span class="sig-name descname"><span class="pre">last_updated_timestamp</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#mlflow.entities.Issue.last_updated_timestamp" title="Permalink to this definition"> </a></dt>
+<dd><p>Last update timestamp in milliseconds.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.Issue.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.entities.Issue.name" title="Permalink to this definition"> </a></dt>
+<dd><p>Short descriptive name for the issue.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.Issue.root_causes">
+<span class="sig-name descname"><span class="pre">root_causes</span></span><em class="property"><span class="pre">:</span> <span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span> <span class="p"><span class="pre">|</span></span> <span class="pre">None</span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#mlflow.entities.Issue.root_causes" title="Permalink to this definition"> </a></dt>
+<dd><p>Analysis of the root causes of the issue.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.Issue.source_run_id">
+<span class="sig-name descname"><span class="pre">source_run_id</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span> <span class="p"><span class="pre">|</span></span> <span class="pre">None</span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#mlflow.entities.Issue.source_run_id" title="Permalink to this definition"> </a></dt>
+<dd><p>MLflow run ID that discovered this issue.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.Issue.status">
+<span class="sig-name descname"><span class="pre">status</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.entities.Issue.status" title="Permalink to this definition"> </a></dt>
+<dd><p>Issue status.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.entities.Issue.to_dictionary">
+<span class="sig-name descname"><span class="pre">to_dictionary</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">typing.Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/mlflow/entities/issue.html#Issue.to_dictionary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.Issue.to_dictionary" title="Permalink to this definition"> </a></dt>
+<dd><p>Convert Issue to dictionary representation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.entities.Issue.to_proto">
+<span class="sig-name descname"><span class="pre">to_proto</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">issues_pb2.Issue</span></span></span><a class="reference internal" href="../_modules/mlflow/entities/issue.html#Issue.to_proto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.Issue.to_proto" title="Permalink to this definition"> </a></dt>
+<dd><p>Convert Issue to protobuf representation.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mlflow.entities.IssueReference">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.entities.</span></span><span class="sig-name descname"><span class="pre">IssueReference</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">issue_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">issue_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#mlflow.entities.AssessmentSource" title="mlflow.entities.AssessmentSource"><span class="pre">AssessmentSource</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trace_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">span_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_time_ms</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_update_time_ms</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/entities/assessment.html#IssueReference"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.IssueReference" title="Permalink to this definition"> </a></dt>
+<dd><p>Represents a reference to an issue associated with a trace. This type of assessment
+is used internally to link traces to discovered issues.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>issue_id</strong> – The ID of the issue this assessment references (stored in assessment name).</p></li>
+<li><p><strong>issue_name</strong> – The name of the issue (stored in the issue value).</p></li>
+<li><p><strong>source</strong> – The source of the assessment. If not provided, the default source is CODE.</p></li>
+<li><p><strong>trace_id</strong> – The ID of the trace associated with the assessment.</p></li>
+<li><p><strong>run_id</strong> – The ID of the run that discovered the issue.</p></li>
+<li><p><strong>span_id</strong> – The ID of the span associated with the assessment, if applicable.</p></li>
+<li><p><strong>create_time_ms</strong> – The creation time of the assessment in milliseconds.</p></li>
+<li><p><strong>last_update_time_ms</strong> – The last update time of the assessment in milliseconds.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.entities.IssueReference.from_dictionary">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_dictionary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">typing.Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mlflow.entities.IssueReference" title="mlflow.entities.IssueReference"><span class="pre">IssueReference</span></a></span></span><a class="reference internal" href="../_modules/mlflow/entities/assessment.html#IssueReference.from_dictionary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.IssueReference.from_dictionary" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.entities.IssueReference.from_proto">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_proto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proto</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mlflow.entities.IssueReference" title="mlflow.entities.IssueReference"><span class="pre">IssueReference</span></a></span></span><a class="reference internal" href="../_modules/mlflow/entities/assessment.html#IssueReference.from_proto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.IssueReference.from_proto" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mlflow.entities.IssueReference.issue_id">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">issue_id</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.entities.IssueReference.issue_id" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mlflow.entities.IssueReference.issue_name">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">issue_name</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.entities.IssueReference.issue_name" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -4045,7 +4402,7 @@ support token usage tracking.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="mlflow.entities.TraceLocation">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.entities.</span></span><span class="sig-name descname"><span class="pre">TraceLocation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#mlflow.entities.TraceLocationType" title="mlflow.entities.TraceLocationType"><span class="pre">TraceLocationType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mlflow_experiment</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#mlflow.entities.MlflowExperimentLocation" title="mlflow.entities.MlflowExperimentLocation"><span class="pre">MlflowExperimentLocation</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inference_table</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#mlflow.entities.InferenceTableLocation" title="mlflow.entities.InferenceTableLocation"><span class="pre">InferenceTableLocation</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uc_schema</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#mlflow.entities.UCSchemaLocation" title="mlflow.entities.UCSchemaLocation"><span class="pre">UCSchemaLocation</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/entities/trace_location.html#TraceLocation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.TraceLocation" title="Permalink to this definition"> </a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.entities.</span></span><span class="sig-name descname"><span class="pre">TraceLocation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#mlflow.entities.TraceLocationType" title="mlflow.entities.TraceLocationType"><span class="pre">TraceLocationType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mlflow_experiment</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#mlflow.entities.MlflowExperimentLocation" title="mlflow.entities.MlflowExperimentLocation"><span class="pre">MlflowExperimentLocation</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inference_table</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#mlflow.entities.InferenceTableLocation" title="mlflow.entities.InferenceTableLocation"><span class="pre">InferenceTableLocation</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uc_schema</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#mlflow.entities.UCSchemaLocation" title="mlflow.entities.UCSchemaLocation"><span class="pre">UCSchemaLocation</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uc_table_prefix</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">mlflow.entities.trace_location.UnityCatalog</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/entities/trace_location.html#TraceLocation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.TraceLocation" title="Permalink to this definition"> </a></dt>
 <dd><p>Represents the location where the trace is stored.</p>
 <p>Currently, MLflow supports two types of trace locations:</p>
 <blockquote>
@@ -4069,6 +4426,11 @@ location type is Databricks Inference table.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="mlflow.entities.TraceLocation.from_databricks_uc_schema">
 <em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_databricks_uc_schema</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">catalog_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mlflow.entities.TraceLocation" title="mlflow.entities.TraceLocation"><span class="pre">TraceLocation</span></a></span></span><a class="reference internal" href="../_modules/mlflow/entities/trace_location.html#TraceLocation.from_databricks_uc_schema"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.TraceLocation.from_databricks_uc_schema" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.entities.TraceLocation.from_databricks_uc_table_prefix">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_databricks_uc_table_prefix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">catalog_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_prefix</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mlflow.entities.TraceLocation" title="mlflow.entities.TraceLocation"><span class="pre">TraceLocation</span></a></span></span><a class="reference internal" href="../_modules/mlflow/entities/trace_location.html#TraceLocation.from_databricks_uc_table_prefix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.TraceLocation.from_databricks_uc_table_prefix" title="Permalink to this definition"> </a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -4116,6 +4478,11 @@ location type is Databricks Inference table.</p></li>
 <span class="sig-name descname"><span class="pre">uc_schema</span></span><em class="property"><span class="pre">:</span> <a class="reference internal" href="#mlflow.entities.UCSchemaLocation" title="mlflow.entities.UCSchemaLocation"><span class="pre">UCSchemaLocation</span></a> <span class="p"><span class="pre">|</span></span> <span class="pre">None</span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#mlflow.entities.TraceLocation.uc_schema" title="Permalink to this definition"> </a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.TraceLocation.uc_table_prefix">
+<span class="sig-name descname"><span class="pre">uc_table_prefix</span></span><em class="property"><span class="pre">:</span> <span class="pre">mlflow.entities.trace_location.UnityCatalog</span> <span class="p"><span class="pre">|</span></span> <span class="pre">None</span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#mlflow.entities.TraceLocation.uc_table_prefix" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -4140,6 +4507,11 @@ location type is Databricks Inference table.</p></li>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mlflow.entities.TraceLocationType.UC_SCHEMA">
 <span class="sig-name descname"><span class="pre">UC_SCHEMA</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'UC_SCHEMA'</span></em><a class="headerlink" href="#mlflow.entities.TraceLocationType.UC_SCHEMA" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.entities.TraceLocationType.UC_TABLE_PREFIX">
+<span class="sig-name descname"><span class="pre">UC_TABLE_PREFIX</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'UC_TABLE_PREFIX'</span></em><a class="headerlink" href="#mlflow.entities.TraceLocationType.UC_TABLE_PREFIX" title="Permalink to this definition"> </a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -4384,7 +4756,7 @@ location type is Databricks Inference table.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlflow.entities.WebhookEvent.from_str">
-<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_str</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">'registered_model.created'</span><span class="p"><span class="pre">,</span> </span><span class="pre">'model_version.created'</span><span class="p"><span class="pre">,</span> </span><span class="pre">'model_version_tag.set'</span><span class="p"><span class="pre">,</span> </span><span class="pre">'model_version_tag.deleted'</span><span class="p"><span class="pre">,</span> </span><span class="pre">'model_version_alias.created'</span><span class="p"><span class="pre">,</span> </span><span class="pre">'model_version_alias.deleted'</span><span class="p"><span class="pre">,</span> </span><span class="pre">'prompt.created'</span><span class="p"><span class="pre">,</span> </span><span class="pre">'prompt_version.created'</span><span class="p"><span class="pre">,</span> </span><span class="pre">'prompt_tag.set'</span><span class="p"><span class="pre">,</span> </span><span class="pre">'prompt_tag.deleted'</span><span class="p"><span class="pre">,</span> </span><span class="pre">'prompt_version_tag.set'</span><span class="p"><span class="pre">,</span> </span><span class="pre">'prompt_version_tag.deleted'</span><span class="p"><span class="pre">,</span> </span><span class="pre">'prompt_alias.created'</span><span class="p"><span class="pre">,</span> </span><span class="pre">'prompt_alias.deleted'</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">typing_extensions.Self</span></span></span><a class="reference internal" href="../_modules/mlflow/entities/webhook.html#WebhookEvent.from_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.WebhookEvent.from_str" title="Permalink to this definition"> </a></dt>
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_str</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">'registered_model.created'</span><span class="p"><span class="pre">,</span> </span><span class="pre">'model_version.created'</span><span class="p"><span class="pre">,</span> </span><span class="pre">'model_version_tag.set'</span><span class="p"><span class="pre">,</span> </span><span class="pre">'model_version_tag.deleted'</span><span class="p"><span class="pre">,</span> </span><span class="pre">'model_version_alias.created'</span><span class="p"><span class="pre">,</span> </span><span class="pre">'model_version_alias.deleted'</span><span class="p"><span class="pre">,</span> </span><span class="pre">'prompt.created'</span><span class="p"><span class="pre">,</span> </span><span class="pre">'prompt_version.created'</span><span class="p"><span class="pre">,</span> </span><span class="pre">'prompt_tag.set'</span><span class="p"><span class="pre">,</span> </span><span class="pre">'prompt_tag.deleted'</span><span class="p"><span class="pre">,</span> </span><span class="pre">'prompt_version_tag.set'</span><span class="p"><span class="pre">,</span> </span><span class="pre">'prompt_version_tag.deleted'</span><span class="p"><span class="pre">,</span> </span><span class="pre">'prompt_alias.created'</span><span class="p"><span class="pre">,</span> </span><span class="pre">'prompt_alias.deleted'</span><span class="p"><span class="pre">,</span> </span><span class="pre">'budget_policy.exceeded'</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">typing_extensions.Self</span></span></span><a class="reference internal" href="../_modules/mlflow/entities/webhook.html#WebhookEvent.from_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.entities.WebhookEvent.from_str" title="Permalink to this definition"> </a></dt>
 <dd><p>Create a WebhookEvent from a dot-separated string representation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

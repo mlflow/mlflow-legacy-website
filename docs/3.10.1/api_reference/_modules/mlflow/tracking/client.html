@@ -6403,7 +6403,11 @@
 <span class="sd">            client.delete_prompt_version(&quot;my_prompt&quot;, &quot;1&quot;)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">registry_client</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_registry_client</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">registry_client</span><span class="o">.</span><span class="n">delete_prompt_version</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span></div>
+        <span class="n">registry_client</span><span class="o">.</span><span class="n">delete_prompt_version</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+
+        <span class="c1"># Invalidate all cache entries for this prompt name since aliases and</span>
+        <span class="c1"># &quot;latest&quot; may also resolve to the deleted version.</span>
+        <span class="n">PromptCache</span><span class="o">.</span><span class="n">get_instance</span><span class="p">()</span><span class="o">.</span><span class="n">delete_all</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="MlflowClient.set_prompt_tag"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.set_prompt_tag">[docs]</a>    <span class="nd">@require_prompt_registry</span>
     <span class="nd">@translate_prompt_exception</span>
@@ -6492,15 +6496,14 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Search prompt versions for a given prompt name.</span>
 
-<span class="sd">        This method delegates directly to the store. Only supported in Unity Catalog registries.</span>
-
 <span class="sd">        Args:</span>
 <span class="sd">            name: Name of the prompt to search versions for.</span>
 <span class="sd">            max_results: Maximum number of versions to return.</span>
 <span class="sd">            page_token: Token for pagination.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            SearchPromptVersionsResponse containing the list of versions.</span>
+<span class="sd">            A :py:class:`PagedList &lt;mlflow.store.entities.PagedList&gt;` of</span>
+<span class="sd">            :py:class:`~mlflow.entities.model_registry.PromptVersion` objects.</span>
 
 <span class="sd">        Example:</span>
 
@@ -6509,9 +6512,9 @@
 <span class="sd">            from mlflow import MlflowClient</span>
 
 <span class="sd">            client = MlflowClient()</span>
-<span class="sd">            response = client.search_prompt_versions(&quot;my_prompt&quot;, max_results=10)</span>
-<span class="sd">            for version in response.prompt_versions:</span>
-<span class="sd">                print(f&quot;Version {version.version}: {version.description}&quot;)</span>
+<span class="sd">            versions = client.search_prompt_versions(&quot;my_prompt&quot;, max_results=10)</span>
+<span class="sd">            for version in versions:</span>
+<span class="sd">                print(f&quot;Version {version.version}: {version.template}&quot;)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">registry_client</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_registry_client</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">registry_client</span><span class="o">.</span><span class="n">search_prompt_versions</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">max_results</span><span class="p">,</span> <span class="n">page_token</span><span class="p">)</span></div>
@@ -6542,7 +6545,7 @@
 <span class="sd">            # For Unity Catalog, delete all versions first</span>
 <span class="sd">            if client.get_registry_uri().startswith(&quot;databricks-uc&quot;):</span>
 <span class="sd">                versions = client.search_prompt_versions(&quot;my_prompt&quot;)</span>
-<span class="sd">                for version in versions.prompt_versions:</span>
+<span class="sd">                for version in versions:</span>
 <span class="sd">                    client.delete_prompt_version(&quot;my_prompt&quot;, version.version)</span>
 
 <span class="sd">            # Then delete the prompt</span>
@@ -6554,16 +6557,9 @@
         <span class="n">registry_uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_registry_uri</span>
 
         <span class="k">if</span> <span class="n">is_databricks_unity_catalog_uri</span><span class="p">(</span><span class="n">registry_uri</span><span class="p">):</span>
-            <span class="n">search_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_prompt_versions</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">max_results</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">versions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_prompt_versions</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">max_results</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-            <span class="c1"># Check if any versions exist</span>
-            <span class="n">has_versions</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="nb">hasattr</span><span class="p">(</span><span class="n">search_response</span><span class="p">,</span> <span class="s2">&quot;prompt_versions&quot;</span><span class="p">)</span>
-                <span class="ow">and</span> <span class="n">search_response</span><span class="o">.</span><span class="n">prompt_versions</span>
-                <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">search_response</span><span class="o">.</span><span class="n">prompt_versions</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
-            <span class="p">)</span>
-
-            <span class="k">if</span> <span class="n">has_versions</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">versions</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
                     <span class="sa">f</span><span class="s2">&quot;Cannot delete prompt &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; because it still has undeleted versions. &quot;</span>
                     <span class="sa">f</span><span class="s2">&quot;Please delete all versions first using delete_prompt_version(), &quot;</span>
@@ -6576,7 +6572,9 @@
         <span class="c1"># the background thread holds a session open while we try to delete.</span>
         <span class="k">with</span> <span class="n">_prompt_experiment_link_lock</span><span class="p">:</span>
             <span class="c1"># For non-Unity Catalog registries, or if version check passes, delete the prompt</span>
-            <span class="k">return</span> <span class="n">registry_client</span><span class="o">.</span><span class="n">delete_prompt</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
+            <span class="n">registry_client</span><span class="o">.</span><span class="n">delete_prompt</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">PromptCache</span><span class="o">.</span><span class="n">get_instance</span><span class="p">()</span><span class="o">.</span><span class="n">delete_all</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">return</span></div>
 
 <div class="viewcode-block" id="MlflowClient.create_dataset"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.create_dataset">[docs]</a>    <span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.4.0&quot;</span><span class="p">)</span>
     <span class="nd">@_disable_in_databricks</span><span class="p">()</span>
@@ -6825,8 +6823,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tracking_client</span><span class="o">.</span><span class="n">remove_dataset_from_experiments</span><span class="p">(</span><span class="n">dataset_id</span><span class="p">,</span> <span class="n">experiment_ids</span><span class="p">)</span></div>
 
     <span class="c1"># Webhook APIs</span>
-<div class="viewcode-block" id="MlflowClient.create_webhook"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.create_webhook">[docs]</a>    <span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.3.0&quot;</span><span class="p">)</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">create_webhook</span><span class="p">(</span>
+<div class="viewcode-block" id="MlflowClient.create_webhook"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.create_webhook">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">create_webhook</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -6864,8 +6861,7 @@
             <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="MlflowClient.get_webhook"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.get_webhook">[docs]</a>    <span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.3.0&quot;</span><span class="p">)</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_webhook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">webhook_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Webhook</span><span class="p">:</span>
+<div class="viewcode-block" id="MlflowClient.get_webhook"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.get_webhook">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_webhook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">webhook_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Webhook</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get webhook instance by ID.</span>
 
@@ -6877,8 +6873,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_registry_client</span><span class="p">()</span><span class="o">.</span><span class="n">get_webhook</span><span class="p">(</span><span class="n">webhook_id</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="MlflowClient.list_webhooks"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.list_webhooks">[docs]</a>    <span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.3.0&quot;</span><span class="p">)</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">list_webhooks</span><span class="p">(</span>
+<div class="viewcode-block" id="MlflowClient.list_webhooks"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.list_webhooks">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">list_webhooks</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">max_results</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">page_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -6895,8 +6890,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_registry_client</span><span class="p">()</span><span class="o">.</span><span class="n">list_webhooks</span><span class="p">(</span><span class="n">max_results</span><span class="p">,</span> <span class="n">page_token</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="MlflowClient.update_webhook"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.update_webhook">[docs]</a>    <span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.3.0&quot;</span><span class="p">)</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">update_webhook</span><span class="p">(</span>
+<div class="viewcode-block" id="MlflowClient.update_webhook"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.update_webhook">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">update_webhook</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">webhook_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -6938,8 +6932,7 @@
             <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="MlflowClient.delete_webhook"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.delete_webhook">[docs]</a>    <span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.3.0&quot;</span><span class="p">)</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">delete_webhook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">webhook_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="MlflowClient.delete_webhook"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.delete_webhook">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">delete_webhook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">webhook_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Delete a webhook.</span>
 
@@ -6951,8 +6944,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_get_registry_client</span><span class="p">()</span><span class="o">.</span><span class="n">delete_webhook</span><span class="p">(</span><span class="n">webhook_id</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="MlflowClient.test_webhook"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.test_webhook">[docs]</a>    <span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.3.0&quot;</span><span class="p">)</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">test_webhook</span><span class="p">(</span>
+<div class="viewcode-block" id="MlflowClient.test_webhook"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.test_webhook">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">test_webhook</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">webhook_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">WebhookEventStr</span> <span class="o">|</span> <span class="n">WebhookEvent</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WebhookTestResult</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>

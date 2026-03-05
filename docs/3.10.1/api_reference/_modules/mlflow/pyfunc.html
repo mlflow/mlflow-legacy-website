@@ -1730,8 +1730,9 @@
 
     <span class="n">tmp_model_dir</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">(</span><span class="nb">dir</span><span class="o">=</span><span class="n">root_model_cache_dir</span><span class="p">)</span>
     <span class="c1"># mkdtemp creates a directory with permission 0o700</span>
-    <span class="c1"># change it to be 0o770 to ensure it can be seen in spark UDF</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">chmod</span><span class="p">(</span><span class="n">tmp_model_dir</span><span class="p">,</span> <span class="mo">0o770</span><span class="p">)</span>
+    <span class="c1"># For Spark UDFs, we need to make it accessible to other processes</span>
+    <span class="c1"># Use 0o750 (owner: rwx, group: r-x, others: None) instead of 0o770</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">chmod</span><span class="p">(</span><span class="n">tmp_model_dir</span><span class="p">,</span> <span class="mo">0o750</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">tmp_model_dir</span>
 
 

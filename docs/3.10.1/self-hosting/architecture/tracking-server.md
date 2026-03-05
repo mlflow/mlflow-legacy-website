@@ -82,7 +82,7 @@ with mlflow.start_span(name="test_trace") as span:
 typescript
 
 ```
-import * as mlflow from "mlflow-tracing";
+import * as mlflow from "@mlflow/core";
 
 mlflow.init({
     trackingUri: "<your-tracking-server-uri>",

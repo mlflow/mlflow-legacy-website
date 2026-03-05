@@ -214,6 +214,14 @@ Each integration automatically captures your application's logic and intermediat
 
 [Claude Code](/docs/3.10.1/genai/tracing/integrations/listing/claude_code.md)
 
+[![Langfuse Logo](/docs/3.10.1/images/logos/langfuse-logo.png)](/docs/3.10.1/genai/tracing/integrations/listing/langfuse.md)
+
+[Langfuse](/docs/3.10.1/genai/tracing/integrations/listing/langfuse.md)
+
+[![Arize / Phoenix Logo](/docs/3.10.1/images/logos/arize-phoenix-logo.png)](/docs/3.10.1/genai/tracing/integrations/listing/arize.md)
+
+[Arize / Phoenix](/docs/3.10.1/genai/tracing/integrations/listing/arize.md)
+
 ### Gateways[​](#gateways "Direct link to Gateways")
 
 [![MLflow AI Gateway Logo](/docs/3.10.1/images/logos/mlflow-logo.svg)](/docs/3.10.1/genai/tracing/integrations/listing/mlflow-ai-gateway.md)

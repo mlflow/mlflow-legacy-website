@@ -131,6 +131,7 @@
 - [Tracing AG2🤖](/docs/3.10.1/genai/tracing/integrations/listing/ag2.md): AG2 Tracing via autolog
 - [Tracing Agno](/docs/3.10.1/genai/tracing/integrations/listing/agno.md): Agno is a flexible agent framework for orchestrating LLMs, reasoning steps, tools, and memory into a unified pipeline.
 - [Tracing Anthropic](/docs/3.10.1/genai/tracing/integrations/listing/anthropic.md): MLflow Tracing provides automatic tracing capability for Anthropic LLMs. By enabling auto tracing
+- [Tracing Arize / Phoenix](/docs/3.10.1/genai/tracing/integrations/listing/arize.md): Arize Phoenix is an open-source AI observability platform. Its OpenInference instrumentation libraries produce OpenTelemetry spans with rich AI-specific attributes for model providers like OpenAI, Anthropic, and others.
 - [Tracing AutoGen](/docs/3.10.1/genai/tracing/integrations/listing/autogen.md): AutoGen tracing via autolog
 - [Tracing Amazon Bedrock with MLflow](/docs/3.10.1/genai/tracing/integrations/listing/bedrock.md): MLflow supports automatic tracing for Amazon Bedrock, a fully managed service on AWS that provides high-performing
 - [Tracing Amazon Bedrock AgentCore](/docs/3.10.1/genai/tracing/integrations/listing/bedrock-agentcore.md): Enable OpenTelemetry in Amazon Bedrock AgentCore
@@ -154,6 +155,7 @@
 - [Tracing Koog](/docs/3.10.1/genai/tracing/integrations/listing/koog.md): Enable OpenTelemetry in Koog
 - [Tracing LangChain🦜⛓️](/docs/3.10.1/genai/tracing/integrations/listing/langchain.md): LangChain is an open-source framework for building LLM-powered applications.
 - [Tracing Langflow](/docs/3.10.1/genai/tracing/integrations/listing/langflow.md): Enable OpenTelemetry in Langflow via Traceloop
+- [Tracing Langfuse](/docs/3.10.1/genai/tracing/integrations/listing/langfuse.md): Langfuse is an open-source LLM engineering platform for tracing, evaluating, and monitoring AI applications.
 - [Tracing LangGraph🦜🕸️](/docs/3.10.1/genai/tracing/integrations/listing/langgraph.md): LangGraph is an open-source library for building stateful, multi-actor applications with LLMs, used to create agent and multi-agent workflows.
 - [Tracing LiteLLM🚄](/docs/3.10.1/genai/tracing/integrations/listing/litellm.md): LiteLLM is an open-source LLM Gateway that allow accessing 100+ LLMs in the unified interface.
 - [Tracing LiteLLM Proxy](/docs/3.10.1/genai/tracing/integrations/listing/litellm-proxy.md): LiteLLM Proxy is a self-hosted LLM gateway that provides a unified OpenAI-compatible API to access 100+ LLM providers. It offers features like load balancing, spend tracking, and rate limiting across multiple providers.
@@ -261,6 +263,7 @@
 - [Search Runs](/docs/3.10.1/ml/search/search-runs.md): This guide will walk you through how to search your MLflow runs through the MLflow UI and Python API.
 - [MLflow Tracking](/docs/3.10.1/ml/tracking.md): The MLflow Tracking is an API and UI for logging parameters, code versions, metrics, and output files
 - [Automatic Logging with MLflow Tracking](/docs/3.10.1/ml/tracking/autolog.md): Auto logging is a powerful feature that allows you to log metrics, parameters, and models without the need for explicit log statements. All you need to do is to
+- [Pickle-Free Model format](/docs/3.10.1/ml/tracking/pickle-free-models.md): Saving models with Python's pickle or cloudpickle relies on Python's object serialization mechanism, which can execute arbitrary code during deserialization. MLflow supports safer pickle-free saving formats for several model flavors. Prefer these formats when possible.
 - [MLflow Tracking Quickstart](/docs/3.10.1/ml/tracking/quickstart.md): Need help setting up tracking? Try MLflow Assistant - a powerful AI assistant that can help you set up MLflow tracking for your project.
 - [System Metrics](/docs/3.10.1/ml/tracking/system-metrics.md): MLflow allows users to log system metrics including CPU stats, GPU stats, memory usage, network traffic, and
 - [MLflow Tracking APIs](/docs/3.10.1/ml/tracking/tracking-api.md): MLflow Tracking provides comprehensive APIs across multiple programming languages to capture your machine learning experiments. Whether you prefer automatic instrumentation or granular control, MLflow adapts to your workflow.

@@ -198,6 +198,12 @@ MLflow Authentication provides API endpoints to manage users and permissions.
 | [Get Gateway Model Definition Permission](/docs/3.10.1/api_reference/auth/rest-api.html/#get-gateway-model-definition-permission)       | `3.0/mlflow/gateway/model-definitions/permissions/get`    | `GET`    | can\_manage                 |
 | [Update Gateway Model Definition Permission](/docs/3.10.1/api_reference/auth/rest-api.html/#update-gateway-model-definition-permission) | `3.0/mlflow/gateway/model-definitions/permissions/update` | `PATCH`  | can\_manage                 |
 | [Delete Gateway Model Definition Permission](/docs/3.10.1/api_reference/auth/rest-api.html/#delete-gateway-model-definition-permission) | `3.0/mlflow/gateway/model-definitions/permissions/delete` | `DELETE` | can\_manage                 |
+| Create Webhook                                                                                                                          | `2.0/mlflow/webhooks`                                     | `POST`   | Only admin                  |
+| List Webhooks                                                                                                                           | `2.0/mlflow/webhooks`                                     | `GET`    | Only admin                  |
+| Get Webhook                                                                                                                             | `2.0/mlflow/webhooks/&lt;webhook_id&gt;`                  | `GET`    | Only admin                  |
+| Update Webhook                                                                                                                          | `2.0/mlflow/webhooks/&lt;webhook_id&gt;`                  | `PATCH`  | Only admin                  |
+| Delete Webhook                                                                                                                          | `2.0/mlflow/webhooks/&lt;webhook_id&gt;`                  | `DELETE` | Only admin                  |
+| Test Webhook                                                                                                                            | `2.0/mlflow/webhooks/&lt;webhook_id&gt;/test`             | `POST`   | Only admin                  |
 
 Some APIs will also have their behaviour modified. For example, the creator of an experiment will automatically be granted `MANAGE` permission on that experiment, so that the creator can grant or revoke other users' access to that experiment.
 

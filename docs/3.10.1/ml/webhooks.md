@@ -17,6 +17,10 @@ MLflow webhooks enable real-time notifications when specific events occur in the
 * **Multiple event types** including model/prompt creation, versioning, and tagging
 * **Built-in testing** to verify webhook connectivity
 
+Authorization
+
+When [MLflow Authentication](/docs/3.10.1/self-hosting/security/basic-http-auth.md) is enabled, all webhook operations (create, list, get, update, delete, and test) require **admin privileges**. Non-admin users will receive a `403 Forbidden` response when attempting to access webhook endpoints.
+
 ## Supported Events[​](#supported-events "Direct link to Supported Events")
 
 MLflow webhooks support the following Model Registry and Prompt Registry events:

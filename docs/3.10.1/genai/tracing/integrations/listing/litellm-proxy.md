@@ -177,7 +177,7 @@ pip install 'mlflow[genai]' openai
 bash
 
 ```
-npm install mlflow-openai openai
+npm install @mlflow/openai openai
 ```
 
 2
@@ -254,8 +254,8 @@ Initialize MLflow tracing with `init()` and wrap the OpenAI client with the `tra
 typescript
 
 ```
-import { init } from "mlflow-tracing";
-import { tracedOpenAI } from "mlflow-openai";
+import { init } from "@mlflow/core";
+import { tracedOpenAI } from "@mlflow/openai";
 import { OpenAI } from "openai";
 
 // Initialize MLflow tracing
@@ -329,8 +329,8 @@ print(answer)
 typescript
 
 ```
-import { init, trace, SpanType } from "mlflow-tracing";
-import { tracedOpenAI } from "mlflow-openai";
+import { init, trace, SpanType } from "@mlflow/core";
+import { tracedOpenAI } from "@mlflow/openai";
 import { OpenAI } from "openai";
 
 init({

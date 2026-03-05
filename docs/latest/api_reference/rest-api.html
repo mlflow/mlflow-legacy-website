@@ -449,6 +449,30 @@
 <li class="toctree-l3"><a class="reference internal" href="#mlflowdeletepromptoptimizationjob">Request Structure</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#create-budget-policy">Create Budget Policy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mlflowcreategatewaybudgetpolicy">Request Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mlflowcreategatewaybudgetpolicyresponse">Response Structure</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#get-budget-policy">Get Budget Policy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mlflowgetgatewaybudgetpolicy">Request Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mlflowgetgatewaybudgetpolicyresponse">Response Structure</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#update-budget-policy">Update Budget Policy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mlflowupdategatewaybudgetpolicy">Request Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mlflowupdategatewaybudgetpolicyresponse">Response Structure</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#delete-budget-policy">Delete Budget Policy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mlflowdeletegatewaybudgetpolicy">Request Structure</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#list-budget-policies">List Budget Policies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mlflowlistgatewaybudgetpolicies">Request Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mlflowlistgatewaybudgetpoliciesresponse">Response Structure</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#create-registeredmodel">Create RegisteredModel</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#mlflowcreateregisteredmodel">Request Structure</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#mlflowcreateregisteredmodelresponse">Response Structure</a></li>
@@ -596,6 +620,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#mlflowartifactsabortmultipartupload">Request Structure</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#get-presigned-url-for-multipart-download">Get Presigned URL for Multipart Download</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mlflowartifactsgetpresigneddownloadurlresponse">Response Structure</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#data-structures">Data Structures</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#adddatasettoexperiments">AddDatasetToExperiments</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#assessment">Assessment</a></li>
@@ -639,6 +667,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#mlflowartifactsfileinfo">FileInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#finalevalscoresentry">FinalEvalScoresEntry</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#finalizeloggedmodel">FinalizeLoggedModel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gatewaybudgetpolicy">GatewayBudgetPolicy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#gatewayendpoint">GatewayEndpoint</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#gatewayendpointbinding">GatewayEndpointBinding</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#gatewayendpointmodelconfig">GatewayEndpointModelConfig</a></li>
@@ -658,9 +687,11 @@
 <li class="toctree-l3"><a class="reference internal" href="#gettraceinfov3">GetTraceInfoV3</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#getworkspace">GetWorkspace</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#headersentry">HeadersEntry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mlflowartifactsgetpresigneddownloadurlresponseheadersentry">HeadersEntry</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#inferencetablelocation">InferenceTableLocation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#initialevalscoresentry">InitialEvalScoresEntry</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#inputtag">InputTag</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#issuereference">IssueReference</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#jobstate">JobState</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#linkpromptstotrace">LinkPromptsToTrace</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#linktracestorun">LinkTracesToRun</a></li>
@@ -781,6 +812,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#webhooktestresult">WebhookTestResult</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#workspace">Workspace</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#aggregationtype">AggregationType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#budgetaction">BudgetAction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#budgetdurationunit">BudgetDurationUnit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#budgettargetscope">BudgetTargetScope</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#budgetunit">BudgetUnit</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#deploymentjobrunstate">DeploymentJobRunState</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#fallbackstrategy">FallbackStrategy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#gatewaymodellinkagetype">GatewayModelLinkageType</a></li>
@@ -867,102 +902,108 @@ tracking server. For example, to search for experiments on a tracking server hos
 <div class="contents local topic" id="table-of-contents">
 <p class="topic-title">Table of Contents</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#create-experiment" id="id191">Create Experiment</a></p></li>
-<li><p><a class="reference internal" href="#search-experiments" id="id192">Search Experiments</a></p></li>
-<li><p><a class="reference internal" href="#get-experiment" id="id193">Get Experiment</a></p></li>
-<li><p><a class="reference internal" href="#get-experiment-by-name" id="id194">Get Experiment By Name</a></p></li>
-<li><p><a class="reference internal" href="#delete-experiment" id="id195">Delete Experiment</a></p></li>
-<li><p><a class="reference internal" href="#restore-experiment" id="id196">Restore Experiment</a></p></li>
-<li><p><a class="reference internal" href="#update-experiment" id="id197">Update Experiment</a></p></li>
-<li><p><a class="reference internal" href="#set-experiment-tag" id="id198">Set Experiment Tag</a></p></li>
-<li><p><a class="reference internal" href="#delete-experiment-tag" id="id199">Delete Experiment Tag</a></p></li>
-<li><p><a class="reference internal" href="#create-run" id="id200">Create Run</a></p></li>
-<li><p><a class="reference internal" href="#update-run" id="id201">Update Run</a></p></li>
-<li><p><a class="reference internal" href="#delete-run" id="id202">Delete Run</a></p></li>
-<li><p><a class="reference internal" href="#restore-run" id="id203">Restore Run</a></p></li>
-<li><p><a class="reference internal" href="#get-run" id="id204">Get Run</a></p></li>
-<li><p><a class="reference internal" href="#search-runs" id="id205">Search Runs</a></p></li>
-<li><p><a class="reference internal" href="#log-metric" id="id206">Log Metric</a></p></li>
-<li><p><a class="reference internal" href="#log-param" id="id207">Log Param</a></p></li>
-<li><p><a class="reference internal" href="#log-batch" id="id208">Log Batch</a></p></li>
-<li><p><a class="reference internal" href="#log-model" id="id209">Log Model</a></p></li>
-<li><p><a class="reference internal" href="#log-inputs" id="id210">Log Inputs</a></p></li>
-<li><p><a class="reference internal" href="#set-tag" id="id211">Set Tag</a></p></li>
-<li><p><a class="reference internal" href="#delete-tag" id="id212">Delete Tag</a></p></li>
-<li><p><a class="reference internal" href="#get-metric-history" id="id213">Get Metric History</a></p></li>
-<li><p><a class="reference internal" href="#list-artifacts" id="id214">List Artifacts</a></p></li>
-<li><p><a class="reference internal" href="#register-scorer" id="id215">Register Scorer</a></p></li>
-<li><p><a class="reference internal" href="#list-scorers" id="id216">List Scorers</a></p></li>
-<li><p><a class="reference internal" href="#list-scorer-versions" id="id217">List Scorer Versions</a></p></li>
-<li><p><a class="reference internal" href="#get-scorer" id="id218">Get Scorer</a></p></li>
-<li><p><a class="reference internal" href="#delete-scorer" id="id219">Delete Scorer</a></p></li>
-<li><p><a class="reference internal" href="#create-gateway-secret" id="id220">Create Gateway Secret</a></p></li>
-<li><p><a class="reference internal" href="#get-gateway-secret-info" id="id221">Get Gateway Secret Info</a></p></li>
-<li><p><a class="reference internal" href="#update-gateway-secret" id="id222">Update Gateway Secret</a></p></li>
-<li><p><a class="reference internal" href="#delete-gateway-secret" id="id223">Delete Gateway Secret</a></p></li>
-<li><p><a class="reference internal" href="#list-gateway-secrets" id="id224">List Gateway Secrets</a></p></li>
-<li><p><a class="reference internal" href="#create-gateway-model-definition" id="id225">Create Gateway Model Definition</a></p></li>
-<li><p><a class="reference internal" href="#get-gateway-model-definition" id="id226">Get Gateway Model Definition</a></p></li>
-<li><p><a class="reference internal" href="#list-gateway-model-definitions" id="id227">List Gateway Model Definitions</a></p></li>
-<li><p><a class="reference internal" href="#update-gateway-model-definition" id="id228">Update Gateway Model Definition</a></p></li>
-<li><p><a class="reference internal" href="#delete-gateway-model-definition" id="id229">Delete Gateway Model Definition</a></p></li>
-<li><p><a class="reference internal" href="#create-gateway-endpoint" id="id230">Create Gateway Endpoint</a></p></li>
-<li><p><a class="reference internal" href="#get-gateway-endpoint" id="id231">Get Gateway Endpoint</a></p></li>
-<li><p><a class="reference internal" href="#update-gateway-endpoint" id="id232">Update Gateway Endpoint</a></p></li>
-<li><p><a class="reference internal" href="#delete-gateway-endpoint" id="id233">Delete Gateway Endpoint</a></p></li>
-<li><p><a class="reference internal" href="#list-gateway-endpoints" id="id234">List Gateway Endpoints</a></p></li>
-<li><p><a class="reference internal" href="#attach-model-to-endpoint" id="id235">Attach Model to Endpoint</a></p></li>
-<li><p><a class="reference internal" href="#detach-model-from-endpoint" id="id236">Detach Model from Endpoint</a></p></li>
-<li><p><a class="reference internal" href="#create-endpoint-binding" id="id237">Create Endpoint Binding</a></p></li>
-<li><p><a class="reference internal" href="#delete-endpoint-binding" id="id238">Delete Endpoint Binding</a></p></li>
-<li><p><a class="reference internal" href="#list-endpoint-bindings" id="id239">List Endpoint Bindings</a></p></li>
-<li><p><a class="reference internal" href="#gateway-set-endpoint-tag" id="id240">Gateway Set Endpoint Tag</a></p></li>
-<li><p><a class="reference internal" href="#gateway-delete-endpoint-tag" id="id241">Gateway Delete Endpoint Tag</a></p></li>
-<li><p><a class="reference internal" href="#create-prompt-optimization-job" id="id242">Create Prompt Optimization Job</a></p></li>
-<li><p><a class="reference internal" href="#get-prompt-optimization-job" id="id243">Get Prompt Optimization Job</a></p></li>
-<li><p><a class="reference internal" href="#search-prompt-optimization-jobs" id="id244">Search Prompt Optimization Jobs</a></p></li>
-<li><p><a class="reference internal" href="#cancel-prompt-optimization-job" id="id245">Cancel Prompt Optimization Job</a></p></li>
-<li><p><a class="reference internal" href="#delete-prompt-optimization-job" id="id246">Delete Prompt Optimization Job</a></p></li>
-<li><p><a class="reference internal" href="#create-registeredmodel" id="id247">Create RegisteredModel</a></p></li>
-<li><p><a class="reference internal" href="#get-registeredmodel" id="id248">Get RegisteredModel</a></p></li>
-<li><p><a class="reference internal" href="#rename-registeredmodel" id="id249">Rename RegisteredModel</a></p></li>
-<li><p><a class="reference internal" href="#update-registeredmodel" id="id250">Update RegisteredModel</a></p></li>
-<li><p><a class="reference internal" href="#delete-registeredmodel" id="id251">Delete RegisteredModel</a></p></li>
-<li><p><a class="reference internal" href="#search-registeredmodels" id="id252">Search RegisteredModels</a></p></li>
-<li><p><a class="reference internal" href="#get-latest-modelversions" id="id253">Get Latest ModelVersions</a></p></li>
-<li><p><a class="reference internal" href="#create-modelversion" id="id254">Create ModelVersion</a></p></li>
-<li><p><a class="reference internal" href="#get-modelversion" id="id255">Get ModelVersion</a></p></li>
-<li><p><a class="reference internal" href="#update-modelversion" id="id256">Update ModelVersion</a></p></li>
-<li><p><a class="reference internal" href="#delete-modelversion" id="id257">Delete ModelVersion</a></p></li>
-<li><p><a class="reference internal" href="#search-modelversions" id="id258">Search ModelVersions</a></p></li>
-<li><p><a class="reference internal" href="#get-download-uri-for-modelversion-artifacts" id="id259">Get Download URI For ModelVersion Artifacts</a></p></li>
-<li><p><a class="reference internal" href="#transition-modelversion-stage" id="id260">Transition ModelVersion Stage</a></p></li>
-<li><p><a class="reference internal" href="#set-registered-model-tag" id="id261">Set Registered Model Tag</a></p></li>
-<li><p><a class="reference internal" href="#set-model-version-tag" id="id262">Set Model Version Tag</a></p></li>
-<li><p><a class="reference internal" href="#delete-registered-model-tag" id="id263">Delete Registered Model Tag</a></p></li>
-<li><p><a class="reference internal" href="#delete-model-version-tag" id="id264">Delete Model Version Tag</a></p></li>
-<li><p><a class="reference internal" href="#set-registered-model-alias" id="id265">Set Registered Model Alias</a></p></li>
-<li><p><a class="reference internal" href="#delete-registered-model-alias" id="id266">Delete Registered Model Alias</a></p></li>
-<li><p><a class="reference internal" href="#get-model-version-by-alias" id="id267">Get Model Version by Alias</a></p></li>
-<li><p><a class="reference internal" href="#create-webhook" id="id268">Create Webhook</a></p></li>
-<li><p><a class="reference internal" href="#list-webhooks" id="id269">List Webhooks</a></p></li>
-<li><p><a class="reference internal" href="#get-webhook" id="id270">Get Webhook</a></p></li>
-<li><p><a class="reference internal" href="#update-webhook" id="id271">Update Webhook</a></p></li>
-<li><p><a class="reference internal" href="#delete-webhook" id="id272">Delete Webhook</a></p></li>
-<li><p><a class="reference internal" href="#test-webhook" id="id273">Test Webhook</a></p></li>
-<li><p><a class="reference internal" href="#download-artifact" id="id274">Download Artifact</a></p></li>
-<li><p><a class="reference internal" href="#upload-artifact" id="id275">Upload Artifact</a></p></li>
-<li><p><a class="reference internal" href="#mlflowartifactsmlflowartifactsservicelistartifacts" id="id276">List Artifacts</a></p></li>
-<li><p><a class="reference internal" href="#delete-artifacts" id="id277">Delete Artifacts</a></p></li>
-<li><p><a class="reference internal" href="#create-an-artifact-multipart-upload" id="id278">Create an Artifact Multipart Upload</a></p></li>
-<li><p><a class="reference internal" href="#complete-an-artifact-multipart-upload" id="id279">Complete an Artifact Multipart Upload</a></p></li>
-<li><p><a class="reference internal" href="#abort-an-artifact-multipart-upload" id="id280">Abort an Artifact Multipart Upload</a></p></li>
-<li><p><a class="reference internal" href="#data-structures" id="id281">Data Structures</a></p></li>
+<li><p><a class="reference internal" href="#create-experiment" id="id202">Create Experiment</a></p></li>
+<li><p><a class="reference internal" href="#search-experiments" id="id203">Search Experiments</a></p></li>
+<li><p><a class="reference internal" href="#get-experiment" id="id204">Get Experiment</a></p></li>
+<li><p><a class="reference internal" href="#get-experiment-by-name" id="id205">Get Experiment By Name</a></p></li>
+<li><p><a class="reference internal" href="#delete-experiment" id="id206">Delete Experiment</a></p></li>
+<li><p><a class="reference internal" href="#restore-experiment" id="id207">Restore Experiment</a></p></li>
+<li><p><a class="reference internal" href="#update-experiment" id="id208">Update Experiment</a></p></li>
+<li><p><a class="reference internal" href="#set-experiment-tag" id="id209">Set Experiment Tag</a></p></li>
+<li><p><a class="reference internal" href="#delete-experiment-tag" id="id210">Delete Experiment Tag</a></p></li>
+<li><p><a class="reference internal" href="#create-run" id="id211">Create Run</a></p></li>
+<li><p><a class="reference internal" href="#update-run" id="id212">Update Run</a></p></li>
+<li><p><a class="reference internal" href="#delete-run" id="id213">Delete Run</a></p></li>
+<li><p><a class="reference internal" href="#restore-run" id="id214">Restore Run</a></p></li>
+<li><p><a class="reference internal" href="#get-run" id="id215">Get Run</a></p></li>
+<li><p><a class="reference internal" href="#search-runs" id="id216">Search Runs</a></p></li>
+<li><p><a class="reference internal" href="#log-metric" id="id217">Log Metric</a></p></li>
+<li><p><a class="reference internal" href="#log-param" id="id218">Log Param</a></p></li>
+<li><p><a class="reference internal" href="#log-batch" id="id219">Log Batch</a></p></li>
+<li><p><a class="reference internal" href="#log-model" id="id220">Log Model</a></p></li>
+<li><p><a class="reference internal" href="#log-inputs" id="id221">Log Inputs</a></p></li>
+<li><p><a class="reference internal" href="#set-tag" id="id222">Set Tag</a></p></li>
+<li><p><a class="reference internal" href="#delete-tag" id="id223">Delete Tag</a></p></li>
+<li><p><a class="reference internal" href="#get-metric-history" id="id224">Get Metric History</a></p></li>
+<li><p><a class="reference internal" href="#list-artifacts" id="id225">List Artifacts</a></p></li>
+<li><p><a class="reference internal" href="#register-scorer" id="id226">Register Scorer</a></p></li>
+<li><p><a class="reference internal" href="#list-scorers" id="id227">List Scorers</a></p></li>
+<li><p><a class="reference internal" href="#list-scorer-versions" id="id228">List Scorer Versions</a></p></li>
+<li><p><a class="reference internal" href="#get-scorer" id="id229">Get Scorer</a></p></li>
+<li><p><a class="reference internal" href="#delete-scorer" id="id230">Delete Scorer</a></p></li>
+<li><p><a class="reference internal" href="#create-gateway-secret" id="id231">Create Gateway Secret</a></p></li>
+<li><p><a class="reference internal" href="#get-gateway-secret-info" id="id232">Get Gateway Secret Info</a></p></li>
+<li><p><a class="reference internal" href="#update-gateway-secret" id="id233">Update Gateway Secret</a></p></li>
+<li><p><a class="reference internal" href="#delete-gateway-secret" id="id234">Delete Gateway Secret</a></p></li>
+<li><p><a class="reference internal" href="#list-gateway-secrets" id="id235">List Gateway Secrets</a></p></li>
+<li><p><a class="reference internal" href="#create-gateway-model-definition" id="id236">Create Gateway Model Definition</a></p></li>
+<li><p><a class="reference internal" href="#get-gateway-model-definition" id="id237">Get Gateway Model Definition</a></p></li>
+<li><p><a class="reference internal" href="#list-gateway-model-definitions" id="id238">List Gateway Model Definitions</a></p></li>
+<li><p><a class="reference internal" href="#update-gateway-model-definition" id="id239">Update Gateway Model Definition</a></p></li>
+<li><p><a class="reference internal" href="#delete-gateway-model-definition" id="id240">Delete Gateway Model Definition</a></p></li>
+<li><p><a class="reference internal" href="#create-gateway-endpoint" id="id241">Create Gateway Endpoint</a></p></li>
+<li><p><a class="reference internal" href="#get-gateway-endpoint" id="id242">Get Gateway Endpoint</a></p></li>
+<li><p><a class="reference internal" href="#update-gateway-endpoint" id="id243">Update Gateway Endpoint</a></p></li>
+<li><p><a class="reference internal" href="#delete-gateway-endpoint" id="id244">Delete Gateway Endpoint</a></p></li>
+<li><p><a class="reference internal" href="#list-gateway-endpoints" id="id245">List Gateway Endpoints</a></p></li>
+<li><p><a class="reference internal" href="#attach-model-to-endpoint" id="id246">Attach Model to Endpoint</a></p></li>
+<li><p><a class="reference internal" href="#detach-model-from-endpoint" id="id247">Detach Model from Endpoint</a></p></li>
+<li><p><a class="reference internal" href="#create-endpoint-binding" id="id248">Create Endpoint Binding</a></p></li>
+<li><p><a class="reference internal" href="#delete-endpoint-binding" id="id249">Delete Endpoint Binding</a></p></li>
+<li><p><a class="reference internal" href="#list-endpoint-bindings" id="id250">List Endpoint Bindings</a></p></li>
+<li><p><a class="reference internal" href="#gateway-set-endpoint-tag" id="id251">Gateway Set Endpoint Tag</a></p></li>
+<li><p><a class="reference internal" href="#gateway-delete-endpoint-tag" id="id252">Gateway Delete Endpoint Tag</a></p></li>
+<li><p><a class="reference internal" href="#create-prompt-optimization-job" id="id253">Create Prompt Optimization Job</a></p></li>
+<li><p><a class="reference internal" href="#get-prompt-optimization-job" id="id254">Get Prompt Optimization Job</a></p></li>
+<li><p><a class="reference internal" href="#search-prompt-optimization-jobs" id="id255">Search Prompt Optimization Jobs</a></p></li>
+<li><p><a class="reference internal" href="#cancel-prompt-optimization-job" id="id256">Cancel Prompt Optimization Job</a></p></li>
+<li><p><a class="reference internal" href="#delete-prompt-optimization-job" id="id257">Delete Prompt Optimization Job</a></p></li>
+<li><p><a class="reference internal" href="#create-budget-policy" id="id258">Create Budget Policy</a></p></li>
+<li><p><a class="reference internal" href="#get-budget-policy" id="id259">Get Budget Policy</a></p></li>
+<li><p><a class="reference internal" href="#update-budget-policy" id="id260">Update Budget Policy</a></p></li>
+<li><p><a class="reference internal" href="#delete-budget-policy" id="id261">Delete Budget Policy</a></p></li>
+<li><p><a class="reference internal" href="#list-budget-policies" id="id262">List Budget Policies</a></p></li>
+<li><p><a class="reference internal" href="#create-registeredmodel" id="id263">Create RegisteredModel</a></p></li>
+<li><p><a class="reference internal" href="#get-registeredmodel" id="id264">Get RegisteredModel</a></p></li>
+<li><p><a class="reference internal" href="#rename-registeredmodel" id="id265">Rename RegisteredModel</a></p></li>
+<li><p><a class="reference internal" href="#update-registeredmodel" id="id266">Update RegisteredModel</a></p></li>
+<li><p><a class="reference internal" href="#delete-registeredmodel" id="id267">Delete RegisteredModel</a></p></li>
+<li><p><a class="reference internal" href="#search-registeredmodels" id="id268">Search RegisteredModels</a></p></li>
+<li><p><a class="reference internal" href="#get-latest-modelversions" id="id269">Get Latest ModelVersions</a></p></li>
+<li><p><a class="reference internal" href="#create-modelversion" id="id270">Create ModelVersion</a></p></li>
+<li><p><a class="reference internal" href="#get-modelversion" id="id271">Get ModelVersion</a></p></li>
+<li><p><a class="reference internal" href="#update-modelversion" id="id272">Update ModelVersion</a></p></li>
+<li><p><a class="reference internal" href="#delete-modelversion" id="id273">Delete ModelVersion</a></p></li>
+<li><p><a class="reference internal" href="#search-modelversions" id="id274">Search ModelVersions</a></p></li>
+<li><p><a class="reference internal" href="#get-download-uri-for-modelversion-artifacts" id="id275">Get Download URI For ModelVersion Artifacts</a></p></li>
+<li><p><a class="reference internal" href="#transition-modelversion-stage" id="id276">Transition ModelVersion Stage</a></p></li>
+<li><p><a class="reference internal" href="#set-registered-model-tag" id="id277">Set Registered Model Tag</a></p></li>
+<li><p><a class="reference internal" href="#set-model-version-tag" id="id278">Set Model Version Tag</a></p></li>
+<li><p><a class="reference internal" href="#delete-registered-model-tag" id="id279">Delete Registered Model Tag</a></p></li>
+<li><p><a class="reference internal" href="#delete-model-version-tag" id="id280">Delete Model Version Tag</a></p></li>
+<li><p><a class="reference internal" href="#set-registered-model-alias" id="id281">Set Registered Model Alias</a></p></li>
+<li><p><a class="reference internal" href="#delete-registered-model-alias" id="id282">Delete Registered Model Alias</a></p></li>
+<li><p><a class="reference internal" href="#get-model-version-by-alias" id="id283">Get Model Version by Alias</a></p></li>
+<li><p><a class="reference internal" href="#create-webhook" id="id284">Create Webhook</a></p></li>
+<li><p><a class="reference internal" href="#list-webhooks" id="id285">List Webhooks</a></p></li>
+<li><p><a class="reference internal" href="#get-webhook" id="id286">Get Webhook</a></p></li>
+<li><p><a class="reference internal" href="#update-webhook" id="id287">Update Webhook</a></p></li>
+<li><p><a class="reference internal" href="#delete-webhook" id="id288">Delete Webhook</a></p></li>
+<li><p><a class="reference internal" href="#test-webhook" id="id289">Test Webhook</a></p></li>
+<li><p><a class="reference internal" href="#download-artifact" id="id290">Download Artifact</a></p></li>
+<li><p><a class="reference internal" href="#upload-artifact" id="id291">Upload Artifact</a></p></li>
+<li><p><a class="reference internal" href="#mlflowartifactsmlflowartifactsservicelistartifacts" id="id292">List Artifacts</a></p></li>
+<li><p><a class="reference internal" href="#delete-artifacts" id="id293">Delete Artifacts</a></p></li>
+<li><p><a class="reference internal" href="#create-an-artifact-multipart-upload" id="id294">Create an Artifact Multipart Upload</a></p></li>
+<li><p><a class="reference internal" href="#complete-an-artifact-multipart-upload" id="id295">Complete an Artifact Multipart Upload</a></p></li>
+<li><p><a class="reference internal" href="#abort-an-artifact-multipart-upload" id="id296">Abort an Artifact Multipart Upload</a></p></li>
+<li><p><a class="reference internal" href="#get-presigned-url-for-multipart-download" id="id297">Get Presigned URL for Multipart Download</a></p></li>
+<li><p><a class="reference internal" href="#data-structures" id="id298">Data Structures</a></p></li>
 </ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="create-experiment">
-<span id="mlflowmlflowservicecreateexperiment"></span><h2><a class="toc-backref" href="#id191">Create Experiment</a><a class="headerlink" href="#create-experiment" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicecreateexperiment"></span><h2><a class="toc-backref" href="#id202">Create Experiment</a><a class="headerlink" href="#create-experiment" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 73%" />
@@ -1040,7 +1081,7 @@ backends are also guaranteed to support up to 20 tags per request.</p></td>
 </div>
 </div>
 <div class="section" id="search-experiments">
-<span id="mlflowmlflowservicesearchexperiments"></span><h2><a class="toc-backref" href="#id192">Search Experiments</a><a class="headerlink" href="#search-experiments" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicesearchexperiments"></span><h2><a class="toc-backref" href="#id203">Search Experiments</a><a class="headerlink" href="#search-experiments" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 73%" />
@@ -1130,7 +1171,7 @@ default. Tiebreaks are done by experiment id DESC.</p></td>
 </div>
 </div>
 <div class="section" id="get-experiment">
-<span id="mlflowmlflowservicegetexperiment"></span><h2><a class="toc-backref" href="#id193">Get Experiment</a><a class="headerlink" href="#get-experiment" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicegetexperiment"></span><h2><a class="toc-backref" href="#id204">Get Experiment</a><a class="headerlink" href="#get-experiment" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 71%" />
@@ -1195,7 +1236,7 @@ default. Tiebreaks are done by experiment id DESC.</p></td>
 </div>
 </div>
 <div class="section" id="get-experiment-by-name">
-<span id="mlflowmlflowservicegetexperimentbyname"></span><h2><a class="toc-backref" href="#id194">Get Experiment By Name</a><a class="headerlink" href="#get-experiment-by-name" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicegetexperimentbyname"></span><h2><a class="toc-backref" href="#id205">Get Experiment By Name</a><a class="headerlink" href="#get-experiment-by-name" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 75%" />
@@ -1264,7 +1305,7 @@ experiments share the same name, the API will return one of them.</p>
 </div>
 </div>
 <div class="section" id="delete-experiment">
-<span id="mlflowmlflowservicedeleteexperiment"></span><h2><a class="toc-backref" href="#id195">Delete Experiment</a><a class="headerlink" href="#delete-experiment" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicedeleteexperiment"></span><h2><a class="toc-backref" href="#id206">Delete Experiment</a><a class="headerlink" href="#delete-experiment" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 73%" />
@@ -1308,7 +1349,7 @@ If the experiment uses FileStore, artifacts associated with experiment are also 
 </div>
 </div>
 <div class="section" id="restore-experiment">
-<span id="mlflowmlflowservicerestoreexperiment"></span><h2><a class="toc-backref" href="#id196">Restore Experiment</a><a class="headerlink" href="#restore-experiment" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicerestoreexperiment"></span><h2><a class="toc-backref" href="#id207">Restore Experiment</a><a class="headerlink" href="#restore-experiment" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 73%" />
@@ -1354,7 +1395,7 @@ artifacts associated with experiment are also restored.</p>
 </div>
 </div>
 <div class="section" id="update-experiment">
-<span id="mlflowmlflowserviceupdateexperiment"></span><h2><a class="toc-backref" href="#id197">Update Experiment</a><a class="headerlink" href="#update-experiment" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowserviceupdateexperiment"></span><h2><a class="toc-backref" href="#id208">Update Experiment</a><a class="headerlink" href="#update-experiment" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 73%" />
@@ -1401,7 +1442,7 @@ artifacts associated with experiment are also restored.</p>
 </div>
 </div>
 <div class="section" id="set-experiment-tag">
-<span id="mlflowmlflowservicesetexperimenttag"></span><h2><a class="toc-backref" href="#id198">Set Experiment Tag</a><a class="headerlink" href="#set-experiment-tag" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicesetexperimenttag"></span><h2><a class="toc-backref" href="#id209">Set Experiment Tag</a><a class="headerlink" href="#set-experiment-tag" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 78%" />
@@ -1453,7 +1494,7 @@ field is required.</p></td>
 </div>
 </div>
 <div class="section" id="delete-experiment-tag">
-<span id="mlflowmlflowservicedeleteexperimenttag"></span><h2><a class="toc-backref" href="#id199">Delete Experiment Tag</a><a class="headerlink" href="#delete-experiment-tag" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicedeleteexperimenttag"></span><h2><a class="toc-backref" href="#id210">Delete Experiment Tag</a><a class="headerlink" href="#delete-experiment-tag" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 79%" />
@@ -1500,7 +1541,7 @@ field is required.</p></td>
 </div>
 </div>
 <div class="section" id="create-run">
-<span id="mlflowmlflowservicecreaterun"></span><h2><a class="toc-backref" href="#id200">Create Run</a><a class="headerlink" href="#create-run" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicecreaterun"></span><h2><a class="toc-backref" href="#id211">Create Run</a><a class="headerlink" href="#create-run" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 68%" />
@@ -1584,7 +1625,7 @@ instead.</p></td>
 </div>
 </div>
 <div class="section" id="update-run">
-<span id="mlflowmlflowserviceupdaterun"></span><h2><a class="toc-backref" href="#id201">Update Run</a><a class="headerlink" href="#update-run" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowserviceupdaterun"></span><h2><a class="toc-backref" href="#id212">Update Run</a><a class="headerlink" href="#update-run" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 68%" />
@@ -1665,7 +1706,7 @@ instead.</p></td>
 </div>
 </div>
 <div class="section" id="delete-run">
-<span id="mlflowmlflowservicedeleterun"></span><h2><a class="toc-backref" href="#id202">Delete Run</a><a class="headerlink" href="#delete-run" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicedeleterun"></span><h2><a class="toc-backref" href="#id213">Delete Run</a><a class="headerlink" href="#delete-run" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 68%" />
@@ -1708,7 +1749,7 @@ instead.</p></td>
 </div>
 </div>
 <div class="section" id="restore-run">
-<span id="mlflowmlflowservicerestorerun"></span><h2><a class="toc-backref" href="#id203">Restore Run</a><a class="headerlink" href="#restore-run" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicerestorerun"></span><h2><a class="toc-backref" href="#id214">Restore Run</a><a class="headerlink" href="#restore-run" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 69%" />
@@ -1751,7 +1792,7 @@ instead.</p></td>
 </div>
 </div>
 <div class="section" id="get-run">
-<span id="mlflowmlflowservicegetrun"></span><h2><a class="toc-backref" href="#id204">Get Run</a><a class="headerlink" href="#get-run" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicegetrun"></span><h2><a class="toc-backref" href="#id215">Get Run</a><a class="headerlink" href="#get-run" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 66%" />
@@ -1822,7 +1863,7 @@ If there are multiple values with the latest timestamp, return the maximum of th
 </div>
 </div>
 <div class="section" id="search-runs">
-<span id="mlflowmlflowservicesearchruns"></span><h2><a class="toc-backref" href="#id205">Search Runs</a><a class="headerlink" href="#search-runs" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicesearchruns"></span><h2><a class="toc-backref" href="#id216">Search Runs</a><a class="headerlink" href="#search-runs" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 68%" />
@@ -1918,7 +1959,7 @@ time (and this is the default ordering criterion if order_by is not provided).</
 </div>
 </div>
 <div class="section" id="log-metric">
-<span id="mlflowmlflowservicelogmetric"></span><h2><a class="toc-backref" href="#id206">Log Metric</a><a class="headerlink" href="#log-metric" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicelogmetric"></span><h2><a class="toc-backref" href="#id217">Log Metric</a><a class="headerlink" href="#log-metric" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 71%" />
@@ -1995,7 +2036,7 @@ A metric can be logged multiple times.</p>
 </div>
 </div>
 <div class="section" id="log-param">
-<span id="mlflowmlflowservicelogparam"></span><h2><a class="toc-backref" href="#id207">Log Param</a><a class="headerlink" href="#log-param" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicelogparam"></span><h2><a class="toc-backref" href="#id218">Log Param</a><a class="headerlink" href="#log-param" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 73%" />
@@ -2052,7 +2093,7 @@ constant dates and values used in an ETL pipeline. A param can be logged only on
 </div>
 </div>
 <div class="section" id="log-batch">
-<span id="mlflowmlflowservicelogbatch"></span><h2><a class="toc-backref" href="#id208">Log Batch</a><a class="headerlink" href="#log-batch" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicelogbatch"></span><h2><a class="toc-backref" href="#id219">Log Batch</a><a class="headerlink" href="#log-batch" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 70%" />
@@ -2150,7 +2191,7 @@ to metric, param, and tag keys and values:</p>
 </div>
 </div>
 <div class="section" id="log-model">
-<span id="mlflowmlflowservicelogmodel"></span><h2><a class="toc-backref" href="#id209">Log Model</a><a class="headerlink" href="#log-model" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicelogmodel"></span><h2><a class="toc-backref" href="#id220">Log Model</a><a class="headerlink" href="#log-model" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 70%" />
@@ -2200,7 +2241,7 @@ to metric, param, and tag keys and values:</p>
 </div>
 </div>
 <div class="section" id="log-inputs">
-<span id="mlflowmlflowserviceloginputs"></span><h2><a class="toc-backref" href="#id210">Log Inputs</a><a class="headerlink" href="#log-inputs" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowserviceloginputs"></span><h2><a class="toc-backref" href="#id221">Log Inputs</a><a class="headerlink" href="#log-inputs" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 71%" />
@@ -2250,7 +2291,7 @@ to metric, param, and tag keys and values:</p>
 </div>
 </div>
 <div class="section" id="set-tag">
-<span id="mlflowmlflowservicesettag"></span><h2><a class="toc-backref" href="#id211">Set Tag</a><a class="headerlink" href="#set-tag" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicesettag"></span><h2><a class="toc-backref" href="#id222">Set Tag</a><a class="headerlink" href="#set-tag" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 69%" />
@@ -2307,7 +2348,7 @@ field is required.</p></td>
 </div>
 </div>
 <div class="section" id="delete-tag">
-<span id="mlflowmlflowservicedeletetag"></span><h2><a class="toc-backref" href="#id212">Delete Tag</a><a class="headerlink" href="#delete-tag" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicedeletetag"></span><h2><a class="toc-backref" href="#id223">Delete Tag</a><a class="headerlink" href="#delete-tag" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 71%" />
@@ -2355,7 +2396,7 @@ a run completes.</p>
 </div>
 </div>
 <div class="section" id="get-metric-history">
-<span id="mlflowmlflowservicegetmetrichistory"></span><h2><a class="toc-backref" href="#id213">Get Metric History</a><a class="headerlink" href="#get-metric-history" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicegetmetrichistory"></span><h2><a class="toc-backref" href="#id224">Get Metric History</a><a class="headerlink" href="#get-metric-history" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 73%" />
@@ -2443,7 +2484,7 @@ available to fetch.</p></td>
 </div>
 </div>
 <div class="section" id="list-artifacts">
-<span id="mlflowmlflowservicelistartifacts"></span><h2><a class="toc-backref" href="#id214">List Artifacts</a><a class="headerlink" href="#list-artifacts" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicelistartifacts"></span><h2><a class="toc-backref" href="#id225">List Artifacts</a><a class="headerlink" href="#list-artifacts" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 70%" />
@@ -2529,7 +2570,7 @@ the response contains only artifacts with the specified prefix.</p>
 </div>
 </div>
 <div class="section" id="register-scorer">
-<span id="mlflowmlflowserviceregisterscorer"></span><h2><a class="toc-backref" href="#id215">Register Scorer</a><a class="headerlink" href="#register-scorer" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowserviceregisterscorer"></span><h2><a class="toc-backref" href="#id226">Register Scorer</a><a class="headerlink" href="#register-scorer" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 72%" />
@@ -2623,7 +2664,7 @@ the response contains only artifacts with the specified prefix.</p>
 </div>
 </div>
 <div class="section" id="list-scorers">
-<span id="mlflowmlflowservicelistscorers"></span><h2><a class="toc-backref" href="#id216">List Scorers</a><a class="headerlink" href="#list-scorers" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicelistscorers"></span><h2><a class="toc-backref" href="#id227">List Scorers</a><a class="headerlink" href="#list-scorers" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 69%" />
@@ -2689,7 +2730,7 @@ the response contains only artifacts with the specified prefix.</p>
 </div>
 </div>
 <div class="section" id="list-scorer-versions">
-<span id="mlflowmlflowservicelistscorerversions"></span><h2><a class="toc-backref" href="#id217">List Scorer Versions</a><a class="headerlink" href="#list-scorer-versions" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicelistscorerversions"></span><h2><a class="toc-backref" href="#id228">List Scorer Versions</a><a class="headerlink" href="#list-scorer-versions" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 72%" />
@@ -2759,7 +2800,7 @@ the response contains only artifacts with the specified prefix.</p>
 </div>
 </div>
 <div class="section" id="get-scorer">
-<span id="mlflowmlflowservicegetscorer"></span><h2><a class="toc-backref" href="#id218">Get Scorer</a><a class="headerlink" href="#get-scorer" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicegetscorer"></span><h2><a class="toc-backref" href="#id229">Get Scorer</a><a class="headerlink" href="#get-scorer" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 68%" />
@@ -2833,7 +2874,7 @@ the response contains only artifacts with the specified prefix.</p>
 </div>
 </div>
 <div class="section" id="delete-scorer">
-<span id="mlflowmlflowservicedeletescorer"></span><h2><a class="toc-backref" href="#id219">Delete Scorer</a><a class="headerlink" href="#delete-scorer" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicedeletescorer"></span><h2><a class="toc-backref" href="#id230">Delete Scorer</a><a class="headerlink" href="#delete-scorer" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 70%" />
@@ -2885,7 +2926,7 @@ the response contains only artifacts with the specified prefix.</p>
 </div>
 </div>
 <div class="section" id="create-gateway-secret">
-<span id="mlflowmlflowservicecreategatewaysecret"></span><h2><a class="toc-backref" href="#id220">Create Gateway Secret</a><a class="headerlink" href="#create-gateway-secret" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicecreategatewaysecret"></span><h2><a class="toc-backref" href="#id231">Create Gateway Secret</a><a class="headerlink" href="#create-gateway-secret" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 75%" />
@@ -2968,7 +3009,7 @@ credentials: {“aws_access_key_id”: “…”, “aws_secret_access_key”: �
 </div>
 </div>
 <div class="section" id="get-gateway-secret-info">
-<span id="mlflowmlflowservicegetgatewaysecretinfo"></span><h2><a class="toc-backref" href="#id221">Get Gateway Secret Info</a><a class="headerlink" href="#get-gateway-secret-info" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicegetgatewaysecretinfo"></span><h2><a class="toc-backref" href="#id232">Get Gateway Secret Info</a><a class="headerlink" href="#get-gateway-secret-info" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 73%" />
@@ -3037,7 +3078,7 @@ credentials: {“aws_access_key_id”: “…”, “aws_secret_access_key”: �
 </div>
 </div>
 <div class="section" id="update-gateway-secret">
-<span id="mlflowmlflowserviceupdategatewaysecret"></span><h2><a class="toc-backref" href="#id222">Update Gateway Secret</a><a class="headerlink" href="#update-gateway-secret" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowserviceupdategatewaysecret"></span><h2><a class="toc-backref" href="#id233">Update Gateway Secret</a><a class="headerlink" href="#update-gateway-secret" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 75%" />
@@ -3116,7 +3157,7 @@ credentials: {“aws_access_key_id”: “…”, “aws_secret_access_key”: �
 </div>
 </div>
 <div class="section" id="delete-gateway-secret">
-<span id="mlflowmlflowservicedeletegatewaysecret"></span><h2><a class="toc-backref" href="#id223">Delete Gateway Secret</a><a class="headerlink" href="#delete-gateway-secret" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicedeletegatewaysecret"></span><h2><a class="toc-backref" href="#id234">Delete Gateway Secret</a><a class="headerlink" href="#delete-gateway-secret" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 75%" />
@@ -3159,7 +3200,7 @@ credentials: {“aws_access_key_id”: “…”, “aws_secret_access_key”: �
 </div>
 </div>
 <div class="section" id="list-gateway-secrets">
-<span id="mlflowmlflowservicelistgatewaysecretinfos"></span><h2><a class="toc-backref" href="#id224">List Gateway Secrets</a><a class="headerlink" href="#list-gateway-secrets" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicelistgatewaysecretinfos"></span><h2><a class="toc-backref" href="#id235">List Gateway Secrets</a><a class="headerlink" href="#list-gateway-secrets" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 74%" />
@@ -3224,7 +3265,7 @@ credentials: {“aws_access_key_id”: “…”, “aws_secret_access_key”: �
 </div>
 </div>
 <div class="section" id="create-gateway-model-definition">
-<span id="mlflowmlflowservicecreategatewaymodeldefinition"></span><h2><a class="toc-backref" href="#id225">Create Gateway Model Definition</a><a class="headerlink" href="#create-gateway-model-definition" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicecreategatewaymodeldefinition"></span><h2><a class="toc-backref" href="#id236">Create Gateway Model Definition</a><a class="headerlink" href="#create-gateway-model-definition" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 79%" />
@@ -3305,7 +3346,7 @@ credentials: {“aws_access_key_id”: “…”, “aws_secret_access_key”: �
 </div>
 </div>
 <div class="section" id="get-gateway-model-definition">
-<span id="mlflowmlflowservicegetgatewaymodeldefinition"></span><h2><a class="toc-backref" href="#id226">Get Gateway Model Definition</a><a class="headerlink" href="#get-gateway-model-definition" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicegetgatewaymodeldefinition"></span><h2><a class="toc-backref" href="#id237">Get Gateway Model Definition</a><a class="headerlink" href="#get-gateway-model-definition" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 78%" />
@@ -3370,7 +3411,7 @@ credentials: {“aws_access_key_id”: “…”, “aws_secret_access_key”: �
 </div>
 </div>
 <div class="section" id="list-gateway-model-definitions">
-<span id="mlflowmlflowservicelistgatewaymodeldefinitions"></span><h2><a class="toc-backref" href="#id227">List Gateway Model Definitions</a><a class="headerlink" href="#list-gateway-model-definitions" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicelistgatewaymodeldefinitions"></span><h2><a class="toc-backref" href="#id238">List Gateway Model Definitions</a><a class="headerlink" href="#list-gateway-model-definitions" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 78%" />
@@ -3439,7 +3480,7 @@ credentials: {“aws_access_key_id”: “…”, “aws_secret_access_key”: �
 </div>
 </div>
 <div class="section" id="update-gateway-model-definition">
-<span id="mlflowmlflowserviceupdategatewaymodeldefinition"></span><h2><a class="toc-backref" href="#id228">Update Gateway Model Definition</a><a class="headerlink" href="#update-gateway-model-definition" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowserviceupdategatewaymodeldefinition"></span><h2><a class="toc-backref" href="#id239">Update Gateway Model Definition</a><a class="headerlink" href="#update-gateway-model-definition" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 79%" />
@@ -3524,7 +3565,7 @@ credentials: {“aws_access_key_id”: “…”, “aws_secret_access_key”: �
 </div>
 </div>
 <div class="section" id="delete-gateway-model-definition">
-<span id="mlflowmlflowservicedeletegatewaymodeldefinition"></span><h2><a class="toc-backref" href="#id229">Delete Gateway Model Definition</a><a class="headerlink" href="#delete-gateway-model-definition" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicedeletegatewaymodeldefinition"></span><h2><a class="toc-backref" href="#id240">Delete Gateway Model Definition</a><a class="headerlink" href="#delete-gateway-model-definition" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 79%" />
@@ -3567,7 +3608,7 @@ credentials: {“aws_access_key_id”: “…”, “aws_secret_access_key”: �
 </div>
 </div>
 <div class="section" id="create-gateway-endpoint">
-<span id="mlflowmlflowservicecreategatewayendpoint"></span><h2><a class="toc-backref" href="#id230">Create Gateway Endpoint</a><a class="headerlink" href="#create-gateway-endpoint" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicecreategatewayendpoint"></span><h2><a class="toc-backref" href="#id241">Create Gateway Endpoint</a><a class="headerlink" href="#create-gateway-endpoint" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 76%" />
@@ -3658,7 +3699,7 @@ invocations.</p></td>
 </div>
 </div>
 <div class="section" id="get-gateway-endpoint">
-<span id="mlflowmlflowservicegetgatewayendpoint"></span><h2><a class="toc-backref" href="#id231">Get Gateway Endpoint</a><a class="headerlink" href="#get-gateway-endpoint" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicegetgatewayendpoint"></span><h2><a class="toc-backref" href="#id242">Get Gateway Endpoint</a><a class="headerlink" href="#get-gateway-endpoint" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 75%" />
@@ -3727,7 +3768,7 @@ invocations.</p></td>
 </div>
 </div>
 <div class="section" id="update-gateway-endpoint">
-<span id="mlflowmlflowserviceupdategatewayendpoint"></span><h2><a class="toc-backref" href="#id232">Update Gateway Endpoint</a><a class="headerlink" href="#update-gateway-endpoint" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowserviceupdategatewayendpoint"></span><h2><a class="toc-backref" href="#id243">Update Gateway Endpoint</a><a class="headerlink" href="#update-gateway-endpoint" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 76%" />
@@ -3821,7 +3862,7 @@ set to false, usage tracking is disabled and experiment_id is cleared.</p></td>
 </div>
 </div>
 <div class="section" id="delete-gateway-endpoint">
-<span id="mlflowmlflowservicedeletegatewayendpoint"></span><h2><a class="toc-backref" href="#id233">Delete Gateway Endpoint</a><a class="headerlink" href="#delete-gateway-endpoint" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicedeletegatewayendpoint"></span><h2><a class="toc-backref" href="#id244">Delete Gateway Endpoint</a><a class="headerlink" href="#delete-gateway-endpoint" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 76%" />
@@ -3864,7 +3905,7 @@ set to false, usage tracking is disabled and experiment_id is cleared.</p></td>
 </div>
 </div>
 <div class="section" id="list-gateway-endpoints">
-<span id="mlflowmlflowservicelistgatewayendpoints"></span><h2><a class="toc-backref" href="#id234">List Gateway Endpoints</a><a class="headerlink" href="#list-gateway-endpoints" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicelistgatewayendpoints"></span><h2><a class="toc-backref" href="#id245">List Gateway Endpoints</a><a class="headerlink" href="#list-gateway-endpoints" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 75%" />
@@ -3933,7 +3974,7 @@ set to false, usage tracking is disabled and experiment_id is cleared.</p></td>
 </div>
 </div>
 <div class="section" id="attach-model-to-endpoint">
-<span id="mlflowmlflowserviceattachmodeltoendpoint"></span><h2><a class="toc-backref" href="#id235">Attach Model to Endpoint</a><a class="headerlink" href="#attach-model-to-endpoint" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowserviceattachmodeltoendpoint"></span><h2><a class="toc-backref" href="#id246">Attach Model to Endpoint</a><a class="headerlink" href="#attach-model-to-endpoint" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 79%" />
@@ -4006,7 +4047,7 @@ set to false, usage tracking is disabled and experiment_id is cleared.</p></td>
 </div>
 </div>
 <div class="section" id="detach-model-from-endpoint">
-<span id="mlflowmlflowservicedetachmodelfromendpoint"></span><h2><a class="toc-backref" href="#id236">Detach Model from Endpoint</a><a class="headerlink" href="#detach-model-from-endpoint" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicedetachmodelfromendpoint"></span><h2><a class="toc-backref" href="#id247">Detach Model from Endpoint</a><a class="headerlink" href="#detach-model-from-endpoint" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 79%" />
@@ -4053,7 +4094,7 @@ set to false, usage tracking is disabled and experiment_id is cleared.</p></td>
 </div>
 </div>
 <div class="section" id="create-endpoint-binding">
-<span id="mlflowmlflowservicecreateendpointbinding"></span><h2><a class="toc-backref" href="#id237">Create Endpoint Binding</a><a class="headerlink" href="#create-endpoint-binding" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicecreateendpointbinding"></span><h2><a class="toc-backref" href="#id248">Create Endpoint Binding</a><a class="headerlink" href="#create-endpoint-binding" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 79%" />
@@ -4130,7 +4171,7 @@ set to false, usage tracking is disabled and experiment_id is cleared.</p></td>
 </div>
 </div>
 <div class="section" id="delete-endpoint-binding">
-<span id="mlflowmlflowservicedeleteendpointbinding"></span><h2><a class="toc-backref" href="#id238">Delete Endpoint Binding</a><a class="headerlink" href="#delete-endpoint-binding" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicedeleteendpointbinding"></span><h2><a class="toc-backref" href="#id249">Delete Endpoint Binding</a><a class="headerlink" href="#delete-endpoint-binding" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 79%" />
@@ -4181,7 +4222,7 @@ set to false, usage tracking is disabled and experiment_id is cleared.</p></td>
 </div>
 </div>
 <div class="section" id="list-endpoint-bindings">
-<span id="mlflowmlflowservicelistendpointbindings"></span><h2><a class="toc-backref" href="#id239">List Endpoint Bindings</a><a class="headerlink" href="#list-endpoint-bindings" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicelistendpointbindings"></span><h2><a class="toc-backref" href="#id250">List Endpoint Bindings</a><a class="headerlink" href="#list-endpoint-bindings" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 79%" />
@@ -4254,7 +4295,7 @@ set to false, usage tracking is disabled and experiment_id is cleared.</p></td>
 </div>
 </div>
 <div class="section" id="gateway-set-endpoint-tag">
-<span id="mlflowmlflowservicesetgatewayendpointtag"></span><h2><a class="toc-backref" href="#id240">Gateway Set Endpoint Tag</a><a class="headerlink" href="#gateway-set-endpoint-tag" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicesetgatewayendpointtag"></span><h2><a class="toc-backref" href="#id251">Gateway Set Endpoint Tag</a><a class="headerlink" href="#gateway-set-endpoint-tag" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 76%" />
@@ -4305,7 +4346,7 @@ set to false, usage tracking is disabled and experiment_id is cleared.</p></td>
 </div>
 </div>
 <div class="section" id="gateway-delete-endpoint-tag">
-<span id="mlflowmlflowservicedeletegatewayendpointtag"></span><h2><a class="toc-backref" href="#id241">Gateway Delete Endpoint Tag</a><a class="headerlink" href="#gateway-delete-endpoint-tag" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicedeletegatewayendpointtag"></span><h2><a class="toc-backref" href="#id252">Gateway Delete Endpoint Tag</a><a class="headerlink" href="#gateway-delete-endpoint-tag" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 78%" />
@@ -4352,7 +4393,7 @@ set to false, usage tracking is disabled and experiment_id is cleared.</p></td>
 </div>
 </div>
 <div class="section" id="create-prompt-optimization-job">
-<span id="mlflowmlflowservicecreatepromptoptimizationjob"></span><h2><a class="toc-backref" href="#id242">Create Prompt Optimization Job</a><a class="headerlink" href="#create-prompt-optimization-job" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicecreatepromptoptimizationjob"></span><h2><a class="toc-backref" href="#id253">Create Prompt Optimization Job</a><a class="headerlink" href="#create-prompt-optimization-job" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 76%" />
@@ -4431,7 +4472,7 @@ The optimization process runs asynchronously and can be monitored via getPromptO
 </div>
 </div>
 <div class="section" id="get-prompt-optimization-job">
-<span id="mlflowmlflowservicegetpromptoptimizationjob"></span><h2><a class="toc-backref" href="#id243">Get Prompt Optimization Job</a><a class="headerlink" href="#get-prompt-optimization-job" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicegetpromptoptimizationjob"></span><h2><a class="toc-backref" href="#id254">Get Prompt Optimization Job</a><a class="headerlink" href="#get-prompt-optimization-job" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 79%" />
@@ -4498,7 +4539,7 @@ and the best prompt if the optimization has completed.</p>
 </div>
 </div>
 <div class="section" id="search-prompt-optimization-jobs">
-<span id="mlflowmlflowservicesearchpromptoptimizationjobs"></span><h2><a class="toc-backref" href="#id244">Search Prompt Optimization Jobs</a><a class="headerlink" href="#search-prompt-optimization-jobs" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicesearchpromptoptimizationjobs"></span><h2><a class="toc-backref" href="#id255">Search Prompt Optimization Jobs</a><a class="headerlink" href="#search-prompt-optimization-jobs" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 79%" />
@@ -4564,7 +4605,7 @@ Returns a list of optimization jobs matching the specified filters.</p>
 </div>
 </div>
 <div class="section" id="cancel-prompt-optimization-job">
-<span id="mlflowmlflowservicecancelpromptoptimizationjob"></span><h2><a class="toc-backref" href="#id245">Cancel Prompt Optimization Job</a><a class="headerlink" href="#cancel-prompt-optimization-job" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicecancelpromptoptimizationjob"></span><h2><a class="toc-backref" href="#id256">Cancel Prompt Optimization Job</a><a class="headerlink" href="#cancel-prompt-optimization-job" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 81%" />
@@ -4630,7 +4671,7 @@ If the job is already completed or cancelled, this operation has no effect.</p>
 </div>
 </div>
 <div class="section" id="delete-prompt-optimization-job">
-<span id="mlflowmlflowservicedeletepromptoptimizationjob"></span><h2><a class="toc-backref" href="#id246">Delete Prompt Optimization Job</a><a class="headerlink" href="#delete-prompt-optimization-job" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmlflowservicedeletepromptoptimizationjob"></span><h2><a class="toc-backref" href="#id257">Delete Prompt Optimization Job</a><a class="headerlink" href="#delete-prompt-optimization-job" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 79%" />
@@ -4673,8 +4714,371 @@ This permanently removes the job and all related information.</p>
 <hr class="docutils" />
 </div>
 </div>
+<div class="section" id="create-budget-policy">
+<span id="mlflowmlflowservicecreatebudgetpolicy"></span><h2><a class="toc-backref" href="#id258">Create Budget Policy</a><a class="headerlink" href="#create-budget-policy" title="Permalink to this headline"> </a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 75%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Endpoint</p></th>
+<th class="head"><p>HTTP Method</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">3.0/mlflow/gateway/budgets/create</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">POST</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>Create a new budget policy</p>
+<div class="section" id="mlflowcreategatewaybudgetpolicy">
+<span id="id89"></span><h3>Request Structure<a class="headerlink" href="#mlflowcreategatewaybudgetpolicy" title="Permalink to this headline"> </a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 53%" />
+<col style="width: 21%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>budget_unit</p></td>
+<td><p><a class="reference internal" href="#mlflowbudgetunit"><span class="std std-ref">BudgetUnit</span></a></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>budget_amount</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DOUBLE</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>duration_unit</p></td>
+<td><p><a class="reference internal" href="#mlflowbudgetdurationunit"><span class="std std-ref">BudgetDurationUnit</span></a></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>duration_value</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">INT32</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>target_scope</p></td>
+<td><p><a class="reference internal" href="#mlflowbudgettargetscope"><span class="std std-ref">BudgetTargetScope</span></a></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>budget_action</p></td>
+<td><p><a class="reference internal" href="#mlflowbudgetaction"><span class="std std-ref">BudgetAction</span></a></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>created_by</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mlflowcreategatewaybudgetpolicyresponse">
+<span id="id90"></span><h3>Response Structure<a class="headerlink" href="#mlflowcreategatewaybudgetpolicyresponse" title="Permalink to this headline"> </a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 55%" />
+<col style="width: 21%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>budget_policy</p></td>
+<td><p><a class="reference internal" href="#mlflowgatewaybudgetpolicy"><span class="std std-ref">GatewayBudgetPolicy</span></a></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+</div>
+</div>
+<div class="section" id="get-budget-policy">
+<span id="mlflowmlflowservicegetbudgetpolicy"></span><h2><a class="toc-backref" href="#id259">Get Budget Policy</a><a class="headerlink" href="#get-budget-policy" title="Permalink to this headline"> </a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 73%" />
+<col style="width: 27%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Endpoint</p></th>
+<th class="head"><p>HTTP Method</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">3.0/mlflow/gateway/budgets/get</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">GET</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>Get a budget policy by ID</p>
+<div class="section" id="mlflowgetgatewaybudgetpolicy">
+<span id="id91"></span><h3>Request Structure<a class="headerlink" href="#mlflowgetgatewaybudgetpolicy" title="Permalink to this headline"> </a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 42%" />
+<col style="width: 28%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>budget_policy_id</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mlflowgetgatewaybudgetpolicyresponse">
+<span id="id92"></span><h3>Response Structure<a class="headerlink" href="#mlflowgetgatewaybudgetpolicyresponse" title="Permalink to this headline"> </a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 55%" />
+<col style="width: 21%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>budget_policy</p></td>
+<td><p><a class="reference internal" href="#mlflowgatewaybudgetpolicy"><span class="std std-ref">GatewayBudgetPolicy</span></a></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+</div>
+</div>
+<div class="section" id="update-budget-policy">
+<span id="mlflowmlflowserviceupdatebudgetpolicy"></span><h2><a class="toc-backref" href="#id260">Update Budget Policy</a><a class="headerlink" href="#update-budget-policy" title="Permalink to this headline"> </a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 75%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Endpoint</p></th>
+<th class="head"><p>HTTP Method</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">3.0/mlflow/gateway/budgets/update</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">POST</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>Update a budget policy</p>
+<div class="section" id="mlflowupdategatewaybudgetpolicy">
+<span id="id93"></span><h3>Request Structure<a class="headerlink" href="#mlflowupdategatewaybudgetpolicy" title="Permalink to this headline"> </a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 52%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>budget_policy_id</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>budget_unit</p></td>
+<td><p><a class="reference internal" href="#mlflowbudgetunit"><span class="std std-ref">BudgetUnit</span></a></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>budget_amount</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DOUBLE</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>duration_unit</p></td>
+<td><p><a class="reference internal" href="#mlflowbudgetdurationunit"><span class="std std-ref">BudgetDurationUnit</span></a></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>duration_value</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">INT32</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>target_scope</p></td>
+<td><p><a class="reference internal" href="#mlflowbudgettargetscope"><span class="std std-ref">BudgetTargetScope</span></a></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>budget_action</p></td>
+<td><p><a class="reference internal" href="#mlflowbudgetaction"><span class="std std-ref">BudgetAction</span></a></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>updated_by</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mlflowupdategatewaybudgetpolicyresponse">
+<span id="id94"></span><h3>Response Structure<a class="headerlink" href="#mlflowupdategatewaybudgetpolicyresponse" title="Permalink to this headline"> </a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 55%" />
+<col style="width: 21%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>budget_policy</p></td>
+<td><p><a class="reference internal" href="#mlflowgatewaybudgetpolicy"><span class="std std-ref">GatewayBudgetPolicy</span></a></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+</div>
+</div>
+<div class="section" id="delete-budget-policy">
+<span id="mlflowmlflowservicedeletebudgetpolicy"></span><h2><a class="toc-backref" href="#id261">Delete Budget Policy</a><a class="headerlink" href="#delete-budget-policy" title="Permalink to this headline"> </a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 75%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Endpoint</p></th>
+<th class="head"><p>HTTP Method</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">3.0/mlflow/gateway/budgets/delete</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DELETE</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>Delete a budget policy</p>
+<div class="section" id="mlflowdeletegatewaybudgetpolicy">
+<span id="id95"></span><h3>Request Structure<a class="headerlink" href="#mlflowdeletegatewaybudgetpolicy" title="Permalink to this headline"> </a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 42%" />
+<col style="width: 28%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>budget_policy_id</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+</div>
+</div>
+<div class="section" id="list-budget-policies">
+<span id="mlflowmlflowservicelistbudgetpolicies"></span><h2><a class="toc-backref" href="#id262">List Budget Policies</a><a class="headerlink" href="#list-budget-policies" title="Permalink to this headline"> </a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 74%" />
+<col style="width: 26%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Endpoint</p></th>
+<th class="head"><p>HTTP Method</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">3.0/mlflow/gateway/budgets/list</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">GET</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>List budget policies</p>
+<div class="section" id="mlflowlistgatewaybudgetpolicies">
+<span id="id96"></span><h3>Request Structure<a class="headerlink" href="#mlflowlistgatewaybudgetpolicies" title="Permalink to this headline"> </a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 34%" />
+<col style="width: 32%" />
+<col style="width: 34%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>max_results</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">INT64</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>page_token</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mlflowlistgatewaybudgetpoliciesresponse">
+<span id="id97"></span><h3>Response Structure<a class="headerlink" href="#mlflowlistgatewaybudgetpoliciesresponse" title="Permalink to this headline"> </a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 61%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>budget_policies</p></td>
+<td><p>An array of <a class="reference internal" href="#mlflowgatewaybudgetpolicy"><span class="std std-ref">GatewayBudgetPolicy</span></a></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>next_page_token</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+</div>
+</div>
 <div class="section" id="create-registeredmodel">
-<span id="mlflowmodelregistryservicecreateregisteredmodel"></span><h2><a class="toc-backref" href="#id247">Create RegisteredModel</a><a class="headerlink" href="#create-registeredmodel" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicecreateregisteredmodel"></span><h2><a class="toc-backref" href="#id263">Create RegisteredModel</a><a class="headerlink" href="#create-registeredmodel" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 76%" />
@@ -4693,7 +5097,7 @@ This permanently removes the job and all related information.</p>
 </table>
 <p>Throws <code class="docutils literal notranslate"><span class="pre">RESOURCE_ALREADY_EXISTS</span></code> if a registered model with the given name exists.</p>
 <div class="section" id="mlflowcreateregisteredmodel">
-<span id="id89"></span><h3>Request Structure<a class="headerlink" href="#mlflowcreateregisteredmodel" title="Permalink to this headline"> </a></h3>
+<span id="id98"></span><h3>Request Structure<a class="headerlink" href="#mlflowcreateregisteredmodel" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 16%" />
@@ -4727,7 +5131,7 @@ This permanently removes the job and all related information.</p>
 </table>
 </div>
 <div class="section" id="mlflowcreateregisteredmodelresponse">
-<span id="id90"></span><h3>Response Structure<a class="headerlink" href="#mlflowcreateregisteredmodelresponse" title="Permalink to this headline"> </a></h3>
+<span id="id99"></span><h3>Response Structure<a class="headerlink" href="#mlflowcreateregisteredmodelresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 30%" />
@@ -4751,7 +5155,7 @@ This permanently removes the job and all related information.</p>
 </div>
 </div>
 <div class="section" id="get-registeredmodel">
-<span id="mlflowmodelregistryservicegetregisteredmodel"></span><h2><a class="toc-backref" href="#id248">Get RegisteredModel</a><a class="headerlink" href="#get-registeredmodel" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicegetregisteredmodel"></span><h2><a class="toc-backref" href="#id264">Get RegisteredModel</a><a class="headerlink" href="#get-registeredmodel" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 75%" />
@@ -4769,7 +5173,7 @@ This permanently removes the job and all related information.</p>
 </tbody>
 </table>
 <div class="section" id="mlflowgetregisteredmodel">
-<span id="id91"></span><h3>Request Structure<a class="headerlink" href="#mlflowgetregisteredmodel" title="Permalink to this headline"> </a></h3>
+<span id="id100"></span><h3>Request Structure<a class="headerlink" href="#mlflowgetregisteredmodel" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 13%" />
@@ -4791,7 +5195,7 @@ This permanently removes the job and all related information.</p>
 </table>
 </div>
 <div class="section" id="mlflowgetregisteredmodelresponse">
-<span id="id92"></span><h3>Response Structure<a class="headerlink" href="#mlflowgetregisteredmodelresponse" title="Permalink to this headline"> </a></h3>
+<span id="id101"></span><h3>Response Structure<a class="headerlink" href="#mlflowgetregisteredmodelresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 30%" />
@@ -4815,7 +5219,7 @@ This permanently removes the job and all related information.</p>
 </div>
 </div>
 <div class="section" id="rename-registeredmodel">
-<span id="mlflowmodelregistryservicerenameregisteredmodel"></span><h2><a class="toc-backref" href="#id249">Rename RegisteredModel</a><a class="headerlink" href="#rename-registeredmodel" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicerenameregisteredmodel"></span><h2><a class="toc-backref" href="#id265">Rename RegisteredModel</a><a class="headerlink" href="#rename-registeredmodel" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 76%" />
@@ -4833,7 +5237,7 @@ This permanently removes the job and all related information.</p>
 </tbody>
 </table>
 <div class="section" id="mlflowrenameregisteredmodel">
-<span id="id93"></span><h3>Request Structure<a class="headerlink" href="#mlflowrenameregisteredmodel" title="Permalink to this headline"> </a></h3>
+<span id="id102"></span><h3>Request Structure<a class="headerlink" href="#mlflowrenameregisteredmodel" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 13%" />
@@ -4859,7 +5263,7 @@ This permanently removes the job and all related information.</p>
 </table>
 </div>
 <div class="section" id="mlflowrenameregisteredmodelresponse">
-<span id="id94"></span><h3>Response Structure<a class="headerlink" href="#mlflowrenameregisteredmodelresponse" title="Permalink to this headline"> </a></h3>
+<span id="id103"></span><h3>Response Structure<a class="headerlink" href="#mlflowrenameregisteredmodelresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 30%" />
@@ -4883,7 +5287,7 @@ This permanently removes the job and all related information.</p>
 </div>
 </div>
 <div class="section" id="update-registeredmodel">
-<span id="mlflowmodelregistryserviceupdateregisteredmodel"></span><h2><a class="toc-backref" href="#id250">Update RegisteredModel</a><a class="headerlink" href="#update-registeredmodel" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryserviceupdateregisteredmodel"></span><h2><a class="toc-backref" href="#id266">Update RegisteredModel</a><a class="headerlink" href="#update-registeredmodel" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 76%" />
@@ -4901,7 +5305,7 @@ This permanently removes the job and all related information.</p>
 </tbody>
 </table>
 <div class="section" id="mlflowupdateregisteredmodel">
-<span id="id95"></span><h3>Request Structure<a class="headerlink" href="#mlflowupdateregisteredmodel" title="Permalink to this headline"> </a></h3>
+<span id="id104"></span><h3>Request Structure<a class="headerlink" href="#mlflowupdateregisteredmodel" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 19%" />
@@ -4931,7 +5335,7 @@ This permanently removes the job and all related information.</p>
 </table>
 </div>
 <div class="section" id="mlflowupdateregisteredmodelresponse">
-<span id="id96"></span><h3>Response Structure<a class="headerlink" href="#mlflowupdateregisteredmodelresponse" title="Permalink to this headline"> </a></h3>
+<span id="id105"></span><h3>Response Structure<a class="headerlink" href="#mlflowupdateregisteredmodelresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 30%" />
@@ -4955,7 +5359,7 @@ This permanently removes the job and all related information.</p>
 </div>
 </div>
 <div class="section" id="delete-registeredmodel">
-<span id="mlflowmodelregistryservicedeleteregisteredmodel"></span><h2><a class="toc-backref" href="#id251">Delete RegisteredModel</a><a class="headerlink" href="#delete-registeredmodel" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicedeleteregisteredmodel"></span><h2><a class="toc-backref" href="#id267">Delete RegisteredModel</a><a class="headerlink" href="#delete-registeredmodel" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 76%" />
@@ -4973,7 +5377,7 @@ This permanently removes the job and all related information.</p>
 </tbody>
 </table>
 <div class="section" id="mlflowdeleteregisteredmodel">
-<span id="id97"></span><h3>Request Structure<a class="headerlink" href="#mlflowdeleteregisteredmodel" title="Permalink to this headline"> </a></h3>
+<span id="id106"></span><h3>Request Structure<a class="headerlink" href="#mlflowdeleteregisteredmodel" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 13%" />
@@ -4997,7 +5401,7 @@ This permanently removes the job and all related information.</p>
 </div>
 </div>
 <div class="section" id="search-registeredmodels">
-<span id="mlflowmodelregistryservicesearchregisteredmodels"></span><h2><a class="toc-backref" href="#id252">Search RegisteredModels</a><a class="headerlink" href="#search-registeredmodels" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicesearchregisteredmodels"></span><h2><a class="toc-backref" href="#id268">Search RegisteredModels</a><a class="headerlink" href="#search-registeredmodels" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 76%" />
@@ -5015,7 +5419,7 @@ This permanently removes the job and all related information.</p>
 </tbody>
 </table>
 <div class="section" id="mlflowsearchregisteredmodels">
-<span id="id98"></span><h3>Request Structure<a class="headerlink" href="#mlflowsearchregisteredmodels" title="Permalink to this headline"> </a></h3>
+<span id="id107"></span><h3>Request Structure<a class="headerlink" href="#mlflowsearchregisteredmodels" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 7%" />
@@ -5051,7 +5455,7 @@ is the default. Tiebreaks are done by model name ASC.</p></td>
 </table>
 </div>
 <div class="section" id="mlflowsearchregisteredmodelsresponse">
-<span id="id99"></span><h3>Response Structure<a class="headerlink" href="#mlflowsearchregisteredmodelsresponse" title="Permalink to this headline"> </a></h3>
+<span id="id108"></span><h3>Response Structure<a class="headerlink" href="#mlflowsearchregisteredmodelsresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 17%" />
@@ -5079,7 +5483,7 @@ is the default. Tiebreaks are done by model name ASC.</p></td>
 </div>
 </div>
 <div class="section" id="get-latest-modelversions">
-<span id="mlflowmodelregistryservicegetlatestversions"></span><h2><a class="toc-backref" href="#id253">Get Latest ModelVersions</a><a class="headerlink" href="#get-latest-modelversions" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicegetlatestversions"></span><h2><a class="toc-backref" href="#id269">Get Latest ModelVersions</a><a class="headerlink" href="#get-latest-modelversions" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 81%" />
@@ -5097,7 +5501,7 @@ is the default. Tiebreaks are done by model name ASC.</p></td>
 </tbody>
 </table>
 <div class="section" id="mlflowgetlatestversions">
-<span id="id100"></span><h3>Request Structure<a class="headerlink" href="#mlflowgetlatestversions" title="Permalink to this headline"> </a></h3>
+<span id="id109"></span><h3>Request Structure<a class="headerlink" href="#mlflowgetlatestversions" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 12%" />
@@ -5123,7 +5527,7 @@ is the default. Tiebreaks are done by model name ASC.</p></td>
 </table>
 </div>
 <div class="section" id="mlflowgetlatestversionsresponse">
-<span id="id101"></span><h3>Response Structure<a class="headerlink" href="#mlflowgetlatestversionsresponse" title="Permalink to this headline"> </a></h3>
+<span id="id110"></span><h3>Response Structure<a class="headerlink" href="#mlflowgetlatestversionsresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 8%" />
@@ -5148,7 +5552,7 @@ latest version for each stage, including <code class="docutils literal notransla
 </div>
 </div>
 <div class="section" id="create-modelversion">
-<span id="mlflowmodelregistryservicecreatemodelversion"></span><h2><a class="toc-backref" href="#id254">Create ModelVersion</a><a class="headerlink" href="#create-modelversion" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicecreatemodelversion"></span><h2><a class="toc-backref" href="#id270">Create ModelVersion</a><a class="headerlink" href="#create-modelversion" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 75%" />
@@ -5166,7 +5570,7 @@ latest version for each stage, including <code class="docutils literal notransla
 </tbody>
 </table>
 <div class="section" id="mlflowcreatemodelversion">
-<span id="id102"></span><h3>Request Structure<a class="headerlink" href="#mlflowcreatemodelversion" title="Permalink to this headline"> </a></h3>
+<span id="id111"></span><h3>Request Structure<a class="headerlink" href="#mlflowcreatemodelversion" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 7%" />
@@ -5212,7 +5616,7 @@ latest version for each stage, including <code class="docutils literal notransla
 </table>
 </div>
 <div class="section" id="mlflowcreatemodelversionresponse">
-<span id="id103"></span><h3>Response Structure<a class="headerlink" href="#mlflowcreatemodelversionresponse" title="Permalink to this headline"> </a></h3>
+<span id="id112"></span><h3>Response Structure<a class="headerlink" href="#mlflowcreatemodelversionresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 14%" />
@@ -5236,7 +5640,7 @@ latest version for each stage, including <code class="docutils literal notransla
 </div>
 </div>
 <div class="section" id="get-modelversion">
-<span id="mlflowmodelregistryservicegetmodelversion"></span><h2><a class="toc-backref" href="#id255">Get ModelVersion</a><a class="headerlink" href="#get-modelversion" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicegetmodelversion"></span><h2><a class="toc-backref" href="#id271">Get ModelVersion</a><a class="headerlink" href="#get-modelversion" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 73%" />
@@ -5254,7 +5658,7 @@ latest version for each stage, including <code class="docutils literal notransla
 </tbody>
 </table>
 <div class="section" id="mlflowgetmodelversion">
-<span id="id104"></span><h3>Request Structure<a class="headerlink" href="#mlflowgetmodelversion" title="Permalink to this headline"> </a></h3>
+<span id="id113"></span><h3>Request Structure<a class="headerlink" href="#mlflowgetmodelversion" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 15%" />
@@ -5280,7 +5684,7 @@ latest version for each stage, including <code class="docutils literal notransla
 </table>
 </div>
 <div class="section" id="mlflowgetmodelversionresponse">
-<span id="id105"></span><h3>Response Structure<a class="headerlink" href="#mlflowgetmodelversionresponse" title="Permalink to this headline"> </a></h3>
+<span id="id114"></span><h3>Response Structure<a class="headerlink" href="#mlflowgetmodelversionresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 27%" />
@@ -5304,7 +5708,7 @@ latest version for each stage, including <code class="docutils literal notransla
 </div>
 </div>
 <div class="section" id="update-modelversion">
-<span id="mlflowmodelregistryserviceupdatemodelversion"></span><h2><a class="toc-backref" href="#id256">Update ModelVersion</a><a class="headerlink" href="#update-modelversion" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryserviceupdatemodelversion"></span><h2><a class="toc-backref" href="#id272">Update ModelVersion</a><a class="headerlink" href="#update-modelversion" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 75%" />
@@ -5322,7 +5726,7 @@ latest version for each stage, including <code class="docutils literal notransla
 </tbody>
 </table>
 <div class="section" id="mlflowupdatemodelversion">
-<span id="id106"></span><h3>Request Structure<a class="headerlink" href="#mlflowupdatemodelversion" title="Permalink to this headline"> </a></h3>
+<span id="id115"></span><h3>Request Structure<a class="headerlink" href="#mlflowupdatemodelversion" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 14%" />
@@ -5352,7 +5756,7 @@ latest version for each stage, including <code class="docutils literal notransla
 </table>
 </div>
 <div class="section" id="mlflowupdatemodelversionresponse">
-<span id="id107"></span><h3>Response Structure<a class="headerlink" href="#mlflowupdatemodelversionresponse" title="Permalink to this headline"> </a></h3>
+<span id="id116"></span><h3>Response Structure<a class="headerlink" href="#mlflowupdatemodelversionresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 14%" />
@@ -5376,7 +5780,7 @@ latest version for each stage, including <code class="docutils literal notransla
 </div>
 </div>
 <div class="section" id="delete-modelversion">
-<span id="mlflowmodelregistryservicedeletemodelversion"></span><h2><a class="toc-backref" href="#id257">Delete ModelVersion</a><a class="headerlink" href="#delete-modelversion" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicedeletemodelversion"></span><h2><a class="toc-backref" href="#id273">Delete ModelVersion</a><a class="headerlink" href="#delete-modelversion" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 75%" />
@@ -5394,7 +5798,7 @@ latest version for each stage, including <code class="docutils literal notransla
 </tbody>
 </table>
 <div class="section" id="mlflowdeletemodelversion">
-<span id="id108"></span><h3>Request Structure<a class="headerlink" href="#mlflowdeletemodelversion" title="Permalink to this headline"> </a></h3>
+<span id="id117"></span><h3>Request Structure<a class="headerlink" href="#mlflowdeletemodelversion" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 15%" />
@@ -5422,7 +5826,7 @@ latest version for each stage, including <code class="docutils literal notransla
 </div>
 </div>
 <div class="section" id="search-modelversions">
-<span id="mlflowmodelregistryservicesearchmodelversions"></span><h2><a class="toc-backref" href="#id258">Search ModelVersions</a><a class="headerlink" href="#search-modelversions" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicesearchmodelversions"></span><h2><a class="toc-backref" href="#id274">Search ModelVersions</a><a class="headerlink" href="#search-modelversions" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 75%" />
@@ -5440,7 +5844,7 @@ latest version for each stage, including <code class="docutils literal notransla
 </tbody>
 </table>
 <div class="section" id="mlflowsearchmodelversions">
-<span id="id109"></span><h3>Request Structure<a class="headerlink" href="#mlflowsearchmodelversions" title="Permalink to this headline"> </a></h3>
+<span id="id118"></span><h3>Request Structure<a class="headerlink" href="#mlflowsearchmodelversions" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 7%" />
@@ -5475,7 +5879,7 @@ done by latest stage transition timestamp, followed by name ASC, followed by ver
 </table>
 </div>
 <div class="section" id="mlflowsearchmodelversionsresponse">
-<span id="id110"></span><h3>Response Structure<a class="headerlink" href="#mlflowsearchmodelversionsresponse" title="Permalink to this headline"> </a></h3>
+<span id="id119"></span><h3>Response Structure<a class="headerlink" href="#mlflowsearchmodelversionsresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 13%" />
@@ -5503,7 +5907,7 @@ done by latest stage transition timestamp, followed by name ASC, followed by ver
 </div>
 </div>
 <div class="section" id="get-download-uri-for-modelversion-artifacts">
-<span id="mlflowmodelregistryservicegetmodelversiondownloaduri"></span><h2><a class="toc-backref" href="#id259">Get Download URI For ModelVersion Artifacts</a><a class="headerlink" href="#get-download-uri-for-modelversion-artifacts" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicegetmodelversiondownloaduri"></span><h2><a class="toc-backref" href="#id275">Get Download URI For ModelVersion Artifacts</a><a class="headerlink" href="#get-download-uri-for-modelversion-artifacts" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 79%" />
@@ -5521,7 +5925,7 @@ done by latest stage transition timestamp, followed by name ASC, followed by ver
 </tbody>
 </table>
 <div class="section" id="mlflowgetmodelversiondownloaduri">
-<span id="id111"></span><h3>Request Structure<a class="headerlink" href="#mlflowgetmodelversiondownloaduri" title="Permalink to this headline"> </a></h3>
+<span id="id120"></span><h3>Request Structure<a class="headerlink" href="#mlflowgetmodelversiondownloaduri" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 15%" />
@@ -5547,7 +5951,7 @@ done by latest stage transition timestamp, followed by name ASC, followed by ver
 </table>
 </div>
 <div class="section" id="mlflowgetmodelversiondownloaduriresponse">
-<span id="id112"></span><h3>Response Structure<a class="headerlink" href="#mlflowgetmodelversiondownloaduriresponse" title="Permalink to this headline"> </a></h3>
+<span id="id121"></span><h3>Response Structure<a class="headerlink" href="#mlflowgetmodelversiondownloaduriresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 14%" />
@@ -5571,7 +5975,7 @@ done by latest stage transition timestamp, followed by name ASC, followed by ver
 </div>
 </div>
 <div class="section" id="transition-modelversion-stage">
-<span id="mlflowmodelregistryservicetransitionmodelversionstage"></span><h2><a class="toc-backref" href="#id260">Transition ModelVersion Stage</a><a class="headerlink" href="#transition-modelversion-stage" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicetransitionmodelversionstage"></span><h2><a class="toc-backref" href="#id276">Transition ModelVersion Stage</a><a class="headerlink" href="#transition-modelversion-stage" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 79%" />
@@ -5589,7 +5993,7 @@ done by latest stage transition timestamp, followed by name ASC, followed by ver
 </tbody>
 </table>
 <div class="section" id="mlflowtransitionmodelversionstage">
-<span id="id113"></span><h3>Request Structure<a class="headerlink" href="#mlflowtransitionmodelversionstage" title="Permalink to this headline"> </a></h3>
+<span id="id122"></span><h3>Request Structure<a class="headerlink" href="#mlflowtransitionmodelversionstage" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 14%" />
@@ -5625,7 +6029,7 @@ versions’s stage This field is required.</p></td>
 </table>
 </div>
 <div class="section" id="mlflowtransitionmodelversionstageresponse">
-<span id="id114"></span><h3>Response Structure<a class="headerlink" href="#mlflowtransitionmodelversionstageresponse" title="Permalink to this headline"> </a></h3>
+<span id="id123"></span><h3>Response Structure<a class="headerlink" href="#mlflowtransitionmodelversionstageresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 23%" />
@@ -5649,7 +6053,7 @@ versions’s stage This field is required.</p></td>
 </div>
 </div>
 <div class="section" id="set-registered-model-tag">
-<span id="mlflowmodelregistryservicesetregisteredmodeltag"></span><h2><a class="toc-backref" href="#id261">Set Registered Model Tag</a><a class="headerlink" href="#set-registered-model-tag" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicesetregisteredmodeltag"></span><h2><a class="toc-backref" href="#id277">Set Registered Model Tag</a><a class="headerlink" href="#set-registered-model-tag" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 76%" />
@@ -5667,7 +6071,7 @@ versions’s stage This field is required.</p></td>
 </tbody>
 </table>
 <div class="section" id="mlflowsetregisteredmodeltag">
-<span id="id115"></span><h3>Request Structure<a class="headerlink" href="#mlflowsetregisteredmodeltag" title="Permalink to this headline"> </a></h3>
+<span id="id124"></span><h3>Request Structure<a class="headerlink" href="#mlflowsetregisteredmodeltag" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 6%" />
@@ -5700,7 +6104,7 @@ storage backends are guaranteed to support key values up to 250 bytes in size. T
 </div>
 </div>
 <div class="section" id="set-model-version-tag">
-<span id="mlflowmodelregistryservicesetmodelversiontag"></span><h2><a class="toc-backref" href="#id262">Set Model Version Tag</a><a class="headerlink" href="#set-model-version-tag" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicesetmodelversiontag"></span><h2><a class="toc-backref" href="#id278">Set Model Version Tag</a><a class="headerlink" href="#set-model-version-tag" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 75%" />
@@ -5718,7 +6122,7 @@ storage backends are guaranteed to support key values up to 250 bytes in size. T
 </tbody>
 </table>
 <div class="section" id="mlflowsetmodelversiontag">
-<span id="id116"></span><h3>Request Structure<a class="headerlink" href="#mlflowsetmodelversiontag" title="Permalink to this headline"> </a></h3>
+<span id="id125"></span><h3>Request Structure<a class="headerlink" href="#mlflowsetmodelversiontag" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 6%" />
@@ -5755,7 +6159,7 @@ storage backends are guaranteed to support key values up to 250 bytes in size. T
 </div>
 </div>
 <div class="section" id="delete-registered-model-tag">
-<span id="mlflowmodelregistryservicedeleteregisteredmodeltag"></span><h2><a class="toc-backref" href="#id263">Delete Registered Model Tag</a><a class="headerlink" href="#delete-registered-model-tag" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicedeleteregisteredmodeltag"></span><h2><a class="toc-backref" href="#id279">Delete Registered Model Tag</a><a class="headerlink" href="#delete-registered-model-tag" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 78%" />
@@ -5773,7 +6177,7 @@ storage backends are guaranteed to support key values up to 250 bytes in size. T
 </tbody>
 </table>
 <div class="section" id="mlflowdeleteregisteredmodeltag">
-<span id="id117"></span><h3>Request Structure<a class="headerlink" href="#mlflowdeleteregisteredmodeltag" title="Permalink to this headline"> </a></h3>
+<span id="id126"></span><h3>Request Structure<a class="headerlink" href="#mlflowdeleteregisteredmodeltag" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 7%" />
@@ -5801,7 +6205,7 @@ storage backends are guaranteed to support key values up to 250 bytes in size. T
 </div>
 </div>
 <div class="section" id="delete-model-version-tag">
-<span id="mlflowmodelregistryservicedeletemodelversiontag"></span><h2><a class="toc-backref" href="#id264">Delete Model Version Tag</a><a class="headerlink" href="#delete-model-version-tag" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicedeletemodelversiontag"></span><h2><a class="toc-backref" href="#id280">Delete Model Version Tag</a><a class="headerlink" href="#delete-model-version-tag" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 76%" />
@@ -5819,7 +6223,7 @@ storage backends are guaranteed to support key values up to 250 bytes in size. T
 </tbody>
 </table>
 <div class="section" id="mlflowdeletemodelversiontag">
-<span id="id118"></span><h3>Request Structure<a class="headerlink" href="#mlflowdeletemodelversiontag" title="Permalink to this headline"> </a></h3>
+<span id="id127"></span><h3>Request Structure<a class="headerlink" href="#mlflowdeletemodelversiontag" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 7%" />
@@ -5851,7 +6255,7 @@ storage backends are guaranteed to support key values up to 250 bytes in size. T
 </div>
 </div>
 <div class="section" id="set-registered-model-alias">
-<span id="mlflowmodelregistryservicesetregisteredmodelalias"></span><h2><a class="toc-backref" href="#id265">Set Registered Model Alias</a><a class="headerlink" href="#set-registered-model-alias" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicesetregisteredmodelalias"></span><h2><a class="toc-backref" href="#id281">Set Registered Model Alias</a><a class="headerlink" href="#set-registered-model-alias" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 75%" />
@@ -5869,7 +6273,7 @@ storage backends are guaranteed to support key values up to 250 bytes in size. T
 </tbody>
 </table>
 <div class="section" id="mlflowsetregisteredmodelalias">
-<span id="id119"></span><h3>Request Structure<a class="headerlink" href="#mlflowsetregisteredmodelalias" title="Permalink to this headline"> </a></h3>
+<span id="id128"></span><h3>Request Structure<a class="headerlink" href="#mlflowsetregisteredmodelalias" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 6%" />
@@ -5902,7 +6306,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </div>
 </div>
 <div class="section" id="delete-registered-model-alias">
-<span id="mlflowmodelregistryservicedeleteregisteredmodelalias"></span><h2><a class="toc-backref" href="#id266">Delete Registered Model Alias</a><a class="headerlink" href="#delete-registered-model-alias" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicedeleteregisteredmodelalias"></span><h2><a class="toc-backref" href="#id282">Delete Registered Model Alias</a><a class="headerlink" href="#delete-registered-model-alias" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 75%" />
@@ -5920,7 +6324,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </tbody>
 </table>
 <div class="section" id="mlflowdeleteregisteredmodelalias">
-<span id="id120"></span><h3>Request Structure<a class="headerlink" href="#mlflowdeleteregisteredmodelalias" title="Permalink to this headline"> </a></h3>
+<span id="id129"></span><h3>Request Structure<a class="headerlink" href="#mlflowdeleteregisteredmodelalias" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 7%" />
@@ -5948,7 +6352,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </div>
 </div>
 <div class="section" id="get-model-version-by-alias">
-<span id="mlflowmodelregistryservicegetmodelversionbyalias"></span><h2><a class="toc-backref" href="#id267">Get Model Version by Alias</a><a class="headerlink" href="#get-model-version-by-alias" title="Permalink to this headline"> </a></h2>
+<span id="mlflowmodelregistryservicegetmodelversionbyalias"></span><h2><a class="toc-backref" href="#id283">Get Model Version by Alias</a><a class="headerlink" href="#get-model-version-by-alias" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 75%" />
@@ -5966,7 +6370,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </tbody>
 </table>
 <div class="section" id="mlflowgetmodelversionbyalias">
-<span id="id121"></span><h3>Request Structure<a class="headerlink" href="#mlflowgetmodelversionbyalias" title="Permalink to this headline"> </a></h3>
+<span id="id130"></span><h3>Request Structure<a class="headerlink" href="#mlflowgetmodelversionbyalias" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 13%" />
@@ -5992,7 +6396,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </table>
 </div>
 <div class="section" id="mlflowgetmodelversionbyaliasresponse">
-<span id="id122"></span><h3>Response Structure<a class="headerlink" href="#mlflowgetmodelversionbyaliasresponse" title="Permalink to this headline"> </a></h3>
+<span id="id131"></span><h3>Response Structure<a class="headerlink" href="#mlflowgetmodelversionbyaliasresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 27%" />
@@ -6016,7 +6420,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </div>
 </div>
 <div class="section" id="create-webhook">
-<span id="mlflowwebhookservicecreatewebhook"></span><h2><a class="toc-backref" href="#id268">Create Webhook</a><a class="headerlink" href="#create-webhook" title="Permalink to this headline"> </a></h2>
+<span id="mlflowwebhookservicecreatewebhook"></span><h2><a class="toc-backref" href="#id284">Create Webhook</a><a class="headerlink" href="#create-webhook" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 66%" />
@@ -6034,7 +6438,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </tbody>
 </table>
 <div class="section" id="mlflowcreatewebhook">
-<span id="id123"></span><h3>Request Structure<a class="headerlink" href="#mlflowcreatewebhook" title="Permalink to this headline"> </a></h3>
+<span id="id132"></span><h3>Request Structure<a class="headerlink" href="#mlflowcreatewebhook" title="Permalink to this headline"> </a></h3>
 <p>Create webhook request</p>
 <table class="docutils align-default">
 <colgroup>
@@ -6077,7 +6481,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </table>
 </div>
 <div class="section" id="mlflowcreatewebhookresponse">
-<span id="id124"></span><h3>Response Structure<a class="headerlink" href="#mlflowcreatewebhookresponse" title="Permalink to this headline"> </a></h3>
+<span id="id133"></span><h3>Response Structure<a class="headerlink" href="#mlflowcreatewebhookresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 26%" />
@@ -6101,7 +6505,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </div>
 </div>
 <div class="section" id="list-webhooks">
-<span id="mlflowwebhookservicelistwebhooks"></span><h2><a class="toc-backref" href="#id269">List Webhooks</a><a class="headerlink" href="#list-webhooks" title="Permalink to this headline"> </a></h2>
+<span id="mlflowwebhookservicelistwebhooks"></span><h2><a class="toc-backref" href="#id285">List Webhooks</a><a class="headerlink" href="#list-webhooks" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 66%" />
@@ -6119,7 +6523,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </tbody>
 </table>
 <div class="section" id="mlflowlistwebhooks">
-<span id="id125"></span><h3>Request Structure<a class="headerlink" href="#mlflowlistwebhooks" title="Permalink to this headline"> </a></h3>
+<span id="id134"></span><h3>Request Structure<a class="headerlink" href="#mlflowlistwebhooks" title="Permalink to this headline"> </a></h3>
 <p>List webhooks request</p>
 <table class="docutils align-default">
 <colgroup>
@@ -6146,7 +6550,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </table>
 </div>
 <div class="section" id="mlflowlistwebhooksresponse">
-<span id="id126"></span><h3>Response Structure<a class="headerlink" href="#mlflowlistwebhooksresponse" title="Permalink to this headline"> </a></h3>
+<span id="id135"></span><h3>Response Structure<a class="headerlink" href="#mlflowlistwebhooksresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 20%" />
@@ -6174,7 +6578,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </div>
 </div>
 <div class="section" id="get-webhook">
-<span id="mlflowwebhookservicegetwebhook"></span><h2><a class="toc-backref" href="#id270">Get Webhook</a><a class="headerlink" href="#get-webhook" title="Permalink to this headline"> </a></h2>
+<span id="mlflowwebhookservicegetwebhook"></span><h2><a class="toc-backref" href="#id286">Get Webhook</a><a class="headerlink" href="#get-webhook" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 75%" />
@@ -6192,7 +6596,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </tbody>
 </table>
 <div class="section" id="mlflowgetwebhook">
-<span id="id127"></span><h3>Request Structure<a class="headerlink" href="#mlflowgetwebhook" title="Permalink to this headline"> </a></h3>
+<span id="id136"></span><h3>Request Structure<a class="headerlink" href="#mlflowgetwebhook" title="Permalink to this headline"> </a></h3>
 <p>Get webhook request</p>
 <table class="docutils align-default">
 <colgroup>
@@ -6215,7 +6619,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </table>
 </div>
 <div class="section" id="mlflowgetwebhookresponse">
-<span id="id128"></span><h3>Response Structure<a class="headerlink" href="#mlflowgetwebhookresponse" title="Permalink to this headline"> </a></h3>
+<span id="id137"></span><h3>Response Structure<a class="headerlink" href="#mlflowgetwebhookresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 26%" />
@@ -6239,7 +6643,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </div>
 </div>
 <div class="section" id="update-webhook">
-<span id="mlflowwebhookserviceupdatewebhook"></span><h2><a class="toc-backref" href="#id271">Update Webhook</a><a class="headerlink" href="#update-webhook" title="Permalink to this headline"> </a></h2>
+<span id="mlflowwebhookserviceupdatewebhook"></span><h2><a class="toc-backref" href="#id287">Update Webhook</a><a class="headerlink" href="#update-webhook" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 75%" />
@@ -6257,7 +6661,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </tbody>
 </table>
 <div class="section" id="mlflowupdatewebhook">
-<span id="id129"></span><h3>Request Structure<a class="headerlink" href="#mlflowupdatewebhook" title="Permalink to this headline"> </a></h3>
+<span id="id138"></span><h3>Request Structure<a class="headerlink" href="#mlflowupdatewebhook" title="Permalink to this headline"> </a></h3>
 <p>Update webhook request</p>
 <table class="docutils align-default">
 <colgroup>
@@ -6304,7 +6708,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </table>
 </div>
 <div class="section" id="mlflowupdatewebhookresponse">
-<span id="id130"></span><h3>Response Structure<a class="headerlink" href="#mlflowupdatewebhookresponse" title="Permalink to this headline"> </a></h3>
+<span id="id139"></span><h3>Response Structure<a class="headerlink" href="#mlflowupdatewebhookresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 26%" />
@@ -6328,7 +6732,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </div>
 </div>
 <div class="section" id="delete-webhook">
-<span id="mlflowwebhookservicedeletewebhook"></span><h2><a class="toc-backref" href="#id272">Delete Webhook</a><a class="headerlink" href="#delete-webhook" title="Permalink to this headline"> </a></h2>
+<span id="mlflowwebhookservicedeletewebhook"></span><h2><a class="toc-backref" href="#id288">Delete Webhook</a><a class="headerlink" href="#delete-webhook" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 75%" />
@@ -6346,7 +6750,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </tbody>
 </table>
 <div class="section" id="mlflowdeletewebhook">
-<span id="id131"></span><h3>Request Structure<a class="headerlink" href="#mlflowdeletewebhook" title="Permalink to this headline"> </a></h3>
+<span id="id140"></span><h3>Request Structure<a class="headerlink" href="#mlflowdeletewebhook" title="Permalink to this headline"> </a></h3>
 <p>Delete webhook request</p>
 <table class="docutils align-default">
 <colgroup>
@@ -6371,7 +6775,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </div>
 </div>
 <div class="section" id="test-webhook">
-<span id="mlflowwebhookservicetestwebhook"></span><h2><a class="toc-backref" href="#id273">Test Webhook</a><a class="headerlink" href="#test-webhook" title="Permalink to this headline"> </a></h2>
+<span id="mlflowwebhookservicetestwebhook"></span><h2><a class="toc-backref" href="#id289">Test Webhook</a><a class="headerlink" href="#test-webhook" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 77%" />
@@ -6389,7 +6793,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </tbody>
 </table>
 <div class="section" id="mlflowtestwebhook">
-<span id="id132"></span><h3>Request Structure<a class="headerlink" href="#mlflowtestwebhook" title="Permalink to this headline"> </a></h3>
+<span id="id141"></span><h3>Request Structure<a class="headerlink" href="#mlflowtestwebhook" title="Permalink to this headline"> </a></h3>
 <p>Test webhook request</p>
 <table class="docutils align-default">
 <colgroup>
@@ -6416,7 +6820,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </table>
 </div>
 <div class="section" id="mlflowtestwebhookresponse">
-<span id="id133"></span><h3>Response Structure<a class="headerlink" href="#mlflowtestwebhookresponse" title="Permalink to this headline"> </a></h3>
+<span id="id142"></span><h3>Response Structure<a class="headerlink" href="#mlflowtestwebhookresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 21%" />
@@ -6440,7 +6844,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </div>
 </div>
 <div class="section" id="download-artifact">
-<span id="mlflowartifactsmlflowartifactsservicedownloadartifact"></span><h2><a class="toc-backref" href="#id274">Download Artifact</a><a class="headerlink" href="#download-artifact" title="Permalink to this headline"> </a></h2>
+<span id="mlflowartifactsmlflowartifactsservicedownloadartifact"></span><h2><a class="toc-backref" href="#id290">Download Artifact</a><a class="headerlink" href="#download-artifact" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 81%" />
@@ -6460,7 +6864,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 <hr class="docutils" />
 </div>
 <div class="section" id="upload-artifact">
-<span id="mlflowartifactsmlflowartifactsserviceuploadartifact"></span><h2><a class="toc-backref" href="#id275">Upload Artifact</a><a class="headerlink" href="#upload-artifact" title="Permalink to this headline"> </a></h2>
+<span id="mlflowartifactsmlflowartifactsserviceuploadartifact"></span><h2><a class="toc-backref" href="#id291">Upload Artifact</a><a class="headerlink" href="#upload-artifact" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 81%" />
@@ -6480,7 +6884,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 <hr class="docutils" />
 </div>
 <div class="section" id="mlflowartifactsmlflowartifactsservicelistartifacts">
-<span id="id134"></span><h2><a class="toc-backref" href="#id276">List Artifacts</a><a class="headerlink" href="#mlflowartifactsmlflowartifactsservicelistartifacts" title="Permalink to this headline"> </a></h2>
+<span id="id143"></span><h2><a class="toc-backref" href="#id292">List Artifacts</a><a class="headerlink" href="#mlflowartifactsmlflowartifactsservicelistartifacts" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 73%" />
@@ -6498,7 +6902,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </tbody>
 </table>
 <div class="section" id="mlflowartifactslistartifacts">
-<span id="id135"></span><h3>Request Structure<a class="headerlink" href="#mlflowartifactslistartifacts" title="Permalink to this headline"> </a></h3>
+<span id="id144"></span><h3>Request Structure<a class="headerlink" href="#mlflowartifactslistartifacts" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 11%" />
@@ -6520,7 +6924,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </table>
 </div>
 <div class="section" id="mlflowartifactslistartifactsresponse">
-<span id="id136"></span><h3>Response Structure<a class="headerlink" href="#mlflowartifactslistartifactsresponse" title="Permalink to this headline"> </a></h3>
+<span id="id145"></span><h3>Response Structure<a class="headerlink" href="#mlflowartifactslistartifactsresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 12%" />
@@ -6544,7 +6948,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </div>
 </div>
 <div class="section" id="delete-artifacts">
-<span id="mlflowartifactsmlflowartifactsservicedeleteartifact"></span><h2><a class="toc-backref" href="#id277">Delete Artifacts</a><a class="headerlink" href="#delete-artifacts" title="Permalink to this headline"> </a></h2>
+<span id="mlflowartifactsmlflowartifactsservicedeleteartifact"></span><h2><a class="toc-backref" href="#id293">Delete Artifacts</a><a class="headerlink" href="#delete-artifacts" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 81%" />
@@ -6564,7 +6968,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 <hr class="docutils" />
 </div>
 <div class="section" id="create-an-artifact-multipart-upload">
-<span id="mlflowartifactsmlflowartifactsservicecreatemultipartupload"></span><h2><a class="toc-backref" href="#id278">Create an Artifact Multipart Upload</a><a class="headerlink" href="#create-an-artifact-multipart-upload" title="Permalink to this headline"> </a></h2>
+<span id="mlflowartifactsmlflowartifactsservicecreatemultipartupload"></span><h2><a class="toc-backref" href="#id294">Create an Artifact Multipart Upload</a><a class="headerlink" href="#create-an-artifact-multipart-upload" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 82%" />
@@ -6582,7 +6986,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </tbody>
 </table>
 <div class="section" id="mlflowartifactscreatemultipartupload">
-<span id="id137"></span><h3>Request Structure<a class="headerlink" href="#mlflowartifactscreatemultipartupload" title="Permalink to this headline"> </a></h3>
+<span id="id146"></span><h3>Request Structure<a class="headerlink" href="#mlflowartifactscreatemultipartupload" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 32%" />
@@ -6608,7 +7012,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </table>
 </div>
 <div class="section" id="mlflowartifactscreatemultipartuploadresponse">
-<span id="id138"></span><h3>Response Structure<a class="headerlink" href="#mlflowartifactscreatemultipartuploadresponse" title="Permalink to this headline"> </a></h3>
+<span id="id147"></span><h3>Response Structure<a class="headerlink" href="#mlflowartifactscreatemultipartuploadresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 15%" />
@@ -6636,7 +7040,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </div>
 </div>
 <div class="section" id="complete-an-artifact-multipart-upload">
-<span id="mlflowartifactsmlflowartifactsservicecompletemultipartupload"></span><h2><a class="toc-backref" href="#id279">Complete an Artifact Multipart Upload</a><a class="headerlink" href="#complete-an-artifact-multipart-upload" title="Permalink to this headline"> </a></h2>
+<span id="mlflowartifactsmlflowartifactsservicecompletemultipartupload"></span><h2><a class="toc-backref" href="#id295">Complete an Artifact Multipart Upload</a><a class="headerlink" href="#complete-an-artifact-multipart-upload" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 82%" />
@@ -6654,7 +7058,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </tbody>
 </table>
 <div class="section" id="mlflowartifactscompletemultipartupload">
-<span id="id139"></span><h3>Request Structure<a class="headerlink" href="#mlflowartifactscompletemultipartupload" title="Permalink to this headline"> </a></h3>
+<span id="id148"></span><h3>Request Structure<a class="headerlink" href="#mlflowartifactscompletemultipartupload" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 15%" />
@@ -6686,7 +7090,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </div>
 </div>
 <div class="section" id="abort-an-artifact-multipart-upload">
-<span id="mlflowartifactsmlflowartifactsserviceabortmultipartupload"></span><h2><a class="toc-backref" href="#id280">Abort an Artifact Multipart Upload</a><a class="headerlink" href="#abort-an-artifact-multipart-upload" title="Permalink to this headline"> </a></h2>
+<span id="mlflowartifactsmlflowartifactsserviceabortmultipartupload"></span><h2><a class="toc-backref" href="#id296">Abort an Artifact Multipart Upload</a><a class="headerlink" href="#abort-an-artifact-multipart-upload" title="Permalink to this headline"> </a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 81%" />
@@ -6704,7 +7108,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </tbody>
 </table>
 <div class="section" id="mlflowartifactsabortmultipartupload">
-<span id="id140"></span><h3>Request Structure<a class="headerlink" href="#mlflowartifactsabortmultipartupload" title="Permalink to this headline"> </a></h3>
+<span id="id149"></span><h3>Request Structure<a class="headerlink" href="#mlflowartifactsabortmultipartupload" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 32%" />
@@ -6728,10 +7132,60 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </tr>
 </tbody>
 </table>
+<hr class="docutils" />
+</div>
+</div>
+<div class="section" id="get-presigned-url-for-multipart-download">
+<span id="mlflowartifactsmlflowartifactsservicegetpresigneddownloadurl"></span><h2><a class="toc-backref" href="#id297">Get Presigned URL for Multipart Download</a><a class="headerlink" href="#get-presigned-url-for-multipart-download" title="Permalink to this headline"> </a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 81%" />
+<col style="width: 19%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Endpoint</p></th>
+<th class="head"><p>HTTP Method</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">2.0/mlflow-artifacts/presigned/&lt;path:artifact_path&gt;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">GET</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="mlflowartifactsgetpresigneddownloadurlresponse">
+<span id="id150"></span><h3>Response Structure<a class="headerlink" href="#mlflowartifactsgetpresigneddownloadurlresponse" title="Permalink to this headline"> </a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 47%" />
+<col style="width: 46%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>url</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
+<td><p>The presigned URL for downloading the artifact directly from cloud storage.</p></td>
+</tr>
+<tr class="row-odd"><td><p>headers</p></td>
+<td><p>An array of <a class="reference internal" href="#mlflowartifactsgetpresigneddownloadurlresponseheadersentry"><span class="std std-ref">HeadersEntry</span></a></p></td>
+<td><p>Optional headers that must be included in the download request.</p></td>
+</tr>
+<tr class="row-even"><td><p>file_size</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">INT64</span></code></p></td>
+<td><p>Optional size of the file in bytes.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="section" id="data-structures">
-<span id="restadd"></span><h2><a class="toc-backref" href="#id281">Data Structures</a><a class="headerlink" href="#data-structures" title="Permalink to this headline"> </a></h2>
+<span id="restadd"></span><h2><a class="toc-backref" href="#id298">Data Structures</a><a class="headerlink" href="#data-structures" title="Permalink to this headline"> </a></h2>
 <div class="section" id="adddatasettoexperiments">
 <span id="mlflowadddatasettoexperiments"></span><h3>AddDatasetToExperiments<a class="headerlink" href="#adddatasettoexperiments" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
@@ -6763,9 +7217,9 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 <p>Data and metadata for an assessment of a trace.</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 17%" />
-<col style="width: 37%" />
-<col style="width: 46%" />
+<col style="width: 23%" />
+<col style="width: 38%" />
+<col style="width: 38%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Field Name</p></th>
@@ -6777,12 +7231,13 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 <tr class="row-even"><td><p>assessment_id</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
 <td><p>Unique ID of the assessment. NB: This is not marked as required field via
-“validate_required”, because the message is used in the context of creating a new
-assessment, where the ID is not known.</p></td>
+“validate_required”, because the message is used in the context of
+creating a new assessment, where the ID is not known.</p></td>
 </tr>
 <tr class="row-odd"><td><p>assessment_name</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
-<td><p>Name of the assessment. The name must not contain “.”. This field is required.</p></td>
+<td><p>Name of the assessment. The name must not contain “.”. This field is
+required.</p></td>
 </tr>
 <tr class="row-even"><td><p>trace_id</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
@@ -6810,8 +7265,9 @@ assessment, where the ID is not known.</p></td>
 </tr>
 <tr class="row-even"><td><p>metadata</p></td>
 <td><p>An array of <a class="reference internal" href="#mlflowassessmentsassessmentmetadataentry"><span class="std std-ref">MetadataEntry</span></a></p></td>
-<td><p>Additional metadata describing the assessment and store additional information, such as
-the chunk relevance chunk_index. This metadata is required to be JSON-serializable.</p></td>
+<td><p>Additional metadata describing the assessment and store additional
+information, such as the chunk relevance chunk_index. This metadata is
+required to be JSON-serializable.</p></td>
 </tr>
 <tr class="row-odd"><td><p>overrides</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
@@ -6819,13 +7275,16 @@ the chunk relevance chunk_index. This metadata is required to be JSON-serializab
 </tr>
 <tr class="row-even"><td><p>valid</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">BOOL</span></code></p></td>
-<td><p>Whether this assessment is valid (i.e. has not been superseded) defaults to true, and is
-set to false if a new superseding assessment is created.</p></td>
+<td><p>Whether this assessment is valid (i.e. has not been superseded) defaults
+to true, and is set to false if a new superseding assessment is created.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">feedback</span></code> OR <code class="docutils literal notranslate"><span class="pre">expectation</span></code></p></td>
-<td><p><a class="reference internal" href="#mlflowassessmentsfeedback"><span class="std std-ref">Feedback</span></a> OR <a class="reference internal" href="#mlflowassessmentsexpectation"><span class="std std-ref">Expectation</span></a></p></td>
-<td><p>If <code class="docutils literal notranslate"><span class="pre">feedback</span></code>, the feedback on the trace from this assessment. If <code class="docutils literal notranslate"><span class="pre">expectation</span></code>, a
-representation of the guidelines and/or expected response from the agent.</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">feedback</span></code> OR <code class="docutils literal notranslate"><span class="pre">expectation</span></code> OR <code class="docutils literal notranslate"><span class="pre">issue</span></code></p></td>
+<td><p><a class="reference internal" href="#mlflowassessmentsfeedback"><span class="std std-ref">Feedback</span></a> OR <a class="reference internal" href="#mlflowassessmentsexpectation"><span class="std std-ref">Expectation</span></a>
+OR <a class="reference internal" href="#mlflowassessmentsissuereference"><span class="std std-ref">IssueReference</span></a></p></td>
+<td><p>If <code class="docutils literal notranslate"><span class="pre">feedback</span></code>, the feedback on the trace from this assessment. If
+<code class="docutils literal notranslate"><span class="pre">expectation</span></code>, a representation of the guidelines and/or expected
+response from the agent. If <code class="docutils literal notranslate"><span class="pre">issue</span></code>, a reference to an issue associated
+with this trace.</p></td>
 </tr>
 </tbody>
 </table>
@@ -6914,7 +7373,7 @@ empty. This field is required.</p></td>
 </table>
 </div>
 <div class="section" id="mlflowcreategatewaysecretauthconfigentry">
-<span id="id141"></span><h3>AuthConfigEntry<a class="headerlink" href="#mlflowcreategatewaysecretauthconfigentry" title="Permalink to this headline"> </a></h3>
+<span id="id151"></span><h3>AuthConfigEntry<a class="headerlink" href="#mlflowcreategatewaysecretauthconfigentry" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 32%" />
@@ -6940,7 +7399,7 @@ empty. This field is required.</p></td>
 </table>
 </div>
 <div class="section" id="mlflowupdategatewaysecretauthconfigentry">
-<span id="id142"></span><h3>AuthConfigEntry<a class="headerlink" href="#mlflowupdategatewaysecretauthconfigentry" title="Permalink to this headline"> </a></h3>
+<span id="id152"></span><h3>AuthConfigEntry<a class="headerlink" href="#mlflowupdategatewaysecretauthconfigentry" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 32%" />
@@ -7213,7 +7672,7 @@ elements in an array.</p></td>
 </table>
 </div>
 <div class="section" id="mlflowsearchloggedmodelsdataset">
-<span id="id143"></span><h3>Dataset<a class="headerlink" href="#mlflowsearchloggedmodelsdataset" title="Permalink to this headline"> </a></h3>
+<span id="id153"></span><h3>Dataset<a class="headerlink" href="#mlflowsearchloggedmodelsdataset" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 21%" />
@@ -7239,7 +7698,7 @@ elements in an array.</p></td>
 </table>
 </div>
 <div class="section" id="mlflowdatasetsdataset">
-<span id="id144"></span><h3>Dataset<a class="headerlink" href="#mlflowdatasetsdataset" title="Permalink to this headline"> </a></h3>
+<span id="id154"></span><h3>Dataset<a class="headerlink" href="#mlflowdatasetsdataset" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 16%" />
@@ -8016,7 +8475,7 @@ rejected for now</p></td>
 </table>
 </div>
 <div class="section" id="mlflowartifactsfileinfo">
-<span id="id145"></span><h3>FileInfo<a class="headerlink" href="#mlflowartifactsfileinfo" title="Permalink to this headline"> </a></h3>
+<span id="id155"></span><h3>FileInfo<a class="headerlink" href="#mlflowartifactsfileinfo" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 16%" />
@@ -8094,6 +8553,69 @@ rejected for now</p></td>
 <td><p><a class="reference internal" href="#mlflowloggedmodelstatus"><span class="std std-ref">LoggedModelStatus</span></a></p></td>
 <td><p>Whether or not the model is ready for use. Valid values in this message: ENUM&lt;LOGGED_MODEL_READY, LOGGED_MODEL_UPLOAD_FAILED&gt;
 (“LOGGED_MODEL_UPLOAD_FAILED” indicates that something went wrong when logging the model weights / agent code) This field is required.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="gatewaybudgetpolicy">
+<span id="mlflowgatewaybudgetpolicy"></span><h3>GatewayBudgetPolicy<a class="headerlink" href="#gatewaybudgetpolicy" title="Permalink to this headline"> </a></h3>
+<p>Represents a budget policy for the AI Gateway</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 30%" />
+<col style="width: 54%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>budget_policy_id</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
+<td><p>Unique identifier for this budget policy</p></td>
+</tr>
+<tr class="row-odd"><td><p>budget_unit</p></td>
+<td><p><a class="reference internal" href="#mlflowbudgetunit"><span class="std std-ref">BudgetUnit</span></a></p></td>
+<td><p>Budget measurement unit (e.g. USD)</p></td>
+</tr>
+<tr class="row-even"><td><p>budget_amount</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DOUBLE</span></code></p></td>
+<td><p>Budget limit amount</p></td>
+</tr>
+<tr class="row-odd"><td><p>duration_unit</p></td>
+<td><p><a class="reference internal" href="#mlflowbudgetdurationunit"><span class="std std-ref">BudgetDurationUnit</span></a></p></td>
+<td><p>Unit of time window (MINUTES, HOURS, DAYS, WEEKS, MONTHS)</p></td>
+</tr>
+<tr class="row-even"><td><p>duration_value</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">INT32</span></code></p></td>
+<td><p>Length of the window in units of duration_unit</p></td>
+</tr>
+<tr class="row-odd"><td><p>target_scope</p></td>
+<td><p><a class="reference internal" href="#mlflowbudgettargetscope"><span class="std std-ref">BudgetTargetScope</span></a></p></td>
+<td><p>Scope of the budget (GLOBAL or WORKSPACE)</p></td>
+</tr>
+<tr class="row-even"><td><p>budget_action</p></td>
+<td><p><a class="reference internal" href="#mlflowbudgetaction"><span class="std std-ref">BudgetAction</span></a></p></td>
+<td><p>Action when budget is exceeded</p></td>
+</tr>
+<tr class="row-odd"><td><p>created_by</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
+<td><p>User ID who created the policy</p></td>
+</tr>
+<tr class="row-even"><td><p>created_at</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">INT64</span></code></p></td>
+<td><p>Creation timestamp in milliseconds</p></td>
+</tr>
+<tr class="row-odd"><td><p>last_updated_by</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
+<td><p>User ID who last updated the policy</p></td>
+</tr>
+<tr class="row-even"><td><p>last_updated_at</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">INT64</span></code></p></td>
+<td><p>Last update timestamp in milliseconds</p></td>
 </tr>
 </tbody>
 </table>
@@ -8768,6 +9290,32 @@ IDs) x (# run IDs) metric data points.</p></td>
 </tbody>
 </table>
 </div>
+<div class="section" id="mlflowartifactsgetpresigneddownloadurlresponseheadersentry">
+<span id="id156"></span><h3>HeadersEntry<a class="headerlink" href="#mlflowartifactsgetpresigneddownloadurlresponseheadersentry" title="Permalink to this headline"> </a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 32%" />
+<col style="width: 35%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>key</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>value</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
 <div class="section" id="inferencetablelocation">
 <span id="mlflowtracelocationinferencetablelocation"></span><h3>InferenceTableLocation<a class="headerlink" href="#inferencetablelocation" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
@@ -8839,6 +9387,29 @@ IDs) x (# run IDs) metric data points.</p></td>
 <tr class="row-odd"><td><p>value</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
 <td><p>The tag value. This field is required.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="issuereference">
+<span id="mlflowassessmentsissuereference"></span><h3>IssueReference<a class="headerlink" href="#issuereference" title="Permalink to this headline"> </a></h3>
+<p>Reference to an issue associated with this trace</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 76%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>issue_name</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
+<td><p>The name of the issue this assessment references This field is required.</p></td>
 </tr>
 </tbody>
 </table>
@@ -9271,7 +9842,7 @@ name, Model Version number, etc.</p></td>
 </table>
 </div>
 <div class="section" id="mlflowjobstatemetadataentry">
-<span id="id146"></span><h3>MetadataEntry<a class="headerlink" href="#mlflowjobstatemetadataentry" title="Permalink to this headline"> </a></h3>
+<span id="id157"></span><h3>MetadataEntry<a class="headerlink" href="#mlflowjobstatemetadataentry" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 32%" />
@@ -10264,7 +10835,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowcreateassessmentresponse">
-<span id="id147"></span><h3>Response<a class="headerlink" href="#mlflowcreateassessmentresponse" title="Permalink to this headline"> </a></h3>
+<span id="id158"></span><h3>Response<a class="headerlink" href="#mlflowcreateassessmentresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 16%" />
@@ -10286,7 +10857,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowupdateassessmentresponse">
-<span id="id148"></span><h3>Response<a class="headerlink" href="#mlflowupdateassessmentresponse" title="Permalink to this headline"> </a></h3>
+<span id="id159"></span><h3>Response<a class="headerlink" href="#mlflowupdateassessmentresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 15%" />
@@ -10308,7 +10879,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowgetassessmentrequestresponse">
-<span id="id149"></span><h3>Response<a class="headerlink" href="#mlflowgetassessmentrequestresponse" title="Permalink to this headline"> </a></h3>
+<span id="id160"></span><h3>Response<a class="headerlink" href="#mlflowgetassessmentrequestresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 16%" />
@@ -10330,7 +10901,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowstarttraceresponse">
-<span id="id150"></span><h3>Response<a class="headerlink" href="#mlflowstarttraceresponse" title="Permalink to this headline"> </a></h3>
+<span id="id161"></span><h3>Response<a class="headerlink" href="#mlflowstarttraceresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 19%" />
@@ -10352,7 +10923,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowendtraceresponse">
-<span id="id151"></span><h3>Response<a class="headerlink" href="#mlflowendtraceresponse" title="Permalink to this headline"> </a></h3>
+<span id="id162"></span><h3>Response<a class="headerlink" href="#mlflowendtraceresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 21%" />
@@ -10374,7 +10945,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowgettraceinforesponse">
-<span id="id152"></span><h3>Response<a class="headerlink" href="#mlflowgettraceinforesponse" title="Permalink to this headline"> </a></h3>
+<span id="id163"></span><h3>Response<a class="headerlink" href="#mlflowgettraceinforesponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 17%" />
@@ -10396,7 +10967,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowgettraceinfov3response">
-<span id="id153"></span><h3>Response<a class="headerlink" href="#mlflowgettraceinfov3response" title="Permalink to this headline"> </a></h3>
+<span id="id164"></span><h3>Response<a class="headerlink" href="#mlflowgettraceinfov3response" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 27%" />
@@ -10418,7 +10989,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowbatchgettracesresponse">
-<span id="id154"></span><h3>Response<a class="headerlink" href="#mlflowbatchgettracesresponse" title="Permalink to this headline"> </a></h3>
+<span id="id165"></span><h3>Response<a class="headerlink" href="#mlflowbatchgettracesresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 16%" />
@@ -10440,7 +11011,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowgettraceresponse">
-<span id="id155"></span><h3>Response<a class="headerlink" href="#mlflowgettraceresponse" title="Permalink to this headline"> </a></h3>
+<span id="id166"></span><h3>Response<a class="headerlink" href="#mlflowgettraceresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 18%" />
@@ -10462,7 +11033,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowsearchtracesresponse">
-<span id="id156"></span><h3>Response<a class="headerlink" href="#mlflowsearchtracesresponse" title="Permalink to this headline"> </a></h3>
+<span id="id167"></span><h3>Response<a class="headerlink" href="#mlflowsearchtracesresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 15%" />
@@ -10488,7 +11059,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowsearchunifiedtracesresponse">
-<span id="id157"></span><h3>Response<a class="headerlink" href="#mlflowsearchunifiedtracesresponse" title="Permalink to this headline"> </a></h3>
+<span id="id168"></span><h3>Response<a class="headerlink" href="#mlflowsearchunifiedtracesresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 15%" />
@@ -10514,7 +11085,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowgetonlinetracedetailsresponse">
-<span id="id158"></span><h3>Response<a class="headerlink" href="#mlflowgetonlinetracedetailsresponse" title="Permalink to this headline"> </a></h3>
+<span id="id169"></span><h3>Response<a class="headerlink" href="#mlflowgetonlinetracedetailsresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 10%" />
@@ -10536,7 +11107,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowdeletetracesresponse">
-<span id="id159"></span><h3>Response<a class="headerlink" href="#mlflowdeletetracesresponse" title="Permalink to this headline"> </a></h3>
+<span id="id170"></span><h3>Response<a class="headerlink" href="#mlflowdeletetracesresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 40%" />
@@ -10558,7 +11129,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowdeletetracesv3response">
-<span id="id160"></span><h3>Response<a class="headerlink" href="#mlflowdeletetracesv3response" title="Permalink to this headline"> </a></h3>
+<span id="id171"></span><h3>Response<a class="headerlink" href="#mlflowdeletetracesv3response" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 40%" />
@@ -10580,7 +11151,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowcalculatetracefiltercorrelationresponse">
-<span id="id161"></span><h3>Response<a class="headerlink" href="#mlflowcalculatetracefiltercorrelationresponse" title="Permalink to this headline"> </a></h3>
+<span id="id172"></span><h3>Response<a class="headerlink" href="#mlflowcalculatetracefiltercorrelationresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 18%" />
@@ -10622,7 +11193,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowquerytracemetricsresponse">
-<span id="id162"></span><h3>Response<a class="headerlink" href="#mlflowquerytracemetricsresponse" title="Permalink to this headline"> </a></h3>
+<span id="id173"></span><h3>Response<a class="headerlink" href="#mlflowquerytracemetricsresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 12%" />
@@ -10648,7 +11219,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowstarttracev3response">
-<span id="id163"></span><h3>Response<a class="headerlink" href="#mlflowstarttracev3response" title="Permalink to this headline"> </a></h3>
+<span id="id174"></span><h3>Response<a class="headerlink" href="#mlflowstarttracev3response" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 19%" />
@@ -10670,7 +11241,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowsearchdatasetsresponse">
-<span id="id164"></span><h3>Response<a class="headerlink" href="#mlflowsearchdatasetsresponse" title="Permalink to this headline"> </a></h3>
+<span id="id175"></span><h3>Response<a class="headerlink" href="#mlflowsearchdatasetsresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 13%" />
@@ -10692,7 +11263,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowcreateloggedmodelresponse">
-<span id="id165"></span><h3>Response<a class="headerlink" href="#mlflowcreateloggedmodelresponse" title="Permalink to this headline"> </a></h3>
+<span id="id176"></span><h3>Response<a class="headerlink" href="#mlflowcreateloggedmodelresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 17%" />
@@ -10714,7 +11285,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowfinalizeloggedmodelresponse">
-<span id="id166"></span><h3>Response<a class="headerlink" href="#mlflowfinalizeloggedmodelresponse" title="Permalink to this headline"> </a></h3>
+<span id="id177"></span><h3>Response<a class="headerlink" href="#mlflowfinalizeloggedmodelresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 19%" />
@@ -10736,7 +11307,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowgetloggedmodelresponse">
-<span id="id167"></span><h3>Response<a class="headerlink" href="#mlflowgetloggedmodelresponse" title="Permalink to this headline"> </a></h3>
+<span id="id178"></span><h3>Response<a class="headerlink" href="#mlflowgetloggedmodelresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 18%" />
@@ -10758,7 +11329,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowsearchloggedmodelsresponse">
-<span id="id168"></span><h3>Response<a class="headerlink" href="#mlflowsearchloggedmodelsresponse" title="Permalink to this headline"> </a></h3>
+<span id="id179"></span><h3>Response<a class="headerlink" href="#mlflowsearchloggedmodelsresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 14%" />
@@ -10784,7 +11355,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowsetloggedmodeltagsresponse">
-<span id="id169"></span><h3>Response<a class="headerlink" href="#mlflowsetloggedmodeltagsresponse" title="Permalink to this headline"> </a></h3>
+<span id="id180"></span><h3>Response<a class="headerlink" href="#mlflowsetloggedmodeltagsresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 19%" />
@@ -10806,7 +11377,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowlistloggedmodelartifactsresponse">
-<span id="id170"></span><h3>Response<a class="headerlink" href="#mlflowlistloggedmodelartifactsresponse" title="Permalink to this headline"> </a></h3>
+<span id="id181"></span><h3>Response<a class="headerlink" href="#mlflowlistloggedmodelartifactsresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 14%" />
@@ -10836,7 +11407,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowsearchtracesv3response">
-<span id="id171"></span><h3>Response<a class="headerlink" href="#mlflowsearchtracesv3response" title="Permalink to this headline"> </a></h3>
+<span id="id182"></span><h3>Response<a class="headerlink" href="#mlflowsearchtracesv3response" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 15%" />
@@ -10862,7 +11433,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowcreatedatasetresponse">
-<span id="id172"></span><h3>Response<a class="headerlink" href="#mlflowcreatedatasetresponse" title="Permalink to this headline"> </a></h3>
+<span id="id183"></span><h3>Response<a class="headerlink" href="#mlflowcreatedatasetresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 19%" />
@@ -10884,7 +11455,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowgetdatasetresponse">
-<span id="id173"></span><h3>Response<a class="headerlink" href="#mlflowgetdatasetresponse" title="Permalink to this headline"> </a></h3>
+<span id="id184"></span><h3>Response<a class="headerlink" href="#mlflowgetdatasetresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 18%" />
@@ -10910,7 +11481,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowsearchevaluationdatasetsresponse">
-<span id="id174"></span><h3>Response<a class="headerlink" href="#mlflowsearchevaluationdatasetsresponse" title="Permalink to this headline"> </a></h3>
+<span id="id185"></span><h3>Response<a class="headerlink" href="#mlflowsearchevaluationdatasetsresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 17%" />
@@ -10936,7 +11507,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowsetdatasettagsresponse">
-<span id="id175"></span><h3>Response<a class="headerlink" href="#mlflowsetdatasettagsresponse" title="Permalink to this headline"> </a></h3>
+<span id="id186"></span><h3>Response<a class="headerlink" href="#mlflowsetdatasettagsresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 19%" />
@@ -10958,7 +11529,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowupsertdatasetrecordsresponse">
-<span id="id176"></span><h3>Response<a class="headerlink" href="#mlflowupsertdatasetrecordsresponse" title="Permalink to this headline"> </a></h3>
+<span id="id187"></span><h3>Response<a class="headerlink" href="#mlflowupsertdatasetrecordsresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 29%" />
@@ -10984,7 +11555,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowgetdatasetexperimentidsresponse">
-<span id="id177"></span><h3>Response<a class="headerlink" href="#mlflowgetdatasetexperimentidsresponse" title="Permalink to this headline"> </a></h3>
+<span id="id188"></span><h3>Response<a class="headerlink" href="#mlflowgetdatasetexperimentidsresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 17%" />
@@ -11006,7 +11577,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowgetdatasetrecordsresponse">
-<span id="id178"></span><h3>Response<a class="headerlink" href="#mlflowgetdatasetrecordsresponse" title="Permalink to this headline"> </a></h3>
+<span id="id189"></span><h3>Response<a class="headerlink" href="#mlflowgetdatasetrecordsresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 20%" />
@@ -11032,7 +11603,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowdeletedatasetrecordsresponse">
-<span id="id179"></span><h3>Response<a class="headerlink" href="#mlflowdeletedatasetrecordsresponse" title="Permalink to this headline"> </a></h3>
+<span id="id190"></span><h3>Response<a class="headerlink" href="#mlflowdeletedatasetrecordsresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 28%" />
@@ -11054,7 +11625,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowadddatasettoexperimentsresponse">
-<span id="id180"></span><h3>Response<a class="headerlink" href="#mlflowadddatasettoexperimentsresponse" title="Permalink to this headline"> </a></h3>
+<span id="id191"></span><h3>Response<a class="headerlink" href="#mlflowadddatasettoexperimentsresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 13%" />
@@ -11076,7 +11647,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowremovedatasetfromexperimentsresponse">
-<span id="id181"></span><h3>Response<a class="headerlink" href="#mlflowremovedatasetfromexperimentsresponse" title="Permalink to this headline"> </a></h3>
+<span id="id192"></span><h3>Response<a class="headerlink" href="#mlflowremovedatasetfromexperimentsresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 12%" />
@@ -11098,7 +11669,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowgetsecretsconfigresponse">
-<span id="id182"></span><h3>Response<a class="headerlink" href="#mlflowgetsecretsconfigresponse" title="Permalink to this headline"> </a></h3>
+<span id="id193"></span><h3>Response<a class="headerlink" href="#mlflowgetsecretsconfigresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 18%" />
@@ -11120,7 +11691,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowlistworkspacesresponse">
-<span id="id183"></span><h3>Response<a class="headerlink" href="#mlflowlistworkspacesresponse" title="Permalink to this headline"> </a></h3>
+<span id="id194"></span><h3>Response<a class="headerlink" href="#mlflowlistworkspacesresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 15%" />
@@ -11142,7 +11713,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowcreateworkspaceresponse">
-<span id="id184"></span><h3>Response<a class="headerlink" href="#mlflowcreateworkspaceresponse" title="Permalink to this headline"> </a></h3>
+<span id="id195"></span><h3>Response<a class="headerlink" href="#mlflowcreateworkspaceresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 15%" />
@@ -11164,7 +11735,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowgetworkspaceresponse">
-<span id="id185"></span><h3>Response<a class="headerlink" href="#mlflowgetworkspaceresponse" title="Permalink to this headline"> </a></h3>
+<span id="id196"></span><h3>Response<a class="headerlink" href="#mlflowgetworkspaceresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 15%" />
@@ -11186,7 +11757,7 @@ specified interval. Examples: 60 (minute), 3600 (hour), 86400 (day), 604800 (wee
 </table>
 </div>
 <div class="section" id="mlflowupdateworkspaceresponse">
-<span id="id186"></span><h3>Response<a class="headerlink" href="#mlflowupdateworkspaceresponse" title="Permalink to this headline"> </a></h3>
+<span id="id197"></span><h3>Response<a class="headerlink" href="#mlflowupdateworkspaceresponse" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 15%" />
@@ -11711,7 +12282,7 @@ binary operations Example: <code class="docutils literal notranslate"><span clas
 </table>
 </div>
 <div class="section" id="mlflowupdategatewaysecretsecretvalueentry">
-<span id="id187"></span><h3>SecretValueEntry<a class="headerlink" href="#mlflowupdategatewaysecretsecretvalueentry" title="Permalink to this headline"> </a></h3>
+<span id="id198"></span><h3>SecretValueEntry<a class="headerlink" href="#mlflowupdategatewaysecretsecretvalueentry" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 32%" />
@@ -12510,6 +13081,116 @@ required.</p></td>
 </tbody>
 </table>
 </div>
+<div class="section" id="budgetaction">
+<span id="mlflowbudgetaction"></span><h3>BudgetAction<a class="headerlink" href="#budgetaction" title="Permalink to this headline"> </a></h3>
+<p>Action to take when a budget is exceeded</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 68%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>BUDGET_ACTION_UNSPECIFIED</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>ALERT</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>REJECT</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="budgetdurationunit">
+<span id="mlflowbudgetdurationunit"></span><h3>BudgetDurationUnit<a class="headerlink" href="#budgetdurationunit" title="Permalink to this headline"> </a></h3>
+<p>Duration unit for budget policy fixed windows</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 68%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>DURATION_UNIT_UNSPECIFIED</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>MINUTES</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>HOURS</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>DAYS</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>WEEKS</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>MONTHS</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="budgettargetscope">
+<span id="mlflowbudgettargetscope"></span><h3>BudgetTargetScope<a class="headerlink" href="#budgettargetscope" title="Permalink to this headline"> </a></h3>
+<p>Target scope for a budget policy</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 67%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>TARGET_SCOPE_UNSPECIFIED</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>GLOBAL</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>WORKSPACE</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="budgetunit">
+<span id="mlflowbudgetunit"></span><h3>BudgetUnit<a class="headerlink" href="#budgetunit" title="Permalink to this headline"> </a></h3>
+<p>Budget measurement unit</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 66%" />
+<col style="width: 34%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>BUDGET_UNIT_UNSPECIFIED</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>USD</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
 <div class="section" id="deploymentjobrunstate">
 <span id="mlflowmodelversiondeploymentjobstatedeploymentjobrunstate"></span><h3>DeploymentJobRunState<a class="headerlink" href="#deploymentjobrunstate" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
@@ -12829,7 +13510,7 @@ LoggedModel files such as model weights / agent code.</p></td>
 </table>
 </div>
 <div class="section" id="mlflowassessmentsassessmentsourcesourcetype">
-<span id="id188"></span><h3>SourceType<a class="headerlink" href="#mlflowassessmentsassessmentsourcesourcetype" title="Permalink to this headline"> </a></h3>
+<span id="id199"></span><h3>SourceType<a class="headerlink" href="#mlflowassessmentsassessmentsourcesourcetype" title="Permalink to this headline"> </a></h3>
 <p>Type of the assessment source.</p>
 <table class="docutils align-default">
 <colgroup>
@@ -12858,7 +13539,7 @@ LoggedModel files such as model weights / agent code.</p></td>
 </table>
 </div>
 <div class="section" id="mlflowdatasetsdatasetrecordsourcesourcetype">
-<span id="id189"></span><h3>SourceType<a class="headerlink" href="#mlflowdatasetsdatasetrecordsourcesourcetype" title="Permalink to this headline"> </a></h3>
+<span id="id200"></span><h3>SourceType<a class="headerlink" href="#mlflowdatasetsdatasetrecordsourcesourcetype" title="Permalink to this headline"> </a></h3>
 <p>Type of the dataset record source.</p>
 <table class="docutils align-default">
 <colgroup>
@@ -12920,7 +13601,7 @@ contrast with when the full trace is logged only upon its completion.</p></td>
 </table>
 </div>
 <div class="section" id="mlflowdeploymentjobconnectionstate">
-<span id="id190"></span><h3>State<a class="headerlink" href="#mlflowdeploymentjobconnectionstate" title="Permalink to this headline"> </a></h3>
+<span id="id201"></span><h3>State<a class="headerlink" href="#mlflowdeploymentjobconnectionstate" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 35%" />
@@ -13058,6 +13739,9 @@ contrast with when the full trace is logged only upon its completion.</p></td>
 <tr class="row-even"><td><p>SET</p></td>
 <td></td>
 </tr>
+<tr class="row-odd"><td><p>EXCEEDED</p></td>
+<td></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -13103,6 +13787,9 @@ contrast with when the full trace is logged only upon its completion.</p></td>
 <td></td>
 </tr>
 <tr class="row-odd"><td><p>PROMPT_ALIAS</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>BUDGET_POLICY</p></td>
 <td></td>
 </tr>
 </tbody>

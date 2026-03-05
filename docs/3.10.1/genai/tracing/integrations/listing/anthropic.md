@@ -33,7 +33,7 @@ pip install 'mlflow[genai]' anthropic
 bash
 
 ```
-npm install mlflow-anthropic @anthropic-ai/sdk
+npm install @mlflow/anthropic @anthropic-ai/sdk
 ```
 
 2
@@ -107,7 +107,7 @@ typescript
 
 ```
 import Anthropic from "@anthropic-ai/sdk";
-import { tracedAnthropic } from "mlflow-anthropic";
+import { tracedAnthropic } from "@mlflow/anthropic";
 
 // Wrap the Anthropic client with the tracedAnthropic function
 const client = tracedAnthropic(new Anthropic());

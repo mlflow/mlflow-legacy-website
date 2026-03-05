@@ -714,8 +714,8 @@
 
     <span class="c1"># NB: If otel resource env vars are set explicitly, don&#39;t create an empty resource</span>
     <span class="c1"># so that they are propagated to otel spans.</span>
-    <span class="n">otel_service_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OTEL_SERVICE_NAME&quot;</span><span class="p">)</span>
-    <span class="n">otel_resource_attributes</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OTEL_RESOURCE_ATTRIBUTES&quot;</span><span class="p">)</span>
+    <span class="n">otel_service_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;OTEL_SERVICE_NAME&quot;</span><span class="p">)</span>
+    <span class="n">otel_resource_attributes</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;OTEL_RESOURCE_ATTRIBUTES&quot;</span><span class="p">)</span>
     <span class="n">resource</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">sdk_attributes</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;telemetry.sdk.language&quot;</span><span class="p">:</span> <span class="s2">&quot;python&quot;</span><span class="p">,</span>
@@ -806,6 +806,7 @@
             <span class="n">exporter</span> <span class="o">=</span> <span class="n">DatabricksUCTableSpanExporter</span><span class="p">(</span><span class="n">tracking_uri</span><span class="o">=</span><span class="n">mlflow</span><span class="o">.</span><span class="n">get_tracking_uri</span><span class="p">())</span>
             <span class="n">processor</span> <span class="o">=</span> <span class="n">DatabricksUCTableSpanProcessor</span><span class="p">(</span><span class="n">span_exporter</span><span class="o">=</span><span class="n">exporter</span><span class="p">)</span>
             <span class="n">processors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">processor</span><span class="p">)</span>
+            <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Added DatabricksUCTableSpanProcessor based on trace destination&quot;</span><span class="p">)</span>
 
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">trace_destination</span><span class="p">,</span> <span class="n">MlflowExperimentLocation</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">is_in_databricks_model_serving_environment</span><span class="p">():</span>
@@ -817,10 +818,12 @@
                 <span class="p">)</span>
             <span class="n">processor</span> <span class="o">=</span> <span class="n">_get_mlflow_span_processor</span><span class="p">(</span><span class="n">tracking_uri</span><span class="o">=</span><span class="n">mlflow</span><span class="o">.</span><span class="n">get_tracking_uri</span><span class="p">())</span>
             <span class="n">processors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">processor</span><span class="p">)</span>
+            <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Added MlflowSpanProcessor based on trace destination&quot;</span><span class="p">)</span>
 
         <span class="c1"># Trace destination has highest precedence; definitely ignore defaults</span>
         <span class="c1"># Ignore OTLP (unless dual export is set and we should use OTLP)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">should_use_otlp_exporter</span><span class="p">()</span> <span class="ow">and</span> <span class="n">MLFLOW_TRACE_ENABLE_OTLP_DUAL_EXPORT</span><span class="o">.</span><span class="n">get</span><span class="p">()):</span>
+            <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Rely on trace destination for tracing&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">processors</span>
 
     <span class="c1"># If no explicit trace destination OR we passed the dual exporter check, honor OTLP</span>
@@ -838,6 +841,7 @@
             <span class="ow">and</span> <span class="ow">not</span> <span class="n">MLFLOW_TRACE_ENABLE_OTLP_DUAL_EXPORT</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
         <span class="p">)</span>
         <span class="n">processors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">otel_processor</span><span class="p">)</span>
+        <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Added OtelSpanProcessor&quot;</span><span class="p">)</span>
 
         <span class="c1"># We have now added the OTLP processor.</span>
         <span class="c1"># If dual export is not set, return.</span>
@@ -852,6 +856,7 @@
     <span class="k">if</span> <span class="n">is_in_databricks_model_serving_environment</span><span class="p">():</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">is_mlflow_tracing_enabled_in_model_serving</span><span class="p">():</span>
             <span class="c1"># May still return an OTLP processor from above, or nothing at all.</span>
+            <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Mlflow tracing is not enabled in model serving&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">processors</span>
 
         <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.export.inference_table</span><span class="w"> </span><span class="kn">import</span> <span class="n">InferenceTableSpanExporter</span>
@@ -860,9 +865,11 @@
         <span class="n">exporter</span> <span class="o">=</span> <span class="n">InferenceTableSpanExporter</span><span class="p">()</span>
         <span class="n">processor</span> <span class="o">=</span> <span class="n">InferenceTableSpanProcessor</span><span class="p">(</span><span class="n">exporter</span><span class="p">)</span>
         <span class="n">processors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">processor</span><span class="p">)</span>
+        <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Added InferenceTableSpanProcessor&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">processor</span> <span class="o">=</span> <span class="n">_get_mlflow_span_processor</span><span class="p">(</span><span class="n">tracking_uri</span><span class="o">=</span><span class="n">mlflow</span><span class="o">.</span><span class="n">get_tracking_uri</span><span class="p">())</span>
         <span class="n">processors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">processor</span><span class="p">)</span>
+        <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Added MLflow span processors&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">processors</span>
 

@@ -273,7 +273,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize MLflow tracking and set active model with git-based version tracking.&quot;&quot;&quot;</span>
     <span class="c1"># in a Databricks App, the app name is set in the environment variable DATABRICKS_APP_NAME</span>
     <span class="c1"># in local development, we use a fallback app name</span>
-    <span class="n">app_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;DATABRICKS_APP_NAME&quot;</span><span class="p">,</span> <span class="s2">&quot;local&quot;</span><span class="p">)</span>
+    <span class="n">app_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;DATABRICKS_APP_NAME&quot;</span><span class="p">,</span> <span class="s2">&quot;local&quot;</span><span class="p">)</span>
 
     <span class="c1"># Get current git commit hash for versioning</span>
     <span class="k">try</span><span class="p">:</span>

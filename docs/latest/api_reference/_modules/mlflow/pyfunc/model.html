@@ -1509,13 +1509,14 @@
             <span class="ow">and</span> <span class="ow">not</span> <span class="n">is_in_databricks_runtime</span><span class="p">()</span>
             <span class="ow">and</span> <span class="ow">not</span> <span class="n">is_in_databricks_model_serving_environment</span><span class="p">()</span>
         <span class="p">):</span>
-            <span class="n">mlflow</span><span class="o">.</span><span class="n">pyfunc</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                <span class="s2">&quot;Saving the Pyfunc models in the CloudPickle format requires exercising &quot;</span>
-                <span class="s2">&quot;caution as Python&#39;s object serialization mechanism may execute arbitrary code &quot;</span>
-                <span class="s2">&quot;during deserialization. &quot;</span>
-                <span class="s2">&quot;The recommended safe alternative is saving it as the model-from-code &quot;</span>
-                <span class="s2">&quot;artifacts, see https://mlflow.org/docs/latest/ml/model/models-from-code/ &quot;</span>
-                <span class="s2">&quot;for details&quot;</span><span class="p">,</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
+                <span class="s2">&quot;Deserializing model using pickle is disallowed, but this model is saved &quot;</span>
+                <span class="s2">&quot;in cloudpickle format. The recommended way is to save the model as &quot;</span>
+                <span class="s2">&quot;models-from-code artifacts, see &quot;</span>
+                <span class="s2">&quot;https://mlflow.org/docs/latest/ml/model/models-from-code/ for details. &quot;</span>
+                <span class="s2">&quot;Another workaround is to set environment &quot;</span>
+                <span class="s2">&quot;variable &#39;MLFLOW_ALLOW_PICKLE_DESERIALIZATION&#39; to &#39;true&#39; to allow &quot;</span>
+                <span class="s2">&quot;deserializing model using pickle.&quot;</span>
             <span class="p">)</span>
         <span class="n">python_model_cloudpickle_version</span> <span class="o">=</span> <span class="n">pyfunc_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">CONFIG_KEY_CLOUDPICKLE_VERSION</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">python_model_cloudpickle_version</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>

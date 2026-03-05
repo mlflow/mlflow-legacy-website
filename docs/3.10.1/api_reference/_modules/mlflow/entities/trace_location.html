@@ -369,10 +369,7 @@
 
 <div class="viewcode-block" id="UCSchemaLocation.from_dict"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.UCSchemaLocation.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;UCSchemaLocation&quot;</span><span class="p">:</span>
-        <span class="n">location</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span>
-            <span class="n">catalog_name</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;catalog_name&quot;</span><span class="p">],</span>
-            <span class="n">schema_name</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;schema_name&quot;</span><span class="p">],</span>
-        <span class="p">)</span>
+        <span class="n">location</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">catalog_name</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;catalog_name&quot;</span><span class="p">],</span> <span class="n">schema_name</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;schema_name&quot;</span><span class="p">])</span>
         <span class="k">if</span> <span class="n">otel_spans_table_name</span> <span class="o">:=</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;otel_spans_table_name&quot;</span><span class="p">):</span>
             <span class="n">location</span><span class="o">.</span><span class="n">_otel_spans_table_name</span> <span class="o">=</span> <span class="n">otel_spans_table_name</span>
         <span class="k">if</span> <span class="n">otel_logs_table_name</span> <span class="o">:=</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;otel_logs_table_name&quot;</span><span class="p">):</span>
@@ -380,11 +377,84 @@
         <span class="k">return</span> <span class="n">location</span></div></div>
 
 
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">UnityCatalog</span><span class="p">(</span><span class="n">TraceLocationBase</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a Databricks Unity Catalog location with a table prefix.</span>
+
+<span class="sd">    Note: Arclight catalogs are not supported.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        catalog_name: The name of the Unity Catalog catalog.</span>
+<span class="sd">        schema_name: The name of the Unity Catalog schema.</span>
+<span class="sd">        table_prefix: The prefix for tables in this location.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">catalog_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">schema_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">table_prefix</span><span class="p">:</span> <span class="nb">str</span>
+
+    <span class="c1"># These are fully qualified table names (catalog.schema.table) set by the backend.</span>
+    <span class="n">_otel_spans_table_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_otel_logs_table_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_annotations_table_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">schema_location</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">catalog_name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">schema_name</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">full_table_prefix</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">catalog_name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">schema_name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">table_prefix</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">full_otel_spans_table_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_otel_spans_table_name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">full_otel_logs_table_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_otel_logs_table_name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">full_annotations_table_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_annotations_table_name</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;catalog_name&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog_name</span><span class="p">,</span>
+            <span class="s2">&quot;schema_name&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema_name</span><span class="p">,</span>
+            <span class="s2">&quot;table_prefix&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">table_prefix</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_otel_spans_table_name</span><span class="p">:</span>
+            <span class="n">d</span><span class="p">[</span><span class="s2">&quot;otel_spans_table_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_otel_spans_table_name</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_otel_logs_table_name</span><span class="p">:</span>
+            <span class="n">d</span><span class="p">[</span><span class="s2">&quot;otel_logs_table_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_otel_logs_table_name</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_annotations_table_name</span><span class="p">:</span>
+            <span class="n">d</span><span class="p">[</span><span class="s2">&quot;annotations_table_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_annotations_table_name</span>
+        <span class="k">return</span> <span class="n">d</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;UnityCatalog&quot;</span><span class="p">:</span>
+        <span class="n">location</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">catalog_name</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;catalog_name&quot;</span><span class="p">],</span>
+            <span class="n">schema_name</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;schema_name&quot;</span><span class="p">],</span>
+            <span class="n">table_prefix</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;table_prefix&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">otel_spans_table_name</span> <span class="o">:=</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;otel_spans_table_name&quot;</span><span class="p">):</span>
+            <span class="n">location</span><span class="o">.</span><span class="n">_otel_spans_table_name</span> <span class="o">=</span> <span class="n">otel_spans_table_name</span>
+        <span class="k">if</span> <span class="n">otel_logs_table_name</span> <span class="o">:=</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;otel_logs_table_name&quot;</span><span class="p">):</span>
+            <span class="n">location</span><span class="o">.</span><span class="n">_otel_logs_table_name</span> <span class="o">=</span> <span class="n">otel_logs_table_name</span>
+        <span class="k">if</span> <span class="n">annotations_table_name</span> <span class="o">:=</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;annotations_table_name&quot;</span><span class="p">):</span>
+            <span class="n">location</span><span class="o">.</span><span class="n">_annotations_table_name</span> <span class="o">=</span> <span class="n">annotations_table_name</span>
+        <span class="k">return</span> <span class="n">location</span>
+
+
 <div class="viewcode-block" id="TraceLocationType"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.TraceLocationType">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">TraceLocationType</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
     <span class="n">TRACE_LOCATION_TYPE_UNSPECIFIED</span> <span class="o">=</span> <span class="s2">&quot;TRACE_LOCATION_TYPE_UNSPECIFIED&quot;</span>
     <span class="n">MLFLOW_EXPERIMENT</span> <span class="o">=</span> <span class="s2">&quot;MLFLOW_EXPERIMENT&quot;</span>
     <span class="n">INFERENCE_TABLE</span> <span class="o">=</span> <span class="s2">&quot;INFERENCE_TABLE&quot;</span>
     <span class="n">UC_SCHEMA</span> <span class="o">=</span> <span class="s2">&quot;UC_SCHEMA&quot;</span>
+    <span class="n">UC_TABLE_PREFIX</span> <span class="o">=</span> <span class="s2">&quot;UC_TABLE_PREFIX&quot;</span>
 
 <div class="viewcode-block" id="TraceLocationType.to_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.TraceLocationType.to_proto">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">pb</span><span class="o">.</span><span class="n">TraceLocation</span><span class="o">.</span><span class="n">TraceLocationType</span><span class="o">.</span><span class="n">Value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
@@ -421,6 +491,7 @@
     <span class="n">mlflow_experiment</span><span class="p">:</span> <span class="n">MlflowExperimentLocation</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">inference_table</span><span class="p">:</span> <span class="n">InferenceTableLocation</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">uc_schema</span><span class="p">:</span> <span class="n">UCSchemaLocation</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">uc_table_prefix</span><span class="p">:</span> <span class="n">UnityCatalog</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="p">(</span>
@@ -429,22 +500,30 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">mlflow_experiment</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">inference_table</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">uc_schema</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">uc_table_prefix</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span>
                 <span class="p">]</span>
             <span class="p">)</span>
             <span class="o">&gt;</span> <span class="mi">1</span>
         <span class="p">):</span>
             <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
-                <span class="s2">&quot;Only one of mlflow_experiment, inference_table, or uc_schema can be provided.&quot;</span>
+                <span class="s2">&quot;Only one of mlflow_experiment, inference_table, uc_schema, &quot;</span>
+                <span class="s2">&quot;or uc_table_prefix can be provided.&quot;</span>
             <span class="p">)</span>
 
         <span class="k">if</span> <span class="p">(</span>
             <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mlflow_experiment</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="n">TraceLocationType</span><span class="o">.</span><span class="n">MLFLOW_EXPERIMENT</span><span class="p">)</span>
             <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inference_table</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="n">TraceLocationType</span><span class="o">.</span><span class="n">INFERENCE_TABLE</span><span class="p">)</span>
             <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uc_schema</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="n">TraceLocationType</span><span class="o">.</span><span class="n">UC_SCHEMA</span><span class="p">)</span>
+            <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uc_table_prefix</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="n">TraceLocationType</span><span class="o">.</span><span class="n">UC_TABLE_PREFIX</span><span class="p">)</span>
         <span class="p">):</span>
+            <span class="n">location</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mlflow_experiment</span>
+                <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">inference_table</span>
+                <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">uc_schema</span>
+                <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">uc_table_prefix</span>
+            <span class="p">)</span>
             <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Trace location type </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2"> does not match the provided location &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">mlflow_experiment</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">inference_table</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">uc_schema</span><span class="si">}</span><span class="s2">.&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Trace location type </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2"> does not match the provided location </span><span class="si">{</span><span class="n">location</span><span class="si">}</span><span class="s2">.&quot;</span>
             <span class="p">)</span>
 
 <div class="viewcode-block" id="TraceLocation.to_dict"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.TraceLocation.to_dict">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
@@ -455,6 +534,8 @@
             <span class="n">d</span><span class="p">[</span><span class="s2">&quot;inference_table&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inference_table</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">uc_schema</span><span class="p">:</span>
             <span class="n">d</span><span class="p">[</span><span class="s2">&quot;uc_schema&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">uc_schema</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">uc_table_prefix</span><span class="p">:</span>
+            <span class="n">d</span><span class="p">[</span><span class="s2">&quot;uc_table_prefix&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">uc_table_prefix</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">d</span></div>
 
 <div class="viewcode-block" id="TraceLocation.from_dict"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.TraceLocation.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
@@ -468,6 +549,9 @@
                 <span class="n">InferenceTableLocation</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="n">v</span> <span class="o">:=</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;inference_table&quot;</span><span class="p">))</span> <span class="k">else</span> <span class="kc">None</span>
             <span class="p">),</span>
             <span class="n">uc_schema</span><span class="o">=</span><span class="p">(</span><span class="n">UCSchemaLocation</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="n">v</span> <span class="o">:=</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;uc_schema&quot;</span><span class="p">))</span> <span class="k">else</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="n">uc_table_prefix</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">UnityCatalog</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="n">v</span> <span class="o">:=</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;uc_table_prefix&quot;</span><span class="p">))</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">),</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="TraceLocation.to_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.TraceLocation.to_proto">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pb</span><span class="o">.</span><span class="n">TraceLocation</span><span class="p">:</span>
@@ -481,6 +565,8 @@
                 <span class="nb">type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">to_proto</span><span class="p">(),</span>
                 <span class="n">inference_table</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">inference_table</span><span class="o">.</span><span class="n">to_proto</span><span class="p">(),</span>
             <span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">uc_table_prefix</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pb</span><span class="o">.</span><span class="n">TraceLocation</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">to_proto</span><span class="p">())</span>
         <span class="c1"># uc schema is not supported in to_proto since it&#39;s databricks specific, should use</span>
         <span class="c1"># databricks_service_utils to convert to proto</span>
         <span class="k">else</span><span class="p">:</span>
@@ -503,7 +589,23 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">from_databricks_uc_schema</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">catalog_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">schema_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TraceLocation&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
             <span class="nb">type</span><span class="o">=</span><span class="n">TraceLocationType</span><span class="o">.</span><span class="n">UC_SCHEMA</span><span class="p">,</span>
-            <span class="n">uc_schema</span><span class="o">=</span><span class="n">UCSchemaLocation</span><span class="p">(</span><span class="n">catalog_name</span><span class="o">=</span><span class="n">catalog_name</span><span class="p">,</span> <span class="n">schema_name</span><span class="o">=</span><span class="n">schema_name</span><span class="p">),</span>
+            <span class="n">uc_schema</span><span class="o">=</span><span class="n">UCSchemaLocation</span><span class="p">(</span>
+                <span class="n">catalog_name</span><span class="o">=</span><span class="n">catalog_name</span><span class="p">,</span>
+                <span class="n">schema_name</span><span class="o">=</span><span class="n">schema_name</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="TraceLocation.from_databricks_uc_table_prefix"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.TraceLocation.from_databricks_uc_table_prefix">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_databricks_uc_table_prefix</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span> <span class="n">catalog_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">schema_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">table_prefix</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TraceLocation&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="n">TraceLocationType</span><span class="o">.</span><span class="n">UC_TABLE_PREFIX</span><span class="p">,</span>
+            <span class="n">uc_table_prefix</span><span class="o">=</span><span class="n">UnityCatalog</span><span class="p">(</span>
+                <span class="n">catalog_name</span><span class="o">=</span><span class="n">catalog_name</span><span class="p">,</span>
+                <span class="n">schema_name</span><span class="o">=</span><span class="n">schema_name</span><span class="p">,</span>
+                <span class="n">table_prefix</span><span class="o">=</span><span class="n">table_prefix</span><span class="p">,</span>
+            <span class="p">),</span>
         <span class="p">)</span></div></div>
 </pre></div>
 

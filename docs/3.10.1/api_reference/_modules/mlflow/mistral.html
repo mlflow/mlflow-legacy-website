@@ -269,7 +269,10 @@
 <span class="sd">        silent: If ``True``, suppress all event logs and warnings from MLflow during Mistral AI</span>
 <span class="sd">            autologging. If ``False``, show all events and warnings.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">mistralai.chat</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chat</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">mistralai.client.chat</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chat</span>  <span class="c1"># mistralai &gt;= 2.0</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">mistralai.chat</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chat</span>  <span class="c1"># mistralai &lt; 2.0</span>
 
     <span class="n">safe_patch</span><span class="p">(</span>
         <span class="n">FLAVOR_NAME</span><span class="p">,</span>

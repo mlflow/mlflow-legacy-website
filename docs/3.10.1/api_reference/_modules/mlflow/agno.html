@@ -248,15 +248,14 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.telemetry.events</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutologgingEvent</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.telemetry.track</span><span class="w"> </span><span class="kn">import</span> <span class="n">_record_event</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">experimental</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">experimental</span> <span class="k">as</span> <span class="n">experimental</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.autologging_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">autologging_integration</span><span class="p">,</span> <span class="n">safe_patch</span>
 
 <span class="n">FLAVOR_NAME</span> <span class="o">=</span> <span class="s2">&quot;agno&quot;</span>
 <span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="autolog"><a class="viewcode-back" href="../../python_api/mlflow.agno.html#mlflow.agno.autolog">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.3.0&quot;</span><span class="p">)</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">autolog</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">log_traces</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">disable</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">silent</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="autolog"><a class="viewcode-back" href="../../python_api/mlflow.agno.html#mlflow.agno.autolog">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">autolog</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">log_traces</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">disable</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">silent</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Enables (or disables) and configures autologging from Agno to MLflow.</span>
 

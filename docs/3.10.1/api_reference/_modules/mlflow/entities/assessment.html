@@ -260,6 +260,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.protos.assessments_pb2</span><span class="w"> </span><span class="kn">import</span> <span class="n">Assessment</span> <span class="k">as</span> <span class="n">ProtoAssessment</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.protos.assessments_pb2</span><span class="w"> </span><span class="kn">import</span> <span class="n">Expectation</span> <span class="k">as</span> <span class="n">ProtoExpectation</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.protos.assessments_pb2</span><span class="w"> </span><span class="kn">import</span> <span class="n">Feedback</span> <span class="k">as</span> <span class="n">ProtoFeedback</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.protos.assessments_pb2</span><span class="w"> </span><span class="kn">import</span> <span class="n">IssueReference</span> <span class="k">as</span> <span class="n">ProtoIssueReference</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.exception_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_stacktrace</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.proto_json_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">proto_timestamp_to_milliseconds</span>
 
@@ -285,6 +286,8 @@
 <span class="sd">    - Feedback: A label that represents the feedback on the quality of the operation.</span>
 <span class="sd">        Feedback can come from different sources, such as human judges, heuristic scorers,</span>
 <span class="sd">        or LLM-as-a-Judge.</span>
+<span class="sd">    - IssueReference: A reference to an issue associated with a trace, used to link traces</span>
+<span class="sd">        to discovered quality or operational problems.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
@@ -308,10 +311,11 @@
     <span class="c1"># Deprecated, use `error` in Feedback instead. Just kept for backward compatibility</span>
     <span class="c1"># and will be removed in the 3.0.0 release.</span>
     <span class="n">error</span><span class="p">:</span> <span class="n">AssessmentError</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="c1"># Should only be used internally. To create an assessment with an expectation or feedback,</span>
-    <span class="c1"># use the`Expectation` or `Feedback` classes instead.</span>
+    <span class="c1"># Should only be used internally. To create an assessment with an expectation, feedback,</span>
+    <span class="c1"># or issue reference, use the `Expectation`, `Feedback`, or `IssueReference` classes instead.</span>
     <span class="n">expectation</span><span class="p">:</span> <span class="n">ExpectationValue</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">feedback</span><span class="p">:</span> <span class="n">FeedbackValue</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">issue</span><span class="p">:</span> <span class="n">IssueReferenceValue</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="c1"># The ID of the assessment which this assessment overrides.</span>
     <span class="n">overrides</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="c1"># Whether this assessment is valid (i.e. has not been overridden).</span>
@@ -321,9 +325,11 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.constant</span><span class="w"> </span><span class="kn">import</span> <span class="n">AssessmentMetadataKey</span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expectation</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">feedback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expectation</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">feedback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">issue</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
-                <span class="s2">&quot;Exactly one of `expectation` or `feedback` should be specified.&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;Exactly one of `expectation`, `feedback`, or `issue` should be specified.&quot;</span><span class="p">,</span>
             <span class="p">)</span>
 
         <span class="c1"># Populate the error field to the feedback object</span>
@@ -380,6 +386,8 @@
             <span class="n">assessment</span><span class="o">.</span><span class="n">expectation</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expectation</span><span class="o">.</span><span class="n">to_proto</span><span class="p">())</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">feedback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">assessment</span><span class="o">.</span><span class="n">feedback</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">feedback</span><span class="o">.</span><span class="n">to_proto</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">issue</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">assessment</span><span class="o">.</span><span class="n">issue</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">issue</span><span class="o">.</span><span class="n">to_proto</span><span class="p">())</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -397,6 +405,8 @@
             <span class="k">return</span> <span class="n">Expectation</span><span class="o">.</span><span class="n">from_proto</span><span class="p">(</span><span class="n">proto</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">proto</span><span class="o">.</span><span class="n">WhichOneof</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;feedback&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">Feedback</span><span class="o">.</span><span class="n">from_proto</span><span class="p">(</span><span class="n">proto</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">proto</span><span class="o">.</span><span class="n">WhichOneof</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;issue&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">IssueReference</span><span class="o">.</span><span class="n">from_proto</span><span class="p">(</span><span class="n">proto</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Unknown assessment type: </span><span class="si">{</span><span class="n">proto</span><span class="o">.</span><span class="n">WhichOneof</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
@@ -413,6 +423,8 @@
             <span class="k">return</span> <span class="n">Expectation</span><span class="o">.</span><span class="n">from_dictionary</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;feedback&quot;</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">Feedback</span><span class="o">.</span><span class="n">from_dictionary</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;issue&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">IssueReference</span><span class="o">.</span><span class="n">from_dictionary</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Unknown assessment type: </span><span class="si">{</span><span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;assessment_name&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
@@ -721,6 +733,136 @@
 
 
 <span class="n">_JSON_SERIALIZATION_FORMAT</span> <span class="o">=</span> <span class="s2">&quot;JSON_FORMAT&quot;</span>
+
+
+<div class="viewcode-block" id="IssueReference"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.IssueReference">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">IssueReference</span><span class="p">(</span><span class="n">Assessment</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a reference to an issue associated with a trace. This type of assessment</span>
+<span class="sd">    is used internally to link traces to discovered issues.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        issue_id: The ID of the issue this assessment references (stored in assessment name).</span>
+<span class="sd">        issue_name: The name of the issue (stored in the issue value).</span>
+<span class="sd">        source: The source of the assessment. If not provided, the default source is CODE.</span>
+<span class="sd">        trace_id: The ID of the trace associated with the assessment.</span>
+<span class="sd">        run_id: The ID of the run that discovered the issue.</span>
+<span class="sd">        span_id: The ID of the span associated with the assessment, if applicable.</span>
+<span class="sd">        create_time_ms: The creation time of the assessment in milliseconds.</span>
+<span class="sd">        last_update_time_ms: The last update time of the assessment in milliseconds.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">issue_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">issue_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">source</span><span class="p">:</span> <span class="n">AssessmentSource</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">trace_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">run_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">metadata</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">span_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">create_time_ms</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">last_update_time_ms</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="k">if</span> <span class="n">source</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">source</span> <span class="o">=</span> <span class="n">AssessmentSource</span><span class="p">(</span><span class="n">source_type</span><span class="o">=</span><span class="n">AssessmentSourceType</span><span class="o">.</span><span class="n">LLM_JUDGE</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">issue_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span><span class="s2">&quot;The `issue_id` field must be specified.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">issue_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+                <span class="s2">&quot;The `issue_name` field must be specified.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">issue_id</span><span class="p">,</span>
+            <span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">,</span>
+            <span class="n">trace_id</span><span class="o">=</span><span class="n">trace_id</span><span class="p">,</span>
+            <span class="n">run_id</span><span class="o">=</span><span class="n">run_id</span><span class="p">,</span>
+            <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">,</span>
+            <span class="n">span_id</span><span class="o">=</span><span class="n">span_id</span><span class="p">,</span>
+            <span class="n">create_time_ms</span><span class="o">=</span><span class="n">create_time_ms</span><span class="p">,</span>
+            <span class="n">last_update_time_ms</span><span class="o">=</span><span class="n">last_update_time_ms</span><span class="p">,</span>
+            <span class="n">issue</span><span class="o">=</span><span class="n">IssueReferenceValue</span><span class="p">(</span><span class="n">issue_name</span><span class="o">=</span><span class="n">issue_name</span><span class="p">),</span>
+        <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">issue_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+    <span class="nd">@issue_id</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">issue_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">issue_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">issue_id</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">issue_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">issue</span><span class="o">.</span><span class="n">issue_name</span>
+
+    <span class="nd">@issue_name</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">issue_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">issue_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">issue</span><span class="o">.</span><span class="n">issue_name</span> <span class="o">=</span> <span class="n">issue_name</span>
+
+<div class="viewcode-block" id="IssueReference.from_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.IssueReference.from_proto">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;IssueReference&quot;</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.databricks_tracing_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_trace_id_from_assessment_proto</span>
+
+        <span class="n">metadata</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">proto</span><span class="o">.</span><span class="n">metadata</span><span class="p">)</span> <span class="k">if</span> <span class="n">proto</span><span class="o">.</span><span class="n">metadata</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="n">issue_ref</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">trace_id</span><span class="o">=</span><span class="n">get_trace_id_from_assessment_proto</span><span class="p">(</span><span class="n">proto</span><span class="p">),</span>
+            <span class="n">issue_id</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">assessment_name</span><span class="p">,</span>
+            <span class="n">issue_name</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">issue</span><span class="o">.</span><span class="n">issue_name</span><span class="p">,</span>
+            <span class="n">source</span><span class="o">=</span><span class="n">AssessmentSource</span><span class="o">.</span><span class="n">from_proto</span><span class="p">(</span><span class="n">proto</span><span class="o">.</span><span class="n">source</span><span class="p">),</span>
+            <span class="n">create_time_ms</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">create_time</span><span class="o">.</span><span class="n">ToMilliseconds</span><span class="p">(),</span>
+            <span class="n">last_update_time_ms</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">last_update_time</span><span class="o">.</span><span class="n">ToMilliseconds</span><span class="p">(),</span>
+            <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">,</span>
+            <span class="n">span_id</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">span_id</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">issue_ref</span><span class="o">.</span><span class="n">assessment_id</span> <span class="o">=</span> <span class="n">proto</span><span class="o">.</span><span class="n">assessment_id</span> <span class="ow">or</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">issue_ref</span></div>
+
+<div class="viewcode-block" id="IssueReference.from_dictionary"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.IssueReference.from_dictionary">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_dictionary</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;IssueReference&quot;</span><span class="p">:</span>
+        <span class="n">issue_value</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;issue&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">issue_value</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span><span class="s2">&quot;`issue` must exist in the dictionary.&quot;</span><span class="p">)</span>
+
+        <span class="n">issue_ref</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">trace_id</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;trace_id&quot;</span><span class="p">),</span>
+            <span class="n">issue_id</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;assessment_name&quot;</span><span class="p">],</span>
+            <span class="n">issue_name</span><span class="o">=</span><span class="n">issue_value</span><span class="p">[</span><span class="s2">&quot;issue_name&quot;</span><span class="p">],</span>
+            <span class="n">source</span><span class="o">=</span><span class="n">AssessmentSource</span><span class="o">.</span><span class="n">from_dictionary</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]),</span>
+            <span class="n">create_time_ms</span><span class="o">=</span><span class="n">proto_timestamp_to_milliseconds</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;create_time&quot;</span><span class="p">]),</span>
+            <span class="n">last_update_time_ms</span><span class="o">=</span><span class="n">proto_timestamp_to_milliseconds</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;last_update_time&quot;</span><span class="p">]),</span>
+            <span class="n">metadata</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;metadata&quot;</span><span class="p">),</span>
+            <span class="n">span_id</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;span_id&quot;</span><span class="p">),</span>
+        <span class="p">)</span>
+
+        <span class="n">issue_ref</span><span class="o">.</span><span class="n">assessment_id</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;assessment_id&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">run_id</span> <span class="o">:=</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;run_id&quot;</span><span class="p">):</span>
+            <span class="n">issue_ref</span><span class="o">.</span><span class="n">run_id</span> <span class="o">=</span> <span class="n">run_id</span>
+        <span class="k">return</span> <span class="n">issue_ref</span></div></div>
+
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">IssueReferenceValue</span><span class="p">(</span><span class="n">_MlflowObject</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Represents an issue reference value.&quot;&quot;&quot;</span>
+
+    <span class="n">issue_name</span><span class="p">:</span> <span class="nb">str</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ProtoIssueReference</span><span class="p">(</span><span class="n">issue_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">issue_name</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;IssueReferenceValue&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">issue_name</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">issue_name</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;issue_name&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">issue_name</span><span class="p">}</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_dictionary</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">issue_name</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;issue_name&quot;</span><span class="p">])</span>
 
 
 <span class="nd">@dataclass</span>
