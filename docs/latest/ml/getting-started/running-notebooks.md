@@ -145,7 +145,7 @@ Install MLflow with Databricks connectivity:
 bash
 
 ```
-pip install --upgrade "mlflow[databricks]>=3.1"
+pip install --upgrade 'mlflow[databricks]>=3.1'
 ```
 
 <br />
@@ -232,7 +232,7 @@ Databricks runtimes include MLflow, but for the best experience, update to the l
 bash
 
 ```
-%pip install --upgrade "mlflow[databricks]>=3.1"
+%pip install --upgrade 'mlflow[databricks]>=3.1'
 dbutils.library.restartPython()
 ```
 

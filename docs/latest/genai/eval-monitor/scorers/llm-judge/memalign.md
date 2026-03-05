@@ -47,7 +47,7 @@ MemAlign requires additional dependencies:
 bash
 
 ```
-pip install mlflow[genai] dspy jinja2 tqdm
+pip install 'mlflow[genai]' dspy jinja2 tqdm
 ```
 
 ## Basic Usage[​](#basic-usage "Direct link to Basic Usage")

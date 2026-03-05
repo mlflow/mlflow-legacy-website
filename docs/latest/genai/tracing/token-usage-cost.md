@@ -35,7 +35,7 @@ mlflow server
 bash
 
 ```
-uv add mlflow[genai]>=3.10.0
+uv add 'mlflow[genai]>=3.10.0'
 uv run mlflow server
 ```
 

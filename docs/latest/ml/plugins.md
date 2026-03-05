@@ -504,7 +504,7 @@ Store artifacts directly in SQL Server databases:
 bash
 
 ```
-pip install mlflow[sqlserver]
+pip install 'mlflow[sqlserver]'
 ```
 
 python
@@ -527,7 +527,7 @@ Integrate with Aliyun Object Storage Service:
 bash
 
 ```
-pip install mlflow[aliyun-oss]
+pip install 'mlflow[aliyun-oss]'
 ```
 
 python
@@ -552,7 +552,7 @@ Use XetHub for versioned artifact storage:
 bash
 
 ```
-pip install mlflow[xethub]
+pip install 'mlflow[xethub]'
 ```
 
 python
@@ -670,7 +670,7 @@ Enterprise artifact governance:
 bash
 
 ```
-pip install mlflow[jfrog]
+pip install 'mlflow[jfrog]'
 ```
 
 **Key Features:**

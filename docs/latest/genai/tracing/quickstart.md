@@ -257,17 +257,17 @@ For more details on tracking users and sessions, see the [Track Users & Sessions
 
 Congrats on sending your first trace with MLflow! Now that you've got the basics working, here are the recommended next steps to deepen your understanding of tracing:
 
+### [Evaluation Quickstart](/docs/latest/genai/eval-monitor/quickstart.md)
+
+[Learn how to systematically evaluate your GenAI application's quality with LLM judges and automated testing](/docs/latest/genai/eval-monitor/quickstart.md)
+
+[Start evaluating →](/docs/latest/genai/eval-monitor/quickstart.md)
+
 ### [Automatic Tracing](/docs/latest/genai/tracing/app-instrumentation/automatic.md)
 
 [Explore one-line automatic tracing for popular GenAI libraries and frameworks](/docs/latest/genai/tracing/app-instrumentation/automatic.md)
 
 [Enable auto-tracing →](/docs/latest/genai/tracing/app-instrumentation/automatic.md)
-
-### [Tracing UI](/docs/latest/genai/tracing/observe-with-traces/ui.md)
-
-[Learn how to explore and analyze your traces in the MLflow UI](/docs/latest/genai/tracing/observe-with-traces/ui.md)
-
-[View traces →](/docs/latest/genai/tracing/observe-with-traces/ui.md)
 
 ### [Quality Test Traces](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 

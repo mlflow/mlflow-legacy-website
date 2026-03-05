@@ -84,6 +84,47 @@ Before enabling workspaces, confirm that existing experiment artifact locations 
 * Call `GET /api/3.0/mlflow/server-info` to check `workspaces_enabled`.
 * The endpoint is reachable without a workspace header; a `404` indicates an older server without workspace support.
 
+## Authentication Configuration for Workspaces[​](#authentication-configuration-for-workspaces "Direct link to Authentication Configuration for Workspaces")
+
+When using workspaces with basic-auth (`--app-name basic-auth`), additional settings in the [auth config file](/docs/latest/self-hosting/security/basic-http-auth.md#configuration) (`basic_auth.ini`) control workspace-level permission behavior.
+
+| Setting                          | Default | Description                                                                                                                                                                                                   |
+| -------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `grant_default_workspace_access` | `false` | When `true`, all users inherit `default_permission` for the reserved `default` workspace (pre-workspaces behavior). When `false`, users need explicit workspace permissions even for the `default` workspace. |
+| `workspace_cache_max_size`       | `10000` | Maximum entries in the resource-to-workspace lookup cache used for permission checks.                                                                                                                         |
+| `workspace_cache_ttl_seconds`    | `3600`  | TTL in seconds for cached resource-to-workspace lookups.                                                                                                                                                      |
+
+### `grant_default_workspace_access`[​](#grant_default_workspace_access "Direct link to grant_default_workspace_access")
+
+This setting controls how the reserved `default` workspace interacts with `default_permission`.
+
+* **`false` (default)**: The `default` workspace does not inherit `default_permission`. Users must be granted explicit workspace permissions to access resources, even in the `default` workspace. This is the most secure option for new deployments.
+* **`true`**: The `default` workspace inherits `default_permission` for all authenticated users. The `default` workspace also appears in `mlflow.list_workspaces()` results for every user.
+
+Recommendation for existing instances
+
+If you are enabling workspaces on an existing MLflow instance that already uses basic-auth, set `grant_default_workspace_access = true` for backwards compatibility. Without this, all existing resources (which live in the `default` workspace) will become inaccessible to non-admin users who lack explicit workspace permissions.
+
+Example configuration:
+
+basic\_auth.ini
+
+ini
+
+```
+[mlflow]
+default_permission = READ
+database_uri = sqlite:///basic_auth.db
+admin_username = admin
+admin_password = password1234
+authorization_function = mlflow.server.auth:authenticate_request_basic_auth
+# Default secure setting for new deployments; for existing instances upgrading to workspaces,
+# set this to true for backwards compatibility (see note above).
+grant_default_workspace_access = false
+workspace_cache_max_size = 10000
+workspace_cache_ttl_seconds = 3600
+```
+
 ## Environment Variables[​](#environment-variables "Direct link to Environment Variables")
 
 | Variable                     | Description                                                                  | Default                                    |

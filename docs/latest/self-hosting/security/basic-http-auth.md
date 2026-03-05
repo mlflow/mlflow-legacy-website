@@ -17,7 +17,7 @@ First, install all dependencies required for the basic auth app:
 bash
 
 ```
-pip install mlflow[auth]
+pip install 'mlflow[auth]'
 ```
 
 note
