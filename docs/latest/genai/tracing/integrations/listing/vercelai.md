@@ -113,7 +113,7 @@ main.ts
 typescript
 
 ```
-import { init } from "mlflow-tracing";
+import { init } from "@mlflow/core";
 import { generateText } from "ai";
 import { openai } from "@ai-sdk/openai";
 import { NodeSDK } from '@opentelemetry/sdk-node';
