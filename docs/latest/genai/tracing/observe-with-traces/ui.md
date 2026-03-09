@@ -1,8 +1,8 @@
 # MLflow Tracing UI
 
-## GenAI Experiment Overview[​](#genai-experiment-overview "Direct link to GenAI Experiment Overview")
+## LLM and AI Agent Experiment Overview[​](#llm-and-ai-agent-experiment-overview "Direct link to LLM and AI Agent Experiment Overview")
 
-The **Overview** tab in GenAI experiments provides comprehensive analytics and visualizations for your GenAI application traces. This tab is organized into three sub-tabs to help you monitor different aspects of your application.
+The **Overview** tab in LLM and AI agent experiments provides comprehensive analytics and visualizations for your LLM application and AI agent traces. This tab is organized into three sub-tabs to help you monitor different aspects of your application.
 
 All tabs include a **time range selector** and **time unit selector** to customize the granularity and range of the displayed data.
 
@@ -21,7 +21,7 @@ The Usage tab displays key metrics about your trace requests over time:
 
 ### Quality[​](#quality "Direct link to Quality")
 
-The Quality tab provides insights into the quality of your GenAI outputs:
+The Quality tab provides insights into the quality of your LLM and AI agent outputs:
 
 * **Quality Summary**: Provides overview of scorers result
 * **Quality Insights**: Displays metrics computed by [scorers](/docs/latest/genai/eval-monitor/scorers.md), with a dedicated chart for each assessment type
@@ -69,6 +69,111 @@ You can also edit key-value tags on your traces via the UI.
 In order to browse the span data of an individual trace, simply click on the link in the "Trace ID" or "Trace name" columns to open the trace viewer:
 
 [](/docs/latest/images/llms/tracing/tracing-top.mp4)
+
+## Multimodal Content[​](#multimodal-content "Direct link to Multimodal Content")
+
+The MLflow Trace UI supports rendering multimodal content in chat-style spans, including images and audio.
+
+### Images[​](#images "Direct link to Images")
+
+When traced LLM calls include image content parts (using the `image_url` type), images are rendered inline within chat messages in the trace viewer. Both URLs and base64-encoded data URIs are supported.
+
+python
+
+```
+import mlflow
+import openai
+
+mlflow.openai.autolog()
+
+client = openai.OpenAI()
+
+response = client.chat.completions.create(
+    model="gpt-4o",
+    messages=[
+        {
+            "role": "user",
+            "content": [
+                {"type": "text", "text": "What's in this image?"},
+                {
+                    "type": "image_url",
+                    "image_url": {"url": "https://example.com/image.png"},
+                },
+            ],
+        }
+    ],
+)
+```
+
+![Image content rendered inline in the trace viewer](/docs/latest/assets/images/trace-image-content-a17f5ef35bd737c5ccd1c9927b6e1177.png)
+
+### Audio[​](#audio "Direct link to Audio")
+
+When traced LLM calls include audio content parts (using the `input_audio` type), the trace UI renders an inline audio player so you can play back the audio directly. Supported formats are **WAV** and **MP3**.
+
+python
+
+```
+import base64
+import mlflow
+import openai
+
+mlflow.openai.autolog()
+
+client = openai.OpenAI()
+
+# Read audio file and encode as base64
+with open("audio.wav", "rb") as f:
+    audio_data = base64.b64encode(f.read()).decode("utf-8")
+
+response = client.chat.completions.create(
+    model="gpt-4o-audio-preview",
+    messages=[
+        {
+            "role": "user",
+            "content": [
+                {"type": "text", "text": "What is in this audio?"},
+                {
+                    "type": "input_audio",
+                    "input_audio": {"data": audio_data, "format": "wav"},
+                },
+            ],
+        }
+    ],
+)
+```
+
+![Audio content rendered with an inline player in the trace viewer](/docs/latest/assets/images/trace-audio-player-9cff82ff97b49b3b9f962c06023214b2.png)
+
+### Manual Tracing with Multimodal Content[​](#manual-tracing-with-multimodal-content "Direct link to Manual Tracing with Multimodal Content")
+
+You can also attach multimodal content to spans when using [manual tracing](/docs/latest/genai/tracing/app-instrumentation/manual-tracing.md). Set the `mlflow.chat.messages` span attribute with content parts following the OpenAI format:
+
+python
+
+```
+import mlflow
+
+with mlflow.start_span(name="multimodal-span", span_type="llm") as span:
+    span.set_attribute(
+        "mlflow.chat.messages",
+        [
+            {
+                "role": "user",
+                "content": [
+                    {"type": "text", "text": "Describe this audio"},
+                    {
+                        "type": "input_audio",
+                        "input_audio": {
+                            "data": "<base64-encoded-audio>",
+                            "format": "wav",
+                        },
+                    },
+                ],
+            }
+        ],
+    )
+```
 
 ## Jupyter Notebook integration[​](#jupyter-notebook-integration "Direct link to Jupyter Notebook integration")
 

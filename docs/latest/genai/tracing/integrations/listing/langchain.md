@@ -78,12 +78,10 @@ prompt_template = PromptTemplate.from_template(
 chain = prompt_template | llm | StrOutputParser()
 
 # Let's test another call
-chain.invoke(
-    {
-        "person": "Linus Torvalds",
-        "question": "Can I just set everyone's access to sudo to make things easier?",
-    }
-)
+chain.invoke({
+    "person": "Linus Torvalds",
+    "question": "Can I just set everyone's access to sudo to make things easier?",
+})
 ```
 
 ### 5. View the trace in the MLflow UI[​](#5-view-the-trace-in-the-mlflow-ui "Direct link to 5. View the trace in the MLflow UI")

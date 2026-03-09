@@ -1,6 +1,6 @@
 # Evaluating Prompts
 
-Prompts are the core components of GenAI applications. However, iterating over prompts can be challenging because it is hard to know if the new prompt is better than the old one. MLflow provides a framework to systematically evaluate prompt templates and track performance over time.
+Prompts are the core components of LLM applications and AI agents. However, iterating over prompts can be challenging because it is hard to know if the new prompt is better than the old one. MLflow provides a framework to systematically evaluate prompt templates and track performance over time.
 
 ![Prompt Evaluation](/docs/latest/images/mlflow-3/eval-monitor/prompt-evaluation-hero.png)
 
@@ -121,16 +121,12 @@ python
 eval_dataset = [
     {
         "inputs": {"question": "What causes rain?"},
-        "expectations": {
-            "key_concepts": ["evaporation", "condensation", "precipitation"]
-        },
+        "expectations": {"key_concepts": ["evaporation", "condensation", "precipitation"]},
         "tags": {"topic": "weather"},
     },
     {
         "inputs": {"question": "Explain the difference between AI and ML"},
-        "expectations": {
-            "key_concepts": ["artificial intelligence", "machine learning", "subset"]
-        },
+        "expectations": {"key_concepts": ["artificial intelligence", "machine learning", "subset"]},
         "tags": {"topic": "technology"},
     },
     {
@@ -158,9 +154,7 @@ def predict_fn(question: str) -> str:
     prompt = mlflow.genai.load_prompt("prompts:/qa_prompt@latest")
     rendered_prompt = prompt.format(question=question)
 
-    response = client.chat.completions.create(
-        model="gpt-4.1-mini", messages=rendered_prompt
-    )
+    response = client.chat.completions.create(model="gpt-4.1-mini", messages=rendered_prompt)
     return response.choices[0].message.content
 ```
 

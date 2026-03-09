@@ -8,21 +8,11 @@ Welcome to the developer guide for the integration of [LangChain](https://www.la
 
 [LangChain](https://www.langchain.com/) is a versatile framework designed for building applications powered by language models. It excels in creating context-aware applications that utilize language models for reasoning and generating responses, enabling the development of sophisticated NLP applications.
 
-[LangGraph](https://langchain-ai.github.io/langgraph/) is a complementary agent-based framework from the creators of Langchain, supporting the creation of stateful agent and multi-agent GenAI applications. LangGraph utilizes LangChain in order to interface with GenAI agent components.
+[LangGraph](https://langchain-ai.github.io/langgraph/) is a complementary agent-based framework from the creators of Langchain, supporting the creation of stateful agent and multi-agent AI applications. LangGraph utilizes LangChain in order to interface with LLM and AI agent components.
 
 ## Why use MLflow with LangChain?[​](#why-use-mlflow-with-langchain "Direct link to Why use MLflow with LangChain?")
 
-Aside from the benefits of using MLflow for managing and deploying machine learning models, the integration of LangChain with MLflow provides a number of benefits that are associated with using LangChain within the broader MLflow ecosystem.
-
-### Experiment Tracking[​](#experiment-tracking "Direct link to Experiment Tracking")
-
-LangChain's flexibility in experimenting with various agents, tools, and retrievers becomes even more powerful when paired with [MLflow Tracking](/docs/latest/ml/tracking.md). This combination allows for rapid experimentation and iteration. You can effortlessly compare runs, making it easier to refine models and accelerate the journey from development to production deployment.
-
-### Dependency Management[​](#dependency-management "Direct link to Dependency Management")
-
-Deploy your LangChain application with confidence, leveraging MLflow's ability to [manage and record code and environment dependencies](/docs/latest/ml/model/dependencies.md) automatically. You can also explicitly declare external resource dependencies, like the LLM serving endpoint or vector search index queried by your LangChain application. These dependencies are tracked by MLflow as model metadata, so that downstream serving systems can ensure authentication from your deployed LangChain application to these dependent resources just works.
-
-These features ensure consistency between development and production environments, reducing deployment risks with less manual intervention.
+MLflow gives you complete visibility into your LangChain agents and applications, with built-in tools for tracing, evaluation, and deployment.
 
 ### MLflow Evaluate[​](#mlflow-evaluate "Direct link to MLflow Evaluate")
 
@@ -318,9 +308,7 @@ python
 ```
 import mlflow
 
-input_example = {
-    "messages": [{"role": "user", "content": "what is the weather in seattle today?"}]
-}
+input_example = {"messages": [{"role": "user", "content": "what is the weather in seattle today?"}]}
 
 with mlflow.start_run():
     model_info = mlflow.langchain.log_model(
@@ -362,9 +350,9 @@ import os
 from operator import itemgetter
 from langchain.schema.runnable import RunnablePassthrough
 
-model = RunnablePassthrough.assign(
-    problem=lambda x: x["messages"][-1]["content"]
-) | itemgetter("problem")
+model = RunnablePassthrough.assign(problem=lambda x: x["messages"][-1]["content"]) | itemgetter(
+    "problem"
+)
 
 input_example = {
     "messages": [
@@ -380,9 +368,7 @@ assert model.invoke(input_example) == "Hello"
 # set this environment variable to avoid input conversion
 os.environ["MLFLOW_CONVERT_MESSAGES_DICT_FOR_LANGCHAIN"] = "false"
 with mlflow.start_run():
-    model_info = mlflow.langchain.log_model(
-        model, name="model", input_example=input_example
-    )
+    model_info = mlflow.langchain.log_model(model, name="model", input_example=input_example)
 
 pyfunc_model = mlflow.pyfunc.load_model(model_info.model_uri)
 assert pyfunc_model.predict(input_example) == ["Hello"]

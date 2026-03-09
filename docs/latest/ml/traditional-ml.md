@@ -1,6 +1,6 @@
 # MLflow for Traditional Machine Learning
 
-MLflow provides comprehensive experiment tracking, model management, and deployment capabilities for traditional machine learning workflows. From scikit-learn pipelines to gradient boosting models, MLflow streamlines your path from experimentation to production.
+MLflow for ML Models provides comprehensive experiment tracking, model management, and deployment capabilities for traditional machine learning workflows. From scikit-learn pipelines to gradient boosting models, MLflow streamlines your path from experimentation to production.
 
 ## Get Started[​](#get-started "Direct link to Get Started")
 

@@ -56,7 +56,7 @@ pip install 'mlflow[genai]' openai
 bash
 
 ```
-npm install mlflow-openai openai
+npm install @mlflow/openai openai
 ```
 
 2
@@ -80,7 +80,7 @@ mlflow.set_experiment("<your-databricks-workspace>")
 typescript
 
 ```
-import * as mlflow from "mlflow-tracing";
+import * as mlflow from "@mlflow/core";
 
 mlflow.init({
   trackingUri: "databricks",
@@ -130,7 +130,7 @@ Initialize MLflow tracing with `init()` and wrap the OpenAI client with the `tra
 typescript
 
 ```
-import { tracedOpenAI } from "mlflow-openai";
+import { tracedOpenAI } from "@mlflow/openai";
 import { OpenAI } from "openai";
 
 // Wrap the OpenAI client pointing to Databricks AI Gateway

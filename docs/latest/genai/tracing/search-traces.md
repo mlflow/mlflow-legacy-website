@@ -55,7 +55,7 @@ The `search_traces` API uses a SQL-like Domain Specific Language (DSL) for query
 | **String Fields**    | `trace.client_request_id`, `trace.name`                              | `=`, `!=`, `LIKE`, `ILIKE`, `RLIKE`                           | trace.name LIKE "%Generate%"        |
 | **Linked Prompts**   | `prompt`                                                             | `=` (format: `"name/version"`)                                | prompt = "qa-system-prompt/4"       |
 | **Span Name/Type**   | `span.name`, `span.type`                                             | `=`, `!=`, `LIKE`, `ILIKE`, `RLIKE`                           | span.type RLIKE "^LLM"              |
-| **Tags**             | `tag.<key>`                                                          | `=`, `!=`, `LIKE`, `ILIKE`, `RLIKE`                           | tag.key = "value"                   |
+| **Tags**             | `tag.<key>`                                                          | `=`, `!=`, `LIKE`, `ILIKE`, `RLIKE`, `IS NULL`, `IS NOT NULL` | tag.key = "value"                   |
 | **Metadata**         | `metadata.<key>`                                                     | `=`, `!=`, `LIKE`, `ILIKE`, `RLIKE`, `IS NULL`, `IS NOT NULL` | metadata.user\_id LIKE "user%"      |
 | **Feedback**         | `feedback.<name>`                                                    | `=`, `!=`, `LIKE`, `ILIKE`, `RLIKE`                           | feedback.rating = "excellent"       |
 | **Expectations**     | `expectation.<name>`                                                 | `=`, `!=`, `LIKE`, `ILIKE`, `RLIKE`                           | expectation.result = "pass"         |
@@ -176,6 +176,15 @@ mlflow.search_traces(filter_string="tag.environment ILIKE '%prod%'")
 
 # Regular expression matching with RLIKE
 mlflow.search_traces(filter_string="tag.version RLIKE '^v[0-9]+\\.[0-9]+'")
+
+# Find traces where a tag key exists
+mlflow.search_traces(filter_string="tag.model_name IS NOT NULL")
+
+# Find traces where a tag key is missing
+mlflow.search_traces(filter_string="tag.environment IS NULL")
+
+# Combine null checks with other filters
+mlflow.search_traces(filter_string="tag.environment IS NOT NULL AND tag.model_name = 'gpt-4'")
 ```
 
 #### Filter by Metadata[​](#filter-by-metadata "Direct link to Filter by Metadata")
@@ -193,9 +202,7 @@ mlflow.search_traces(filter_string="metadata.session_id IS NOT NULL")
 mlflow.search_traces(filter_string="metadata.region IS NULL")
 
 # Combine null checks with other filters
-mlflow.search_traces(
-    filter_string="metadata.region IS NOT NULL AND metadata.env = 'production'"
-)
+mlflow.search_traces(filter_string="metadata.region IS NOT NULL AND metadata.env = 'production'")
 ```
 
 #### Filter by Run Association[​](#filter-by-run-association "Direct link to Filter by Run Association")
@@ -325,9 +332,7 @@ import mlflow
 traces_df = mlflow.search_traces(filter_string="trace.status = 'OK'")
 
 # Return as list of Trace objects
-traces_list = mlflow.search_traces(
-    filter_string="trace.status = 'OK'", return_type="list"
-)
+traces_list = mlflow.search_traces(filter_string="trace.status = 'OK'", return_type="list")
 ```
 
 note

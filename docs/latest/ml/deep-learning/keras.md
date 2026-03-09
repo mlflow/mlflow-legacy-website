@@ -43,13 +43,11 @@ X_train = np.random.rand(1000, 20)
 y_train = np.random.randint(0, 2, 1000)
 
 # Define model
-model = keras.Sequential(
-    [
-        keras.layers.Dense(64, activation="relu", input_shape=(20,)),
-        keras.layers.Dense(32, activation="relu"),
-        keras.layers.Dense(1, activation="sigmoid"),
-    ]
-)
+model = keras.Sequential([
+    keras.layers.Dense(64, activation="relu", input_shape=(20,)),
+    keras.layers.Dense(32, activation="relu"),
+    keras.layers.Dense(1, activation="sigmoid"),
+])
 
 model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
 
@@ -89,12 +87,10 @@ X_train = np.random.rand(100, 20)
 y_train = np.random.randint(0, 2, 100)
 
 # Define and compile model
-model = keras.Sequential(
-    [
-        keras.layers.Dense(64, activation="relu", input_shape=(20,)),
-        keras.layers.Dense(1, activation="sigmoid"),
-    ]
-)
+model = keras.Sequential([
+    keras.layers.Dense(64, activation="relu", input_shape=(20,)),
+    keras.layers.Dense(1, activation="sigmoid"),
+])
 
 model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
 
@@ -120,13 +116,12 @@ python
 import mlflow
 from tensorflow import keras
 
+
 # Define model
-model = keras.Sequential(
-    [
-        keras.layers.Dense(64, activation="relu", input_shape=(20,)),
-        keras.layers.Dense(1, activation="sigmoid"),
-    ]
-)
+model = keras.Sequential([
+    keras.layers.Dense(64, activation="relu", input_shape=(20,)),
+    keras.layers.Dense(1, activation="sigmoid"),
+])
 
 # Train model (code omitted for brevity)
 
@@ -151,14 +146,12 @@ from mlflow import MlflowClient
 
 with mlflow.start_run():
     # Create a simple model for demonstration
-    model = keras.Sequential(
-        [
-            keras.layers.Conv2D(32, 3, activation="relu", input_shape=(28, 28, 1)),
-            keras.layers.MaxPooling2D(2),
-            keras.layers.Flatten(),
-            keras.layers.Dense(10, activation="softmax"),
-        ]
-    )
+    model = keras.Sequential([
+        keras.layers.Conv2D(32, 3, activation="relu", input_shape=(28, 28, 1)),
+        keras.layers.MaxPooling2D(2),
+        keras.layers.Flatten(),
+        keras.layers.Dense(10, activation="softmax"),
+    ])
 
     # Log model to registry
     model_info = mlflow.tensorflow.log_model(

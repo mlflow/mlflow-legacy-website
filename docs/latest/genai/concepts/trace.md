@@ -4,7 +4,7 @@
 
 Tracing is an observability technique that captures the complete execution flow of a request through your application. Unlike traditional logging that captures discrete events, tracing creates a detailed map of how data flows through your system, recording every operation, transformation, and decision point.
 
-In the context of GenAI applications, tracing becomes essential because these systems involve complex, multi-step workflows that are difficult to debug and optimize without complete visibility into their execution.
+In the context of LLM applications and AI agents, tracing becomes essential because these systems involve complex, multi-step workflows that are difficult to debug and optimize without complete visibility into their execution.
 
 ![Trace Example](/docs/latest/images/llms/tracing/genai-trace-debug.png)
 
@@ -14,7 +14,7 @@ Example of a Trace for a Tool Calling Agent
 
 #### Debugging
 
-Tracing provides deep insights into what happens beneath the abstractions of GenAI libraries, helping you precisely identify where issues occur.
+Tracing provides deep insights into what happens beneath the abstractions of LLM and AI agent frameworks, helping you precisely identify where issues occur.
 
 #### Quality Checks
 
@@ -40,7 +40,7 @@ At a high level, an MLflow **Trace** is composed of two primary objects:
 
 MLflow Trace Architecture Overview
 
-MLflow Traces are designed to be compatible with **OpenTelemetry** specifications, a widely adopted industry standard for observability. This ensures interoperability and allows MLflow Traces to be exported and used with other OpenTelemetry-compatible systems. MLflow enhances the basic OpenTelemetry Span model by defining specific structures and attributes for Generative AI use cases, providing richer context and deeper insight into quality and performance.
+MLflow Traces are designed to be compatible with **OpenTelemetry** specifications, a widely adopted industry standard for observability. This ensures interoperability and allows MLflow Traces to be exported and used with other OpenTelemetry-compatible systems. MLflow enhances the basic OpenTelemetry Span model by defining specific structures and attributes for LLM and AI agent use cases, providing richer context and deeper insight into quality and performance.
 
 ### TraceInfo: Metadata and Context[​](#traceinfo-metadata-and-context "Direct link to TraceInfo: Metadata and Context")
 
