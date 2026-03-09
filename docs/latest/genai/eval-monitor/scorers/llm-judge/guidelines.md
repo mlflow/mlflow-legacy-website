@@ -1,6 +1,6 @@
 # Create a guidelines LLM Judge
 
-Guidelines LLM judges use pass/fail natural language criteria to evaluate GenAI outputs. They excel at evaluating:
+Guidelines LLM judges use pass/fail natural language criteria to evaluate LLM application and AI agent outputs. They excel at evaluating:
 
 * **Compliance**: "Must not include pricing information"
 * **Style/tone**: "Maintain professional, empathetic tone"
@@ -158,9 +158,7 @@ data = [
     {
         "inputs": {"question": "How to learn Python?"},
         "outputs": "You can read a book or take a course.",
-        "expectations": {
-            "guidelines": ["The response must be helpful and encouraging"]
-        },
+        "expectations": {"guidelines": ["The response must be helpful and encouraging"]},
     },
 ]
 
@@ -431,9 +429,7 @@ document_extraction_data = [
 ]
 
 
-results = mlflow.genai.evaluate(
-    data=document_extraction_data, scorers=[ExpectationsGuidelines()]
-)
+results = mlflow.genai.evaluate(data=document_extraction_data, scorers=[ExpectationsGuidelines()])
 ```
 
 ## Select the LLM that powers the judge[​](#select-the-llm-that-powers-the-judge "Direct link to Select the LLM that powers the judge")

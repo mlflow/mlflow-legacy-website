@@ -1,12 +1,12 @@
-# Evaluating LLMs/Agents with MLflow
+# Evaluating LLMs and Agents with MLflow
 
-MLflow's evaluation and monitoring capabilities help you systematically measure, improve, and maintain the quality of your GenAI applications throughout their lifecycle from development through production.
+MLflow's evaluation and monitoring capabilities help you systematically measure, improve, and maintain the quality of your LLM applications and AI agents throughout their lifecycle from development through production.
 
 [](/docs/latest/images/mlflow-3/eval-monitor/evaluation-result-video.mp4)
 
 <br />
 
-**Try MLflow GenAI Demo**<br />The quickest way to learn about MLflow GenAI is to try the demo. Click to see how to launch the demo ↓
+**Try the MLflow LLMs and Agents Demo**<br />The quickest way to learn about MLflow for LLMs and AI Agents is to try the demo. **Click to launch the demo ↓**
 
 #### **Starting from UI**[​](#starting-from-ui "Direct link to starting-from-ui")
 
@@ -24,7 +24,7 @@ bash
 uvx mlflow demo
 ```
 
-A core tenet of MLflow's evaluation capabilities is **Evaluation-Driven Development**. This is an emerging practice to tackle the challenge of building high-quality LLM/Agentic applications. MLflow is an **end-to-end** platform that is designed to support this practice and help you deploy AI applications with confidence.
+A core tenet of MLflow's evaluation capabilities is **Evaluation-Driven Development**. This is an emerging practice to tackle the challenge of building high-quality LLM/Agentic applications. MLflow is an open source AI engineering platform that is designed to support this practice and help you quickly build production-quality AI agents and LLM applications.
 
 ![Evaluation Driven Development](/docs/latest/images/mlflow-3/eval-monitor/evaluation-driven-development.png)
 
@@ -38,7 +38,7 @@ A core tenet of MLflow's evaluation capabilities is **Evaluation-Driven Developm
 
 #### Create and maintain a High-Quality Dataset[​](#create-and-maintain-a-high-quality-dataset "Direct link to Create and maintain a High-Quality Dataset")
 
-Before you can evaluate your GenAI application, you need test data. **Evaluation Datasets** provide a centralized repository for managing test cases, ground truth expectations, and evaluation data at scale.
+Before you can evaluate your LLM application or AI agent, you need test data. **Evaluation Datasets** provide a centralized repository for managing test cases, ground truth expectations, and evaluation data at scale.
 
 Think of Evaluation Datasets as your "test database" - a single source of truth for all the data needed to evaluate your AI systems. They transform ad-hoc testing into systematic quality assurance.
 
@@ -48,7 +48,7 @@ Think of Evaluation Datasets as your "test database" - a single source of truth 
 
 #### Track Annotation and Human Feedbacks[​](#track-annotation-and-human-feedbacks "Direct link to Track Annotation and Human Feedbacks")
 
-Human feedback is essential for building high-quality GenAI applications that meet user expectations. MLflow supports collecting, managing, and utilizing feedback from end-users and domain experts.
+Human feedback is essential for building high-quality LLM applications and AI agents that meet user expectations. MLflow supports collecting, managing, and utilizing feedback from end-users and domain experts.
 
 Feedbacks are attached to traces and recorded with metadata, including user, timestamp, revisions, etc.
 
@@ -58,7 +58,7 @@ Feedbacks are attached to traces and recorded with metadata, including user, tim
 
 #### Scale Quality Assessment with Automation[​](#scale-quality-assessment-with-automation "Direct link to Scale Quality Assessment with Automation")
 
-Quality assessment is a critical part of building high-quality GenAI applications, however, it is often time-consuming and requires human expertise. LLMs are powerful tools to automate quality assessment.
+Quality assessment is a critical part of building high-quality LLM applications and AI agents, however, it is often time-consuming and requires human expertise. LLMs are powerful tools to automate quality assessment.
 
 MLflow offers various built-in LLM-as-a-Judge scorers to help automate the process, as well as a flexible toolset to build your own LLM judges with ease.
 
@@ -68,9 +68,9 @@ MLflow offers various built-in LLM-as-a-Judge scorers to help automate the proce
 
 #### Evaluate and Enhance quality[​](#evaluate-and-enhance-quality "Direct link to Evaluate and Enhance quality")
 
-Systematically assessing and improving the quality of GenAI applications is a challenge. MLflow provides a comprehensive set of tools to help you evaluate and enhance the quality of your applications.
+Systematically assessing and improving the quality of LLM applications and AI agents is a challenge. MLflow provides a comprehensive set of tools to help you evaluate and enhance the quality of your applications.
 
-Being the industry's most-trusted experiment tracking platform, MLflow provides a strong foundation for tracking your evaluation results and effectively collaborating with your team.
+Being the industry's most-trusted open source AI engineering platform for agents and LLM applications, MLflow provides a strong foundation for tracking your evaluation results and effectively collaborating with your team.
 
 [Learn more →](/docs/latest/genai/eval-monitor/quickstart.md)
 
@@ -78,7 +78,7 @@ Being the industry's most-trusted experiment tracking platform, MLflow provides 
 
 #### Monitor Applications in Production[​](#monitor-applications-in-production "Direct link to Monitor Applications in Production")
 
-Understanding and optimizing GenAI application performance is crucial for efficient operations. MLflow Tracing captures key metrics like latency and token usage at each step, as well as various quality metrics, helping you identify bottlenecks, monitor efficiency, and find optimization opportunities.
+Understanding and optimizing LLM application and AI agent performance is crucial for efficient operations. MLflow Tracing captures key metrics like latency and token usage at each step, as well as various quality metrics, helping you identify bottlenecks, monitor efficiency, and find optimization opportunities.
 
 [Learn more →](/docs/latest/genai/tracing/prod-tracing.md)
 
@@ -130,9 +130,7 @@ dataset = [
     },
     {
         "inputs": {"question": "Can MLflow create a taco for my lunch?"},
-        "expectations": {
-            "expected_response": "No, unfortunately, MLflow is not a taco maker."
-        },
+        "expectations": {"expected_response": "No, unfortunately, MLflow is not a taco maker."},
     },
 ]
 
@@ -160,7 +158,7 @@ results = mlflow.genai.evaluate(
 
 ## Review the results[​](#review-the-results "Direct link to Review the results")
 
-Open the MLflow UI to review the evaluation results. If you are using OSS MLflow, you can use the following command to start the UI:
+Open the MLflow UI to review the evaluation results. You can use the following command to start the UI:
 
 bash
 
@@ -168,7 +166,7 @@ bash
 mlflow server --port 5000
 ```
 
-If you are using cloud-based MLflow, open the experiment page in the platform. You should see a new evaluation run is created under the "Runs" tab. Click on the run name to view the evaluation results.
+You should see a new evaluation run is created under the "Runs" tab. Click on the run name to view the evaluation results.
 
 ![Evaluation Results](/docs/latest/images/mlflow-3/eval-monitor/quickstart-eval-hero.png)
 

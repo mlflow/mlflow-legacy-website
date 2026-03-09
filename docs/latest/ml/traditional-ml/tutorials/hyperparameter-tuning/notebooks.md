@@ -30,7 +30,7 @@ There is a challenge at the end of this notebook that encourages you to explore 
 
 ## Supplementary Notebook - Logging Plots in MLflow[​](#supplementary-notebook---logging-plots-in-mlflow "Direct link to Supplementary Notebook - Logging Plots in MLflow")
 
-This notebook shows best practices around logging important plots associated with the machine learning lifecycle. From data investigation and reporting plots to model evaluation plots, we delve into the native support that MLflow has for logging the plots that are critical for ensuring provenance and observability of your modeling activities.
+This notebook shows best practices around logging important plots associated with the ML model development workflow. From data investigation and reporting plots to model evaluation plots, we delve into the native support that MLflow has for logging the plots that are critical for ensuring provenance and observability of your modeling activities.
 
 note
 

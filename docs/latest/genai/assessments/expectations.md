@@ -1,6 +1,6 @@
 # Ground Truth Expectations
 
-MLflow Expectations provide a systematic way to capture ground truth - the correct or desired outputs that your AI should produce. By establishing these reference points, you create the foundation for meaningful evaluation and continuous improvement of your GenAI applications.
+MLflow Expectations provide a systematic way to capture ground truth - the correct or desired outputs that your AI should produce. By establishing these reference points, you create the foundation for meaningful evaluation and continuous improvement of your LLM applications and AI agents.
 
 For complete API documentation and implementation details, see the [`mlflow.log_expectation()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.log_expectation) reference.
 
@@ -16,7 +16,7 @@ Before using the [Expectations API](/docs/latest/api_reference/python_api/mlflow
 
 * MLflow 3.2.0 or later installed
 * An active MLflow tracking server or local tracking setup
-* Traces that have been logged from your GenAI application to an MLflow Experiment
+* Traces that have been logged from your LLM application or AI agent to an MLflow Experiment
 
 ## Why Annotate Ground Truth?[​](#why-annotate-ground-truth "Direct link to Why Annotate Ground Truth?")
 
@@ -411,9 +411,7 @@ python
 
 ```
 # Delete specific expectation
-mlflow.delete_assessment(
-    trace_id="tr-1234567890abcdef", assessment_id="a-5555666677778888"
-)
+mlflow.delete_assessment(trace_id="tr-1234567890abcdef", assessment_id="a-5555666677778888")
 ```
 
 ## Integration with Evaluation[​](#integration-with-evaluation "Direct link to Integration with Evaluation")
@@ -441,6 +439,6 @@ Expectations are most powerful when combined with systematic evaluation:
 
 ### [LLM Evaluation](/docs/latest/genai/eval-monitor.md)
 
-[Learn how to systematically evaluate and improve your GenAI applications](/docs/latest/genai/eval-monitor.md)
+[Learn how to systematically evaluate and improve your LLM applications and AI agents](/docs/latest/genai/eval-monitor.md)
 
 [Start evaluating →](/docs/latest/genai/eval-monitor.md)

@@ -6,7 +6,7 @@ Need help with this setup? Try [MLflow Assistant](/docs/latest/genai/getting-sta
 
 MLflow is open source, and you can set up the MLflow server using either `pip` or `docker`.
 
-Before you can leverage MLflow for your GenAI application development, you must first start the MLflow server.
+Before you can leverage MLflow for your LLM application and AI agent development, you must first start the MLflow server.
 
 * Local (uv)
 * Local (pip)
@@ -60,6 +60,6 @@ If you are using MLflow on Databricks, please visit [this](https://docs.databric
 
 ## Next Step[​](#next-step "Direct link to Next Step")
 
-Now that you have started the MLflow server, let's start tracing your GenAI application.
+Now that you have started the MLflow server, let's start tracing your LLM application or AI agent.
 
-Follow [this quickstart](/docs/latest/genai/tracing/quickstart.md) to send your GenAI application traces to the MLflow server.
+Follow [this quickstart](/docs/latest/genai/tracing/quickstart.md) to send your LLM application or AI agent traces to the MLflow server.

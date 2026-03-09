@@ -35,7 +35,7 @@ These examples show how to set up LLM judges that automatically evaluate traces 
 
 note
 
-* Automatic evaluation only supports [LLM judges](/docs/latest/genai/eval-monitor/scorers.md#llms-as-judges). Code-based scorers (using the [`@scorer` decorator](/docs/latest/genai/eval-monitor/scorers/custom.md)) are not supported. Use [built-in judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md) or create custom judges with [`make_judge()`](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges/create-custom-judge.md).
+* Automatic evaluation only supports [LLM judges](/docs/latest/genai/eval-monitor/scorers.md#llms-as-judges). Code-based scorers (using the [`@scorer` decorator](/docs/latest/genai/eval-monitor/scorers/custom.md) or [`Scorer` class](/docs/latest/genai/eval-monitor/scorers/custom.md#define-scorers-with-the-scorer-class)) are not supported. Use [built-in judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md) or create custom judges with [`make_judge()`](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges/create-custom-judge.md).
 * When a judge is created or enabled, it evaluates traces and sessions that are **at most one hour old**. Updating a judge's configuration does not trigger re-evaluation of previously assessed traces.
 
 - UI
@@ -128,9 +128,7 @@ python
 from mlflow.genai.scorers import get_scorer, ScorerSamplingConfig
 
 judge = get_scorer(name="tool_call_correctness")
-judge.update(
-    sampling_config=ScorerSamplingConfig(sample_rate=0.3)
-)  # Change sample rate
+judge.update(sampling_config=ScorerSamplingConfig(sample_rate=0.3))  # Change sample rate
 judge.stop()  # Or, disable the judge
 ```
 

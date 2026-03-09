@@ -41,7 +41,7 @@ bash
 mlflow autolog claude
 
 # Set up tracing in specific directory
-mlflow autolog claude ~/my-project
+mlflow autolog claude -d ~/my-project
 
 # Check tracing status
 mlflow autolog claude --status
@@ -78,7 +78,7 @@ bash
 
 ```
 # Set up tracing in your project
-mlflow autolog claude ~/my-project
+mlflow autolog claude -d ~/my-project
 
 # Navigate to project directory
 cd ~/my-project
@@ -144,9 +144,9 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-#### Claude Tracing with MLflow GenAI Evaluation[​](#claude-tracing-with-mlflow-genai-evaluation "Direct link to Claude Tracing with MLflow GenAI Evaluation")
+#### Claude Tracing with MLflow Evaluation[​](#claude-tracing-with-mlflow-evaluation "Direct link to Claude Tracing with MLflow Evaluation")
 
-You can also use SDK tracing with MLflow's GenAI evaluation framework:
+You can also use SDK tracing with MLflow's evaluation framework:
 
 python
 
@@ -191,12 +191,10 @@ relevance = make_judge(
 )
 
 # Create evaluation dataset
-eval_data = pd.DataFrame(
-    [
-        {"inputs": {"query": "What is machine learning?"}},
-        {"inputs": {"query": "Explain neural networks"}},
-    ]
-)
+eval_data = pd.DataFrame([
+    {"inputs": {"query": "What is machine learning?"}},
+    {"inputs": {"query": "Explain neural networks"}},
+])
 
 # Run evaluation with automatic tracing
 mlflow.set_experiment("claude_evaluation")

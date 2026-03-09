@@ -30,7 +30,7 @@ Monitor usage across providers and optimize costs by routing requests to the mos
 
 Shared endpoint configurations and standardized access patterns across development teams.
 
-**Try MLflow GenAI Demo**<br />The quickest way to learn about MLflow GenAI is to try the demo. Click to see how to launch the demo ↓
+**Try the MLflow LLMs and Agents Demo**<br />The quickest way to learn about MLflow for LLMs and AI Agents is to try the demo. **Click to launch the demo ↓**
 
 #### **Starting from UI**[​](#starting-from-ui "Direct link to starting-from-ui")
 

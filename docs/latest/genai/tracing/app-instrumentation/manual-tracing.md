@@ -1,6 +1,6 @@
 # Manual Tracing
 
-In addition to the [Auto Tracing](/docs/latest/genai/tracing/app-instrumentation/automatic.md) integrations, you can instrument your GenAI application by using MLflow's manual tracing APIs.
+In addition to the [Auto Tracing](/docs/latest/genai/tracing/app-instrumentation/automatic.md) integrations, you can instrument your LLM application or AI agent by using MLflow's manual tracing APIs.
 
 ## Decorator[​](#decorator "Direct link to Decorator")
 
@@ -63,7 +63,7 @@ Decorator requires TypeScript version 5.0+ and it can only be applied to class m
 typescript
 
 ```
-import * as mlflow from "mlflow-tracing";
+import * as mlflow from "@mlflow/core";
 
 class MyClass {
     @mlflow.trace({ spanType: mlflow.SpanType.LLM })
@@ -115,7 +115,7 @@ invocation(4, 2)
 typescript
 
 ```
-import * as mlflow from "mlflow-tracing";
+import * as mlflow from "@mlflow/core";
 
 const getWeather = async (city: string) => {
     return `The weather in ${city} is sunny`;
@@ -136,7 +136,7 @@ await tracedGetWeather('San Francisco');
 typescript
 
 ```
-import * as mlflow from "mlflow-tracing";
+import * as mlflow from "@mlflow/core";
 
 const getWeather = mlflow.trace(
     (city: string) => {
@@ -167,19 +167,15 @@ python
 from mlflow.entities import SpanType
 
 
-@mlflow.trace(
-    name="call-local-llm", span_type=SpanType.LLM, attributes={"model": "gpt-4o-mini"}
-)
+@mlflow.trace(name="call-local-llm", span_type=SpanType.LLM, attributes={"model": "gpt-4o-mini"})
 def invoke(prompt: str):
-    return client.invoke(
-        messages=[{"role": "user", "content": prompt}], model="gpt-4o-mini"
-    )
+    return client.invoke(messages=[{"role": "user", "content": prompt}], model="gpt-4o-mini")
 ```
 
 typescript
 
 ```
-import * as mlflow from "mlflow-tracing";
+import * as mlflow from "@mlflow/core";
 
 class MyClass {
     @mlflow.trace({
@@ -221,7 +217,7 @@ Use the `mlflow.getCurrentActiveSpan` API.
 typescript
 
 ```
-import * as mlflow from "mlflow-tracing";
+import * as mlflow from "@mlflow/core";
 
 class MyClass {
     @mlflow.trace({ spanType: mlflow.SpanType.LLM })
@@ -253,7 +249,7 @@ def my_func(x):
 typescript
 
 ```
-import * as mlflow from "mlflow-tracing";
+import * as mlflow from "@mlflow/core";
 
 class MyClass {
     @mlflow.trace({ spanType: mlflow.SpanType.LLM })
@@ -306,8 +302,7 @@ def summarize_document(document_content: str, user_instructions: str):
 
 # Example Call
 long_document = (
-    "This is a very long document that contains many details about various topics..."
-    * 10
+    "This is a very long document that contains many details about various topics..." * 10
 )
 instructions = "Focus on the key takeaways regarding topic X."
 summary_result = summarize_document(long_document, instructions)
@@ -316,7 +311,7 @@ summary_result = summarize_document(long_document, instructions)
 typescript
 
 ```
-import * as mlflow from "mlflow-tracing";
+import * as mlflow from "@mlflow/core";
 
 class MyClass {
     @mlflow.trace({ name: "Summarization Pipeline" })
@@ -373,7 +368,7 @@ Use the `mlflow.withSpan` function wrapper.
 typescript
 
 ```
-import * as mlflow from "mlflow-tracing";
+import * as mlflow from "@mlflow/core";
 
 const result = await mlflow.withSpan(
     async (span: mlflow.Span) => {
@@ -436,8 +431,8 @@ start_session()
 typescript
 
 ```
-import * as mlflow from "mlflow-tracing";
-import { tracedOpenAI } from "mlflow-openai";
+import * as mlflow from "@mlflow/core";
+import { tracedOpenAI } from "@mlflow/openai";
 import { OpenAI } from "openai";
 import * as readline from "readline";
 

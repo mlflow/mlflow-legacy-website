@@ -142,7 +142,8 @@ from openai import OpenAI
 
 # Point to your LiteLLM Proxy
 client = OpenAI(
-    base_url="http://localhost:4000/v1", api_key="sk-1234"  # Your LiteLLM Proxy API key
+    base_url="http://localhost:4000/v1",
+    api_key="sk-1234",  # Your LiteLLM Proxy API key
 )
 
 response = client.chat.completions.create(
@@ -177,7 +178,7 @@ pip install 'mlflow[genai]' openai
 bash
 
 ```
-npm install mlflow-openai openai
+npm install @mlflow/openai openai
 ```
 
 2
@@ -254,8 +255,8 @@ Initialize MLflow tracing with `init()` and wrap the OpenAI client with the `tra
 typescript
 
 ```
-import { init } from "mlflow-tracing";
-import { tracedOpenAI } from "mlflow-openai";
+import { init } from "@mlflow/core";
+import { tracedOpenAI } from "@mlflow/openai";
 import { OpenAI } from "openai";
 
 // Initialize MLflow tracing
@@ -329,8 +330,8 @@ print(answer)
 typescript
 
 ```
-import { init, trace, SpanType } from "mlflow-tracing";
-import { tracedOpenAI } from "mlflow-openai";
+import { init, trace, SpanType } from "@mlflow/core";
+import { tracedOpenAI } from "@mlflow/openai";
 import { OpenAI } from "openai";
 
 init({

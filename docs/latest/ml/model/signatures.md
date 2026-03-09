@@ -60,7 +60,9 @@ model = RandomForestClassifier().fit(X, y)
 with mlflow.start_run():
     # The input example automatically generates a signature
     mlflow.sklearn.log_model(
-        model, name="iris_model", input_example=X.iloc[[0]]  # First row as example
+        model,
+        name="iris_model",
+        input_example=X.iloc[[0]],  # First row as example
     )
 ```
 
@@ -88,13 +90,11 @@ python
 
 ```
 # Column-based signature (DataFrames)
-input_schema = Schema(
-    [
-        ColSpec("double", "sepal_length"),
-        ColSpec("double", "sepal_width"),
-        ColSpec("string", "species", required=False),  # Optional field
-    ]
-)
+input_schema = Schema([
+    ColSpec("double", "sepal_length"),
+    ColSpec("double", "sepal_width"),
+    ColSpec("string", "species", required=False),  # Optional field
+])
 
 # Tensor-based signature (NumPy arrays)
 input_schema = Schema(
@@ -113,13 +113,11 @@ python
 output_schema = Schema([ColSpec("long", "prediction")])
 
 # Multiple outputs
-output_schema = Schema(
-    [
-        ColSpec("double", "probability"),
-        ColSpec("string", "predicted_class"),
-        ColSpec("long", "confidence_score"),
-    ]
-)
+output_schema = Schema([
+    ColSpec("double", "probability"),
+    ColSpec("string", "predicted_class"),
+    ColSpec("long", "confidence_score"),
+])
 
 # Tensor output
 output_schema = Schema(
@@ -133,18 +131,14 @@ python
 
 ```
 # Define inference parameters
-params_schema = ParamSchema(
-    [
-        ParamSpec("temperature", "double", 0.7),  # Default temperature
-        ParamSpec("max_tokens", "long", 100),  # Default max tokens
-        ParamSpec("stop_words", "string", [".", "!"], (-1,)),  # List parameter
-    ]
-)
+params_schema = ParamSchema([
+    ParamSpec("temperature", "double", 0.7),  # Default temperature
+    ParamSpec("max_tokens", "long", 100),  # Default max tokens
+    ParamSpec("stop_words", "string", [".", "!"], (-1,)),  # List parameter
+])
 
 # Use in model signature
-signature = ModelSignature(
-    inputs=input_schema, outputs=output_schema, params=params_schema
-)
+signature = ModelSignature(inputs=input_schema, outputs=output_schema, params=params_schema)
 ```
 
 **Common Parameters:** `temperature` controls randomness in generation, `max_length`/`max_tokens` limits output length, `top_k` and `top_p` control sampling strategies, and `repetition_penalty` reduces repetitive outputs.
@@ -213,9 +207,7 @@ with mlflow.start_run():
     mlflow.pyfunc.log_model(
         name="chat_model",
         python_model=CustomModel(),
-        input_example=[
-            {"role": "user", "content": "Hello"}
-        ],  # Validates against type hints
+        input_example=[{"role": "user", "content": "Hello"}],  # Validates against type hints
     )
 ```
 
@@ -244,21 +236,17 @@ python
 
 ```
 # ✅ Correct - Always use List wrapper
-def predict(self, model_input: List[str]) -> List[str]:
-    ...
+def predict(self, model_input: List[str]) -> List[str]: ...
 
 
-def predict(self, model_input: List[Message]) -> List[Dict]:
-    ...
+def predict(self, model_input: List[Message]) -> List[Dict]: ...
 
 
 # ❌ Incorrect - Missing List wrapper
-def predict(self, model_input: str) -> str:
-    ...
+def predict(self, model_input: str) -> str: ...
 
 
-def predict(self, model_input: Message) -> Dict:
-    ...
+def predict(self, model_input: Message) -> Dict: ...
 ```
 
 ### Primitive Types[​](#primitive-types "Direct link to Primitive Types")
@@ -524,9 +512,7 @@ from mlflow.types.type_hints import TypeFromExample
 class FlexibleModel(mlflow.pyfunc.PythonModel):
     def predict(self, model_input: TypeFromExample):
         # Type determined by input_example at logging time
-        return [
-            item.upper() if isinstance(item, str) else str(item) for item in model_input
-        ]
+        return [item.upper() if isinstance(item, str) else str(item) for item in model_input]
 
 
 # Input example determines the expected type
@@ -550,16 +536,13 @@ python
 
 ```
 # Supported but no validation
-def predict(self, model_input: pd.DataFrame) -> pd.DataFrame:
-    ...
+def predict(self, model_input: pd.DataFrame) -> pd.DataFrame: ...
 
 
-def predict(self, model_input: np.ndarray) -> np.ndarray:
-    ...
+def predict(self, model_input: np.ndarray) -> np.ndarray: ...
 
 
-def predict(self, model_input: scipy.sparse.csr_matrix):
-    ...
+def predict(self, model_input: scipy.sparse.csr_matrix): ...
 
 
 # You must provide explicit signature or input_example
@@ -617,8 +600,7 @@ class NumberInput(pydantic.BaseModel):
 
 
 # Discriminated union with validation
-def predict(self, model_input: List[Union[TextInput, NumberInput]]) -> List[str]:
-    ...
+def predict(self, model_input: List[Union[TextInput, NumberInput]]) -> List[str]: ...
 ```
 
 ### Serving Models with Type Hints[​](#serving-models-with-type-hints "Direct link to Serving Models with Type Hints")
@@ -787,12 +769,10 @@ python
 
 ```
 # Include None values to make fields optional
-pd.DataFrame(
-    {
-        "required_field": [1, 2, 3],
-        "optional_field": [1.0, None, 3.0],  # This becomes optional
-    }
-)
+pd.DataFrame({
+    "required_field": [1, 2, 3],
+    "optional_field": [1.0, None, 3.0],  # This becomes optional
+})
 ```
 
 ### Compatibility Notes[​](#compatibility-notes "Direct link to Compatibility Notes")
@@ -906,15 +886,13 @@ ParamSpec(
 python
 
 ```
-params_schema = ParamSchema(
-    [
-        ParamSpec("temperature", "double", 0.7),
-        ParamSpec("max_tokens", "long", 100),
-        ParamSpec("top_p", "double", 0.9),
-        ParamSpec("frequency_penalty", "double", 0.0),
-        ParamSpec("stop_sequences", "string", [], (-1,)),  # List of strings
-    ]
-)
+params_schema = ParamSchema([
+    ParamSpec("temperature", "double", 0.7),
+    ParamSpec("max_tokens", "long", 100),
+    ParamSpec("top_p", "double", 0.9),
+    ParamSpec("frequency_penalty", "double", 0.0),
+    ParamSpec("stop_sequences", "string", [], (-1,)),  # List of strings
+])
 ```
 
 **Model Selection:**
@@ -922,13 +900,11 @@ params_schema = ParamSchema(
 python
 
 ```
-params_schema = ParamSchema(
-    [
-        ParamSpec("model_name", "string", "default"),
-        ParamSpec("use_cache", "boolean", True),
-        ParamSpec("timeout", "long", 30),
-    ]
-)
+params_schema = ParamSchema([
+    ParamSpec("model_name", "string", "default"),
+    ParamSpec("use_cache", "boolean", True),
+    ParamSpec("timeout", "long", 30),
+])
 ```
 
 ### Using Parameters at Inference[​](#using-parameters-at-inference "Direct link to Using Parameters at Inference")
@@ -1039,13 +1015,11 @@ from mlflow.models import ModelSignature
 from mlflow.types.schema import Schema, ColSpec
 
 # Define input schema
-input_schema = Schema(
-    [
-        ColSpec("double", "feature_1"),
-        ColSpec("string", "feature_2"),
-        ColSpec("long", "feature_3", required=False),  # Optional
-    ]
-)
+input_schema = Schema([
+    ColSpec("double", "feature_1"),
+    ColSpec("string", "feature_2"),
+    ColSpec("long", "feature_3", required=False),  # Optional
+])
 
 # Define output schema
 output_schema = Schema([ColSpec("double", "prediction")])
@@ -1192,7 +1166,9 @@ params = {"temperature": 0.3, "max_tokens": 50, "stop_sequences": [".", "!"]}
 
 # Create signature with parameters - automatically inferred
 signature = infer_signature(
-    input_data, model.predict(input_data), params  # Include parameters in signature
+    input_data,
+    model.predict(input_data),
+    params,  # Include parameters in signature
 )
 
 with mlflow.start_run():
@@ -1250,18 +1226,16 @@ python
 import pandas as pd
 
 # Single record example
-single_record = pd.DataFrame(
-    [{"sepal_length": 5.1, "sepal_width": 3.5, "petal_length": 1.4, "petal_width": 0.2}]
-)
+single_record = pd.DataFrame([
+    {"sepal_length": 5.1, "sepal_width": 3.5, "petal_length": 1.4, "petal_width": 0.2}
+])
 
 # Multiple records example
-batch_example = pd.DataFrame(
-    [
-        {"feature_1": 1.0, "feature_2": "A"},
-        {"feature_1": 2.0, "feature_2": "B"},
-        {"feature_1": 3.0, "feature_2": "C"},
-    ]
-)
+batch_example = pd.DataFrame([
+    {"feature_1": 1.0, "feature_2": "A"},
+    {"feature_1": 2.0, "feature_2": "B"},
+    {"feature_1": 3.0, "feature_2": "C"},
+])
 
 # Log model with DataFrame example
 mlflow.sklearn.log_model(model, name="model", input_example=single_record)
@@ -1326,9 +1300,7 @@ params = {"temperature": 0.2, "max_length": 50, "do_sample": True}
 input_example = (input_data, params)
 
 # Log model with parameters
-mlflow.transformers.log_model(
-    model, name="translation_model", input_example=input_example
-)
+mlflow.transformers.log_model(model, name="translation_model", input_example=input_example)
 
 # At inference time
 loaded_model = mlflow.pyfunc.load_model(model_uri)
@@ -1439,13 +1411,11 @@ python
 import pandas as pd
 
 # Basic DataFrame
-df = pd.DataFrame(
-    {
-        "feature_1": [1.0, 2.0, 3.0],
-        "feature_2": ["A", "B", "C"],
-        "feature_3": [True, False, True],
-    }
-)
+df = pd.DataFrame({
+    "feature_1": [1.0, 2.0, 3.0],
+    "feature_2": ["A", "B", "C"],
+    "feature_3": [True, False, True],
+})
 print(infer_signature(df))
 # → Column-based schema
 
@@ -1457,13 +1427,11 @@ print(infer_signature(df_optional))
 # → optional_col marked as optional
 
 # Mixed data types
-df_mixed = pd.DataFrame(
-    {
-        "numbers": [1, 2, 3],
-        "arrays": [[1, 2], [3, 4], [5, 6]],  # Lists in DataFrame
-        "objects": [{"a": 1}, {"b": 2}, {"c": 3}],  # Dicts in DataFrame
-    }
-)
+df_mixed = pd.DataFrame({
+    "numbers": [1, 2, 3],
+    "arrays": [[1, 2], [3, 4], [5, 6]],  # Lists in DataFrame
+    "objects": [{"a": 1}, {"b": 2}, {"c": 3}],  # Dicts in DataFrame
+})
 print(infer_signature(df_mixed))
 # → Complex schema with Array and Object types
 ```

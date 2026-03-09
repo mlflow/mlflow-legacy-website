@@ -1,6 +1,6 @@
 # Auto Tracing Integrations
 
-MLflow Tracing is integrated with 40+ popular Generative AI libraries and frameworks, offering **one-line automatic tracing** experience. This allows you to gain immediate observability into your GenAI applications with minimal setup.
+MLflow Tracing is integrated with 40+ popular LLM and AI agent libraries and frameworks, offering **one-line automatic tracing** experience. This allows you to gain immediate observability into your LLM applications and AI agents with minimal setup.
 
 MLflow's automatic tracing provides:
 
@@ -226,6 +226,14 @@ Click any integration below to get started with detailed setup instructions.
 [![Claude Code Logo](/docs/latest/images/logos/claude-code-logo.png)](/docs/latest/genai/tracing/integrations/listing/claude_code.md)
 
 [Claude Code](/docs/latest/genai/tracing/integrations/listing/claude_code.md)
+
+[![Langfuse Logo](/docs/latest/images/logos/langfuse-logo.png)](/docs/latest/genai/tracing/integrations/listing/langfuse.md)
+
+[Langfuse](/docs/latest/genai/tracing/integrations/listing/langfuse.md)
+
+[![Arize / Phoenix Logo](/docs/latest/images/logos/arize-phoenix-logo.png)](/docs/latest/genai/tracing/integrations/listing/arize.md)
+
+[Arize / Phoenix](/docs/latest/genai/tracing/integrations/listing/arize.md)
 
 ## Gateways[​](#gateways "Direct link to Gateways")
 

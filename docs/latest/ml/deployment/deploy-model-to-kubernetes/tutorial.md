@@ -26,7 +26,7 @@ Fortunately, MLflow offers a solution for this. MLflow provides an alternative i
 
 ### Benefits of using MLflow with KServe[​](#benefits-of-using-mlflow-with-kserve "Direct link to Benefits of using MLflow with KServe")
 
-While KServe enables highly scalable and production-ready model serving, deploying your model there might require some effort. MLflow simplifies the process of deploying models to a Kubernetes cluster with KServe and MLServer. Additionally, it offers seamless **end-to-end model management** as a single place to manage the entire ML lifecycle. This includes [experiment tracking](/docs/latest/ml/tracking.md), [model packaging](/docs/latest/ml/model.md), [versioning](/docs/latest/ml/model-registry.md), [evaluation](/docs/latest/ml/evaluation.md), and [deployment](/docs/latest/ml/deployment.md), which we will cover in this tutorial.
+While KServe enables highly scalable and production-ready model serving, deploying your model there might require some effort. MLflow simplifies the process of deploying models to a Kubernetes cluster with KServe and MLServer. Additionally, it offers seamless **end-to-end model management** as a single place to manage the entire ML model development workflow. This includes [experiment tracking](/docs/latest/ml/tracking.md), [model packaging](/docs/latest/ml/model.md), [versioning](/docs/latest/ml/model-registry.md), [evaluation](/docs/latest/ml/evaluation.md), and [deployment](/docs/latest/ml/deployment.md), which we will cover in this tutorial.
 
 ## Step 1: Installing MLflow and Additional Dependencies[​](#step-1-installing-mlflow-and-additional-dependencies "Direct link to Step 1: Installing MLflow and Additional Dependencies")
 
@@ -157,13 +157,11 @@ with mlflow.start_run(run_name="hyperparameter-tuning"):
     # Evaluate the best model on test dataset
     y_pred = clf.best_estimator_.predict(X_test)
     rmse, mae, r2 = eval_metrics(y_pred, y_test)
-    mlflow.log_metrics(
-        {
-            "mean_squared_error_X_test": rmse,
-            "mean_absolute_error_X_test": mae,
-            "r2_score_X_test": r2,
-        }
-    )
+    mlflow.log_metrics({
+        "mean_squared_error_X_test": rmse,
+        "mean_absolute_error_X_test": mae,
+        "r2_score_X_test": r2,
+    })
 ```
 
 When you reopen the MLflow UI, you should notice that the run "hyperparameter-tuning" contains 5 child runs. MLflow utilizes parent-child relationship, which is particularly useful for grouping a set of runs, such as those in hyper parameter tuning. Here the auto-logging is enabled and MLflow automatically create child runs for the top 5 runs based on the `scoring` metric, which is negative mean absolute error in this example.

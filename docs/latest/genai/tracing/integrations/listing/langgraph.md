@@ -90,9 +90,7 @@ tools = [get_weather]
 graph = create_react_agent(llm, tools)
 
 # Invoke the graph
-result = graph.invoke(
-    {"messages": [{"role": "user", "content": "what is the weather in sf?"}]}
-)
+result = graph.invoke({"messages": [{"role": "user", "content": "what is the weather in sf?"}]})
 ```
 
 ### 5. View the trace in the MLflow UI[​](#5-view-the-trace-in-the-mlflow-ui "Direct link to 5. View the trace in the MLflow UI")
