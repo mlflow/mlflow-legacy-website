@@ -1,6 +1,6 @@
 # Create a custom judge using `make_judge()`
 
-Custom judges are LLM-based judges that evaluate your GenAI agents against specific quality criteria. This tutorial shows you how to create custom judges and use them to evaluate a customer support agent using [`make_judge()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.judges.make_jduge).
+Custom judges are LLM-based judges that evaluate your LLM applications and AI agents against specific quality criteria. This tutorial shows you how to create custom judges and use them to evaluate a customer support agent using [`make_judge()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.judges.make_judge).
 
 You will:
 
@@ -11,7 +11,7 @@ You will:
 
 ## Step 1: Create an agent to evaluate[​](#step-1-create-an-agent-to-evaluate "Direct link to Step 1: Create an agent to evaluate")
 
-Create a GenAI agent that responds to customer support questions. The agent has a (fake) knob that controls the system prompt so you can easily compare the judge's outputs between "good" and "bad" conversations.
+Create an AI agent that responds to customer support questions. The agent has a (fake) knob that controls the system prompt so you can easily compare the judge's outputs between "good" and "bad" conversations.
 
 1. Initialize an OpenAI client to connect to OpenAI-hosted LLMs. Use the native OpenAI SDK to connect to OpenAI-hosted models. Select a model from the [available OpenAI models](https://platform.openai.com/docs/models).
 
@@ -91,9 +91,10 @@ def customer_support_agent(messages: List[Dict[str, str]]):
     ]
 
     if tool_results:
-        messages_for_llm.append(
-            {"role": "system", "content": f"Tool results: {', '.join(tool_results)}"}
-        )
+        messages_for_llm.append({
+            "role": "system",
+            "content": f"Tool results: {', '.join(tool_results)}",
+        })
 
     # Call LLM to generate a response
     output = client.chat.completions.create(
@@ -101,11 +102,7 @@ def customer_support_agent(messages: List[Dict[str, str]]):
         messages=cast(Any, messages_for_llm),
     )
 
-    return {
-        "messages": [
-            {"role": "assistant", "content": output.choices[0].message.content}
-        ]
-    }
+    return {"messages": [{"role": "assistant", "content": output.choices[0].message.content}]}
 ```
 
 ## Step 2: Define custom judges[​](#step-2-define-custom-judges "Direct link to Step 2: Define custom judges")
@@ -182,9 +179,7 @@ issue_resolution_judge = make_judge(
         "User's messages: {{ inputs }}\n"
         "Agent's responses: {{ outputs }}"
     ),
-    feedback_value_type=Literal[
-        "fully_resolved", "partially_resolved", "needs_follow_up"
-    ],
+    feedback_value_type=Literal["fully_resolved", "partially_resolved", "needs_follow_up"],
 )
 ```
 
@@ -202,9 +197,7 @@ expected_behaviors_judge = make_judge(
         "Compare the agent's response in {{ outputs }} against the expected behaviors in {{ expectations }}.\n\n"
         "User's question: {{ inputs }}"
     ),
-    feedback_value_type=Literal[
-        "meets_expectations", "partially_meets", "does_not_meet"
-    ],
+    feedback_value_type=Literal["meets_expectations", "partially_meets", "does_not_meet"],
 )
 ```
 
@@ -499,7 +492,7 @@ DEBUG:mlflow.genai.judges:Tool response: {"duration_ms": 2500, "inputs": {"query
 
 ## Next steps[​](#next-steps "Direct link to Next steps")
 
-### [Evaluate and improve a GenAI application](/docs/latest/genai/eval-monitor/quickstart.md)
+### [Evaluate and improve your application](/docs/latest/genai/eval-monitor/quickstart.md)
 
 [Use custom judges in end-to-end evaluation workflows](/docs/latest/genai/eval-monitor/quickstart.md)
 

@@ -1,6 +1,6 @@
 # Log Prompts with Models
 
-Prompts are often used as a part of GenAI applications. Managing the association between prompts and models is crucial for tracking the evolution of models and ensuring consistency across different environments. MLflow Prompt Registry is integrated with MLflow's model tracking capability, allowing you to track which prompts (and versions) are used by your models and applications.
+Prompts are often used as a part of LLM applications and AI agents. Managing the association between prompts and models is crucial for tracking the evolution of models and ensuring consistency across different environments. MLflow Prompt Registry is integrated with MLflow's model tracking capability, allowing you to track which prompts (and versions) are used by your models and applications.
 
 ## Basic Usage[​](#basic-usage "Direct link to Basic Usage")
 
@@ -22,7 +22,7 @@ with mlflow.start_run():
 
 warning
 
-The `prompts` parameter for associating prompts with models is only supported for GenAI flavors such as OpenAI, LangChain, LlamaIndex, DSPy, etc. Please refer to the [GenAI flavors](/docs/latest/genai/flavors.md) for the full list of supported flavors.
+The `prompts` parameter for associating prompts with models is only supported for LLM and AI agent flavors such as OpenAI, LangChain, LlamaIndex, DSPy, etc. Please refer to the [supported flavors](/docs/latest/genai/flavors.md) for the full list.
 
 ## Example 1: Logging Prompts with LangChain[​](#example-1-logging-prompts-with-langchain "Direct link to Example 1: Logging Prompts with LangChain")
 
@@ -42,16 +42,14 @@ from langchain_openai import ChatOpenAI
 prompt = mlflow.genai.load_prompt("prompts:/summarization-prompt/2")
 
 # Create LangChain prompt object
-langchain_prompt = ChatPromptTemplate.from_messages(
-    [
-        (
-            # IMPORTANT: Convert prompt template from double to single curly braces format
-            "system",
-            prompt.to_single_brace_format(),
-        ),
-        ("placeholder", "{messages}"),
-    ]
-)
+langchain_prompt = ChatPromptTemplate.from_messages([
+    (
+        # IMPORTANT: Convert prompt template from double to single curly braces format
+        "system",
+        prompt.to_single_brace_format(),
+    ),
+    ("placeholder", "{messages}"),
+])
 
 # Define the LangChain chain
 llm = ChatOpenAI()
@@ -70,9 +68,7 @@ python
 
 ```
 with mlflow.start_run(run_name="summarizer-model"):
-    mlflow.langchain.log_model(
-        chain, name="model", prompts=["prompts:/summarization-prompt/2"]
-    )
+    mlflow.langchain.log_model(chain, name="model", prompts=["prompts:/summarization-prompt/2"])
 ```
 
 Now you can view the associated prompts to the model in MLflow UI:
@@ -194,16 +190,14 @@ mlflow.langchain.autolog()
 # Load the graph
 graph = mlflow.langchain.load_model(model_info.model_uri)
 
-graph.invoke(
-    {
-        "messages": [
-            {
-                "role": "user",
-                "content": "What is the difference between multi-threading and multi-processing?",
-            }
-        ]
-    }
-)
+graph.invoke({
+    "messages": [
+        {
+            "role": "user",
+            "content": "What is the difference between multi-threading and multi-processing?",
+        }
+    ]
+})
 ```
 
 ![Chatbot](/docs/latest/assets/images/prompt-logged-trace-f531e466499e24d2b8541d655237ea91.png)

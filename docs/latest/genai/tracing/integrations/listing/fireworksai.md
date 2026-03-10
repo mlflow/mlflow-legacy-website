@@ -33,7 +33,7 @@ pip install 'mlflow[genai]' openai
 bash
 
 ```
-npm install mlflow-openai openai
+npm install @mlflow/openai openai
 ```
 
 2
@@ -98,9 +98,7 @@ client = openai.OpenAI(
 # Use the client as usual - traces will be automatically captured
 response = client.chat.completions.create(
     model="accounts/fireworks/models/deepseek-v3-0324",  # For other models see: https://fireworks.ai/models
-    messages=[
-        {"role": "user", "content": "Why is open source better than closed source?"}
-    ],
+    messages=[{"role": "user", "content": "Why is open source better than closed source?"}],
 )
 ```
 
@@ -110,7 +108,7 @@ typescript
 
 ```
 import { OpenAI } from "openai";
-import { tracedOpenAI } from "mlflow-openai";
+import { tracedOpenAI } from "@mlflow/openai";
 
 // Wrap the OpenAI client and point to FireworksAI endpoint
 const client = tracedOpenAI(
@@ -195,7 +193,7 @@ typescript
 
 ```
 import { OpenAI } from "openai";
-import { tracedOpenAI } from "mlflow-openai";
+import { tracedOpenAI } from "@mlflow/openai";
 
 // Configure OpenAI client for FireworksAI
 const client = tracedOpenAI(
@@ -241,9 +239,7 @@ client = openai.OpenAI(
 
 stream = client.chat.completions.create(
     model="accounts/fireworks/models/deepseek-v3-0324",
-    messages=[
-        {"role": "user", "content": "How fast would a glass of water freeze on Titan?"}
-    ],
+    messages=[{"role": "user", "content": "How fast would a glass of water freeze on Titan?"}],
     stream=True,  # Enable streaming response
 )
 for chunk in stream:
@@ -344,13 +340,11 @@ def run_tool_agent(question: str):
             else:
                 raise RuntimeError("An invalid tool is returned from the assistant!")
 
-            messages.append(
-                {
-                    "role": "tool",
-                    "tool_call_id": tool_call.id,
-                    "content": tool_result,
-                }
-            )
+            messages.append({
+                "role": "tool",
+                "tool_call_id": tool_call.id,
+                "content": tool_result,
+            })
 
         # Send the tool results to the model and get a new response
         response = client.chat.completions.create(

@@ -154,15 +154,11 @@ export OIDC_CLIENT_SECRET=...
 export OIDC_REDIRECT_URI="http://localhost:8080/callback"
 
 # NOTE: OAuth 2.0 and OIDC define the scope parameter as a space-separated list of scope values
-
 export OIDC_SCOPE="openid profile email"
 
 # Set a stable, secret value (e.g. 32+ random characters) and keep it the same across restarts and replicas.
-
 # If you don't set it, the app will use an auto-generated key that changes on server restart / UI page reloading
-
 # and breaks sessions.
-
 export SECRET_KEY="your-stable-secret-at-least-32-chars-long"
 ```
 

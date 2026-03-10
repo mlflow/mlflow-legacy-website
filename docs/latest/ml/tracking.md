@@ -110,9 +110,7 @@ python
 ```
 client = mlflow.tracking.MlflowClient()
 experiment_id = "0"
-best_run = client.search_runs(
-    experiment_id, order_by=["metrics.val_loss ASC"], max_results=1
-)[0]
+best_run = client.search_runs(experiment_id, order_by=["metrics.val_loss ASC"], max_results=1)[0]
 print(best_run.info)
 # {'run_id': '...', 'metrics': {'val_loss': 0.123}, ...}
 ```

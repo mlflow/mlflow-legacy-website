@@ -2,9 +2,9 @@
 
 ![PydanticAI Tracing via autolog](/docs/latest/assets/images/pydanticai-tracing-794fbcf11fdb1407e2be31fefaec5536.png)
 
-[​PydanticAI](https://ai.pydantic.dev/) is a Python framework designed to simplify the development of production-grade generative AI applications. It brings type safety, ergonomic API design, and a developer-friendly experience to GenAI app development.​
+[​PydanticAI](https://ai.pydantic.dev/) is a Python framework designed to simplify the development of production-grade generative AI applications. It brings type safety, ergonomic API design, and a developer-friendly experience to LLM and AI agent app development.​
 
-[MLflow Tracing](/docs/latest/genai/tracing.md) provides automatic tracing capability for [​PydanticAI](https://ai.pydantic.dev/), an open source framework for building multi-agent applications. By enabling auto tracing for ​PydanticAI by calling the [`mlflow.pydantic_ai.autolog()`](/docs/latest/api_reference/python_api/mlflow.pydantic_ai.html#mlflow.pydantic_ai.autolog) function, , MLflow will capture nested traces for ​PydanticAI workflow execution and logged them to the active MLflow Experiment.
+[MLflow Tracing](/docs/latest/genai/tracing.md) provides automatic tracing capability for [​PydanticAI](https://ai.pydantic.dev/), an open source framework for building multi-agent applications. By enabling auto tracing for ​PydanticAI by calling the [`mlflow.pydantic_ai.autolog()`](/docs/latest/api_reference/python_api/mlflow.pydantic_ai.html#mlflow.pydantic_ai.autolog) function, MLflow will capture nested traces for ​PydanticAI workflow execution and log them to the active MLflow Experiment.
 
 python
 
@@ -83,9 +83,7 @@ weather_agent = Agent(
 
 
 @weather_agent.tool
-async def get_lat_lng(
-    ctx: RunContext[Deps], location_description: str
-) -> dict[str, float]:
+async def get_lat_lng(ctx: RunContext[Deps], location_description: str) -> dict[str, float]:
     """Get the latitude and longitude of a location.
 
     Args:
@@ -127,9 +125,7 @@ async def get_weather(ctx: RunContext[Deps], lat: float, lng: float) -> dict[str
         "location": f"{lat},{lng}",
         "units": "metric",
     }
-    r = await ctx.deps.client.get(
-        "https://api.tomorrow.io/v4/weather/realtime", params=params
-    )
+    r = await ctx.deps.client.get("https://api.tomorrow.io/v4/weather/realtime", params=params)
     r.raise_for_status()
     data = r.json()
 
@@ -161,7 +157,7 @@ async def get_weather(ctx: RunContext[Deps], lat: float, lng: float) -> dict[str
         8000: "Thunderstorm",
     }
     return {
-        "temperature": f'{values["temperatureApparent"]:0.0f}°C',
+        "temperature": f"{values['temperatureApparent']:0.0f}°C",
         "description": code_lookup.get(values["weatherCode"], "Unknown"),
     }
 
@@ -170,9 +166,7 @@ async def main():
     async with AsyncClient() as client:
         weather_api_key = os.getenv("WEATHER_API_KEY")
         geo_api_key = os.getenv("GEO_API_KEY")
-        deps = Deps(
-            client=client, weather_api_key=weather_api_key, geo_api_key=geo_api_key
-        )
+        deps = Deps(client=client, weather_api_key=weather_api_key, geo_api_key=geo_api_key)
         result = await weather_agent.run(
             "What is the weather like in London and in Wiltshire?", deps=deps
         )

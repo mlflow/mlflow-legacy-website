@@ -6,7 +6,7 @@
 
 ## Managed MLflow on Databricks[​](#managed-mlflow-on-databricks "Direct link to Managed MLflow on Databricks")
 
-Databricks offers a fully managed MLflow service as a part of their platform. This is the easiest way to get started with MLflow tracing, without having to set up any infrastructure. If you are using Databricks Foundation Model APIs, it is no brainer to use the managed MLflow for end-to-end LLMOps including tracing.
+Databricks offers a fully managed MLflow service as a part of their platform. This is the easiest way to get started with MLflow tracing, without having to set up any infrastructure. If you are using Databricks Foundation Model APIs, it is no brainer to use the managed MLflow for end-to-end [LLMOps](https://mlflow.org/llmops) including tracing.
 
 Visit Databricks documentation
 
@@ -30,7 +30,7 @@ pip install 'mlflow[genai]' openai
 bash
 
 ```
-npm install mlflow-openai openai
+npm install @mlflow/openai openai
 ```
 
 2
@@ -68,7 +68,7 @@ typescript
 
 ```
 import { OpenAI } from "openai";
-import { tracedOpenAI } from "mlflow-openai";
+import { tracedOpenAI } from "@mlflow/openai";
 
 // Wrap the OpenAI client and point to Databricks endpoint
 const client = tracedOpenAI(

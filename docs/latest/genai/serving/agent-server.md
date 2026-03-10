@@ -39,9 +39,7 @@ In this example, we'll use the openai-agents-sdk to define our Responses API com
    async def non_streaming(request: ResponsesAgentRequest) -> ResponsesAgentResponse:
        msgs = [i.model_dump() for i in request.input]
        result = await Runner.run(agent, msgs)
-       return ResponsesAgentResponse(
-           output=[item.to_input_item() for item in result.new_items]
-       )
+       return ResponsesAgentResponse(output=[item.to_input_item() for item in result.new_items])
 
 
    # You can also optionally register a @stream function to support streaming responses
@@ -137,11 +135,7 @@ You can use [`mlflow.genai.evaluate()`](/docs/latest/api_reference/python_api/ml
    eval_dataset = [
        {
            "inputs": {
-               "request": {
-                   "input": [
-                       {"role": "user", "content": "What's the 15th Fibonacci number"}
-                   ]
-               }
+               "request": {"input": [{"role": "user", "content": "What's the 15th Fibonacci number"}]}
            },
            "expected_response": "The 15th Fibonacci number is 610.",
        }

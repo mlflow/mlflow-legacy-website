@@ -34,7 +34,7 @@ pip install 'mlflow[genai]' openai
 bash
 
 ```
-npm install mlflow-openai openai
+npm install @mlflow/openai openai
 ```
 
 2
@@ -119,9 +119,7 @@ mlflow.set_experiment("OpenAI")
 
 openai_client = openai.OpenAI()
 
-response = client.responses.create(
-    model="o4-mini", input="What is the capital of France?"
-)
+response = client.responses.create(model="o4-mini", input="What is the capital of France?")
 ```
 
 Wrap the OpenAI client with the `tracedOpenAI` function and make API calls as usual.
@@ -130,7 +128,7 @@ typescript
 
 ```
 import { OpenAI } from "openai";
-import { tracedOpenAI } from "mlflow-openai";
+import { tracedOpenAI } from "@mlflow/openai";
 
 // Wrap the OpenAI client with the tracedOpenAI function
 const client = tracedOpenAI(new OpenAI());
@@ -183,6 +181,10 @@ See [OpenAI Agents SDK Tracing](/docs/latest/genai/tracing/integrations/listing/
 | ------ | ----- |
 | ✅     | ✅    |
 
+Image and Audio Support for OpenAI Traces
+
+MLflow automatically captures images and audio sent to OpenAI models. See [Image and Audio (Multimodal) Content in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md) for examples and supported formats.
+
 ## Streaming[​](#streaming "Direct link to Streaming")
 
 MLflow Tracing supports streaming API of the OpenAI SDK. With the same set up of auto tracing, MLflow automatically traces the streaming response and render the concatenated output in the span UI. The actual chunks in the response stream can be found in the `Event` tab as well.
@@ -204,9 +206,7 @@ client = openai.OpenAI()
 
 stream = client.chat.completions.create(
     model="o4-mini",
-    messages=[
-        {"role": "user", "content": "How fast would a glass of water freeze on Titan?"}
-    ],
+    messages=[{"role": "user", "content": "How fast would a glass of water freeze on Titan?"}],
     stream=True,  # Enable streaming response
 )
 for chunk in stream:
@@ -237,7 +237,7 @@ typescript
 
 ```
 import { OpenAI } from "openai";
-import { tracedOpenAI } from "mlflow-openai";
+import { tracedOpenAI } from "@mlflow/openai";
 
 // Wrap the OpenAI client with the tracedOpenAI function
 const client = tracedOpenAI(new OpenAI());
@@ -271,9 +271,7 @@ client = openai.AsyncOpenAI()
 
 response = await client.chat.completions.create(
     model="gpt-4o-mini",
-    messages=[
-        {"role": "user", "content": "How fast would a glass of water freeze on Titan?"}
-    ],
+    messages=[{"role": "user", "content": "How fast would a glass of water freeze on Titan?"}],
     # Async streaming is also supported
     # stream=True
 )
@@ -369,18 +367,14 @@ def run_tool_agent(question: str):
             else:
                 raise RuntimeError("An invalid tool is returned from the assistant!")
 
-            messages.append(
-                {
-                    "role": "tool",
-                    "tool_call_id": tool_call.id,
-                    "content": tool_result,
-                }
-            )
+            messages.append({
+                "role": "tool",
+                "tool_call_id": tool_call.id,
+                "content": tool_result,
+            })
 
         # Sent the tool results to the model and get a new response
-        response = client.chat.completions.create(
-            model="gpt-4o-mini", messages=messages
-        )
+        response = client.chat.completions.create(model="gpt-4o-mini", messages=messages)
 
     return response.choices[0].message.content
 
@@ -450,13 +444,11 @@ def run_tool_agent(question: str):
 
     # Sent the tool results to the model and get a new response
     messages.append(tool_call)
-    messages.append(
-        {
-            "type": "function_call_output",
-            "call_id": tool_call.call_id,
-            "output": str(result),
-        }
-    )
+    messages.append({
+        "type": "function_call_output",
+        "call_id": tool_call.call_id,
+        "output": str(result),
+    })
 
     response = client.responses.create(
         model="gpt-4o-mini",

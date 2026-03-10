@@ -234,9 +234,7 @@ Validate that alignment improved your judge:
 python
 
 ```
-def test_alignment_improvement(
-    original_judge, aligned_judge, test_traces: list
-) -> dict:
+def test_alignment_improvement(original_judge, aligned_judge, test_traces: list) -> dict:
     """Compare judge performance before and after alignment."""
 
     original_correct = 0
@@ -245,9 +243,7 @@ def test_alignment_improvement(
     for trace in test_traces:
         # Get human ground truth from trace assessments
         feedbacks = trace.search_assessments(type="feedback")
-        human_feedback = next(
-            (f for f in feedbacks if f.source.source_type == "HUMAN"), None
-        )
+        human_feedback = next((f for f in feedbacks if f.source.source_type == "HUMAN"), None)
 
         if not human_feedback:
             continue

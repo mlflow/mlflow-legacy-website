@@ -10,8 +10,17 @@ You can initiate a new prompt in the MLflow Prompt Registry in two primary ways:
 * Python
 
 1. Navigate to the Prompt Registry section in your MLflow instance.
+
 2. Click on the "Create Prompt" (or similar) button.
-3. Fill in the prompt details such as name, prompt template text, and commit message (optional)
+
+3. Fill in the prompt details such as name, prompt template text, and commit message (optional).
+
+4. Optionally, expand **Advanced settings** to configure additional settings:
+
+   <!-- -->
+
+   * **Structured output (JSON schema)** — a JSON object that defines the expected response format for the prompt. The schema is stored with the prompt version and shown on the version detail page. See [Structured Output](https://mlflow.org/docs/latest/genai/prompt-registry/structured-output/) for details and examples.
+   * **Model configuration** — set model parameters such as the model name, temperature, and other inference settings to associate with this prompt version. See [Model Configuration](https://mlflow.org/docs/latest/genai/prompt-registry/#model-configuration) for details and examples.
 
 ![Registered Prompt in UI](/docs/latest/assets/images/registered-prompt-b8d47ff0d061d8703b61a9a6e94a77c3.png)
 
