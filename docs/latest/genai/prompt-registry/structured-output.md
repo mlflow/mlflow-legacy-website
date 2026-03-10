@@ -2,6 +2,31 @@
 
 MLflow Prompt Registry supports defining structured output schemas for your prompts, ensuring that language model responses follow a consistent format and can be validated. This feature is particularly useful for applications that need to parse and process model outputs programmatically.
 
+You can define structured output in two ways: in the **MLflow UI** when creating or editing a prompt (under **Advanced settings** → **Structured output (JSON schema)**), or via the **Python API** using the `response_format` parameter. The schema is stored with the prompt version and displayed on the prompt version detail page.
+
+## JSON format for the UI[​](#json-format-for-the-ui "Direct link to JSON format for the UI")
+
+In the MLflow UI, enter a **JSON object** that describes the expected response shape. For example, a simple schema with a single string field:
+
+json
+
+```
+{
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "string"
+    }
+  },
+  "required": ["result"],
+  "additionalProperties": false
+}
+```
+
+tip
+
+When using providers such as OpenAI with strict structured output, include `"additionalProperties": false` on each object in your schema so the response conforms to the expected shape.
+
 ## Overview[​](#overview "Direct link to Overview")
 
 Structured output allows you to:
@@ -10,7 +35,7 @@ Structured output allows you to:
 * **Validate model responses** against your defined schema
 * **Ensure consistency** across different model calls
 * **Improve integration** with downstream applications
-* **Enable type safety** in your GenAI applications
+* **Enable type safety** in your LLM applications and AI agents
 
 note
 
@@ -189,9 +214,7 @@ prompt = mlflow.genai.load_prompt("prompts:/summarization-prompt/1")
 # Use with OpenAI's response_format parameter
 response = client.chat.completions.create(
     model="gpt-4.1",
-    messages=[
-        {"role": "user", "content": prompt.format(num_sentences=3, text="Your text")}
-    ],
+    messages=[{"role": "user", "content": prompt.format(num_sentences=3, text="Your text")}],
     response_format=prompt.response_format,  # OpenAI's structured output
 )
 

@@ -1,10 +1,10 @@
-# MLflow Assistant
+# MLflow AI Assistant
 
-MLflow Assistant is a powerful AI-powered helper that transforms cutting-edge coding agents like Claude Code into experienced AI engineers by your side. Unlike typical chatbots, MLflow Assistant is **aware of your codebase and context**. It is not just a question-answering tool, but a full-fledged AI engineer that can find root causes for issues, setup quality tests, and apply LLMOps best practices into your project.
+The MLflow AI Assistant is a powerful AI-powered helper that transforms cutting-edge coding agents like Claude Code into experienced AI engineers by your side. Unlike typical chatbots, MLflow AI Assistant is **aware of your codebase and context**. It is not just a question-answering tool, but a full-fledged AI engineer that can find root causes for issues, set up quality tests, and apply [LLMOps](https://mlflow.org/llmops) best practices to your project.
 
-![MLflow Assistant](/docs/latest/images/assistant/hero.png)
+![MLflow AI Assistant](/docs/latest/images/assistant/hero.png)
 
-## What's Unique About MLflow Assistant?[​](#whats-unique-about-mlflow-assistant "Direct link to What's Unique About MLflow Assistant?")
+## What's Unique About MLflow AI Assistant?[​](#whats-unique-about-mlflow-ai-assistant "Direct link to What's Unique About MLflow AI Assistant?")
 
 #### No Additional Costs
 
@@ -24,7 +24,7 @@ Add custom skills, sub-agents, and permissions. Everything runs on your machine 
 
 ## Example Use Cases[​](#example-use-cases "Direct link to Example Use Cases")
 
-Explore the use cases below to see MLflow Assistant in action.
+Explore the use cases below to see MLflow AI Assistant in action.
 
 * Set Up MLflow
 * Debug Issues
@@ -94,11 +94,11 @@ Prompt engineering is still a critical part of building LLM applications, yet ma
 
 warning
 
-Currently, MLflow Assistant is in beta and only available for **local MLflow tracking server**. Support for remote tracking servers is coming soon.
+Currently, MLflow AI Assistant is in beta and only available for **local MLflow tracking server**. Support for remote tracking servers is coming soon.
 
 ## Getting Started[​](#getting-started "Direct link to Getting Started")
 
-Set up MLflow Assistant with your preferred coding agent. Currently, **Claude Code** is fully supported, with more agents coming soon.
+Set up MLflow AI Assistant with your preferred coding agent. Currently, **Claude Code** is fully supported, with more agents coming soon.
 
 ### 1. Open MLflow UI[​](#1-open-mlflow-ui "Direct link to 1. Open MLflow UI")
 
@@ -118,9 +118,9 @@ Once the setup is complete, you can start chatting with the assistant. Note that
 
 ## FAQ & Troubleshooting[​](#faq--troubleshooting "Direct link to FAQ & Troubleshooting")
 
-**Is MLflow Assistant really free?**
+**Is MLflow AI Assistant really free?**
 
-Yes! MLflow Assistant uses your existing coding agent subscription. You pay for the agent (Claude Code, etc.), but MLflow provides the knowledge and integration at no cost. There are no additional fees, premium tiers, or usage limits from MLflow's side.
+Yes! MLflow AI Assistant uses your existing coding agent subscription. You pay for the agent (Claude Code, etc.), but MLflow provides the knowledge and integration at no cost. There are no additional fees, premium tiers, or usage limits from MLflow's side.
 
 **Which coding agents are supported?**
 

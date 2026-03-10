@@ -83,9 +83,7 @@ conversational_pipeline = transformers.pipeline(model="microsoft/DialoGPT-medium
 # Define the signature
 signature = mlflow.models.infer_signature(
     "Hi there, chatbot!",
-    mlflow.transformers.generate_signature_output(
-        conversational_pipeline, "Hi there, chatbot!"
-    ),
+    mlflow.transformers.generate_signature_output(conversational_pipeline, "Hi there, chatbot!"),
 )
 
 # Log the pipeline
@@ -169,9 +167,7 @@ pyfunc_loaded = mlflow.pyfunc.load_model("text2text")
 result = pyfunc_loaded.predict(data)
 
 # overriding some inference configuration with different values
-pyfunc_loaded = mlflow.pyfunc.load_model(
-    "text2text", model_config=dict(do_sample=False)
-)
+pyfunc_loaded = mlflow.pyfunc.load_model("text2text", model_config=dict(do_sample=False))
 ```
 
 note
@@ -311,9 +307,7 @@ with mlflow.start_run():
     )
 
 # Load the components as a pipeline
-loaded_pipeline = mlflow.transformers.load_model(
-    model_info.model_uri, return_type="pipeline"
-)
+loaded_pipeline = mlflow.transformers.load_model(model_info.model_uri, return_type="pipeline")
 
 print(type(loaded_pipeline).__name__)
 # >> TextClassificationPipeline
@@ -337,9 +331,7 @@ import mlflow
 translation_pipeline = transformers.pipeline(
     task="translation_en_to_fr",
     model=transformers.T5ForConditionalGeneration.from_pretrained("t5-small"),
-    tokenizer=transformers.T5TokenizerFast.from_pretrained(
-        "t5-small", model_max_length=100
-    ),
+    tokenizer=transformers.T5TokenizerFast.from_pretrained("t5-small", model_max_length=100),
 )
 
 with mlflow.start_run():
@@ -420,9 +412,7 @@ task = "translation_en_to_fr"
 my_pipeline = transformers.pipeline(
     task=task,
     model=transformers.T5ForConditionalGeneration.from_pretrained("t5-small"),
-    tokenizer=transformers.T5TokenizerFast.from_pretrained(
-        "t5-small", model_max_length=100
-    ),
+    tokenizer=transformers.T5TokenizerFast.from_pretrained("t5-small", model_max_length=100),
     framework="pt",
 )
 
@@ -471,9 +461,7 @@ task = "translation_en_to_fr"
 my_pipeline = transformers.pipeline(
     task=task,
     model=transformers.T5ForConditionalGeneration.from_pretrained("t5-small"),
-    tokenizer=transformers.T5TokenizerFast.from_pretrained(
-        "t5-small", model_max_length=100
-    ),
+    tokenizer=transformers.T5TokenizerFast.from_pretrained("t5-small", model_max_length=100),
     framework="pt",
 )
 

@@ -2,7 +2,7 @@
 
 ## What is Feedback?[​](#what-is-feedback "Direct link to What is Feedback?")
 
-**Feedback** in MLflow represents the result of any quality assessment performed on your GenAI application outputs. It provides a standardized way to capture evaluations, whether they come from automated systems, LLM judges, or human reviewers.
+**Feedback** in MLflow represents the result of any quality assessment performed on your LLM application or AI agent outputs. It provides a standardized way to capture evaluations, whether they come from automated systems, LLM judges, or human reviewers.
 
 Feedback serves as the bridge between running your application and understanding its quality, enabling you to systematically track performance across different dimensions like correctness, relevance, safety, and adherence to guidelines.
 
@@ -14,15 +14,15 @@ Feedbacks attached to traces
 
 #### Manual Quality Checks
 
-Manual quality checks are important for ensuring the quality of your GenAI application. For example, you can attach a feedback to indicate the hallucination in the response and compare quality between different models.
+Manual quality checks are important for ensuring the quality of your LLM application or AI agent. For example, you can attach a feedback to indicate the hallucination in the response and compare quality between different models.
 
 #### End-User Feedbacks
 
-Feedbacks from end-users are precious for improving the quality of your GenAI application. By storing feedbacks on your traces, you can easily monitor the user satisfaction of your application over time.
+Feedbacks from end-users are precious for improving the quality of your LLM application or AI agent. By storing feedbacks on your traces, you can easily monitor the user satisfaction of your application over time.
 
 #### LLM Judge Evaluation
 
-LLM judges are powerful tools for systematically running quality checks at scale. When using MLflow's GenAI Evaluation, Feedbacks from LLM judges are attached to the traces, enabling you to track evaluation results in the unified way as manual quality checks.
+LLM judges are powerful tools for systematically running quality checks at scale. When using MLflow's evaluation framework, feedbacks from LLM judges are attached to the traces, enabling you to track evaluation results in the unified way as manual quality checks.
 
 #### Collaborative Annotation
 

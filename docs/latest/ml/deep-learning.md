@@ -1,6 +1,6 @@
 # MLflow for Deep Learning
 
-MLflow provides comprehensive experiment tracking, model management, and deployment capabilities for deep learning workflows. From PyTorch training loops to TensorFlow models, MLflow streamlines your path from experimentation to production.
+MLflow for ML Models provides comprehensive experiment tracking, model management, and deployment capabilities for deep learning workflows. From PyTorch training loops to TensorFlow models, MLflow streamlines your path from experimentation to production.
 
 ## Get Started[​](#get-started "Direct link to Get Started")
 

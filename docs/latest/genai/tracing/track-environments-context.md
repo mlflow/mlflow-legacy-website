@@ -1,6 +1,6 @@
 # Track Versions & Environments
 
-Tracking the execution environment and application version of your GenAI application allows you to debug performance and quality issues relative to the code. This metadata enables:
+Tracking the execution environment and application version of your LLM application or AI agent allows you to debug performance and quality issues relative to the code. This metadata enables:
 
 * **Environment-specific analysis** across `development`, `staging`, and `production`
 * **Performance/quality tracking** and regression detection across app versions

@@ -1,6 +1,6 @@
 # Use Prompts in Apps
 
-Once you have created and versioned your prompts in the MLflow Prompt Registry, the next crucial step is to integrate them into your GenAI applications. This page guides you on how to load prompts, bind variables, handle versioning, and ensure complete lineage by linking prompt versions to your logged MLflow Models.
+Once you have created and versioned your prompts in the MLflow Prompt Registry, the next crucial step is to integrate them into your LLM applications and AI agents. This page guides you on how to load prompts, bind variables, handle versioning, and ensure complete lineage by linking prompt versions to your logged MLflow Models.
 
 ## Loading Prompts from the Registry[​](#loading-prompts-from-the-registry "Direct link to Loading Prompts from the Registry")
 
@@ -59,7 +59,8 @@ prompt = mlflow.genai.register_prompt(
 
 question = "What is MLflow?"
 response = (
-    client.chat.completions.create(
+    client.chat.completions
+    .create(
         messages=[{"role": "user", "content": prompt.format(question=question)}],
         model="gpt-4o-mini",
         temperature=0.1,
@@ -85,16 +86,14 @@ from langchain_openai import ChatOpenAI
 prompt = mlflow.genai.load_prompt("prompts:/summarization-prompt/2")
 
 # Create LangChain prompt object
-langchain_prompt = ChatPromptTemplate.from_messages(
-    [
-        (
-            # IMPORTANT: Convert prompt template from double to single curly braces format
-            "system",
-            prompt.to_single_brace_format(),
-        ),
-        ("placeholder", "{messages}"),
-    ]
-)
+langchain_prompt = ChatPromptTemplate.from_messages([
+    (
+        # IMPORTANT: Convert prompt template from double to single curly braces format
+        "system",
+        prompt.to_single_brace_format(),
+    ),
+    ("placeholder", "{messages}"),
+])
 
 # Define the LangChain chain
 llm = ChatOpenAI()
@@ -164,7 +163,7 @@ with mlflow.start_run():
 
 ## Linking Prompts to Logged Models for Full Lineage[​](#linking-prompts-to-logged-models-for-full-lineage "Direct link to Linking Prompts to Logged Models for Full Lineage")
 
-For complete reproducibility and traceability, it is crucial to log which specific prompt versions your application (or model) uses. When you log your GenAI application as an MLflow Model (e.g., using `mlflow.pyfunc.log_model()`, `mlflow.langchain.log_model()`, etc.), you should include information about the prompts from the registry that it utilizes.
+For complete reproducibility and traceability, it is crucial to log which specific prompt versions your application (or model) uses. When you log your LLM application or AI agent as an MLflow Model (e.g., using `mlflow.pyfunc.log_model()`, `mlflow.langchain.log_model()`, etc.), you should include information about the prompts from the registry that it utilizes.
 
 MLflow is designed to facilitate this. When a model is logged, and that model's code loads prompts using the `prompts:/` URI via `mlflow.genai.load_prompt()`, MLflow can automatically record these prompt dependencies as part of the logged model's metadata.
 

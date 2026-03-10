@@ -105,9 +105,7 @@ def execute_tuning(test_no):
     # Partial application of the log_run function
     log_current_run = partial(log_run, test_no=test_no)
     # Generate run names and apply log_current_run function to each run name
-    runs = starmap(
-        log_current_run, ((run_name,) for run_name in generate_run_names(test_no))
-    )
+    runs = starmap(log_current_run, ((run_name,) for run_name in generate_run_names(test_no)))
     # Consume the iterator to execute the runs
     consume(runs)
 
@@ -216,9 +214,7 @@ def execute_tuning(
         )
         mlflow.set_tag("test_identifier", ident)
         # Generate run names and apply log_current_run function to each run name
-        runs = starmap(
-            log_current_run, ((run_name,) for run_name in generate_run_names(test_no))
-        )
+        runs = starmap(log_current_run, ((run_name,) for run_name in generate_run_names(test_no)))
         # Consume the iterator to execute the runs
         consume(runs)
 
@@ -232,9 +228,7 @@ param_1_values = ["x", "y", "z"]
 param_2_values = ["u", "v", "w"]
 
 # Execute hyperparameter tuning runs with custom parameter choices
-consume(
-    starmap(execute_tuning, ((x, param_1_values, param_2_values) for x in range(5)))
-)
+consume(starmap(execute_tuning, ((x, param_1_values, param_2_values) for x in range(5))))
 ```
 
 We can view the results of executing this in the UI:
@@ -248,11 +242,7 @@ python
 param_1_values = ["a", "b"]
 param_2_values = ["u", "v", "w"]
 ident = "params_test_2"
-consume(
-    starmap(
-        execute_tuning, ((x, param_1_values, param_2_values, ident) for x in range(5))
-    )
-)
+consume(starmap(execute_tuning, ((x, param_1_values, param_2_values, ident) for x in range(5))))
 ```
 
 ... and even more runs ...
@@ -263,11 +253,7 @@ python
 param_1_values = ["b", "c"]
 param_2_values = ["d", "f"]
 ident = "params_test_3"
-consume(
-    starmap(
-        execute_tuning, ((x, param_1_values, param_2_values, ident) for x in range(5))
-    )
-)
+consume(starmap(execute_tuning, ((x, param_1_values, param_2_values, ident) for x in range(5))))
 ```
 
 Once we execute these three tuning run tests, we can view the results in the UI:

@@ -419,13 +419,11 @@ def generate_model_script(output_path, notebook_path="llama_index_workflow_tutor
   merged_code = (
       "
 
-".join(
-          [
-              cell.source
-              for cell in notebook.cells
-              if cell.cell_type == "code" and cell.source.startswith("# [USE IN MODEL]")
-          ]
-      )
+".join([
+          cell.source
+          for cell in notebook.cells
+          if cell.cell_type == "code" and cell.source.startswith("# [USE IN MODEL]")
+      ])
       + "
 
 import mlflow

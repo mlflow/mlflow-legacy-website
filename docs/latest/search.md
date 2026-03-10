@@ -4,8 +4,8 @@
 
 [Documentation](#)
 
-* [ML Docs](/docs/latest/ml.md)
-* [GenAI Docs](/docs/latest/genai.md)
+* [LLMs & Agents](/docs/latest/genai.md)
+* [Machine Learning](/docs/latest/ml.md)
 
 [API Reference](https://mlflow.org/docs/latest/api_reference/index.html)[Self-Hosting](/docs/latest/self-hosting.md)[Community](/docs/latest/community.md)
 

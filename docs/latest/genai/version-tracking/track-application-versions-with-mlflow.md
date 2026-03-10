@@ -6,7 +6,7 @@ warning
 * This feature is not supported in [Databricks Git Folders](https://docs.databricks.com/aws/en/repos/) yet due to limitations in accessing Git metadata.
 * MLflow >= 3.4 is required for this feature.
 
-This guide demonstrates how to track versions of your GenAI application when your app's code resides in Git or a similar version control system. MLflow provides automatic Git-based versioning through the [`mlflow.genai.enable_git_model_versioning()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.enable_git_model_versioning) API, which seamlessly tracks your application versions based on Git state.
+This guide demonstrates how to track versions of your LLM application or AI agent when your app's code resides in Git or a similar version control system. MLflow provides automatic Git-based versioning through the [`mlflow.genai.enable_git_model_versioning()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.enable_git_model_versioning) API, which seamlessly tracks your application versions based on Git state.
 
 When enabled, MLflow automatically:
 
@@ -23,7 +23,7 @@ MLflow tracks three key components of your Git state:
 * **Commit**: The Git commit hash uniquely identifying the code version
 * **Dirty State**: Whether your working directory has uncommitted changes. A "dirty" repository means there are modifications that haven't been committed yet. MLflow captures these changes as a diff to ensure complete reproducibility
 
-## Why Git-Based Versioning Works for GenAI[​](#why-git-based-versioning-works-for-genai "Direct link to Why Git-Based Versioning Works for GenAI")
+## Why Git-Based Versioning Works for LLM Applications and AI Agents[​](#why-git-based-versioning-works-for-llm-applications-and-ai-agents "Direct link to Why Git-Based Versioning Works for LLM Applications and AI Agents")
 
 Git-based versioning transforms your version control system into a powerful application lifecycle management tool. Every commit becomes a potential application version, with complete code history and change tracking built-in.
 
@@ -93,9 +93,7 @@ import mlflow
 context = mlflow.genai.enable_git_model_versioning()
 
 # Check which version is active
-print(
-    f"Active version - Branch: {context.info.branch}, Commit: {context.info.commit[:8]}"
-)
+print(f"Active version - Branch: {context.info.branch}, Commit: {context.info.commit[:8]}")
 print(f"Repository dirty: {context.info.dirty}")
 ```
 

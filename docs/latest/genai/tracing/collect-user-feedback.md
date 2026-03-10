@@ -1,6 +1,6 @@
 # Collect User Feedback
 
-Capturing user feedback is critical for understanding the real-world quality of your GenAI application. MLflow's Feedback API provides a structured, standardized approach to collecting, storing, and analyzing user feedback directly within your traces.
+Capturing user feedback is critical for understanding the real-world quality of your LLM application or AI agent. MLflow's Feedback API provides a structured, standardized approach to collecting, storing, and analyzing user feedback directly within your traces.
 
 ## Adding Feedback with MLflow UI[​](#adding-feedback-with-mlflow-ui "Direct link to Adding Feedback with MLflow UI")
 
@@ -21,9 +21,7 @@ mlflow.log_feedback(
     name="user_satisfaction",
     value=True,
     rationale="User indicated response was helpful",
-    source=AssessmentSource(
-        source_type=AssessmentSourceType.HUMAN, source_id="user_123"
-    ),
+    source=AssessmentSource(source_type=AssessmentSourceType.HUMAN, source_id="user_123"),
 )
 ```
 
