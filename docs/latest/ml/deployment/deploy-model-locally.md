@@ -84,15 +84,13 @@ python
 import json
 import requests
 
-payload = json.dumps(
-    {
-        "inputs": {"messages": [{"role": "user", "content": "Tell a joke!"}]},
-        "params": {
-            "temperature": 0.5,
-            "max_tokens": 20,
-        },
-    }
-)
+payload = json.dumps({
+    "inputs": {"messages": [{"role": "user", "content": "Tell a joke!"}]},
+    "params": {
+        "temperature": 0.5,
+        "max_tokens": 20,
+    },
+})
 response = requests.post(
     url=f"http://localhost:5678/invocations",
     data=payload,
@@ -143,13 +141,11 @@ python
 import json
 import requests
 
-payload = json.dumps(
-    {
-        "messages": [{"role": "user", "content": "Tell a joke!"}],
-        "temperature": 0.5,
-        "max_tokens": 20,
-    }
-)
+payload = json.dumps({
+    "messages": [{"role": "user", "content": "Tell a joke!"}],
+    "temperature": 0.5,
+    "max_tokens": 20,
+})
 requests.post(
     url=f"http://localhost:5678/invocations",
     data=payload,

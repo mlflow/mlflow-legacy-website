@@ -6,7 +6,7 @@ Starting in MLflow 3.0.0, we recommend [`ResponsesAgent`](/docs/latest/api_refer
 
 MLflow's [`ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) class provides a standardized way to create production-ready conversational AI models. The resulting models are fully integrated with MLflow's tracking, evaluation, and lifecycle management capabilities. They can be shared with others in the MLflow Model Registry, deployed as a REST API, or loaded in a notebook for interactive use. Furthermore, they are compatible with the widely-adopted OpenAI chat API spec, making them easy to integrate with other AI systems and tools.
 
-If you're already familiar with [`PythonModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel), you might wonder why [`ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) is needed. As GenAI applications grow more complex, mapping inputs, outputs, and parameters with a custom `PythonModel` can be challenging. `ChatModel` simplifies this by offering a structured, OpenAI-compatible schema for conversational AI models.
+If you're already familiar with [`PythonModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel), you might wonder why [`ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) is needed. As LLM applications and AI agents grow more complex, mapping inputs, outputs, and parameters with a custom `PythonModel` can be challenging. `ChatModel` simplifies this by offering a structured, OpenAI-compatible schema for conversational AI models.
 
 |             | ChatModel                                                                                                                 | PythonModel                                                                                                                                                                                                            |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -28,7 +28,7 @@ To illustrate these points, this guide will walk you through building a custom `
 
 ## Prerequisites[​](#prerequisites "Direct link to Prerequisites")
 
-* Familiarity with MLflow logging APIs and GenAI concepts.
+* Familiarity with MLflow logging APIs and LLM concepts.
 * MLflow version 2.17.0 or higher installed for use of [`ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel).
 
 ## Understanding ChatModel: Input/Output Mapping[​](#understanding-chatmodel-inputoutput-mapping "Direct link to Understanding ChatModel: Input/Output Mapping")
@@ -63,7 +63,7 @@ python
             "index": 0,
             "message": {
                 "role": "assistant",
-                "content": "MLflow is an open-source platform for machine learning (ML) and artificial intelligence (AI). It's designed to manage,",
+                "content": "MLflow is the largest open source AI engineering platform for agents, LLM applications, and ML models. It's designed to manage,",
             },
             "finish_reason": "stop",
         }
@@ -138,7 +138,7 @@ text
     'created_at': '2024-11-04T12:47:53.075714Z',
     'message': {
         'role': 'assistant',
-        'content': 'MLflow Tracking is an open-source platform for managing, monitoring, and deploying machine learning (ML) models. It provides a'
+        'content': 'MLflow is the largest open source AI engineering platform for agents, LLM applications, and ML models. It provides a'
     },
     'done_reason': 'length',
     'done': True,
@@ -231,9 +231,7 @@ with mlflow.start_run():
     model_info = mlflow.pyfunc.log_model(
         name="ollama_model",
         python_model=code_path,
-        input_example={
-            "messages": [{"role": "user", "content": "Hello, how are you?"}]
-        },
+        input_example={"messages": [{"role": "user", "content": "Hello, how are you?"}]},
     )
 ```
 
@@ -262,7 +260,7 @@ python
             "index": 0,
             "message": {
                 "role": "assistant",
-                "content": "MLflow is an open-source platform for model deployment, monitoring, and tracking. It was created by Databricks, a cloud-based data analytics company, in collaboration with The Data Science Experience (TDEE), a non-profit organization that focuses on providing high-quality, free machine learning resources.\n\nMLflow allows users to build, train, and deploy machine learning models in various frameworks, such as TensorFlow, PyTorch, and scikit-learn. It provides a unified platform for model development, deployment, and tracking across different environments, including local machines, cloud platforms (e.g., AWS), and edge devices.\n\nSome key features of MLflow include:\n\n1. **Model versioning**: Each time a model is trained or deployed, it generates a unique version number. This allows users to track changes, identify conflicts, and manage multiple versions.\n2. **Model deployment**: MLflow provides tools for deploying models in various environments, including Docker containers, Kubernetes, and cloud platforms (e.g., AWS).\n3. **Monitoring and logging**: The platform includes built-in monitoring and logging capabilities to track model performance, errors, and other metrics.\n4. **Integration with popular frameworks**: MLflow integrates with popular machine learning frameworks, making it easy to incorporate the platform into existing workflows.\n5. **Collaboration and sharing**: MLflow allows multiple users to collaborate on models and tracks changes in real-time.\n\nMLflow has several benefits, including:\n\n1. **Improved model management**: The platform provides a centralized view of all models, allowing for better model tracking and management.\n2. **Increased collaboration**: MLflow enables team members to work together on machine learning projects more effectively.\n3. **Better model performance monitoring**: The platform offers real-time insights into model performance, helping users identify issues quickly.\n4. **Simplified model deployment**: MLflow makes it easy to deploy models in various environments, reducing the complexity of model deployment.\n\nOverall, MLflow is a powerful tool for managing and deploying machine learning models, providing a comprehensive platform for model development, tracking, and collaboration.",
+                "content": "MLflow is the largest open source AI engineering platform for agents, LLM applications, and ML models. It was created by Databricks, a leading data and AI company.\n\nMLflow enables teams to build, evaluate, and deploy production-quality AI agents and ML models across various frameworks, such as LangChain, OpenAI, PyTorch, and scikit-learn. It provides a unified platform for AI development, deployment, and monitoring across different environments, including local machines, cloud platforms (e.g., AWS), and edge devices.\n\nSome key features of MLflow include:\n\n1. **Tracing and observability**: End-to-end visibility into agent and LLM application behavior for debugging and optimization.\n2. **Evaluation**: Comprehensive tools for evaluating agent quality, including LLM judges and custom scorers.\n3. **Prompt management**: Version, track, and optimize prompts used in AI applications.\n4. **Model versioning**: Track model versions with automatic lineage and stage management.\n5. **Model deployment**: Deploy models to local servers, cloud platforms, or containerized environments.\n6. **Integration with popular frameworks**: MLflow integrates with 20+ AI and ML frameworks.\n\nMLflow has several benefits, including:\n\n1. **Improved AI development**: The platform provides end-to-end observability and evaluation for agents and LLM applications.\n2. **Increased collaboration**: MLflow enables team members to work together on AI projects more effectively.\n3. **Better quality monitoring**: The platform offers real-time insights into agent and model performance.\n4. **Simplified deployment**: MLflow makes it easy to deploy models in various environments.\n\nOverall, MLflow is a powerful AI engineering platform, providing comprehensive tools for building, evaluating, and deploying production-quality agents and ML models.",
             },
             "finish_reason": "stop",
         }
@@ -288,13 +286,11 @@ When using a ChatModel, parameters are passed alongside messages in the input:
 python
 
 ```
-result = model.predict(
-    {
-        "messages": [{"role": "user", "content": "Write a story"}],
-        "max_tokens": 100,
-        "temperature": 0.7,
-    }
-)
+result = model.predict({
+    "messages": [{"role": "user", "content": "Write a story"}],
+    "max_tokens": 100,
+    "temperature": 0.7,
+})
 ```
 
 You can find the full list of supported parameters [here](/docs/latest/api_reference/python_api/mlflow.types.html#mlflow.types.llm.ChatParams). Furthermore, you can pass arbitrary additional parameters to a ChatModel via the `custom_inputs` key in the input, which we will cover in more detail in the next section.
@@ -359,9 +355,7 @@ class OllamaModelWithMetadata(ChatModel):
         return Options(options)
 
     def predict(self, context, messages, params=None):
-        ollama_messages = [
-            {"role": msg.role, "content": msg.content} for msg in messages
-        ]
+        ollama_messages = [{"role": msg.role, "content": msg.content} for msg in messages]
         options = self._prepare_options(params)
 
         # Call Ollama
@@ -396,9 +390,7 @@ with mlflow.start_run():
     model_info = mlflow.pyfunc.log_model(
         name="ollama_model",
         python_model=code_path,
-        input_example={
-            "messages": [{"role": "user", "content": "Hello, how are you?"}]
-        },
+        input_example={"messages": [{"role": "user", "content": "Hello, how are you?"}]},
     )
 
 loaded_model = mlflow.pyfunc.load_model(model_info.model_uri)
@@ -423,7 +415,7 @@ python
             "index": 0,
             "message": {
                 "role": "assistant",
-                "content": "MLflow is an open-source platform that provides a set of tools for managing and tracking machine learning (ML) model deployments,",
+                "content": "MLflow is the largest open source AI engineering platform for agents, LLM applications, and ML models. It provides tools for tracing, evaluation, and deployment,",
             },
             "finish_reason": "stop",
         }
@@ -560,9 +552,7 @@ class OllamaPyfunc(PythonModel):
             messages = model_input.get("messages", [])
 
         options = self._prepare_options(params)
-        ollama_messages = [
-            {"role": msg["role"], "content": msg["content"]} for msg in messages
-        ]
+        ollama_messages = [{"role": msg["role"], "content": msg["content"]} for msg in messages]
 
         response = self.client.chat(
             model=self.model_name, messages=ollama_messages, options=options
@@ -572,9 +562,7 @@ class OllamaPyfunc(PythonModel):
             choices=[
                 ChatChoice(
                     index=0,
-                    message=ChatMessage(
-                        role="assistant", content=response["message"]["content"]
-                    ),
+                    message=ChatMessage(role="assistant", content=response["message"]["content"]),
                 )
             ],
             model=self.model_name,
@@ -616,7 +604,7 @@ with mlflow.start_run():
     )
 ```
 
-With a custom [`PythonModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel), we need to manually define the input example so that a model signature can be inferred using the example. This is a significant difference from the ChatModel API, which automatically configures a signature that conforms to the standard OpenAI-compatible input/output/parameter schemas. To learn more about auto inference of model signature based on an input example, see the [GenAI model signature example](/docs/latest/ml/model/signatures.md#automatic-signature-inference) section for details.
+With a custom [`PythonModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel), we need to manually define the input example so that a model signature can be inferred using the example. This is a significant difference from the ChatModel API, which automatically configures a signature that conforms to the standard OpenAI-compatible input/output/parameter schemas. To learn more about auto inference of model signature based on an input example, see the [model signature example](/docs/latest/ml/model/signatures.md#automatic-signature-inference) section for details.
 
 There is also one notable difference in how we call the loaded model's `predict` method: parameters are passed as a dictionary via the `params` keyword argument, rather than in the dictionary containing the messages.
 
@@ -643,7 +631,7 @@ python
             "index": 0,
             "message": {
                 "role": "assistant",
-                "content": "MLflow is an open-source platform for machine learning (ML) and deep learning (DL) model management, monitoring, and",
+                "content": "MLflow is the largest open source AI engineering platform for agents, LLM applications, and ML models. It provides tools for monitoring and",
             },
             "finish_reason": "stop",
         }

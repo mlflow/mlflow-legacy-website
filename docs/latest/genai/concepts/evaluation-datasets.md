@@ -6,7 +6,7 @@ Evaluation Datasets require an MLflow Tracking Server with a **[SQL backend](/do
 
 ## What are Evaluation Datasets?[​](#what-are-evaluation-datasets "Direct link to What are Evaluation Datasets?")
 
-**Evaluation Datasets** in MLflow provide a structured way to organize and manage test data for GenAI applications. They serve as centralized repositories for test inputs, optional test outputs, expected outputs (expectations), and evaluation results, enabling systematic quality assessment across your AI development lifecycle.
+**Evaluation Datasets** in MLflow provide a structured way to organize and manage test data for LLM applications and AI agents. They serve as centralized repositories for test inputs, optional test outputs, expected outputs (expectations), and evaluation results, enabling systematic quality assessment across your AI development lifecycle.
 
 Unlike static test files, evaluation datasets are **living validation collections** designed to grow and evolve with your application. Records can be continuously added from production traces, manual curation, or programmatic generation.
 

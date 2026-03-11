@@ -1,6 +1,6 @@
 # Evaluate & Monitor FAQ
 
-This page addresses frequently asked questions about MLflow's GenAI evaluation.
+This page addresses frequently asked questions about MLflow's evaluation framework for LLM applications and AI agents.
 
 ## Where can I find the evaluation results in MLflow UI?[​](#where-can-i-find-the-evaluation-results-in-mlflow-ui "Direct link to Where can I find the evaluation results in MLflow UI?")
 
@@ -109,7 +109,7 @@ with mlflow.start_run(run_name="My Evaluation Run") as run:
 
 ## How do I use Databricks Model Serving endpoints as the predict function?[​](#how-do-i-use-databricks-model-serving-endpoints-as-the-predict-function "Direct link to How do I use Databricks Model Serving endpoints as the predict function?")
 
-MLflow provides [`mlflow.genai.to_predict_fn()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.to_predict_fn), which wraps a Databricks Model Serving endpoint so it behaves like a predict function compatible with GenAI evaluation.
+MLflow provides [`mlflow.genai.to_predict_fn()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.to_predict_fn), which wraps a Databricks Model Serving endpoint so it behaves like a predict function compatible with the evaluation framework.
 
 The wrapper:
 

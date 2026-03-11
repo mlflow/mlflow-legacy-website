@@ -1,6 +1,6 @@
 # Feedback Collection
 
-MLflow Feedback provides a comprehensive system for capturing quality evaluations from multiple sources - whether automated AI judges, programmatic rules, or human reviewers. This systematic approach to feedback collection enables you to understand and improve your GenAI application's performance at scale.
+MLflow Feedback provides a comprehensive system for capturing quality evaluations from multiple sources - whether automated AI judges, programmatic rules, or human reviewers. This systematic approach to feedback collection enables you to understand and improve your LLM application or AI agent's performance at scale.
 
 For complete API documentation and implementation details, see the [`mlflow.log_feedback()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.log_feedback) reference.
 
@@ -14,7 +14,7 @@ Before using feedback collection in MLflow, ensure you have:
 
 * MLflow 3.2.0 or later installed
 * An active MLflow tracking server or local tracking setup
-* Traces that have been logged from your GenAI application to an MLflow Experiment
+* Traces that have been logged from your LLM application or AI agent to an MLflow Experiment
 
 ## Sources of Feedback[​](#sources-of-feedback "Direct link to Sources of Feedback")
 
@@ -57,7 +57,7 @@ llm_judge_source = AssessmentSource(
 
 ## Why Collect Feedback?[​](#why-collect-feedback "Direct link to Why Collect Feedback?")
 
-Collecting feedback on the quality of GenAI applications is critical to a continuous improvement process, ensuring that your application remains effective and is enhanced over time.
+Collecting feedback on the quality of LLM applications and AI agents is critical to a continuous improvement process, ensuring that your application remains effective and is enhanced over time.
 
 #### Enable Continuous Improvement
 
@@ -241,9 +241,7 @@ def evaluate_response_compliance(response_text):
 
     # Check for prohibited terms
     prohibited_terms = ["guaranteed returns", "risk-free", "get rich quick"]
-    found_terms = [
-        term for term in prohibited_terms if term.lower() in response_text.lower()
-    ]
+    found_terms = [term for term in prohibited_terms if term.lower() in response_text.lower()]
     if found_terms:
         results["contains_prohibited_terms"] = True
         results["rationale"].append(f"Contains prohibited terms: {found_terms}")
@@ -262,13 +260,11 @@ def log_compliance_check(trace_id, response_text):
 
     # Calculate overall compliance score
     compliance_score = (
-        sum(
-            [
-                evaluation["has_disclaimer"],
-                evaluation["appropriate_length"],
-                not evaluation["contains_prohibited_terms"],
-            ]
-        )
+        sum([
+            evaluation["has_disclaimer"],
+            evaluation["appropriate_length"],
+            not evaluation["contains_prohibited_terms"],
+        ])
         / 3
     )
 
@@ -310,9 +306,7 @@ python
 
 ```
 # Get a specific feedback by ID
-feedback = mlflow.get_assessment(
-    trace_id="tr-1234567890abcdef", assessment_id="a-0987654321abcdef"
-)
+feedback = mlflow.get_assessment(trace_id="tr-1234567890abcdef", assessment_id="a-0987654321abcdef")
 
 # Access feedback details
 name = feedback.name
@@ -352,9 +346,7 @@ python
 
 ```
 # Delete specific feedback
-mlflow.delete_assessment(
-    trace_id="tr-1234567890abcdef", assessment_id="a-5555666677778888"
-)
+mlflow.delete_assessment(trace_id="tr-1234567890abcdef", assessment_id="a-5555666677778888")
 ```
 
 note
@@ -433,9 +425,7 @@ source = AssessmentSource(
 )
 
 # Good: Individual attribution
-source = AssessmentSource(
-    source_type=AssessmentSourceType.HUMAN, source_id="expert@company.com"
-)
+source = AssessmentSource(source_type=AssessmentSourceType.HUMAN, source_id="expert@company.com")
 
 # Poor: Generic, untraceable
 source = AssessmentSource(source_type=AssessmentSourceType.CODE, source_id="validator")
@@ -479,6 +469,6 @@ mlflow.log_feedback(
 
 ### [LLM Evaluation](/docs/latest/genai/eval-monitor.md)
 
-[Learn how to systematically evaluate and improve your GenAI applications](/docs/latest/genai/eval-monitor.md)
+[Learn how to systematically evaluate and improve your LLM applications and AI agents](/docs/latest/genai/eval-monitor.md)
 
 [Start evaluating →](/docs/latest/genai/eval-monitor.md)
