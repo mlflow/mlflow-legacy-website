@@ -39,9 +39,7 @@ class CustomLLMModel(mlflow.pyfunc.PythonModel):
         # Initialize LLM client
         self.client = openai.OpenAI(api_key=self.config["api_key"])
         self.model_name = self.config["model_name"]
-        self.system_prompt = self.config.get(
-            "system_prompt", "You are a helpful assistant."
-        )
+        self.system_prompt = self.config.get("system_prompt", "You are a helpful assistant.")
 
     def predict(self, context, model_input):
         """Core LLM prediction logic"""
@@ -124,9 +122,9 @@ with mlflow.start_run():
     mlflow.log_artifact("config.json")
 
     # Create input example
-    input_example = pd.DataFrame(
-        {"prompt": ["What is machine learning?", "Explain neural networks"]}
-    )
+    input_example = pd.DataFrame({
+        "prompt": ["What is machine learning?", "Explain neural networks"]
+    })
 
     model_info = mlflow.pyfunc.log_model(
         name="custom_llm_model",
@@ -199,9 +197,7 @@ class MultiLLMEnsemble(mlflow.pyfunc.PythonModel):
             )
             return self._generate_ensemble_response(prompt, task_type)
 
-    def _generate_ensemble_response(
-        self, prompt: str, task_type: str = "general"
-    ) -> str:
+    def _generate_ensemble_response(self, prompt: str, task_type: str = "general") -> str:
         """Generate responses from multiple LLMs and combine them"""
         responses = {}
 
@@ -218,9 +214,7 @@ class MultiLLMEnsemble(mlflow.pyfunc.PythonModel):
         # Combine responses based on voting strategy
         return self._combine_responses(responses, task_type)
 
-    def _generate_single_response(
-        self, model_name: str, prompt: str, task_type: str
-    ) -> str:
+    def _generate_single_response(self, model_name: str, prompt: str, task_type: str) -> str:
         """Generate response from a single LLM"""
         model_config = self.config["models"][model_name]
 
@@ -277,9 +271,7 @@ class MultiLLMEnsemble(mlflow.pyfunc.PythonModel):
             combined_response = "Combined insights:\n\n"
             for model_name, response in responses.items():
                 weight = self.model_weights.get(model_name, 1.0)
-                combined_response += (
-                    f"[{model_name.upper()} - Weight: {weight}]: {response}\n\n"
-                )
+                combined_response += f"[{model_name.upper()} - Weight: {weight}]: {response}\n\n"
             return combined_response
 
         # Default: return first available response
@@ -322,12 +314,10 @@ with mlflow.start_run():
     mlflow.log_artifact("ensemble_config.json")
 
     # Create input example
-    input_example = pd.DataFrame(
-        {
-            "prompt": ["Explain quantum computing", "Write a creative story about AI"],
-            "task_type": ["general", "creative_writing"],
-        }
-    )
+    input_example = pd.DataFrame({
+        "prompt": ["Explain quantum computing", "Write a creative story about AI"],
+        "task_type": ["general", "creative_writing"],
+    })
 
     mlflow.pyfunc.log_model(
         name="multi_llm_ensemble",
@@ -379,13 +369,11 @@ import pandas as pd
 import json
 
 # Prepare test data
-test_data = pd.DataFrame(
-    {
-        "feature1": [1.0, 2.0, 3.0],
-        "feature2": [0.5, 1.5, 2.5],
-        "customer_value": [5000, 15000, 3000],
-    }
-)
+test_data = pd.DataFrame({
+    "feature1": [1.0, 2.0, 3.0],
+    "feature2": [0.5, 1.5, 2.5],
+    "customer_value": [5000, 15000, 3000],
+})
 
 # Convert to the expected input format
 input_data = {"inputs": test_data.to_dict("records")}

@@ -1,6 +1,6 @@
 # MLflow Model Registry
 
-The MLflow Model Registry is a centralized model store, set of APIs and a UI designed to collaboratively manage the full lifecycle of a model. It provides lineage (i.e., which MLflow experiment and run produced the model), versioning, aliasing, metadata tagging and annotation support to ensure that you have the full spectrum of information at every stage from development to production deployment.
+The MLflow Model Registry is a centralized model store, set of APIs and a UI designed to collaboratively manage the full lifecycle of a machine learning model. It provides lineage (i.e., which MLflow experiment and run produced the model), versioning, aliasing, metadata tagging and annotation support to ensure that you have the full spectrum of information at every stage from development to production deployment.
 
 ## Why Model Registry?[​](#why-model-registry "Direct link to Why Model Registry?")
 
@@ -35,7 +35,7 @@ The MLflow Model Registry is available in both open-source (OSS) MLflow and mana
 
 ### Model Registry in OSS MLflow[​](#model-registry-in-oss-mlflow "Direct link to Model Registry in OSS MLflow")
 
-In the open-source version of MLflow, the Model Registry provides both a UI and API for managing the lifecycle of machine learning models. You can register models, track versions, add tags and descriptions, and transition models between stages such as Staging and Production.
+In the open-source version of MLflow for ML Models, the Model Registry provides both a UI and API for versioning and managing ML models. You can register models, track versions, add tags and descriptions, and transition models between stages such as Staging and Production.
 
 Register a model in MLflow
 

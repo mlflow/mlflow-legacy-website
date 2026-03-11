@@ -1,8 +1,8 @@
 # MLflow Tracing UI
 
-## GenAI Experiment Overview[​](#genai-experiment-overview "Direct link to GenAI Experiment Overview")
+## LLM and AI Agent Experiment Overview[​](#llm-and-ai-agent-experiment-overview "Direct link to LLM and AI Agent Experiment Overview")
 
-The **Overview** tab in GenAI experiments provides comprehensive analytics and visualizations for your GenAI application traces. This tab is organized into three sub-tabs to help you monitor different aspects of your application.
+The **Overview** tab in LLM and AI agent experiments provides comprehensive analytics and visualizations for your LLM application and AI agent traces. This tab is organized into three sub-tabs to help you monitor different aspects of your application.
 
 All tabs include a **time range selector** and **time unit selector** to customize the granularity and range of the displayed data.
 
@@ -21,7 +21,7 @@ The Usage tab displays key metrics about your trace requests over time:
 
 ### Quality[​](#quality "Direct link to Quality")
 
-The Quality tab provides insights into the quality of your GenAI outputs:
+The Quality tab provides insights into the quality of your LLM and AI agent outputs:
 
 * **Quality Summary**: Provides overview of scorers result
 * **Quality Insights**: Displays metrics computed by [scorers](/docs/latest/genai/eval-monitor/scorers.md), with a dedicated chart for each assessment type
@@ -68,7 +68,11 @@ You can also edit key-value tags on your traces via the UI.
 
 In order to browse the span data of an individual trace, simply click on the link in the "Trace ID" or "Trace name" columns to open the trace viewer:
 
-[](/docs/latest/images/llms/tracing/tracing-top.mp4)
+![MLflow Tracing UI](/docs/latest/images/llms/tracing/langgraph-agent-trace.png)
+
+Image and Audio Content
+
+MLflow renders images and audio inline in the trace viewer. For supported formats, framework examples, and how to attach multimodal content to traces, see [Image and Audio (Multimodal) Content in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md).
 
 ## Jupyter Notebook integration[​](#jupyter-notebook-integration "Direct link to Jupyter Notebook integration")
 

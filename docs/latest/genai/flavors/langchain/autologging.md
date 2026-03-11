@@ -32,7 +32,7 @@ mlflow.langchain.autolog()
 
 Once you have invoked the chain, you can view the logged traces and artifacts in the MLflow UI.
 
-[](/docs/latest/images/llms/tracing/tracing-top.mp4)
+![LangChain Tracing with MLflow](/docs/latest/images/llms/tracing/langgraph-agent-trace.png)
 
 ## Configure Autologging[​](#configure-autologging "Direct link to Configure Autologging")
 
@@ -79,9 +79,7 @@ import mlflow
 # These two libraries enable autologging to log text analysis related artifacts
 # %pip install textstat spacy
 
-assert (
-    "OPENAI_API_KEY" in os.environ
-), "Please set the OPENAI_API_KEY environment variable."
+assert "OPENAI_API_KEY" in os.environ, "Please set the OPENAI_API_KEY environment variable."
 
 # Enable mlflow langchain autologging
 mlflow.langchain.autolog()
@@ -168,9 +166,7 @@ tools = [get_weather]
 graph = create_react_agent(llm, tools)
 
 # Invoke the graph
-result = graph.invoke(
-    {"messages": [{"role": "user", "content": "what is the weather in sf?"}]}
-)
+result = graph.invoke({"messages": [{"role": "user", "content": "what is the weather in sf?"}]})
 ```
 
 note

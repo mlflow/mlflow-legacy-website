@@ -1,6 +1,6 @@
 # AI Issue Discovery
 
-Automatically analyze traces in your MLflow experiments to find operational issues, quality problems, and performance patterns. The Analyze Experiment tool uses hypothesis-driven analysis to systematically examine your GenAI application's behavior, identify the most important problems, and create a plan for addressing them in the form of a comprehensive markdown report.
+Automatically analyze traces in your MLflow experiments to find operational issues, quality problems, and performance patterns. The Analyze Experiment tool uses hypothesis-driven analysis to systematically examine your LLM application or AI agent's behavior, identify the most important problems, and create a plan for addressing them in the form of a comprehensive markdown report.
 
 ## Overview[​](#overview "Direct link to Overview")
 
