@@ -12,7 +12,7 @@ For example, the above picture illustrates a set of spans that are organized in 
 
 ## Span Object Schema[​](#span-object-schema "Direct link to Span Object Schema")
 
-MLflow's Span object is designed to be compatible with the [OpenTelemetry Span spec](https://opentelemetry.io/docs/concepts/signals/traces#spans). It is a dataclass object that is mostly same as the OpenTelemetry span object, but with some additional convenience accessors and methods to support GenAI use cases. When exported to OpenTelemetry-compatible backend, the Span object is serialized into the strict OpenTelemetry export format (OTLP).
+MLflow's Span object is designed to be compatible with the [OpenTelemetry Span spec](https://opentelemetry.io/docs/concepts/signals/traces#spans). It is a dataclass object that is mostly same as the OpenTelemetry span object, but with some additional convenience accessors and methods to support LLM and AI agent use cases. When exported to OpenTelemetry-compatible backend, the Span object is serialized into the strict OpenTelemetry export format (OTLP).
 
 | Field           | Type              | Description                                                                                                                                                                                                                                                   |
 | --------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -35,17 +35,15 @@ Span attributes are key-value pairs that provide insight into behavioral modific
 python
 
 ```
-span.set_attributes(
-    {
-        "ai.model.name": "o3-mini",
-        "ai.model.version": "2024-01-01",
-        "ai.model.provider": "openai",
-        "ai.model.temperature": 0.7,
-        "ai.model.max_tokens": 1000,
-        "infrastructure.gpu.type": "A100",
-        "infrastructure.memory.used_mb": 2048,
-    }
-)
+span.set_attributes({
+    "ai.model.name": "o3-mini",
+    "ai.model.version": "2024-01-01",
+    "ai.model.provider": "openai",
+    "ai.model.temperature": 0.7,
+    "ai.model.max_tokens": 1000,
+    "infrastructure.gpu.type": "A100",
+    "infrastructure.memory.used_mb": 2048,
+})
 ```
 
 ## Span Types[​](#span-types "Direct link to Span Types")
@@ -80,8 +78,7 @@ from mlflow.entities import SpanType
 
 # Setting a span type with the decorator
 @mlflow.trace(span_type=SpanType.RETRIEVER)
-def retrieve_documents(query: str):
-    ...
+def retrieve_documents(query: str): ...
 
 
 # Setting a span type with the context manager
@@ -93,8 +90,7 @@ with mlflow.start_span(name="add", span_type=SpanType.TOOL) as span:
 
 # You can also define a custom span type string
 @mlflow.trace(span_type="ROUTER")
-def route_request(request):
-    ...
+def route_request(request): ...
 ```
 
 Span type is useful for searching and filtering particular spans in a large trace. MLflow supports both UI and programmatic span search by span type.
@@ -147,7 +143,7 @@ def search_store(query: str) -> list[tuple[str, str]]:
     # Simulate retrieving documents (e.g., from a vector database)
     return [
         (
-            "MLflow Tracing helps debug GenAI applications...",
+            "MLflow Tracing helps debug LLM applications and AI agents...",
             "docs/mlflow/tracing_intro.md",
         ),
         (
@@ -167,9 +163,7 @@ def retrieve_relevant_documents(query: str):
     span = mlflow.get_current_active_span()
 
     # Set the outputs of the span in accordance with the tracing schema
-    outputs = [
-        Document(page_content=doc, metadata={"doc_uri": uri}) for doc, uri in docs
-    ]
+    outputs = [Document(page_content=doc, metadata={"doc_uri": uri}) for doc, uri in docs]
     span.set_outputs(outputs)
 
     # Return the original format for downstream usage

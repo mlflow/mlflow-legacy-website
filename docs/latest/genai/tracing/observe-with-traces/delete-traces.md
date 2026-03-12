@@ -8,7 +8,7 @@ Deleting a trace cannot be undone. Ensure that the parameters provided to the `d
 
 ## Deleting traces from MLflow UI[​](#deleting-traces-from-mlflow-ui "Direct link to Deleting traces from MLflow UI")
 
-![Delete Traces from MLflow UI](/docs/latest/images/llms/tracing/delete-traces.png)
+![Delete Traces from MLflow UI](/docs/latest/images/llms/tracing/trace-ui-delete.png)
 
 ## Delete traces older than a specific timestamp:[​](#delete-traces-older-than-a-specific-timestamp "Direct link to Delete traces older than a specific timestamp:")
 

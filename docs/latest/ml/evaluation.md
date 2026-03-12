@@ -50,9 +50,7 @@ from mlflow.models import infer_signature
 
 # Load dataset
 X, y = load_breast_cancer(return_X_y=True, as_frame=True)
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.3, random_state=42
-)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
 # Train model
 model = xgb.XGBClassifier().fit(X_train, y_train)
@@ -176,9 +174,7 @@ python
 
 ```
 # Run evaluation
-result = mlflow.models.evaluate(
-    model_uri, eval_data, targets="label", model_type="classifier"
-)
+result = mlflow.models.evaluate(model_uri, eval_data, targets="label", model_type="classifier")
 
 # Access metrics
 for metric_name, value in result.metrics.items():
@@ -206,9 +202,7 @@ python
 from mlflow.models import MetricThreshold
 
 # Evaluate model
-result = mlflow.models.evaluate(
-    model_uri, eval_data, targets="label", model_type="classifier"
-)
+result = mlflow.models.evaluate(model_uri, eval_data, targets="label", model_type="classifier")
 
 # Define thresholds
 thresholds = {
@@ -244,9 +238,7 @@ from sklearn.model_selection import train_test_split
 
 # Generate sample data and train a model
 X, y = make_classification(n_samples=1000, n_features=20, n_classes=2, random_state=42)
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.3, random_state=42
-)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
 model = RandomForestClassifier(n_estimators=100, random_state=42)
 model.fit(X_train, y_train)
@@ -256,12 +248,10 @@ predictions = model.predict(X_test)
 prediction_probabilities = model.predict_proba(X_test)[:, 1]
 
 # Create evaluation dataset with predictions
-eval_dataset = pd.DataFrame(
-    {
-        "prediction": predictions,
-        "target": y_test,
-    }
-)
+eval_dataset = pd.DataFrame({
+    "prediction": predictions,
+    "target": y_test,
+})
 
 with mlflow.start_run():
     result = mlflow.models.evaluate(
@@ -287,13 +277,11 @@ When evaluating classification models with probability scores, include a column 
 python
 
 ```
-eval_dataset = pd.DataFrame(
-    {
-        "prediction": predictions,
-        "prediction_proba": prediction_probabilities,  # For ROC-AUC
-        "target": y_test,
-    }
-)
+eval_dataset = pd.DataFrame({
+    "prediction": predictions,
+    "prediction_proba": prediction_probabilities,  # For ROC-AUC
+    "target": y_test,
+})
 ```
 
 ## Function Evaluation[​](#function-evaluation "Direct link to Function Evaluation")
@@ -313,9 +301,7 @@ from sklearn.model_selection import train_test_split
 
 # Generate sample data
 X, y = make_classification(n_samples=1000, n_features=20, n_classes=2, random_state=42)
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.3, random_state=42
-)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
 # Train a model
 model = RandomForestClassifier(n_estimators=100, random_state=42)
@@ -394,9 +380,7 @@ def custom_metric_fn(predictions, targets, metrics):
 
 
 # Create metric
-custom_metric = make_metric(
-    eval_fn=custom_metric_fn, greater_is_better=True, name="custom_metric"
-)
+custom_metric = make_metric(eval_fn=custom_metric_fn, greater_is_better=True, name="custom_metric")
 
 with mlflow.start_run():
     result = mlflow.models.evaluate(
@@ -483,9 +467,7 @@ from mlflow.models import infer_signature
 
 # Load dataset
 X, y = load_breast_cancer(return_X_y=True, as_frame=True)
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.3, random_state=42
-)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
 # Train model
 model = xgb.XGBClassifier().fit(X_train, y_train)
