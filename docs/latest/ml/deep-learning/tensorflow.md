@@ -46,16 +46,14 @@ data = np.random.uniform(size=[20, 28, 28, 3])
 label = np.random.randint(2, size=20)
 
 # Define model
-model = keras.Sequential(
-    [
-        keras.Input([28, 28, 3]),
-        keras.layers.Conv2D(8, 2),
-        keras.layers.MaxPool2D(2),
-        keras.layers.Flatten(),
-        keras.layers.Dense(2),
-        keras.layers.Softmax(),
-    ]
-)
+model = keras.Sequential([
+    keras.Input([28, 28, 3]),
+    keras.layers.Conv2D(8, 2),
+    keras.layers.MaxPool2D(2),
+    keras.layers.Flatten(),
+    keras.layers.Dense(2),
+    keras.layers.Softmax(),
+])
 
 model.compile(
     loss=keras.losses.SparseCategoricalCrossentropy(),
@@ -99,15 +97,13 @@ data = np.random.uniform(size=[100, 28, 28, 3])
 labels = np.random.randint(2, size=100)
 
 # Define and compile your model
-model = keras.Sequential(
-    [
-        keras.Input([28, 28, 3]),
-        keras.layers.Conv2D(8, 3),
-        keras.layers.MaxPool2D(2),
-        keras.layers.Flatten(),
-        keras.layers.Dense(2, activation="softmax"),
-    ]
-)
+model = keras.Sequential([
+    keras.Input([28, 28, 3]),
+    keras.layers.Conv2D(8, 3),
+    keras.layers.MaxPool2D(2),
+    keras.layers.Flatten(),
+    keras.layers.Dense(2, activation="softmax"),
+])
 
 model.compile(
     loss="sparse_categorical_crossentropy",
@@ -168,16 +164,14 @@ import tensorflow as tf
 from tensorflow import keras
 
 # Define model
-model = keras.Sequential(
-    [
-        keras.Input([28, 28, 3]),
-        keras.layers.Conv2D(8, 2),
-        keras.layers.MaxPool2D(2),
-        keras.layers.Flatten(),
-        keras.layers.Dense(2),
-        keras.layers.Softmax(),
-    ]
-)
+model = keras.Sequential([
+    keras.Input([28, 28, 3]),
+    keras.layers.Conv2D(8, 2),
+    keras.layers.MaxPool2D(2),
+    keras.layers.Flatten(),
+    keras.layers.Dense(2),
+    keras.layers.Softmax(),
+])
 
 # Train model (code omitted for brevity)
 
@@ -213,15 +207,13 @@ def objective(trial, x_train, y_train, x_val, y_val):
         }
 
         # Create model with hyperparameters
-        model = keras.Sequential(
-            [
-                keras.layers.Input(shape=(28, 28, 3)),
-                keras.layers.Flatten(),
-                keras.layers.Dense(params["units"], activation="relu"),
-                keras.layers.Dropout(params["dropout"]),
-                keras.layers.Dense(10, activation="softmax"),
-            ]
-        )
+        model = keras.Sequential([
+            keras.layers.Input(shape=(28, 28, 3)),
+            keras.layers.Flatten(),
+            keras.layers.Dense(params["units"], activation="relu"),
+            keras.layers.Dropout(params["dropout"]),
+            keras.layers.Dense(10, activation="softmax"),
+        ])
 
         model.compile(
             optimizer=keras.optimizers.Adam(learning_rate=params["learning_rate"]),
@@ -230,9 +222,7 @@ def objective(trial, x_train, y_train, x_val, y_val):
         )
 
         # Train and evaluate
-        history = model.fit(
-            x_train, y_train, validation_data=(x_val, y_val), epochs=5, verbose=0
-        )
+        history = model.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=5, verbose=0)
 
         val_accuracy = max(history.history["val_accuracy"])
         mlflow.log_metric("val_accuracy", val_accuracy)
@@ -243,9 +233,7 @@ def objective(trial, x_train, y_train, x_val, y_val):
 # Main experiment run
 with mlflow.start_run(run_name="tensorflow_hyperparameter_optimization"):
     study = optuna.create_study(direction="maximize")
-    study.optimize(
-        lambda trial: objective(trial, x_train, y_train, x_val, y_val), n_trials=20
-    )
+    study.optimize(lambda trial: objective(trial, x_train, y_train, x_val, y_val), n_trials=20)
 
     # Log best parameters and results
     mlflow.log_params({f"best_{k}": v for k, v in study.best_params.items()})
@@ -267,14 +255,12 @@ client = MlflowClient()
 
 with mlflow.start_run():
     # Create model for demonstration
-    model = keras.Sequential(
-        [
-            keras.layers.Conv2D(32, 3, activation="relu", input_shape=(224, 224, 3)),
-            keras.layers.MaxPooling2D(2),
-            keras.layers.Flatten(),
-            keras.layers.Dense(10, activation="softmax"),
-        ]
-    )
+    model = keras.Sequential([
+        keras.layers.Conv2D(32, 3, activation="relu", input_shape=(224, 224, 3)),
+        keras.layers.MaxPooling2D(2),
+        keras.layers.Flatten(),
+        keras.layers.Dense(10, activation="softmax"),
+    ])
 
     # Log model to registry
     model_info = mlflow.tensorflow.log_model(
@@ -282,9 +268,7 @@ with mlflow.start_run():
     )
 
     # Tag for tracking
-    mlflow.set_tags(
-        {"model_type": "cnn", "dataset": "imagenet", "framework": "tensorflow"}
-    )
+    mlflow.set_tags({"model_type": "cnn", "dataset": "imagenet", "framework": "tensorflow"})
 
 # Set model alias for deployment
 client.set_registered_model_alias(

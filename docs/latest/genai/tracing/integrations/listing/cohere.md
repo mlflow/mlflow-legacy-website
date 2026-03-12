@@ -33,7 +33,7 @@ pip install 'mlflow[genai]' openai
 bash
 
 ```
-npm install mlflow-openai openai
+npm install @mlflow/openai openai
 ```
 
 2
@@ -105,7 +105,7 @@ typescript
 
 ```
 import { OpenAI } from "openai";
-import { tracedOpenAI } from "mlflow-openai";
+import { tracedOpenAI } from "@mlflow/openai";
 
 // Wrap the OpenAI client and point to Cohere endpoint
 const client = tracedOpenAI(
@@ -187,9 +187,9 @@ answer = answer_question("What is the capital of France?")
 typescript
 
 ```
-import * as mlflow from "mlflow-tracing";
+import * as mlflow from "@mlflow/core";
 import { OpenAI } from "openai";
-import { tracedOpenAI } from "mlflow-openai";
+import { tracedOpenAI } from "@mlflow/openai";
 
 mlflow.init({
   trackingUri: "http://localhost:5000",

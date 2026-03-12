@@ -196,26 +196,21 @@ python
 from mlflow.pyfunc import ResponsesAgent
 
 
-class MyResponsesAgent(ResponsesAgent):
-    ...
+class MyResponsesAgent(ResponsesAgent): ...
 
 
 responses_agent = MyResponsesAgent()
-responses_agent.predict(
-    {
-        "input": [{"role": "user", "content": "what is 4*3 in python"}],
-        "context": {"conversation_id": "123", "user_id": "456"},
-    }
-)
+responses_agent.predict({
+    "input": [{"role": "user", "content": "what is 4*3 in python"}],
+    "context": {"conversation_id": "123", "user_id": "456"},
+})
 # ... log responses_agent using code from above
 # load it back from mlflow
 loaded_model = mlflow.pyfunc.load_model(path)
-loaded_model.predict(
-    {
-        "input": [{"role": "user", "content": "what is 4*3 in python"}],
-        "context": {"conversation_id": "123", "user_id": "456"},
-    }
-)
+loaded_model.predict({
+    "input": [{"role": "user", "content": "what is 4*3 in python"}],
+    "context": {"conversation_id": "123", "user_id": "456"},
+})
 ```
 
 ## Migrating from `ChatAgent`[​](#migrating-from-chatagent "Direct link to migrating-from-chatagent")
@@ -400,9 +395,7 @@ class SimpleResponsesAgent(ResponsesAgent):
             for event in self.predict_stream(request)
             if event.type == "response.output_item.done"
         ]
-        return ResponsesAgentResponse(
-            output=outputs, custom_outputs=request.custom_inputs
-        )
+        return ResponsesAgentResponse(output=outputs, custom_outputs=request.custom_inputs)
 
     def predict_stream(self, request: ResponsesAgentRequest):
         messages = to_chat_completions_input([i.model_dump() for i in request.input])
@@ -496,9 +489,7 @@ class LangGraphResponsesAgent(ResponsesAgent):
             for event in self.predict_stream(request)
             if event.type == "response.output_item.done"
         ]
-        return ResponsesAgentResponse(
-            output=outputs, custom_outputs=request.custom_inputs
-        )
+        return ResponsesAgentResponse(output=outputs, custom_outputs=request.custom_inputs)
 
     def predict_stream(
         self,
@@ -506,9 +497,7 @@ class LangGraphResponsesAgent(ResponsesAgent):
     ) -> Generator[ResponsesAgentStreamEvent, None, None]:
         cc_msgs = to_chat_completions_input([i.model_dump() for i in request.input])
 
-        for _, events in self.agent.stream(
-            {"messages": cc_msgs}, stream_mode=["updates"]
-        ):
+        for _, events in self.agent.stream({"messages": cc_msgs}, stream_mode=["updates"]):
             for node_data in events.values():
                 yield from output_to_responses_items_stream(node_data["messages"])
 
@@ -584,7 +573,8 @@ class ToolCallingAgent(ResponsesAgent):
     @mlflow.trace(span_type=SpanType.LLM)
     def call_llm(self, input_messages) -> ResponsesAgentStreamEvent:
         return (
-            self.client.responses.create(
+            self.client.responses
+            .create(
                 model=self.model,
                 input=input_messages,
                 tools=self.get_tool_specs(),
@@ -605,9 +595,7 @@ class ToolCallingAgent(ResponsesAgent):
             "call_id": tool_call["call_id"],
             "output": result,
         }
-        return ResponsesAgentStreamEvent(
-            type="response.output_item.done", item=tool_call_output
-        )
+        return ResponsesAgentStreamEvent(type="response.output_item.done", item=tool_call_output)
 
     def call_and_run_tools(
         self,
@@ -655,9 +643,7 @@ class ToolCallingAgent(ResponsesAgent):
             for event in self.predict_stream(request)
             if event.type == "response.output_item.done"
         ]
-        return ResponsesAgentResponse(
-            output=outputs, custom_outputs=request.custom_inputs
-        )
+        return ResponsesAgentResponse(output=outputs, custom_outputs=request.custom_inputs)
 
     @mlflow.trace(span_type=SpanType.AGENT)
     def predict_stream(

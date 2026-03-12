@@ -1,0 +1,173 @@
+# Workspaces
+
+Workspaces add an optional organizational layer and permission scheme for MLflow resources such as experiments, registered models, prompts, AI Gateway resources, and artifacts, letting teams share one deployment without running multiple servers.
+
+## Key Capabilities[​](#key-capabilities "Direct link to Key Capabilities")
+
+**Resource scoping** : Each workspace keeps its own resources such as experiments, registered models, prompts, AI Gateway resources, and artifacts. Workspace-level permissions control who can see or modify those resources. All MLflow client and API usage remains the same otherwise.
+
+**Shared infrastructure** : Multiple teams can use a single MLflow server instance, reducing operational overhead while keeping resources grouped by workspace.
+
+**Flexible integration** : The pluggable workspace store architecture can be used to integrate with existing organizational constructs such as Kubernetes namespaces or identity providers.
+
+**Backward Compatible** : Workspaces are opt-in and disabled by default. Existing deployments continue to work without modification.
+
+## When to Use Workspaces[​](#when-to-use-workspaces "Direct link to When to Use Workspaces")
+
+Use workspaces when you need:
+
+* Multiple teams sharing a single MLflow instance while keeping experiments, registered models, prompts, and AI Gateway resources organized
+* Workspace-level permissions to manage groups of resources without needing to manage individual experiments or models
+* Integration with platform-level constructs (for example, Kubernetes namespaces) to keep resources grouped
+* Simplified MLflow administration across multiple teams without deploying separate servers
+
+Not a hard isolation boundary
+
+Workspaces provide logical separation and authorization controls inside one MLflow server. For strict data-plane or compliance isolation, run independent MLflow deployments instead of sharing a server.
+
+Requirements
+
+Workspaces require a SQL database backend store. File-based backends are not supported when workspaces are enabled.
+
+note
+
+If you are enabling workspaces on an existing instance with basic-auth, set `grant_default_workspace_access = true` in your [auth config](/docs/3.10.2/self-hosting/workspaces/configuration.md#grant_default_workspace_access) for backwards compatibility. Otherwise, existing resources in the `default` workspace will become inaccessible to non-admin users.
+
+## Workspace-Scoped Resources[​](#workspace-scoped-resources "Direct link to Workspace-Scoped Resources")
+
+When workspaces are enabled, the following top-level resources are workspace-scoped:
+
+* **Experiments** and all child resources (runs, traces, metrics, parameters, tags, artifacts)
+* **Registered Models** and model versions
+* **Prompts** and prompt versions (prompts share the registered model storage)
+* **AI Gateway resources** such as API keys, model definitions, and endpoints
+* **Evaluation Datasets**
+
+Child resources automatically inherit the workspace of their parent. For example, runs inherit the workspace from their experiment, and model versions inherit the workspace from their registered model.
+
+## Artifact Isolation[​](#artifact-isolation "Direct link to Artifact Isolation")
+
+By default, artifacts are isolated by workspace through URI prefixing. When an experiment is created in a workspace, MLflow automatically generates an artifact location under:
+
+text
+
+```
+<default_artifact_root>/workspaces/<workspace-name>/<experiment-id>
+```
+
+Optionally, a workspace can override its default artifact root. When `default_artifact_root` is set on a workspace, new experiments use:
+
+text
+
+```
+<workspace_default_artifact_root>/<experiment-id>
+```
+
+Run artifact roots are derived from the experiment location:
+
+text
+
+```
+.../<run-id>/artifacts
+```
+
+For backward compatibility, resources that existed before enabling workspaces in the reserved `default` workspace keep their stored artifact locations (which may be unprefixed) and remain accessible.
+
+Client-specified artifact locations
+
+When workspaces are enabled, client-supplied `artifact_location` values are rejected to prevent bypassing workspace isolation. The server automatically manages artifact locations to ensure proper isolation.
+
+## Quick Start[​](#quick-start "Direct link to Quick Start")
+
+Backend and enablement
+
+Workspaces require the SQL backend (file backend not supported). Enable with `MLFLOW_ENABLE_WORKSPACES=1` and configure a workspace provider (the default SQL provider is used when one is not specified).
+
+Enable workspaces when starting the MLflow server:
+
+bash
+
+```
+mlflow server \
+  --backend-store-uri postgresql://user:pass@localhost/mlflow \
+  --default-artifact-root s3://mlflow-artifacts \
+  --enable-workspaces
+```
+
+Use workspaces from the Python client:
+
+python
+
+```
+import mlflow
+
+# Set tracking URI (no workspace in URI)
+mlflow.set_tracking_uri("https://mlflow.example.com")
+
+# Set active workspace
+mlflow.set_workspace("team-a")
+
+# All subsequent operations are scoped to team-a
+experiment_id = mlflow.create_experiment("my-experiment")
+
+with mlflow.start_run(experiment_id=experiment_id):
+    mlflow.log_param("alpha", 0.5)
+    mlflow.log_metric("rmse", 0.8)
+```
+
+List available workspaces:
+
+python
+
+```
+workspaces = mlflow.list_workspaces()
+for workspace in workspaces:
+    print(f"{workspace.name}: {workspace.description}")
+```
+
+## Workspace Resolution[​](#workspace-resolution "Direct link to Workspace Resolution")
+
+The active workspace is determined in the following order:
+
+1. Explicit `mlflow.set_workspace()` call
+2. `MLFLOW_WORKSPACE` environment variable
+3. Provider's `get_default_workspace()` implementation
+
+If neither `mlflow.set_workspace()` nor `MLFLOW_WORKSPACE` is set, MLflow falls back to the provider default workspace (typically `default`). If no workspace can be resolved and the provider does not support a default workspace, API calls will return an error.
+
+## Authentication and Permissions[​](#authentication-and-permissions "Direct link to Authentication and Permissions")
+
+When [MLflow authentication](/docs/3.10.2/self-hosting/security/basic-http-auth.md) is enabled, workspaces support workspace-scoped permissions that complement resource-level access control:
+
+* Workspace-level permissions provide convenient grants for all resources within a workspace
+* Users can have workspace-level permissions, resource-level permissions, or both
+* A user with workspace-level `READ` permission can access all experiments, registered models, prompts, and AI Gateway resources in that workspace
+* A user with workspace-level `USE` permission can invoke AI Gateway endpoints or reference gateway model definitions and API keys
+* Individual resource permissions take precedence and can further restrict access
+* Users with `MANAGE` permission can delegate access to others within their workspace
+
+See [Workspace Permissions](/docs/3.10.2/self-hosting/workspaces/permissions.md) for details.
+
+## Migration and Compatibility[​](#migration-and-compatibility "Direct link to Migration and Compatibility")
+
+Enabling workspaces on an existing deployment:
+
+1. Existing resources are automatically assigned to the `default` workspace
+2. Artifact locations remain unchanged
+3. Existing client usage continues to work by using the `default` workspace
+4. Once resources exist in non-default workspaces, the workspaces feature cannot be disabled until all resources in non-default workspaces are deleted.
+
+The `default` workspace is reserved and cannot be deleted or renamed. It provides backward compatibility for existing deployments.
+
+## Next Steps[​](#next-steps "Direct link to Next Steps")
+
+* [Getting Started](/docs/3.10.2/self-hosting/workspaces/getting-started.md) - Step-by-step guide to setting up workspaces
+* [Configuration](/docs/3.10.2/self-hosting/workspaces/configuration.md) - Server configuration and startup options
+* [Workspace Providers](/docs/3.10.2/self-hosting/workspaces/workspace-providers.md) - Pluggable provider architecture
+* [Permissions](/docs/3.10.2/self-hosting/workspaces/permissions.md) - Workspace-scoped access control
+
+## API Reference[​](#api-reference "Direct link to API Reference")
+
+* [mlflow.set\_workspace()](/docs/3.10.2/api_reference/python_api/mlflow.html#mlflow.set_workspace)
+* [mlflow.get\_workspace()](/docs/3.10.2/api_reference/python_api/mlflow.html#mlflow.get_workspace)
+* [mlflow.list\_workspaces()](/docs/3.10.2/api_reference/python_api/mlflow.html#mlflow.list_workspaces)

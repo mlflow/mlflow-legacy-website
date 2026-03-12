@@ -1,6 +1,6 @@
-# MLflow GenAI Packaging Integrations
+# MLflow LLM and AI Agent Packaging Integrations
 
-MLflow 3 delivers built-in support for packaging and deploying applications written with the GenAI frameworks you depend on. Whether you're orchestrating chains with LangChain or LangGraph, indexing documents in LlamaIndex, wiring up agent patterns via ChatModel and ResponseAgent, or rolling your own with a PythonModel, MLflow provides native packaging and deployment APIs ("flavors") to streamline your path to production.
+MLflow 3 delivers built-in support for packaging and deploying applications written with the LLM and AI agent frameworks you depend on. Whether you're orchestrating chains with LangChain or LangGraph, indexing documents in LlamaIndex, wiring up agent patterns via ChatModel and ResponseAgent, or rolling your own with a PythonModel, MLflow provides native packaging and deployment APIs ("flavors") to streamline your path to production.
 
 OpenAI Model Logging Deprecated
 
@@ -10,7 +10,7 @@ The `mlflow.openai.log_model()` API has been deprecated. If you were using it to
 
 By choosing MLflow's native flavors, you gain end-to-end visibility and control without swapping tools:
 
-* **Unified Tracking & Models**: All calls, parameters, artifacts, and prompt templates become tracked entities within MLflow Experiments. Serialized GenAI application code becomes a LoggedModel—viewable and referenceable within the MLflow UI and APIs.
+* **Unified Tracking & Models**: All calls, parameters, artifacts, and prompt templates become tracked entities within MLflow Experiments. Serialized application code becomes a LoggedModel—viewable and referenceable within the MLflow UI and APIs.
 * **Zero-Boilerplate Setup**: A single `mlflow.<flavor>.log_model(...)` call (or one line of auto-instrumentation) wires into your existing code.
 * **Reproducibility by Default**: MLflow freezes your prompt template, application parameters, framework versions, and dependencies so you can reproduce any result, anytime.
 * **Seamless Transition to Serving**: Each integration produces a standardized MLflow Model you can deploy for batch scoring or real-time inference with `mlflow models serve`.
@@ -33,7 +33,7 @@ Pick your integration from the list below and follow the concise guide—each on
 
 ## Integration Guides[​](#integration-guides "Direct link to Integration Guides")
 
-MLflow supports first-party flavors for these GenAI frameworks and patterns. Click to explore:
+MLflow supports first-party flavors for these LLM and AI agent frameworks and patterns. Click to explore:
 
 [![LangChain Logo](/docs/latest/assets/images/langchain-logo-39d51f94cc9aebac2c191cca0e8189de.png)](/docs/latest/genai/flavors/langchain.md)
 
@@ -53,7 +53,7 @@ MLflow supports first-party flavors for these GenAI frameworks and patterns. Cli
 
 ## Continue Your Journey[​](#continue-your-journey "Direct link to Continue Your Journey")
 
-Once your integration is in place, take advantage of MLflow's full LLMOps platform:
+Once your integration is in place, take advantage of MLflow's full [LLMOps](https://mlflow.org/llmops) platform:
 
 ### 🔍 Observability & Debugging[​](#-observability--debugging "Direct link to 🔍 Observability & Debugging")
 
