@@ -152,12 +152,8 @@ python
 
 ```
 # For classical ML models, use mlflow.models.evaluate
-result_1 = mlflow.models.evaluate(
-    model_1, data, targets="label", model_type="classifier"
-)
-result_2 = mlflow.models.evaluate(
-    model_2, data, targets="label", model_type="classifier"
-)
+result_1 = mlflow.models.evaluate(model_1, data, targets="label", model_type="classifier")
+result_2 = mlflow.models.evaluate(model_2, data, targets="label", model_type="classifier")
 
 # Compare results
 mlflow.validate_evaluation_results(result_1, result_2)

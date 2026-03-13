@@ -4,7 +4,7 @@ MLflow Assistant
 
 Need help setting up tracing? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that can add MLflow tracing to your project automatically.
 
-This quickstart guide will walk you through setting up a simple GenAI application with MLflow Tracing. In less than 10 minutes, you'll enable tracing, run a basic application, and explore the generated traces in the MLflow UI.
+This quickstart guide will walk you through setting up a simple LLM application with MLflow Tracing. In less than 10 minutes, you'll enable tracing, run a basic application, and explore the generated traces in the MLflow UI.
 
 ## Prerequisites[​](#prerequisites "Direct link to Prerequisites")
 
@@ -52,7 +52,7 @@ Refer to the [instruction](https://github.com/mlflow/mlflow/tree/master/docker-c
 
 ## Create a MLflow Experiment[​](#create-a-mlflow-experiment "Direct link to Create a MLflow Experiment")
 
-The traces your GenAI application will send to the MLflow server are grouped into MLflow experiments. We recommend creating one experiment for each GenAI application.
+The traces your LLM application or AI agent will send to the MLflow server are grouped into MLflow experiments. We recommend creating one experiment for each LLM application or AI agent.
 
 Let's create a new MLflow experiment using the MLflow UI so that you can start sending your traces.
 
@@ -70,7 +70,7 @@ Let's create a new MLflow experiment using the MLflow UI so that you can start s
 
 ## Dependency[​](#dependency "Direct link to Dependency")
 
-To connect your GenAI application to the MLflow server, you will need to install the MLflow client SDK.
+To connect your LLM application or AI agent to the MLflow server, you will need to install the MLflow client SDK.
 
 * Python(OpenAI)
 * TypeScript(OpenAI)
@@ -84,7 +84,7 @@ pip install --upgrade 'mlflow[genai]' openai>=1.0.0
 bash
 
 ```
-npm install mlflow-openai
+npm install @mlflow/openai
 ```
 
 info
@@ -95,7 +95,7 @@ For a comprehensive list of LLM providers supported by MLflow, see the [LLM Inte
 
 ## Start Tracing[​](#start-tracing "Direct link to Start Tracing")
 
-Once your experiment is created, you're ready to connect to the MLflow server and begin sending traces from your GenAI application.
+Once your experiment is created, you're ready to connect to the MLflow server and begin sending traces from your LLM application or AI agent.
 
 * Python(OpenAI)
 * TypeScript(OpenAI)
@@ -110,7 +110,7 @@ from openai import OpenAI
 # Specify the tracking URI for the MLflow server.
 mlflow.set_tracking_uri("http://localhost:5000")
 
-# Specify the experiment you just created for your GenAI application.
+# Specify the experiment you just created for your LLM application or AI agent.
 mlflow.set_experiment("My Application")
 
 # Enable automatic tracing for all OpenAI API calls.
@@ -130,8 +130,8 @@ client.chat.completions.create(
 typescript
 
 ```
-import { init } from "mlflow-tracing";
-import { tracedOpenAI } from "mlflow-openai";
+import { init } from "@mlflow/core";
+import { tracedOpenAI } from "@mlflow/openai";
 import { OpenAI } from "openai";
 
 init({
@@ -171,9 +171,7 @@ MLFLOW_TRACKING_URI = "http://localhost:5000"
 MLFLOW_EXPERIMENT_ID = "123"
 
 os.environ["OTEL_EXPORTER_OTLP_TRACES_ENDPOINT"] = f"{MLFLOW_TRACKING_URI}/v1/traces"
-os.environ[
-    "OTEL_EXPORTER_OTLP_TRACES_HEADERS"
-] = f"x-mlflow-experiment-id={MLFLOW_EXPERIMENT_ID}"
+os.environ["OTEL_EXPORTER_OTLP_TRACES_HEADERS"] = f"x-mlflow-experiment-id={MLFLOW_EXPERIMENT_ID}"
 
 app = FastAPI()
 FastAPIInstrumentor.instrument_app(app)
@@ -194,13 +192,17 @@ For a deeper dive into using MLflow together with OpenTelemetry, see the [OpenTe
 
 After running the code above, go to the MLflow UI and select the "My Application" experiment, and then select the "Traces" tab. It should show the newly created trace.
 
+Learn More About Tracing UI
+
+The "Traces" page includes rich information about the trace and supports various actions such as searching, filtering, adding feedbacks, and more. See [View Traces](/docs/latest/genai/tracing/observe-with-traces/ui.md) for comprehensive guide about how to get the most out of the MLflow Tracing UI.
+
 ![Single Trace](/docs/latest/images/llms/tracing/quickstart/single-openai-trace-list.png)
 
 ![Single Trace](/docs/latest/images/llms/tracing/quickstart/single-openai-trace-detail.png)
 
 ## Track Multi-Turn Conversations with Sessions[​](#track-multi-turn-conversations-with-sessions "Direct link to Track Multi-Turn Conversations with Sessions")
 
-Many GenAI applications maintain multi-turn conversations with users. MLflow provides built-in support for tracking user sessions by using standard metadata fields. This allows you to group related traces together and analyze conversation flows.
+Many LLM applications and AI agents maintain multi-turn conversations with users. MLflow provides built-in support for tracking user sessions by using standard metadata fields. This allows you to group related traces together and analyze conversation flows.
 
 * Python
 * TypeScript
@@ -232,7 +234,7 @@ def chat_completion(message: list[dict], user_id: str, session_id: str):
 typescript
 
 ```
-import * as mlflow from "mlflow-tracing";
+import * as mlflow from "@mlflow/core";
 
 const chatCompletion = mlflow.trace(
     (message: Array<Record<string, any>>, userId: string, sessionId: string) => {
@@ -265,7 +267,7 @@ Congrats on sending your first trace with MLflow! Now that you've got the basics
 
 ### [Automatic Tracing](/docs/latest/genai/tracing/app-instrumentation/automatic.md)
 
-[Explore one-line automatic tracing for popular GenAI libraries and frameworks](/docs/latest/genai/tracing/app-instrumentation/automatic.md)
+[Explore one-line automatic tracing for popular LLM and AI agent frameworks](/docs/latest/genai/tracing/app-instrumentation/automatic.md)
 
 [Enable auto-tracing →](/docs/latest/genai/tracing/app-instrumentation/automatic.md)
 

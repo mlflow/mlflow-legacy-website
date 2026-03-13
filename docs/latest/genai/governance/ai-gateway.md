@@ -1,6 +1,6 @@
 # MLflow AI Gateway
 
-MLflow AI Gateway provides a unified interface for deploying and managing multiple LLM providers within your organization. It simplifies interactions with services like OpenAI, Anthropic, and others through a single, secure endpoint.
+MLflow's [AI Gateway](https://mlflow.org/ai-gateway) provides a unified interface for deploying and managing multiple LLM providers within your organization. It simplifies interactions with services like OpenAI, Anthropic, and others through a single, secure endpoint.
 
 The gateway excels in production environments where organizations need to manage multiple LLM providers securely while maintaining operational flexibility. Advanced routing capabilities enable traffic splitting for A/B testing and automatic failover chains for high availability.
 
@@ -30,7 +30,7 @@ Monitor usage across providers and optimize costs by routing requests to the mos
 
 Shared endpoint configurations and standardized access patterns across development teams.
 
-**Try MLflow GenAI Demo**<br />The quickest way to learn about MLflow GenAI is to try the demo. Click to see how to launch the demo ↓
+**Try the MLflow LLMs and Agents Demo**<br />The quickest way to learn about MLflow for LLMs and AI Agents is to try the demo. **Click to launch the demo ↓**
 
 #### **Starting from UI**[​](#starting-from-ui "Direct link to starting-from-ui")
 
@@ -79,6 +79,12 @@ uvx mlflow demo
 [Monitor endpoint usage, performance, token consumption, and costs](/docs/latest/genai/governance/ai-gateway/usage-tracking.md)
 
 [View metrics →](/docs/latest/genai/governance/ai-gateway/usage-tracking.md)
+
+### [Budget Alerts & Limits](/docs/latest/genai/governance/ai-gateway/budget-alerts-limits.md)
+
+[Set spending limits and configure alerts for cost management](/docs/latest/genai/governance/ai-gateway/budget-alerts-limits.md)
+
+[Manage budgets →](/docs/latest/genai/governance/ai-gateway/budget-alerts-limits.md)
 
 ### [Authentication](/docs/latest/self-hosting/security/basic-http-auth.md#ai-gateway-permissions)
 

@@ -1,6 +1,6 @@
 # Tracing LangGraph🦜🕸️
 
-[](/docs/latest/images/llms/tracing/langgraph-tracing.mp4)
+![LangGraph Tracing via autolog](/docs/latest/images/llms/tracing/langgraph-agent-trace.png)
 
 [LangGraph](https://www.langchain.com/langgraph) is an open-source library for building stateful, multi-actor applications with LLMs, used to create agent and multi-agent workflows.
 
@@ -90,9 +90,7 @@ tools = [get_weather]
 graph = create_react_agent(llm, tools)
 
 # Invoke the graph
-result = graph.invoke(
-    {"messages": [{"role": "user", "content": "what is the weather in sf?"}]}
-)
+result = graph.invoke({"messages": [{"role": "user", "content": "what is the weather in sf?"}]})
 ```
 
 ### 5. View the trace in the MLflow UI[​](#5-view-the-trace-in-the-mlflow-ui "Direct link to 5. View the trace in the MLflow UI")

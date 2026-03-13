@@ -1,6 +1,6 @@
 # Evaluating Agents
 
-AI Agents are an emerging pattern of GenAI applications that can use tools, make decisions, and execute multi-step workflows. However, evaluating the performance of those complex agents is challenging. MLflow provides a powerful toolkit to systematically evaluate the agent behavior precisely using traces and scorers.
+AI Agents are an emerging pattern of LLM applications that can use tools, make decisions, and execute multi-step workflows. However, evaluating the performance of those complex agents is challenging. MLflow provides a powerful toolkit to systematically evaluate the agent behavior precisely using traces and scorers.
 
 ![Agent Evaluation](/docs/latest/images/mlflow-3/eval-monitor/agent-evaluation-hero.png)
 
@@ -267,7 +267,7 @@ export MLFLOW_GENAI_EVAL_MAX_WORKERS=10
 
 ## Evaluating MLflow Models[​](#evaluating-mlflow-models "Direct link to Evaluating MLflow Models")
 
-In MLflow 2.x, you can pass the model URI directly to the `model` argument of the legacy [`mlflow.evaluate()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.evaluate) API (deprecated). The new GenAI evaluation API in MLflow **3.x** still support evaluating MLflow Models, but the workflow is slightly different.
+In MLflow 2.x, you can pass the model URI directly to the `model` argument of the legacy [`mlflow.evaluate()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.evaluate) API (deprecated). The new evaluation API in MLflow **3.x** still supports evaluating MLflow Models, but the workflow is slightly different.
 
 python
 
