@@ -33,7 +33,7 @@ pip install 'mlflow[genai]' anthropic
 bash
 
 ```
-npm install mlflow-anthropic @anthropic-ai/sdk
+npm install @mlflow/anthropic @anthropic-ai/sdk
 ```
 
 2
@@ -107,7 +107,7 @@ typescript
 
 ```
 import Anthropic from "@anthropic-ai/sdk";
-import { tracedAnthropic } from "mlflow-anthropic";
+import { tracedAnthropic } from "@mlflow/anthropic";
 
 // Wrap the Anthropic client with the tracedAnthropic function
 const client = tracedAnthropic(new Anthropic());
@@ -141,6 +141,10 @@ MLflow supports automatic tracing for the following Anthropic APIs:
 (\*1) Async support was added in MLflow 2.21.0.
 
 To request support for additional APIs, please open a [feature request](https://github.com/mlflow/mlflow/issues) on GitHub.
+
+Image Support in Anthropic Traces
+
+MLflow automatically captures images sent to Anthropic models and normalizes them to the standard trace format. See [Image and Audio (Multimodal) Content in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md) for examples.
 
 ## Async[​](#async "Direct link to Async")
 
@@ -236,18 +240,16 @@ async def run_tool_agent(question: str):
         else:
             raise RuntimeError("An invalid tool is returned from the assistant!")
 
-        messages.append(
-            {
-                "role": "user",
-                "content": [
-                    {
-                        "type": "tool_result",
-                        "tool_use_id": tool_call.id,
-                        "content": tool_result,
-                    }
-                ],
-            }
-        )
+        messages.append({
+            "role": "user",
+            "content": [
+                {
+                    "type": "tool_result",
+                    "tool_use_id": tool_call.id,
+                    "content": tool_result,
+                }
+            ],
+        })
 
     # Send the tool results to the model and get a new response
     response = await client.messages.create(

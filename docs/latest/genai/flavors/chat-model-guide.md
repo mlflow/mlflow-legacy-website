@@ -1,14 +1,14 @@
-# Tutorial: Custom GenAI Models using ChatModel
+# Tutorial: Custom LLM and AI Agent Models using ChatModel
 
 attention
 
 Starting in MLflow 3.0.0, we recommend [`ResponsesAgent`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent) instead of [`ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel). See more details in the [ResponsesAgent Introduction](/docs/latest/genai/flavors/responses-agent-intro.md).
 
-The rapidly evolving landscape of Generative Artificial Intelligence (GenAI) presents exciting opportunities and integration challenges. To leverage the latest GenAI advancements effectively, developers need a framework that balances flexibility with standardization. MLflow addresses this need with the [`mlflow.pyfunc.ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) class introduced in [version 2.11.0](https://mlflow.org/releases/2.11.0#chatmodel-interface-for-a-unified-chat-experience-with-pyfunc-models), providing a consistent interface for GenAI applications while simplifying deployment and testing.
+The rapidly evolving landscape of LLM applications and AI agents presents exciting opportunities and integration challenges. To leverage the latest advancements effectively, developers need a framework that balances flexibility with standardization. MLflow addresses this need with the [`mlflow.pyfunc.ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) class introduced in [version 2.11.0](https://mlflow.org/releases/2.11.0#chatmodel-interface-for-a-unified-chat-experience-with-pyfunc-models), providing a consistent interface for LLM applications and AI agents while simplifying deployment and testing.
 
 ## Choosing Between ChatModel and PythonModel[​](#choosing-between-chatmodel-and-pythonmodel "Direct link to Choosing Between ChatModel and PythonModel")
 
-When building GenAI applications in MLflow, it's essential to choose the right model abstraction that balances ease of use with the level of customization you need. MLflow offers two primary classes for this purpose: [`mlflow.pyfunc.ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) and [`mlflow.pyfunc.PythonModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel). Each has its own strengths and trade-offs, making it crucial to understand which one best suits your use case.
+When building LLM applications and AI agents in MLflow, it's essential to choose the right model abstraction that balances ease of use with the level of customization you need. MLflow offers two primary classes for this purpose: [`mlflow.pyfunc.ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) and [`mlflow.pyfunc.PythonModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel). Each has its own strengths and trade-offs, making it crucial to understand which one best suits your use case.
 
 |             | ChatModel                                                                                                                 | PythonModel                                                                                                                                                                                                            |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -30,7 +30,7 @@ By the end of this tutorial you will:
 
 ## Prerequisites[​](#prerequisites "Direct link to Prerequisites")
 
-* Familiarity with MLflow logging APIs and GenAI concepts.
+* Familiarity with MLflow logging APIs and LLM concepts.
 * MLflow version 2.11.0 or higher installed for use of [`mlflow.pyfunc.ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel).
 * MLflow version 2.14.0 or higher installed for use of [MLflow Tracing](/docs/latest/genai/tracing.md).
 
@@ -43,7 +43,7 @@ This tutorial uses the [Databricks Foundation Model APIs](https://docs.databrick
 * Standardization
 * Pitfalls
 
-### Tracing Customization for GenAI[​](#tracing-customization-for-genai "Direct link to Tracing Customization for GenAI")
+### Tracing Customization for LLM Applications and AI Agents[​](#tracing-customization-for-llm-applications-and-ai-agents "Direct link to Tracing Customization for LLM Applications and AI Agents")
 
 [MLflow Tracing](/docs/latest/genai/tracing.md) allows you to monitor and log the execution of your model's methods, providing valuable insights during debugging and performance optimization.
 
@@ -103,7 +103,7 @@ After running our example that includes these combined usage patterns for trace 
 
 ![Traces in the MLflow UI for the Agent example](/docs/latest/assets/images/agent-trace-ui-83d8215ea40e973cff677b782c1e7579.png)
 
-### Model Customization for GenAI[​](#model-customization-for-genai "Direct link to Model Customization for GenAI")
+### Model Customization for LLM Applications and AI Agents[​](#model-customization-for-llm-applications-and-ai-agents "Direct link to Model Customization for LLM Applications and AI Agents")
 
 In order to control the behavior of our `BasicAgent` model without having to hard-code configuration values directly into our model logic, specifying configurations within the `model_config` parameter when logging the model gives some flexibility and versatility to our model definition.
 
@@ -142,19 +142,19 @@ The `model_config` values that are submitted for our `BasicAgent` example within
 
 ![Model configuration in the MLflow UI](/docs/latest/assets/images/model-config-in-ui-54c3ee1bac15ce7bc93f7f8ee9256a0e.png)
 
-### Standardization for GenAI Models[​](#standardization-for-genai-models "Direct link to Standardization for GenAI Models")
+### Standardization for LLM and AI Agent Models[​](#standardization-for-llm-and-ai-agent-models "Direct link to Standardization for LLM and AI Agent Models")
 
-One of the more complex tasks associated with deploying a GenAI application with MLflow arises when attempting to build a custom implementation that is based on subclassing the [`mlflow.pyfunc.PythonModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel) abstraction.
+One of the more complex tasks associated with deploying an LLM application or AI agent with MLflow arises when attempting to build a custom implementation that is based on subclassing the [`mlflow.pyfunc.PythonModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel) abstraction.
 
-While `PythonModel` is recommended for custom Deep Learning and traditional Machine Learning models (such as `sklearn` or `torch` models that require additional processing logic apart from that of a base model), there are internal manipulations of the input data that occur when serving these models that introduce unnecessary complications with GenAI applications.
+While `PythonModel` is recommended for custom Deep Learning and traditional Machine Learning models (such as `sklearn` or `torch` models that require additional processing logic apart from that of a base model), there are internal manipulations of the input data that occur when serving these models that introduce unnecessary complications with LLM applications and AI agents.
 
-Due to the fact that DL and traditional ML models largely rely on structured data, when input data is passed via a REST interface for model serving, the `PythonModel` implementation will convert JSON data into `pandas.DataFrame` or `numpy` objects. This conversion creates a confusing and difficult to debug scenario when using GenAI models. GenAI implementations generally deal exclusively with JSON-conformant data structures and have no tabular representation that makes intuitive sense, thereby creating a frustrating and complex conversion interface needed to make application deployment function correctly.
+Due to the fact that DL and traditional ML models largely rely on structured data, when input data is passed via a REST interface for model serving, the `PythonModel` implementation will convert JSON data into `pandas.DataFrame` or `numpy` objects. This conversion creates a confusing and difficult to debug scenario when using LLM and AI agent models. These implementations generally deal exclusively with JSON-conformant data structures and have no tabular representation that makes intuitive sense, thereby creating a frustrating and complex conversion interface needed to make application deployment function correctly.
 
-To simplify this problem, the [`mlflow.pyfunc.ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) class was created to provide a simpler interface for handling of the data passed into and returned from a call to the `predict()` method on custom Python models serving GenAI use cases.
+To simplify this problem, the [`mlflow.pyfunc.ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) class was created to provide a simpler interface for handling of the data passed into and returned from a call to the `predict()` method on custom Python models serving LLM and AI agent use cases.
 
-In the example tutorial code below, we subclass `ChatModel` in order to utilize this simplified interface with its immutable input and output formats. Because of this immutability, we don't have to reason about model signatures, and can instead directly use API standards that have been broadly accepted throughout the GenAI industry.
+In the example tutorial code below, we subclass `ChatModel` in order to utilize this simplified interface with its immutable input and output formats. Because of this immutability, we don't have to reason about model signatures, and can instead directly use API standards that have been broadly accepted throughout the AI industry.
 
-To illustrate why it is preferred to use `ChatModel` as a super class to custom GenAI implementations in MLflow, here is the signature that would otherwise need to be defined and supplied during model logging to conform to the `OpenAI` API spec as of September 2024:
+To illustrate why it is preferred to use `ChatModel` as a super class to custom LLM and AI agent implementations in MLflow, here is the signature that would otherwise need to be defined and supplied during model logging to conform to the `OpenAI` API spec as of September 2024:
 
 **Input Schema** as a `dict`:
 
@@ -189,7 +189,7 @@ python
 
 note
 
-Agent-based (tool-calling) schemas are significantly more complex than the simpler chat interface example shown above. As GenAI frameworks and services evolve with increasingly sophisticated capabilities and features, the complexity of these interfaces will grow, making manual schema definitions a challenging and time-consuming task. The structured input validation provided by the MLflow [`mlflow.pyfunc.ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) interface removes the burden of defining and managing these intricate signatures manually. By leveraging these pre-defined schemas, you gain robust input type safety and validation, ensuring your deployed applications handle inputs consistently and correctly without additional effort. This approach not only reduces the risk of errors but also streamlines the development process, allowing you to focus on building impactful GenAI solutions without the overhead of managing complex input specifications.
+Agent-based (tool-calling) schemas are significantly more complex than the simpler chat interface example shown above. As LLM and AI agent frameworks and services evolve with increasingly sophisticated capabilities and features, the complexity of these interfaces will grow, making manual schema definitions a challenging and time-consuming task. The structured input validation provided by the MLflow [`mlflow.pyfunc.ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) interface removes the burden of defining and managing these intricate signatures manually. By leveraging these pre-defined schemas, you gain robust input type safety and validation, ensuring your deployed applications handle inputs consistently and correctly without additional effort. This approach not only reduces the risk of errors but also streamlines the development process, allowing you to focus on building impactful AI solutions without the overhead of managing complex input specifications.
 
 By using [`mlflow.pyfunc.ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) to base a custom implementation off of, we don't have to reason about this complex signature. It is provided for us.
 
@@ -198,13 +198,13 @@ The only two considerations to be aware of when interfacing with the static sign
 * If the service that your custom implementation is interfacing with doesn't adhere to the `OpenAI` spec, you will need to extract data from the standard structure of [`mlflow.types.llm.ChatMessage`](/docs/latest/api_reference/python_api/mlflow.types.html#mlflow.types.llm.ChatMessage) and [`mlflow.types.llm.ChatParams`](/docs/latest/api_reference/python_api/mlflow.types.html#mlflow.types.llm.ChatParams) and ensure that it conforms to what your service is expecting.
 * The returned response from `predict` should adhere to the output structure defined within the `ChatModel` output signature: [`mlflow.types.llm.ChatCompletionResponse`](/docs/latest/api_reference/python_api/mlflow.types.html#mlflow.types.llm.ChatCompletionResponse).
 
-### Common GenAI pitfalls in MLflow[​](#common-genai-pitfalls-in-mlflow "Direct link to Common GenAI pitfalls in MLflow")
+### Common LLM and AI Agent pitfalls in MLflow[​](#common-llm-and-ai-agent-pitfalls-in-mlflow "Direct link to Common LLM and AI Agent pitfalls in MLflow")
 
-There are a number of ways that building a custom implementation for a GenAI use case can be frustrating or not intuitive. Here are some of the most common that we've heard from our users:
+There are a number of ways that building a custom implementation for an LLM or AI agent use case can be frustrating or not intuitive. Here are some of the most common that we've heard from our users:
 
 #### Not using a supported flavor[​](#not-using-a-supported-flavor "Direct link to Not using a supported flavor")
 
-If you're working with a library that is natively supported in MLflow, leveraging the built-in support for logging and loading your implementation will always be easier than implementing a custom model. It is recommended to check the [supported GenAI flavors](/docs/latest/genai/flavors.md) to see if there is a built-in solution that will meet your use case needs in one of the many integrations that are available.
+If you're working with a library that is natively supported in MLflow, leveraging the built-in support for logging and loading your implementation will always be easier than implementing a custom model. It is recommended to check the [supported flavors](/docs/latest/genai/flavors.md) to see if there is a built-in solution that will meet your use case needs in one of the many integrations that are available.
 
 #### Misinterpreting what `load_context` does[​](#misinterpreting-what-load_context-does "Direct link to misinterpreting-what-load_context-does")
 
@@ -256,7 +256,7 @@ An effective place to handle secrets assignment (generally set as environment va
 
 #### Failing to use `input_example`[​](#failing-to-use-input_example "Direct link to failing-to-use-input_example")
 
-While it may seem that providing an `input_example` when logging a model in MLflow is purely for cosmetic purposes within the artifact view display within the MLflow UI, there is an additional bit of functionality that makes providing this data very useful, particularly for GenAI use cases.
+While it may seem that providing an `input_example` when logging a model in MLflow is purely for cosmetic purposes within the artifact view display within the MLflow UI, there is an additional bit of functionality that makes providing this data very useful, particularly for LLM and AI agent use cases.
 
 When an `input_example` is provided, MLflow will call your model's `predict` method with the example data to validate that the input is compatible with the model object that you are logging. If there are any failures that occur, you will receive an error message detailing what is wrong with the input syntax. This is very beneficial to ensure that, at the point of logging, you can ensure that your expected input interface structure is what will be allowable for the deployed model, thereby saving you hours of debugging and troubleshooting later when attempting to deploy your solution.
 
@@ -264,13 +264,13 @@ It is **highly recommended** to supply this example during logging.
 
 #### Failing to handle retries for Rate Limits being hit[​](#failing-to-handle-retries-for-rate-limits-being-hit "Direct link to Failing to handle retries for Rate Limits being hit")
 
-Nearly all GenAI provider services impose rate limits and token-based usage limits to prevent disruption to their service or to help protect users from unexpected bills. When limits are reached, it is important that your prediction logic is robust to handle these failures to ensure that a user of your deployed application understands why their request was not successful.
+Nearly all LLM provider services impose rate limits and token-based usage limits to prevent disruption to their service or to help protect users from unexpected bills. When limits are reached, it is important that your prediction logic is robust to handle these failures to ensure that a user of your deployed application understands why their request was not successful.
 
 It can be beneficial to introduce retry logic for certain errors, particularly those involving transient connection issues or per-unit-of-time request limits.
 
 #### Not validating before deployment[​](#not-validating-before-deployment "Direct link to Not validating before deployment")
 
-The process of deploying a GenAI application can a significant amount of time. When an implementation is finally ready to be submitted to a serving environment, the last thing that you want to deal with is a model that is incapable of being served due to some issue with a decoded JSON payload being submitted to your model's `predict()` method.
+The process of deploying an LLM application or AI agent can take a significant amount of time. When an implementation is finally ready to be submitted to a serving environment, the last thing that you want to deal with is a model that is incapable of being served due to some issue with a decoded JSON payload being submitted to your model's `predict()` method.
 
 MLflow offers the [`mlflow.models.validate_serving_input()`](/docs/latest/api_reference/python_api/mlflow.models.html#mlflow.models.validate_serving_input) API to ensure that the model that you have logged is capable of being interacted with by emulating the data processing that occurs with a deployed model.
 
@@ -318,7 +318,7 @@ Of these methods listed above, the methods `load_context` and `predict` override
 
 ## Example of a custom ChatModel[​](#example-of-a-custom-chatmodel "Direct link to Example of a custom ChatModel")
 
-In the full example below, we're creating a custom chat agent by subclassing the [`mlflow.pyfunc.ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel). This agent, named `BasicAgent`, takes advantage of several important features that help streamline the development, deployment, and tracking of GenAI applications. By subclassing `ChatModel`, we ensure a consistent interface for handling conversational agents, while also avoiding common pitfalls associated with more general-purpose models.
+In the full example below, we're creating a custom chat agent by subclassing the [`mlflow.pyfunc.ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel). This agent, named `BasicAgent`, takes advantage of several important features that help streamline the development, deployment, and tracking of LLM applications and AI agents. By subclassing `ChatModel`, we ensure a consistent interface for handling conversational agents, while also avoiding common pitfalls associated with more general-purpose models.
 
 The implementation below highlights the following key aspects:
 
@@ -351,7 +351,7 @@ The implementation below highlights the following key aspects:
 
 * **Models from code**:
   <!-- -->
-  * MLflow recommends using [models from code](/docs/latest/ml/model/models-from-code.md) when authoring GenAI agents or apps, for robust logging and straightforward deployment of agents containing arbitrary Python code.
+  * MLflow recommends using [models from code](/docs/latest/ml/model/models-from-code.md) when authoring AI agents or LLM apps, for robust logging and straightforward deployment of agents containing arbitrary Python code.
 
 python
 
@@ -414,9 +414,7 @@ class BasicAgent(ChatModel):
         return response["choices"][0]["message"]
 
     @mlflow.trace(name="Agent Call")
-    def _call_agent(
-        self, message: ChatMessage, role: str, params: Optional[dict] = None
-    ) -> Dict:
+    def _call_agent(self, message: ChatMessage, role: str, params: Optional[dict] = None) -> Dict:
         """
         Prepares and sends the request to a specific agent based on the role.
 
@@ -433,18 +431,14 @@ class BasicAgent(ChatModel):
 
         # Fetch agent response
         agent_config = self.models[role]
-        response = self._get_agent_response(
-            message_list, agent_config["endpoint"], params
-        )
+        response = self._get_agent_response(message_list, agent_config["endpoint"], params)
 
         # Update conversation history
         self.conversation_history.extend([message.to_dict(), response])
         return response
 
     @mlflow.trace(name="Assemble Conversation")
-    def _prepare_message_list(
-        self, system_message: Dict, user_message: ChatMessage
-    ) -> List[Dict]:
+    def _prepare_message_list(self, system_message: Dict, user_message: ChatMessage) -> List[Dict]:
         """
         Prepare the list of messages to send to the agent.
 
@@ -495,9 +489,7 @@ class BasicAgent(ChatModel):
 
             # Process the response with the judge
             judge_params = self._get_model_params("judge")
-            judge_response = self._call_agent(
-                ChatMessage(**oracle_response), "judge", judge_params
-            )
+            judge_response = self._call_agent(ChatMessage(**oracle_response), "judge", judge_params)
 
             # Reset the conversation history and return the final response
             self.conversation_history = []
@@ -550,7 +542,7 @@ Before logging the model, we need to define the configuration that governs the b
 
 ### Why Decouple Configuration?[​](#why-decouple-configuration "Direct link to Why Decouple Configuration?")
 
-In the context of Generative AI (GenAI), agent behavior can vary greatly depending on the instruction sets and parameters (such as `temperature` or `max_tokens`) given to each agent. If we hardcoded these configurations directly into our model's logic, each new test would require changing the model's source code, leading to:
+In the context of LLM applications and AI agents, agent behavior can vary greatly depending on the instruction sets and parameters (such as `temperature` or `max_tokens`) given to each agent. If we hardcoded these configurations directly into our model's logic, each new test would require changing the model's source code, leading to:
 
 * **Inefficiency**: Changing source code for each test slows down the experimentation process.
 * **Increased Risk of Errors**: Constantly modifying the source increases the chance of introducing bugs or unintended side effects.
@@ -625,7 +617,7 @@ By providing an input example, you ensure that your model is tested with real da
 
 tip
 
-When defining your GenAI application using the [`mlflow.pyfunc.ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel), a default placeholder input example will be used if none is provided. If you notice an unfamiliar or generic input example in the MLflow UI's artifact viewer, it's likely the default placeholder assigned by the system. To avoid this, ensure you specify a custom input example when saving your model.
+When defining your LLM application or AI agent using the [`mlflow.pyfunc.ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel), a default placeholder input example will be used if none is provided. If you notice an unfamiliar or generic input example in the MLflow UI's artifact viewer, it's likely the default placeholder assigned by the system. To avoid this, ensure you specify a custom input example when saving your model.
 
 Here's the input example we'll use:
 
@@ -670,32 +662,30 @@ with mlflow.start_run():
 
 loaded = mlflow.pyfunc.load_model(model_info.model_uri)
 
-response = loaded.predict(
-    {
-        "messages": [
-            {
-                "role": "user",
-                "content": "What is the best material to make a baseball bat out of?",
-            }
-        ]
-    }
-)
+response = loaded.predict({
+    "messages": [
+        {
+            "role": "user",
+            "content": "What is the best material to make a baseball bat out of?",
+        }
+    ]
+})
 ```
 
 ## Conclusion[​](#conclusion "Direct link to Conclusion")
 
-In this tutorial, you have explored the process of creating a custom GenAI chat agent using MLflow's [`mlflow.pyfunc.ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) class. We demonstrated how to implement a flexible, scalable, and standardized approach to managing the deployment of GenAI applications, enabling you to harness the latest advancements in AI, even for libraries and frameworks that are not yet natively supported with a named flavor in MLflow.
+In this tutorial, you have explored the process of creating a custom chat agent using MLflow's [`mlflow.pyfunc.ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) class. We demonstrated how to implement a flexible, scalable, and standardized approach to managing the deployment of LLM applications and AI agents, enabling you to harness the latest advancements in AI, even for libraries and frameworks that are not yet natively supported with a named flavor in MLflow.
 
-By using `ChatModel` instead of the more generic `PythonModel`, you can avoid many of the common pitfalls associated with deploying GenAI by leveraging the benefits of immutable signature interfaces that are consistent across any of your deployed GenAI interfaces, simplifying the use of all of your solutions by providing a consistent experience.
+By using `ChatModel` instead of the more generic `PythonModel`, you can avoid many of the common pitfalls associated with deploying LLM applications and AI agents by leveraging the benefits of immutable signature interfaces that are consistent across any of your deployed interfaces, simplifying the use of all of your solutions by providing a consistent experience.
 
 Key takeaways from this tutorial include:
 
 * **Tracing and Monitoring**: By integrating tracing directly into the model, you gain valuable insights into the internal workings of your application, making debugging and optimization more straightforward. Both the decorator and fluent API approaches offer versatile ways to manage tracing for critical operations.
 * **Flexible Configuration Management**: Decoupling configurations from your model code ensures that you can rapidly test and iterate without modifying source code. This approach not only streamlines experimentation but also enhances reproducibility and scalability as your application evolves.
-* **Standardized Input and Output Structures**: Leveraging the static signatures of `ChatModel` simplifies the complexities of deploying and serving GenAI models. By adhering to established standards, you reduce the friction typically associated with integrating and validating input/output formats.
+* **Standardized Input and Output Structures**: Leveraging the static signatures of `ChatModel` simplifies the complexities of deploying and serving LLM and AI agent models. By adhering to established standards, you reduce the friction typically associated with integrating and validating input/output formats.
 * **Avoiding Common Pitfalls**: Throughout the implementation, we highlighted best practices to avoid common issues, such as proper handling of secrets, validating input examples, and understanding the nuances of loading context. Following these practices ensures that your model remains secure, robust, and reliable in production environments.
 * **Validation and Deployment Readiness**: The importance of validating your model before deployment cannot be overstated. By using tools like [`mlflow.models.validate_serving_input()`](/docs/latest/api_reference/python_api/mlflow.models.html#mlflow.models.validate_serving_input), you can catch and resolve potential deployment issues early, saving time and effort during the production deployment process.
 
-As the landscape of Generative AI continues to evolve, building adaptable and standardized models will be crucial to leveraging the exciting and powerful capabilities that will be unlocked in the months and years ahead. The approach covered in this tutorial equips you with a robust framework for integrating and managing GenAI technologies within MLflow, empowering you to develop, track, and deploy sophisticated AI solutions with ease.
+As the landscape of LLM applications and AI agents continues to evolve, building adaptable and standardized models will be crucial to leveraging the exciting and powerful capabilities that will be unlocked in the months and years ahead. The approach covered in this tutorial equips you with a robust framework for integrating and managing LLM and AI agent technologies within MLflow, empowering you to develop, track, and deploy sophisticated AI solutions with ease.
 
-We encourage you to extend and customize this foundational example to suit your specific needs and explore further enhancements. By leveraging MLflow's growing capabilities, you can continue to refine your GenAI models, ensuring they deliver impactful and reliable results in any application.
+We encourage you to extend and customize this foundational example to suit your specific needs and explore further enhancements. By leveraging MLflow's growing capabilities, you can continue to refine your LLM and AI agent models, ensuring they deliver impactful and reliable results in any application.

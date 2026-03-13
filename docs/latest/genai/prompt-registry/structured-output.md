@@ -10,13 +10,48 @@ Structured output allows you to:
 * **Validate model responses** against your defined schema
 * **Ensure consistency** across different model calls
 * **Improve integration** with downstream applications
-* **Enable type safety** in your GenAI applications
+* **Enable type safety** in your LLM applications and AI agents
 
 note
 
 **Important**: The `response_format` parameter is used for **tracking and documentation purposes** rather than direct runtime enforcement. MLflow stores this information as metadata to help you understand the expected output structure of your prompts, but it does not automatically validate or enforce the format during model execution. You are responsible for implementing the actual validation and enforcement in your application code.
 
 ## Basic Usage[​](#basic-usage "Direct link to Basic Usage")
+
+* UI
+* Python
+
+In the MLflow UI, you can define structured output when creating or editing a prompt:
+
+1. Navigate to the Prompt Registry and open a prompt (or create a new one).
+2. Expand **Advanced settings**.
+3. In the **Structured output (JSON schema)** field, enter a JSON object describing the expected response shape.
+
+For example, a simple schema with a single string field:
+
+json
+
+```
+{
+  "type": "object",
+  "properties": {
+    "summary": {
+      "type": "string",
+      "description": "Summary of the content."
+    }
+  },
+  "required": ["summary"],
+  "additionalProperties": false
+}
+```
+
+![Register prompt with structured output](/docs/latest/assets/images/create-prompt-with-structured-output-0ef48fdf68419014254dba615e902767.png)
+
+tip
+
+When using providers such as OpenAI with strict structured output, include `"additionalProperties": false` on each object in your schema so the response conforms to the expected shape.
+
+Use the [`mlflow.genai.register_prompt()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.register_prompt) function with the `response_format` parameter to define structured output programmatically.
 
 ### Using Pydantic Models[​](#using-pydantic-models "Direct link to Using Pydantic Models")
 
@@ -189,9 +224,7 @@ prompt = mlflow.genai.load_prompt("prompts:/summarization-prompt/1")
 # Use with OpenAI's response_format parameter
 response = client.chat.completions.create(
     model="gpt-4.1",
-    messages=[
-        {"role": "user", "content": prompt.format(num_sentences=3, text="Your text")}
-    ],
+    messages=[{"role": "user", "content": prompt.format(num_sentences=3, text="Your text")}],
     response_format=prompt.response_format,  # OpenAI's structured output
 )
 

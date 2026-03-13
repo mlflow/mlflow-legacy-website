@@ -19,8 +19,7 @@ A filtering function must take a single argument, which is a [`Span`](/docs/late
 python
 
 ```
-def filter_function(span: Span) -> None:
-    ...
+def filter_function(span: Span) -> None: ...
 ```
 
 ## Example 1: Redacting E-mail Address[​](#example-1-redacting-e-mail-address "Direct link to Example 1: Redacting E-mail Address")
@@ -138,13 +137,9 @@ python
 mlflow.tracing.configure(span_processors=[filter_bank_account_number])
 
 # Run the application
-result = graph.invoke(
-    {
-        "messages": [
-            {"role": "user", "content": "What is the bank account number for John Doe?"}
-        ]
-    }
-)
+result = graph.invoke({
+    "messages": [{"role": "user", "content": "What is the bank account number for John Doe?"}]
+})
 ```
 
 The generated trace will have the bank account number redacted from all messages:

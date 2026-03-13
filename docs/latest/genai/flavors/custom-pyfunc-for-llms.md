@@ -8,7 +8,7 @@ Advanced Large Language Models (LLMs) such as the MPT-7B instruct transformer ar
 
 note
 
-This tutorial utilizes the [`mlflow.pyfunc.PythonModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel) class to create a custom PyFunc model for building custom GenAI solutions. It is recommended to utilize the newer [`mlflow.pyfunc.ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) class for building custom implementations due to a simplified development experience and an easier approach to deployment. To learn more, see [the guide to building GenAI applications with ChatModel](/docs/latest/genai/flavors/chat-model-guide.md).
+This tutorial utilizes the [`mlflow.pyfunc.PythonModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel) class to create a custom PyFunc model for building custom LLM and AI agent solutions. It is recommended to utilize the newer [`mlflow.pyfunc.ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) class for building custom implementations due to a simplified development experience and an easier approach to deployment. To learn more, see [the guide to building LLM applications and AI agents with ChatModel](/docs/latest/genai/flavors/chat-model-guide.md).
 
 tip
 

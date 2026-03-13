@@ -196,9 +196,7 @@ model = mlflow.create_external_model(
 )
 
 # Log parameters specific to this model
-mlflow.log_model_params(
-    {"temperature": "0.7", "max_tokens": "1000"}, model_id=model.model_id
-)
+mlflow.log_model_params({"temperature": "0.7", "max_tokens": "1000"}, model_id=model.model_id)
 
 # Set as active model for automatic trace linking
 mlflow.set_active_model(model_id=model.model_id)
@@ -350,9 +348,7 @@ with mlflow.start_run(run_name="hyperparameter_sweep") as parent_run:
     # Child runs for each parameter combination
     for lr in [0.001, 0.01, 0.1]:
         for batch_size in [16, 32, 64]:
-            with mlflow.start_run(
-                nested=True, run_name=f"lr_{lr}_bs_{batch_size}"
-            ) as child_run:
+            with mlflow.start_run(nested=True, run_name=f"lr_{lr}_bs_{batch_size}") as child_run:
                 mlflow.log_params({"learning_rate": lr, "batch_size": batch_size})
 
                 # Train and evaluate
@@ -474,16 +470,14 @@ python
 ```
 with mlflow.start_run():
     # Descriptive tags for filtering
-    mlflow.set_tags(
-        {
-            "model_family": "transformer",
-            "dataset_version": "v2.1",
-            "environment": "production",
-            "team": "nlp-research",
-            "gpu_type": "V100",
-            "experiment_phase": "hyperparameter_tuning",
-        }
-    )
+    mlflow.set_tags({
+        "model_family": "transformer",
+        "dataset_version": "v2.1",
+        "environment": "production",
+        "team": "nlp-research",
+        "gpu_type": "V100",
+        "experiment_phase": "hyperparameter_tuning",
+    })
 
     # Special notes tag for documentation
     mlflow.set_tag(
@@ -552,18 +546,17 @@ with mlflow.start_run():
 
     # Log custom evaluation metrics
     report = classification_report(y_test, predictions, output_dict=True)
-    mlflow.log_metrics(
-        {
-            "precision_macro": report["macro avg"]["precision"],
-            "recall_macro": report["macro avg"]["recall"],
-            "f1_macro": report["macro avg"]["f1-score"],
-        }
-    )
+    mlflow.log_metrics({
+        "precision_macro": report["macro avg"]["precision"],
+        "recall_macro": report["macro avg"]["recall"],
+        "f1_macro": report["macro avg"]["f1-score"],
+    })
 
     # Log custom artifacts
-    feature_importance = pd.DataFrame(
-        {"feature": feature_names, "importance": model.feature_importances_}
-    )
+    feature_importance = pd.DataFrame({
+        "feature": feature_names,
+        "importance": model.feature_importances_,
+    })
     feature_importance.to_csv("feature_importance.csv")
     mlflow.log_artifact("feature_importance.csv")
 

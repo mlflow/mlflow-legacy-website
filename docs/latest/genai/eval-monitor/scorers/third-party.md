@@ -12,8 +12,6 @@ Click an integration below to get started with detailed setup instructions.
 
 ## Available Integrations[​](#available-integrations "Direct link to Available Integrations")
 
-<!-- -->
-
 [![DeepEval](/docs/latest/images/logos/deepeval-logo.png)](/docs/latest/genai/eval-monitor/scorers/third-party/deepeval.md)
 
 ### [DeepEval](/docs/latest/genai/eval-monitor/scorers/third-party/deepeval.md)

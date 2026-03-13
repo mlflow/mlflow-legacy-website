@@ -1,10 +1,10 @@
-# GenAI Evaluation Quickstart
+# Evaluation Quickstart
 
 MLflow Assistant
 
 Need help setting up evaluation? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that can help you set up evaluation for your project.
 
-This quickstart guide will walk you through evaluating your GenAI applications with MLflow's comprehensive evaluation framework. In less than 5 minutes, you'll learn how to evaluate LLM outputs, use built-in and custom evaluation criteria, and analyze results in the MLflow UI.
+This quickstart guide will walk you through evaluating your LLM applications and AI agents with MLflow's comprehensive evaluation framework. In less than 5 minutes, you'll learn how to evaluate LLM outputs, use built-in and custom evaluation criteria, and analyze results in the MLflow UI.
 
 ![Simple Evaluation Results](/docs/latest/images/mlflow-3/eval-monitor/quickstart-eval-hero.png)
 
@@ -83,7 +83,7 @@ import mlflow
 
 # Configure environment
 os.environ["OPENAI_API_KEY"] = "your-api-key-here"  # Replace with your API key
-mlflow.set_experiment("GenAI Evaluation Quickstart")
+mlflow.set_experiment("Evaluation Quickstart")
 ```
 
 ## Step 3: Define your mock agent's prediction function[​](#step-3-define-your-mock-agents-prediction-function "Direct link to Step 3: Define your mock agent's prediction function")
@@ -178,7 +178,7 @@ Here we use three scorers:
 * [Guidelines](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Guidelines): Evaluates if the answer meets the given guidelines.
 * `is_concise`: A custom scorer defined using the [scorer](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.scorer) decorator to judge if the answer is concise (less than 5 words).
 
-The first two scorers use LLMs to evaluate the response, so-called **LLM-as-a-Judge**. This is a powerful technique to assess the quality of the response, because it provides a human-like evaluation for complex language tasks while being more scalable and cost-effective than human evaluation.
+The first two scorers use LLMs to evaluate the response, so-called **[LLM-as-a-Judge](https://mlflow.org/llm-evaluation)**. This is a powerful technique to assess the quality of the response, because it provides a human-like evaluation for complex language tasks while being more scalable and cost-effective than human evaluation.
 
 The Scorer interface allows you to define various types of quality metrics for your application in a simple way. From a simple natural language guideline to a code function with the full control of the evaluation logic.
 
@@ -194,16 +194,21 @@ python
 # Anthropic
 Correctness(model="anthropic:/claude-sonnet-4-20250514")
 
-# Bedrock
+# Bedrock (Anthropic on Bedrock)
 Correctness(model="bedrock:/anthropic.claude-sonnet-4-20250514")
+
+# Bedrock (Amazon Nova)
+Correctness(model="bedrock:/amazon.nova-pro-v1:0")
+Correctness(model="bedrock:/amazon.nova-lite-v1:0")
+Correctness(model="bedrock:/amazon.nova-micro-v1:0")
 
 # Google
 # Run `pip install litellm` to use Google as the judge model
-Correctness(model="gemini/gemini-2.5-flash")
+Correctness(model="gemini:/gemini-2.5-flash")
 
 # xAI
 # Run `pip install litellm` to use xAI as the judge model
-Correctness(model="xai/grok-2-latest")
+Correctness(model="xai:/grok-2-latest")
 ```
 
 ## Step 6: Run the evaluation[​](#step-6-run-the-evaluation "Direct link to Step 6: Run the evaluation")
@@ -257,7 +262,7 @@ from mlflow.genai.scorers import Correctness, Guidelines
 
 # Use different env variable when using a different LLM provider
 os.environ["OPENAI_API_KEY"] = "your-api-key-here"
-mlflow.set_experiment("GenAI Evaluation Quickstart")
+mlflow.set_experiment("Evaluation Quickstart")
 
 # Your agent implementation
 client = OpenAI()
@@ -320,7 +325,7 @@ if __name__ == "__main__":
     )
 ```
 
-After running the code above, go to the MLflow UI and navigate to the "GenAI Evaluation Quickstart" experiment. You'll see the evaluation results with detailed metrics for each scorer.
+After running the code above, go to the MLflow UI and navigate to the "Evaluation Quickstart" experiment. You'll see the evaluation results with detailed metrics for each scorer.
 
 ![Detailed Evaluation Results](/docs/latest/images/mlflow-3/eval-monitor/quickstart-eval-result.png)
 
@@ -336,9 +341,9 @@ You can compare evaluation runs, too. Click on "Evaluation runs" menu (on the le
 
 Congratulations! You've successfully:
 
-* ✅ Set up MLflow GenAI Evaluation for your applications
+* ✅ Set up MLflow evaluation for your applications
 * ✅ Evaluated a Q\&A application with built-in scorers
 * ✅ Created custom evaluation guidelines
 * ✅ Learned to analyze results in the MLflow UI
 
-MLflow's evaluation framework provides comprehensive tools for assessing GenAI application quality, helping you build more reliable and effective AI systems.
+MLflow's evaluation framework provides comprehensive tools for [assessing LLM application and AI agent quality](https://mlflow.org/llm-evaluation), helping you build more reliable and effective AI systems.

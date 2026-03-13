@@ -1,12 +1,12 @@
 # Building MLflow evaluation datasets
 
-To systematically test and improve a GenAI application, you use an evaluation dataset. An evaluation dataset is a selected set of example inputs — either labeled (with known expected outputs, i.e. ground-truth expectations) or unlabeled (without ground-truth). Evaluation datasets help you improve your app's performance in the following ways:
+To systematically test and improve an LLM application or AI agent, you use an evaluation dataset. An evaluation dataset is a selected set of example inputs — either labeled (with known expected outputs, i.e. ground-truth expectations) or unlabeled (without ground-truth). Evaluation datasets help you improve your app's performance in the following ways:
 
 * Improve quality by testing fixes against known problematic examples from production.
 * Prevent regressions. Create a "golden set" of examples that must always work correctly.
 * Compare app versions. Test different prompts, models, or app logic against the same data.
 * Target specific features or isolate certain problems in your agent. Build specialized datasets for safety, domain knowledge, or edge cases.
-* Validate the app across different environments (e.g., development vs. production) as part of LLMOps.
+* Validate the app across different environments (e.g., development vs. production) as part of [LLMOps](https://mlflow.org/llmops).
 
 You can think of them as test suites or benchmarks for your LLM functionality.
 
@@ -22,7 +22,7 @@ Evaluation Datasets require an MLflow Tracking Server with a **[SQL backend](/do
 
 You can use any of the following to create an evaluation dataset:
 
-* Existing traces. If you have already captured traces from a GenAI application, you can use them to create an evaluation dataset based on real-world scenarios.
+* Existing traces. If you have already captured traces from an LLM application or AI agent, you can use them to create an evaluation dataset based on real-world scenarios.
 * Manually created examples. Define test cases by hand using dictionaries or DataFrames. This is useful for targeting specific edge cases or creating "golden" test cases that must always pass.
 
 This page describes how to create an MLflow evaluation dataset. You can create datasets from traces using either the MLflow Monitoring UI or the SDK. You can also use other types of datasets, such as Pandas DataFrames or a list of dictionaries. See [Evaluation examples](/docs/latest/genai/eval-monitor/running-evaluation/eval-examples.md) for more examples.
@@ -145,9 +145,7 @@ traces_df = mlflow.search_traces(
 
 # Analyze patterns
 # For example, check if quality issues correlate with token usage
-correlation = traces_df["span.attributes.usage.total_tokens"].corr(
-    traces_df["tag.quality_score"]
-)
+correlation = traces_df["span.attributes.usage.total_tokens"].corr(traces_df["tag.quality_score"])
 print(f"Correlation between token usage and quality: {correlation}")
 ```
 
@@ -230,40 +228,38 @@ dataset = create_dataset(
 )
 
 # Create DataFrame with inputs and expectations (ground truth)
-df = pd.DataFrame(
-    [
-        {
-            "inputs": {
-                "question": "What is MLflow?",
-                "domain": "general",
-            },
-            "expectations": {
-                "expected_answer": "MLflow is an open-source platform for ML",
-                "must_mention": ["tracking", "experiments", "models"],
-            },
+df = pd.DataFrame([
+    {
+        "inputs": {
+            "question": "What is MLflow?",
+            "domain": "general",
         },
-        {
-            "inputs": {
-                "question": "How do I track experiments?",
-                "domain": "technical",
-            },
-            "expectations": {
-                "expected_answer": "Use mlflow.start_run() and mlflow.log_params()",
-                "must_mention": ["log_params", "log_metrics"],
-            },
+        "expectations": {
+            "expected_answer": "MLflow is an open-source AI engineering platform",
+            "must_mention": ["tracking", "experiments", "models"],
         },
-        {
-            "inputs": {
-                "question": "Explain model versioning",
-                "domain": "technical",
-            },
-            "expectations": {
-                "expected_answer": "Model Registry provides versioning",
-                "must_mention": ["Model Registry", "versions"],
-            },
+    },
+    {
+        "inputs": {
+            "question": "How do I track experiments?",
+            "domain": "technical",
         },
-    ]
-)
+        "expectations": {
+            "expected_answer": "Use mlflow.start_run() and mlflow.log_params()",
+            "must_mention": ["log_params", "log_metrics"],
+        },
+    },
+    {
+        "inputs": {
+            "question": "Explain model versioning",
+            "domain": "technical",
+        },
+        "expectations": {
+            "expected_answer": "Model Registry provides versioning",
+            "must_mention": ["Model Registry", "versions"],
+        },
+    },
+])
 
 # Add records from DataFrame
 dataset.merge_records(df)
@@ -364,7 +360,7 @@ dataset = dataset.merge_records(new_cases)
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-Ready to improve your GenAI testing? Start with these resources:
+Ready to improve your LLM and AI agent testing? Start with these resources:
 
 ### [Dataset Structure](/docs/latest/genai/concepts/evaluation-datasets.md)
 

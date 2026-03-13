@@ -55,29 +55,23 @@ dataset_context = ["train"] * 5 + ["test"] * 5
 
 for i in range(10):
     with mlflow.start_run():
-        mlflow.log_metrics(
-            {
-                "loss": loss[i],
-                "accuracy": accuracy[i],
-                "log-scale-loss": log_scale_loss[i],
-                "f1 score": f1_score[i],
-            }
-        )
+        mlflow.log_metrics({
+            "loss": loss[i],
+            "accuracy": accuracy[i],
+            "log-scale-loss": log_scale_loss[i],
+            "f1 score": f1_score[i],
+        })
 
-        mlflow.log_params(
-            {
-                "batch_size": batch_size[i],
-                "learning rate": learning_rate[i],
-                "model": model[i],
-            }
-        )
+        mlflow.log_params({
+            "batch_size": batch_size[i],
+            "learning rate": learning_rate[i],
+            "model": model[i],
+        })
 
-        mlflow.set_tags(
-            {
-                "task": task[i],
-                "environment": environment[i],
-            }
-        )
+        mlflow.set_tags({
+            "task": task[i],
+            "environment": environment[i],
+        })
 
         dataset = mlflow.data.from_numpy(
             features=np.random.uniform(size=[20, 28, 28, 3]),
@@ -136,9 +130,7 @@ python
 ```
 import mlflow
 
-bad_runs = mlflow.search_runs(
-    filter_string="metrics.loss > 0.8", search_all_experiments=True
-)
+bad_runs = mlflow.search_runs(filter_string="metrics.loss > 0.8", search_all_experiments=True)
 print(bad_runs)
 ```
 
@@ -264,6 +256,15 @@ Other than the that, the syntax should be intuitive to anyone who has used SQL. 
      params.model ILIKE "gpt%"
      ```
 
+   * For null checks on tags and params, MLflow supports `IS NULL` and `IS NOT NULL`. These check whether a tag or param exists on a run. Examples include:
+
+     sql
+
+     ```
+     tags.environment IS NOT NULL
+     params.model IS NULL
+     ```
+
    * For sets, MLflow supports `IN`. Examples include:
 
      sql
@@ -313,6 +314,8 @@ sql
 params.batch_size = "2"
 params.model LIKE "GPT%"
 params.model ILIKE "gPt%"
+params.model IS NULL
+params.model IS NOT NULL
 params.model LIKE "GPT%" AND params.batch_size = "2"
 ```
 
@@ -329,6 +332,8 @@ tags."environment" = "notebook"
 tags.environment = "notebook"
 tags.task = "Classification"
 tags.task ILIKE "classif%"
+tags.environment IS NOT NULL
+tags.task IS NULL
 ```
 
 #### 4 - Searching By Dataset Information[​](#4---searching-by-dataset-information "Direct link to 4 - Searching By Dataset Information")
@@ -420,9 +425,25 @@ metrics.loss <= 0.15 AND metrics.loss >= 0.1
 
 Finally, before moving on it's important to revisit that you cannot use the `OR` keyword in your queries.
 
-#### 8 - Non-None Queries[​](#8---non-none-queries "Direct link to 8 - Non-None Queries")
+#### 8 - Null Checks with IS NULL / IS NOT NULL[​](#8---null-checks-with-is-null--is-not-null "Direct link to 8 - Null Checks with IS NULL / IS NOT NULL")
 
-To search for runs where a field (only type string is supported) is not null, use the `field != "None"` syntax. For example, to search for runs where the batch\_size is not null, you can use the following query:
+To search for runs where a tag or param is present or absent, use `IS NULL` and `IS NOT NULL`. `IS NULL` matches runs that do **not** have the specified tag or param, while `IS NOT NULL` matches runs that **do** have it.
+
+sql
+
+```
+params.model IS NULL
+params.model IS NOT NULL
+tags.environment IS NULL
+tags.environment IS NOT NULL
+tags.task IS NOT NULL AND params.model IS NULL
+```
+
+note
+
+`IS NULL` / `IS NOT NULL` is only supported for **tags** and **params**, not for metrics or attributes.
+
+You can also check for the string literal `"None"` using the `!=` comparator:
 
 sql
 
