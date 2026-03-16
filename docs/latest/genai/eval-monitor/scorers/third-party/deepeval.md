@@ -24,7 +24,7 @@ from mlflow.genai.scorers.deepeval import AnswerRelevancy
 scorer = AnswerRelevancy(threshold=0.7, model="openai:/gpt-4")
 feedback = scorer(
     inputs="What is MLflow?",
-    outputs="MLflow is an open-source platform for managing machine learning workflows.",
+    outputs="MLflow is an open-source AI engineering platform for agents and LLMs.",
 )
 
 print(feedback.value)  # "yes" or "no"
@@ -42,7 +42,7 @@ from mlflow.genai.scorers.deepeval import AnswerRelevancy, Faithfulness
 eval_dataset = [
     {
         "inputs": {"query": "What is MLflow?"},
-        "outputs": "MLflow is an open-source platform for managing machine learning workflows.",
+        "outputs": "MLflow is an open-source AI engineering platform for agents and LLMs.",
     },
     {
         "inputs": {"query": "How do I track experiments?"},

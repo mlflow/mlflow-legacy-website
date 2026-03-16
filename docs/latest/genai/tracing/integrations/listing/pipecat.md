@@ -41,6 +41,33 @@ Currently, MLflow Server supports only the OTLP/HTTP endpoint, and the OTLP/gRPC
 
 Refer to the [Pipecat OpenTelemetry Tracing documentation](https://docs.pipecat.ai/server/utilities/opentelemetry) for setting up tracing in Pipecat and specify OTLP HTTP exporter with above environment variables.
 
+## Combine with the MLflow Tracing SDK[​](#combine-with-the-mlflow-tracing-sdk "Direct link to Combine with the MLflow Tracing SDK")
+
+You can combine the auto-generated OpenTelemetry traces with the [MLflow Tracing SDK](/docs/latest/genai/tracing.md) to add custom spans, set tags, and log assessments within the same trace.
+
+python
+
+```
+import os
+
+os.environ["MLFLOW_USE_DEFAULT_TRACER_PROVIDER"] = "false"
+
+import mlflow
+from mlflow.entities.trace_location import MlflowExperimentLocation
+
+mlflow.set_tracking_uri("http://localhost:5000")
+exp_id = mlflow.set_experiment("Pipecat").experiment_id
+mlflow.tracing.set_destination(MlflowExperimentLocation(exp_id))
+
+# Add custom MLflow spans alongside the auto-generated traces
+with mlflow.start_span("custom_step") as span:
+    span.set_inputs({"query": "test"})
+    # your application logic here
+    span.set_outputs({"result": "success"})
+```
+
+See [Combining the OpenTelemetry SDK and the MLflow Tracing SDK](/docs/latest/genai/tracing/app-instrumentation/opentelemetry.md#combining-the-opentelemetry-sdk-and-the-mlflow-tracing-sdk) for details.
+
 ## Reference[​](#reference "Direct link to Reference")
 
 For complete step-by-step instructions on sending traces to MLflow from OpenTelemetry compatible frameworks, see the [Collect OpenTelemetry Traces into MLflow](/docs/latest/genai/tracing/opentelemetry/ingest.md).

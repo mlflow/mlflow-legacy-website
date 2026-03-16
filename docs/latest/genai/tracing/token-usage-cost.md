@@ -1,6 +1,6 @@
 # Token Usage and Cost Tracking
 
-MLflow automatically tracks token usage and cost for LLM calls within your traces. This enables you to monitor resource consumption and optimize costs across your GenAI applications.
+MLflow automatically tracks token usage and cost for LLM calls within your traces. This enables you to monitor resource consumption and optimize costs across your LLM applications and AI agents.
 
 [](/docs/latest/images/llms/tracing/token-usage-and-cost-charts.mp4)
 

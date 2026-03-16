@@ -1,6 +1,6 @@
 # Tracing LangChain🦜⛓️
 
-[](/docs/latest/images/llms/tracing/tracing-top.mp4)
+![LangChain Tracing with MLflow](/docs/latest/images/llms/tracing/langgraph-agent-trace.png)
 
 [LangChain](https://www.langchain.com/) is an open-source framework for building LLM-powered applications.
 
@@ -78,12 +78,10 @@ prompt_template = PromptTemplate.from_template(
 chain = prompt_template | llm | StrOutputParser()
 
 # Let's test another call
-chain.invoke(
-    {
-        "person": "Linus Torvalds",
-        "question": "Can I just set everyone's access to sudo to make things easier?",
-    }
-)
+chain.invoke({
+    "person": "Linus Torvalds",
+    "question": "Can I just set everyone's access to sudo to make things easier?",
+})
 ```
 
 ### 5. View the trace in the MLflow UI[​](#5-view-the-trace-in-the-mlflow-ui "Direct link to 5. View the trace in the MLflow UI")
@@ -245,6 +243,10 @@ shell
 pip install openai==1.30.5 langchain==0.2.1 langchain-openai==0.1.8 langchain-community==0.2.1 mlflow==2.14.0 tiktoken==0.7.0
 ```
 
+Image Support for LangChain Traces
+
+MLflow captures image content parts passed through LangChain models. See [Image and Audio (Multimodal) Content in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md) for details.
+
 ## Supported APIs[​](#supported-apis "Direct link to Supported APIs")
 
 The following APIs are supported by auto tracing for LangChain.
@@ -306,6 +308,39 @@ class CustomLangchainTracer(MlflowLangchainTracer):
             attributes=kwargs,
         )
 ```
+
+## Combine with the MLflow Tracing SDK (JS / TS)[​](#combine-with-the-mlflow-tracing-sdk-js--ts "Direct link to Combine with the MLflow Tracing SDK (JS / TS)")
+
+When using LangChain.js with OpenTelemetry-based tracing, you can combine the automatically generated traces with the [MLflow Tracing SDK](/docs/latest/genai/tracing.md) (`@mlflow/core`) to add custom spans, set tags, and update trace metadata within the same trace.
+
+typescript
+
+```
+import { init, withSpan } from "@mlflow/core";
+import { LangChainInstrumentation } from "@arizeai/openinference-instrumentation-langchain";
+import * as CallbackManagerModule from "@langchain/core/callbacks/manager";
+
+// Initialize MLflow SDK - sets up the OTel provider to capture all spans
+init({
+  trackingUri: "http://localhost:5000",
+  experimentId: "<your-experiment-id>",
+});
+
+// Enable LangChain instrumentation
+const lcInstrumentation = new LangChainInstrumentation();
+lcInstrumentation.manuallyInstrument(CallbackManagerModule);
+
+// Add custom MLflow spans alongside the auto-generated LangChain traces
+const result = await withSpan(
+  { name: "custom_step", inputs: { query: "test" } },
+  async (span) => {
+    // your LangChain application logic here
+    return { result: "success" };
+  }
+);
+```
+
+For detailed instructions and examples, see [Combining the OpenTelemetry SDK and the MLflow Tracing SDK](/docs/latest/genai/tracing/app-instrumentation/opentelemetry.md#combining-the-opentelemetry-sdk-and-the-mlflow-tracing-sdk).
 
 ## Disable auto-tracing[​](#disable-auto-tracing "Direct link to Disable auto-tracing")
 

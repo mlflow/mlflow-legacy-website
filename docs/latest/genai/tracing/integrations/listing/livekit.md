@@ -286,6 +286,35 @@ export OPENAI_API_KEY=your-key
 python livekit_llm_example.py
 ```
 
+## Combine with the MLflow Tracing SDK[​](#combine-with-the-mlflow-tracing-sdk "Direct link to Combine with the MLflow Tracing SDK")
+
+Since this integration is built on OpenTelemetry, you can combine the automatically generated traces with the [MLflow Tracing SDK](/docs/latest/genai/tracing.md) to add custom spans, set tags, and log assessments within the same trace. This is useful when you want to enrich the auto-generated traces with additional application-specific context.
+
+To enable this, set the `MLFLOW_USE_DEFAULT_TRACER_PROVIDER` environment variable to `false` and call [`mlflow.tracing.set_destination()`](/docs/latest/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.set_destination) to merge spans from both SDKs into a single trace.
+
+python
+
+```
+import os
+
+os.environ["MLFLOW_USE_DEFAULT_TRACER_PROVIDER"] = "false"
+
+import mlflow
+from mlflow.entities.trace_location import MlflowExperimentLocation
+
+mlflow.set_tracking_uri("http://localhost:5000")
+exp_id = mlflow.set_experiment("LiveKit").experiment_id
+mlflow.tracing.set_destination(MlflowExperimentLocation(exp_id))
+
+# Add custom MLflow spans alongside the auto-generated LiveKit traces
+with mlflow.start_span("custom_step") as span:
+    span.set_inputs({"query": "test"})
+    # your application logic here
+    span.set_outputs({"result": "success"})
+```
+
+For detailed instructions and examples, see [Combining the OpenTelemetry SDK and the MLflow Tracing SDK](/docs/latest/genai/tracing/app-instrumentation/opentelemetry.md#combining-the-opentelemetry-sdk-and-the-mlflow-tracing-sdk).
+
 ## Troubleshooting[​](#troubleshooting "Direct link to Troubleshooting")
 
 ### Traces Not Appearing in MLflow[​](#traces-not-appearing-in-mlflow "Direct link to Traces Not Appearing in MLflow")

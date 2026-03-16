@@ -113,7 +113,7 @@ main.ts
 typescript
 
 ```
-import { init } from "mlflow-tracing";
+import { init } from "@mlflow/core";
 import { generateText } from "ai";
 import { openai } from "@ai-sdk/openai";
 import { NodeSDK } from '@opentelemetry/sdk-node';
@@ -176,6 +176,39 @@ for await (const part of stream.textStream) {
 ## Tracking Token Usage and Cost[​](#tracking-token-usage-and-cost "Direct link to Tracking Token Usage and Cost")
 
 MLflow automatically tracks token usage for Vercel AI SDK. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. Cost information may be unavailable depending on the provider; see the [Token Usage and Cost Tracking](/docs/latest/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
+
+## Combine with the MLflow Tracing SDK[​](#combine-with-the-mlflow-tracing-sdk "Direct link to Combine with the MLflow Tracing SDK")
+
+Since this integration is built on OpenTelemetry, you can combine the automatically generated traces with the [MLflow Tracing SDK](/docs/latest/genai/tracing.md) (`@mlflow/core`) to add custom spans, set tags, and update trace metadata within the same trace.
+
+typescript
+
+```
+import { init, withSpan } from "@mlflow/core";
+import { generateText } from "ai";
+import { openai } from "@ai-sdk/openai";
+
+// Initialize MLflow SDK - sets up the OTel provider to capture all spans
+init({
+  trackingUri: "http://localhost:5000",
+  experimentId: "<your-experiment-id>",
+});
+
+// Add custom MLflow spans alongside the auto-generated Vercel AI SDK traces
+const result = await withSpan(
+  { name: "custom_step", inputs: { query: "test" } },
+  async (span) => {
+    const { text } = await generateText({
+      model: openai("gpt-4o-mini"),
+      prompt: "What is MLflow?",
+      experimental_telemetry: { isEnabled: true },
+    });
+    return { result: text };
+  }
+);
+```
+
+For detailed instructions and examples, see [Combining the OpenTelemetry SDK and the MLflow Tracing SDK](/docs/latest/genai/tracing/app-instrumentation/opentelemetry.md#combining-the-opentelemetry-sdk-and-the-mlflow-tracing-sdk).
 
 ## Disable auto-tracing[​](#disable-auto-tracing "Direct link to Disable auto-tracing")
 

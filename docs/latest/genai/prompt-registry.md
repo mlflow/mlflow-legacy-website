@@ -1,8 +1,8 @@
 # Prompt Registry
 
-**MLflow Prompt Registry** is a powerful tool that streamlines prompt engineering and management in your Generative AI (GenAI) applications. It enables you to version, track, and reuse prompts across your organization, helping maintain consistency and improving collaboration in prompt development.
+**MLflow Prompt Registry** is a powerful tool that streamlines prompt engineering and management in your LLM applications and AI agents. It enables you to version, track, and reuse prompts across your organization, helping maintain consistency and improving collaboration in prompt development.
 
-**Try MLflow GenAI Demo**<br />The quickest way to learn about MLflow GenAI is to try the demo. Click to see how to launch the demo ↓
+**Try the MLflow LLMs and Agents Demo**<br />The quickest way to learn about MLflow for LLMs and AI Agents is to try the demo. **Click to launch the demo ↓**
 
 #### **Starting from UI**[​](#starting-from-ui "Direct link to starting-from-ui")
 
@@ -32,7 +32,7 @@ Build robust yet flexible deployment pipelines for prompts, allowing you to isol
 
 #### Lineage
 
-Seamlessly integrate with MLflow's existing features such as model tracking and evaluation for end-to-end GenAI lifecycle management.
+Seamlessly integrated with MLflow's Tracing, Evaluation, and Monitoring capabilities for agent observability and quality improvement.
 
 #### Collaboration
 
@@ -55,7 +55,7 @@ Share prompts across your organization with a centralized registry, enabling tea
 
 note
 
-Prompt template text can contain variables in `{{variable}}` format. These variables can be filled with dynamic content when using the prompt in your GenAI application. MLflow also provides the `to_single_brace_format()` API to convert templates into single brace format for frameworks like LangChain or LlamaIndex that require single brace interpolation.
+Prompt template text can contain variables in `{{variable}}` format. These variables can be filled with dynamic content when using the prompt in your LLM application or AI agent. MLflow also provides the `to_single_brace_format()` API to convert templates into single brace format for frameworks like LangChain or LlamaIndex that require single brace interpolation.
 
 To create a new prompt using the Python API, use [`mlflow.genai.register_prompt()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.register_prompt) API:
 
@@ -77,7 +77,7 @@ prompt = mlflow.genai.register_prompt(
     template=initial_template,
     # Optional: Provide a commit message to describe the changes
     commit_message="Initial commit",
-    # Optional: Set tags applies to the prompt (across versions)
+    # Optional: Specify tags for this prompt
     tags={
         "author": "author@example.com",
         "task": "summarization",
@@ -91,14 +91,14 @@ print(f"Created prompt '{prompt.name}' (version {prompt.version})")
 
 This creates a new prompt with the specified template text and metadata. The prompt is now available in the MLflow UI for further management.
 
-![Registered Prompt in UI](/docs/latest/assets/images/registered-prompt-b8d47ff0d061d8703b61a9a6e94a77c3.png)
+![Registered Prompt in UI](/docs/latest/assets/images/registered-prompt-d457d27524f55e7575e9a129e53487e4.png)
 
 ### 2. Update the Prompt with a New Version[​](#2-update-the-prompt-with-a-new-version "Direct link to 2. Update the Prompt with a New Version")
 
 * UI
 * Python
 
-![Update Prompt UI](/docs/latest/assets/images/update-prompt-ui-74a489e65098893bbffe253f43fb210d.png)
+![Update Prompt UI](/docs/latest/assets/images/update-prompt-ui-9fe89b08b9318729754441fbe67f0a90.png)
 
 1. The previous step leads to the created prompt page. (If you closed the page, navigate to the **Prompts** tab in the MLflow UI and click on the prompt name.)
 2. Click on the **Create prompt Version** button.
@@ -140,11 +140,11 @@ updated_prompt = mlflow.genai.register_prompt(
 Once you have multiple versions of a prompt, you can compare them to understand the changes between versions. To compare prompt versions in the MLflow UI, click on the **Compare** tab in the prompt details page:
 
 ![Compare Prompt
-Versions](/docs/latest/assets/images/compare-prompt-versions-2082121aeaca4be99a0cf968535141ed.png)
+Versions](/docs/latest/assets/images/compare-prompt-versions-cfb444eca59dc0c2e14b98d480aa2c17.png)
 
 ### 4. Load and Use the Prompt[​](#4-load-and-use-the-prompt "Direct link to 4. Load and Use the Prompt")
 
-To use a prompt in your GenAI application, you can load it with the [`mlflow.genai.load_prompt()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.load_prompt) API and fill in the variables using the [`mlflow.entities.Prompt.format()`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.Prompt.format) method of the prompt object.
+To use a prompt in your LLM application or AI agent, you can load it with the [`mlflow.genai.load_prompt()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.load_prompt) API and fill in the variables using the [`mlflow.entities.Prompt.format()`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.Prompt.format) method of the prompt object.
 
 python
 
@@ -153,11 +153,9 @@ import mlflow
 import openai
 
 target_text = """
-MLflow is an open source platform for managing the end-to-end machine learning lifecycle.
-It tackles four primary functions in the ML lifecycle: Tracking experiments, packaging ML
-code for reuse, managing and deploying models, and providing a central model registry.
-MLflow currently offers these functions as four components: MLflow Tracking,
-MLflow Projects, MLflow Models, and MLflow Registry.
+MLflow is the largest open source AI engineering platform for agents and LLMs. It enables teams of all sizes
+to debug, evaluate, monitor, and optimize production-quality AI applications,
+while controlling costs and managing access to LLMs and data.
 """
 
 # Load the prompt
@@ -569,14 +567,10 @@ python
 import mlflow
 
 # Custom TTL: Cache for 5 minutes
-prompt = mlflow.genai.load_prompt(
-    "prompts:/summarization-prompt/1", cache_ttl_seconds=300
-)
+prompt = mlflow.genai.load_prompt("prompts:/summarization-prompt/1", cache_ttl_seconds=300)
 
 # Bypass cache entirely: Always fetch from registry
-prompt = mlflow.genai.load_prompt(
-    "prompts:/summarization-prompt@production", cache_ttl_seconds=0
-)
+prompt = mlflow.genai.load_prompt("prompts:/summarization-prompt@production", cache_ttl_seconds=0)
 
 # Use infinite TTL even for alias-based prompts
 prompt = mlflow.genai.load_prompt(

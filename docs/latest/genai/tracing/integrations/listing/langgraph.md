@@ -1,6 +1,6 @@
 # Tracing LangGraph🦜🕸️
 
-[](/docs/latest/images/llms/tracing/langgraph-tracing.mp4)
+![LangGraph Tracing via autolog](/docs/latest/images/llms/tracing/langgraph-agent-trace.png)
 
 [LangGraph](https://www.langchain.com/langgraph) is an open-source library for building stateful, multi-actor applications with LLMs, used to create agent and multi-agent workflows.
 
@@ -90,9 +90,7 @@ tools = [get_weather]
 graph = create_react_agent(llm, tools)
 
 # Invoke the graph
-result = graph.invoke(
-    {"messages": [{"role": "user", "content": "what is the weather in sf?"}]}
-)
+result = graph.invoke({"messages": [{"role": "user", "content": "what is the weather in sf?"}]})
 ```
 
 ### 5. View the trace in the MLflow UI[​](#5-view-the-trace-in-the-mlflow-ui "Direct link to 5. View the trace in the MLflow UI")
@@ -257,6 +255,39 @@ The thread ID will be recorded in the trace metadata and displayed in the MLflow
 By navigating to the Session tab on the side bar, you can view all the traces in the session.
 
 ![LangGraph Session Page](/docs/latest/assets/images/langgraph-session-page-c27d68787ae5bbefa08c8bb485273697.png)
+
+## Combine with the MLflow Tracing SDK (JS / TS)[​](#combine-with-the-mlflow-tracing-sdk-js--ts "Direct link to Combine with the MLflow Tracing SDK (JS / TS)")
+
+When using LangGraph.js with OpenTelemetry-based tracing, you can combine the automatically generated traces with the [MLflow Tracing SDK](/docs/latest/genai/tracing.md) (`@mlflow/core`) to add custom spans, set tags, and update trace metadata within the same trace.
+
+typescript
+
+```
+import { init, withSpan } from "@mlflow/core";
+import { LangChainInstrumentation } from "@arizeai/openinference-instrumentation-langchain";
+import * as CallbackManagerModule from "@langchain/core/callbacks/manager";
+
+// Initialize MLflow SDK - sets up the OTel provider to capture all spans
+init({
+  trackingUri: "http://localhost:5000",
+  experimentId: "<your-experiment-id>",
+});
+
+// Enable LangChain instrumentation (also instruments LangGraph)
+const lcInstrumentation = new LangChainInstrumentation();
+lcInstrumentation.manuallyInstrument(CallbackManagerModule);
+
+// Add custom MLflow spans alongside the auto-generated LangGraph traces
+const result = await withSpan(
+  { name: "custom_step", inputs: { query: "test" } },
+  async (span) => {
+    // your LangGraph application logic here
+    return { result: "success" };
+  }
+);
+```
+
+For detailed instructions and examples, see [Combining the OpenTelemetry SDK and the MLflow Tracing SDK](/docs/latest/genai/tracing/app-instrumentation/opentelemetry.md#combining-the-opentelemetry-sdk-and-the-mlflow-tracing-sdk).
 
 ## Disable auto-tracing[​](#disable-auto-tracing "Direct link to Disable auto-tracing")
 

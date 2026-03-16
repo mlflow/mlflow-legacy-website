@@ -87,7 +87,7 @@ python
 @mlflow.trace
 def predict(messages: list[dict]) -> str:
     # Customize the request preview for long message histories
-    custom_preview = f'{messages[0]["content"][:10]} ... {messages[-1]["content"][:10]}'
+    custom_preview = f"{messages[0]['content'][:10]} ... {messages[-1]['content'][:10]}"
     mlflow.update_current_trace(request_preview=custom_preview)
 
     # Your model logic here

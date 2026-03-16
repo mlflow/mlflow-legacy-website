@@ -1,6 +1,6 @@
 # Production Tracing SDK
 
-MLflow offers a Production Tracing SDK package called `mlflow-tracing` that includes only the essential functionality for tracing and monitoring of your GenAI applications. This package is designed for production environments where minimizing dependencies and deployment size is critical.
+MLflow offers a Production Tracing SDK package called `mlflow-tracing` that includes only the essential functionality for tracing and monitoring of your LLM applications and AI agents. This package is designed for production environments where minimizing dependencies and deployment size is critical.
 
 ## Why Use the Production Tracing SDK?[​](#why-use-the-production-tracing-sdk "Direct link to Why Use the Production Tracing SDK?")
 
@@ -66,7 +66,7 @@ The Production Tracing SDK works with various observability platforms. Choose yo
 * Amazon SageMaker
 * Nebius
 
-MLflow is a **fully open-source project**, allowing you to self-host your own MLflow server in your own infrastructure. This is a great option if you want to have full control over your data and are restricted in using cloud-based services.
+MLflow is a **fully open-source [AI engineering platform](https://mlflow.org/genai)**, allowing you to self-host your own MLflow server in your own infrastructure. This is a great option if you want to have full control over your data and are restricted in using cloud-based services.
 
 In self-hosting mode, you will be responsible for running the tracking server instance and scaling it to your needs. We **strongly recommend** using a SQL-based tracking server on top of a performant database to minimize operational overhead and ensure high availability.
 
@@ -81,15 +81,15 @@ Refer to the [tracking server setup guide](/docs/latest/ml/tracking.md#tracking-
 
 [](/docs/latest/images/llms/tracing/tracing-top.mp4)
 
-[Databricks Lakehouse Monitoring for GenAI](https://docs.databricks.com/aws/en/generative-ai/agent-evaluation/monitoring) is a go-to solution for monitoring your GenAI application with MLflow Tracing. It provides access to a robust, fully functional monitoring dashboard for operational excellence and quality analysis.
+[Databricks Lakehouse Monitoring for GenAI](https://docs.databricks.com/aws/en/generative-ai/agent-evaluation/monitoring) is a go-to solution for monitoring your LLM application or AI agent with MLflow Tracing. It provides access to a robust, fully functional monitoring dashboard for operational excellence and quality analysis.
 
 Lakehouse Monitoring for GenAI can be used regardless of whether your application is hosted on Databricks or not.
 
-[Sign up for free](https://signup.databricks.com/?destination_url=/ml/experiments-signup?source=OSS_DOCS\&dbx_source=TRY_MLFLOW\&signup_experience_step=EXPRESS\&provider=MLFLOW\&utm_source=OSS_DOCS) and [get started in a minute](https://docs.databricks.com/aws/en/generative-ai/agent-evaluation/monitoring) to run your GenAI application with complete observability.
+[Sign up for free](https://signup.databricks.com/?destination_url=/ml/experiments-signup?source=OSS_DOCS\&dbx_source=TRY_MLFLOW\&signup_experience_step=EXPRESS\&provider=MLFLOW\&utm_source=OSS_DOCS) and [get started in a minute](https://docs.databricks.com/aws/en/generative-ai/agent-evaluation/monitoring) to run your LLM application or AI agent with complete observability.
 
 [](https://assets.docs.databricks.com/_static/images/generative-ai/monitoring/monitoring-hero.mp4)
 
-MLflow Tracing is **built on the OpenTelemetry tracing spec**, an industry-standard framework for observability, making it a vendor-neutral solution for monitoring your GenAI applications.
+MLflow Tracing is **built on the OpenTelemetry tracing spec**, an industry-standard framework for observability, making it a vendor-neutral solution for monitoring your LLM applications and AI agents.
 
 If you are using OpenTelemetry as part of your observability tech stack, you can use MLflow Tracing without any additional service onboarding. Simply configure the OTLP endpoint and MLflow will export traces to your existing observability platform.
 
@@ -108,11 +108,11 @@ Refer to the [OpenTelemetry Integration](/docs/latest/genai/tracing/opentelemetr
 
 [MLflow on Amazon SageMaker](https://aws.amazon.com/sagemaker-ai/experiments/) is a fully managed service offered as part of the SageMaker platform by AWS, including tracing and other MLflow features such as model registry.
 
-MLflow Tracing offers a one-line solution for [tracing Amazon Bedrock](/docs/latest/genai/tracing/integrations/listing/bedrock.md), making it the best suitable solution for monitoring GenAI application powered by AWS and Amazon Bedrock.
+MLflow Tracing offers a one-line solution for [tracing Amazon Bedrock](/docs/latest/genai/tracing/integrations/listing/bedrock.md), making it the best suitable solution for monitoring LLM applications and AI agents powered by AWS and Amazon Bedrock.
 
 ![Managed MLflow on SageMaker](https://d1.awsstatic.com/deploy-mlflow-models.3eb857c5790a44b461845a630e3a231229838443.png)
 
-[Nebius](https://nebius.com/services/managed-mlflow), a cutting-edge cloud platform for GenAI explorers, offers a fully managed MLflow server. Combining the powerful GPU infrastructure of Nebius for training and hosting LLMs/foundation models with the observability capabilities of MLflow Tracing, Nebius serves as a comprehensive platform for AI/ML developers.
+[Nebius](https://nebius.com/services/managed-mlflow), a cutting-edge cloud platform for AI builders, offers a fully managed MLflow server. Combining the powerful GPU infrastructure of Nebius for training and hosting LLMs/foundation models with the observability capabilities of MLflow Tracing, Nebius serves as a comprehensive platform for AI/ML developers.
 
 **Key Features:**
 
@@ -127,19 +127,19 @@ Refer to the [Nebius documentation](https://nebius.com/services/managed-mlflow) 
 
 ## Supported Features[​](#supported-features "Direct link to Supported Features")
 
-The Production Tracing SDK includes all essential tracing functionalities for monitoring your GenAI applications. Click the cards below to learn more about each supported feature.
+The Production Tracing SDK includes all essential tracing functionalities for monitoring your LLM applications and AI agents. Click the cards below to learn more about each supported feature.
 
 [⚡️ Automatic Tracing for AI Libraries](/docs/latest/genai/tracing/integrations.md)
 
 ***
 
-[MLflow Tracing SDK supports one-line integration with all of the most popular LLM/GenAI libraries including OpenAI, Anthropic, LangChain, LlamaIndex, Hugging Face, DSPy, and any LLM provider that conforms to OpenAI API format. This automatic tracing capability allows you to monitor your GenAI application with minimal effort and easily switch between different libraries.](/docs/latest/genai/tracing/integrations.md)
+[MLflow Tracing SDK supports one-line integration with all of the most popular LLM and AI agent frameworks including OpenAI, Anthropic, LangChain, LlamaIndex, Hugging Face, DSPy, and any LLM provider that conforms to OpenAI API format. This automatic tracing capability allows you to monitor your LLM application or AI agent with minimal effort and easily switch between different libraries.](/docs/latest/genai/tracing/integrations.md)
 
 [⚙️ Manual Instrumentation](/docs/latest/genai/tracing/app-instrumentation/manual-tracing.md)
 
 ***
 
-[MLflow Tracing SDK provides a simple and intuitive API for manually instrumenting your GenAI application. Manual instrumentation and automatic tracing can be used together, allowing you to trace advanced applications containing custom code and have fine-grained control over the tracing behavior.](/docs/latest/genai/tracing/app-instrumentation/manual-tracing.md)
+[MLflow Tracing SDK provides a simple and intuitive API for manually instrumenting your LLM application or AI agent. Manual instrumentation and automatic tracing can be used together, allowing you to trace advanced applications containing custom code and have fine-grained control over the tracing behavior.](/docs/latest/genai/tracing/app-instrumentation/manual-tracing.md)
 
 [🏷️ Tagging and Filtering Traces](/docs/latest/genai/tracing/track-users-sessions.md)
 
@@ -284,10 +284,10 @@ def your_function():
 
 ## Package Size Comparison[​](#package-size-comparison "Direct link to Package Size Comparison")
 
-| Package          | Size     | Dependencies | Use Case                                        |
-| ---------------- | -------- | ------------ | ----------------------------------------------- |
-| `mlflow`         | \~1000MB | 20+ packages | Development, experimentation, full ML lifecycle |
-| `mlflow-tracing` | \~5MB    | 5-8 packages | Production tracing, monitoring, observability   |
+| Package          | Size     | Dependencies | Use Case                                                   |
+| ---------------- | -------- | ------------ | ---------------------------------------------------------- |
+| `mlflow`         | \~1000MB | 20+ packages | Development, experimentation, full AI development workflow |
+| `mlflow-tracing` | \~5MB    | 5-8 packages | Production tracing, monitoring, observability              |
 
 The Production Tracing SDK is **95% smaller** than the full MLflow package, making it ideal for:
 
@@ -299,7 +299,7 @@ The Production Tracing SDK is **95% smaller** than the full MLflow package, maki
 
 ## Summary[​](#summary "Direct link to Summary")
 
-The MLflow Tracing SDK provides a production-optimized solution for monitoring GenAI applications with:
+The MLflow Tracing SDK provides a production-optimized solution for monitoring LLM applications and AI agents with:
 
 * **Minimal footprint** for fast deployments
 * **Full tracing capabilities** for comprehensive monitoring

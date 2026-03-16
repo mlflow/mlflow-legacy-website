@@ -1,7 +1,5 @@
 # Gateway Server (Legacy)
 
-<!-- -->
-
 The Gateway Server provides a YAML-based configuration approach for deploying and managing LLM endpoints. This legacy method offers flexibility for users who prefer file-based configuration and command-line server management.
 
 note

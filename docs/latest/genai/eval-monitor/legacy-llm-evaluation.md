@@ -6,11 +6,11 @@ This is a migration guide for users who are using the legacy LLM evaluation capa
 
 > The mlflow\.evaluate API has been deprecated as of MLflow 3.0.0.
 
-If you are new to MLflow or its evaluation capabilities, start from the [MLflow 3 GenAI Evaluation](https://mlflow.org/docs/latest/genai/eval-monitor/index.html) guide instead.
+If you are new to MLflow or its evaluation capabilities, start from the [MLflow 3 Evaluation](https://mlflow.org/docs/latest/genai/eval-monitor/index.html) guide instead.
 
 ## Why Migrate?[​](#why-migrate "Direct link to Why Migrate?")
 
-MLflow 3 introduces a [new evaluation suite](/docs/latest/genai/eval-monitor.md) that are optimized for evaluating LLMs and GenAI applications. Compared to the legacy evaluation through the `mlflow.evaluate` API, the new suite offers the following benefits:
+MLflow 3 introduces a [new evaluation suite](/docs/latest/genai/eval-monitor.md) that is optimized for evaluating LLM applications and AI agents. Compared to the legacy evaluation through the `mlflow.evaluate` API, the new suite offers the following benefits:
 
 ##### 1. Richer evaluation results[​](#1-richer-evaluation-results "Direct link to 1. Richer evaluation results")
 
@@ -24,9 +24,9 @@ MLflow 3 displays the evaluation results with intuitive visualizations. Each pre
 
 A rich set of built-in [LLM Judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md) and a flexible toolset to build your own LLM-as-a-Judge supports you to evaluate various aspects of your LLM applications. Furthermore, the new [Agents-as-a-Judge](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md) capability evaluates complex trace with minimum context window consumption and boilerplate code.
 
-##### 3. Integration with other MLflow GenAI capabilities[​](#3-integration-with-other-mlflow-genai-capabilities "Direct link to 3. Integration with other MLflow GenAI capabilities")
+##### 3. Integration with other MLflow capabilities[​](#3-integration-with-other-mlflow-capabilities "Direct link to 3. Integration with other MLflow capabilities")
 
-The new evaluation suite is tightly integrated with other MLflow GenAI capabilities, such as [tracing](/docs/latest/genai/tracing.md), [prompt management](/docs/latest/genai/prompt-registry.md), [prompt optimization](/docs/latest/genai/prompt-registry/optimize-prompts.md), making it an end-to-end solution for building high-quality LLM applications.
+The new evaluation suite is tightly integrated with other MLflow capabilities, such as [tracing](/docs/latest/genai/tracing.md), [prompt management](/docs/latest/genai/prompt-registry.md), [prompt optimization](/docs/latest/genai/prompt-registry/optimize-prompts.md), making it an end-to-end solution for building high-quality LLM applications.
 
 ##### 4. Better future support[​](#4-better-future-support "Direct link to 4. Better future support")
 
@@ -52,7 +52,7 @@ Execute the evaluation and make sure the results are as expected.
 
 Before you start the migration
 
-Before starting the migration, we highly recommend you to visit the [GenAI Evaluation Guide](/docs/latest/genai/eval-monitor.md) and go through the [Quickstart](/docs/latest/genai/eval-monitor/quickstart.md) to get a sense of the new evaluation suite. Basic understanding of the concepts will help you to migrate your existing workload smoothly.
+Before starting the migration, we highly recommend you to visit the [Evaluation Guide](/docs/latest/genai/eval-monitor.md) and go through the [Quickstart](/docs/latest/genai/eval-monitor/quickstart.md) to get a sense of the new evaluation suite. Basic understanding of the concepts will help you to migrate your existing workload smoothly.
 
 ### 1. Wrap Your Model in a Function[​](#1-wrap-your-model-in-a-function "Direct link to 1. Wrap Your Model in a Function")
 
@@ -112,8 +112,8 @@ The dataset format has been changed to be more flexible and consistent. The new 
 * `expectations`: The expected output from the predict\_fn function, namely, ground truth for the answer.
 * Optionally, you can pass `outputs` column or `trace` column to evaluate pre-generated outputs and traces.
 
-| Old Format                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | New Format                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Old Format                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | New Format                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | ```python
 eval_data = pd.DataFrame(
   {
@@ -122,7 +122,7 @@ eval_data = pd.DataFrame(
           "What is Spark?",
       ],
       "ground_truth": [
-          "MLflow is an open-source platform for managing the end-to-end machine learning (ML) lifecycle.",
+          "MLflow is the largest open source AI engineering platform for agents and LLMs.",
           "Apache Spark is an open-source, distributed computing system designed for big data processing and analytics.",
       ],
       "predictions": [
@@ -143,7 +143,7 @@ eval_data = [
   {
       "inputs": {"question": "What is MLflow?"},
       "outputs": "MLflow is an open-source MLOps platform",
-      "expectations": {"answer": "MLflow is an open-source platform for managing the end-to-end machine learning (ML) lifecycle."},
+      "expectations": {"answer": "MLflow is the largest open source AI engineering platform for agents and LLMs."},
   },
   {
       "inputs": {"question": "What is Spark?"},
@@ -252,6 +252,6 @@ See [MLflow 2 documentation](https://mlflow.org/docs/2.22.1/llms/llm-evaluate) f
 
 It will likely be removed in MLflow 3.7.0 or a few releases after that.
 
-### Q: Should I migrate non-GenAI workloads to the new evaluation suite?[​](#q-should-i-migrate-non-genai-workloads-to-the-new-evaluation-suite "Direct link to Q: Should I migrate non-GenAI workloads to the new evaluation suite?")
+### Q: Should I migrate non-LLM workloads to the new evaluation suite?[​](#q-should-i-migrate-non-llm-workloads-to-the-new-evaluation-suite "Direct link to Q: Should I migrate non-LLM workloads to the new evaluation suite?")
 
-No. The new evaluation suite is only for GenAI workloads. If you are not using GenAI, you should use the [`mlflow.models.evaluate()`](/docs/latest/api_reference/python_api/mlflow.models.html#mlflow.models.evaluate) API, which offers perfect compatibility with `mlflow.evaluate` API but drops the GenAI-specific features.
+No. The new evaluation suite is only for LLM applications and AI agents. If you are not building LLM applications or AI agents, you should use the [`mlflow.models.evaluate()`](/docs/latest/api_reference/python_api/mlflow.models.html#mlflow.models.evaluate) API, which offers perfect compatibility with `mlflow.evaluate` API but drops the LLM-specific features.
