@@ -1,0 +1,817 @@
+
+
+<!DOCTYPE html>
+<!-- source: docs/source/_modules/mlflow/types/responses_helpers -->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mlflow.types.responses_helpers</title>
+  
+   
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="canonical" href="https://mlflow.org/docs/latest/_modules/mlflow/types/responses_helpers.html">
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+  
+
+  
+
+  
+    
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer',"GTM-N6WMTTJ");</script>
+        <!-- End Google Tag Manager -->
+    
+  
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16857946923"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-16857946923');
+  </script>
+  <!-- Eng gtag -->
+
+  
+
+  
+  <meta name="docsearch:docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_version" content="current" data-rh="true">
+  <meta name="docsearch:version" content="current" data-rh="true">
+  <meta name="docusaurus_locale" content="en" data-rh="true">
+  <meta name="docsearch:language" content="en" data-rh="true">
+
+  
+  
+    
+
+  
+
+  
+  
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600" rel="stylesheet">
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/cards.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/grids.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/mobile.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/simple-cards.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/tabs.css" type="text/css" />
+    
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="MLflow 3.10.2 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+<script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+<script type="text/javascript" src="../../../_static/jquery.js"></script>
+<script type="text/javascript" src="../../../_static/underscore.js"></script>
+<script type="text/javascript" src="../../../_static/doctools.js"></script>
+<script type="text/javascript" src="../../../_static/tabs.js"></script>
+<script type="text/javascript" src="../../../_static/languagesections.js"></script>
+<script type="text/javascript" src="../../../_static/runllm.js"></script>
+
+<body class="wy-body-for-nav" role="document">
+  
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6WMTTJ"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  
+  <nav class="wy-nav-top header" role="navigation" aria-label="top navigation">
+    <div class="header-container">
+  <style scoped>
+    .header-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
+    }
+
+    .logo-container {
+      display: flex;
+      gap: 12px;
+      flex-direction: row;
+      white-space: nowrap;
+      align-items: center;
+      justify-content: center;
+    }
+
+    a:hover {
+      text-decoration: none;
+      color: #0194e2;
+    }
+  </style>
+  <div class="logo-container">
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
+    <a href="../../../index.html" class="wy-nav-top-logo">
+      <img
+        src="../../../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
+    </a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
+  </div>
+  <span class="header-link version">3.10.2</span>
+</div>
+  </nav>
+  <page>
+    
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side relative">
+      <div class="wy-side-scroll">
+  <div class="wy-side-nav-search">
+    
+
+    
+
+    
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+    
+  </div>
+
+  <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+    
+      <a href="../../../index.html">Home</a>
+    
+
+    
+      
+
+      
+        <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../python_api/index.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../typescript_api/index.html">TypeScript API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli.html">Command-Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auth/python-api.html">MLflow Authentication Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auth/rest-api.html">MLflow Authentication REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../R-api.html">R API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../java_api/index.html">Java API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rest-api.html">REST API</a></li>
+</ul>
+
+      
+    
+  </div>
+
+  <div role="contentinfo">
+    
+
+    <p>
+      <a id='feedbacklink' href="https://github.com/mlflow/mlflow/blob/master/CONTRIBUTING.md" target="_blank">Contribute</a>
+    </p>
+  </div>
+</div>
+    </nav>
+
+    <main class="wy-grid-for-nav">
+      <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+        <div class="wy-nav-content">
+          <div class="rst-content">
+            
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Documentation</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+        <li><a href="../../index.html">Module code</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+    
+      <li>mlflow.types.responses_helpers</li>
+    
+    
+    <!-- <li class="wy-breadcrumbs-aside">
+      <a href="https://github.com/mlflow/mlflow/blob/master/docs/source/_modules/mlflow/types/responses_helpers" class="fa fa-github"> Edit on GitHub</a>
+    </li> -->
+    
+  </ul>
+</div>
+            <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+              <div itemprop="articleBody">
+                
+  <h1>Source code for mlflow.types.responses_helpers</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">ConfigDict</span><span class="p">,</span> <span class="n">Field</span><span class="p">,</span> <span class="n">model_validator</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Classes are inspired by classes for Response and ResponseStreamEvent in openai-python</span>
+
+<span class="sd">https://github.com/openai/openai-python/blob/ed53107e10e6c86754866b48f8bd862659134ca8/src/openai/types/responses/response.py#L31</span>
+<span class="sd">https://github.com/openai/openai-python/blob/ed53107e10e6c86754866b48f8bd862659134ca8/src/openai/types/responses/response_stream_event.py#L42</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="c1">#########################</span>
+<span class="c1"># Response helper classes</span>
+<span class="c1">#########################</span>
+<div class="viewcode-block" id="Status"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.Status">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">Status</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">status</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_status</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Status&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span>
+            <span class="s2">&quot;in_progress&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;completed&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;incomplete&quot;</span><span class="p">,</span>
+        <span class="p">}:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Invalid status: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="si">}</span><span class="s2"> for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">. &quot;</span>
+                <span class="s2">&quot;Must be &#39;in_progress&#39;, &#39;completed&#39;, or &#39;incomplete&#39;.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="ResponseError"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.ResponseError">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ResponseError</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">code</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">message</span><span class="p">:</span> <span class="nb">str</span></div>
+
+
+<div class="viewcode-block" id="AnnotationFileCitation"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.AnnotationFileCitation">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">AnnotationFileCitation</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">file_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">index</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;file_citation&quot;</span></div>
+
+
+<div class="viewcode-block" id="AnnotationURLCitation"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.AnnotationURLCitation">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">AnnotationURLCitation</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">end_index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">start_index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;url_citation&quot;</span>
+    <span class="n">url</span><span class="p">:</span> <span class="nb">str</span></div>
+
+
+<div class="viewcode-block" id="AnnotationFilePath"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.AnnotationFilePath">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">AnnotationFilePath</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">file_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">index</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;file_path&quot;</span></div>
+
+
+<div class="viewcode-block" id="Annotation"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.Annotation">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">Annotation</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">extra</span><span class="o">=</span><span class="s2">&quot;allow&quot;</span><span class="p">)</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span>
+
+    <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Annotation&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;file_citation&quot;</span><span class="p">:</span>
+            <span class="n">AnnotationFileCitation</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">model_dump</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;url_citation&quot;</span><span class="p">:</span>
+            <span class="n">AnnotationURLCitation</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">model_dump</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;file_path&quot;</span><span class="p">:</span>
+            <span class="n">AnnotationFilePath</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">model_dump</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid annotation type: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="ResponseOutputText"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.ResponseOutputText">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ResponseOutputText</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">annotations</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Annotation</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">text</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;output_text&quot;</span></div>
+
+
+<div class="viewcode-block" id="ResponseOutputRefusal"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.ResponseOutputRefusal">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ResponseOutputRefusal</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">refusal</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;refusal&quot;</span></div>
+
+
+<div class="viewcode-block" id="Content"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.Content">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">Content</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">extra</span><span class="o">=</span><span class="s2">&quot;allow&quot;</span><span class="p">)</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span>
+
+    <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Content&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;output_text&quot;</span><span class="p">:</span>
+            <span class="n">ResponseOutputText</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">model_dump</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;refusal&quot;</span><span class="p">:</span>
+            <span class="n">ResponseOutputRefusal</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">model_dump</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid content type: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2"> for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="ResponseOutputMessage"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.ResponseOutputMessage">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ResponseOutputMessage</span><span class="p">(</span><span class="n">Status</span><span class="p">):</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">content</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Content</span><span class="p">]</span>
+    <span class="n">role</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;assistant&quot;</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;message&quot;</span>
+
+    <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_role</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ResponseOutputMessage&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">role</span> <span class="o">!=</span> <span class="s2">&quot;assistant&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid role: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">role</span><span class="si">}</span><span class="s2">. Must be &#39;assistant&#39;.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_content</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ResponseOutputMessage&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">content</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;content must not be None for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;content must not be an empty list&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="ResponseFunctionToolCall"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.ResponseFunctionToolCall">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ResponseFunctionToolCall</span><span class="p">(</span><span class="n">Status</span><span class="p">):</span>
+    <span class="n">arguments</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">call_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;function_call&quot;</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Summary"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.Summary">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">Summary</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">text</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;summary_text&quot;</span></div>
+
+
+<div class="viewcode-block" id="ResponseReasoningItem"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.ResponseReasoningItem">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ResponseReasoningItem</span><span class="p">(</span><span class="n">Status</span><span class="p">):</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">summary</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Summary</span><span class="p">]</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;reasoning&quot;</span></div>
+
+
+<div class="viewcode-block" id="McpApprovalRequest"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.McpApprovalRequest">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">McpApprovalRequest</span><span class="p">(</span><span class="n">Status</span><span class="p">):</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">arguments</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">server_label</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;mcp_approval_request&quot;</span></div>
+
+
+<div class="viewcode-block" id="McpApprovalResponse"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.McpApprovalResponse">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">McpApprovalResponse</span><span class="p">(</span><span class="n">Status</span><span class="p">):</span>
+    <span class="n">approval_request_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">approve</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;mcp_approval_response&quot;</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">reason</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="OutputItem"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.OutputItem">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">OutputItem</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">extra</span><span class="o">=</span><span class="s2">&quot;allow&quot;</span><span class="p">)</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span>
+
+    <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;OutputItem&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;message&quot;</span><span class="p">:</span>
+            <span class="n">ResponseOutputMessage</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">model_dump</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;function_call&quot;</span><span class="p">:</span>
+            <span class="n">ResponseFunctionToolCall</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">model_dump</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span>
+            <span class="n">ResponseReasoningItem</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">model_dump</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;function_call_output&quot;</span><span class="p">:</span>
+            <span class="n">FunctionCallOutput</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">model_dump</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;mcp_approval_request&quot;</span><span class="p">:</span>
+            <span class="n">McpApprovalRequest</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">model_dump</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;mcp_approval_response&quot;</span><span class="p">:</span>
+            <span class="n">McpApprovalResponse</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">model_dump</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span>
+            <span class="s2">&quot;file_search_call&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;computer_call&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;web_search_call&quot;</span><span class="p">,</span>
+        <span class="p">}:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid type: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2"> for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="IncompleteDetails"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.IncompleteDetails">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">IncompleteDetails</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">reason</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_reason</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;IncompleteDetails&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">reason</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">reason</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;max_output_tokens&quot;</span><span class="p">,</span> <span class="s2">&quot;content_filter&quot;</span><span class="p">}:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid reason: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">reason</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="ToolChoiceFunction"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.ToolChoiceFunction">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ToolChoiceFunction</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;function&quot;</span></div>
+
+
+<div class="viewcode-block" id="FunctionTool"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.FunctionTool">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">FunctionTool</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+    <span class="n">strict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;function&quot;</span>
+    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Tool"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.Tool">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">Tool</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">extra</span><span class="o">=</span><span class="s2">&quot;allow&quot;</span><span class="p">)</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span>
+
+    <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Tool&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;function&quot;</span><span class="p">:</span>
+            <span class="n">FunctionTool</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">model_dump</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;file_search&quot;</span><span class="p">,</span> <span class="s2">&quot;computer_use&quot;</span><span class="p">,</span> <span class="s2">&quot;web_search&quot;</span><span class="p">}:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid tool type: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="ToolChoice"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.ToolChoice">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ToolChoice</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">tool_choice</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">ToolChoiceFunction</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_tool_choice</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ToolChoice&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tool_choice</span>
+            <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tool_choice</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_choice</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="s2">&quot;required&quot;</span><span class="p">}</span>
+        <span class="p">):</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid tool choice: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">tool_choice</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="ReasoningParams"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.ReasoningParams">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ReasoningParams</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">effort</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">generate_summary</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_generate_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ReasoningParams&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_summary</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_summary</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;concise&quot;</span><span class="p">,</span> <span class="s2">&quot;detailed&quot;</span><span class="p">}:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid generate_summary: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">generate_summary</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_effort</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ReasoningParams&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">effort</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">effort</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;low&quot;</span><span class="p">,</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span> <span class="s2">&quot;high&quot;</span><span class="p">}:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid effort: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">effort</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="InputTokensDetails"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.InputTokensDetails">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">InputTokensDetails</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">cached_tokens</span><span class="p">:</span> <span class="nb">int</span></div>
+
+
+<div class="viewcode-block" id="OutputTokensDetails"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.OutputTokensDetails">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">OutputTokensDetails</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">reasoning_tokens</span><span class="p">:</span> <span class="nb">int</span></div>
+
+
+<div class="viewcode-block" id="ResponseUsage"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.ResponseUsage">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ResponseUsage</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">input_tokens</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">input_tokens_details</span><span class="p">:</span> <span class="n">InputTokensDetails</span>
+    <span class="n">output_tokens</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">output_tokens_details</span><span class="p">:</span> <span class="n">OutputTokensDetails</span>
+    <span class="n">total_tokens</span><span class="p">:</span> <span class="nb">int</span></div>
+
+
+<div class="viewcode-block" id="Truncation"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.Truncation">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">Truncation</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">truncation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_truncation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Truncation&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">truncation</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">truncation</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="s2">&quot;disabled&quot;</span><span class="p">}:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid truncation: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">truncation</span><span class="si">}</span><span class="s2">. Must be &#39;auto&#39; or &#39;disabled&#39;.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="Response"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.Response">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">Response</span><span class="p">(</span><span class="n">Truncation</span><span class="p">,</span> <span class="n">ToolChoice</span><span class="p">):</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">created_at</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">error</span><span class="p">:</span> <span class="n">ResponseError</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">incomplete_details</span><span class="p">:</span> <span class="n">IncompleteDetails</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">instructions</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">metadata</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="nb">object</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;response&quot;</span>
+    <span class="n">output</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">OutputItem</span><span class="p">]</span>
+    <span class="n">parallel_tool_calls</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">tools</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Tool</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">top_p</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">max_output_tokens</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">previous_response_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">reasoning</span><span class="p">:</span> <span class="n">ReasoningParams</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">status</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">text</span><span class="p">:</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">usage</span><span class="p">:</span> <span class="n">ResponseUsage</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">user</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">output_text</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convenience property that aggregates all `output_text` items from the `output`</span>
+<span class="sd">        list.</span>
+
+<span class="sd">        If no `output_text` content blocks exist, then an empty string is returned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">texts</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">output</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;message&quot;</span><span class="p">:</span>
+                <span class="n">texts</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+                    <span class="n">content</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">content</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">content</span> <span class="k">if</span> <span class="n">content</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;output_text&quot;</span>
+                <span class="p">)</span>
+
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">texts</span><span class="p">)</span>
+
+    <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_status</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Response&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span>
+            <span class="s2">&quot;completed&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;failed&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;in_progress&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;incomplete&quot;</span><span class="p">,</span>
+        <span class="p">}:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Invalid status: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="si">}</span><span class="s2">. Must be &#39;completed&#39;, &#39;failed&#39;, &quot;</span>
+                <span class="s2">&quot;&#39;in_progress&#39;, or &#39;incomplete&#39;.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<span class="c1">#################################</span>
+<span class="c1"># ResponsesRequest helper classes</span>
+<span class="c1">#################################</span>
+<div class="viewcode-block" id="ResponseInputTextParam"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.ResponseInputTextParam">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ResponseInputTextParam</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">text</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;input_text&quot;</span></div>
+
+
+<div class="viewcode-block" id="Message"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.Message">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">Message</span><span class="p">(</span><span class="n">Status</span><span class="p">):</span>
+    <span class="n">content</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">ResponseInputTextParam</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span>
+    <span class="n">role</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">status</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;message&quot;</span>
+
+    <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_content</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Message&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">content</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;content must not be None&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="s2">&quot;type&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">item</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                            <span class="s2">&quot;dictionary type content field values must have key &#39;type&#39;&quot;</span>
+                        <span class="p">)</span>
+                    <span class="k">if</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;input_text&quot;</span><span class="p">:</span>
+                        <span class="n">ResponseInputTextParam</span><span class="p">(</span><span class="o">**</span><span class="n">item</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;input_image&quot;</span><span class="p">,</span> <span class="s2">&quot;input_file&quot;</span><span class="p">}:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid type: </span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_role</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Message&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">role</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;assistant&quot;</span><span class="p">,</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;developer&quot;</span><span class="p">}:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Invalid role: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">role</span><span class="si">}</span><span class="s2">. Must be &#39;user&#39;, &#39;assistant&#39;, &#39;system&#39;, or &#39;developer&#39;.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="FunctionCallOutput"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.FunctionCallOutput">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">FunctionCallOutput</span><span class="p">(</span><span class="n">Status</span><span class="p">):</span>
+    <span class="n">call_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">output</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;function_call_output&quot;</span></div>
+
+
+<div class="viewcode-block" id="BaseRequestPayload"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.BaseRequestPayload">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">BaseRequestPayload</span><span class="p">(</span><span class="n">Truncation</span><span class="p">,</span> <span class="n">ToolChoice</span><span class="p">):</span>
+    <span class="n">max_output_tokens</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">metadata</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">parallel_tool_calls</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">tools</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Tool</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">reasoning</span><span class="p">:</span> <span class="n">ReasoningParams</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">store</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">stream</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">text</span><span class="p">:</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">top_p</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">user</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">background</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<span class="c1">#####################################</span>
+<span class="c1"># ResponsesStreamEvent helper classes</span>
+<span class="c1">#####################################</span>
+
+
+<div class="viewcode-block" id="ResponseTextDeltaEvent"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.ResponseTextDeltaEvent">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ResponseTextDeltaEvent</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">content_index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">delta</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">item_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">output_index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;response.output_text.delta&quot;</span></div>
+
+
+<div class="viewcode-block" id="ResponseTextAnnotationDeltaEvent"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.ResponseTextAnnotationDeltaEvent">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ResponseTextAnnotationDeltaEvent</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">annotation</span><span class="p">:</span> <span class="n">Annotation</span>
+    <span class="n">annotation_index</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">content_index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">item_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">output_index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;response.output_text.annotation.added&quot;</span></div>
+
+
+<div class="viewcode-block" id="ResponseOutputItemDoneEvent"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.ResponseOutputItemDoneEvent">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ResponseOutputItemDoneEvent</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">item</span><span class="p">:</span> <span class="n">OutputItem</span>
+    <span class="n">output_index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;response.output_item.done&quot;</span></div>
+
+
+<div class="viewcode-block" id="ResponseErrorEvent"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.ResponseErrorEvent">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ResponseErrorEvent</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">code</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">message</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">param</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;error&quot;</span></div>
+
+
+<div class="viewcode-block" id="ResponseCompletedEvent"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.responses_helpers.ResponseCompletedEvent">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ResponseCompletedEvent</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">response</span><span class="p">:</span> <span class="n">Response</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;response.completed&quot;</span></div>
+</pre></div>
+
+              </div>
+            </div>
+            <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+      <p class="copyright">
+          &copy; MLflow Project, a Series of LF Projects, LLC. All rights reserved.
+      </p>
+
+  </div> 
+
+</footer>
+          </div>
+        </div>
+      </section>
+    </main>
+  </page>
+
+  
+
+
+  
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:'../../../',
+      VERSION:'3.10.2',
+      COLLAPSE_INDEX:false,
+      FILE_SUFFIX:'.html',
+      LINK_SUFFIX: '.html',
+      HAS_SOURCE:  true
+    };
+  </script>
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/clipboard.min.js"></script>
+  <script type="text/javascript" src="../../../_static/js/jquery.waypoints.min.js"></script>
+
+  
+  
+  
+  <script type="text/javascript">var CLIPPY_SVG_PATH = "../../../_static/clippy.svg";</script>
+  <script type="text/javascript" src="../../../_static/js/custom.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+    jQuery(function () {
+      SphinxRtdTheme.StickyNav.enable();
+    });
+
+  </script>
+  
+
+  
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
+        // Get the code block designator class entries
+        const allHighlights = document.querySelectorAll('.highlight');
+        // Disable copyable links for notebook cell numbering and for cell outputs
+        const highlights = Array.from(allHighlights).filter(highlight => !highlight.closest('.highlight-none') && 
+            !highlight.closest('.nboutput'));
+    
+        highlights.forEach(function(highlight) {
+            const copyIcon = document.createElement('span');
+            copyIcon.classList.add('copy-icon');
+            copyIcon.innerHTML = '&#xf0ea;';
+
+            copyIcon.addEventListener('click', function() {
+                const code = highlight.querySelector('pre').textContent;
+                copyToClipboard(code);
+
+                // Flash effect on click
+                this.style.color = '#0194E2';
+                setTimeout(() => {
+                    this.style.color = ''; 
+                }, 100);
+
+                // Display "Code copied to clipboard" near the clicked icon
+                const message = document.createElement('span');
+                message.textContent = "Copied!";
+                message.classList.add('copy-message'); 
+
+                // Append the message to the icon
+                this.appendChild(message);
+
+                setTimeout(() => {
+                    this.removeChild(message);
+                }, 500);
+            });
+
+            highlight.appendChild(copyIcon);
+        });
+    });
+  </script>
+
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        // Force download for notebook-download-btn
+        const downloadButtons = document.querySelectorAll('.notebook-download-btn');
+        downloadButtons.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default behavior
+
+                // Fetch the raw content of the notebook from GitHub
+                fetch(button.href)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const url = window.URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.style.display = 'none';
+                        link.href = url;
+                        const filename = button.href.split('/').pop();
+                        link.download = filename; 
+
+                        document.body.appendChild(link);
+                        link.click();
+
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(link);
+                    })
+                    .catch(err => console.error('Error fetching the notebook:', err));
+            });
+        });
+    });
+</script> 
+</body>
+</html>

@@ -1,0 +1,809 @@
+
+
+<!DOCTYPE html>
+<!-- source: docs/source/_modules/mlflow/genai/optimize/optimizers/gepa_optimizer -->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mlflow.genai.optimize.optimizers.gepa_optimizer</title>
+  
+   
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="canonical" href="https://mlflow.org/docs/latest/_modules/mlflow/genai/optimize/optimizers/gepa_optimizer.html">
+  
+  
+    <link rel="shortcut icon" href="../../../../../_static/favicon.ico"/>
+  
+
+  
+
+  
+    
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer',"GTM-N6WMTTJ");</script>
+        <!-- End Google Tag Manager -->
+    
+  
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16857946923"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-16857946923');
+  </script>
+  <!-- Eng gtag -->
+
+  
+
+  
+  <meta name="docsearch:docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_version" content="current" data-rh="true">
+  <meta name="docsearch:version" content="current" data-rh="true">
+  <meta name="docusaurus_locale" content="en" data-rh="true">
+  <meta name="docsearch:language" content="en" data-rh="true">
+
+  
+  
+    
+
+  
+
+  
+  
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600" rel="stylesheet">
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/css/custom.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/css/cards.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/css/grids.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/css/mobile.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/css/simple-cards.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/css/tabs.css" type="text/css" />
+    
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="MLflow 3.10.2 documentation" href="../../../../../index.html"/>
+        <link rel="up" title="mlflow.genai.optimize" href="../../optimize.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+<script type="text/javascript" src="../../../../../_static/documentation_options.js"></script>
+<script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+<script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+<script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+<script type="text/javascript" src="../../../../../_static/tabs.js"></script>
+<script type="text/javascript" src="../../../../../_static/languagesections.js"></script>
+<script type="text/javascript" src="../../../../../_static/runllm.js"></script>
+
+<body class="wy-body-for-nav" role="document">
+  
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6WMTTJ"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  
+  <nav class="wy-nav-top header" role="navigation" aria-label="top navigation">
+    <div class="header-container">
+  <style scoped>
+    .header-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
+    }
+
+    .logo-container {
+      display: flex;
+      gap: 12px;
+      flex-direction: row;
+      white-space: nowrap;
+      align-items: center;
+      justify-content: center;
+    }
+
+    a:hover {
+      text-decoration: none;
+      color: #0194e2;
+    }
+  </style>
+  <div class="logo-container">
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
+    <a href="../../../../../index.html" class="wy-nav-top-logo">
+      <img
+        src="../../../../../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
+    </a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
+  </div>
+  <span class="header-link version">3.10.2</span>
+</div>
+  </nav>
+  <page>
+    
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side relative">
+      <div class="wy-side-scroll">
+  <div class="wy-side-nav-search">
+    
+
+    
+
+    
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+    
+  </div>
+
+  <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+    
+      <a href="../../../../../index.html">Home</a>
+    
+
+    
+      
+
+      
+        <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../python_api/index.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../typescript_api/index.html">TypeScript API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../cli.html">Command-Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../auth/python-api.html">MLflow Authentication Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../auth/rest-api.html">MLflow Authentication REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../R-api.html">R API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../java_api/index.html">Java API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../rest-api.html">REST API</a></li>
+</ul>
+
+      
+    
+  </div>
+
+  <div role="contentinfo">
+    
+
+    <p>
+      <a id='feedbacklink' href="https://github.com/mlflow/mlflow/blob/master/CONTRIBUTING.md" target="_blank">Contribute</a>
+    </p>
+  </div>
+</div>
+    </nav>
+
+    <main class="wy-grid-for-nav">
+      <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+        <div class="wy-nav-content">
+          <div class="rst-content">
+            
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Documentation</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+        <li><a href="../../../../index.html">Module code</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+        <li><a href="../../optimize.html">mlflow.genai.optimize</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+    
+      <li>mlflow.genai.optimize.optimizers.gepa_optimizer</li>
+    
+    
+    <!-- <li class="wy-breadcrumbs-aside">
+      <a href="https://github.com/mlflow/mlflow/blob/master/docs/source/_modules/mlflow/genai/optimize/optimizers/gepa_optimizer" class="fa fa-github"> Edit on GitHub</a>
+    </li> -->
+    
+  </ul>
+</div>
+            <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+              <div itemprop="articleBody">
+                
+  <h1>Source code for mlflow.genai.optimize.optimizers.gepa_optimizer</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">mlflow</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.optimize.optimizers.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">BasePromptOptimizer</span><span class="p">,</span> <span class="n">_EvalFunc</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.optimize.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">EvaluationResultRecord</span><span class="p">,</span> <span class="n">PromptOptimizerOutput</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">experimental</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">gepa</span>
+
+<span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1"># Artifact path and file name constants</span>
+<span class="n">PROMPT_CANDIDATES_DIR</span> <span class="o">=</span> <span class="s2">&quot;prompt_candidates&quot;</span>
+<span class="n">EVAL_RESULTS_FILE</span> <span class="o">=</span> <span class="s2">&quot;eval_results.json&quot;</span>
+<span class="n">SCORES_FILE</span> <span class="o">=</span> <span class="s2">&quot;scores.json&quot;</span>
+
+
+<div class="viewcode-block" id="GepaPromptOptimizer"><a class="viewcode-back" href="../../../../../python_api/mlflow.genai.html#mlflow.genai.optimize.GepaPromptOptimizer">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.5.0&quot;</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">GepaPromptOptimizer</span><span class="p">(</span><span class="n">BasePromptOptimizer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A prompt adapter that uses GEPA (Genetic-Pareto) optimization algorithm</span>
+<span class="sd">    to optimize prompts.</span>
+
+<span class="sd">    GEPA uses iterative mutation, reflection, and Pareto-aware candidate selection</span>
+<span class="sd">    to improve text components like prompts. It leverages large language models to</span>
+<span class="sd">    reflect on system behavior and propose improvements.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        reflection_model: Name of the model to use for reflection and optimization.</span>
+<span class="sd">            Format: &quot;&lt;provider&gt;:/&lt;model&gt;&quot;</span>
+<span class="sd">            (e.g., &quot;openai:/gpt-4o&quot;, &quot;anthropic:/claude-3-5-sonnet-20241022&quot;).</span>
+<span class="sd">        max_metric_calls: Maximum number of evaluation calls during optimization.</span>
+<span class="sd">            Higher values may lead to better results but increase optimization time.</span>
+<span class="sd">            Default: 100</span>
+<span class="sd">        display_progress_bar: Whether to show a progress bar during optimization.</span>
+<span class="sd">            Default: False</span>
+<span class="sd">        gepa_kwargs: Additional keyword arguments to pass directly to</span>
+<span class="sd">            gepa.optimize &lt;https://github.com/gepa-ai/gepa/blob/main/src/gepa/api.py&gt;.</span>
+<span class="sd">            Useful for accessing advanced GEPA features not directly exposed</span>
+<span class="sd">            through MLflow&#39;s GEPA interface.</span>
+
+<span class="sd">            Note: Parameters already handled by MLflow&#39;s GEPA class will be overridden by the direct</span>
+<span class="sd">            parameters and should not be passed through gepa_kwargs. List of predefined params:</span>
+
+<span class="sd">            - max_metric_calls</span>
+<span class="sd">            - display_progress_bar</span>
+<span class="sd">            - seed_candidate</span>
+<span class="sd">            - trainset</span>
+<span class="sd">            - adapter</span>
+<span class="sd">            - reflection_lm</span>
+<span class="sd">            - use_mlflow</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            import mlflow</span>
+<span class="sd">            import openai</span>
+<span class="sd">            from mlflow.genai.optimize.optimizers import GepaPromptOptimizer</span>
+
+<span class="sd">            prompt = mlflow.genai.register_prompt(</span>
+<span class="sd">                name=&quot;qa&quot;,</span>
+<span class="sd">                template=&quot;Answer the following question: {{question}}&quot;,</span>
+<span class="sd">            )</span>
+
+
+<span class="sd">            def predict_fn(question: str) -&gt; str:</span>
+<span class="sd">                completion = openai.OpenAI().chat.completions.create(</span>
+<span class="sd">                    model=&quot;gpt-4o-mini&quot;,</span>
+<span class="sd">                    messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: prompt.format(question=question)}],</span>
+<span class="sd">                )</span>
+<span class="sd">                return completion.choices[0].message.content</span>
+
+
+<span class="sd">            dataset = [</span>
+<span class="sd">                {&quot;inputs&quot;: {&quot;question&quot;: &quot;What is the capital of France?&quot;}, &quot;outputs&quot;: &quot;Paris&quot;},</span>
+<span class="sd">                {&quot;inputs&quot;: {&quot;question&quot;: &quot;What is the capital of Germany?&quot;}, &quot;outputs&quot;: &quot;Berlin&quot;},</span>
+<span class="sd">            ]</span>
+
+<span class="sd">            result = mlflow.genai.optimize_prompts(</span>
+<span class="sd">                predict_fn=predict_fn,</span>
+<span class="sd">                train_data=dataset,</span>
+<span class="sd">                prompt_uris=[prompt.uri],</span>
+<span class="sd">                optimizer=GepaPromptOptimizer(</span>
+<span class="sd">                    reflection_model=&quot;openai:/gpt-4o&quot;,</span>
+<span class="sd">                    display_progress_bar=True,</span>
+<span class="sd">                ),</span>
+<span class="sd">            )</span>
+
+<span class="sd">            print(result.optimized_prompts[0].template)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">reflection_model</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">max_metric_calls</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="n">display_progress_bar</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">gepa_kwargs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reflection_model</span> <span class="o">=</span> <span class="n">reflection_model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_metric_calls</span> <span class="o">=</span> <span class="n">max_metric_calls</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">display_progress_bar</span> <span class="o">=</span> <span class="n">display_progress_bar</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gepa_kwargs</span> <span class="o">=</span> <span class="n">gepa_kwargs</span> <span class="ow">or</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="GepaPromptOptimizer.optimize"><a class="viewcode-back" href="../../../../../python_api/mlflow.genai.html#mlflow.genai.optimize.GepaPromptOptimizer.optimize">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">optimize</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">eval_fn</span><span class="p">:</span> <span class="n">_EvalFunc</span><span class="p">,</span>
+        <span class="n">train_data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+        <span class="n">target_prompts</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+        <span class="n">enable_tracking</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PromptOptimizerOutput</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Optimize the target prompts using GEPA algorithm.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            eval_fn: The evaluation function that takes candidate prompts as a dict</span>
+<span class="sd">                (prompt template name -&gt; prompt template) and a dataset as a list of dicts,</span>
+<span class="sd">                and returns a list of EvaluationResultRecord.</span>
+<span class="sd">            train_data: The dataset to use for optimization. Each record should</span>
+<span class="sd">                include the inputs and outputs fields with dict values.</span>
+<span class="sd">            target_prompts: The target prompt templates to use. The key is the prompt template</span>
+<span class="sd">                name and the value is the prompt template.</span>
+<span class="sd">            enable_tracking: If True (default), automatically log optimization progress.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The outputs of the prompt optimizer that includes the optimized prompts</span>
+<span class="sd">            as a dict (prompt template name -&gt; prompt template).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.metrics.genai.model_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">_parse_model_uri</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">train_data</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+                <span class="s2">&quot;GEPA optimizer requires `train_data` to be provided.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">gepa</span>
+        <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
+                <span class="s2">&quot;GEPA &gt;= 0.0.26 is required. Please install it with: `pip install &#39;gepa&gt;=0.0.26&#39;`&quot;</span>
+            <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+
+        <span class="n">provider</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">_parse_model_uri</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reflection_model</span><span class="p">)</span>
+
+        <span class="k">class</span><span class="w"> </span><span class="nc">MlflowGEPAAdapter</span><span class="p">(</span><span class="n">gepa</span><span class="o">.</span><span class="n">GEPAAdapter</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            MLflow optimization adapter for GEPA optimization</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                eval_function: Function that evaluates candidate prompts on a dataset.</span>
+<span class="sd">                prompts_dict: Dictionary mapping prompt names to their templates.</span>
+<span class="sd">                tracking_enabled: Whether to log traces/metrics/params/artifacts during</span>
+<span class="sd">                    optimization.</span>
+<span class="sd">                full_dataset_size: Size of the full training dataset, used to distinguish</span>
+<span class="sd">                    full validation passes from minibatch evaluations.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+
+            <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eval_function</span><span class="p">,</span> <span class="n">prompts_dict</span><span class="p">,</span> <span class="n">tracking_enabled</span><span class="p">,</span> <span class="n">full_dataset_size</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">eval_function</span> <span class="o">=</span> <span class="n">eval_function</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">prompts_dict</span> <span class="o">=</span> <span class="n">prompts_dict</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">prompt_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">prompts_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tracking_enabled</span> <span class="o">=</span> <span class="n">tracking_enabled</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">full_dataset_size</span> <span class="o">=</span> <span class="n">full_dataset_size</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">validation_iteration</span> <span class="o">=</span> <span class="mi">0</span>
+
+            <span class="k">def</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span>
+                <span class="bp">self</span><span class="p">,</span>
+                <span class="n">batch</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+                <span class="n">candidate</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+                <span class="n">capture_traces</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;gepa.EvaluationBatch&quot;</span><span class="p">:</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">                Evaluate a candidate prompt using the MLflow eval function.</span>
+
+<span class="sd">                Args:</span>
+<span class="sd">                    batch: List of data instances to evaluate</span>
+<span class="sd">                    candidate: Proposed text components (prompts)</span>
+<span class="sd">                    capture_traces: Whether to capture execution traces</span>
+
+<span class="sd">                Returns:</span>
+<span class="sd">                    EvaluationBatch with outputs, scores, and optional trajectories</span>
+<span class="sd">                &quot;&quot;&quot;</span>
+                <span class="n">eval_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_function</span><span class="p">(</span><span class="n">candidate</span><span class="p">,</span> <span class="n">batch</span><span class="p">)</span>
+
+                <span class="n">outputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">result</span><span class="o">.</span><span class="n">outputs</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">eval_results</span><span class="p">]</span>
+                <span class="n">scores</span> <span class="o">=</span> <span class="p">[</span><span class="n">result</span><span class="o">.</span><span class="n">score</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">eval_results</span><span class="p">]</span>
+                <span class="n">trajectories</span> <span class="o">=</span> <span class="n">eval_results</span> <span class="k">if</span> <span class="n">capture_traces</span> <span class="k">else</span> <span class="kc">None</span>
+                <span class="n">objective_scores</span> <span class="o">=</span> <span class="p">[</span><span class="n">result</span><span class="o">.</span><span class="n">individual_scores</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">eval_results</span><span class="p">]</span>
+
+                <span class="c1"># Track validation candidates only during full dataset validation</span>
+                <span class="c1"># (not during minibatch evaluation in reflective mutation)</span>
+                <span class="n">is_full_validation</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">capture_traces</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">full_dataset_size</span>
+                <span class="k">if</span> <span class="n">is_full_validation</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">tracking_enabled</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_log_validation_candidate</span><span class="p">(</span><span class="n">candidate</span><span class="p">,</span> <span class="n">eval_results</span><span class="p">)</span>
+
+                <span class="k">return</span> <span class="n">gepa</span><span class="o">.</span><span class="n">EvaluationBatch</span><span class="p">(</span>
+                    <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">,</span>
+                    <span class="n">scores</span><span class="o">=</span><span class="n">scores</span><span class="p">,</span>
+                    <span class="n">trajectories</span><span class="o">=</span><span class="n">trajectories</span><span class="p">,</span>
+                    <span class="n">objective_scores</span><span class="o">=</span><span class="n">objective_scores</span> <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">objective_scores</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="p">)</span>
+
+            <span class="k">def</span><span class="w"> </span><span class="nf">_log_validation_candidate</span><span class="p">(</span>
+                <span class="bp">self</span><span class="p">,</span>
+                <span class="n">candidate</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+                <span class="n">eval_results</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">EvaluationResultRecord</span><span class="p">],</span>
+            <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">                Log validation candidate prompts and scores as MLflow artifacts.</span>
+
+<span class="sd">                Args:</span>
+<span class="sd">                    candidate: The candidate prompts being validated</span>
+<span class="sd">                    eval_results: Evaluation results containing scores</span>
+<span class="sd">                &quot;&quot;&quot;</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">tracking_enabled</span><span class="p">:</span>
+                    <span class="k">return</span>
+
+                <span class="n">iteration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validation_iteration</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">validation_iteration</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                <span class="c1"># Compute aggregate score across all records</span>
+                <span class="n">aggregate_score</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="nb">sum</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">score</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">eval_results</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">eval_results</span><span class="p">)</span> <span class="k">if</span> <span class="n">eval_results</span> <span class="k">else</span> <span class="mf">0.0</span>
+                <span class="p">)</span>
+
+                <span class="c1"># Collect all scorer names</span>
+                <span class="n">scorer_names</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">eval_results</span><span class="p">:</span>
+                    <span class="n">scorer_names</span> <span class="o">|=</span> <span class="n">result</span><span class="o">.</span><span class="n">individual_scores</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+
+                <span class="c1"># Build the evaluation results table and log to MLflow as a table artifact</span>
+                <span class="n">eval_results_table</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">inputs</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">eval_results</span><span class="p">],</span>
+                    <span class="s2">&quot;output&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">outputs</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">eval_results</span><span class="p">],</span>
+                    <span class="s2">&quot;expectation&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">expectations</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">eval_results</span><span class="p">],</span>
+                    <span class="s2">&quot;aggregate_score&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">score</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">eval_results</span><span class="p">],</span>
+                <span class="p">}</span>
+                <span class="k">for</span> <span class="n">scorer_name</span> <span class="ow">in</span> <span class="n">scorer_names</span><span class="p">:</span>
+                    <span class="n">eval_results_table</span><span class="p">[</span><span class="n">scorer_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+                        <span class="n">r</span><span class="o">.</span><span class="n">individual_scores</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">scorer_name</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">eval_results</span>
+                    <span class="p">]</span>
+
+                <span class="n">iteration_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">PROMPT_CANDIDATES_DIR</span><span class="si">}</span><span class="s2">/iteration_</span><span class="si">{</span><span class="n">iteration</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="n">mlflow</span><span class="o">.</span><span class="n">log_table</span><span class="p">(</span>
+                    <span class="n">data</span><span class="o">=</span><span class="n">eval_results_table</span><span class="p">,</span>
+                    <span class="n">artifact_file</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">iteration_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">EVAL_RESULTS_FILE</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+
+                <span class="c1"># Compute per-scorer average scores</span>
+                <span class="n">per_scorer_scores</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="k">for</span> <span class="n">scorer_name</span> <span class="ow">in</span> <span class="n">scorer_names</span><span class="p">:</span>
+                    <span class="n">scores</span> <span class="o">=</span> <span class="p">[</span>
+                        <span class="n">r</span><span class="o">.</span><span class="n">individual_scores</span><span class="p">[</span><span class="n">scorer_name</span><span class="p">]</span>
+                        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">eval_results</span>
+                        <span class="k">if</span> <span class="n">scorer_name</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">individual_scores</span>
+                    <span class="p">]</span>
+                    <span class="k">if</span> <span class="n">scores</span><span class="p">:</span>
+                        <span class="n">per_scorer_scores</span><span class="p">[</span><span class="n">scorer_name</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+
+                <span class="c1"># Log per-scorer metrics for time progression visualization</span>
+                <span class="n">mlflow</span><span class="o">.</span><span class="n">log_metrics</span><span class="p">(</span>
+                    <span class="p">{</span><span class="s2">&quot;eval_score&quot;</span><span class="p">:</span> <span class="n">aggregate_score</span><span class="p">}</span>
+                    <span class="o">|</span> <span class="p">{</span><span class="sa">f</span><span class="s2">&quot;eval_score.</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">score</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">per_scorer_scores</span><span class="o">.</span><span class="n">items</span><span class="p">()},</span>
+                    <span class="n">step</span><span class="o">=</span><span class="n">iteration</span><span class="p">,</span>
+                <span class="p">)</span>
+
+                <span class="c1"># Log scores summary as JSON artifact</span>
+                <span class="n">scores_data</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">&quot;aggregate&quot;</span><span class="p">:</span> <span class="n">aggregate_score</span><span class="p">,</span>
+                    <span class="s2">&quot;per_scorer&quot;</span><span class="p">:</span> <span class="n">per_scorer_scores</span><span class="p">,</span>
+                <span class="p">}</span>
+                <span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">tmp_dir</span><span class="p">:</span>
+                    <span class="n">tmp_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">)</span>
+                    <span class="n">scores_path</span> <span class="o">=</span> <span class="n">tmp_path</span> <span class="o">/</span> <span class="n">SCORES_FILE</span>
+                    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">scores_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">scores_data</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+                    <span class="n">mlflow</span><span class="o">.</span><span class="n">log_artifact</span><span class="p">(</span><span class="n">scores_path</span><span class="p">,</span> <span class="n">artifact_path</span><span class="o">=</span><span class="n">iteration_dir</span><span class="p">)</span>
+
+                    <span class="c1"># Write each prompt as a separate text file</span>
+                    <span class="k">for</span> <span class="n">prompt_name</span><span class="p">,</span> <span class="n">prompt_text</span> <span class="ow">in</span> <span class="n">candidate</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                        <span class="n">prompt_path</span> <span class="o">=</span> <span class="n">tmp_path</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prompt_name</span><span class="si">}</span><span class="s2">.txt&quot;</span>
+                        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">prompt_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">prompt_text</span><span class="p">)</span>
+                        <span class="n">mlflow</span><span class="o">.</span><span class="n">log_artifact</span><span class="p">(</span><span class="n">prompt_path</span><span class="p">,</span> <span class="n">artifact_path</span><span class="o">=</span><span class="n">iteration_dir</span><span class="p">)</span>
+
+            <span class="k">def</span><span class="w"> </span><span class="nf">make_reflective_dataset</span><span class="p">(</span>
+                <span class="bp">self</span><span class="p">,</span>
+                <span class="n">candidate</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+                <span class="n">eval_batch</span><span class="p">:</span> <span class="s2">&quot;gepa.EvaluationBatch[EvaluationResultRecord, Any]&quot;</span><span class="p">,</span>
+                <span class="n">components_to_update</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+            <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]:</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">                Build a reflective dataset for instruction refinement.</span>
+
+<span class="sd">                Args:</span>
+<span class="sd">                    candidate: The evaluated candidate</span>
+<span class="sd">                    eval_batch: Result of evaluate with capture_traces=True</span>
+<span class="sd">                    components_to_update: Component names to update</span>
+
+<span class="sd">                Returns:</span>
+<span class="sd">                    Dict of reflective dataset per component</span>
+<span class="sd">                &quot;&quot;&quot;</span>
+                <span class="n">reflective_datasets</span> <span class="o">=</span> <span class="p">{}</span>
+
+                <span class="k">for</span> <span class="n">component_name</span> <span class="ow">in</span> <span class="n">components_to_update</span><span class="p">:</span>
+                    <span class="n">component_data</span> <span class="o">=</span> <span class="p">[]</span>
+
+                    <span class="n">trajectories</span> <span class="o">=</span> <span class="n">eval_batch</span><span class="o">.</span><span class="n">trajectories</span>
+
+                    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">trajectory</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">trajectories</span><span class="p">,</span> <span class="n">eval_batch</span><span class="o">.</span><span class="n">scores</span><span class="p">)):</span>
+                        <span class="n">trace</span> <span class="o">=</span> <span class="n">trajectory</span><span class="o">.</span><span class="n">trace</span>
+                        <span class="n">spans</span> <span class="o">=</span> <span class="p">[]</span>
+                        <span class="k">if</span> <span class="n">trace</span><span class="p">:</span>
+                            <span class="n">spans</span> <span class="o">=</span> <span class="p">[</span>
+                                <span class="p">{</span>
+                                    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">span</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                    <span class="s2">&quot;inputs&quot;</span><span class="p">:</span> <span class="n">span</span><span class="o">.</span><span class="n">inputs</span><span class="p">,</span>
+                                    <span class="s2">&quot;outputs&quot;</span><span class="p">:</span> <span class="n">span</span><span class="o">.</span><span class="n">outputs</span><span class="p">,</span>
+                                <span class="p">}</span>
+                                <span class="k">for</span> <span class="n">span</span> <span class="ow">in</span> <span class="n">trace</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">spans</span>
+                            <span class="p">]</span>
+
+                        <span class="n">component_data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                            <span class="s2">&quot;component_name&quot;</span><span class="p">:</span> <span class="n">component_name</span><span class="p">,</span>
+                            <span class="s2">&quot;current_text&quot;</span><span class="p">:</span> <span class="n">candidate</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">component_name</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+                            <span class="s2">&quot;trace&quot;</span><span class="p">:</span> <span class="n">spans</span><span class="p">,</span>
+                            <span class="s2">&quot;score&quot;</span><span class="p">:</span> <span class="n">score</span><span class="p">,</span>
+                            <span class="s2">&quot;inputs&quot;</span><span class="p">:</span> <span class="n">trajectory</span><span class="o">.</span><span class="n">inputs</span><span class="p">,</span>
+                            <span class="s2">&quot;outputs&quot;</span><span class="p">:</span> <span class="n">trajectory</span><span class="o">.</span><span class="n">outputs</span><span class="p">,</span>
+                            <span class="s2">&quot;expectations&quot;</span><span class="p">:</span> <span class="n">trajectory</span><span class="o">.</span><span class="n">expectations</span><span class="p">,</span>
+                            <span class="s2">&quot;rationales&quot;</span><span class="p">:</span> <span class="n">trajectory</span><span class="o">.</span><span class="n">rationales</span><span class="p">,</span>
+                            <span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span>
+                        <span class="p">})</span>
+
+                    <span class="n">reflective_datasets</span><span class="p">[</span><span class="n">component_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">component_data</span>
+
+                <span class="k">return</span> <span class="n">reflective_datasets</span>
+
+        <span class="n">adapter</span> <span class="o">=</span> <span class="n">MlflowGEPAAdapter</span><span class="p">(</span>
+            <span class="n">eval_fn</span><span class="p">,</span> <span class="n">target_prompts</span><span class="p">,</span> <span class="n">enable_tracking</span><span class="p">,</span> <span class="n">full_dataset_size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">train_data</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gepa_kwargs</span> <span class="o">|</span> <span class="p">{</span>
+            <span class="s2">&quot;seed_candidate&quot;</span><span class="p">:</span> <span class="n">target_prompts</span><span class="p">,</span>
+            <span class="s2">&quot;trainset&quot;</span><span class="p">:</span> <span class="n">train_data</span><span class="p">,</span>
+            <span class="s2">&quot;adapter&quot;</span><span class="p">:</span> <span class="n">adapter</span><span class="p">,</span>
+            <span class="s2">&quot;reflection_lm&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">provider</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">model</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;max_metric_calls&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_metric_calls</span><span class="p">,</span>
+            <span class="s2">&quot;display_progress_bar&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">display_progress_bar</span><span class="p">,</span>
+            <span class="s2">&quot;use_mlflow&quot;</span><span class="p">:</span> <span class="n">enable_tracking</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="n">gepa_result</span> <span class="o">=</span> <span class="n">gepa</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="n">optimized_prompts</span> <span class="o">=</span> <span class="n">gepa_result</span><span class="o">.</span><span class="n">best_candidate</span>
+        <span class="p">(</span>
+            <span class="n">initial_eval_score</span><span class="p">,</span>
+            <span class="n">final_eval_score</span><span class="p">,</span>
+            <span class="n">initial_eval_score_per_scorer</span><span class="p">,</span>
+            <span class="n">final_eval_score_per_scorer</span><span class="p">,</span>
+        <span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_eval_scores</span><span class="p">(</span><span class="n">gepa_result</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">PromptOptimizerOutput</span><span class="p">(</span>
+            <span class="n">optimized_prompts</span><span class="o">=</span><span class="n">optimized_prompts</span><span class="p">,</span>
+            <span class="n">initial_eval_score</span><span class="o">=</span><span class="n">initial_eval_score</span><span class="p">,</span>
+            <span class="n">final_eval_score</span><span class="o">=</span><span class="n">final_eval_score</span><span class="p">,</span>
+            <span class="n">initial_eval_score_per_scorer</span><span class="o">=</span><span class="n">initial_eval_score_per_scorer</span><span class="p">,</span>
+            <span class="n">final_eval_score_per_scorer</span><span class="o">=</span><span class="n">final_eval_score_per_scorer</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_eval_scores</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">result</span><span class="p">:</span> <span class="s2">&quot;gepa.GEPAResult&quot;</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extract initial and final evaluation scores from GEPA result.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            result: GEPA optimization result</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple of (initial_eval_score, final_eval_score,</span>
+<span class="sd">                      initial_eval_score_per_scorer, final_eval_score_per_scorer).</span>
+<span class="sd">            Aggregated scores can be None if unavailable.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">final_eval_score</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">initial_eval_score</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">initial_eval_score_per_scorer</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">final_eval_score_per_scorer</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="n">scores</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">val_aggregate_scores</span>
+        <span class="k">if</span> <span class="n">scores</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># The first score is the initial baseline score</span>
+            <span class="n">initial_eval_score</span> <span class="o">=</span> <span class="n">scores</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="c1"># The highest score is the final optimized score</span>
+            <span class="n">final_eval_score</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+
+        <span class="c1"># Extract per-scorer scores from val_aggregate_subscores</span>
+        <span class="n">subscores</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="s2">&quot;val_aggregate_subscores&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">subscores</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">subscores</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># The first subscore dict is the initial baseline per-scorer scores</span>
+            <span class="n">initial_eval_score_per_scorer</span> <span class="o">=</span> <span class="n">subscores</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">or</span> <span class="p">{}</span>
+            <span class="c1"># Find the per-scorer scores corresponding to the best aggregate score</span>
+            <span class="k">if</span> <span class="n">scores</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">best_idx</span> <span class="o">=</span> <span class="n">scores</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">scores</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">best_idx</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">subscores</span><span class="p">)</span> <span class="ow">and</span> <span class="n">subscores</span><span class="p">[</span><span class="n">best_idx</span><span class="p">]:</span>
+                    <span class="n">final_eval_score_per_scorer</span> <span class="o">=</span> <span class="n">subscores</span><span class="p">[</span><span class="n">best_idx</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">initial_eval_score</span><span class="p">,</span>
+            <span class="n">final_eval_score</span><span class="p">,</span>
+            <span class="n">initial_eval_score_per_scorer</span><span class="p">,</span>
+            <span class="n">final_eval_score_per_scorer</span><span class="p">,</span>
+        <span class="p">)</span></div>
+</pre></div>
+
+              </div>
+            </div>
+            <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+      <p class="copyright">
+          &copy; MLflow Project, a Series of LF Projects, LLC. All rights reserved.
+      </p>
+
+  </div> 
+
+</footer>
+          </div>
+        </div>
+      </section>
+    </main>
+  </page>
+
+  
+
+
+  
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:'../../../../../',
+      VERSION:'3.10.2',
+      COLLAPSE_INDEX:false,
+      FILE_SUFFIX:'.html',
+      LINK_SUFFIX: '.html',
+      HAS_SOURCE:  true
+    };
+  </script>
+
+  
+
+  <script type="text/javascript" src="../../../../../_static/js/clipboard.min.js"></script>
+  <script type="text/javascript" src="../../../../../_static/js/jquery.waypoints.min.js"></script>
+
+  
+  
+  
+  <script type="text/javascript">var CLIPPY_SVG_PATH = "../../../../../_static/clippy.svg";</script>
+  <script type="text/javascript" src="../../../../../_static/js/custom.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+    jQuery(function () {
+      SphinxRtdTheme.StickyNav.enable();
+    });
+
+  </script>
+  
+
+  
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
+        // Get the code block designator class entries
+        const allHighlights = document.querySelectorAll('.highlight');
+        // Disable copyable links for notebook cell numbering and for cell outputs
+        const highlights = Array.from(allHighlights).filter(highlight => !highlight.closest('.highlight-none') && 
+            !highlight.closest('.nboutput'));
+    
+        highlights.forEach(function(highlight) {
+            const copyIcon = document.createElement('span');
+            copyIcon.classList.add('copy-icon');
+            copyIcon.innerHTML = '&#xf0ea;';
+
+            copyIcon.addEventListener('click', function() {
+                const code = highlight.querySelector('pre').textContent;
+                copyToClipboard(code);
+
+                // Flash effect on click
+                this.style.color = '#0194E2';
+                setTimeout(() => {
+                    this.style.color = ''; 
+                }, 100);
+
+                // Display "Code copied to clipboard" near the clicked icon
+                const message = document.createElement('span');
+                message.textContent = "Copied!";
+                message.classList.add('copy-message'); 
+
+                // Append the message to the icon
+                this.appendChild(message);
+
+                setTimeout(() => {
+                    this.removeChild(message);
+                }, 500);
+            });
+
+            highlight.appendChild(copyIcon);
+        });
+    });
+  </script>
+
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        // Force download for notebook-download-btn
+        const downloadButtons = document.querySelectorAll('.notebook-download-btn');
+        downloadButtons.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default behavior
+
+                // Fetch the raw content of the notebook from GitHub
+                fetch(button.href)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const url = window.URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.style.display = 'none';
+                        link.href = url;
+                        const filename = button.href.split('/').pop();
+                        link.download = filename; 
+
+                        document.body.appendChild(link);
+                        link.click();
+
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(link);
+                    })
+                    .catch(err => console.error('Error fetching the notebook:', err));
+            });
+        });
+    });
+</script> 
+</body>
+</html>

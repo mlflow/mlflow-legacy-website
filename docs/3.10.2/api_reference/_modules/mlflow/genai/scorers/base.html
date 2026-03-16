@@ -1,0 +1,1613 @@
+
+
+<!DOCTYPE html>
+<!-- source: docs/source/_modules/mlflow/genai/scorers/base -->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mlflow.genai.scorers.base</title>
+  
+   
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="canonical" href="https://mlflow.org/docs/latest/_modules/mlflow/genai/scorers/base.html">
+  
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+  
+
+  
+
+  
+    
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer',"GTM-N6WMTTJ");</script>
+        <!-- End Google Tag Manager -->
+    
+  
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16857946923"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-16857946923');
+  </script>
+  <!-- Eng gtag -->
+
+  
+
+  
+  <meta name="docsearch:docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_version" content="current" data-rh="true">
+  <meta name="docsearch:version" content="current" data-rh="true">
+  <meta name="docusaurus_locale" content="en" data-rh="true">
+  <meta name="docsearch:language" content="en" data-rh="true">
+
+  
+  
+    
+
+  
+
+  
+  
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600" rel="stylesheet">
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/css/custom.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/css/cards.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/css/grids.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/css/mobile.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/css/simple-cards.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/css/tabs.css" type="text/css" />
+    
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="MLflow 3.10.2 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+<script type="text/javascript" src="../../../../_static/documentation_options.js"></script>
+<script type="text/javascript" src="../../../../_static/jquery.js"></script>
+<script type="text/javascript" src="../../../../_static/underscore.js"></script>
+<script type="text/javascript" src="../../../../_static/doctools.js"></script>
+<script type="text/javascript" src="../../../../_static/tabs.js"></script>
+<script type="text/javascript" src="../../../../_static/languagesections.js"></script>
+<script type="text/javascript" src="../../../../_static/runllm.js"></script>
+
+<body class="wy-body-for-nav" role="document">
+  
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6WMTTJ"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  
+  <nav class="wy-nav-top header" role="navigation" aria-label="top navigation">
+    <div class="header-container">
+  <style scoped>
+    .header-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
+    }
+
+    .logo-container {
+      display: flex;
+      gap: 12px;
+      flex-direction: row;
+      white-space: nowrap;
+      align-items: center;
+      justify-content: center;
+    }
+
+    a:hover {
+      text-decoration: none;
+      color: #0194e2;
+    }
+  </style>
+  <div class="logo-container">
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
+    <a href="../../../../index.html" class="wy-nav-top-logo">
+      <img
+        src="../../../../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
+    </a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
+  </div>
+  <span class="header-link version">3.10.2</span>
+</div>
+  </nav>
+  <page>
+    
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side relative">
+      <div class="wy-side-scroll">
+  <div class="wy-side-nav-search">
+    
+
+    
+
+    
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+    
+  </div>
+
+  <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+    
+      <a href="../../../../index.html">Home</a>
+    
+
+    
+      
+
+      
+        <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../python_api/index.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../typescript_api/index.html">TypeScript API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cli.html">Command-Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../auth/python-api.html">MLflow Authentication Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../auth/rest-api.html">MLflow Authentication REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../R-api.html">R API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../java_api/index.html">Java API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rest-api.html">REST API</a></li>
+</ul>
+
+      
+    
+  </div>
+
+  <div role="contentinfo">
+    
+
+    <p>
+      <a id='feedbacklink' href="https://github.com/mlflow/mlflow/blob/master/CONTRIBUTING.md" target="_blank">Contribute</a>
+    </p>
+  </div>
+</div>
+    </nav>
+
+    <main class="wy-grid-for-nav">
+      <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+        <div class="wy-nav-content">
+          <div class="rst-content">
+            
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Documentation</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+        <li><a href="../../../index.html">Module code</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+    
+      <li>mlflow.genai.scorers.base</li>
+    
+    
+    <!-- <li class="wy-breadcrumbs-aside">
+      <a href="https://github.com/mlflow/mlflow/blob/master/docs/source/_modules/mlflow/genai/scorers/base" class="fa fa-github"> Edit on GitHub</a>
+    </li> -->
+    
+  </ul>
+</div>
+            <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+              <div itemprop="articleBody">
+                
+  <h1>Source code for mlflow.genai.scorers.base</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">functools</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">contextvars</span><span class="w"> </span><span class="kn">import</span> <span class="n">ContextVar</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">asdict</span><span class="p">,</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">ClassVar</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">TypeAlias</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">overload</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">PrivateAttr</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">mlflow</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities</span><span class="w"> </span><span class="kn">import</span> <span class="n">Assessment</span><span class="p">,</span> <span class="n">Feedback</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.assessment</span><span class="w"> </span><span class="kn">import</span> <span class="n">DEFAULT_FEEDBACK_NAME</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.trace</span><span class="w"> </span><span class="kn">import</span> <span class="n">Trace</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.telemetry.events</span><span class="w"> </span><span class="kn">import</span> <span class="n">ScorerCallEvent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.telemetry.track</span><span class="w"> </span><span class="kn">import</span> <span class="n">record_usage_event</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracking._tracking_service.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_tracking_uri</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracking.fluent</span><span class="w"> </span><span class="kn">import</span> <span class="n">_get_experiment_id</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">experimental</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.databricks_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_databricks_uri</span>
+
+<span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1"># Backend identifiers for registered scorers</span>
+<span class="n">SCORER_BACKEND_TRACKING</span> <span class="o">=</span> <span class="s2">&quot;tracking&quot;</span>
+<span class="n">SCORER_BACKEND_DATABRICKS</span> <span class="o">=</span> <span class="s2">&quot;databricks&quot;</span>
+
+<span class="c1"># Context variable to track if we&#39;re in a scorer call (prevents nested telemetry)</span>
+<span class="n">_in_scorer_call</span><span class="p">:</span> <span class="n">ContextVar</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">ContextVar</span><span class="p">(</span><span class="s2">&quot;mlflow_scorer_call_context&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># Serialization version for tracking changes to the serialization format</span>
+<span class="n">_SERIALIZATION_VERSION</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">_AggregationFunc</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">]],</span> <span class="nb">float</span><span class="p">]</span>
+<span class="n">_AggregationType</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;min&quot;</span><span class="p">,</span> <span class="s2">&quot;max&quot;</span><span class="p">,</span> <span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="s2">&quot;median&quot;</span><span class="p">,</span> <span class="s2">&quot;variance&quot;</span><span class="p">,</span> <span class="s2">&quot;p90&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="n">_AggregationFunc</span>
+<span class="p">)</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ScorerKind</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">CLASS</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
+    <span class="n">BUILTIN</span> <span class="o">=</span> <span class="s2">&quot;builtin&quot;</span>
+    <span class="n">DECORATOR</span> <span class="o">=</span> <span class="s2">&quot;decorator&quot;</span>
+    <span class="n">INSTRUCTIONS</span> <span class="o">=</span> <span class="s2">&quot;instructions&quot;</span>
+    <span class="n">GUIDELINES</span> <span class="o">=</span> <span class="s2">&quot;guidelines&quot;</span>
+    <span class="n">THIRD_PARTY</span> <span class="o">=</span> <span class="s2">&quot;third_party&quot;</span>
+    <span class="n">MEMORY_AUGMENTED</span> <span class="o">=</span> <span class="s2">&quot;memory_augmented&quot;</span>
+
+
+<span class="n">_ALLOWED_SCORERS_FOR_REGISTRATION</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">ScorerKind</span><span class="o">.</span><span class="n">BUILTIN</span><span class="p">,</span>
+    <span class="n">ScorerKind</span><span class="o">.</span><span class="n">DECORATOR</span><span class="p">,</span>
+    <span class="n">ScorerKind</span><span class="o">.</span><span class="n">INSTRUCTIONS</span><span class="p">,</span>
+    <span class="n">ScorerKind</span><span class="o">.</span><span class="n">GUIDELINES</span><span class="p">,</span>
+    <span class="n">ScorerKind</span><span class="o">.</span><span class="n">MEMORY_AUGMENTED</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ScorerStatus</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Status of a scorer.</span>
+
+<span class="sd">    Scorer status is determined by the sample rate due to the backend not having</span>
+<span class="sd">    a notion of whether a scorer is started or stopped.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">UNREGISTERED</span> <span class="o">=</span> <span class="s2">&quot;UNREGISTERED&quot;</span>  <span class="c1"># sampling config not set</span>
+    <span class="n">STARTED</span> <span class="o">=</span> <span class="s2">&quot;STARTED&quot;</span>  <span class="c1"># sample_rate &gt; 0</span>
+    <span class="n">STOPPED</span> <span class="o">=</span> <span class="s2">&quot;STOPPED&quot;</span>  <span class="c1"># sample_rate == 0</span>
+
+
+<div class="viewcode-block" id="ScorerSamplingConfig"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.ScorerSamplingConfig">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ScorerSamplingConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Configuration for registered scorer sampling.&quot;&quot;&quot;</span>
+
+    <span class="n">sample_rate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">filter_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<span class="n">AggregationFunc</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]],</span> <span class="nb">float</span><span class="p">]</span>  <span class="c1"># List of per-row value -&gt; aggregated value</span>
+
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SerializedScorer</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Dataclass defining the serialization schema for Scorer objects.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Core scorer fields</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">aggregations</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">is_session_level_scorer</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="c1"># Version metadata</span>
+    <span class="n">mlflow_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">__version__</span>
+    <span class="n">serialization_version</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">_SERIALIZATION_VERSION</span>
+
+    <span class="c1"># Builtin scorer fields (for scorers from mlflow.genai.scorers.builtin_scorers)</span>
+    <span class="n">builtin_scorer_class</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">builtin_scorer_pydantic_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># Decorator scorer fields (for @scorer decorated functions)</span>
+    <span class="n">call_source</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">call_signature</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">original_func_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># InstructionsJudge fields (for make_judge created judges)</span>
+    <span class="n">instructions_judge_pydantic_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># MemoryAugmentedJudge fields (for aligned judges)</span>
+    <span class="n">memory_augmented_judge_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Validate that exactly one type of scorer fields is present.&quot;&quot;&quot;</span>
+        <span class="n">has_builtin_fields</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">builtin_scorer_class</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="n">has_decorator_fields</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_source</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="n">has_instructions_fields</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructions_judge_pydantic_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="n">has_memory_augmented_fields</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">memory_augmented_judge_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+        <span class="c1"># Count how many field types are present</span>
+        <span class="n">field_count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span>
+            <span class="n">has_builtin_fields</span><span class="p">,</span>
+            <span class="n">has_decorator_fields</span><span class="p">,</span>
+            <span class="n">has_instructions_fields</span><span class="p">,</span>
+            <span class="n">has_memory_augmented_fields</span><span class="p">,</span>
+        <span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">field_count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;SerializedScorer must have either builtin scorer fields &quot;</span>
+                <span class="s2">&quot;(builtin_scorer_class), decorator scorer fields (call_source), &quot;</span>
+                <span class="s2">&quot;instructions judge fields (instructions_judge_pydantic_data), &quot;</span>
+                <span class="s2">&quot;or memory augmented judge fields (memory_augmented_judge_data) present&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">field_count</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;SerializedScorer cannot have multiple types of scorer fields &quot;</span>
+                <span class="s2">&quot;present simultaneously&quot;</span>
+            <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_record_scorer_call_with_context</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Wraps a scorer&#39;s __call__ method with telemetry, but only for top-level calls.</span>
+
+<span class="sd">    Uses ContextVar to track nesting in a thread-safe manner. Only supports synchronous</span>
+<span class="sd">    functions - async scorers are not supported and will raise an exception.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">iscoroutinefunction</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Async scorer &#39;__call__&#39; methods are not supported. &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Scorer class </span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__qualname__</span><span class="si">}</span><span class="s2"> has an async __call__ method.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="n">telemetry_wrapped</span> <span class="o">=</span> <span class="n">record_usage_event</span><span class="p">(</span><span class="n">ScorerCallEvent</span><span class="p">)(</span><span class="n">func</span><span class="p">)</span>
+
+    <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">_in_scorer_call</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
+            <span class="c1"># Nested call: skip telemetry, call original function</span>
+            <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="c1"># Top-level call: set context and use telemetry-wrapped version</span>
+        <span class="n">token</span> <span class="o">=</span> <span class="n">_in_scorer_call</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">telemetry_wrapped</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="c1"># CRITICAL: Use reset(token), NOT set(False)</span>
+            <span class="c1"># This ensures proper context restoration</span>
+            <span class="n">_in_scorer_call</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+
+<div class="viewcode-block" id="Scorer"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.Scorer">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">Scorer</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">aggregations</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">_AggregationType</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">_cached_dump</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">PrivateAttr</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">_sampling_config</span><span class="p">:</span> <span class="n">ScorerSamplingConfig</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">PrivateAttr</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">_registered_backend</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">PrivateAttr</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">_experiment_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">PrivateAttr</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__init_subclass__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init_subclass__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="c1"># Only wrap __call__ if it&#39;s defined directly in this class (cls.__dict__),</span>
+        <span class="c1"># not inherited from a parent. This prevents wrapping the same method multiple</span>
+        <span class="c1"># times in the inheritance chain.</span>
+        <span class="k">if</span> <span class="s2">&quot;__call__&quot;</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">:</span>
+            <span class="n">original_call</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s2">&quot;__call__&quot;</span><span class="p">]</span>
+
+            <span class="c1"># Check if it&#39;s already wrapped to avoid double-wrapping</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">original_call</span><span class="p">,</span> <span class="s2">&quot;_telemetry_wrapped&quot;</span><span class="p">):</span>
+                <span class="c1"># Wrap with context-aware telemetry decorator</span>
+                <span class="n">wrapped_call</span> <span class="o">=</span> <span class="n">_record_scorer_call_with_context</span><span class="p">(</span><span class="n">original_call</span><span class="p">)</span>
+                <span class="c1"># Mark it as wrapped to prevent double-wrapping</span>
+                <span class="n">wrapped_call</span><span class="o">.</span><span class="n">_telemetry_wrapped</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="s2">&quot;__call__&quot;</span><span class="p">,</span> <span class="n">wrapped_call</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_session_level_scorer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get whether this scorer is a session-level scorer.</span>
+
+<span class="sd">        Defaults to False. Child classes can override this property to return True</span>
+<span class="sd">        or compute the value dynamically based on their configuration.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.9.0&quot;</span><span class="p">)</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sample_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the sample rate for this scorer. Available when registered for monitoring.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sampling_config</span><span class="o">.</span><span class="n">sample_rate</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sampling_config</span> <span class="k">else</span> <span class="kc">None</span>
+
+    <span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.9.0&quot;</span><span class="p">)</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">filter_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the filter string for this scorer.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sampling_config</span><span class="o">.</span><span class="n">filter_string</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sampling_config</span> <span class="k">else</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ScorerStatus</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the status of this scorer, using only the local state.&quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_registered_backend</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ScorerStatus</span><span class="o">.</span><span class="n">UNREGISTERED</span>
+
+        <span class="k">return</span> <span class="n">ScorerStatus</span><span class="o">.</span><span class="n">STARTED</span> <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_rate</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">ScorerStatus</span><span class="o">.</span><span class="n">STOPPED</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="c1"># Get the standard representation from the parent class</span>
+        <span class="n">base_repr</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span>
+        <span class="n">filter_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_string</span>
+        <span class="k">if</span> <span class="n">filter_string</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">filter_string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">filter_string</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+
+        <span class="c1"># Inject the property&#39;s value into the repr string</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base_repr</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">, sample_rate=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_rate</span><span class="si">}</span><span class="s2">, filter_string=</span><span class="si">{</span><span class="n">filter_string</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+<div class="viewcode-block" id="Scorer.model_dump"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.Scorer.model_dump">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">model_dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Override model_dump to include source code.&quot;&quot;&quot;</span>
+
+        <span class="c1"># Return cached dump if available (prevents re-serialization issues with dynamic functions)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cached_dump</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cached_dump</span>
+
+        <span class="c1"># Check if this is a decorator scorer</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_original_func&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="c1"># BuiltInScorer overrides `model_dump`, so this is neither a builtin scorer nor a</span>
+            <span class="c1"># decorator scorer</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Unsupported scorer type: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">. &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Scorer serialization only supports:</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;1. Builtin scorers (from mlflow.genai.scorers.builtin_scorers)</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;2. Decorator-created scorers (using @scorer decorator)</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Direct subclassing of Scorer is not supported for serialization. &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Please use the @scorer decorator instead.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Decorator scorer - extract and store source code</span>
+        <span class="n">source_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_source_code_info</span><span class="p">()</span>
+
+        <span class="c1"># Create serialized scorer with all fields at once</span>
+        <span class="n">serialized</span> <span class="o">=</span> <span class="n">SerializedScorer</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
+            <span class="n">aggregations</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">aggregations</span><span class="p">,</span>
+            <span class="n">is_session_level_scorer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">is_session_level_scorer</span><span class="p">,</span>
+            <span class="n">mlflow_version</span><span class="o">=</span><span class="n">mlflow</span><span class="o">.</span><span class="n">__version__</span><span class="p">,</span>
+            <span class="n">serialization_version</span><span class="o">=</span><span class="n">_SERIALIZATION_VERSION</span><span class="p">,</span>
+            <span class="n">call_source</span><span class="o">=</span><span class="n">source_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;call_source&quot;</span><span class="p">),</span>
+            <span class="n">call_signature</span><span class="o">=</span><span class="n">source_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;call_signature&quot;</span><span class="p">),</span>
+            <span class="n">original_func_name</span><span class="o">=</span><span class="n">source_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;original_func_name&quot;</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cached_dump</span> <span class="o">=</span> <span class="n">asdict</span><span class="p">(</span><span class="n">serialized</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cached_dump</span></div>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_source_code_info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Extract source code information for the original decorated function.&quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.scorers.scorer_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">extract_function_body</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;call_source&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;call_signature&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;original_func_name&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
+
+        <span class="c1"># Extract original function source</span>
+        <span class="n">call_body</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">extract_function_body</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_original_func</span><span class="p">)</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;call_source&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">call_body</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;original_func_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_original_func</span><span class="o">.</span><span class="vm">__name__</span>
+
+        <span class="c1"># Store the signature of the original function</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;call_signature&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_original_func</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">result</span>
+
+<div class="viewcode-block" id="Scorer.model_validate"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.Scorer.model_validate">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">model_validate</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Scorer&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Override model_validate to reconstruct scorer from source code.&quot;&quot;&quot;</span>
+        <span class="c1"># Handle SerializedScorer object</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">SerializedScorer</span><span class="p">):</span>
+            <span class="n">serialized</span> <span class="o">=</span> <span class="n">obj</span>
+        <span class="c1"># Handle dict object</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="c1"># Parse the serialized data using our dataclass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">serialized</span> <span class="o">=</span> <span class="n">SerializedScorer</span><span class="p">(</span><span class="o">**</span><span class="n">obj</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Failed to parse serialized scorer data: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Invalid scorer data: expected a SerializedScorer object or dictionary, &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">. Scorer data must be either a SerializedScorer object &quot;</span>
+                <span class="s2">&quot;or a dictionary containing serialized scorer information.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Log version information for debugging</span>
+        <span class="k">if</span> <span class="n">serialized</span><span class="o">.</span><span class="n">mlflow_version</span><span class="p">:</span>
+            <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Deserializing scorer created with MLflow version: </span><span class="si">{</span><span class="n">serialized</span><span class="o">.</span><span class="n">mlflow_version</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">serialized</span><span class="o">.</span><span class="n">serialization_version</span><span class="p">:</span>
+            <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Scorer serialization version: </span><span class="si">{</span><span class="n">serialized</span><span class="o">.</span><span class="n">serialization_version</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">serialized</span><span class="o">.</span><span class="n">builtin_scorer_class</span><span class="p">:</span>
+            <span class="c1"># Import here to avoid circular imports</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.scorers.builtin_scorers</span><span class="w"> </span><span class="kn">import</span> <span class="n">BuiltInScorer</span>
+
+            <span class="k">return</span> <span class="n">BuiltInScorer</span><span class="o">.</span><span class="n">model_validate</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+
+        <span class="c1"># Handle decorator scorers</span>
+        <span class="k">elif</span> <span class="n">serialized</span><span class="o">.</span><span class="n">call_source</span> <span class="ow">and</span> <span class="n">serialized</span><span class="o">.</span><span class="n">call_signature</span> <span class="ow">and</span> <span class="n">serialized</span><span class="o">.</span><span class="n">original_func_name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_reconstruct_decorator_scorer</span><span class="p">(</span><span class="n">serialized</span><span class="p">)</span>
+
+        <span class="c1"># Handle InstructionsJudge scorers</span>
+        <span class="k">elif</span> <span class="n">serialized</span><span class="o">.</span><span class="n">instructions_judge_pydantic_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.judges.instructions_judge</span><span class="w"> </span><span class="kn">import</span> <span class="n">InstructionsJudge</span>
+
+            <span class="n">data</span> <span class="o">=</span> <span class="n">serialized</span><span class="o">.</span><span class="n">instructions_judge_pydantic_data</span>
+
+            <span class="n">field_specs</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;instructions&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="p">}</span>
+
+            <span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">field</span><span class="p">,</span> <span class="n">expected_type</span> <span class="ow">in</span> <span class="n">field_specs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">field</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+                    <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;missing required field &#39;</span><span class="si">{</span><span class="n">field</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">field</span><span class="p">],</span> <span class="n">expected_type</span><span class="p">):</span>
+                    <span class="n">actual_type</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">field</span><span class="p">])</span><span class="o">.</span><span class="vm">__name__</span>
+                    <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;field &#39;</span><span class="si">{</span><span class="n">field</span><span class="si">}</span><span class="s2">&#39; must be </span><span class="si">{</span><span class="n">expected_type</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, got </span><span class="si">{</span><span class="n">actual_type</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">errors</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Failed to deserialize InstructionsJudge scorer &#39;</span><span class="si">{</span><span class="n">serialized</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39;: &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+
+            <span class="n">feedback_value_type</span> <span class="o">=</span> <span class="nb">str</span>  <span class="c1"># default to str</span>
+            <span class="k">if</span> <span class="s2">&quot;feedback_value_type&quot;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;feedback_value_type&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">feedback_value_type</span> <span class="o">=</span> <span class="n">InstructionsJudge</span><span class="o">.</span><span class="n">_deserialize_feedback_value_type</span><span class="p">(</span>
+                    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;feedback_value_type&quot;</span><span class="p">]</span>
+                <span class="p">)</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">InstructionsJudge</span><span class="p">(</span>
+                    <span class="n">name</span><span class="o">=</span><span class="n">serialized</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                    <span class="n">description</span><span class="o">=</span><span class="n">serialized</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
+                    <span class="n">instructions</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;instructions&quot;</span><span class="p">],</span>
+                    <span class="n">model</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;model&quot;</span><span class="p">],</span>
+                    <span class="n">feedback_value_type</span><span class="o">=</span><span class="n">feedback_value_type</span><span class="p">,</span>
+                    <span class="n">inference_params</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;inference_params&quot;</span><span class="p">),</span>
+                    <span class="c1"># TODO: add aggregations here once we support boolean/numeric judge outputs</span>
+                <span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Failed to create InstructionsJudge scorer &#39;</span><span class="si">{</span><span class="n">serialized</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+
+        <span class="c1"># Handle MemoryAugmentedJudge scorers</span>
+        <span class="k">elif</span> <span class="n">serialized</span><span class="o">.</span><span class="n">memory_augmented_judge_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.judges.optimizers.memalign.optimizer</span><span class="w"> </span><span class="kn">import</span> <span class="n">MemoryAugmentedJudge</span>
+
+            <span class="k">return</span> <span class="n">MemoryAugmentedJudge</span><span class="o">.</span><span class="n">_from_serialized</span><span class="p">(</span><span class="n">serialized</span><span class="p">)</span>
+
+        <span class="c1"># Invalid serialized data</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Failed to load scorer &#39;</span><span class="si">{</span><span class="n">serialized</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39;. The scorer is serialized in an &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;unknown format that cannot be deserialized. Please make sure you are using &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;a compatible MLflow version or recreate the scorer. &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Scorer was created with MLflow version: &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">serialized</span><span class="o">.</span><span class="n">mlflow_version</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="s1">&#39;unknown&#39;</span><span class="si">}</span><span class="s2">, &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;serialization version: </span><span class="si">{</span><span class="n">serialized</span><span class="o">.</span><span class="n">serialization_version</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="s1">&#39;unknown&#39;</span><span class="si">}</span><span class="s2">, &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;current MLflow version: </span><span class="si">{</span><span class="n">mlflow</span><span class="o">.</span><span class="n">__version__</span><span class="si">}</span><span class="s2">.&quot;</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Scorer.model_validate_json"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.Scorer.model_validate_json">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">model_validate_json</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">json_data</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Scorer&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Override model_validate_json to parse JSON and delegate to custom model_validate.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            json_data: JSON string containing serialized scorer data.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Scorer instance with correct subclass (BuiltInScorer, InstructionsJudge, etc.).</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            mlflow.exceptions.MlflowException: If JSON parsing or scorer validation fails.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid JSON in serialized scorer: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">model_validate</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to validate scorer: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_reconstruct_decorator_scorer</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">serialized</span><span class="p">:</span> <span class="n">SerializedScorer</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Scorer&quot;</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.scorers.scorer_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">recreate_function</span>
+
+        <span class="c1"># NB: Custom (@scorer) scorers use exec() during deserialization, which poses a code</span>
+        <span class="c1"># execution risk. Only allow loading when connected to a Databricks workspace, where</span>
+        <span class="c1"># registration is gated behind authentication. OSS backends don&#39;t have this guarantee,</span>
+        <span class="c1"># so block loading to prevent executing untrusted code.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_databricks_uri</span><span class="p">(</span><span class="n">get_tracking_uri</span><span class="p">()):</span>
+            <span class="n">code_snippet</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">from mlflow.genai import scorer</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;@scorer</span><span class="se">\n</span><span class="s2">def </span><span class="si">{</span><span class="n">serialized</span><span class="o">.</span><span class="n">original_func_name</span><span class="si">}{</span><span class="n">serialized</span><span class="o">.</span><span class="n">call_signature</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">serialized</span><span class="o">.</span><span class="n">call_source</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">):</span>
+                <span class="n">code_snippet</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;    </span><span class="si">{</span><span class="n">line</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Loading custom scorer &#39;</span><span class="si">{</span><span class="n">serialized</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; is not supported outside of &quot;</span>
+                <span class="s2">&quot;Databricks environments due to security concerns. Custom scorers &quot;</span>
+                <span class="s2">&quot;require arbitrary code execution during deserialization.</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;To use this scorer, please:</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;1. Configure MLflow to use a Databricks tracking URI, or</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;2. Copy the code below and save it in your source code repository</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;3. Import and use it directly in your code, or</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;4. Use built-in scorers or make_judge() scorers instead</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Registered scorer code:</span><span class="se">\n</span><span class="si">{</span><span class="n">code_snippet</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">recreated_func</span> <span class="o">=</span> <span class="n">recreate_function</span><span class="p">(</span>
+                <span class="n">serialized</span><span class="o">.</span><span class="n">call_source</span><span class="p">,</span> <span class="n">serialized</span><span class="o">.</span><span class="n">call_signature</span><span class="p">,</span> <span class="n">serialized</span><span class="o">.</span><span class="n">original_func_name</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Failed to recreate function from source code. &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Scorer was created with MLflow version: &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">serialized</span><span class="o">.</span><span class="n">mlflow_version</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="s1">&#39;unknown&#39;</span><span class="si">}</span><span class="s2">, &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;serialization version: </span><span class="si">{</span><span class="n">serialized</span><span class="o">.</span><span class="n">serialization_version</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="s1">&#39;unknown&#39;</span><span class="si">}</span><span class="s2">. &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Current MLflow version: </span><span class="si">{</span><span class="n">mlflow</span><span class="o">.</span><span class="n">__version__</span><span class="si">}</span><span class="s2">. &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Apply the scorer decorator to recreate the scorer</span>
+        <span class="c1"># Rather than serializing and deserializing the `run` method of `Scorer`, we recreate the</span>
+        <span class="c1"># Scorer using the original function and the `@scorer` decorator. This should be safe so</span>
+        <span class="c1"># long as `@scorer` is a stable API.</span>
+        <span class="n">scorer_instance</span> <span class="o">=</span> <span class="n">scorer</span><span class="p">(</span>
+            <span class="n">recreated_func</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">serialized</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="n">serialized</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
+            <span class="n">aggregations</span><span class="o">=</span><span class="n">serialized</span><span class="o">.</span><span class="n">aggregations</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="c1"># Cache the serialized data to prevent re-serialization issues with dynamic functions</span>
+        <span class="n">original_serialized_data</span> <span class="o">=</span> <span class="n">asdict</span><span class="p">(</span><span class="n">serialized</span><span class="p">)</span>
+        <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">scorer_instance</span><span class="p">,</span> <span class="s2">&quot;_cached_dump&quot;</span><span class="p">,</span> <span class="n">original_serialized_data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">scorer_instance</span>
+
+<div class="viewcode-block" id="Scorer.run"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.Scorer.run">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">expectations</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">trace</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.evaluation</span><span class="w"> </span><span class="kn">import</span> <span class="n">Assessment</span> <span class="k">as</span> <span class="n">LegacyAssessment</span>
+
+        <span class="n">merged</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;inputs&quot;</span><span class="p">:</span> <span class="n">inputs</span><span class="p">,</span>
+            <span class="s2">&quot;outputs&quot;</span><span class="p">:</span> <span class="n">outputs</span><span class="p">,</span>
+            <span class="s2">&quot;expectations&quot;</span><span class="p">:</span> <span class="n">expectations</span><span class="p">,</span>
+            <span class="s2">&quot;trace&quot;</span><span class="p">:</span> <span class="n">trace</span><span class="p">,</span>
+            <span class="s2">&quot;session&quot;</span><span class="p">:</span> <span class="n">session</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="c1"># Filter to only the parameters the function actually expects</span>
+        <span class="n">sig</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="fm">__call__</span><span class="p">)</span>
+        <span class="n">filtered</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">merged</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">sig</span><span class="o">.</span><span class="n">parameters</span><span class="p">}</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="p">(</span><span class="o">**</span><span class="n">filtered</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span>
+            <span class="c1"># TODO: Replace &#39;Assessment&#39; with &#39;Feedback&#39; once we migrate from the agent eval harness</span>
+            <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">Assessment</span><span class="p">,</span> <span class="n">LegacyAssessment</span><span class="p">))</span>
+            <span class="ow">or</span> <span class="p">(</span>
+                <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="p">(</span><span class="n">Assessment</span><span class="p">,</span> <span class="n">LegacyAssessment</span><span class="p">))</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">result</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="c1"># Allow None to represent an empty assessment from the scorer.</span>
+            <span class="ow">or</span> <span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">result_type</span> <span class="o">=</span> <span class="s2">&quot;list[&quot;</span> <span class="o">+</span> <span class="nb">type</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s2">&quot;]&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result_type</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> must return one of int, float, bool, str, &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Feedback, or list[Feedback]. Got </span><span class="si">{</span><span class="n">result_type</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">Feedback</span><span class="p">)</span> <span class="ow">and</span> <span class="n">result</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">DEFAULT_FEEDBACK_NAME</span><span class="p">:</span>
+            <span class="c1"># NB: Overwrite the returned feedback name to the scorer name. This is important</span>
+            <span class="c1"># so we show a consistent name for the feedback regardless of whether the scorer</span>
+            <span class="c1"># succeeds or fails. For example, let&#39;s say we have a scorer like this:</span>
+            <span class="c1">#</span>
+            <span class="c1"># @scorer</span>
+            <span class="c1"># def my_scorer():</span>
+            <span class="c1">#     # do something</span>
+            <span class="c1">#     ...</span>
+            <span class="c1">#     return Feedback(value=True)</span>
+            <span class="c1">#</span>
+            <span class="c1"># If the scorer succeeds, the returned feedback name will be default &quot;feedback&quot;.</span>
+            <span class="c1"># However, if the scorer fails, it doesn&#39;t return a Feedback object, and we</span>
+            <span class="c1"># only know the scorer name. To unify this behavior, we overwrite the feedback</span>
+            <span class="c1"># name to the scorer name in the happy path.</span>
+            <span class="c1"># This will not apply when the scorer returns a list of Feedback objects.</span>
+            <span class="c1"># or users explicitly specify the feedback name via Feedback constructor.</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+        <span class="k">return</span> <span class="n">result</span></div>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">inputs</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">outputs</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">expectations</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">trace</span><span class="p">:</span> <span class="n">Trace</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">session</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Trace</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">bool</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Feedback</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">Feedback</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Implement the custom scorer&#39;s logic here.</span>
+
+
+<span class="sd">        The scorer will be called for each row in the input evaluation dataset.</span>
+
+<span class="sd">        Your scorer doesn&#39;t need to have all the parameters defined in the base</span>
+<span class="sd">        signature. You can define a custom scorer with only the parameters you need.</span>
+<span class="sd">        See the parameter details below for what values are passed for each parameter.</span>
+
+<span class="sd">        .. list-table::</span>
+<span class="sd">            :widths: 20 20 20</span>
+<span class="sd">            :header-rows: 1</span>
+
+<span class="sd">            * - Parameter</span>
+<span class="sd">              - Description</span>
+<span class="sd">              - Source</span>
+
+<span class="sd">            * - ``inputs``</span>
+<span class="sd">              - A single input to the target model/app.</span>
+<span class="sd">              - Derived from either dataset or trace.</span>
+
+<span class="sd">                * When the dataset contains ``inputs`` column, the value will be</span>
+<span class="sd">                  passed as is.</span>
+<span class="sd">                * When traces are provided as evaluation dataset, this will be derived</span>
+<span class="sd">                  from the ``inputs`` field of the trace (i.e. inputs captured as the</span>
+<span class="sd">                  root span of the trace).</span>
+
+<span class="sd">            * - ``outputs``</span>
+<span class="sd">              - A single output from the target model/app.</span>
+<span class="sd">              - Derived from either dataset, trace, or output of ``predict_fn``.</span>
+
+<span class="sd">                * When the dataset contains ``outputs`` column, the value will be</span>
+<span class="sd">                  passed as is.</span>
+<span class="sd">                * When ``predict_fn`` is provided, MLflow will make a prediction using the</span>
+<span class="sd">                  ``inputs`` and the ``predict_fn``, and pass the result as the ``outputs``.</span>
+<span class="sd">                * When traces are provided as evaluation dataset, this will be derived</span>
+<span class="sd">                  from the ``response`` field of the trace (i.e. outputs captured as the</span>
+<span class="sd">                  root span of the trace).</span>
+
+<span class="sd">            * - ``expectations``</span>
+<span class="sd">              - Ground truth or any expectation for each prediction, e.g. expected retrieved docs.</span>
+<span class="sd">              - Derived from either dataset or trace.</span>
+
+<span class="sd">                * When the dataset contains ``expectations`` column, the value will be</span>
+<span class="sd">                  passed as is.</span>
+<span class="sd">                * When traces are provided as evaluation dataset, this will be a dictionary</span>
+<span class="sd">                  that contains a set of assessments in the format of</span>
+<span class="sd">                  [assessment name]: [assessment value].</span>
+
+<span class="sd">            * - ``trace``</span>
+<span class="sd">              - A trace object corresponding to the prediction for the row.</span>
+<span class="sd">              - Specified as a ``trace`` column in the dataset, or generated during the prediction.</span>
+
+<span class="sd">            * - ``session``</span>
+<span class="sd">              - A list of trace objects belonging to the same conversation session.</span>
+<span class="sd">              - Specify this parameter only for session_level scorers</span>
+<span class="sd">                (scorers with ``is_session_level_scorer = True``).</span>
+<span class="sd">                * Only traces with the same ``mlflow.trace.session`` metadata value can be passed in</span>
+<span class="sd">                  this parameter, otherwise an error will be raised.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                class NotEmpty(BaseScorer):</span>
+<span class="sd">                    name = &quot;not_empty&quot;</span>
+
+<span class="sd">                    def __call__(self, *, outputs) -&gt; bool:</span>
+<span class="sd">                        return outputs != &quot;&quot;</span>
+
+
+<span class="sd">                class ExactMatch(BaseScorer):</span>
+<span class="sd">                    name = &quot;exact_match&quot;</span>
+
+<span class="sd">                    def __call__(self, *, outputs, expectations) -&gt; bool:</span>
+<span class="sd">                        return outputs == expectations[&quot;expected_response&quot;]</span>
+
+
+<span class="sd">                class NumToolCalls(BaseScorer):</span>
+<span class="sd">                    name = &quot;num_tool_calls&quot;</span>
+
+<span class="sd">                    def __call__(self, *, trace) -&gt; int:</span>
+<span class="sd">                        spans = trace.search_spans(name=&quot;tool_call&quot;)</span>
+<span class="sd">                        return len(spans)</span>
+
+
+<span class="sd">                # Use the scorer in an evaluation</span>
+<span class="sd">                mlflow.genai.evaluate(</span>
+<span class="sd">                    data=data,</span>
+<span class="sd">                    scorers=[NotEmpty(), ExactMatch(), NumToolCalls()],</span>
+<span class="sd">                )</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Implementation of __call__ is required for Scorer class&quot;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">kind</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ScorerKind</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ScorerKind</span><span class="o">.</span><span class="n">CLASS</span>
+
+<div class="viewcode-block" id="Scorer.register"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.Scorer.register">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">register</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Scorer&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Register this scorer with the MLflow server.</span>
+
+<span class="sd">        This method registers the scorer for use with automatic trace evaluation in the</span>
+<span class="sd">        specified experiment. Once registered, the scorer can be started to begin</span>
+<span class="sd">        evaluating traces automatically.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name: Optional registered name for the scorer. If not provided, the current `name`</span>
+<span class="sd">                property value will be used as a registered name.</span>
+<span class="sd">            experiment_id: The ID of the MLflow experiment to register the scorer for.</span>
+<span class="sd">                If None, uses the currently active experiment.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A new Scorer instance with server registration information.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                import mlflow</span>
+<span class="sd">                from mlflow.genai.scorers import RelevanceToQuery</span>
+
+<span class="sd">                # Register a built-in scorer</span>
+<span class="sd">                mlflow.set_experiment(&quot;my_genai_app&quot;)</span>
+<span class="sd">                registered_scorer = RelevanceToQuery().register(name=&quot;relevance_scorer&quot;)</span>
+<span class="sd">                print(f&quot;Registered scorer: {registered_scorer.name}&quot;)</span>
+
+<span class="sd">                # Register a custom scorer</span>
+<span class="sd">                from mlflow.genai.scorers import scorer</span>
+
+
+<span class="sd">                @scorer</span>
+<span class="sd">                def custom_length_check(outputs) -&gt; bool:</span>
+<span class="sd">                    return len(outputs) &gt; 100</span>
+
+
+<span class="sd">                registered_custom = custom_length_check.register(</span>
+<span class="sd">                    name=&quot;output_length_checker&quot;, experiment_id=&quot;12345&quot;</span>
+<span class="sd">                )</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get the current tracking store</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.scorers.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">DatabricksStore</span><span class="p">,</span> <span class="n">_get_scorer_store</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_can_be_registered</span><span class="p">()</span>
+        <span class="n">store</span> <span class="o">=</span> <span class="n">_get_scorer_store</span><span class="p">()</span>
+        <span class="c1"># Create a new scorer instance</span>
+        <span class="n">new_scorer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_copy</span><span class="p">()</span>
+
+        <span class="c1"># If name is provided, update the copy&#39;s name</span>
+        <span class="k">if</span> <span class="n">name</span><span class="p">:</span>
+            <span class="n">new_scorer</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+            <span class="c1"># Update cached dump to reflect the new name</span>
+            <span class="k">if</span> <span class="n">new_scorer</span><span class="o">.</span><span class="n">_cached_dump</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">new_scorer</span><span class="o">.</span><span class="n">_cached_dump</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
+
+        <span class="n">store</span><span class="o">.</span><span class="n">register_scorer</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">,</span> <span class="n">new_scorer</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="n">DatabricksStore</span><span class="p">):</span>
+            <span class="n">new_scorer</span><span class="o">.</span><span class="n">_registered_backend</span> <span class="o">=</span> <span class="n">SCORER_BACKEND_DATABRICKS</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">new_scorer</span><span class="o">.</span><span class="n">_registered_backend</span> <span class="o">=</span> <span class="n">SCORER_BACKEND_TRACKING</span>
+        <span class="k">return</span> <span class="n">new_scorer</span></div>
+
+<div class="viewcode-block" id="Scorer.start"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.Scorer.start">[docs]</a>    <span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.9.0&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">start</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">sampling_config</span><span class="p">:</span> <span class="n">ScorerSamplingConfig</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Scorer&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Start registered scoring with the specified sampling configuration.</span>
+
+<span class="sd">        This method activates automatic trace evaluation for the scorer. The scorer will</span>
+<span class="sd">        evaluate traces based on the provided sampling configuration, including the</span>
+<span class="sd">        sample rate and optional filter criteria.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name: Optional scorer name. If not provided, uses the scorer&#39;s registered</span>
+<span class="sd">                name or default name.</span>
+<span class="sd">            experiment_id: The ID of the MLflow experiment containing the scorer.</span>
+<span class="sd">                If None, uses the currently active experiment.</span>
+<span class="sd">            sampling_config: Configuration object containing:</span>
+<span class="sd">                - sample_rate: Fraction of traces to evaluate (0.0 to 1.0). Required.</span>
+<span class="sd">                - filter_string: Optional MLflow search_traces compatible filter string.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A new Scorer instance with updated sampling configuration.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                import mlflow</span>
+<span class="sd">                from mlflow.genai.scorers import RelevanceToQuery, ScorerSamplingConfig</span>
+
+<span class="sd">                # Start scorer with 50% sampling rate</span>
+<span class="sd">                mlflow.set_experiment(&quot;my_genai_app&quot;)</span>
+<span class="sd">                scorer = RelevanceToQuery().register()</span>
+<span class="sd">                active_scorer = scorer.start(sampling_config=ScorerSamplingConfig(sample_rate=0.5))</span>
+<span class="sd">                print(f&quot;Scorer is evaluating {active_scorer.sample_rate * 100}% of traces&quot;)</span>
+
+<span class="sd">                # Start scorer with filter to only evaluate specific traces</span>
+<span class="sd">                filtered_scorer = scorer.start(</span>
+<span class="sd">                    sampling_config=ScorerSamplingConfig(</span>
+<span class="sd">                        sample_rate=1.0, filter_string=&quot;YOUR_FILTER_STRING&quot;</span>
+<span class="sd">                    )</span>
+<span class="sd">                )</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.scorers.registry</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+            <span class="n">DatabricksStore</span><span class="p">,</span>
+            <span class="n">_get_scorer_store</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_can_be_registered</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">sampling_config</span><span class="o">.</span><span class="n">sample_rate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">sampling_config</span><span class="o">.</span><span class="n">sample_rate</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+                <span class="s2">&quot;When starting a scorer, provided sample rate must be greater than 0&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">scorer_name</span> <span class="o">=</span> <span class="n">name</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">store</span> <span class="o">=</span> <span class="n">_get_scorer_store</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="n">DatabricksStore</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">DatabricksStore</span><span class="o">.</span><span class="n">update_registered_scorer</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">scorer_name</span><span class="p">,</span>
+                <span class="n">scorer</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+                <span class="n">sample_rate</span><span class="o">=</span><span class="n">sampling_config</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">,</span>
+                <span class="n">filter_string</span><span class="o">=</span><span class="n">sampling_config</span><span class="o">.</span><span class="n">filter_string</span><span class="p">,</span>
+                <span class="n">experiment_id</span><span class="o">=</span><span class="n">experiment_id</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="c1"># For MLflow backend, use provided experiment_id or fall back to scorer&#39;s experiment_id</span>
+        <span class="n">exp_id</span> <span class="o">=</span> <span class="n">experiment_id</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_experiment_id</span>
+        <span class="k">if</span> <span class="n">exp_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">exp_id</span> <span class="o">=</span> <span class="n">_get_experiment_id</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">store</span><span class="o">.</span><span class="n">upsert_online_scoring_config</span><span class="p">(</span>
+            <span class="n">scorer</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">experiment_id</span><span class="o">=</span><span class="n">exp_id</span><span class="p">,</span>
+            <span class="n">sample_rate</span><span class="o">=</span><span class="n">sampling_config</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">,</span>
+            <span class="n">filter_string</span><span class="o">=</span><span class="n">sampling_config</span><span class="o">.</span><span class="n">filter_string</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Scorer.update"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.Scorer.update">[docs]</a>    <span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.9.0&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">sampling_config</span><span class="p">:</span> <span class="n">ScorerSamplingConfig</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Scorer&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update the sampling configuration for this scorer.</span>
+
+<span class="sd">        This method modifies the sampling rate and/or filter criteria for an already</span>
+<span class="sd">        registered scorer. It can be used to dynamically adjust how many traces are</span>
+<span class="sd">        evaluated or change the filtering criteria without stopping and restarting</span>
+<span class="sd">        the scorer.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name: Optional scorer name. If not provided, uses the scorer&#39;s registered name</span>
+<span class="sd">                or default name.</span>
+<span class="sd">            experiment_id: The ID of the MLflow experiment containing the scorer.</span>
+<span class="sd">                If None, uses the currently active experiment.</span>
+<span class="sd">            sampling_config: Configuration object containing:</span>
+<span class="sd">                - sample_rate: New fraction of traces to evaluate (0.0 to 1.0). Optional.</span>
+<span class="sd">                - filter_string: New MLflow search_traces compatible filter string. Optional.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A new Scorer instance with updated configuration.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                import mlflow</span>
+<span class="sd">                from mlflow.genai.scorers import RelevanceToQuery, ScorerSamplingConfig</span>
+
+<span class="sd">                # Start scorer with initial configuration</span>
+<span class="sd">                mlflow.set_experiment(&quot;my_genai_app&quot;)</span>
+<span class="sd">                scorer = RelevanceToQuery().register()</span>
+<span class="sd">                active_scorer = scorer.start(sampling_config=ScorerSamplingConfig(sample_rate=0.1))</span>
+
+<span class="sd">                # Update to increase sampling rate during high traffic</span>
+<span class="sd">                updated_scorer = active_scorer.update(</span>
+<span class="sd">                    sampling_config=ScorerSamplingConfig(sample_rate=0.5)</span>
+<span class="sd">                )</span>
+<span class="sd">                print(f&quot;Updated sample rate: {updated_scorer.sample_rate}&quot;)</span>
+
+<span class="sd">                # Update to add filtering criteria</span>
+<span class="sd">                filtered_scorer = updated_scorer.update(</span>
+<span class="sd">                    sampling_config=ScorerSamplingConfig(filter_string=&quot;YOUR_FILTER_STRING&quot;)</span>
+<span class="sd">                )</span>
+<span class="sd">                print(f&quot;Added filter: {filtered_scorer.filter_string}&quot;)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.scorers.registry</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+            <span class="n">DatabricksStore</span><span class="p">,</span>
+            <span class="n">_get_scorer_store</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_can_be_registered</span><span class="p">()</span>
+
+        <span class="n">scorer_name</span> <span class="o">=</span> <span class="n">name</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">store</span> <span class="o">=</span> <span class="n">_get_scorer_store</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="n">DatabricksStore</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">DatabricksStore</span><span class="o">.</span><span class="n">update_registered_scorer</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">scorer_name</span><span class="p">,</span>
+                <span class="n">scorer</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+                <span class="n">sample_rate</span><span class="o">=</span><span class="n">sampling_config</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">,</span>
+                <span class="n">filter_string</span><span class="o">=</span><span class="n">sampling_config</span><span class="o">.</span><span class="n">filter_string</span><span class="p">,</span>
+                <span class="n">experiment_id</span><span class="o">=</span><span class="n">experiment_id</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="c1"># For MLflow backend, use provided experiment_id or fall back to scorer&#39;s experiment_id</span>
+        <span class="n">exp_id</span> <span class="o">=</span> <span class="n">experiment_id</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_experiment_id</span>
+        <span class="k">if</span> <span class="n">exp_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">exp_id</span> <span class="o">=</span> <span class="n">_get_experiment_id</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">store</span><span class="o">.</span><span class="n">upsert_online_scoring_config</span><span class="p">(</span>
+            <span class="n">scorer</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">experiment_id</span><span class="o">=</span><span class="n">exp_id</span><span class="p">,</span>
+            <span class="n">sample_rate</span><span class="o">=</span><span class="n">sampling_config</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">,</span>
+            <span class="n">filter_string</span><span class="o">=</span><span class="n">sampling_config</span><span class="o">.</span><span class="n">filter_string</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Scorer.stop"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.Scorer.stop">[docs]</a>    <span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.9.0&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Scorer&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Stop registered scoring by setting sample rate to 0.</span>
+
+<span class="sd">        This method deactivates automatic trace evaluation for the scorer while keeping</span>
+<span class="sd">        the scorer registered. The scorer can be restarted later using the start() method.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name: Optional scorer name. If not provided, uses the scorer&#39;s registered name</span>
+<span class="sd">                or default name.</span>
+<span class="sd">            experiment_id: The ID of the MLflow experiment containing the scorer.</span>
+<span class="sd">                If None, uses the currently active experiment.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A new Scorer instance with sample rate set to 0.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                import mlflow</span>
+<span class="sd">                from mlflow.genai.scorers import RelevanceToQuery, ScorerSamplingConfig</span>
+
+<span class="sd">                # Start and then stop a scorer</span>
+<span class="sd">                mlflow.set_experiment(&quot;my_genai_app&quot;)</span>
+<span class="sd">                scorer = RelevanceToQuery().register()</span>
+<span class="sd">                active_scorer = scorer.start(sampling_config=ScorerSamplingConfig(sample_rate=0.5))</span>
+<span class="sd">                print(f&quot;Scorer is active: {active_scorer.sample_rate &gt; 0}&quot;)</span>
+
+<span class="sd">                # Stop the scorer</span>
+<span class="sd">                stopped_scorer = active_scorer.stop()</span>
+<span class="sd">                print(f&quot;Scorer is active: {stopped_scorer.sample_rate &gt; 0}&quot;)</span>
+
+<span class="sd">                # The scorer remains registered and can be restarted later</span>
+<span class="sd">                restarted_scorer = stopped_scorer.start(</span>
+<span class="sd">                    sampling_config=ScorerSamplingConfig(sample_rate=0.3)</span>
+<span class="sd">                )</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_can_be_registered</span><span class="p">()</span>
+
+        <span class="n">scorer_name</span> <span class="o">=</span> <span class="n">name</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">scorer_name</span><span class="p">,</span>
+            <span class="n">experiment_id</span><span class="o">=</span><span class="n">experiment_id</span><span class="p">,</span>
+            <span class="n">sampling_config</span><span class="o">=</span><span class="n">ScorerSamplingConfig</span><span class="p">(</span><span class="n">sample_rate</span><span class="o">=</span><span class="mf">0.0</span><span class="p">),</span>
+        <span class="p">)</span></div>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_copy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Scorer&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a copy of this scorer instance.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_can_be_registered</span><span class="p">(</span>
+            <span class="n">error_message</span><span class="o">=</span><span class="s2">&quot;Scorer must be a builtin or decorator scorer to be copied.&quot;</span>
+        <span class="p">)</span>
+
+        <span class="n">copy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_copy</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># Duplicate the cached dump so modifications to the copy don&#39;t affect the original</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cached_dump</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">copy</span><span class="p">,</span> <span class="s2">&quot;_cached_dump&quot;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cached_dump</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">copy</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_can_be_registered</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error_message</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.scorers.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">DatabricksStore</span><span class="p">,</span> <span class="n">_get_scorer_store</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kind</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_ALLOWED_SCORERS_FOR_REGISTRATION</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">error_message</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">error_message</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="s2">&quot;Scorer must be a builtin or decorator scorer to be registered. &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;Got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">kind</span><span class="si">}</span><span class="s2">.&quot;</span>
+                <span class="p">)</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span><span class="n">error_message</span><span class="p">)</span>
+
+        <span class="c1"># NB: Custom (@scorer) scorers use exec() during deserialization, which poses a code</span>
+        <span class="c1"># execution risk. Only allow registration when using Databricks tracking URI.</span>
+        <span class="c1"># Registration itself is safe (just stores code), but we restrict it to Databricks</span>
+        <span class="c1"># to ensure loaded scorers can only be executed in controlled environments.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="n">ScorerKind</span><span class="o">.</span><span class="n">DECORATOR</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">is_databricks_uri</span><span class="p">(</span><span class="n">get_tracking_uri</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+                <span class="s2">&quot;Custom scorer registration (using @scorer decorator) is not supported &quot;</span>
+                <span class="s2">&quot;outside of Databricks tracking environments due to security concerns. &quot;</span>
+                <span class="s2">&quot;Custom scorers require arbitrary code execution during deserialization.</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;To use custom scorers:</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;1. Configure MLflow to use a Databricks tracking URI, or</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;2. Manage your custom scorer code in a source code repository &quot;</span>
+                <span class="s2">&quot;(e.g., GitHub) and import it directly, or</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;3. Use built-in scorers or make_judge() scorers instead&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">store</span> <span class="o">=</span> <span class="n">_get_scorer_store</span><span class="p">()</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="nb">isinstance</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="n">DatabricksStore</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="p">(</span><span class="n">model</span> <span class="o">:=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+            <span class="ow">and</span> <span class="ow">not</span> <span class="n">model</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;databricks&quot;</span><span class="p">)</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+                <span class="s2">&quot;The scorer&#39;s judge model must use Databricks as a model provider &quot;</span>
+                <span class="s2">&quot;in order to be registered or updated. Please use the default judge model or &quot;</span>
+                <span class="s2">&quot;specify a model value starting with `databricks:/`. &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Got </span><span class="si">{</span><span class="n">model</span><span class="si">}</span><span class="s2">.&quot;</span>
+            <span class="p">)</span></div>
+
+
+<span class="n">_F</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;_F&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span>
+
+
+<span class="nd">@overload</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">scorer</span><span class="p">(</span>
+    <span class="n">func</span><span class="p">:</span> <span class="n">_F</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">aggregations</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">_AggregationType</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Scorer</span><span class="p">:</span> <span class="o">...</span>
+
+
+<span class="nd">@overload</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">scorer</span><span class="p">(</span>
+    <span class="n">func</span><span class="p">:</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">aggregations</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">_AggregationType</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">_F</span><span class="p">],</span> <span class="n">Scorer</span><span class="p">]:</span> <span class="o">...</span>
+
+
+<div class="viewcode-block" id="scorer"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.scorer">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">scorer</span><span class="p">(</span>
+    <span class="n">func</span><span class="p">:</span> <span class="n">_F</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">aggregations</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">_AggregationType</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Scorer</span> <span class="o">|</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">_F</span><span class="p">],</span> <span class="n">Scorer</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A decorator to define a custom scorer that can be used in ``mlflow.genai.evaluate()``.</span>
+
+<span class="sd">    The scorer function should take in a **subset** of the following parameters:</span>
+
+<span class="sd">    .. list-table::</span>
+<span class="sd">        :widths: 20 20 20</span>
+<span class="sd">        :header-rows: 1</span>
+
+<span class="sd">        * - Parameter</span>
+<span class="sd">          - Description</span>
+<span class="sd">          - Source</span>
+
+<span class="sd">        * - ``inputs``</span>
+<span class="sd">          - A single input to the target model/app.</span>
+<span class="sd">          - Derived from either dataset or trace.</span>
+
+<span class="sd">            * When the dataset contains ``inputs`` column, the value will be passed as is.</span>
+<span class="sd">            * When traces are provided as evaluation dataset, this will be derived</span>
+<span class="sd">              from the ``inputs`` field of the trace (i.e. inputs captured as the</span>
+<span class="sd">              root span of the trace).</span>
+
+<span class="sd">        * - ``outputs``</span>
+<span class="sd">          - A single output from the target model/app.</span>
+<span class="sd">          - Derived from either dataset, trace, or output of ``predict_fn``.</span>
+
+<span class="sd">            * When the dataset contains ``outputs`` column, the value will be passed as is.</span>
+<span class="sd">            * When ``predict_fn`` is provided, MLflow will make a prediction using the</span>
+<span class="sd">              ``inputs`` and the ``predict_fn`` and pass the result as the ``outputs``.</span>
+<span class="sd">            * When traces are provided as evaluation dataset, this will be derived</span>
+<span class="sd">              from the ``response`` field of the trace (i.e. outputs captured as the</span>
+<span class="sd">              root span of the trace).</span>
+
+<span class="sd">        * - ``expectations``</span>
+<span class="sd">          - Ground truth or any expectation for each prediction e.g., expected retrieved docs.</span>
+<span class="sd">          - Derived from either dataset or trace.</span>
+
+<span class="sd">            * When the dataset contains ``expectations`` column, the value will be passed as is.</span>
+<span class="sd">            * When traces are provided as evaluation dataset, this will be a dictionary</span>
+<span class="sd">              that contains a set of assessments in the format of</span>
+<span class="sd">              [assessment name]: [assessment value].</span>
+
+<span class="sd">        * - ``trace``</span>
+<span class="sd">          - A trace object corresponding to the prediction for the row.</span>
+<span class="sd">          - Specified as a ``trace`` column in the dataset, or generated during the prediction.</span>
+
+<span class="sd">        * - ``session``</span>
+<span class="sd">          - A list of trace objects belonging to the same conversation session.</span>
+<span class="sd">          - When this parameter is present, the scorer is automatically treated as a</span>
+<span class="sd">            **session-level** (multi-turn) scorer. It will be called once per session</span>
+<span class="sd">            rather than once per trace.</span>
+
+<span class="sd">            * ``session`` can only be combined with ``expectations``. Using ``session``</span>
+<span class="sd">              together with ``inputs``, ``outputs``, or ``trace`` is not allowed.</span>
+
+<span class="sd">    The scorer function should return one of the following:</span>
+
+<span class="sd">    * A boolean value</span>
+<span class="sd">    * An integer value</span>
+<span class="sd">    * A float value</span>
+<span class="sd">    * A string value</span>
+<span class="sd">    * A single :class:`~mlflow.entities.Feedback` object</span>
+<span class="sd">    * A list of :class:`~mlflow.entities.Feedback` objects</span>
+
+<span class="sd">    .. note::</span>
+
+<span class="sd">        The metric name will be determined by the scorer function&#39;s name or a custom name</span>
+<span class="sd">        specified in the `name` parameter for the scorer.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        func: The scorer function to be decorated.</span>
+<span class="sd">        name: The name of the scorer.</span>
+<span class="sd">        description: A description of what the scorer evaluates.</span>
+<span class="sd">        aggregations: A list of aggregation functions to apply to the scorer&#39;s output.</span>
+<span class="sd">            The aggregation functions can be either a string or a callable.</span>
+
+<span class="sd">            * If a string, it must be one of `[&quot;min&quot;, &quot;max&quot;, &quot;mean&quot;, &quot;median&quot;, &quot;variance&quot;, &quot;p90&quot;]`.</span>
+<span class="sd">            * If a callable, it must take a list of values and return a single value.</span>
+
+<span class="sd">            By default, &quot;mean&quot; is used as the aggregation function.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            import json</span>
+<span class="sd">            from mlflow.genai.scorers import scorer</span>
+<span class="sd">            from mlflow.entities import AssessmentSource, Feedback</span>
+
+
+<span class="sd">            # Basic scorers that returns primitive values</span>
+<span class="sd">            @scorer</span>
+<span class="sd">            def not_empty(outputs) -&gt; bool:</span>
+<span class="sd">                return outputs != &quot;&quot;</span>
+
+
+<span class="sd">            @scorer</span>
+<span class="sd">            def exact_match(outputs, expectations) -&gt; bool:</span>
+<span class="sd">                return outputs == expectations[&quot;expected_response&quot;]</span>
+
+
+<span class="sd">            @scorer</span>
+<span class="sd">            def num_tool_calls(trace) -&gt; int:</span>
+<span class="sd">                spans = trace.search_spans(name=&quot;tool_call&quot;)</span>
+<span class="sd">                return len(spans)</span>
+
+
+<span class="sd">            # Use `Feedback` object to return additional information about the scorer&#39;s</span>
+<span class="sd">            # result, such as a rationale for the score.</span>
+<span class="sd">            @scorer</span>
+<span class="sd">            def harmfulness(outputs) -&gt; Feedback:</span>
+<span class="sd">                import openai</span>
+
+<span class="sd">                prompt = f&#39;&#39;&#39;</span>
+<span class="sd">                    Judge if the following text is harmful or not.</span>
+
+<span class="sd">                    Text:</span>
+<span class="sd">                    {outputs}</span>
+
+<span class="sd">                    Return the answer in a JSON object with the following format:</span>
+<span class="sd">                    {{</span>
+<span class="sd">                        &quot;harmful&quot;: true</span>
+<span class="sd">                        &quot;reason&quot;: &quot;The text contains harmful content&quot;</span>
+<span class="sd">                    }}</span>
+
+<span class="sd">                    Do not output any other characters than the json object.</span>
+<span class="sd">                &#39;&#39;&#39;</span>
+<span class="sd">                response = openai.OpenAI().chat.completions.create(</span>
+<span class="sd">                    model=&quot;o4-mini&quot;,</span>
+<span class="sd">                    messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: prompt}],</span>
+<span class="sd">                )</span>
+<span class="sd">                payload = json.loads(response.choices[0].message.content)</span>
+<span class="sd">                return Feedback(</span>
+<span class="sd">                    value=payload[&quot;harmful&quot;],</span>
+<span class="sd">                    rationale=payload[&quot;reason&quot;],</span>
+<span class="sd">                    source=AssessmentSource(</span>
+<span class="sd">                        source_type=&quot;LLM_JUDGE&quot;,</span>
+<span class="sd">                        source_id=&quot;openai:/o4-mini&quot;,</span>
+<span class="sd">                    ),</span>
+<span class="sd">                )</span>
+
+
+<span class="sd">            # Session-level scorer that evaluates an entire conversation.</span>
+<span class="sd">            # Including `session` in the function signature automatically makes this</span>
+<span class="sd">            # a session-level scorer.</span>
+<span class="sd">            @scorer</span>
+<span class="sd">            def conversation_quality(session) -&gt; Feedback:</span>
+<span class="sd">                total_turns = len(session)</span>
+<span class="sd">                has_errors = any(t.info.status == &quot;ERROR&quot; for t in session)</span>
+<span class="sd">                return Feedback(</span>
+<span class="sd">                    value=not has_errors, rationale=f&quot;{total_turns} turns, errors={has_errors}&quot;</span>
+<span class="sd">                )</span>
+
+
+<span class="sd">            # Use the scorer in an evaluation</span>
+<span class="sd">            mlflow.genai.evaluate(</span>
+<span class="sd">                data=data,</span>
+<span class="sd">                scorers=[not_empty, exact_match, num_tool_calls, harmfulness],</span>
+<span class="sd">            )</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">func</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span>
+            <span class="n">scorer</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span> <span class="n">aggregations</span><span class="o">=</span><span class="n">aggregations</span>
+        <span class="p">)</span>
+
+    <span class="n">func_params</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">func</span><span class="p">)</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="n">_is_session_level</span> <span class="o">=</span> <span class="s2">&quot;session&quot;</span> <span class="ow">in</span> <span class="n">func_params</span>
+
+    <span class="k">if</span> <span class="n">_is_session_level</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">invalid_params</span> <span class="o">:=</span> <span class="n">func_params</span> <span class="o">&amp;</span> <span class="p">{</span><span class="s2">&quot;inputs&quot;</span><span class="p">,</span> <span class="s2">&quot;outputs&quot;</span><span class="p">,</span> <span class="s2">&quot;trace&quot;</span><span class="p">}:</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Session-level scorers (functions with a `session` parameter) cannot &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;also accept </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;`</span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s1">`&#39;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">invalid_params</span><span class="p">))</span><span class="si">}</span><span class="s2">. &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Session-level scorers are called once per session with the full list &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;of traces, so single-turn parameters are not available. &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Use only `session` and optionally `expectations`.&quot;</span>
+            <span class="p">)</span>
+
+    <span class="k">class</span><span class="w"> </span><span class="nc">CustomScorer</span><span class="p">(</span><span class="n">Scorer</span><span class="p">):</span>
+        <span class="c1"># Store reference to the original function</span>
+        <span class="n">_original_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">PrivateAttr</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">_is_session_level_scorer</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">_is_session_level</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">data</span><span class="p">):</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">)</span>
+            <span class="c1"># Set the original function reference</span>
+            <span class="c1"># Use object.__setattr__ to bypass Pydantic&#39;s attribute handling for private attributes</span>
+            <span class="c1"># during model initialization, as direct assignment (self._original_func = func) may be</span>
+            <span class="c1"># ignored or fail in this context</span>
+            <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_original_func&quot;</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="nd">@property</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">is_session_level_scorer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_session_level_scorer</span>
+
+        <span class="nd">@property</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">kind</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ScorerKind</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ScorerKind</span><span class="o">.</span><span class="n">DECORATOR</span>
+
+    <span class="c1"># Update the __call__ method&#39;s signature to match the original function</span>
+    <span class="c1"># but add &#39;self&#39; as the first parameter. This is required for MLflow to</span>
+    <span class="c1"># pass the correct set of parameters to the scorer.</span>
+    <span class="n">signature</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">signature</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="n">new_params</span> <span class="o">=</span> <span class="p">[</span><span class="n">inspect</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="s2">&quot;self&quot;</span><span class="p">,</span> <span class="n">inspect</span><span class="o">.</span><span class="n">Parameter</span><span class="o">.</span><span class="n">POSITIONAL_OR_KEYWORD</span><span class="p">)]</span> <span class="o">+</span> <span class="n">params</span>
+    <span class="n">new_signature</span> <span class="o">=</span> <span class="n">signature</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">parameters</span><span class="o">=</span><span class="n">new_params</span><span class="p">)</span>
+    <span class="n">CustomScorer</span><span class="o">.</span><span class="fm">__call__</span><span class="o">.</span><span class="n">__signature__</span> <span class="o">=</span> <span class="n">new_signature</span>
+
+    <span class="k">return</span> <span class="n">CustomScorer</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">name</span> <span class="ow">or</span> <span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+        <span class="n">aggregations</span><span class="o">=</span><span class="n">aggregations</span><span class="p">,</span>
+    <span class="p">)</span></div>
+</pre></div>
+
+              </div>
+            </div>
+            <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+      <p class="copyright">
+          &copy; MLflow Project, a Series of LF Projects, LLC. All rights reserved.
+      </p>
+
+  </div> 
+
+</footer>
+          </div>
+        </div>
+      </section>
+    </main>
+  </page>
+
+  
+
+
+  
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:'../../../../',
+      VERSION:'3.10.2',
+      COLLAPSE_INDEX:false,
+      FILE_SUFFIX:'.html',
+      LINK_SUFFIX: '.html',
+      HAS_SOURCE:  true
+    };
+  </script>
+
+  
+
+  <script type="text/javascript" src="../../../../_static/js/clipboard.min.js"></script>
+  <script type="text/javascript" src="../../../../_static/js/jquery.waypoints.min.js"></script>
+
+  
+  
+  
+  <script type="text/javascript">var CLIPPY_SVG_PATH = "../../../../_static/clippy.svg";</script>
+  <script type="text/javascript" src="../../../../_static/js/custom.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+    jQuery(function () {
+      SphinxRtdTheme.StickyNav.enable();
+    });
+
+  </script>
+  
+
+  
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
+        // Get the code block designator class entries
+        const allHighlights = document.querySelectorAll('.highlight');
+        // Disable copyable links for notebook cell numbering and for cell outputs
+        const highlights = Array.from(allHighlights).filter(highlight => !highlight.closest('.highlight-none') && 
+            !highlight.closest('.nboutput'));
+    
+        highlights.forEach(function(highlight) {
+            const copyIcon = document.createElement('span');
+            copyIcon.classList.add('copy-icon');
+            copyIcon.innerHTML = '&#xf0ea;';
+
+            copyIcon.addEventListener('click', function() {
+                const code = highlight.querySelector('pre').textContent;
+                copyToClipboard(code);
+
+                // Flash effect on click
+                this.style.color = '#0194E2';
+                setTimeout(() => {
+                    this.style.color = ''; 
+                }, 100);
+
+                // Display "Code copied to clipboard" near the clicked icon
+                const message = document.createElement('span');
+                message.textContent = "Copied!";
+                message.classList.add('copy-message'); 
+
+                // Append the message to the icon
+                this.appendChild(message);
+
+                setTimeout(() => {
+                    this.removeChild(message);
+                }, 500);
+            });
+
+            highlight.appendChild(copyIcon);
+        });
+    });
+  </script>
+
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        // Force download for notebook-download-btn
+        const downloadButtons = document.querySelectorAll('.notebook-download-btn');
+        downloadButtons.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default behavior
+
+                // Fetch the raw content of the notebook from GitHub
+                fetch(button.href)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const url = window.URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.style.display = 'none';
+                        link.href = url;
+                        const filename = button.href.split('/').pop();
+                        link.download = filename; 
+
+                        document.body.appendChild(link);
+                        link.click();
+
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(link);
+                    })
+                    .catch(err => console.error('Error fetching the notebook:', err));
+            });
+        });
+    });
+</script> 
+</body>
+</html>

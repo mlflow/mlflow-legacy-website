@@ -1,0 +1,569 @@
+
+
+<!DOCTYPE html>
+<!-- source: docs/source/_modules/mlflow/tracing/distributed -->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mlflow.tracing.distributed</title>
+  
+   
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="canonical" href="https://mlflow.org/docs/latest/_modules/mlflow/tracing/distributed.html">
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+  
+
+  
+
+  
+    
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer',"GTM-N6WMTTJ");</script>
+        <!-- End Google Tag Manager -->
+    
+  
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16857946923"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-16857946923');
+  </script>
+  <!-- Eng gtag -->
+
+  
+
+  
+  <meta name="docsearch:docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_version" content="current" data-rh="true">
+  <meta name="docsearch:version" content="current" data-rh="true">
+  <meta name="docusaurus_locale" content="en" data-rh="true">
+  <meta name="docsearch:language" content="en" data-rh="true">
+
+  
+  
+    
+
+  
+
+  
+  
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600" rel="stylesheet">
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/cards.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/grids.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/mobile.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/simple-cards.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/tabs.css" type="text/css" />
+    
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="MLflow 3.10.2 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+<script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+<script type="text/javascript" src="../../../_static/jquery.js"></script>
+<script type="text/javascript" src="../../../_static/underscore.js"></script>
+<script type="text/javascript" src="../../../_static/doctools.js"></script>
+<script type="text/javascript" src="../../../_static/tabs.js"></script>
+<script type="text/javascript" src="../../../_static/languagesections.js"></script>
+<script type="text/javascript" src="../../../_static/runllm.js"></script>
+
+<body class="wy-body-for-nav" role="document">
+  
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6WMTTJ"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  
+  <nav class="wy-nav-top header" role="navigation" aria-label="top navigation">
+    <div class="header-container">
+  <style scoped>
+    .header-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
+    }
+
+    .logo-container {
+      display: flex;
+      gap: 12px;
+      flex-direction: row;
+      white-space: nowrap;
+      align-items: center;
+      justify-content: center;
+    }
+
+    a:hover {
+      text-decoration: none;
+      color: #0194e2;
+    }
+  </style>
+  <div class="logo-container">
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
+    <a href="../../../index.html" class="wy-nav-top-logo">
+      <img
+        src="../../../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
+    </a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
+  </div>
+  <span class="header-link version">3.10.2</span>
+</div>
+  </nav>
+  <page>
+    
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side relative">
+      <div class="wy-side-scroll">
+  <div class="wy-side-nav-search">
+    
+
+    
+
+    
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+    
+  </div>
+
+  <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+    
+      <a href="../../../index.html">Home</a>
+    
+
+    
+      
+
+      
+        <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../python_api/index.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../typescript_api/index.html">TypeScript API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli.html">Command-Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auth/python-api.html">MLflow Authentication Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auth/rest-api.html">MLflow Authentication REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../R-api.html">R API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../java_api/index.html">Java API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rest-api.html">REST API</a></li>
+</ul>
+
+      
+    
+  </div>
+
+  <div role="contentinfo">
+    
+
+    <p>
+      <a id='feedbacklink' href="https://github.com/mlflow/mlflow/blob/master/CONTRIBUTING.md" target="_blank">Contribute</a>
+    </p>
+  </div>
+</div>
+    </nav>
+
+    <main class="wy-grid-for-nav">
+      <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+        <div class="wy-nav-content">
+          <div class="rst-content">
+            
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Documentation</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+        <li><a href="../../index.html">Module code</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+    
+      <li>mlflow.tracing.distributed</li>
+    
+    
+    <!-- <li class="wy-breadcrumbs-aside">
+      <a href="https://github.com/mlflow/mlflow/blob/master/docs/source/_modules/mlflow/tracing/distributed" class="fa fa-github"> Edit on GitHub</a>
+    </li> -->
+    
+  </ul>
+</div>
+            <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+              <div itemprop="articleBody">
+                
+  <h1>Source code for mlflow.tracing.distributed</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">contextmanager</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">opentelemetry.trace.propagation.tracecontext</span><span class="w"> </span><span class="kn">import</span> <span class="n">TraceContextTextMapPropagator</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">mlflow</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.span</span><span class="w"> </span><span class="kn">import</span> <span class="n">LiveSpan</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.telemetry.events</span><span class="w"> </span><span class="kn">import</span> <span class="n">TracingContextPropagation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.telemetry.track</span><span class="w"> </span><span class="kn">import</span> <span class="n">record_usage_event</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.provider</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_context_api</span><span class="p">,</span> <span class="n">get_current_context</span><span class="p">,</span> <span class="n">get_current_otel_span</span>
+
+<span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="get_tracing_context_headers_for_http_request"><a class="viewcode-back" href="../../../python_api/mlflow.tracing.html#mlflow.tracing.get_tracing_context_headers_for_http_request">[docs]</a><span class="nd">@record_usage_event</span><span class="p">(</span><span class="n">TracingContextPropagation</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_tracing_context_headers_for_http_request</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the http request headers that hold information of the tracing context.</span>
+<span class="sd">    The trace context is serialized as the traceparent header which is defined</span>
+<span class="sd">    in the W3C TraceContext specification.</span>
+<span class="sd">    For details, you can refer to</span>
+<span class="sd">    https://opentelemetry.io/docs/concepts/context-propagation/</span>
+<span class="sd">    and</span>
+<span class="sd">    https://www.w3.org/TR/trace-context/#traceparent-header</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The http request headers that hold information of the tracing context.</span>
+
+<span class="sd">    Example (client code):</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        import mlflow</span>
+<span class="sd">        from mlflow.tracing import get_tracing_context_headers_for_http_request</span>
+
+<span class="sd">        with mlflow.start_span(&quot;client-root&quot;) as client_span:</span>
+<span class="sd">            # Get the headers that hold information of the tracing context,</span>
+<span class="sd">            # and send request to remote agent with the headers</span>
+<span class="sd">            headers = get_tracing_context_headers_for_http_request()</span>
+<span class="sd">            resp = requests.post(f&quot;{base_url}/remote_agent_handler&quot;, headers=headers)</span>
+
+<span class="sd">    Example (server handler code):</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        import mlflow</span>
+<span class="sd">        from flask import Flask, request</span>
+<span class="sd">        from mlflow.tracing import set_tracing_context_from_http_request_headers</span>
+
+<span class="sd">        app = Flask(__name__)</span>
+
+
+<span class="sd">        @app.post(&quot;/agent-handler&quot;)</span>
+<span class="sd">        def handle():</span>
+<span class="sd">            headers = dict(request.headers)</span>
+<span class="sd">            with set_tracing_context_from_http_request_headers(headers):</span>
+<span class="sd">                with mlflow.start_span(&quot;server-handler&quot;) as span:</span>
+<span class="sd">                    # call agent ...</span>
+<span class="sd">                    span.set_attribute(&quot;key&quot;, &quot;value&quot;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">active_span</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">get_current_active_span</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">active_span</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+            <span class="s2">&quot;No active span found for fetching the trace context from. Returning an empty header.&quot;</span>
+        <span class="p">)</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">TraceContextTextMapPropagator</span><span class="p">()</span><span class="o">.</span><span class="n">inject</span><span class="p">(</span><span class="n">carrier</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="n">get_current_context</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">headers</span></div>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_tracing_headers_from_span</span><span class="p">(</span><span class="n">span</span><span class="p">:</span> <span class="n">LiveSpan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get traceparent headers pointing to the given span.</span>
+
+<span class="sd">    Unlike get_tracing_context_headers_for_http_request(), this does not rely on</span>
+<span class="sd">    the global context or OTel context propagation. It constructs the W3C</span>
+<span class="sd">    traceparent header directly from the span&#39;s trace and span IDs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ctx</span> <span class="o">=</span> <span class="n">span</span><span class="o">.</span><span class="n">_span</span><span class="o">.</span><span class="n">get_span_context</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ctx</span><span class="o">.</span><span class="n">is_valid</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{}</span>
+    <span class="n">trace_id</span> <span class="o">=</span> <span class="nb">format</span><span class="p">(</span><span class="n">ctx</span><span class="o">.</span><span class="n">trace_id</span><span class="p">,</span> <span class="s2">&quot;032x&quot;</span><span class="p">)</span>
+    <span class="n">span_id</span> <span class="o">=</span> <span class="nb">format</span><span class="p">(</span><span class="n">ctx</span><span class="o">.</span><span class="n">span_id</span><span class="p">,</span> <span class="s2">&quot;016x&quot;</span><span class="p">)</span>
+    <span class="n">flags</span> <span class="o">=</span> <span class="nb">format</span><span class="p">(</span><span class="n">ctx</span><span class="o">.</span><span class="n">trace_flags</span><span class="p">,</span> <span class="s2">&quot;02x&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;traceparent&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;00-</span><span class="si">{</span><span class="n">trace_id</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">span_id</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">flags</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span>
+
+
+<div class="viewcode-block" id="set_tracing_context_from_http_request_headers"><a class="viewcode-back" href="../../../python_api/mlflow.tracing.html#mlflow.tracing.set_tracing_context_from_http_request_headers">[docs]</a><span class="nd">@record_usage_event</span><span class="p">(</span><span class="n">TracingContextPropagation</span><span class="p">)</span>
+<span class="nd">@contextmanager</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">set_tracing_context_from_http_request_headers</span><span class="p">(</span><span class="n">headers</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Context manager to extract the trace context from the http request headers</span>
+<span class="sd">    and set the extracted trace context as the current trace context within the</span>
+<span class="sd">    scope of this context manager.</span>
+<span class="sd">    The trace context must be serialized as the &#39;traceparent&#39; header which is defined</span>
+<span class="sd">    in the W3C TraceContext specification, please see</span>
+<span class="sd">    :py:func:`mlflow.tracing.get_tracing_context_headers_for_http_request`</span>
+<span class="sd">    for how to get the http request headers.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        headers: The http request headers to extract the trace context from.</span>
+
+<span class="sd">    Example (client code):</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        import mlflow</span>
+<span class="sd">        from mlflow.tracing import get_tracing_context_headers_for_http_request</span>
+
+<span class="sd">        with mlflow.start_span(&quot;client-root&quot;) as client_span:</span>
+<span class="sd">            # Get the headers that hold information of the tracing context,</span>
+<span class="sd">            # and send request to remote agent with the headers</span>
+<span class="sd">            headers = get_tracing_context_headers_for_http_request()</span>
+<span class="sd">            resp = requests.post(f&quot;{base_url}/remote_agent_handler&quot;, headers=headers)</span>
+
+<span class="sd">    Example (server handler code):</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        import mlflow</span>
+<span class="sd">        from flask import Flask, request</span>
+<span class="sd">        from mlflow.tracing import set_tracing_context_from_http_request_headers</span>
+
+<span class="sd">        app = Flask(__name__)</span>
+
+
+<span class="sd">        @app.post(&quot;/agent-handler&quot;)</span>
+<span class="sd">        def handle():</span>
+<span class="sd">            headers = dict(request.headers)</span>
+<span class="sd">            with set_tracing_context_from_http_request_headers(headers):</span>
+<span class="sd">                with mlflow.start_span(&quot;server-handler&quot;) as span:</span>
+<span class="sd">                    # call agent ...</span>
+<span class="sd">                    span.set_attribute(&quot;key&quot;, &quot;value&quot;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.trace_info</span><span class="w"> </span><span class="kn">import</span> <span class="n">TraceInfo</span><span class="p">,</span> <span class="n">TraceState</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.trace_manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">InMemoryTraceManager</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">generate_mlflow_trace_id_from_otel_trace_id</span>
+
+    <span class="n">token</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">otel_trace_id</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">trace_manager</span> <span class="o">=</span> <span class="n">InMemoryTraceManager</span><span class="o">.</span><span class="n">get_instance</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;Traceparent&quot;</span> <span class="ow">in</span> <span class="n">headers</span><span class="p">:</span>
+            <span class="c1"># Note: Some http server framework (e.g. flask) converts http header key</span>
+            <span class="c1"># first letter to upper case, but `TraceContextTextMapPropagator` can&#39;t</span>
+            <span class="c1"># recognize the key &#39;Traceparent&#39;, so that convert it to lower case.</span>
+            <span class="n">traceparent</span> <span class="o">=</span> <span class="n">headers</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;Traceparent&quot;</span><span class="p">)</span>
+            <span class="n">headers</span><span class="p">[</span><span class="s2">&quot;traceparent&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">traceparent</span>
+
+        <span class="k">if</span> <span class="s2">&quot;traceparent&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">headers</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+                <span class="s2">&quot;The http request headers do not contain the required key &#39;traceparent&#39;, &quot;</span>
+                <span class="s2">&quot;please generate the request headers &quot;</span>
+                <span class="s2">&quot;by &#39;mlflow.tracing.distributed.get_tracing_context_headers_for_http_request&#39; &quot;</span>
+                <span class="s2">&quot;API.&quot;</span>
+            <span class="p">)</span>
+        <span class="n">ctx</span> <span class="o">=</span> <span class="n">TraceContextTextMapPropagator</span><span class="p">()</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span>
+        <span class="n">token</span> <span class="o">=</span> <span class="n">get_context_api</span><span class="p">()</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
+
+        <span class="n">extracted_span</span> <span class="o">=</span> <span class="n">get_current_otel_span</span><span class="p">()</span>
+        <span class="n">span_context</span> <span class="o">=</span> <span class="n">extracted_span</span><span class="o">.</span><span class="n">get_span_context</span><span class="p">()</span>
+        <span class="n">otel_trace_id</span> <span class="o">=</span> <span class="n">span_context</span><span class="o">.</span><span class="n">trace_id</span>
+
+        <span class="n">trace_id</span> <span class="o">=</span> <span class="n">generate_mlflow_trace_id_from_otel_trace_id</span><span class="p">(</span><span class="n">otel_trace_id</span><span class="p">)</span>
+        <span class="n">dummy_trace_info</span> <span class="o">=</span> <span class="n">TraceInfo</span><span class="p">(</span>
+            <span class="n">trace_id</span><span class="o">=</span><span class="n">trace_id</span><span class="p">,</span>
+            <span class="n">trace_location</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">request_time</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">state</span><span class="o">=</span><span class="n">TraceState</span><span class="o">.</span><span class="n">IN_PROGRESS</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">trace_manager</span><span class="o">.</span><span class="n">register_trace</span><span class="p">(</span><span class="n">otel_trace_id</span><span class="p">,</span> <span class="n">dummy_trace_info</span><span class="p">,</span> <span class="n">is_remote_trace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">yield</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">token</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">get_context_api</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">otel_trace_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">trace_manager</span><span class="o">.</span><span class="n">pop_trace</span><span class="p">(</span><span class="n">otel_trace_id</span><span class="p">)</span></div>
+</pre></div>
+
+              </div>
+            </div>
+            <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+      <p class="copyright">
+          &copy; MLflow Project, a Series of LF Projects, LLC. All rights reserved.
+      </p>
+
+  </div> 
+
+</footer>
+          </div>
+        </div>
+      </section>
+    </main>
+  </page>
+
+  
+
+
+  
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:'../../../',
+      VERSION:'3.10.2',
+      COLLAPSE_INDEX:false,
+      FILE_SUFFIX:'.html',
+      LINK_SUFFIX: '.html',
+      HAS_SOURCE:  true
+    };
+  </script>
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/clipboard.min.js"></script>
+  <script type="text/javascript" src="../../../_static/js/jquery.waypoints.min.js"></script>
+
+  
+  
+  
+  <script type="text/javascript">var CLIPPY_SVG_PATH = "../../../_static/clippy.svg";</script>
+  <script type="text/javascript" src="../../../_static/js/custom.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+    jQuery(function () {
+      SphinxRtdTheme.StickyNav.enable();
+    });
+
+  </script>
+  
+
+  
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
+        // Get the code block designator class entries
+        const allHighlights = document.querySelectorAll('.highlight');
+        // Disable copyable links for notebook cell numbering and for cell outputs
+        const highlights = Array.from(allHighlights).filter(highlight => !highlight.closest('.highlight-none') && 
+            !highlight.closest('.nboutput'));
+    
+        highlights.forEach(function(highlight) {
+            const copyIcon = document.createElement('span');
+            copyIcon.classList.add('copy-icon');
+            copyIcon.innerHTML = '&#xf0ea;';
+
+            copyIcon.addEventListener('click', function() {
+                const code = highlight.querySelector('pre').textContent;
+                copyToClipboard(code);
+
+                // Flash effect on click
+                this.style.color = '#0194E2';
+                setTimeout(() => {
+                    this.style.color = ''; 
+                }, 100);
+
+                // Display "Code copied to clipboard" near the clicked icon
+                const message = document.createElement('span');
+                message.textContent = "Copied!";
+                message.classList.add('copy-message'); 
+
+                // Append the message to the icon
+                this.appendChild(message);
+
+                setTimeout(() => {
+                    this.removeChild(message);
+                }, 500);
+            });
+
+            highlight.appendChild(copyIcon);
+        });
+    });
+  </script>
+
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        // Force download for notebook-download-btn
+        const downloadButtons = document.querySelectorAll('.notebook-download-btn');
+        downloadButtons.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default behavior
+
+                // Fetch the raw content of the notebook from GitHub
+                fetch(button.href)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const url = window.URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.style.display = 'none';
+                        link.href = url;
+                        const filename = button.href.split('/').pop();
+                        link.download = filename; 
+
+                        document.body.appendChild(link);
+                        link.click();
+
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(link);
+                    })
+                    .catch(err => console.error('Error fetching the notebook:', err));
+            });
+        });
+    });
+</script> 
+</body>
+</html>

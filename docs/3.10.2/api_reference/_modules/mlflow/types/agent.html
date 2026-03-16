@@ -1,0 +1,623 @@
+
+
+<!DOCTYPE html>
+<!-- source: docs/source/_modules/mlflow/types/agent -->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mlflow.types.agent</title>
+  
+   
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="canonical" href="https://mlflow.org/docs/latest/_modules/mlflow/types/agent.html">
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+  
+
+  
+
+  
+    
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer',"GTM-N6WMTTJ");</script>
+        <!-- End Google Tag Manager -->
+    
+  
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16857946923"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-16857946923');
+  </script>
+  <!-- Eng gtag -->
+
+  
+
+  
+  <meta name="docsearch:docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_version" content="current" data-rh="true">
+  <meta name="docsearch:version" content="current" data-rh="true">
+  <meta name="docusaurus_locale" content="en" data-rh="true">
+  <meta name="docsearch:language" content="en" data-rh="true">
+
+  
+  
+    
+
+  
+
+  
+  
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600" rel="stylesheet">
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/cards.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/grids.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/mobile.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/simple-cards.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/tabs.css" type="text/css" />
+    
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="MLflow 3.10.2 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+<script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+<script type="text/javascript" src="../../../_static/jquery.js"></script>
+<script type="text/javascript" src="../../../_static/underscore.js"></script>
+<script type="text/javascript" src="../../../_static/doctools.js"></script>
+<script type="text/javascript" src="../../../_static/tabs.js"></script>
+<script type="text/javascript" src="../../../_static/languagesections.js"></script>
+<script type="text/javascript" src="../../../_static/runllm.js"></script>
+
+<body class="wy-body-for-nav" role="document">
+  
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6WMTTJ"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  
+  <nav class="wy-nav-top header" role="navigation" aria-label="top navigation">
+    <div class="header-container">
+  <style scoped>
+    .header-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
+    }
+
+    .logo-container {
+      display: flex;
+      gap: 12px;
+      flex-direction: row;
+      white-space: nowrap;
+      align-items: center;
+      justify-content: center;
+    }
+
+    a:hover {
+      text-decoration: none;
+      color: #0194e2;
+    }
+  </style>
+  <div class="logo-container">
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
+    <a href="../../../index.html" class="wy-nav-top-logo">
+      <img
+        src="../../../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
+    </a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
+  </div>
+  <span class="header-link version">3.10.2</span>
+</div>
+  </nav>
+  <page>
+    
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side relative">
+      <div class="wy-side-scroll">
+  <div class="wy-side-nav-search">
+    
+
+    
+
+    
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+    
+  </div>
+
+  <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+    
+      <a href="../../../index.html">Home</a>
+    
+
+    
+      
+
+      
+        <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../python_api/index.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../typescript_api/index.html">TypeScript API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli.html">Command-Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auth/python-api.html">MLflow Authentication Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auth/rest-api.html">MLflow Authentication REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../R-api.html">R API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../java_api/index.html">Java API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rest-api.html">REST API</a></li>
+</ul>
+
+      
+    
+  </div>
+
+  <div role="contentinfo">
+    
+
+    <p>
+      <a id='feedbacklink' href="https://github.com/mlflow/mlflow/blob/master/CONTRIBUTING.md" target="_blank">Contribute</a>
+    </p>
+  </div>
+</div>
+    </nav>
+
+    <main class="wy-grid-for-nav">
+      <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+        <div class="wy-nav-content">
+          <div class="rst-content">
+            
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Documentation</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+        <li><a href="../../index.html">Module code</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+    
+      <li>mlflow.types.agent</li>
+    
+    
+    <!-- <li class="wy-breadcrumbs-aside">
+      <a href="https://github.com/mlflow/mlflow/blob/master/docs/source/_modules/mlflow/types/agent" class="fa fa-github"> Edit on GitHub</a>
+    </li> -->
+    
+  </ul>
+</div>
+            <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+              <div itemprop="articleBody">
+                
+  <h1>Source code for mlflow.types.agent</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConfigDict</span><span class="p">,</span> <span class="n">model_validator</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.types.chat</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">ChatUsage</span><span class="p">,</span> <span class="n">ToolCall</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.types.llm</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">_custom_inputs_col_spec</span><span class="p">,</span>
+    <span class="n">_custom_outputs_col_spec</span><span class="p">,</span>
+    <span class="n">_token_usage_stats_col_spec</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.types.schema</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Array</span><span class="p">,</span>
+    <span class="n">ColSpec</span><span class="p">,</span>
+    <span class="n">DataType</span><span class="p">,</span>
+    <span class="n">Map</span><span class="p">,</span>
+    <span class="n">Object</span><span class="p">,</span>
+    <span class="n">Property</span><span class="p">,</span>
+    <span class="n">Schema</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="ChatAgentMessage"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.agent.ChatAgentMessage">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ChatAgentMessage</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A message in a ChatAgent model request or response.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        role (str): The role of the entity that sent the message (e.g. ``&quot;user&quot;``, ``&quot;system&quot;``,</span>
+<span class="sd">            ``&quot;assistant&quot;``, ``&quot;tool&quot;``).</span>
+<span class="sd">        content (str): The content of the message.</span>
+<span class="sd">            **Optional** Can be ``None`` if tool_calls is provided.</span>
+<span class="sd">        name (str): The name of the entity that sent the message. **Optional** defaults to ``None``</span>
+<span class="sd">        id (str): The ID of the message. Required when it is either part of a</span>
+<span class="sd">            :py:class:`ChatAgentResponse` or :py:class:`ChatAgentChunk`.</span>
+<span class="sd">        tool_calls (List[:py:class:`mlflow.types.chat.ToolCall`]): A list of tool calls made by the</span>
+<span class="sd">            model. **Optional** defaults to ``None``</span>
+<span class="sd">        tool_call_id (str): The ID of the tool call that this message is a response to.</span>
+<span class="sd">            **Optional** defaults to ``None``</span>
+<span class="sd">        attachments (Dict[str, str]): A dictionary of attachments. **Optional** defaults to ``None``</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">role</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">content</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">tool_calls</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ToolCall</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">tool_call_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="c1"># TODO make this a pydantic class with subtypes once we have more details on usage</span>
+    <span class="n">attachments</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="ChatAgentMessage.check_content_and_tool_calls"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.agent.ChatAgentMessage.check_content_and_tool_calls">[docs]</a>    <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_content_and_tool_calls</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Ensure at least one of &#39;content&#39; or &#39;tool_calls&#39; is set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">content</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_calls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Either &#39;content&#39; or &#39;tool_calls&#39; must be provided.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="ChatAgentMessage.check_tool_messages"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.agent.ChatAgentMessage.check_tool_messages">[docs]</a>    <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_tool_messages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Ensure that the &#39;name&#39; and &#39;tool_call_id&#39; fields are set for tool messages.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">role</span> <span class="o">==</span> <span class="s2">&quot;tool&quot;</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_call_id</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Both &#39;name&#39; and &#39;tool_call_id&#39; must be provided for tool messages.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div></div>
+
+
+<div class="viewcode-block" id="ChatContext"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.agent.ChatContext">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ChatContext</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Context to be used in a ChatAgent endpoint.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        conversation_id (str): The ID of the conversation. **Optional** defaults to ``None``</span>
+<span class="sd">        user_id (str): The ID of the user. **Optional** defaults to ``None``</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">conversation_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="ChatAgentRequest"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.agent.ChatAgentRequest">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ChatAgentRequest</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Format of a ChatAgent interface request.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        messages: A list of :py:class:`ChatAgentMessage` that will be passed to the model.</span>
+<span class="sd">        context (:py:class:`ChatContext`): The context to be used in the chat endpoint. Includes</span>
+<span class="sd">            conversation_id and user_id. **Optional** defaults to ``None``</span>
+<span class="sd">        custom_inputs (Dict[str, Any]): An optional param to provide arbitrary additional context</span>
+<span class="sd">            to the model. The dictionary values must be JSON-serializable.</span>
+<span class="sd">            **Optional** defaults to ``None``</span>
+<span class="sd">        stream (bool): Whether to stream back responses as they are generated.</span>
+<span class="sd">            **Optional**, defaults to ``False``</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">messages</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ChatAgentMessage</span><span class="p">]</span>
+    <span class="n">context</span><span class="p">:</span> <span class="n">ChatContext</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">custom_inputs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">stream</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="ChatAgentResponse"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.agent.ChatAgentResponse">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ChatAgentResponse</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents the response of a ChatAgent.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        messages: A list of :py:class:`ChatAgentMessage` that are returned from the model.</span>
+<span class="sd">        finish_reason (str): The reason why generation stopped. **Optional** defaults to ``None``</span>
+<span class="sd">        custom_outputs (Dict[str, Any]): An optional param to provide arbitrary additional context</span>
+<span class="sd">            from the model. The dictionary values must be JSON-serializable. **Optional**, defaults</span>
+<span class="sd">            to ``None``</span>
+<span class="sd">        usage (:py:class:`mlflow.types.chat.ChatUsage`): The token usage of the request</span>
+<span class="sd">            **Optional**, defaults to None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">validate_assignment</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">messages</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ChatAgentMessage</span><span class="p">]</span>
+    <span class="n">finish_reason</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="c1"># TODO: add finish_reason_metadata once we have a plan for usage</span>
+    <span class="n">custom_outputs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">usage</span><span class="p">:</span> <span class="n">ChatUsage</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="ChatAgentResponse.check_message_ids"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.agent.ChatAgentResponse.check_message_ids">[docs]</a>    <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_message_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Ensure that all messages have an ID and it is unique.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">message_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">msg</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">messages</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">msg_id</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">msg_id</span> <span class="ow">in</span> <span class="n">message_ids</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;All ChatAgentMessage objects in field `messages` must have an ID. You can use &quot;</span>
+                <span class="s2">&quot;`str(uuid.uuid4())` to generate a unique ID.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">message_ids</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">message_ids</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;All ChatAgentMessage objects in field `messages` must have unique IDs. &quot;</span>
+                <span class="s2">&quot;You can use `str(uuid.uuid4())` to generate a unique ID.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div></div>
+
+
+<div class="viewcode-block" id="ChatAgentChunk"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.agent.ChatAgentChunk">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ChatAgentChunk</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a single chunk within the streaming response of a ChatAgent.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        delta: A :py:class:`ChatAgentMessage` representing a single chunk within the list of</span>
+<span class="sd">            messages comprising agent output. In particular, clients should assume the `content`</span>
+<span class="sd">            field within this `ChatAgentMessage` contains only part of the message content, and</span>
+<span class="sd">            aggregate message content by ID across chunks. More info can be found in the docstring</span>
+<span class="sd">            of :py:func:`ChatAgent.predict_stream &lt;mlflow.pyfunc.ChatAgent.predict_stream&gt;`.</span>
+<span class="sd">        finish_reason (str): The reason why generation stopped. **Optional** defaults to ``None``</span>
+<span class="sd">        custom_outputs (Dict[str, Any]): An optional param to provide arbitrary additional context</span>
+<span class="sd">            from the model. The dictionary values must be JSON-serializable. **Optional**, defaults</span>
+<span class="sd">            to ``None``</span>
+<span class="sd">        usage (:py:class:`mlflow.types.chat.ChatUsage`): The token usage of the request</span>
+<span class="sd">            **Optional**, defaults to None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">validate_assignment</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">delta</span><span class="p">:</span> <span class="n">ChatAgentMessage</span>
+    <span class="n">finish_reason</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="c1"># TODO: add finish_reason_metadata once we have a plan for usage</span>
+    <span class="n">custom_outputs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">usage</span><span class="p">:</span> <span class="n">ChatUsage</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="ChatAgentChunk.check_message_id"><a class="viewcode-back" href="../../../python_api/mlflow.types.html#mlflow.types.agent.ChatAgentChunk.check_message_id">[docs]</a>    <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_message_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Ensure that the message ID is unique.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="o">.</span><span class="n">id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;The field `delta` of ChatAgentChunk must contain a ChatAgentMessage object with an&quot;</span>
+                <span class="s2">&quot; ID. If this chunk contains partial content, it should have the same ID as other &quot;</span>
+                <span class="s2">&quot; chunks in the same message. See &quot;</span>
+                <span class="s2">&quot;https://mlflow.org/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatAgent.predict_stream&quot;</span>
+                <span class="s2">&quot; for more details. You can use `str(uuid.uuid4())` to generate a unique ID.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div></div>
+
+
+<span class="c1"># fmt: off</span>
+<span class="n">_chat_agent_messages_col_spec</span> <span class="o">=</span> <span class="n">ColSpec</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;messages&quot;</span><span class="p">,</span>
+    <span class="nb">type</span><span class="o">=</span><span class="n">Array</span><span class="p">(</span>
+        <span class="n">Object</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">Property</span><span class="p">(</span><span class="s2">&quot;role&quot;</span><span class="p">,</span> <span class="n">DataType</span><span class="o">.</span><span class="n">string</span><span class="p">),</span>
+                <span class="n">Property</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">,</span> <span class="n">DataType</span><span class="o">.</span><span class="n">string</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+                <span class="n">Property</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">DataType</span><span class="o">.</span><span class="n">string</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+                <span class="n">Property</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="n">DataType</span><span class="o">.</span><span class="n">string</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+                <span class="n">Property</span><span class="p">(</span><span class="s2">&quot;tool_calls&quot;</span><span class="p">,</span> <span class="n">Array</span><span class="p">(</span><span class="n">Object</span><span class="p">([</span>
+                    <span class="n">Property</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="n">DataType</span><span class="o">.</span><span class="n">string</span><span class="p">),</span>
+                    <span class="n">Property</span><span class="p">(</span><span class="s2">&quot;function&quot;</span><span class="p">,</span> <span class="n">Object</span><span class="p">([</span>
+                        <span class="n">Property</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">DataType</span><span class="o">.</span><span class="n">string</span><span class="p">),</span>
+                        <span class="n">Property</span><span class="p">(</span><span class="s2">&quot;arguments&quot;</span><span class="p">,</span> <span class="n">DataType</span><span class="o">.</span><span class="n">string</span><span class="p">),</span>
+                    <span class="p">])),</span>
+                    <span class="n">Property</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="n">DataType</span><span class="o">.</span><span class="n">string</span><span class="p">),</span>
+                <span class="p">])),</span> <span class="kc">False</span><span class="p">),</span>
+                <span class="n">Property</span><span class="p">(</span><span class="s2">&quot;tool_call_id&quot;</span><span class="p">,</span> <span class="n">DataType</span><span class="o">.</span><span class="n">string</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+                <span class="n">Property</span><span class="p">(</span><span class="s2">&quot;attachments&quot;</span><span class="p">,</span> <span class="n">Map</span><span class="p">(</span><span class="n">DataType</span><span class="o">.</span><span class="n">string</span><span class="p">),</span> <span class="kc">False</span><span class="p">),</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+    <span class="p">),</span>
+<span class="p">)</span>
+
+<span class="c1"># TODO: move out all params to a ParamSchema when Map(AnyType()) is supported by ParamSpec</span>
+<span class="n">CHAT_AGENT_INPUT_SCHEMA</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="n">_chat_agent_messages_col_spec</span><span class="p">,</span>
+        <span class="n">ColSpec</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;context&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">Object</span><span class="p">([</span>
+            <span class="n">Property</span><span class="p">(</span><span class="s2">&quot;conversation_id&quot;</span><span class="p">,</span> <span class="n">DataType</span><span class="o">.</span><span class="n">string</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+            <span class="n">Property</span><span class="p">(</span><span class="s2">&quot;user_id&quot;</span><span class="p">,</span> <span class="n">DataType</span><span class="o">.</span><span class="n">string</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+        <span class="p">]),</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+        <span class="n">_custom_inputs_col_spec</span><span class="p">,</span>
+        <span class="n">ColSpec</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;stream&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">DataType</span><span class="o">.</span><span class="n">boolean</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">CHAT_AGENT_OUTPUT_SCHEMA</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="n">_chat_agent_messages_col_spec</span><span class="p">,</span>
+        <span class="n">ColSpec</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;finish_reason&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">DataType</span><span class="o">.</span><span class="n">string</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+        <span class="n">_custom_outputs_col_spec</span><span class="p">,</span>
+        <span class="n">_token_usage_stats_col_spec</span><span class="p">,</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">CHAT_AGENT_INPUT_EXAMPLE</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;messages&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Hello!&quot;</span><span class="p">},</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+              </div>
+            </div>
+            <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+      <p class="copyright">
+          &copy; MLflow Project, a Series of LF Projects, LLC. All rights reserved.
+      </p>
+
+  </div> 
+
+</footer>
+          </div>
+        </div>
+      </section>
+    </main>
+  </page>
+
+  
+
+
+  
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:'../../../',
+      VERSION:'3.10.2',
+      COLLAPSE_INDEX:false,
+      FILE_SUFFIX:'.html',
+      LINK_SUFFIX: '.html',
+      HAS_SOURCE:  true
+    };
+  </script>
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/clipboard.min.js"></script>
+  <script type="text/javascript" src="../../../_static/js/jquery.waypoints.min.js"></script>
+
+  
+  
+  
+  <script type="text/javascript">var CLIPPY_SVG_PATH = "../../../_static/clippy.svg";</script>
+  <script type="text/javascript" src="../../../_static/js/custom.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+    jQuery(function () {
+      SphinxRtdTheme.StickyNav.enable();
+    });
+
+  </script>
+  
+
+  
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
+        // Get the code block designator class entries
+        const allHighlights = document.querySelectorAll('.highlight');
+        // Disable copyable links for notebook cell numbering and for cell outputs
+        const highlights = Array.from(allHighlights).filter(highlight => !highlight.closest('.highlight-none') && 
+            !highlight.closest('.nboutput'));
+    
+        highlights.forEach(function(highlight) {
+            const copyIcon = document.createElement('span');
+            copyIcon.classList.add('copy-icon');
+            copyIcon.innerHTML = '&#xf0ea;';
+
+            copyIcon.addEventListener('click', function() {
+                const code = highlight.querySelector('pre').textContent;
+                copyToClipboard(code);
+
+                // Flash effect on click
+                this.style.color = '#0194E2';
+                setTimeout(() => {
+                    this.style.color = ''; 
+                }, 100);
+
+                // Display "Code copied to clipboard" near the clicked icon
+                const message = document.createElement('span');
+                message.textContent = "Copied!";
+                message.classList.add('copy-message'); 
+
+                // Append the message to the icon
+                this.appendChild(message);
+
+                setTimeout(() => {
+                    this.removeChild(message);
+                }, 500);
+            });
+
+            highlight.appendChild(copyIcon);
+        });
+    });
+  </script>
+
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        // Force download for notebook-download-btn
+        const downloadButtons = document.querySelectorAll('.notebook-download-btn');
+        downloadButtons.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default behavior
+
+                // Fetch the raw content of the notebook from GitHub
+                fetch(button.href)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const url = window.URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.style.display = 'none';
+                        link.href = url;
+                        const filename = button.href.split('/').pop();
+                        link.download = filename; 
+
+                        document.body.appendChild(link);
+                        link.click();
+
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(link);
+                    })
+                    .catch(err => console.error('Error fetching the notebook:', err));
+            });
+        });
+    });
+</script> 
+</body>
+</html>
