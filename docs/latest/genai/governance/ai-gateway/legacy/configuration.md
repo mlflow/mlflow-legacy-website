@@ -1,7 +1,5 @@
 # AI Gateway Server Configuration
 
-<!-- -->
-
 Configure providers, endpoints, and advanced settings for your MLflow AI Gateway.
 
 ## Provider Configurations[​](#provider-configurations "Direct link to Provider Configurations")

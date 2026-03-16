@@ -225,7 +225,7 @@ def handle_chat(request: Request, chat_request: ChatRequest):
 
 ### Feedback Collection[​](#feedback-collection "Direct link to Feedback Collection")
 
-Capturing user feedback on specific interactions is essential for understanding quality and improving your GenAI application. For detailed guidance, see [Collect User Feedback](/docs/latest/genai/tracing/collect-user-feedback.md). The following example demonstrates how to collect feedback in a FastAPI application.
+Capturing user feedback on specific interactions is essential for understanding quality and improving your LLM application or AI agent. For detailed guidance, see [Collect User Feedback](/docs/latest/genai/tracing/collect-user-feedback.md). The following example demonstrates how to collect feedback in a FastAPI application.
 
 python
 
@@ -260,9 +260,7 @@ def handle_chat_feedback(
     client = MlflowClient()
     experiment = client.get_experiment_by_name("production-genai-app")
     traces = client.search_traces(locations=[experiment.experiment_id])
-    traces = [
-        trace for trace in traces if trace.info.client_request_id == client_request_id
-    ][:1]
+    traces = [trace for trace in traces if trace.info.client_request_id == client_request_id][:1]
 
     if not traces:
         return {
@@ -275,9 +273,7 @@ def handle_chat_feedback(
         trace_id=traces[0].info.trace_id,
         name="response_is_correct",
         value=feedback.is_correct,
-        source=AssessmentSource(
-            source_type="HUMAN", source_id=request.headers.get("X-User-ID")
-        ),
+        source=AssessmentSource(source_type="HUMAN", source_id=request.headers.get("X-User-ID")),
         rationale=feedback.comment,
     )
 

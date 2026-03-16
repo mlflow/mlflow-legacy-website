@@ -1,6 +1,6 @@
 # Auto Tracing Integrations
 
-MLflow Tracing is integrated with 40+ popular Generative AI libraries and frameworks, offering **one-line automatic tracing** experience. This allows you to gain immediate observability into your GenAI applications with minimal setup.
+MLflow Tracing is integrated with 40+ popular LLM and AI agent libraries and frameworks, offering **one-line automatic tracing** experience. This allows you to gain immediate observability into your LLM applications and AI agents with minimal setup.
 
 MLflow's automatic tracing provides:
 
@@ -227,6 +227,18 @@ Click any integration below to get started with detailed setup instructions.
 
 [Claude Code](/docs/latest/genai/tracing/integrations/listing/claude_code.md)
 
+[![Opencode Logo](/docs/latest/images/logos/opencode-logo.png)](/docs/latest/genai/tracing/integrations/listing/opencode.md)
+
+[Opencode](/docs/latest/genai/tracing/integrations/listing/opencode.md)
+
+[![Langfuse Logo](/docs/latest/images/logos/langfuse-logo.png)](/docs/latest/genai/tracing/integrations/listing/langfuse.md)
+
+[Langfuse](/docs/latest/genai/tracing/integrations/listing/langfuse.md)
+
+[![Arize / Phoenix Logo](/docs/latest/images/logos/arize-phoenix-logo.png)](/docs/latest/genai/tracing/integrations/listing/arize.md)
+
+[Arize / Phoenix](/docs/latest/genai/tracing/integrations/listing/arize.md)
+
 ## Gateways[​](#gateways "Direct link to Gateways")
 
 [![MLflow AI Gateway Logo](/docs/latest/images/logos/mlflow-logo.svg)](/docs/latest/genai/tracing/integrations/listing/mlflow-ai-gateway.md)
@@ -270,6 +282,10 @@ Click any integration below to get started with detailed setup instructions.
 [TrueFoundry](/docs/latest/genai/tracing/integrations/listing/truefoundry.md)
 
 ## No-Code[​](#no-code "Direct link to No-Code")
+
+[![Goose Logo](/docs/latest/images/logos/goose-logo.png)](/docs/latest/genai/tracing/integrations/listing/goose.md)
+
+[Goose](/docs/latest/genai/tracing/integrations/listing/goose.md)
 
 [![Langflow Logo](/docs/latest/images/logos/langflow.svg)](/docs/latest/genai/tracing/integrations/listing/langflow.md)
 

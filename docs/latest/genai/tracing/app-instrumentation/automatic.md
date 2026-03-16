@@ -1,8 +1,8 @@
 # Automatic Tracing
 
-MLflow Tracing is integrated with various GenAI libraries and provides **one-line automatic tracing** experience for each library (and the combination of them!). This page shows detailed examples to integrate MLflow with popular GenAI libraries.
+MLflow Tracing is integrated with various LLM and AI agent frameworks and provides **one-line automatic tracing** experience for each library (and the combination of them!). This page shows detailed examples to integrate MLflow with popular LLM and AI agent frameworks.
 
-[](/docs/latest/images/llms/tracing/tracing-top.mp4)
+![Automatic Tracing with MLflow](/docs/latest/images/llms/anthropic/anthropic-tracing.png)
 
 ## Supported Integrations[​](#supported-integrations "Direct link to Supported Integrations")
 
@@ -214,6 +214,18 @@ Each integration automatically captures your application's logic and intermediat
 
 [Claude Code](/docs/latest/genai/tracing/integrations/listing/claude_code.md)
 
+[![Opencode Logo](/docs/latest/images/logos/opencode-logo.png)](/docs/latest/genai/tracing/integrations/listing/opencode.md)
+
+[Opencode](/docs/latest/genai/tracing/integrations/listing/opencode.md)
+
+[![Langfuse Logo](/docs/latest/images/logos/langfuse-logo.png)](/docs/latest/genai/tracing/integrations/listing/langfuse.md)
+
+[Langfuse](/docs/latest/genai/tracing/integrations/listing/langfuse.md)
+
+[![Arize / Phoenix Logo](/docs/latest/images/logos/arize-phoenix-logo.png)](/docs/latest/genai/tracing/integrations/listing/arize.md)
+
+[Arize / Phoenix](/docs/latest/genai/tracing/integrations/listing/arize.md)
+
 ### Gateways[​](#gateways "Direct link to Gateways")
 
 [![MLflow AI Gateway Logo](/docs/latest/images/logos/mlflow-logo.svg)](/docs/latest/genai/tracing/integrations/listing/mlflow-ai-gateway.md)
@@ -257,6 +269,10 @@ Each integration automatically captures your application's logic and intermediat
 [TrueFoundry](/docs/latest/genai/tracing/integrations/listing/truefoundry.md)
 
 ### No-Code[​](#no-code "Direct link to No-Code")
+
+[![Goose Logo](/docs/latest/images/logos/goose-logo.png)](/docs/latest/genai/tracing/integrations/listing/goose.md)
+
+[Goose](/docs/latest/genai/tracing/integrations/listing/goose.md)
 
 [![Langflow Logo](/docs/latest/images/logos/langflow.svg)](/docs/latest/genai/tracing/integrations/listing/langflow.md)
 

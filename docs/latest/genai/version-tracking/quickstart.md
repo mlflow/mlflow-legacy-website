@@ -1,6 +1,6 @@
 # Version Tracking Quickstart
 
-Build and track a LangChain-based chatbot with MLflow's version management capabilities. This quickstart demonstrates prompt versioning, application tracking, trace generation, and performance evaluation using MLflow's GenAI features.
+Build and track a LangChain-based chatbot with MLflow's version management capabilities. This quickstart demonstrates prompt versioning, application tracking, trace generation, and performance evaluation using MLflow's LLM and AI agent features.
 
 ## Prerequisites[​](#prerequisites "Direct link to Prerequisites")
 
@@ -8,7 +8,7 @@ Build and track a LangChain-based chatbot with MLflow's version management capab
 
 MLflow 3 Required
 
-This quickstart requires MLflow version 3.0 or higher for full GenAI functionality.
+This quickstart requires MLflow version 3.0 or higher for full LLM and AI agent functionality.
 
 bash
 
@@ -29,7 +29,7 @@ export OPENAI_API_KEY=your_api_key_here
 
 ## What You'll Learn[​](#what-youll-learn "Direct link to What You'll Learn")
 
-This quickstart covers the essential concepts for building trackable GenAI applications with MLflow's version management system.
+This quickstart covers the essential concepts for building trackable LLM applications and AI agents with MLflow's version management system.
 
 #### Version Control Prompts
 
@@ -91,7 +91,7 @@ chain = prompt | ChatOpenAI(temperature=0.7) | StrOutputParser()
 # Test the chain
 question = "What is MLflow?"
 print(chain.invoke({"question": question}))
-# MLflow is an open-source platform for managing the end-to-end machine learning lifecycle...
+# MLflow is the largest open source AI engineering platform for agents and LLMs...
 ```
 
 ## Step 3: Enable Trace Observability[​](#step-3-enable-trace-observability "Direct link to Step 3: Enable Trace Observability")
@@ -204,9 +204,7 @@ eval_data = [
 def evaluate_response(response, expected_keywords):
     """Simple keyword-based evaluation."""
     response_lower = response.lower()
-    keyword_matches = sum(
-        1 for keyword in expected_keywords if keyword.lower() in response_lower
-    )
+    keyword_matches = sum(1 for keyword in expected_keywords if keyword.lower() in response_lower)
     coverage_score = keyword_matches / len(expected_keywords)
     response_length = len(response.split())
 
@@ -221,30 +219,24 @@ def evaluate_response(response, expected_keywords):
 evaluation_results = []
 for i, (output, eval_item) in enumerate(zip(outputs, eval_data)):
     metrics = evaluate_response(output, eval_item["expected_keywords"])
-    evaluation_results.append(
-        {
-            "question": eval_item["question"],
-            "response": output,
-            "keyword_coverage": metrics["keyword_coverage"],
-            "response_length": metrics["response_length"],
-            "keyword_matches": metrics["keyword_matches"],
-        }
-    )
+    evaluation_results.append({
+        "question": eval_item["question"],
+        "response": output,
+        "keyword_coverage": metrics["keyword_coverage"],
+        "response_length": metrics["response_length"],
+        "keyword_matches": metrics["keyword_matches"],
+    })
 
     print(
-        f"Question {i+1}: {metrics['keyword_matches']}/{len(eval_item['expected_keywords'])} keywords found"
+        f"Question {i + 1}: {metrics['keyword_matches']}/{len(eval_item['expected_keywords'])} keywords found"
     )
     print(f"Coverage: {metrics['keyword_coverage']:.1%}")
     print(f"Response length: {metrics['response_length']} words\n")
 
 # Log evaluation metrics
 with mlflow.start_run():
-    avg_coverage = sum(r["keyword_coverage"] for r in evaluation_results) / len(
-        evaluation_results
-    )
-    avg_length = sum(r["response_length"] for r in evaluation_results) / len(
-        evaluation_results
-    )
+    avg_coverage = sum(r["keyword_coverage"] for r in evaluation_results) / len(evaluation_results)
+    avg_length = sum(r["response_length"] for r in evaluation_results) / len(evaluation_results)
 
     mlflow.log_metric("avg_keyword_coverage", avg_coverage)
     mlflow.log_metric("avg_response_length", avg_length)
@@ -259,7 +251,7 @@ The evaluation metrics are logged to MLflow for tracking and comparison. Navigat
 
 ## What You've Built[​](#what-youve-built "Direct link to What You've Built")
 
-You now have a complete version-tracked GenAI application with comprehensive observability and evaluation capabilities.
+You now have a complete version-tracked LLM application with comprehensive observability and evaluation capabilities.
 
 What you've accomplished:
 
@@ -272,7 +264,7 @@ What you've accomplished:
 
 ### [Track Application Versions](/docs/latest/genai/version-tracking/track-application-versions-with-mlflow.md)
 
-[Learn advanced version tracking patterns for production GenAI applications](/docs/latest/genai/version-tracking/track-application-versions-with-mlflow.md)
+[Learn advanced version tracking patterns for production LLM applications and AI agents](/docs/latest/genai/version-tracking/track-application-versions-with-mlflow.md)
 
 [Learn more →](/docs/latest/genai/version-tracking/track-application-versions-with-mlflow.md)
 
@@ -290,6 +282,6 @@ What you've accomplished:
 
 ### [Evaluation & Monitoring](/docs/latest/genai/eval-monitor.md)
 
-[Build comprehensive evaluation pipelines for production GenAI applications](/docs/latest/genai/eval-monitor.md)
+[Build comprehensive evaluation pipelines for production LLM applications and AI agents](/docs/latest/genai/eval-monitor.md)
 
 [Learn more →](/docs/latest/genai/eval-monitor.md)

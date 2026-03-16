@@ -1,6 +1,6 @@
 # Create custom code-based scorers
 
-Custom code-based [scorers](/docs/latest/genai/eval-monitor/scorers.md) offer the ultimate flexibility to define precisely how your GenAI application's quality is measured. You can define evaluation metrics tailored to your specific business use case, whether based on simple heuristics, advanced logic, or programmatic evaluations.
+Custom code-based [scorers](/docs/latest/genai/eval-monitor/scorers.md) offer the ultimate flexibility to define precisely how your LLM application or AI agent's quality is measured. You can define evaluation metrics tailored to your specific business use case, whether based on simple heuristics, advanced logic, or programmatic evaluations.
 
 Use custom scorers for the following scenarios:
 
@@ -11,9 +11,13 @@ Use custom scorers for the following scenarios:
 
 For a tutorial with many examples, see [Code-based scorer examples](/docs/latest/genai/eval-monitor/scorers/custom/code-examples.md).
 
+Custom scorers are for offline evaluation only
+
+Custom code-based scorers (both the [`@scorer` decorator](#define-scorers-with-the-scorer-decorator) and the [`Scorer` class](#define-scorers-with-the-scorer-class)) work with [`mlflow.genai.evaluate()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.evaluate) for offline evaluation. They are **not supported** for [automatic evaluation](/docs/latest/genai/eval-monitor/automatic-evaluations.md) (production monitoring), which only supports [LLM judges](/docs/latest/genai/eval-monitor/scorers.md#llms-as-judges) such as [built-in judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md), [`make_judge()`](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges/create-custom-judge.md), and [Guidelines](/docs/latest/genai/eval-monitor/scorers/llm-judge/guidelines.md).
+
 ## How custom scorers work[​](#how-custom-scorers-work "Direct link to How custom scorers work")
 
-Custom scorers are written in Python and give you full control to evaluate any data from your app's traces. After you define a custom scorer, you can use it exactly like a [built-in LLM Judge](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md#available-judges).
+Custom scorers are written in Python and give you full control to evaluate any data from your app's traces. After you define a custom scorer, you can use it with [`mlflow.genai.evaluate()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.evaluate) just like a [built-in LLM Judge](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md#available-judges).
 
 For example, suppose you want a scorer that checks if the LLM's response exactly matches the `expected_response` and is short enough. The image of the MLflow UI below shows traces scored by these custom metrics.
 
@@ -92,10 +96,8 @@ def my_custom_scorer(
         dict[str, Any]
     ],  # App's raw input, a dictionary of input argument names and values
     outputs: Optional[Any],  # App's raw output
-    expectations: Optional[
-        dict[str, Any]
-    ],  # Ground truth, a dictionary of label names and values
-    trace: Optional[mlflow.entities.Trace]  # Complete trace with all spans and metadata
+    expectations: Optional[dict[str, Any]],  # Ground truth, a dictionary of label names and values
+    trace: Optional[mlflow.entities.Trace],  # Complete trace with all spans and metadata
 ) -> Union[int, float, bool, str, Feedback, List[Feedback]]:
     # Your evaluation logic here
     ...
@@ -179,9 +181,7 @@ python
 def comprehensive_check(inputs, outputs):
     return [
         Feedback(name="relevance", value=True, rationale="Directly addresses query"),
-        Feedback(
-            name="tone", value="professional", rationale="Appropriate for audience"
-        ),
+        Feedback(name="tone", value="professional", rationale="Appropriate for audience"),
         Feedback(name="length", value=150, rationale="Word count within limits"),
     ]
 ```
@@ -251,9 +251,7 @@ def retrieved_document_recall(trace: Trace, expectations: dict) -> Feedback:
         all_document_urls.extend([document["doc_uri"] for document in span.outputs])
 
     # Compute the recall
-    true_positives = len(
-        set(all_document_urls) & set(expectations["relevant_document_urls"])
-    )
+    true_positives = len(set(all_document_urls) & set(expectations["relevant_document_urls"]))
     expected_positives = len(expectations["relevant_document_urls"])
     recall = true_positives / expected_positives
     return Feedback(
@@ -368,9 +366,7 @@ def is_valid_response(outputs):
         return Feedback(value=True, rationale="Valid JSON with all required fields")
 
     except json.JSONDecodeError as e:
-        return Feedback(
-            error=e
-        )  # Can pass exception object directly to the error parameter
+        return Feedback(error=e)  # Can pass exception object directly to the error parameter
 ```
 
 The `error` parameter accepts:
@@ -456,7 +452,7 @@ class GoodScorer(Scorer):
 
 [Learn more →](/docs/latest/genai/eval-monitor/scorers/custom/tutorial.md)
 
-### [Evaluate GenAI during development](/docs/latest/genai/eval-monitor.md)
+### [Evaluate during development](/docs/latest/genai/eval-monitor.md)
 
 [Understand how mlflow.genai.evaluate() uses your scorers](/docs/latest/genai/eval-monitor.md)
 

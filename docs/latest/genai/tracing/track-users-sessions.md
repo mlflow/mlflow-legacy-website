@@ -2,7 +2,7 @@
 
 [](/docs/latest/images/llms/tracing/chat-sessions-demo.mp4)
 
-Many real-world AI applications use session to maintain multi-turn user interactions. MLflow Tracing provides built-in support for associating traces with users and grouping them into sessions. Tracking users and sessions in your GenAI application provides essential context for understanding user behavior, analyzing conversation flows, and improving personalization.
+Many real-world AI applications use sessions to maintain multi-turn user interactions. MLflow Tracing provides built-in support for associating traces with users and grouping them into sessions. Tracking users and sessions in your LLM application or AI agent provides essential context for understanding user behavior, analyzing conversation flows, and improving personalization.
 
 ## Store User and Session IDs in Metadata[​](#store-user-and-session-ids-in-metadata "Direct link to Store User and Session IDs in Metadata")
 
@@ -47,7 +47,7 @@ def chat_completion(message: list[dict], user_id: str, session_id: str):
 typescript
 
 ```
-import * as mlflow from "mlflow-tracing";
+import * as mlflow from "@mlflow/core";
 
 const chatCompletion = mlflow.trace(
     (message: Array<Record<string, any>>, userId: string, sessionId: string) => {
@@ -137,8 +137,8 @@ typescript
 ```
 import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
-import * as mlflow from 'mlflow-tracing';
-import { tracedOpenAI } from "mlflow-openai";
+import * as mlflow from '@mlflow/core';
+import { tracedOpenAI } from "@mlflow/openai";
 import OpenAI from 'openai';
 
 const app = express();

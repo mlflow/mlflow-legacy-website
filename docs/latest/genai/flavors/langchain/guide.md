@@ -54,9 +54,7 @@ from langchain.prompts import PromptTemplate
 import mlflow
 
 # Ensure the OpenAI API key is set in the environment
-assert (
-    "OPENAI_API_KEY" in os.environ
-), "Please set the OPENAI_API_KEY environment variable."
+assert "OPENAI_API_KEY" in os.environ, "Please set the OPENAI_API_KEY environment variable."
 
 # Initialize the OpenAI model and the prompt template
 llm = OpenAI(temperature=0.9)
@@ -147,12 +145,8 @@ import mlflow
 # and that you have a accounts with SerpAPI and OpenAI to use their APIs.
 
 # Ensuring necessary API keys are set
-assert (
-    "OPENAI_API_KEY" in os.environ
-), "Please set the OPENAI_API_KEY environment variable."
-assert (
-    "SERPAPI_API_KEY" in os.environ
-), "Please set the SERPAPI_API_KEY environment variable."
+assert "OPENAI_API_KEY" in os.environ, "Please set the OPENAI_API_KEY environment variable."
+assert "SERPAPI_API_KEY" in os.environ, "Please set the SERPAPI_API_KEY environment variable."
 
 # Load the language model for agent control
 llm = OpenAI(temperature=0)
@@ -161,9 +155,7 @@ llm = OpenAI(temperature=0)
 tools = load_tools(["serpapi", "llm-math"], llm=llm)
 
 # Finally, let's initialize an agent with the tools, the language model, and the type of agent we want to use.
-agent = initialize_agent(
-    tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True
-)
+agent = initialize_agent(tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True)
 
 # Log the agent in an MLflow run
 with mlflow.start_run():
@@ -195,7 +187,7 @@ python
 * **Agent Initialization and Usage**: Details the initialization process of a LangChain agent with specific tools and model settings, and how it can be used to perform complex queries.
 * **Efficient Model Management and Deployment**: Illustrates the ease with which complex LangChain agents can be managed and deployed using MLflow, from logging to prediction.
 
-## Real-Time Streaming Outputs with LangChain and GenAI LLMs[​](#real-time-streaming-outputs-with-langchain-and-genai-llms "Direct link to Real-Time Streaming Outputs with LangChain and GenAI LLMs")
+## Real-Time Streaming Outputs with LangChain and LLMs[​](#real-time-streaming-outputs-with-langchain-and-llms "Direct link to Real-Time Streaming Outputs with LangChain and LLMs")
 
 note
 
@@ -203,7 +195,7 @@ Stream responses via the `predict_stream` API are only available in MLflow versi
 
 ### Overview of Streaming Output Capabilities[​](#overview-of-streaming-output-capabilities "Direct link to Overview of Streaming Output Capabilities")
 
-LangChain integration within MLflow enables real-time streaming outputs from various GenAI language models (LLMs) that support such functionality. This feature is essential for applications that require immediate, incremental responses, facilitating dynamic interactions such as conversational agents or live content generation.
+LangChain integration within MLflow enables real-time streaming outputs from various language models (LLMs) that support such functionality. This feature is essential for applications that require immediate, incremental responses, facilitating dynamic interactions such as conversational agents or live content generation.
 
 ### Supported Streaming Models[​](#supported-streaming-models "Direct link to Supported Streaming Models")
 
@@ -329,9 +321,7 @@ from langchain.vectorstores import FAISS
 
 import mlflow
 
-assert (
-    "OPENAI_API_KEY" in os.environ
-), "Please set the OPENAI_API_KEY environment variable."
+assert "OPENAI_API_KEY" in os.environ, "Please set the OPENAI_API_KEY environment variable."
 
 with tempfile.TemporaryDirectory() as temp_dir:
     persist_dir = os.path.join(temp_dir, "faiss_index")
@@ -364,11 +354,7 @@ with tempfile.TemporaryDirectory() as temp_dir:
 
 # Load the retrievalQA chain
 loaded_model = mlflow.pyfunc.load_model(logged_model.model_uri)
-print(
-    loaded_model.predict(
-        [{"query": "What did the president say about Ketanji Brown Jackson"}]
-    )
-)
+print(loaded_model.predict([{"query": "What did the president say about Ketanji Brown Jackson"}]))
 ```
 
 The output of the example above is shown below:
@@ -409,9 +395,7 @@ from langchain.vectorstores import FAISS
 
 import mlflow
 
-assert (
-    "OPENAI_API_KEY" in os.environ
-), "Please set the OPENAI_API_KEY environment variable."
+assert "OPENAI_API_KEY" in os.environ, "Please set the OPENAI_API_KEY environment variable."
 
 with tempfile.TemporaryDirectory() as temp_dir:
     persist_dir = os.path.join(temp_dir, "faiss_index")
@@ -442,11 +426,7 @@ with tempfile.TemporaryDirectory() as temp_dir:
 
 # Load the retriever chain
 loaded_model = mlflow.pyfunc.load_model(logged_model.model_uri)
-print(
-    loaded_model.predict(
-        [{"query": "What did the president say about Ketanji Brown Jackson"}]
-    )
-)
+print(loaded_model.predict([{"query": "What did the president say about Ketanji Brown Jackson"}]))
 ```
 
 The output of the example above is shown below:

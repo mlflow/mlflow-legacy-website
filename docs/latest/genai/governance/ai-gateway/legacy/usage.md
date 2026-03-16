@@ -1,7 +1,5 @@
 # AI Gateway Server Usage
 
-<!-- -->
-
 Learn how to query your AI Gateway endpoints, integrate with applications, and leverage different APIs and tools.
 
 ## Basic Querying[​](#basic-querying "Direct link to Basic Querying")

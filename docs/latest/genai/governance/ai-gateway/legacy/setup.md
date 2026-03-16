@@ -1,7 +1,5 @@
 # AI Gateway Server Setup
 
-<!-- -->
-
 Get your MLflow AI Gateway up and running quickly with this step-by-step setup guide.
 
 ## Installation[​](#installation "Direct link to Installation")

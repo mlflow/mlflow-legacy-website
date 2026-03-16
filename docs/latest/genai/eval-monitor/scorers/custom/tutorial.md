@@ -1,6 +1,6 @@
 # Develop code-based scorers
 
-In MLflow Evaluation for GenAI, [custom code-based scorers](/docs/latest/genai/eval-monitor/scorers/custom.md) allow you to define flexible evaluation metrics for your AI agent or application.
+In MLflow Evaluation, [custom code-based scorers](/docs/latest/genai/eval-monitor/scorers/custom.md) allow you to define flexible evaluation metrics for your AI agent or application.
 
 As you develop scorers, you will often need to iterate quickly. Use this developer workflow to update your scorer without rerunning your entire app each time:
 

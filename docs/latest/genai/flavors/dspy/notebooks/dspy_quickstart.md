@@ -142,12 +142,12 @@ class CSVDataset(Dataset):
       train_df, test_df = read_data_and_subset_to_categories()
 
       # Sample for each label
-      train_samples_df = pd.concat(
-          [group.sample(n=self.n_train_per_label) for _, group in train_df.groupby("label")]
-      )
-      test_samples_df = pd.concat(
-          [group.sample(n=self.n_test_per_label) for _, group in test_df.groupby("label")]
-      )
+      train_samples_df = pd.concat([
+          group.sample(n=self.n_train_per_label) for _, group in train_df.groupby("label")
+      ])
+      test_samples_df = pd.concat([
+          group.sample(n=self.n_test_per_label) for _, group in test_df.groupby("label")
+      ])
 
       # Set DSPy class variables
       self._train = train_samples_df.to_dict(orient="records")

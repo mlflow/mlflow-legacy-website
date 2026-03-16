@@ -1,6 +1,6 @@
 # Compare Application Versions with Traces
 
-Objective version comparison drives successful GenAI development. MLflow's trace-based comparison enables you to analyze performance differences, validate improvements, and make data-driven deployment decisions across application iterations.
+Objective version comparison drives successful LLM application and AI agent development. MLflow's trace-based comparison enables you to analyze performance differences, validate improvements, and make data-driven deployment decisions across application iterations.
 
 ## Why Trace-Based Comparison Works[​](#why-trace-based-comparison-works "Direct link to Why Trace-Based Comparison Works")
 
@@ -94,7 +94,7 @@ print("🔄 Generating traces for version comparison...")
 
 # Run both versions on the same inputs
 for i, question in enumerate(test_questions):
-    print(f"Testing scenario {i+1}: {question[:30]}...")
+    print(f"Testing scenario {i + 1}: {question[:30]}...")
 
     # Generate trace for v1
     v1_response = basic_agent(question)
@@ -220,6 +220,6 @@ This gives you a clear, data-driven view of how your application versions compar
 
 ### [MLflow Tracing](/docs/latest/genai/tracing.md)
 
-[Explore MLflow's comprehensive tracing capabilities for GenAI applications](/docs/latest/genai/tracing.md)
+[Explore MLflow's comprehensive tracing capabilities for LLM applications and AI agents](/docs/latest/genai/tracing.md)
 
 [Learn more →](/docs/latest/genai/tracing.md)

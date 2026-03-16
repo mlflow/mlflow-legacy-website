@@ -80,21 +80,12 @@ import transformers
 # Read a pre-trained conversation pipeline from HuggingFace hub
 conversational_pipeline = transformers.pipeline(model="microsoft/DialoGPT-medium")
 
-# Define the signature
-signature = mlflow.models.infer_signature(
-    "Hi there, chatbot!",
-    mlflow.transformers.generate_signature_output(
-        conversational_pipeline, "Hi there, chatbot!"
-    ),
-)
-
 # Log the pipeline
 with mlflow.start_run():
     model_info = mlflow.transformers.log_model(
         transformers_model=conversational_pipeline,
         name="chatbot",
         task="conversational",
-        signature=signature,
         input_example="A clever and witty question",
     )
 
@@ -130,8 +121,6 @@ python
 
 ```
 import mlflow
-from mlflow.models import infer_signature
-from mlflow.transformers import generate_signature_output
 import transformers
 
 architecture = "mrm8488/t5-base-finetuned-common_gen"
@@ -142,12 +131,6 @@ model = transformers.pipeline(
 )
 data = "pencil draw paper"
 
-# Infer the signature
-signature = infer_signature(
-    data,
-    generate_signature_output(model, data),
-)
-
 # Define an model_config
 model_config = {
     "num_beams": 5,
@@ -156,12 +139,12 @@ model_config = {
     "remove_invalid_values": True,
 }
 
-# Saving model_config with the model
+# Saving model_config with the model, signature is inferred from input_example
 mlflow.transformers.save_model(
     model,
     path="text2text",
     model_config=model_config,
-    signature=signature,
+    input_example=data,
 )
 
 pyfunc_loaded = mlflow.pyfunc.load_model("text2text")
@@ -169,9 +152,7 @@ pyfunc_loaded = mlflow.pyfunc.load_model("text2text")
 result = pyfunc_loaded.predict(data)
 
 # overriding some inference configuration with different values
-pyfunc_loaded = mlflow.pyfunc.load_model(
-    "text2text", model_config=dict(do_sample=False)
-)
+pyfunc_loaded = mlflow.pyfunc.load_model("text2text", model_config=dict(do_sample=False))
 ```
 
 note
@@ -184,8 +165,6 @@ python
 
 ```
 import mlflow
-from mlflow.models import infer_signature
-from mlflow.transformers import generate_signature_output
 import transformers
 
 architecture = "mrm8488/t5-base-finetuned-common_gen"
@@ -208,19 +187,12 @@ inference_params = {
     "do_sample": True,
 }
 
-# Infer the signature including params
-signature_with_params = infer_signature(
-    data,
-    generate_signature_output(model, data),
-    params=inference_params,
-)
-
-# Saving model with signature and model config
+# Saving model with model config, signature is inferred from input_example
 mlflow.transformers.save_model(
     model,
     path="text2text",
     model_config=model_config,
-    signature=signature_with_params,
+    input_example=(data, inference_params),
 )
 
 pyfunc_loaded = mlflow.pyfunc.load_model("text2text")
@@ -311,9 +283,7 @@ with mlflow.start_run():
     )
 
 # Load the components as a pipeline
-loaded_pipeline = mlflow.transformers.load_model(
-    model_info.model_uri, return_type="pipeline"
-)
+loaded_pipeline = mlflow.transformers.load_model(model_info.model_uri, return_type="pipeline")
 
 print(type(loaded_pipeline).__name__)
 # >> TextClassificationPipeline
@@ -337,9 +307,7 @@ import mlflow
 translation_pipeline = transformers.pipeline(
     task="translation_en_to_fr",
     model=transformers.T5ForConditionalGeneration.from_pretrained("t5-small"),
-    tokenizer=transformers.T5TokenizerFast.from_pretrained(
-        "t5-small", model_max_length=100
-    ),
+    tokenizer=transformers.T5TokenizerFast.from_pretrained("t5-small", model_max_length=100),
 )
 
 with mlflow.start_run():
@@ -388,7 +356,7 @@ In order to preserve any attached legal requirements to the usage of any model t
 
 For pipelines that support `pyfunc`, there are 3 means of attaching a model signature to the `MLmodel` file.
 
-* Provide a model signature explicitly via setting a valid `ModelSignature` to the `signature` attribute. This can be generated via the helper utility [`mlflow.transformers.generate_signature_output()`](/docs/latest/api_reference/python_api/mlflow.transformers.html#mlflow.transformers.generate_signature_output)
+* Provide a model signature explicitly via setting a valid `ModelSignature` to the `signature` attribute.
 
 * Provide an `input_example`. The signature will be inferred and validated that it matches the appropriate input type. The output type will be validated by performing inference automatically (if the model is a `pyfunc` supported type).
 
@@ -420,9 +388,7 @@ task = "translation_en_to_fr"
 my_pipeline = transformers.pipeline(
     task=task,
     model=transformers.T5ForConditionalGeneration.from_pretrained("t5-small"),
-    tokenizer=transformers.T5TokenizerFast.from_pretrained(
-        "t5-small", model_max_length=100
-    ),
+    tokenizer=transformers.T5TokenizerFast.from_pretrained("t5-small", model_max_length=100),
     framework="pt",
 )
 
@@ -471,9 +437,7 @@ task = "translation_en_to_fr"
 my_pipeline = transformers.pipeline(
     task=task,
     model=transformers.T5ForConditionalGeneration.from_pretrained("t5-small"),
-    tokenizer=transformers.T5TokenizerFast.from_pretrained(
-        "t5-small", model_max_length=100
-    ),
+    tokenizer=transformers.T5TokenizerFast.from_pretrained("t5-small", model_max_length=100),
     framework="pt",
 )
 
@@ -526,16 +490,14 @@ An example of specifying an appropriate uri-based input model signature for an a
 python
 
 ```
-from mlflow.models import infer_signature
-from mlflow.transformers import generate_signature_output
+import mlflow
 
 url = "https://www.mywebsite.com/sound/files/for/transcription/file111.mp3"
-signature = infer_signature(url, generate_signature_output(my_audio_pipeline, url))
 with mlflow.start_run():
     mlflow.transformers.log_model(
         transformers_model=my_audio_pipeline,
         name="my_transcriber",
-        signature=signature,
+        input_example=url,
     )
 ```
 
