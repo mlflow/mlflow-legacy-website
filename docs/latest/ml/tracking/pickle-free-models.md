@@ -1,5 +1,9 @@
 # Pickle-Free Model format
 
+Experimental
+
+This feature is experimental and may change in future releases.
+
 Saving models with Python's `pickle` or `cloudpickle` relies on Python's object serialization mechanism, which can execute arbitrary code during deserialization. MLflow supports safer **pickle-free** saving formats for several model flavors. Prefer these formats when possible.
 
 Upcoming Default Behavior Change
