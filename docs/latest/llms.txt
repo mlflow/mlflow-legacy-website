@@ -269,7 +269,7 @@
 - [Search Runs](/docs/latest/ml/search/search-runs.md): This guide will walk you through how to search your MLflow runs through the MLflow UI and Python API.
 - [MLflow Tracking](/docs/latest/ml/tracking.md): Log parameters, metrics, and artifacts for ML experiments. Compare runs, visualize results, and reproduce models.
 - [Automatic Logging with MLflow Tracking](/docs/latest/ml/tracking/autolog.md): Auto logging is a powerful feature that allows you to log metrics, parameters, and models without the need for explicit log statements. All you need to do is to
-- [Pickle-Free Model format](/docs/latest/ml/tracking/pickle-free-models.md): Saving models with Python's pickle or cloudpickle relies on Python's object serialization mechanism, which can execute arbitrary code during deserialization. MLflow supports safer pickle-free saving formats for several model flavors. Prefer these formats when possible.
+- [Pickle-Free Model format](/docs/latest/ml/tracking/pickle-free-models.md): This feature is experimental and may change in future releases.
 - [MLflow Tracking Quickstart](/docs/latest/ml/tracking/quickstart.md): Need help setting up tracking? Try MLflow Assistant - a powerful AI assistant that can help you set up MLflow tracking for your project.
 - [System Metrics](/docs/latest/ml/tracking/system-metrics.md): MLflow allows users to log system metrics including CPU stats, GPU stats, memory usage, network traffic, and
 - [MLflow Tracking APIs](/docs/latest/ml/tracking/tracking-api.md): MLflow Tracking provides comprehensive APIs across multiple programming languages to capture your machine learning experiments. Whether you prefer automatic instrumentation or granular control, MLflow adapts to your workflow.
