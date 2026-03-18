@@ -107,7 +107,9 @@ Explore the MLflow's machine learning capabilities and integrations below to enh
 
 [Kubernetes Deployment](/docs/latest/ml/deployment/deploy-model-to-kubernetes.md)
 
-![MLflow Deployment](/docs/latest/assets/images/mlflow-deployment-overview-99db410b2c58fedf506eb9ce5aa41a86.png)
+[Modal Deployment](/docs/latest/ml/deployment/deploy-model-to-modal.md)
+
+![MLflow Deployment](/docs/latest/assets/images/mlflow-deployment-overview-f0b56bbb6d5689f022a5cff47f16f832.png)
 
 ### Explore Native MLflow ML Library Integrations[​](#explore-native-mlflow-ml-library-integrations "Direct link to Explore Native MLflow ML Library Integrations")
 
