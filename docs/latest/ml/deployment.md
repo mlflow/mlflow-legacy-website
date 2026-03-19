@@ -2,7 +2,7 @@
 
 After training your machine learning model and ensuring its performance, the next step is deploying it to a production environment. This process can be complex, but MLflow simplifies it by offering an easy toolset for deploying your ML models to various targets, including local environments, cloud services, and Kubernetes clusters.
 
-![](/docs/latest/assets/images/mlflow-deployment-overview-99db410b2c58fedf506eb9ce5aa41a86.png)
+![](/docs/latest/assets/images/mlflow-deployment-overview-f0b56bbb6d5689f022a5cff47f16f832.png)
 
 By using MLflow deployment toolset, you can enjoy the following benefits:
 

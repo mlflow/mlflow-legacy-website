@@ -1,4 +1,4 @@
-# MLflow
+# MLflow AI Platform
 
 
 ## Docs
@@ -213,7 +213,7 @@
 - [Compare Application Versions with Traces](/docs/latest/genai/version-tracking/compare-app-versions.md): Compare different application versions using traces to track improvements and identify the best performing iteration.
 - [Version Tracking Quickstart](/docs/latest/genai/version-tracking/quickstart.md): Build and track a LangChain-based chatbot with MLflow's version management capabilities. This quickstart demonstrates prompt versioning, application tracking, trace generation, and performance evaluation using MLflow's LLM and AI agent features.
 - [Track versions of Git-based applications with MLflow](/docs/latest/genai/version-tracking/track-application-versions-with-mlflow.md): Learn how to track versions of your LLM application or AI agent when your app's code resides in Git, using MLflow's automatic Git versioning capabilities.
-- [MLflow: AI Engineering Platform for LLMs, Agents, & Models](/docs/latest/ml.md): Track experiments, version models, evaluate performance, and deploy ML models to production with MLflow's open source platform.
+- [MLflow: AI Engineering Platform for LLMs, Agents, & Models](/docs/latest/ml.md): Learn about MLflow, the largest open source AI engineering platform for debugging, evaluating, monitoring, and optimizing agents, LLMs, and ML models.
 - [Community Model Flavors](/docs/latest/ml/community-model-flavors.md): Discover community-built MLflow model flavors for additional ML framework integrations.
 - [MLflow Dataset Tracking](/docs/latest/ml/dataset.md): Track datasets used in ML experiments for reproducibility, lineage, and evaluation.
 - [MLflow for Deep Learning](/docs/latest/ml/deep-learning.md): Track and deploy PyTorch, TensorFlow, and Keras deep learning models with MLflow's experiment tracking and autologging.
@@ -269,7 +269,7 @@
 - [Search Runs](/docs/latest/ml/search/search-runs.md): This guide will walk you through how to search your MLflow runs through the MLflow UI and Python API.
 - [MLflow Tracking](/docs/latest/ml/tracking.md): Log parameters, metrics, and artifacts for ML experiments. Compare runs, visualize results, and reproduce models.
 - [Automatic Logging with MLflow Tracking](/docs/latest/ml/tracking/autolog.md): Auto logging is a powerful feature that allows you to log metrics, parameters, and models without the need for explicit log statements. All you need to do is to
-- [Pickle-Free Model format](/docs/latest/ml/tracking/pickle-free-models.md): Saving models with Python's pickle or cloudpickle relies on Python's object serialization mechanism, which can execute arbitrary code during deserialization. MLflow supports safer pickle-free saving formats for several model flavors. Prefer these formats when possible.
+- [Pickle-Free Model format](/docs/latest/ml/tracking/pickle-free-models.md): This feature is experimental and may change in future releases.
 - [MLflow Tracking Quickstart](/docs/latest/ml/tracking/quickstart.md): Need help setting up tracking? Try MLflow Assistant - a powerful AI assistant that can help you set up MLflow tracking for your project.
 - [System Metrics](/docs/latest/ml/tracking/system-metrics.md): MLflow allows users to log system metrics including CPU stats, GPU stats, memory usage, network traffic, and
 - [MLflow Tracking APIs](/docs/latest/ml/tracking/tracking-api.md): MLflow Tracking provides comprehensive APIs across multiple programming languages to capture your machine learning experiments. Whether you prefer automatic instrumentation or granular control, MLflow adapts to your workflow.
