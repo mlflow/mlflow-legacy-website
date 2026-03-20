@@ -1044,7 +1044,7 @@ While MLflow's built-in model persistence utilities are convenient for packaging
 
 The [`mlflow.pyfunc`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc) module provides [`save_model()`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.save_model) and [`log_model()`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.log_model) utilities for creating MLflow Models with the `python_function` flavor that contain user-specified code and *artifact* (file) dependencies. These artifact dependencies may include serialized models produced by any Python ML library.
 
-Because these custom models contain the `python_function` flavor, they can be deployed to any of MLflow's supported production environments, such as SageMaker, AzureML, or local REST endpoints.
+Because these custom models contain the `python_function` flavor, they can be deployed to any of MLflow's supported production environments, such as SageMaker, AzureML, Modal, or local REST endpoints.
 
 The following examples demonstrate how you can use the [`mlflow.pyfunc`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc) module to create custom Python models. For additional information about model customization with MLflow's `python_function` utilities, see the [python\_function custom models documentation](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#pyfunc-create-custom).
 
