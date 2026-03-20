@@ -1,5 +1,9 @@
 # Pickle-Free Model format
 
+Experimental
+
+This feature is experimental and may change in future releases.
+
 Saving models with Python's `pickle` or `cloudpickle` relies on Python's object serialization mechanism, which can execute arbitrary code during deserialization. MLflow supports safer **pickle-free** saving formats for several model flavors. Prefer these formats when possible.
 
 Upcoming Default Behavior Change
@@ -148,6 +152,10 @@ export MLFLOW_ALLOW_PICKLE_DESERIALIZATION=false
 ```
 
 When set to `false`, loading a model that was saved with `pickle` or `cloudpickle` will raise an error unless you use a pickle-free saving option when logging the model. The default is `true` for backward compatibility.
+
+note
+
+In Databricks Runtime, loading models serialized with `pickle` or `cloudpickle` is always allowed, regardless of the `MLFLOW_ALLOW_PICKLE_DESERIALIZATION` environment variable. This is because Databricks uses a managed MLflow artifact store that protects model artifacts from unauthorized modification. By ensuring artifact integrity, the platform mitigates the risk of executing malicious code during `pickle` or `cloudpickle` deserialization.
 
 ## Summary[​](#summary "Direct link to Summary")
 
