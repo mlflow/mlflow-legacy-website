@@ -1,0 +1,78 @@
+# OpenTelemetry GenAI Semantic Conventions
+
+[OpenTelemetry Semantic Conventions for GenAI](https://opentelemetry.io/docs/specs/semconv/gen-ai/gen-ai-spans/) define a standard schema for describing AI and LLM telemetry, backed by the Cloud Native Computing Foundation (CNCF). The convention is adopted by many observability platforms and cloud services, including Google Cloud, AWS, Azure, Datadog, and more. By natively supporting this standard, MLflow ensures your AI observability data is never locked into a proprietary format and any compliant tool can produce or consume it.
+
+## Exporting Traces in GenAI Semconv Format[​](#exporting-traces-in-genai-semconv-format "Direct link to Exporting Traces in GenAI Semconv Format")
+
+By default, MLflow exports traces using its internal `mlflow.*` attribute format. To export in the GenAI Semantic Convention format (`gen_ai.*`), set the `MLFLOW_ENABLE_OTEL_GENAI_SEMCONV` environment variable and configure the OTLP endpoint as the export destination.
+
+python
+
+```
+import os
+
+# Enable GenAI Semantic Convention format for OTLP export
+os.environ["MLFLOW_ENABLE_OTEL_GENAI_SEMCONV"] = "true"
+os.environ["OTEL_EXPORTER_OTLP_TRACES_ENDPOINT"] = "http://localhost:4317/v1/traces"
+```
+
+When enabled, MLflow translates span attributes at export time. This allows other OTel-compatible backends to understand the trace data and display it in a human-readable format.
+
+![GenAI Semantic Conventions Trace in MLflow](/docs/3.11.1.dev0/images/llms/tracing/opentelemetry/genai-semconv-trace.png)
+
+The following table summarizes the key mappings:
+
+| MLflow Attribute         | GenAI Semconv Attribute                                    | Description                                  |
+| ------------------------ | ---------------------------------------------------------- | -------------------------------------------- |
+| `mlflow.spanType`        | `gen_ai.operation.name`                                    | Operation type (e.g., `CHAT_MODEL` → `chat`) |
+| `mlflow.llm.model`       | `gen_ai.request.model`                                     | Model name                                   |
+| `mlflow.llm.provider`    | `gen_ai.provider.name`                                     | Provider (e.g., `openai`, `anthropic`)       |
+| `mlflow.chat.tokenUsage` | `gen_ai.usage.input_tokens` / `gen_ai.usage.output_tokens` | Token counts                                 |
+| `mlflow.spanInputs`      | `gen_ai.input.messages`                                    | Input messages                               |
+| `mlflow.spanOutputs`     | `gen_ai.output.messages`                                   | Output messages                              |
+
+For the full mapping tables, see the [Attribute Mapping Reference](/docs/3.11.1.dev0/genai/tracing/opentelemetry/attribute-mapping.md).
+
+info
+
+GenAI semconv export is available in **MLflow 3.11** and above. Set `MLFLOW_ENABLE_OTEL_GENAI_SEMCONV=true` to enable it.
+
+## Ingesting GenAI Semconv Traces to MLflow[​](#ingesting-genai-semconv-traces-to-mlflow "Direct link to Ingesting GenAI Semconv Traces to MLflow")
+
+MLflow Server itself is OTel-compatible and exposes an OTLP endpoint at `/v1/traces` that automatically recognizes traces that use GenAI Semantic Convention attributes.You can send GenAI semconv-compliant traces to MLflow and they will be displayed as first-class citizens with proper span types, token counts, model info, and structured inputs/outputs.
+
+See [Collect OpenTelemetry Traces into MLflow](/docs/3.11.1.dev0/genai/tracing/opentelemetry/ingest.md) for setup instructions.
+
+## Supported Frameworks[​](#supported-frameworks "Direct link to Supported Frameworks")
+
+Message format conversion for GenAI semconv export is supported for the following providers and frameworks:
+
+* **OpenAI** (Chat Completions and Responses API)
+* **Anthropic**
+* **Google Gemini**
+* **Amazon Bedrock**
+
+On the ingestion side, MLflow recognizes GenAI semconv traces from any compliant tool, including [Google ADK](/docs/3.11.1.dev0/genai/tracing/integrations/listing/google-adk.md), [LiveKit Agents](/docs/3.11.1.dev0/genai/tracing/integrations/listing/livekit.md), [Spring AI](/docs/3.11.1.dev0/genai/tracing/integrations/listing/spring-ai.md), and more.
+
+## Dual Export with GenAI Format[​](#dual-export-with-genai-format "Direct link to Dual Export with GenAI Format")
+
+You can combine GenAI semconv export with [dual export](/docs/3.11.1.dev0/genai/tracing/opentelemetry/export.md#dual-export) to send traces to both MLflow and an OpenTelemetry-compatible backend simultaneously. MLflow stores traces in its own format locally (for the MLflow UI) while exporting the GenAI semconv version to the OTLP endpoint. To enable dual export, set `MLFLOW_TRACE_ENABLE_OTLP_DUAL_EXPORT=true`.
+
+python
+
+```
+import os
+
+# Enable both GenAI semconv format and dual export
+os.environ["MLFLOW_ENABLE_OTEL_GENAI_SEMCONV"] = "true"
+os.environ["MLFLOW_TRACE_ENABLE_OTLP_DUAL_EXPORT"] = "true"
+
+# Configure the MLflow tracking server URI and experiment ID
+os.environ["MLFLOW_TRACKING_URI"] = "http://localhost:5000"
+os.environ["MLFLOW_EXPERIMENT_ID"] = "123"
+
+# Configure the other OpenTelemetry-compatible backend OTLP endpoint
+os.environ["OTEL_EXPORTER_OTLP_TRACES_ENDPOINT"] = (
+    "http://other-backend-otlp-endpoint:4317/v1/traces"
+)
+```
