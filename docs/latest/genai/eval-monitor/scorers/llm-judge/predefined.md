@@ -17,11 +17,11 @@ The MLflow UI provides a visual Judge Builder that lets you create custom LLM ju
 
 2. **LLM judge**: Select a built-in judge. We're using the `RelevanceToQuery` and `Correctness` judges in this example.
 
-![RelevanceToQuery Judge UI](/docs/3.11.1/images/mlflow-3/eval-monitor/scorers/relevance-create-judge-ui.png)
+![RelevanceToQuery Judge UI](/docs/latest/images/mlflow-3/eval-monitor/scorers/relevance-create-judge-ui.png)
 
 3. Click **Create judge** to save your new LLM judge
 
-To use the built-in LLM judges, select the judge class from the [available judges](#available-judges) and pass it to the `scorers` argument of the [evaluate](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.evaluate) function.
+To use the built-in LLM judges, select the judge class from the [available judges](#available-judges) and pass it to the `scorers` argument of the [evaluate](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.evaluate) function.
 
 python
 
@@ -59,7 +59,7 @@ results = mlflow.genai.evaluate(
 )
 ```
 
-![Built-in judges result](/docs/3.11.1/images/mlflow-3/eval-monitor/scorers/builtin-judges-results.png)
+![Built-in judges result](/docs/latest/images/mlflow-3/eval-monitor/scorers/builtin-judges-results.png)
 
 ## Available Judges[​](#available-judges "Direct link to Available Judges")
 
@@ -67,30 +67,30 @@ results = mlflow.genai.evaluate(
 
 | Judge                                                                                                                                                | What does it evaluate?                                        | Requires ground-truth? | Requires traces? |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- | ---------------------- | ---------------- |
-| [RelevanceToQuery](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/rag/relevance.md#relevancetoquery-judge)                                        | Does the app's response directly address the user's input?    | No                     | No               |
-| [Correctness](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/response-quality/correctness.md)                                                     | Are the expected facts supported by the app's response?       | Yes\*                  | No               |
-| [Completeness](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Completeness)\*\*                                        | Does the agent address all questions in a single user prompt? | No                     | No               |
-| [Fluency](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Fluency)                                                      | Is the response grammatically correct and naturally flowing?  | No                     | No               |
-| [Safety](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/response-quality/safety.md)                                                               | Does the app's response avoid harmful or toxic content?       | No                     | No               |
-| [Equivalence](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Equivalence)                                              | Is the app's response equivalent to the expected output?      | Yes                    | No               |
-| [Summarization](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Summarization)                                          | Is the summary faithful, comprehensive, concise, and clear?   | No                     | No               |
-| [Guidelines](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/guidelines.md#1-built-in-guidelines-judge-global-guidelines)                          | Does the response adhere to provided guidelines?              | Yes\*                  | No               |
-| [ExpectationsGuidelines](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/guidelines.md#2-built-in-expectationsguidelines-judge-per-row-guidelines) | Does the response meet specific expectations and guidelines?  | Yes\*                  | No               |
+| [RelevanceToQuery](/docs/latest/genai/eval-monitor/scorers/llm-judge/rag/relevance.md#relevancetoquery-judge)                                        | Does the app's response directly address the user's input?    | No                     | No               |
+| [Correctness](/docs/latest/genai/eval-monitor/scorers/llm-judge/response-quality/correctness.md)                                                     | Are the expected facts supported by the app's response?       | Yes\*                  | No               |
+| [Completeness](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Completeness)\*\*                                        | Does the agent address all questions in a single user prompt? | No                     | No               |
+| [Fluency](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Fluency)                                                      | Is the response grammatically correct and naturally flowing?  | No                     | No               |
+| [Safety](/docs/latest/genai/eval-monitor/scorers/llm-judge/response-quality/safety.md)                                                               | Does the app's response avoid harmful or toxic content?       | No                     | No               |
+| [Equivalence](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Equivalence)                                              | Is the app's response equivalent to the expected output?      | Yes                    | No               |
+| [Summarization](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Summarization)                                          | Is the summary faithful, comprehensive, concise, and clear?   | No                     | No               |
+| [Guidelines](/docs/latest/genai/eval-monitor/scorers/llm-judge/guidelines.md#1-built-in-guidelines-judge-global-guidelines)                          | Does the response adhere to provided guidelines?              | Yes\*                  | No               |
+| [ExpectationsGuidelines](/docs/latest/genai/eval-monitor/scorers/llm-judge/guidelines.md#2-built-in-expectationsguidelines-judge-per-row-guidelines) | Does the response meet specific expectations and guidelines?  | Yes\*                  | No               |
 
 ### RAG[​](#rag "Direct link to RAG")
 
 | Judge                                                                                                             | What does it evaluate?                                    | Requires ground-truth? | Requires traces?      |
 | ----------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- | ---------------------- | --------------------- |
-| [RetrievalRelevance](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/rag/relevance.md#retrievalrelevance-judge) | Are retrieved documents relevant to the user's request?   | No                     | ⚠️ **Trace Required** |
-| [RetrievalGroundedness](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/rag/groundedness.md)                    | Is the app's response grounded in retrieved information?  | No                     | ⚠️ **Trace Required** |
-| [RetrievalSufficiency](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/rag/context-sufficiency.md)              | Do retrieved documents contain all necessary information? | Yes                    | ⚠️ **Trace Required** |
+| [RetrievalRelevance](/docs/latest/genai/eval-monitor/scorers/llm-judge/rag/relevance.md#retrievalrelevance-judge) | Are retrieved documents relevant to the user's request?   | No                     | ⚠️ **Trace Required** |
+| [RetrievalGroundedness](/docs/latest/genai/eval-monitor/scorers/llm-judge/rag/groundedness.md)                    | Is the app's response grounded in retrieved information?  | No                     | ⚠️ **Trace Required** |
+| [RetrievalSufficiency](/docs/latest/genai/eval-monitor/scorers/llm-judge/rag/context-sufficiency.md)              | Do retrieved documents contain all necessary information? | Yes                    | ⚠️ **Trace Required** |
 
 ### Tool Call[​](#tool-call "Direct link to Tool Call")
 
 | Judge                                                                                                 | What does it evaluate?                                       | Requires ground-truth? | Requires traces?      |
 | ----------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ | ---------------------- | --------------------- |
-| [ToolCallCorrectness](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/tool-call/correctness.md)\*\* | Are the tool calls and arguments correct for the user query? | No                     | ⚠️ **Trace Required** |
-| [ToolCallEfficiency](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/tool-call/efficiency.md)\*\*   | Are the tool calls efficient without redundancy?             | No                     | ⚠️ **Trace Required** |
+| [ToolCallCorrectness](/docs/latest/genai/eval-monitor/scorers/llm-judge/tool-call/correctness.md)\*\* | Are the tool calls and arguments correct for the user query? | No                     | ⚠️ **Trace Required** |
+| [ToolCallEfficiency](/docs/latest/genai/eval-monitor/scorers/llm-judge/tool-call/efficiency.md)\*\*   | Are the tool calls efficient without redundancy?             | No                     | ⚠️ **Trace Required** |
 
 \*Can extract expectations from trace assessments if available.
 
@@ -98,7 +98,7 @@ results = mlflow.genai.evaluate(
 
 ### Multi-Turn[​](#multi-turn "Direct link to Multi-Turn")
 
-Multi-turn judges evaluate entire conversation sessions rather than individual turns. They require traces with session IDs and are experimental in MLflow 3.7.0. See [Track Users and Sessions](/docs/3.11.1/genai/tracing/track-users-sessions.md)
+Multi-turn judges evaluate entire conversation sessions rather than individual turns. They require traces with session IDs and are experimental in MLflow 3.7.0. See [Track Users and Sessions](/docs/latest/genai/tracing/track-users-sessions.md)
 
 Multi-Turn Evaluation Requirements
 
@@ -109,13 +109,13 @@ Multi-turn judges require:
 
 | Judge                                                                                                                                                 | What does it evaluate?                                                     | Requires Session? |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ----------------- |
-| [ConversationCompleteness](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ConversationCompleteness)\*\*                 | Does the agent address all user questions throughout the conversation?     | Yes               |
-| [ConversationalGuidelines](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ConversationalGuidelines)\*\*                 | Do the assistant's responses comply with provided guidelines?              | Yes               |
-| [ConversationalRoleAdherence](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ConversationalRoleAdherence)\*\*           | Does the assistant maintain its assigned role throughout the conversation? | Yes               |
-| [ConversationalSafety](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ConversationalSafety)\*\*                         | Are the assistant's responses safe and free of harmful content?            | Yes               |
-| [ConversationalToolCallEfficiency](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ConversationalToolCallEfficiency)\*\* | Was tool usage across the conversation efficient and appropriate?          | Yes               |
-| [KnowledgeRetention](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.KnowledgeRetention)\*\*                             | Does the assistant correctly retain information from earlier user inputs?  | Yes               |
-| [UserFrustration](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.UserFrustration)\*\*                                   | Is the user frustrated? Was the frustration resolved?                      | Yes               |
+| [ConversationCompleteness](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ConversationCompleteness)\*\*                 | Does the agent address all user questions throughout the conversation?     | Yes               |
+| [ConversationalGuidelines](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ConversationalGuidelines)\*\*                 | Do the assistant's responses comply with provided guidelines?              | Yes               |
+| [ConversationalRoleAdherence](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ConversationalRoleAdherence)\*\*           | Does the assistant maintain its assigned role throughout the conversation? | Yes               |
+| [ConversationalSafety](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ConversationalSafety)\*\*                         | Are the assistant's responses safe and free of harmful content?            | Yes               |
+| [ConversationalToolCallEfficiency](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ConversationalToolCallEfficiency)\*\* | Was tool usage across the conversation efficient and appropriate?          | Yes               |
+| [KnowledgeRetention](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.KnowledgeRetention)\*\*                             | Does the assistant correctly retain information from earlier user inputs?  | Yes               |
+| [UserFrustration](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.UserFrustration)\*\*                                   | Is the user frustrated? Was the frustration resolved?                      | Yes               |
 
 Availability
 
@@ -129,24 +129,24 @@ Typically, you can get started with evaluation using built-in judges. However, e
 * You need to evaluate specific business logic or domain-specific criteria
 * You want to combine multiple evaluation aspects into a single judge
 
-See [custom LLM judges](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/guidelines.md) guide for detailed examples.
+See [custom LLM judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/guidelines.md) guide for detailed examples.
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [Guidelines Judge](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/guidelines.md)
+### [Guidelines Judge](/docs/latest/genai/eval-monitor/scorers/llm-judge/guidelines.md)
 
-[Learn how to use the Guidelines judge to evaluate responses against custom criteria](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/guidelines.md)
+[Learn how to use the Guidelines judge to evaluate responses against custom criteria](/docs/latest/genai/eval-monitor/scorers/llm-judge/guidelines.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/guidelines.md)
+[Learn more →](/docs/latest/genai/eval-monitor/scorers/llm-judge/guidelines.md)
 
-### [Evaluate Agents](/docs/3.11.1/genai/eval-monitor/running-evaluation/agents.md)
+### [Evaluate Agents](/docs/latest/genai/eval-monitor/running-evaluation/agents.md)
 
-[Learn how to evaluate AI agents with specialized techniques and judges](/docs/3.11.1/genai/eval-monitor/running-evaluation/agents.md)
+[Learn how to evaluate AI agents with specialized techniques and judges](/docs/latest/genai/eval-monitor/running-evaluation/agents.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/running-evaluation/agents.md)
+[Learn more →](/docs/latest/genai/eval-monitor/running-evaluation/agents.md)
 
-### [Evaluate Traces](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+### [Evaluate Traces](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Evaluate production traces to understand and improve your AI application's behavior](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Evaluate production traces to understand and improve your AI application's behavior](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Learn more →](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)

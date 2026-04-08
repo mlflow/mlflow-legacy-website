@@ -8,7 +8,7 @@ Model signatures and input examples are foundational components that define how 
 
 **Model Input Example** - Provides a concrete example of valid model input. This helps developers understand the required data format and validates that your model works correctly.
 
-![Model signatures comparison](/docs/3.11.1/assets/images/signature-vs-no-signature-6981ed9f06b1c588ccd0a276c350c62a.png)
+![Model signatures comparison](/docs/latest/assets/images/signature-vs-no-signature-6981ed9f06b1c588ccd0a276c350c62a.png)
 
 ### Why They Matter[​](#why-they-matter "Direct link to Why They Matter")
 
@@ -924,7 +924,7 @@ result = loaded_model.predict(input_data, params={"temperature": 0.1, "max_token
 
 ## Signature Enforcement and Validation[​](#signature-enforcement-and-validation "Direct link to Signature Enforcement and Validation")
 
-![Signature enforcement process](/docs/3.11.1/assets/images/signature-enforcement-e5974f544a264396c51cb2511dd158f1.png)
+![Signature enforcement process](/docs/latest/assets/images/signature-enforcement-e5974f544a264396c51cb2511dd158f1.png)
 
 MLflow automatically validates inputs against your model signature when:
 
@@ -1370,7 +1370,7 @@ Explore signature behavior with our interactive examples:
 
 [Download Signature Examples Notebook](https://raw.githubusercontent.com/mlflow/mlflow/master/docs/docs/classic-ml/model/notebooks/signature_examples.ipynb)
 
-Or view examples directly: [Signature Examples Notebook](/docs/3.11.1/ml/model/notebooks/signature_examples.md)
+Or view examples directly: [Signature Examples Notebook](/docs/latest/ml/model/notebooks/signature_examples.md)
 
 ### Quick Reference Examples[​](#quick-reference-examples "Direct link to Quick Reference Examples")
 
@@ -1637,7 +1637,7 @@ if model_info.signature != inferred:
 
 ## Additional Resources[​](#additional-resources "Direct link to Additional Resources")
 
-* [Signature Examples Notebook](/docs/3.11.1/ml/model/notebooks/signature_examples.md) - Interactive examples
-* [Model API Documentation](/docs/3.11.1/ml/model.md#model-api) - Complete API reference
-* [Deployment Guide](/docs/3.11.1/ml/deployment.md) - Using signatures in production
-* [MLflow Model Format](/docs/3.11.1/ml/model.md#storage-format) - Technical specification
+* [Signature Examples Notebook](/docs/latest/ml/model/notebooks/signature_examples.md) - Interactive examples
+* [Model API Documentation](/docs/latest/ml/model.md#model-api) - Complete API reference
+* [Deployment Guide](/docs/latest/ml/deployment.md) - Using signatures in production
+* [MLflow Model Format](/docs/latest/ml/model.md#storage-format) - Technical specification

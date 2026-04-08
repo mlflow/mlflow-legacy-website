@@ -149,7 +149,7 @@ The MLflow UI provides the most intuitive way to review traces and add feedback:
 
 The UI automatically logs feedback in the correct format for alignment.
 
-![Adding feedback through MLflow UI](/docs/3.11.1/images/assessments/add_feedback_ui.png)
+![Adding feedback through MLflow UI](/docs/latest/images/assessments/add_feedback_ui.png)
 
 **When to use:** You already have ground truth labels from your data.
 

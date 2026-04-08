@@ -1,6 +1,6 @@
 # Workspace Configuration
 
-Reference for the core flags, env vars, and startup checks for workspace mode. For setup and end-to-end flows, see [Getting Started](/docs/3.11.1/self-hosting/workspaces/getting-started.md). For provider details and artifact routing options, see [Workspace Providers](/docs/3.11.1/self-hosting/workspaces/workspace-providers.md).
+Reference for the core flags, env vars, and startup checks for workspace mode. For setup and end-to-end flows, see [Getting Started](/docs/latest/self-hosting/workspaces/getting-started.md). For provider details and artifact routing options, see [Workspace Providers](/docs/latest/self-hosting/workspaces/workspace-providers.md).
 
 ## Server Configuration (enable/disable)[​](#server-configuration-enabledisable "Direct link to Server Configuration (enable/disable)")
 
@@ -86,7 +86,7 @@ Before enabling workspaces, confirm that existing experiment artifact locations 
 
 ## Authentication Configuration for Workspaces[​](#authentication-configuration-for-workspaces "Direct link to Authentication Configuration for Workspaces")
 
-When using workspaces with basic-auth (`--app-name basic-auth`), additional settings in the [auth config file](/docs/3.11.1/self-hosting/security/basic-http-auth.md#configuration) (`basic_auth.ini`) control workspace-level permission behavior.
+When using workspaces with basic-auth (`--app-name basic-auth`), additional settings in the [auth config file](/docs/latest/self-hosting/security/basic-http-auth.md#configuration) (`basic_auth.ini`) control workspace-level permission behavior.
 
 | Setting                          | Default | Description                                                                                                                                                                                                   |
 | -------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -137,7 +137,7 @@ workspace_cache_ttl_seconds = 3600
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-* [Getting Started](/docs/3.11.1/self-hosting/workspaces/getting-started.md) - Step-by-step enablement
-* [Workspace Providers](/docs/3.11.1/self-hosting/workspaces/workspace-providers.md) - Provider selection and artifact routing
-* [Permissions](/docs/3.11.1/self-hosting/workspaces/permissions.md) - Configure access control
-* [Troubleshooting](/docs/3.11.1/self-hosting/troubleshooting.md) - Common issues and fixes
+* [Getting Started](/docs/latest/self-hosting/workspaces/getting-started.md) - Step-by-step enablement
+* [Workspace Providers](/docs/latest/self-hosting/workspaces/workspace-providers.md) - Provider selection and artifact routing
+* [Permissions](/docs/latest/self-hosting/workspaces/permissions.md) - Configure access control
+* [Troubleshooting](/docs/latest/self-hosting/troubleshooting.md) - Common issues and fixes

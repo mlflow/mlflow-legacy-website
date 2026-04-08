@@ -10,7 +10,7 @@ The backend store is a core component in MLflow that stores metadata for Runs, m
 * Parameters
 * Metrics
 
-Large model artifacts such as model weight files are stored in the [artifact store](/docs/3.11.1/self-hosting/architecture/artifact-store.md).
+Large model artifacts such as model weight files are stored in the [artifact store](/docs/latest/self-hosting/architecture/artifact-store.md).
 
 ## Types of Backend Stores[​](#types-of-backend-stores "Direct link to Types of Backend Stores")
 
@@ -28,17 +28,17 @@ To use file-based storage, specify `--backend-store-uri ./mlruns` when starting 
 
 TO BE DEPRECATED SOON
 
-File system backend is in Keep-the-Light-On (KTLO) mode and is no longer receiving new feature updates. We strongly recommend using the database backend (now the default) for better performance and reliability. See [Migrate from File Store](/docs/3.11.1/self-hosting/migrate-from-file-store.md) for how to migrate existing data.
+File system backend is in Keep-the-Light-On (KTLO) mode and is no longer receiving new feature updates. We strongly recommend using the database backend (now the default) for better performance and reliability. See [Migrate from File Store](/docs/latest/self-hosting/migrate-from-file-store.md) for how to migrate existing data.
 
 ## Configure Backend Store[​](#configure-backend-store "Direct link to Configure Backend Store")
 
 You can configure a different backend store by passing the desired **tracking URI** to MLflow, via either of the following methods:
 
 * Set the `MLFLOW_TRACKING_URI` environment variable.
-* Call [`mlflow.set_tracking_uri()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.set_tracking_uri) in your code.
-* If you are running a [Tracking Server](/docs/3.11.1/self-hosting/architecture/tracking-server.md), you can set the `--backend-store-uri` option when starting the server, like `mlflow server --backend-store-uri postgresql://...`
+* Call [`mlflow.set_tracking_uri()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.set_tracking_uri) in your code.
+* If you are running a [Tracking Server](/docs/latest/self-hosting/architecture/tracking-server.md), you can set the `--backend-store-uri` option when starting the server, like `mlflow server --backend-store-uri postgresql://...`
 
-Continue to the next section for the supported format of tracking URLs. Also visit [this guidance](/docs/3.11.1/self-hosting/architecture/tracking-server.md) for how to set up the backend store properly for your workflow.
+Continue to the next section for the supported format of tracking URLs. Also visit [this guidance](/docs/latest/self-hosting/architecture/tracking-server.md) for how to set up the backend store properly for your workflow.
 
 ## Supported Store Types[​](#supported-store-types "Direct link to Supported Store Types")
 
@@ -46,7 +46,7 @@ MLflow supports the following types of tracking URI for backend stores:
 
 * Local file path (specified as `file:/my/local/dir`), where data is just directly stored locally to a system disk where your code is executing.
 * A Database, encoded as `<dialect>+<driver>://<username>:<password>@<host>:<port>/<database>`. MLflow supports the dialects `mysql`, `mssql`, `sqlite`, and `postgresql`. For more details, see [SQLAlchemy database uri](https://docs.sqlalchemy.org/en/latest/core/engines.html#database-urls).
-* HTTP server (specified as `https://my-server:5000`), which is a server hosting an [MLflow tracking server](/docs/3.11.1/self-hosting/architecture/tracking-server.md).
+* HTTP server (specified as `https://my-server:5000`), which is a server hosting an [MLflow tracking server](/docs/latest/self-hosting/architecture/tracking-server.md).
 * Databricks workspace (specified as `databricks` or as `databricks://<profileName>`, a [Databricks CLI profile](https://github.com/databricks/databricks-cli#installation)). Refer to Access the MLflow tracking server from outside Databricks [\[AWS\]](http://docs.databricks.com/applications/mlflow/access-hosted-tracking-server.html) [\[Azure\]](http://docs.microsoft.com/azure/databricks/applications/mlflow/access-hosted-tracking-server).
 
 database-requirements
@@ -55,7 +55,7 @@ database-requirements
 
 When using database-backed stores, please note:
 
-* **Model Registry Integration**: [Model Registry](/docs/3.11.1/ml/model-registry.md) functionality requires a database-backed store. See [this FAQ](/docs/3.11.1/ml/tracking.md#tracking-with-model-registry) for more information.
+* **Model Registry Integration**: [Model Registry](/docs/latest/ml/model-registry.md) functionality requires a database-backed store. See [this FAQ](/docs/latest/ml/tracking.md#tracking-with-model-registry) for more information.
 
 * **Schema Migrations**: `mlflow server` will fail against a database with an out-of-date schema. Always run `mlflow db upgrade [db_uri]` to upgrade your database schema before starting the server. Schema migrations can result in database downtime and may take longer on larger databases. **Always backup your database before running migrations.**
 
@@ -65,7 +65,7 @@ In Sep 2023, we increased the max length for params recorded in a Run from 500 t
 
 ## Deletion Behavior[​](#deletion-behavior "Direct link to Deletion Behavior")
 
-In order to allow MLflow Runs to be restored, Run metadata and artifacts are not automatically removed from the backend store or artifact store when a Run is deleted. The [mlflow gc](/docs/3.11.1/api_reference/cli.html#mlflow-gc) CLI is provided for permanently removing Run metadata and artifacts for deleted runs.
+In order to allow MLflow Runs to be restored, Run metadata and artifacts are not automatically removed from the backend store or artifact store when a Run is deleted. The [mlflow gc](/docs/latest/api_reference/cli.html#mlflow-gc) CLI is provided for permanently removing Run metadata and artifacts for deleted runs.
 
 ## SQLAlchemy Options[​](#sqlalchemy-options "Direct link to SQLAlchemy Options")
 

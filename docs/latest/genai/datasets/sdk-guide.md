@@ -2,15 +2,15 @@
 
 Complete API reference for creating, managing, and querying evaluation datasets programmatically.
 
-For general information and examples of how to use evaluation datasets, see the section on [running evaluations](/docs/3.11.1/genai/eval-monitor/running-evaluation/agents.md).
+For general information and examples of how to use evaluation datasets, see the section on [running evaluations](/docs/latest/genai/eval-monitor/running-evaluation/agents.md).
 
 SQL Backend Required
 
-Evaluation Datasets require an MLflow Tracking Server with a **[SQL backend](/docs/3.11.1/self-hosting/architecture/backend-store.md#types-of-backend-stores)** (PostgreSQL, MySQL, SQLite, or MSSQL). This feature is **not available** with FileStore (local file system-based tracking).
+Evaluation Datasets require an MLflow Tracking Server with a **[SQL backend](/docs/latest/self-hosting/architecture/backend-store.md#types-of-backend-stores)** (PostgreSQL, MySQL, SQLite, or MSSQL). This feature is **not available** with FileStore (local file system-based tracking).
 
 ## Creating a Dataset[​](#creating-a-dataset "Direct link to Creating a Dataset")
 
-Use [`mlflow.genai.datasets.create_dataset()`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.datasets.create_dataset) to create a new evaluation dataset:
+Use [`mlflow.genai.datasets.create_dataset()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.datasets.create_dataset) to create a new evaluation dataset:
 
 python
 
@@ -27,7 +27,7 @@ dataset = create_dataset(
 print(f"Created dataset: {dataset.dataset_id}")
 ```
 
-You can also use the [`mlflow.tracking.MlflowClient()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.tracking.MlflowClient) API:
+You can also use the [`mlflow.tracking.MlflowClient()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.tracking.MlflowClient) API:
 
 python
 
@@ -44,7 +44,7 @@ dataset = client.create_dataset(
 
 ## Adding Records to a Dataset[​](#adding-records-to-a-dataset "Direct link to Adding Records to a Dataset")
 
-Use the [`mlflow.entities.EvaluationDataset.merge_records()`](/docs/3.11.1/api_reference/python_api/mlflow.entities.html#mlflow.entities.EvaluationDataset.merge_records) method to add new records to your dataset. Records can be added from dictionaries, DataFrames, or traces:
+Use the [`mlflow.entities.EvaluationDataset.merge_records()`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.EvaluationDataset.merge_records) method to add new records to your dataset. Records can be added from dictionaries, DataFrames, or traces:
 
 * From Dictionaries
 * From Traces
@@ -218,7 +218,7 @@ python
 
 ## Updating Existing Records[​](#updating-existing-records "Direct link to Updating Existing Records")
 
-The [`mlflow.entities.EvaluationDataset.merge_records()`](/docs/3.11.1/api_reference/python_api/mlflow.entities.html#mlflow.entities.EvaluationDataset.merge_records) method intelligently handles updates. **Records are matched based on a hash of their inputs** - if a record with identical inputs already exists, its expectations and tags are merged rather than creating a duplicate:
+The [`mlflow.entities.EvaluationDataset.merge_records()`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.EvaluationDataset.merge_records) method intelligently handles updates. **Records are matched based on a hash of their inputs** - if a record with identical inputs already exists, its expectations and tags are merged rather than creating a duplicate:
 
 python
 
@@ -331,7 +331,7 @@ Dataset deletion is permanent and cannot be undone. All records will be deleted.
 
 ## Deleting Specific Records from a Dataset[​](#deleting-specific-records-from-a-dataset "Direct link to Deleting Specific Records from a Dataset")
 
-Remove specific records from a dataset using [`mlflow.genai.datasets.EvaluationDataset.delete_records()`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset.delete_records):
+Remove specific records from a dataset using [`mlflow.genai.datasets.EvaluationDataset.delete_records()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset.delete_records):
 
 python
 
@@ -358,7 +358,7 @@ Deleting records updates the dataset's profile (record count) automatically.
 
 ## Working with Dataset Records[​](#working-with-dataset-records "Direct link to Working with Dataset Records")
 
-The [`mlflow.entities.EvaluationDataset()`](/docs/3.11.1/api_reference/python_api/mlflow.entities.html#mlflow.entities.EvaluationDataset) object provides several ways to access and analyze records:
+The [`mlflow.entities.EvaluationDataset()`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.EvaluationDataset) object provides several ways to access and analyze records:
 
 python
 
@@ -595,20 +595,20 @@ datasets = search_datasets(
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [End-to-End Workflow](/docs/3.11.1/genai/datasets/end-to-end-workflow.md)
+### [End-to-End Workflow](/docs/latest/genai/datasets/end-to-end-workflow.md)
 
-[Learn the complete evaluation-driven development workflow from app building to production](/docs/3.11.1/genai/datasets/end-to-end-workflow.md)
+[Learn the complete evaluation-driven development workflow from app building to production](/docs/latest/genai/datasets/end-to-end-workflow.md)
 
-[View complete workflow →](/docs/3.11.1/genai/datasets/end-to-end-workflow.md)
+[View complete workflow →](/docs/latest/genai/datasets/end-to-end-workflow.md)
 
-### [Run Evaluations](/docs/3.11.1/genai/eval-monitor.md)
+### [Run Evaluations](/docs/latest/genai/eval-monitor.md)
 
-[Use your datasets to systematically evaluate and improve your LLM applications and AI agents](/docs/3.11.1/genai/eval-monitor.md)
+[Use your datasets to systematically evaluate and improve your LLM applications and AI agents](/docs/latest/genai/eval-monitor.md)
 
-[Start evaluating →](/docs/3.11.1/genai/eval-monitor.md)
+[Start evaluating →](/docs/latest/genai/eval-monitor.md)
 
-### [Define Expectations](/docs/3.11.1/genai/assessments/expectations.md)
+### [Define Expectations](/docs/latest/genai/assessments/expectations.md)
 
-[Learn how to add ground truth expectations to your test data for quality validation](/docs/3.11.1/genai/assessments/expectations.md)
+[Learn how to add ground truth expectations to your test data for quality validation](/docs/latest/genai/assessments/expectations.md)
 
-[Set expectations →](/docs/3.11.1/genai/assessments/expectations.md)
+[Set expectations →](/docs/latest/genai/assessments/expectations.md)

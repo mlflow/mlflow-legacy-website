@@ -8,7 +8,7 @@
 
 To start the demo, click on the "Start Demo" button on the top page of the MLflow UI.
 
-![MLflow GenAI Demo UI](/docs/3.11.1/images/llms/demo/demo.png)
+![MLflow GenAI Demo UI](/docs/latest/images/llms/demo/demo.png)
 
 #### **Starting from CLI**[​](#starting-from-cli "Direct link to starting-from-cli")
 
@@ -45,7 +45,7 @@ Share prompts across your organization with a centralized registry, enabling tea
 * UI
 * Python
 
-![Create Prompt UI](/docs/3.11.1/assets/images/create-prompt-ui-03c88144e65d28eb7847b2ae5d8dd49a.png)
+![Create Prompt UI](/docs/latest/assets/images/create-prompt-ui-03c88144e65d28eb7847b2ae5d8dd49a.png)
 
 1. Run `mlflow server` in your terminal to start the MLflow UI.
 2. Navigate to the **Prompts** tab in the MLflow UI.
@@ -57,7 +57,7 @@ note
 
 Prompt template text can contain variables in `{{variable}}` format. These variables can be filled with dynamic content when using the prompt in your LLM application or AI agent. MLflow also provides the `to_single_brace_format()` API to convert templates into single brace format for frameworks like LangChain or LlamaIndex that require single brace interpolation.
 
-To create a new prompt using the Python API, use [`mlflow.genai.register_prompt()`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.register_prompt) API:
+To create a new prompt using the Python API, use [`mlflow.genai.register_prompt()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.register_prompt) API:
 
 python
 
@@ -91,21 +91,21 @@ print(f"Created prompt '{prompt.name}' (version {prompt.version})")
 
 This creates a new prompt with the specified template text and metadata. The prompt is now available in the MLflow UI for further management.
 
-![Registered Prompt in UI](/docs/3.11.1/assets/images/registered-prompt-d457d27524f55e7575e9a129e53487e4.png)
+![Registered Prompt in UI](/docs/latest/assets/images/registered-prompt-d457d27524f55e7575e9a129e53487e4.png)
 
 ### 2. Update the Prompt with a New Version[​](#2-update-the-prompt-with-a-new-version "Direct link to 2. Update the Prompt with a New Version")
 
 * UI
 * Python
 
-![Update Prompt UI](/docs/3.11.1/assets/images/update-prompt-ui-9fe89b08b9318729754441fbe67f0a90.png)
+![Update Prompt UI](/docs/latest/assets/images/update-prompt-ui-9fe89b08b9318729754441fbe67f0a90.png)
 
 1. The previous step leads to the created prompt page. (If you closed the page, navigate to the **Prompts** tab in the MLflow UI and click on the prompt name.)
 2. Click on the **Create prompt Version** button.
 3. The popup dialog is pre-filled with the existing prompt text. Modify the prompt as you wish.
 4. Click **Create** to register the new version.
 
-To update an existing prompt with a new version, use the [`mlflow.genai.register_prompt()`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.register_prompt) API with the existing prompt name:
+To update an existing prompt with a new version, use the [`mlflow.genai.register_prompt()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.register_prompt) API with the existing prompt name:
 
 python
 
@@ -140,11 +140,11 @@ updated_prompt = mlflow.genai.register_prompt(
 Once you have multiple versions of a prompt, you can compare them to understand the changes between versions. To compare prompt versions in the MLflow UI, click on the **Compare** tab in the prompt details page:
 
 ![Compare Prompt
-Versions](/docs/3.11.1/assets/images/compare-prompt-versions-cfb444eca59dc0c2e14b98d480aa2c17.png)
+Versions](/docs/latest/assets/images/compare-prompt-versions-cfb444eca59dc0c2e14b98d480aa2c17.png)
 
 ### 4. Load and Use the Prompt[​](#4-load-and-use-the-prompt "Direct link to 4. Load and Use the Prompt")
 
-To use a prompt in your LLM application or AI agent, you can load it with the [`mlflow.genai.load_prompt()`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.load_prompt) API and fill in the variables using the [`mlflow.entities.Prompt.format()`](/docs/3.11.1/api_reference/python_api/mlflow.entities.html#mlflow.entities.Prompt.format) method of the prompt object.
+To use a prompt in your LLM application or AI agent, you can load it with the [`mlflow.genai.load_prompt()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.load_prompt) API and fill in the variables using the [`mlflow.entities.Prompt.format()`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.Prompt.format) method of the prompt object.
 
 python
 
@@ -229,7 +229,7 @@ Key attributes of a Prompt object:
 
 * `Tags`: Optional key-value pairs assigned at the prompt version for categorization and filtering. For example, you may add tags for project name, language, etc, which apply to all versions of the prompt.
 
-* `Alias`: An mutable named reference to the prompt. For example, you can create an alias named `production` to refer to the version used in your production system. See [Aliases](/docs/3.11.1/genai/prompt-registry/manage-prompt-lifecycles-with-aliases.md) for more details.
+* `Alias`: An mutable named reference to the prompt. For example, you can create an alias named `production` to refer to the version used in your production system. See [Aliases](/docs/latest/genai/prompt-registry/manage-prompt-lifecycles-with-aliases.md) for more details.
 
 * `is_text_prompt`: A boolean property indicating whether the prompt is a text prompt (True) or chat prompt (False).
 
@@ -387,7 +387,7 @@ print(f"Temperature: {prompt.model_config['temperature']}")
 
 ### Using PromptModelConfig Class[​](#using-promptmodelconfig-class "Direct link to Using PromptModelConfig Class")
 
-For better type safety and validation, you can use the [`mlflow.entities.model_registry.PromptModelConfig()`](/docs/3.11.1/api_reference/python_api/mlflow.entities.html#mlflow.entities.model_registry.PromptModelConfig) class:
+For better type safety and validation, you can use the [`mlflow.entities.model_registry.PromptModelConfig()`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.model_registry.PromptModelConfig) class:
 
 python
 
@@ -489,7 +489,7 @@ Model configuration is mutable and can be updated after a prompt version is crea
 
 #### Setting or Updating Model Config[​](#setting-or-updating-model-config "Direct link to Setting or Updating Model Config")
 
-Use [`mlflow.genai.set_prompt_model_config()`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.set_prompt_model_config) to set or update the model configuration for a prompt version:
+Use [`mlflow.genai.set_prompt_model_config()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.set_prompt_model_config) to set or update the model configuration for a prompt version:
 
 python
 
@@ -524,7 +524,7 @@ print(prompt.model_config)
 
 #### Deleting Model Config[​](#deleting-model-config "Direct link to Deleting Model Config")
 
-Use [`mlflow.genai.delete_prompt_model_config()`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.delete_prompt_model_config) to remove model configuration from a prompt version:
+Use [`mlflow.genai.delete_prompt_model_config()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.delete_prompt_model_config) to remove model configuration from a prompt version:
 
 python
 
@@ -641,7 +641,7 @@ prompt = mlflow.genai.load_prompt("prompts:/summarization-prompt@latest")
 
 #### Q: Can I use prompt templates with frameworks like LangChain or LlamaIndex?[​](#q-can-i-use-prompt-templates-with-frameworks-like-langchain-or-llamaindex "Direct link to Q: Can I use prompt templates with frameworks like LangChain or LlamaIndex?")
 
-A: Yes, you can load prompts from MLflow and use them with any framework. For example, the following example demonstrates how to use a prompt registered in MLflow with LangChain. Also refer to [Logging Prompts with LangChain](/docs/3.11.1/genai/prompt-registry/log-with-model.md#example-1-logging-prompts-with-langchain) for more details.
+A: Yes, you can load prompts from MLflow and use them with any framework. For example, the following example demonstrates how to use a prompt registered in MLflow with LangChain. Also refer to [Logging Prompts with LangChain](/docs/latest/genai/prompt-registry/log-with-model.md#example-1-logging-prompts-with-langchain) for more details.
 
 python
 

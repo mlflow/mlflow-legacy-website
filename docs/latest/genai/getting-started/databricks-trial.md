@@ -16,7 +16,7 @@ When you login for the first time, you will be directed to the MLflow Tracing tu
 
 Simply click on either of the two tutorials and you will be able to test out MLflow's instrumentation capabilities within minutes.
 
-![MLflow Tracing Tutorial](/docs/3.11.1/assets/images/tracing-tutorial-1b928a4c8f71cd8f0da3d28e1c556a54.png)
+![MLflow Tracing Tutorial](/docs/latest/assets/images/tracing-tutorial-1b928a4c8f71cd8f0da3d28e1c556a54.png)
 
 Learn Tracing within Databricks MLflow UI
 
@@ -24,13 +24,13 @@ Learn Tracing within Databricks MLflow UI
 
 Otherwise, once you log in to the Databricks Workspace on subsequent visits, you will see a landing page like this:
 
-![Databricks Trial Landing Page](/docs/3.11.1/assets/images/landing-page-6afce12b5b407957ce0a58a117d64d5b.png)
+![Databricks Trial Landing Page](/docs/latest/assets/images/landing-page-6afce12b5b407957ce0a58a117d64d5b.png)
 
 Databricks Landing Page
 
 In order to get to the MLflow UI, you can navigate to it by clicking on the "Experiments" link on the left-hand side (denoted by the laboratory beaker icon). When you get to the MLflow UI on Databricks for the first time, you'll see this:
 
-![Databricks Trial MLflow UI](/docs/3.11.1/assets/images/experiments-page-851d07c550322e143c7b78282a0b47e7.png)
+![Databricks Trial MLflow UI](/docs/latest/assets/images/experiments-page-851d07c550322e143c7b78282a0b47e7.png)
 
 Databricks MLflow UI
 
@@ -42,7 +42,7 @@ With a Databricks managed instance of MLflow, you have two options for running t
 
 Once you're at the main page of the Databricks Workspace, you can import any of the notebooks within this tutorial. Firstly, click "Download this Notebook" button in a tutorial page to download the tutorial notebook. Then navigate to the "Workspace" tab on the left and click that link to open the workspace page. From there, navigate to `Home` and you can right click to bring up the "Import" option. The below image shows what the import dialog should look like if you're going to directly import a notebook from the MLflow documentation website:
 
-![Databricks Workspace import Notebook from MLflow docs website](/docs/3.11.1/assets/images/import-notebook-dd63c143b3ebaa8b35b026e9088d4035.png)
+![Databricks Workspace import Notebook from MLflow docs website](/docs/latest/assets/images/import-notebook-dd63c143b3ebaa8b35b026e9088d4035.png)
 
 At this point, you can simply just run the tutorial. Any calls to MLflow for creating experiments, initiating runs, logging metadata, and saving artifacts will be fully managed for you and your logging history will appear within the MLflow UI.
 
@@ -76,7 +76,7 @@ bash
 
 #### Set Up Authentication to a Databricks Workspace[​](#set-up-authentication-to-a-databricks-workspace "Direct link to Set Up Authentication to a Databricks Workspace")
 
-To set up Databricks Workspace authentication, we can use the API [`mlflow.login()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.login), which will prompt you for required information:
+To set up Databricks Workspace authentication, we can use the API [`mlflow.login()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.login), which will prompt you for required information:
 
 * **Databricks Host**: Use "https\://\<your workspace host>.cloud.databricks.com/
 * **Token**: Your personal access token for your Databricks Workspace.
@@ -140,15 +140,15 @@ text
 
 Now let's navigate to your Databricks Workspace to view the experiment result. Log in to your Databricks Workspace, and click on top left to select machine learning in the drop down list. Then click on the experiment icon. See the screenshot below:
 
-![Landing page of Databricks MLflow server](/docs/3.11.1/assets/images/databricks-lighthouse-landing-page-8719ea229bc7e60265499aef09ae3ffd.png)
+![Landing page of Databricks MLflow server](/docs/latest/assets/images/databricks-lighthouse-landing-page-8719ea229bc7e60265499aef09ae3ffd.png)
 
 In the "Experiments" view, you should be able to find the experiment "check-databricks-connection", similar to
 
-![Experiment view of Databricks MLflow server](/docs/3.11.1/assets/images/databricks-lighthouse-experiment-view-71da0c93ad8b015942690ab9c13aef55.png)
+![Experiment view of Databricks MLflow server](/docs/latest/assets/images/databricks-lighthouse-experiment-view-71da0c93ad8b015942690ab9c13aef55.png)
 
 Clicking on the run name, in our example it is "skillful-jay-111" (it's a randomly generated name, you will see a different name in your Databricks console), will bring you to the run view, similar to
 
-![Run view of Databricks MLflow server](/docs/3.11.1/assets/images/databricks-lighthouse-run-view-2010f6cb028c069c95e9a57661464921.png)
+![Run view of Databricks MLflow server](/docs/latest/assets/images/databricks-lighthouse-run-view-2010f6cb028c069c95e9a57661464921.png)
 
 In the run view, you will see your dummy metrics *"foo"* and *"bar"* are logged successfully.
 

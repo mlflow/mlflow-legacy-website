@@ -1,8 +1,8 @@
 # Tracing VoltAgent
 
-![VoltAgent Tracing](/docs/3.11.1/images/llms/tracing/voltagent-tracing.png)
+![VoltAgent Tracing](/docs/latest/images/llms/tracing/voltagent-tracing.png)
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing.md) provides automatic tracing capability for [VoltAgent](https://github.com/VoltAgent/voltagent), an open-source TypeScript framework for building AI agents. MLflow supports tracing for VoltAgent through the [OpenTelemetry](/docs/3.11.1/genai/tracing/opentelemetry.md) integration.
+[MLflow Tracing](/docs/latest/genai/tracing.md) provides automatic tracing capability for [VoltAgent](https://github.com/VoltAgent/voltagent), an open-source TypeScript framework for building AI agents. MLflow supports tracing for VoltAgent through the [OpenTelemetry](/docs/latest/genai/tracing/opentelemetry.md) integration.
 
 What is VoltAgent?
 
@@ -31,7 +31,7 @@ bash
 mlflow server --backend-store-uri sqlite:///mlflow.db --port 5000
 ```
 
-This example uses SQLite as the backend store. To use other types of SQL databases such as PostgreSQL, MySQL, and MSSQL, change the store URI as described in the [backend store documentation](/docs/3.11.1/self-hosting/architecture/backend-store.md). OpenTelemetry ingestion is not supported with file-based backend stores.
+This example uses SQLite as the backend store. To use other types of SQL databases such as PostgreSQL, MySQL, and MSSQL, change the store URI as described in the [backend store documentation](/docs/latest/self-hosting/architecture/backend-store.md). OpenTelemetry ingestion is not supported with file-based backend stores.
 
 ## Step 3: Install OpenTelemetry Packages[​](#step-3-install-opentelemetry-packages "Direct link to Step 3: Install OpenTelemetry Packages")
 
@@ -116,11 +116,11 @@ Your agent is now running! To interact with it, open the VoltAgent Console at <h
 
 After chatting with your agent, open the MLflow UI at `http://localhost:5000` and navigate to your experiment to see the traces.
 
-![VoltAgent trace in MLflow UI](/docs/3.11.1/images/llms/tracing/voltagent-tracing.png)
+![VoltAgent trace in MLflow UI](/docs/latest/images/llms/tracing/voltagent-tracing.png)
 
 ## Combine with the MLflow Tracing SDK[​](#combine-with-the-mlflow-tracing-sdk "Direct link to Combine with the MLflow Tracing SDK")
 
-Since this integration is built on OpenTelemetry, you can combine the automatically generated traces with the [MLflow Tracing SDK](/docs/3.11.1/genai/tracing.md) (`@mlflow/core`) to add custom spans, set tags, and update trace metadata within the same trace.
+Since this integration is built on OpenTelemetry, you can combine the automatically generated traces with the [MLflow Tracing SDK](/docs/latest/genai/tracing.md) (`@mlflow/core`) to add custom spans, set tags, and update trace metadata within the same trace.
 
 typescript
 
@@ -143,10 +143,10 @@ const result = await withSpan(
 );
 ```
 
-For detailed instructions and examples, see [Combining the OpenTelemetry SDK and the MLflow Tracing SDK](/docs/3.11.1/genai/tracing/app-instrumentation/opentelemetry.md#combining-the-opentelemetry-sdk-and-the-mlflow-tracing-sdk).
+For detailed instructions and examples, see [Combining the OpenTelemetry SDK and the MLflow Tracing SDK](/docs/latest/genai/tracing/app-instrumentation/opentelemetry.md#combining-the-opentelemetry-sdk-and-the-mlflow-tracing-sdk).
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-* [Evaluate the Agent](/docs/3.11.1/genai/eval-monitor/running-evaluation/agents.md): Learn how to evaluate the agent's performance.
-* [Manage Prompts](/docs/3.11.1/genai/prompt-registry.md): Learn how to manage prompts for the agent.
-* [Automatic Agent Optimization](/docs/3.11.1/genai/prompt-registry/optimize-prompts.md): Learn how to automatically optimize the agent end-to-end with state-of-the-art optimization algorithms.
+* [Evaluate the Agent](/docs/latest/genai/eval-monitor/running-evaluation/agents.md): Learn how to evaluate the agent's performance.
+* [Manage Prompts](/docs/latest/genai/prompt-registry.md): Learn how to manage prompts for the agent.
+* [Automatic Agent Optimization](/docs/latest/genai/prompt-registry/optimize-prompts.md): Learn how to automatically optimize the agent end-to-end with state-of-the-art optimization algorithms.

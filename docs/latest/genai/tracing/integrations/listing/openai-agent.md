@@ -1,8 +1,8 @@
 # Tracing OpenAI Agent🤖
 
-![OpenAI Tracing via autolog](/docs/3.11.1/assets/images/openai-agent-tracing-abaaf17d1cba0a11363d63b29a979cbb.png)
+![OpenAI Tracing via autolog](/docs/latest/assets/images/openai-agent-tracing-abaaf17d1cba0a11363d63b29a979cbb.png)
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing.md) provides automatic tracing capability for [OpenAI Agents SDK](https://platform.openai.com/docs/guides/agents-sdk), a multi-agent framework developed by OpenAI. By enabling auto tracing for OpenAI by calling the [`mlflow.openai.autolog()`](/docs/3.11.1/api_reference/python_api/mlflow.openai.html#mlflow.openai.autolog) function, MLflow will capture traces and log them to the active MLflow Experiment.
+[MLflow Tracing](/docs/latest/genai/tracing.md) provides automatic tracing capability for [OpenAI Agents SDK](https://platform.openai.com/docs/guides/agents-sdk), a multi-agent framework developed by OpenAI. By enabling auto tracing for OpenAI by calling the [`mlflow.openai.autolog()`](/docs/latest/api_reference/python_api/mlflow.openai.html#mlflow.openai.autolog) function, MLflow will capture traces and log them to the active MLflow Experiment.
 
 Show setup code
 
@@ -102,7 +102,7 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-![OpenAI Tracing via autolog](/docs/3.11.1/assets/images/openai-agent-tracing-function-calling-a01f7b2fb8f5c73f54d43b2a8e2d63de.png)
+![OpenAI Tracing via autolog](/docs/latest/assets/images/openai-agent-tracing-function-calling-a01f7b2fb8f5c73f54d43b2a8e2d63de.png)
 
 ## Guardrails[​](#guardrails "Direct link to Guardrails")
 
@@ -174,7 +174,7 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-![OpenAI Tracing via autolog](/docs/3.11.1/assets/images/openai-agent-tracing-guardrail-c35d8df829459ed5a5927866c6b745d8.png)
+![OpenAI Tracing via autolog](/docs/latest/assets/images/openai-agent-tracing-guardrail-c35d8df829459ed5a5927866c6b745d8.png)
 
 ## Disable auto-tracing[​](#disable-auto-tracing "Direct link to Disable auto-tracing")
 

@@ -16,7 +16,7 @@ bash
 mlflow server --backend-store-uri sqlite:///mlflow.db
 ```
 
-For connecting to different databases such as PostgreSQL, see [backend store documentation](/docs/3.11.1/self-hosting/architecture/backend-store.md).
+For connecting to different databases such as PostgreSQL, see [backend store documentation](/docs/latest/self-hosting/architecture/backend-store.md).
 
 Moreover, if the logging SDK calls are slow (e.g., `mlflow.log_metric`), you can also enable [async logging](https://mlflow.org/docs/latest/api_reference/python_api/mlflow.config.html#mlflow.config.enable_async_logging) to reduce the overhead.
 

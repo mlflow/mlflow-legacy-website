@@ -85,51 +85,51 @@ This automatically logs training metrics, hyperparameters, and model checkpoints
 
 ### Quickstart[​](#quickstart "Direct link to Quickstart")
 
-[Text Generation with Transformers](/docs/3.11.1/ml/deep-learning/transformers/tutorials/text-generation/text-generation.md)
+[Text Generation with Transformers](/docs/latest/ml/deep-learning/transformers/tutorials/text-generation/text-generation.md)
 
-[Introductory quickstart for using Transformers with MLflow](/docs/3.11.1/ml/deep-learning/transformers/tutorials/text-generation/text-generation.md)
+[Introductory quickstart for using Transformers with MLflow](/docs/latest/ml/deep-learning/transformers/tutorials/text-generation/text-generation.md)
 
 ### Fine-Tuning[​](#fine-tuning "Direct link to Fine-Tuning")
 
-[Fine-tuning a Foundation Model](/docs/3.11.1/ml/deep-learning/transformers/tutorials/fine-tuning/transformers-fine-tuning.md)
+[Fine-tuning a Foundation Model](/docs/latest/ml/deep-learning/transformers/tutorials/fine-tuning/transformers-fine-tuning.md)
 
-[Track fine-tuning experiments and log optimized models](/docs/3.11.1/ml/deep-learning/transformers/tutorials/fine-tuning/transformers-fine-tuning.md)[](/docs/3.11.1/ml/deep-learning/transformers/tutorials/fine-tuning/transformers-peft.md)
+[Track fine-tuning experiments and log optimized models](/docs/latest/ml/deep-learning/transformers/tutorials/fine-tuning/transformers-fine-tuning.md)[](/docs/latest/ml/deep-learning/transformers/tutorials/fine-tuning/transformers-peft.md)
 
-[Fine-tuning with PEFT](/docs/3.11.1/ml/deep-learning/transformers/tutorials/fine-tuning/transformers-peft.md)
+[Fine-tuning with PEFT](/docs/latest/ml/deep-learning/transformers/tutorials/fine-tuning/transformers-peft.md)
 
-[](/docs/3.11.1/ml/deep-learning/transformers/tutorials/fine-tuning/transformers-peft.md)
+[](/docs/latest/ml/deep-learning/transformers/tutorials/fine-tuning/transformers-peft.md)
 
-[Memory-efficient fine-tuning using PEFT (QLoRA) techniques](/docs/3.11.1/ml/deep-learning/transformers/tutorials/fine-tuning/transformers-peft.md)
+[Memory-efficient fine-tuning using PEFT (QLoRA) techniques](/docs/latest/ml/deep-learning/transformers/tutorials/fine-tuning/transformers-peft.md)
 
 ### Advanced Use Cases[​](#advanced-use-cases "Direct link to Advanced Use Cases")
 
-[Audio Transcription](/docs/3.11.1/ml/deep-learning/transformers/tutorials/audio-transcription/whisper.md)
+[Audio Transcription](/docs/latest/ml/deep-learning/transformers/tutorials/audio-transcription/whisper.md)
 
-[Use Whisper models for audio transcription](/docs/3.11.1/ml/deep-learning/transformers/tutorials/audio-transcription/whisper.md)[](/docs/3.11.1/ml/deep-learning/transformers/tutorials/translation/component-translation.md)
+[Use Whisper models for audio transcription](/docs/latest/ml/deep-learning/transformers/tutorials/audio-transcription/whisper.md)[](/docs/latest/ml/deep-learning/transformers/tutorials/translation/component-translation.md)
 
-[Translation](/docs/3.11.1/ml/deep-learning/transformers/tutorials/translation/component-translation.md)
+[Translation](/docs/latest/ml/deep-learning/transformers/tutorials/translation/component-translation.md)
 
-[](/docs/3.11.1/ml/deep-learning/transformers/tutorials/translation/component-translation.md)
+[](/docs/latest/ml/deep-learning/transformers/tutorials/translation/component-translation.md)
 
-[Component-based model logging for translation tasks](/docs/3.11.1/ml/deep-learning/transformers/tutorials/translation/component-translation.md)[](/docs/3.11.1/ml/deep-learning/transformers/tutorials/conversational/conversational-model.md)
+[Component-based model logging for translation tasks](/docs/latest/ml/deep-learning/transformers/tutorials/translation/component-translation.md)[](/docs/latest/ml/deep-learning/transformers/tutorials/conversational/conversational-model.md)
 
-[Conversational Pipelines](/docs/3.11.1/ml/deep-learning/transformers/tutorials/conversational/conversational-model.md)
+[Conversational Pipelines](/docs/latest/ml/deep-learning/transformers/tutorials/conversational/conversational-model.md)
 
-[](/docs/3.11.1/ml/deep-learning/transformers/tutorials/conversational/conversational-model.md)
+[](/docs/latest/ml/deep-learning/transformers/tutorials/conversational/conversational-model.md)
 
-[Stateful chat with conversational pipelines](/docs/3.11.1/ml/deep-learning/transformers/tutorials/conversational/conversational-model.md)[](/docs/3.11.1/ml/deep-learning/transformers/tutorials/conversational/pyfunc-chat-model.md)
+[Stateful chat with conversational pipelines](/docs/latest/ml/deep-learning/transformers/tutorials/conversational/conversational-model.md)[](/docs/latest/ml/deep-learning/transformers/tutorials/conversational/pyfunc-chat-model.md)
 
-[OpenAI-Compatible Chatbot](/docs/3.11.1/ml/deep-learning/transformers/tutorials/conversational/pyfunc-chat-model.md)
+[OpenAI-Compatible Chatbot](/docs/latest/ml/deep-learning/transformers/tutorials/conversational/pyfunc-chat-model.md)
 
-[](/docs/3.11.1/ml/deep-learning/transformers/tutorials/conversational/pyfunc-chat-model.md)
+[](/docs/latest/ml/deep-learning/transformers/tutorials/conversational/pyfunc-chat-model.md)
 
-[Build and serve an OpenAI-compatible chatbot](/docs/3.11.1/ml/deep-learning/transformers/tutorials/conversational/pyfunc-chat-model.md)[](/docs/3.11.1/ml/deep-learning/transformers/tutorials/prompt-templating/prompt-templating.md)
+[Build and serve an OpenAI-compatible chatbot](/docs/latest/ml/deep-learning/transformers/tutorials/conversational/pyfunc-chat-model.md)[](/docs/latest/ml/deep-learning/transformers/tutorials/prompt-templating/prompt-templating.md)
 
-[Prompt Templating](/docs/3.11.1/ml/deep-learning/transformers/tutorials/prompt-templating/prompt-templating.md)
+[Prompt Templating](/docs/latest/ml/deep-learning/transformers/tutorials/prompt-templating/prompt-templating.md)
 
-[](/docs/3.11.1/ml/deep-learning/transformers/tutorials/prompt-templating/prompt-templating.md)
+[](/docs/latest/ml/deep-learning/transformers/tutorials/prompt-templating/prompt-templating.md)
 
-[Optimize LLM outputs with prompt templates](/docs/3.11.1/ml/deep-learning/transformers/tutorials/prompt-templating/prompt-templating.md)
+[Optimize LLM outputs with prompt templates](/docs/latest/ml/deep-learning/transformers/tutorials/prompt-templating/prompt-templating.md)
 
 ## Important Considerations[​](#important-considerations "Direct link to Important Considerations")
 
@@ -138,7 +138,7 @@ This automatically logs training metrics, hyperparameters, and model checkpoints
 * Not all pipeline types are supported for PyFunc inference
 * Some outputs (e.g., additional scores, references) may not be captured
 * Audio and text LLMs are supported; vision and multimodal models require native loading
-* See the [guide](/docs/3.11.1/ml/deep-learning/transformers/guide.md#loading-a-transformers-model-as-a-python-function) for supported pipeline types
+* See the [guide](/docs/latest/ml/deep-learning/transformers/guide.md#loading-a-transformers-model-as-a-python-function) for supported pipeline types
 
 ### Input/Output Types[​](#inputoutput-types "Direct link to Input/Output Types")
 
@@ -150,19 +150,19 @@ Parameters in `ModelSignature` override those in `model_config` when both are pr
 
 ## Working with Large Models[​](#working-with-large-models "Direct link to Working with Large Models")
 
-For models with billions of parameters, MLflow provides optimization techniques to reduce memory usage and speed up logging. See the [large models guide](/docs/3.11.1/ml/deep-learning/transformers/large-models.md).
+For models with billions of parameters, MLflow provides optimization techniques to reduce memory usage and speed up logging. See the [large models guide](/docs/latest/ml/deep-learning/transformers/large-models.md).
 
 ## Tasks[​](#tasks "Direct link to Tasks")
 
-The `task` parameter determines input/output format. MLflow supports native Transformers tasks plus advanced tasks like `llm/v1/chat` and `llm/v1/completions` for OpenAI-compatible inference. See the [tasks guide](/docs/3.11.1/ml/deep-learning/transformers/task.md).
+The `task` parameter determines input/output format. MLflow supports native Transformers tasks plus advanced tasks like `llm/v1/chat` and `llm/v1/completions` for OpenAI-compatible inference. See the [tasks guide](/docs/latest/ml/deep-learning/transformers/task.md).
 
 ## Learn More[​](#learn-more "Direct link to Learn More")
 
-### [Detailed Guide](/docs/3.11.1/ml/deep-learning/transformers/guide.md)
+### [Detailed Guide](/docs/latest/ml/deep-learning/transformers/guide.md)
 
-[Comprehensive documentation covering pipelines, PyFunc, signatures, PEFT, and more](/docs/3.11.1/ml/deep-learning/transformers/guide.md)
+[Comprehensive documentation covering pipelines, PyFunc, signatures, PEFT, and more](/docs/latest/ml/deep-learning/transformers/guide.md)
 
-[Learn more →](/docs/3.11.1/ml/deep-learning/transformers/guide.md)
+[Learn more →](/docs/latest/ml/deep-learning/transformers/guide.md)
 
 ### [Transformers Documentation](https://huggingface.co/docs/transformers/index)
 

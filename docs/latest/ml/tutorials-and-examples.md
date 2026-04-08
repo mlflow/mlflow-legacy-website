@@ -12,7 +12,7 @@ When your project requires coordinating multiple steps—say, data preprocessing
 
 For those who prefer crafting HTTP requests directly, our [Using the MLflow REST API Directly](https://github.com/mlflow/mlflow/tree/master/examples/rest_api) example shows you how to submit runs, retrieve metrics, and register models via simple `curl` and Python snippets 🔍. It's ideal when you want language-agnostic control over your tracking server.
 
-Meanwhile, if you're building custom functionality on top of MLflow's core, dive into [Write & Use MLflow Plugins](/docs/3.11.1/ml/plugins.md#developing-custom-plugins) to learn how to extend MLflow with new flavors, UI tabs, or artifact stores. You'll see how to package your plugin, register it, and test it locally before pushing to production.
+Meanwhile, if you're building custom functionality on top of MLflow's core, dive into [Write & Use MLflow Plugins](/docs/latest/ml/plugins.md#developing-custom-plugins) to learn how to extend MLflow with new flavors, UI tabs, or artifact stores. You'll see how to package your plugin, register it, and test it locally before pushing to production.
 
 ***
 
@@ -70,7 +70,7 @@ MLflow seamlessly integrates with a wide variety of training frameworks so you c
 
 3. **Instrument Your Code**: Browse the framework-specific examples above to identify which integration aligns with your stack. Click the relevant link (e.g., [Keras](https://github.com/mlflow/mlflow/tree/master/examples/keras) for TensorFlow-based models, [XGBoost](https://github.com/mlflow/mlflow/tree/master/examples/xgboost) for tree-based learners, or [LangChain](https://github.com/mlflow/mlflow/tree/master/examples/langchain) for LLM workflows).
 
-4. **Extend & Customize**: To write and test custom plugins, consult [Write & Use MLflow Plugins](/docs/3.11.1/ml/plugins.md#developing-custom-plugins).
+4. **Extend & Customize**: To write and test custom plugins, consult [Write & Use MLflow Plugins](/docs/latest/ml/plugins.md#developing-custom-plugins).
 
 ***
 

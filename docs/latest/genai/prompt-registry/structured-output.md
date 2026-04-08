@@ -45,13 +45,13 @@ json
 }
 ```
 
-![Register prompt with structured output](/docs/3.11.1/assets/images/create-prompt-with-structured-output-0ef48fdf68419014254dba615e902767.png)
+![Register prompt with structured output](/docs/latest/assets/images/create-prompt-with-structured-output-0ef48fdf68419014254dba615e902767.png)
 
 tip
 
 When using providers such as OpenAI with strict structured output, include `"additionalProperties": false` on each object in your schema so the response conforms to the expected shape.
 
-Use the [`mlflow.genai.register_prompt()`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.register_prompt) function with the `response_format` parameter to define structured output programmatically.
+Use the [`mlflow.genai.register_prompt()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.register_prompt) function with the `response_format` parameter to define structured output programmatically.
 
 ### Using Pydantic Models[​](#using-pydantic-models "Direct link to Using Pydantic Models")
 
@@ -268,20 +268,20 @@ result = chain.invoke({"question": "What is MLflow?"})
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [Create and Edit Prompts](/docs/3.11.1/genai/prompt-registry/create-and-edit-prompts.md)
+### [Create and Edit Prompts](/docs/latest/genai/prompt-registry/create-and-edit-prompts.md)
 
-[Learn the basics of prompt management in MLflow](/docs/3.11.1/genai/prompt-registry/create-and-edit-prompts.md)
+[Learn the basics of prompt management in MLflow](/docs/latest/genai/prompt-registry/create-and-edit-prompts.md)
 
-[Manage prompts →](/docs/3.11.1/genai/prompt-registry/create-and-edit-prompts.md)
+[Manage prompts →](/docs/latest/genai/prompt-registry/create-and-edit-prompts.md)
 
-### [Use Prompts in Apps](/docs/3.11.1/genai/prompt-registry/use-prompts-in-apps.md)
+### [Use Prompts in Apps](/docs/latest/genai/prompt-registry/use-prompts-in-apps.md)
 
-[See how to integrate prompts into your applications](/docs/3.11.1/genai/prompt-registry/use-prompts-in-apps.md)
+[See how to integrate prompts into your applications](/docs/latest/genai/prompt-registry/use-prompts-in-apps.md)
 
-[Integrate prompts →](/docs/3.11.1/genai/prompt-registry/use-prompts-in-apps.md)
+[Integrate prompts →](/docs/latest/genai/prompt-registry/use-prompts-in-apps.md)
 
-### [Evaluate Prompts](/docs/3.11.1/genai/prompt-registry/evaluate-prompts.md)
+### [Evaluate Prompts](/docs/latest/genai/prompt-registry/evaluate-prompts.md)
 
-[Learn how to assess prompt performance with evaluations](/docs/3.11.1/genai/prompt-registry/evaluate-prompts.md)
+[Learn how to assess prompt performance with evaluations](/docs/latest/genai/prompt-registry/evaluate-prompts.md)
 
-[Evaluate prompts →](/docs/3.11.1/genai/prompt-registry/evaluate-prompts.md)
+[Evaluate prompts →](/docs/latest/genai/prompt-registry/evaluate-prompts.md)

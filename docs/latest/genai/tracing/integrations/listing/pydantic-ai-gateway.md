@@ -4,11 +4,11 @@
 
 Since Pydantic AI Gateway exposes OpenAI and Anthropic-compatible APIs, you can use MLflow's automatic tracing integrations to capture detailed traces of your LLM interactions.
 
-![Pydantic AI Gateway Tracing](/docs/3.11.1/images/llms/pydantic-ai/pydanticai-gateway-tracing.png)
+![Pydantic AI Gateway Tracing](/docs/latest/images/llms/pydantic-ai/pydanticai-gateway-tracing.png)
 
 Looking for PydanticAI Agent Framework?
 
-This guide covers tracing LLM calls through **Pydantic AI Gateway**. If you're building agents using the Pydantic AI framework directly, see the [PydanticAI Integration](/docs/3.11.1/genai/tracing/integrations/listing/pydantic_ai.md) guide instead.
+This guide covers tracing LLM calls through **Pydantic AI Gateway**. If you're building agents using the Pydantic AI framework directly, see the [PydanticAI Integration](/docs/latest/genai/tracing/integrations/listing/pydantic_ai.md) guide instead.
 
 ## Prerequisite[​](#prerequisite "Direct link to Prerequisite")
 
@@ -52,7 +52,7 @@ You can trace LLM calls through Pydantic AI Gateway using any of the following a
 * Anthropic SDK
 * Pydantic AI Agents
 
-Since Pydantic AI Gateway exposes an OpenAI-compatible API, you can use MLflow's [OpenAI automatic tracing](/docs/3.11.1/genai/tracing/integrations/listing/openai.md) integration to trace calls.
+Since Pydantic AI Gateway exposes an OpenAI-compatible API, you can use MLflow's [OpenAI automatic tracing](/docs/latest/genai/tracing/integrations/listing/openai.md) integration to trace calls.
 
 python
 
@@ -81,7 +81,7 @@ response = client.chat.completions.create(
 print(response.choices[0].message.content)
 ```
 
-If your Pydantic AI Gateway is configured to expose an Anthropic-compatible API, you can use MLflow's [Anthropic automatic tracing](/docs/3.11.1/genai/tracing/integrations/listing/anthropic.md) integration to trace calls.
+If your Pydantic AI Gateway is configured to expose an Anthropic-compatible API, you can use MLflow's [Anthropic automatic tracing](/docs/latest/genai/tracing/integrations/listing/anthropic.md) integration to trace calls.
 
 python
 
@@ -153,7 +153,7 @@ await main()
 # asyncio.run(main())
 ```
 
-For more advanced PydanticAI features like tool calling, MCP servers, and streaming, see the [PydanticAI Integration](/docs/3.11.1/genai/tracing/integrations/listing/pydantic_ai.md) guide.
+For more advanced PydanticAI features like tool calling, MCP servers, and streaming, see the [PydanticAI Integration](/docs/latest/genai/tracing/integrations/listing/pydantic_ai.md) guide.
 
 ## View Traces in MLflow UI[​](#view-traces-in-mlflow-ui "Direct link to View Traces in MLflow UI")
 
@@ -161,20 +161,20 @@ Open the MLflow UI at <http://localhost:5000> (or your custom MLflow server URL)
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [Track User Feedback](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+### [Track User Feedback](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-[Record user feedback on traces for tracking user satisfaction.](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+[Record user feedback on traces for tracking user satisfaction.](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-[Learn about feedback →](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+[Learn about feedback →](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-### [Manage Prompts](/docs/3.11.1/genai/prompt-registry.md)
+### [Manage Prompts](/docs/latest/genai/prompt-registry.md)
 
-[Learn how to manage prompts with MLflow's prompt registry.](/docs/3.11.1/genai/prompt-registry.md)
+[Learn how to manage prompts with MLflow's prompt registry.](/docs/latest/genai/prompt-registry.md)
 
-[Manage prompts →](/docs/3.11.1/genai/prompt-registry.md)
+[Manage prompts →](/docs/latest/genai/prompt-registry.md)
 
-### [Evaluate Traces](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+### [Evaluate Traces](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Evaluate traces with LLM judges to understand and improve your AI application's behavior.](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Evaluate traces with LLM judges to understand and improve your AI application's behavior.](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Evaluate traces →](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Evaluate traces →](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)

@@ -1,10 +1,10 @@
 # Tracing LangChain🦜⛓️
 
-![LangChain Tracing with MLflow](/docs/3.11.1/images/llms/tracing/langgraph-agent-trace.png)
+![LangChain Tracing with MLflow](/docs/latest/images/llms/tracing/langgraph-agent-trace.png)
 
 [LangChain](https://www.langchain.com/) is an open-source framework for building LLM-powered applications.
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing.md) provides automatic tracing capability for LangChain. You can enable tracing for LangChain by calling the [`mlflow.langchain.autolog()`](/docs/3.11.1/api_reference/python_api/mlflow.langchain.html#mlflow.langchain.autolog) function, and nested traces are automatically logged to the active MLflow Experiment upon invocation of chains. In TypeScript, you can pass the MLflow LangChain callback to the `callbacks` option.
+[MLflow Tracing](/docs/latest/genai/tracing.md) provides automatic tracing capability for LangChain. You can enable tracing for LangChain by calling the [`mlflow.langchain.autolog()`](/docs/latest/api_reference/python_api/mlflow.langchain.html#mlflow.langchain.autolog) function, and nested traces are automatically logged to the active MLflow Experiment upon invocation of chains. In TypeScript, you can pass the MLflow LangChain callback to the `callbacks` option.
 
 * Python
 * JS / TS
@@ -29,7 +29,7 @@ MLflow support tracing for LangChain in both Python and TypeScript/JavaScript. P
 
 ### 1. Start MLflow[​](#1-start-mlflow "Direct link to 1. Start MLflow")
 
-Start the MLflow server following the [Self-Hosting Guide](/docs/3.11.1/self-hosting.md), if you don't have one already.
+Start the MLflow server following the [Self-Hosting Guide](/docs/latest/self-hosting.md), if you don't have one already.
 
 ### 2. Install dependencies[​](#2-install-dependencies "Direct link to 2. Install dependencies")
 
@@ -90,7 +90,7 @@ Visit `http://localhost:5000` (or your custom MLflow tracking server URL) to vie
 
 ### 1. Start MLflow[​](#1-start-mlflow-1 "Direct link to 1. Start MLflow")
 
-Start the MLflow server following the [Self-Hosting Guide](/docs/3.11.1/self-hosting.md), if you don't have one already.
+Start the MLflow server following the [Self-Hosting Guide](/docs/latest/self-hosting.md), if you don't have one already.
 
 ### 2. Install the required dependencies:[​](#2-install-the-required-dependencies "Direct link to 2. Install the required dependencies:")
 
@@ -245,7 +245,7 @@ pip install openai==1.30.5 langchain==0.2.1 langchain-openai==0.1.8 langchain-co
 
 Image Support for LangChain Traces
 
-MLflow captures image content parts passed through LangChain models. See [Image and Audio (Multimodal) Content in Traces](/docs/3.11.1/genai/tracing/observe-with-traces/multimodal.md) for details.
+MLflow captures image content parts passed through LangChain models. See [Image and Audio (Multimodal) Content in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md) for details.
 
 ## Supported APIs[​](#supported-apis "Direct link to Supported APIs")
 
@@ -262,11 +262,11 @@ The following APIs are supported by auto tracing for LangChain.
 
 ## Tracking Token Usage and Cost[​](#tracking-token-usage-and-cost "Direct link to Tracking Token Usage and Cost")
 
-MLflow automatically tracks token usage and cost for LangChain. The token usage for each LLM call during a chain invocation will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/3.11.1/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
+MLflow automatically tracks token usage and cost for LangChain. The token usage for each LLM call during a chain invocation will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/latest/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
 
 ## Customize Tracing Behavior[​](#customize-tracing-behavior "Direct link to Customize Tracing Behavior")
 
-Sometimes you may want to customize what information is logged in the traces. You can achieve this by creating a custom callback handler that inherits from [`MlflowLangchainTracer`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.langchai.langchain_tracer.MlflowLangchainTracer). MlflowLangchainTracer is a callback handler that is injected into the langchain model inference process to log traces automatically. It starts a new span upon a set of actions of the chain such as on\_chain\_start, on\_llm\_start, and concludes it when the action is finished. Various metadata such as span type, action name, input, output, latency, are automatically recorded to the span.
+Sometimes you may want to customize what information is logged in the traces. You can achieve this by creating a custom callback handler that inherits from [`MlflowLangchainTracer`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.langchai.langchain_tracer.MlflowLangchainTracer). MlflowLangchainTracer is a callback handler that is injected into the langchain model inference process to log traces automatically. It starts a new span upon a set of actions of the chain such as on\_chain\_start, on\_llm\_start, and concludes it when the action is finished. Various metadata such as span type, action name, input, output, latency, are automatically recorded to the span.
 
 The following example demonstrates how to record an additional attribute to the span when a chat model starts running.
 
@@ -311,7 +311,7 @@ class CustomLangchainTracer(MlflowLangchainTracer):
 
 ## Combine with the MLflow Tracing SDK (JS / TS)[​](#combine-with-the-mlflow-tracing-sdk-js--ts "Direct link to Combine with the MLflow Tracing SDK (JS / TS)")
 
-When using LangChain.js with OpenTelemetry-based tracing, you can combine the automatically generated traces with the [MLflow Tracing SDK](/docs/3.11.1/genai/tracing.md) (`@mlflow/core`) to add custom spans, set tags, and update trace metadata within the same trace.
+When using LangChain.js with OpenTelemetry-based tracing, you can combine the automatically generated traces with the [MLflow Tracing SDK](/docs/latest/genai/tracing.md) (`@mlflow/core`) to add custom spans, set tags, and update trace metadata within the same trace.
 
 typescript
 
@@ -340,7 +340,7 @@ const result = await withSpan(
 );
 ```
 
-For detailed instructions and examples, see [Combining the OpenTelemetry SDK and the MLflow Tracing SDK](/docs/3.11.1/genai/tracing/app-instrumentation/opentelemetry.md#combining-the-opentelemetry-sdk-and-the-mlflow-tracing-sdk).
+For detailed instructions and examples, see [Combining the OpenTelemetry SDK and the MLflow Tracing SDK](/docs/latest/genai/tracing/app-instrumentation/opentelemetry.md#combining-the-opentelemetry-sdk-and-the-mlflow-tracing-sdk).
 
 ## Disable auto-tracing[​](#disable-auto-tracing "Direct link to Disable auto-tracing")
 

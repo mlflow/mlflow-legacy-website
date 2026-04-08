@@ -1,8 +1,8 @@
 # Tracing BytePlus
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing/integrations.md) provides automatic tracing capability for <!-- -->BytePlus<!-- --> models through the OpenAI SDK integration. Since <!-- -->BytePlus<!-- --> offers an OpenAI-compatible API format, you can use<!-- --> `mlflow.openai.autolog()` to trace interactions with <!-- -->BytePlus<!-- --> models.
+[MLflow Tracing](/docs/latest/genai/tracing/integrations.md) provides automatic tracing capability for <!-- -->BytePlus<!-- --> models through the OpenAI SDK integration. Since <!-- -->BytePlus<!-- --> offers an OpenAI-compatible API format, you can use<!-- --> `mlflow.openai.autolog()` to trace interactions with <!-- -->BytePlus<!-- --> models.
 
-![Tracing via autolog](/docs/3.11.1/images/llms/tracing/openai-function-calling.png)
+![Tracing via autolog](/docs/latest/images/llms/tracing/openai-function-calling.png)
 
 MLflow trace automatically captures the following information about <!-- -->BytePlus<!-- --> calls:
 
@@ -132,17 +132,17 @@ const response = await client.chat.completions.create({
 
 Browse to your MLflow UI (for example, http\://localhost:5000) and open the `BytePlus` experiment to see traces for the calls above.
 
-![BytePlus Tracing](/docs/3.11.1/images/llms/tracing/basic-openai-trace.png)
+![BytePlus Tracing](/docs/latest/images/llms/tracing/basic-openai-trace.png)
 
 -> View<!-- --> *[Next Steps](#next-steps)* <!-- -->for learning about more MLflow features like user feedback tracking, prompt management, and evaluation.
 
 ## Streaming and Async Support
 
-MLflow supports tracing for streaming and async <!-- -->BytePlus<!-- --> APIs. Visit the<!-- --> [OpenAI Tracing documentation](/docs/3.11.1/genai/tracing/integrations/listing/openai.md) for example code snippets for tracing streaming and async calls through OpenAI SDK.
+MLflow supports tracing for streaming and async <!-- -->BytePlus<!-- --> APIs. Visit the<!-- --> [OpenAI Tracing documentation](/docs/latest/genai/tracing/integrations/listing/openai.md) for example code snippets for tracing streaming and async calls through OpenAI SDK.
 
 ## Combine with frameworks or manual tracing
 
-The automatic tracing capability in MLflow is designed to work seamlessly with the<!-- --> [Manual Tracing SDK](/docs/3.11.1/genai/tracing/app-instrumentation/manual-tracing.md) or multi-framework integrations. The examples below show Python (manual span) and JS/TS (manual span) at the same level of complexity.
+The automatic tracing capability in MLflow is designed to work seamlessly with the<!-- --> [Manual Tracing SDK](/docs/latest/genai/tracing/app-instrumentation/manual-tracing.md) or multi-framework integrations. The examples below show Python (manual span) and JS/TS (manual span) at the same level of complexity.
 
 * Python
 * JS / TS
@@ -221,24 +221,24 @@ await answerQuestion("What is the capital of France?");
 
 Running either example will produce a trace that includes the <!-- -->BytePlus<!-- --> LLM span; the traced function creates the parent span automatically.
 
-![BytePlus Tracing with Manual Tracing](/docs/3.11.1/images/llms/tracing/openai-trace-with-manual-span.png)
+![BytePlus Tracing with Manual Tracing](/docs/latest/images/llms/tracing/openai-trace-with-manual-span.png)
 
 ## Next steps
 
-### [Track User Feedback](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+### [Track User Feedback](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-[Record user feedback on traces for tracking user satisfaction.](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+[Record user feedback on traces for tracking user satisfaction.](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-[Learn about feedback ->](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+[Learn about feedback ->](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-### [Manage Prompts](/docs/3.11.1/genai/prompt-registry.md)
+### [Manage Prompts](/docs/latest/genai/prompt-registry.md)
 
-[Learn how to manage prompts with MLflow's prompt registry.](/docs/3.11.1/genai/prompt-registry.md)
+[Learn how to manage prompts with MLflow's prompt registry.](/docs/latest/genai/prompt-registry.md)
 
-[Manage prompts ->](/docs/3.11.1/genai/prompt-registry.md)
+[Manage prompts ->](/docs/latest/genai/prompt-registry.md)
 
-### [Evaluate Traces](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+### [Evaluate Traces](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Evaluate traces with LLM judges to understand and improve your AI application's behavior.](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Evaluate traces with LLM judges to understand and improve your AI application's behavior.](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Evaluate traces ->](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Evaluate traces ->](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)

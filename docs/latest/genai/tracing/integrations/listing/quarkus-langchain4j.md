@@ -1,6 +1,6 @@
 # Tracing Quarkus LangChain4j
 
-![Quarkus LangChain4j Logo](/docs/3.11.1/images/logos/langchain4j.svg)
+![Quarkus LangChain4j Logo](/docs/latest/images/logos/langchain4j.svg)
 
 #### Integration via OpenTelemetry
 
@@ -22,7 +22,7 @@ bash
 mlflow server
 ```
 
-To use other types of SQL databases such as PostgreSQL, MySQL, and MSSQL, change the store URI as described in the [backend store documentation](/docs/3.11.1/self-hosting/architecture/backend-store.md).
+To use other types of SQL databases such as PostgreSQL, MySQL, and MSSQL, change the store URI as described in the [backend store documentation](/docs/latest/self-hosting/architecture/backend-store.md).
 
 In your application, configure the server endpoint and set the MLflow experiment ID in the OTLP header `x-mlflow-experiment-id`.
 
@@ -43,4 +43,4 @@ Refer to the [Quarkus LangChain4j Observability documentation](https://docs.quar
 
 ## Reference[​](#reference "Direct link to Reference")
 
-For complete step-by-step instructions on sending traces to MLflow from OpenTelemetry compatible frameworks, see the [Collect OpenTelemetry Traces into MLflow](/docs/3.11.1/genai/tracing/opentelemetry/ingest.md).
+For complete step-by-step instructions on sending traces to MLflow from OpenTelemetry compatible frameworks, see the [Collect OpenTelemetry Traces into MLflow](/docs/latest/genai/tracing/opentelemetry/ingest.md).

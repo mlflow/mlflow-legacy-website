@@ -14,7 +14,7 @@ This built-in LLM judge is designed for evaluating AI agents and tool-calling ap
    pip install --upgrade mlflow
    ```
 
-2. Create an MLflow experiment by following the [setup your environment quickstart](/docs/3.11.1/genai/getting-started/connect-environment.md).
+2. Create an MLflow experiment by following the [setup your environment quickstart](/docs/latest/genai/getting-started/connect-environment.md).
 
 3. (Optional, if using OpenAI models) Use the native OpenAI SDK to connect to OpenAI-hosted models. Select a model from the [available OpenAI models](https://platform.openai.com/docs/models).
 
@@ -89,7 +89,7 @@ results = mlflow.genai.evaluate(
 
 tip
 
-For a complete agent example with this judge, see the [Tool Call Evaluation guide](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/tool-call.md).
+For a complete agent example with this judge, see the [Tool Call Evaluation guide](/docs/latest/genai/eval-monitor/scorers/llm-judge/tool-call.md).
 
 ## Using expectations for comparison[​](#using-expectations-for-comparison "Direct link to Using expectations for comparison")
 
@@ -237,7 +237,7 @@ eval_results = mlflow.genai.evaluate(
 
 You can change the judge model by using the `model` argument in the judge definition. The model must be specified in the format `<provider>:/<model-name>`, where `<provider>` is the name of your model provider (e.g. `openai`, `anthropic`, `gemini`).
 
-For a list of supported models, see [selecting judge models](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges.md#selecting-judge-models).
+For a list of supported models, see [selecting judge models](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md#selecting-judge-models).
 
 ## Interpret results[​](#interpret-results "Direct link to Interpret results")
 
@@ -255,20 +255,20 @@ The judge returns a Feedback object with:
 
 ## Next steps[​](#next-steps "Direct link to Next steps")
 
-### [Evaluate tool call efficiency](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/tool-call/efficiency.md)
+### [Evaluate tool call efficiency](/docs/latest/genai/eval-monitor/scorers/llm-judge/tool-call/efficiency.md)
 
-[Check if tool calls are efficient without redundancy](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/tool-call/efficiency.md)
+[Check if tool calls are efficient without redundancy](/docs/latest/genai/eval-monitor/scorers/llm-judge/tool-call/efficiency.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/tool-call/efficiency.md)
+[Learn more →](/docs/latest/genai/eval-monitor/scorers/llm-judge/tool-call/efficiency.md)
 
-### [Evaluate agents](/docs/3.11.1/genai/eval-monitor/running-evaluation/agents.md)
+### [Evaluate agents](/docs/latest/genai/eval-monitor/running-evaluation/agents.md)
 
-[Learn comprehensive agent evaluation techniques](/docs/3.11.1/genai/eval-monitor/running-evaluation/agents.md)
+[Learn comprehensive agent evaluation techniques](/docs/latest/genai/eval-monitor/running-evaluation/agents.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/running-evaluation/agents.md)
+[Learn more →](/docs/latest/genai/eval-monitor/running-evaluation/agents.md)
 
-### [Build evaluation datasets](/docs/3.11.1/genai/datasets.md)
+### [Build evaluation datasets](/docs/latest/genai/datasets.md)
 
-[Create test cases with expected tool calls for testing](/docs/3.11.1/genai/datasets.md)
+[Create test cases with expected tool calls for testing](/docs/latest/genai/datasets.md)
 
-[Learn more →](/docs/3.11.1/genai/datasets.md)
+[Learn more →](/docs/latest/genai/datasets.md)

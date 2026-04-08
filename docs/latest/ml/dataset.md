@@ -31,13 +31,13 @@ The `Dataset` abstraction is a metadata tracking object that holds comprehensive
 
 **Supported Dataset Types:**
 
-* [`PandasDataset`](/docs/3.11.1/api_reference/python_api/mlflow.data.html#mlflow.data.pandas_dataset.PandasDataset) - For Pandas DataFrames
-* [`SparkDataset`](/docs/3.11.1/api_reference/python_api/mlflow.data.html#mlflow.data.spark_dataset.SparkDataset) - For Apache Spark DataFrames
-* [`NumpyDataset`](/docs/3.11.1/api_reference/python_api/mlflow.data.html#mlflow.data.numpy_dataset.NumpyDataset) - For NumPy arrays
-* [`PolarsDataset`](/docs/3.11.1/api_reference/python_api/mlflow.data.html#mlflow.data.polars_dataset.PolarsDataset) - For Polars DataFrames
-* [`HuggingFaceDataset`](/docs/3.11.1/api_reference/python_api/mlflow.data.html#mlflow.data.huggingface_dataset.HuggingFaceDataset) - For Hugging Face datasets
-* [`TensorFlowDataset`](/docs/3.11.1/api_reference/python_api/mlflow.data.html#mlflow.data.tensorflow_dataset.TensorFlowDataset) - For TensorFlow datasets
-* [`MetaDataset`](/docs/3.11.1/api_reference/python_api/mlflow.data.html#mlflow.data.meta_dataset.MetaDataset) - For metadata-only datasets (no actual data storage)
+* [`PandasDataset`](/docs/latest/api_reference/python_api/mlflow.data.html#mlflow.data.pandas_dataset.PandasDataset) - For Pandas DataFrames
+* [`SparkDataset`](/docs/latest/api_reference/python_api/mlflow.data.html#mlflow.data.spark_dataset.SparkDataset) - For Apache Spark DataFrames
+* [`NumpyDataset`](/docs/latest/api_reference/python_api/mlflow.data.html#mlflow.data.numpy_dataset.NumpyDataset) - For NumPy arrays
+* [`PolarsDataset`](/docs/latest/api_reference/python_api/mlflow.data.html#mlflow.data.polars_dataset.PolarsDataset) - For Polars DataFrames
+* [`HuggingFaceDataset`](/docs/latest/api_reference/python_api/mlflow.data.html#mlflow.data.huggingface_dataset.HuggingFaceDataset) - For Hugging Face datasets
+* [`TensorFlowDataset`](/docs/latest/api_reference/python_api/mlflow.data.html#mlflow.data.tensorflow_dataset.TensorFlowDataset) - For TensorFlow datasets
+* [`MetaDataset`](/docs/latest/api_reference/python_api/mlflow.data.html#mlflow.data.meta_dataset.MetaDataset) - For metadata-only datasets (no actual data storage)
 
 **Special Dataset Types:**
 
@@ -47,7 +47,7 @@ The `Dataset` abstraction is a metadata tracking object that holds comprehensive
 
 The `DatasetSource` component provides linked lineage to the original source of the data, whether it's a file URL, S3 bucket, database table, or any other data source. This ensures you can always trace back to where your data originated.
 
-The `DatasetSource` can be retrieved using the [`mlflow.data.get_source()`](/docs/3.11.1/api_reference/python_api/mlflow.data.html#mlflow.data.get_source) API, which accepts instances of `Dataset`, `DatasetEntity`, or `DatasetInput`.
+The `DatasetSource` can be retrieved using the [`mlflow.data.get_source()`](/docs/latest/api_reference/python_api/mlflow.data.html#mlflow.data.get_source) API, which accepts instances of `Dataset`, `DatasetEntity`, or `DatasetInput`.
 
 ## Quick Start: Basic Dataset Tracking[​](#quick-start-basic-dataset-tracking "Direct link to Quick Start: Basic Dataset Tracking")
 
@@ -301,7 +301,7 @@ versioned_delta_dataset = mlflow.data.from_spark(
 
 When you log datasets to MLflow runs, they appear in the MLflow UI with comprehensive metadata. You can view dataset information, schema, and lineage directly in the interface.
 
-![Dataset in MLflow UI](/docs/3.11.1/assets/images/dataset-mlflow-ui-9c475f4c9e28b0c438dafb3b3e8c9db8.png)
+![Dataset in MLflow UI](/docs/latest/assets/images/dataset-mlflow-ui-9c475f4c9e28b0c438dafb3b3e8c9db8.png)
 
 The UI displays:
 
@@ -427,7 +427,7 @@ comparison_results = compare_model_performance(model_uri, evaluation_datasets)
 
 Here's a complete example showing how datasets integrate with MLflow's evaluation capabilities:
 
-![Dataset Evaluation in MLflow UI](/docs/3.11.1/assets/images/dataset-evaluate-0d449786c6575ea6b14818f6a3a92855.png)
+![Dataset Evaluation in MLflow UI](/docs/latest/assets/images/dataset-evaluate-0d449786c6575ea6b14818f6a3a92855.png)
 
 The evaluation run shows how the dataset, model, metrics, and evaluation artifacts (like confusion matrices) are all logged together, providing a complete view of the evaluation process.
 

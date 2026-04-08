@@ -1,6 +1,6 @@
 # Create a custom judge using `make_judge()`
 
-Custom judges are LLM-based judges that evaluate your LLM applications and AI agents against specific quality criteria. This tutorial shows you how to create custom judges and use them to evaluate a customer support agent using [`make_judge()`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.judges.make_judge).
+Custom judges are LLM-based judges that evaluate your LLM applications and AI agents against specific quality criteria. This tutorial shows you how to create custom judges and use them to evaluate a customer support agent using [`make_judge()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.judges.make_judge).
 
 You will:
 
@@ -129,7 +129,7 @@ mlflow server
 
 2. Navigate to your experiment and select the **Judges** tab, then click **New LLM judge**
 
-![Judges Tab](/docs/3.11.1/images/mlflow-3/eval-monitor/scorers/judges-tab.png)
+![Judges Tab](/docs/latest/images/mlflow-3/eval-monitor/scorers/judges-tab.png)
 
 3. **Select scope**: Choose what you want the judge to evaluate:
 
@@ -140,25 +140,25 @@ mlflow server
 
    * **LLM judge**: Select a built-in judge or "Custom judge" to create your own. Selecting a built-in judge pre-populates the instructions, which you can then modify to customize the evaluation criteria.
    * **Name**: A unique identifier for your judge
-   * **Instructions**: Define your evaluation criteria using [template variables](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges.md#prompts-and-template-variables). Use the **Add variable** button to insert variables into your prompt.
+   * **Instructions**: Define your evaluation criteria using [template variables](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md#prompts-and-template-variables). Use the **Add variable** button to insert variables into your prompt.
    * **Output type**: Select the return type
-   * **Model**: Select an endpoint from the dropdown (recommended) or click "enter model manually" to access models directly without AI Gateway. Endpoints can be configured using [AI Gateway](/docs/3.11.1/genai/governance/ai-gateway.md), which centralizes API key management. Judges using direct model access require local API keys and cannot be run directly from the UI. See [Supported Models](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges.md#selecting-judge-models) for details.
+   * **Model**: Select an endpoint from the dropdown (recommended) or click "enter model manually" to access models directly without AI Gateway. Endpoints can be configured using [AI Gateway](/docs/latest/genai/governance/ai-gateway.md), which centralizes API key management. Judges using direct model access require local API keys and cannot be run directly from the UI. See [Supported Models](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md#selecting-judge-models) for details.
 
-![Judge Builder Dialog](/docs/3.11.1/images/mlflow-3/eval-monitor/scorers/judge-builder-dialog.png)
+![Judge Builder Dialog](/docs/latest/images/mlflow-3/eval-monitor/scorers/judge-builder-dialog.png)
 
 5. **Test your judge** (optional): Click the trace selector dropdown and choose **Select traces** to pick specific traces, then click **Run judge** to preview the evaluation result
 
-![Test Judge Output](/docs/3.11.1/images/mlflow-3/eval-monitor/scorers/test-judge-output.png)
+![Test Judge Output](/docs/latest/images/mlflow-3/eval-monitor/scorers/test-judge-output.png)
 
 6. **Schedule automatic evaluation** (optional):
 
    * **Automatically evaluate future traces**: Enable to run this judge on new traces automatically
    * **Sample rate**: Percentage of traces to evaluate (0-100%)
-   * **Filter string**: Only evaluate traces matching this filter ([syntax](/docs/3.11.1/genai/tracing/search-traces.md))
+   * **Filter string**: Only evaluate traces matching this filter ([syntax](/docs/latest/genai/tracing/search-traces.md))
 
 7. Click **Create judge** to save your new LLM judge
 
-Judges created with `make_judge()` return [`mlflow.entities.Feedback`](/docs/3.11.1/api_reference/python_api/mlflow.entities.html#mlflow.entities.Feedback) objects.
+Judges created with `make_judge()` return [`mlflow.entities.Feedback`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.Feedback) objects.
 
 ### Example judge 1: Evaluate issue resolution[​](#example-judge-1-evaluate-issue-resolution "Direct link to Example judge 1: Evaluate issue resolution")
 
@@ -226,7 +226,7 @@ tool_call_judge = make_judge(
 
 ## Step 3: Create a sample evaluation dataset[​](#step-3-create-a-sample-evaluation-dataset "Direct link to Step 3: Create a sample evaluation dataset")
 
-Each `inputs` is passed to the agent by [`mlflow.genai.evaluate`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.evaluate). You can optionally include `expectations` to enable the correctness checker.
+Each `inputs` is passed to the agent by [`mlflow.genai.evaluate`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.evaluate). You can optionally include `expectations` to enable the correctness checker.
 
 python
 
@@ -492,14 +492,14 @@ DEBUG:mlflow.genai.judges:Tool response: {"duration_ms": 2500, "inputs": {"query
 
 ## Next steps[​](#next-steps "Direct link to Next steps")
 
-### [Evaluate and improve your application](/docs/3.11.1/genai/eval-monitor/quickstart.md)
+### [Evaluate and improve your application](/docs/latest/genai/eval-monitor/quickstart.md)
 
-[Use custom judges in end-to-end evaluation workflows](/docs/3.11.1/genai/eval-monitor/quickstart.md)
+[Use custom judges in end-to-end evaluation workflows](/docs/latest/genai/eval-monitor/quickstart.md)
 
-[Start evaluating →](/docs/3.11.1/genai/eval-monitor/quickstart.md)
+[Start evaluating →](/docs/latest/genai/eval-monitor/quickstart.md)
 
-### [Align judges with human feedback](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/alignment.md)
+### [Align judges with human feedback](/docs/latest/genai/eval-monitor/scorers/llm-judge/alignment.md)
 
-[The base judge is a starting point. As you gather expert feedback on you application's outputs, align the LLM judges to the feedback to further improve judge accuracy](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/alignment.md)
+[The base judge is a starting point. As you gather expert feedback on you application's outputs, align the LLM judges to the feedback to further improve judge accuracy](/docs/latest/genai/eval-monitor/scorers/llm-judge/alignment.md)
 
-[Learn alignment →](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/alignment.md)
+[Learn alignment →](/docs/latest/genai/eval-monitor/scorers/llm-judge/alignment.md)

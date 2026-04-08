@@ -10,7 +10,7 @@ Traffic splitting lets you distribute requests across multiple models based on p
 * **Gradual migration**: Shift traffic incrementally without disrupting service
 * **Load distribution**: Balance requests across multiple providers for reliability
 
-![Traffic Split Configuration](/docs/3.11.1/assets/images/traffic-split-configuration-588d97ccb4ee1a6b2916897cade34f0f.png)
+![Traffic Split Configuration](/docs/latest/assets/images/traffic-split-configuration-588d97ccb4ee1a6b2916897cade34f0f.png)
 
 To configure traffic splitting, open your endpoint's details page and locate the Priority 1 (Traffic Split) section. Click Add Model to include additional models in your traffic split configuration. For each model, select the provider and specific model you want to use, then configure the API key by either creating a new one or selecting from existing keys.
 
@@ -28,7 +28,7 @@ Fallback configuration supports several scenarios:
 * **Cost optimization**: Use cheaper models as fallbacks when expensive models hit rate limits
 * **Regional failover**: Route to providers in different geographic regions
 
-![Fallback Configuration](/docs/3.11.1/assets/images/fallback-configuration-f2d5311914e47c38a91741bb77fe844e.png)
+![Fallback Configuration](/docs/latest/assets/images/fallback-configuration-f2d5311914e47c38a91741bb77fe844e.png)
 
 To configure fallbacks, navigate to the Priority 2 (Fallback) section in your endpoint details page. Click Add Fallback Model to begin adding fallback options. For each fallback, select your provider and model, then configure the appropriate API key.
 

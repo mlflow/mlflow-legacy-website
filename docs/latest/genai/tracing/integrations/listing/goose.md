@@ -1,8 +1,8 @@
 # Tracing Goose
 
-![Goose Tracing via MLflow](/docs/3.11.1/images/llms/tracing/goose-tracing.png)
+![Goose Tracing via MLflow](/docs/latest/images/llms/tracing/goose-tracing.png)
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing.md) provides automatic tracing capability for [Goose](https://github.com/block/goose), an open-source AI agent by Block that automates engineering tasks on your local machine. MLflow supports tracing for Goose through the [OpenTelemetry](/docs/3.11.1/genai/tracing/opentelemetry.md) integration.
+[MLflow Tracing](/docs/latest/genai/tracing.md) provides automatic tracing capability for [Goose](https://github.com/block/goose), an open-source AI agent by Block that automates engineering tasks on your local machine. MLflow supports tracing for Goose through the [OpenTelemetry](/docs/latest/genai/tracing/opentelemetry.md) integration.
 
 What is Goose?
 
@@ -34,11 +34,11 @@ bash
 mlflow server --port 5000
 ```
 
-This example uses SQLite as the backend store. To use other types of SQL databases such as PostgreSQL, MySQL, and MSSQL, change the store URI as described in the [backend store documentation](/docs/3.11.1/self-hosting/architecture/backend-store.md).
+This example uses SQLite as the backend store. To use other types of SQL databases such as PostgreSQL, MySQL, and MSSQL, change the store URI as described in the [backend store documentation](/docs/latest/self-hosting/architecture/backend-store.md).
 
 Managed MLflow
 
-For a fully managed experience with built-in authentication, scalable storage, and team collaboration, [try Managed MLflow for free](/docs/3.11.1/genai/getting-started/databricks-trial.md).
+For a fully managed experience with built-in authentication, scalable storage, and team collaboration, [try Managed MLflow for free](/docs/latest/genai/getting-started/databricks-trial.md).
 
 ## Step 3: Set Environment Variables[​](#step-3-set-environment-variables "Direct link to Step 3: Set Environment Variables")
 
@@ -113,20 +113,20 @@ You will see detailed traces showing:
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [Evaluate the Agent](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+### [Evaluate the Agent](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Learn how to evaluate the agent's performance.](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Learn how to evaluate the agent's performance.](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Evaluate traces →](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Evaluate traces →](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-### [Collect User Feedback](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+### [Collect User Feedback](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-[Learn how to collect user feedback on traces for improving the agent.](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+[Learn how to collect user feedback on traces for improving the agent.](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-[Collect feedback →](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+[Collect feedback →](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-### [Search Traces](/docs/3.11.1/genai/tracing/search-traces.md)
+### [Search Traces](/docs/latest/genai/tracing/search-traces.md)
 
-[Learn how to search and analyze traces for insights.](/docs/3.11.1/genai/tracing/search-traces.md)
+[Learn how to search and analyze traces for insights.](/docs/latest/genai/tracing/search-traces.md)
 
-[Search traces →](/docs/3.11.1/genai/tracing/search-traces.md)
+[Search traces →](/docs/latest/genai/tracing/search-traces.md)

@@ -1,8 +1,8 @@
 # Tracing Amazon Bedrock with MLflow
 
-MLflow supports automatic tracing for Amazon Bedrock, a fully managed service on AWS that provides high-performing foundations from leading AI providers such as Anthropic, Cohere, Meta, Mistral AI, and more. By enabling auto tracing for Amazon Bedrock by calling the [`mlflow.bedrock.autolog()`](/docs/3.11.1/api_reference/python_api/mlflow.bedrock.html#mlflow.bedrock.autolog) function, MLflow will capture traces for LLM invocation and log them to the active MLflow Experiment.
+MLflow supports automatic tracing for Amazon Bedrock, a fully managed service on AWS that provides high-performing foundations from leading AI providers such as Anthropic, Cohere, Meta, Mistral AI, and more. By enabling auto tracing for Amazon Bedrock by calling the [`mlflow.bedrock.autolog()`](/docs/latest/api_reference/python_api/mlflow.bedrock.html#mlflow.bedrock.autolog) function, MLflow will capture traces for LLM invocation and log them to the active MLflow Experiment.
 
-![Bedrock DIY Agent Tracing](/docs/3.11.1/images/llms/tracing/bedrock-tracing-agent.png)
+![Bedrock DIY Agent Tracing](/docs/latest/images/llms/tracing/bedrock-tracing-agent.png)
 
 MLflow trace automatically captures the following information about Amazon Bedrock calls:
 
@@ -102,7 +102,7 @@ response = bedrock.converse(
 
 Open the MLflow UI at <http://localhost:5000> (or your MLflow server URL) to see the trace for your Bedrock API calls.
 
-![Bedrock Trace](/docs/3.11.1/images/llms/tracing/bedrock-tracing-stream.png)
+![Bedrock Trace](/docs/latest/images/llms/tracing/bedrock-tracing-stream.png)
 
 ## Supported APIs[​](#supported-apis "Direct link to Supported APIs")
 
@@ -123,7 +123,7 @@ The `Chat` panel is only supported for the `converse` and `converse_stream` APIs
 
 ## Tracking Token Usage and Cost[​](#tracking-token-usage-and-cost "Direct link to Tracking Token Usage and Cost")
 
-MLflow automatically captures token usage and cost statistics for supported Bedrock models and APIs. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/3.11.1/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
+MLflow automatically captures token usage and cost statistics for supported Bedrock models and APIs. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/latest/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
 
 Token usage is extracted from the response for all major Bedrock providers, including:
 
@@ -169,7 +169,7 @@ for chunk in response["stream"]:
     print(chunk)
 ```
 
-![Bedrock Stream Tracing](/docs/3.11.1/images/llms/tracing/bedrock-tracing-stream.png)
+![Bedrock Stream Tracing](/docs/latest/images/llms/tracing/bedrock-tracing-stream.png)
 
 warning
 
@@ -274,7 +274,7 @@ answer = run_tool_agent(question)
 
 Executing the code above will create a single trace that involves all LLM invocations and the tool calls.
 
-![Bedrock DIY Agent Tracing](/docs/3.11.1/assets/images/bedrock-tracing-agent-cae1bcf40457074afa5bfde0b05b292e.png)
+![Bedrock DIY Agent Tracing](/docs/latest/assets/images/bedrock-tracing-agent-cae1bcf40457074afa5bfde0b05b292e.png)
 
 ## Disable auto-tracing[​](#disable-auto-tracing "Direct link to Disable auto-tracing")
 
@@ -282,20 +282,20 @@ Auto tracing for Amazon Bedrock can be disabled globally by calling `mlflow.bedr
 
 ## Next steps[​](#next-steps "Direct link to Next steps")
 
-### [Track User Feedback](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+### [Track User Feedback](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-[Record user feedback on traces for tracking user satisfaction.](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+[Record user feedback on traces for tracking user satisfaction.](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-[Learn about feedback →](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+[Learn about feedback →](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-### [Manage Prompts](/docs/3.11.1/genai/prompt-registry.md)
+### [Manage Prompts](/docs/latest/genai/prompt-registry.md)
 
-[Learn how to manage prompts with MLflow's prompt registry.](/docs/3.11.1/genai/prompt-registry.md)
+[Learn how to manage prompts with MLflow's prompt registry.](/docs/latest/genai/prompt-registry.md)
 
-[Manage prompts →](/docs/3.11.1/genai/prompt-registry.md)
+[Manage prompts →](/docs/latest/genai/prompt-registry.md)
 
-### [Evaluate Traces](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+### [Evaluate Traces](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Evaluate traces with LLM judges to understand and improve your AI application's behavior.](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Evaluate traces with LLM judges to understand and improve your AI application's behavior.](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Evaluate traces →](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Evaluate traces →](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)

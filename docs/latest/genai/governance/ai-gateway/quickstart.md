@@ -29,7 +29,7 @@ Navigate to `http://localhost:5000/#/gateway` and click on the **API Keys** tab.
 4. Enter your API key from the provider
 5. Click **Create**
 
-![Create API Key](/docs/3.11.1/assets/images/create-api-key-680a70020d74cde71f658c2bf2962d9a.png)
+![Create API Key](/docs/latest/assets/images/create-api-key-680a70020d74cde71f658c2bf2962d9a.png)
 
 Your API key is now securely stored and encrypted.
 
@@ -96,20 +96,20 @@ You should receive a response from your configured model.
 
 Now that you have a working gateway, explore these features:
 
-### [API Keys](/docs/3.11.1/genai/governance/ai-gateway/api-keys/create-and-manage.md)
+### [API Keys](/docs/latest/genai/governance/ai-gateway/api-keys/create-and-manage.md)
 
-[Learn about credential management and best practices for API keys](/docs/3.11.1/genai/governance/ai-gateway/api-keys/create-and-manage.md)
+[Learn about credential management and best practices for API keys](/docs/latest/genai/governance/ai-gateway/api-keys/create-and-manage.md)
 
-[Manage API keys →](/docs/3.11.1/genai/governance/ai-gateway/api-keys/create-and-manage.md)
+[Manage API keys →](/docs/latest/genai/governance/ai-gateway/api-keys/create-and-manage.md)
 
-### [Endpoints](/docs/3.11.1/genai/governance/ai-gateway/endpoints/create-and-manage.md)
+### [Endpoints](/docs/latest/genai/governance/ai-gateway/endpoints/create-and-manage.md)
 
-[Configure endpoints with multiple models and query options](/docs/3.11.1/genai/governance/ai-gateway/endpoints/create-and-manage.md)
+[Configure endpoints with multiple models and query options](/docs/latest/genai/governance/ai-gateway/endpoints/create-and-manage.md)
 
-[Configure endpoints →](/docs/3.11.1/genai/governance/ai-gateway/endpoints/create-and-manage.md)
+[Configure endpoints →](/docs/latest/genai/governance/ai-gateway/endpoints/create-and-manage.md)
 
-### [Traffic Routing](/docs/3.11.1/genai/governance/ai-gateway/traffic-routing-fallbacks.md)
+### [Traffic Routing](/docs/latest/genai/governance/ai-gateway/traffic-routing-fallbacks.md)
 
-[Set up A/B testing, fallbacks, and high availability](/docs/3.11.1/genai/governance/ai-gateway/traffic-routing-fallbacks.md)
+[Set up A/B testing, fallbacks, and high availability](/docs/latest/genai/governance/ai-gateway/traffic-routing-fallbacks.md)
 
-[Set up routing →](/docs/3.11.1/genai/governance/ai-gateway/traffic-routing-fallbacks.md)
+[Set up routing →](/docs/latest/genai/governance/ai-gateway/traffic-routing-fallbacks.md)

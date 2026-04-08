@@ -6,7 +6,7 @@
 
 Expectations serve as the foundation for systematic evaluation, enabling you to define clear quality standards and measure how well your application meets them across different scenarios and use cases.
 
-![Expectations in UI](/docs/3.11.1/assets/images/add_expectation_ui-5d57bfe9d75f1e2bedc36c493aacbd01.png)
+![Expectations in UI](/docs/latest/assets/images/add_expectation_ui-5d57bfe9d75f1e2bedc36c493aacbd01.png)
 
 ## Use Cases[​](#use-cases "Direct link to Use Cases")
 
@@ -28,7 +28,7 @@ Use expectations as a consistent baseline to compare different models, prompts, 
 
 ## Core Structure[​](#core-structure "Direct link to Core Structure")
 
-Expectations are always created by human experts who understand the correct behavior for your AI system. The [`Expectation`](/docs/3.11.1/api_reference/python_api/mlflow.entities.html#mlflow.entities.Expectation) object in MLflow provides a standard container for storing these ground truth values along with metadata about their creation. Expectations are associated with a Trace, or a particular Span in the Trace, allowing you to define expected behavior at any level of granularity.
+Expectations are always created by human experts who understand the correct behavior for your AI system. The [`Expectation`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.Expectation) object in MLflow provides a standard container for storing these ground truth values along with metadata about their creation. Expectations are associated with a Trace, or a particular Span in the Trace, allowing you to define expected behavior at any level of granularity.
 
 ## Expectation Object Schema[​](#expectation-object-schema "Direct link to Expectation Object Schema")
 
@@ -142,20 +142,20 @@ Expectations work hand-in-hand with MLflow's evaluation capabilities:
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [Annotating Expectations](/docs/3.11.1/genai/assessments/expectations.md)
+### [Annotating Expectations](/docs/latest/genai/assessments/expectations.md)
 
-[Learn how to annotate ground truth expectations for your LLM applications and AI agents](/docs/3.11.1/genai/assessments/expectations.md)
+[Learn how to annotate ground truth expectations for your LLM applications and AI agents](/docs/latest/genai/assessments/expectations.md)
 
-[Start annotating →](/docs/3.11.1/genai/assessments/expectations.md)
+[Start annotating →](/docs/latest/genai/assessments/expectations.md)
 
-### [Expectations API Guide](/docs/3.11.1/genai/assessments/expectations.md)
+### [Expectations API Guide](/docs/latest/genai/assessments/expectations.md)
 
-[Complete reference for the expectations API with practical examples](/docs/3.11.1/genai/assessments/expectations.md)
+[Complete reference for the expectations API with practical examples](/docs/latest/genai/assessments/expectations.md)
 
-[View API docs →](/docs/3.11.1/genai/assessments/expectations.md)
+[View API docs →](/docs/latest/genai/assessments/expectations.md)
 
-### [Feedback Integration](/docs/3.11.1/genai/concepts/feedback.md)
+### [Feedback Integration](/docs/latest/genai/concepts/feedback.md)
 
-[Understand how expectations work with feedback for comprehensive evaluation](/docs/3.11.1/genai/concepts/feedback.md)
+[Understand how expectations work with feedback for comprehensive evaluation](/docs/latest/genai/concepts/feedback.md)
 
-[Learn about feedback →](/docs/3.11.1/genai/concepts/feedback.md)
+[Learn about feedback →](/docs/latest/genai/concepts/feedback.md)

@@ -2,7 +2,7 @@
 
 [Modal](https://modal.com) is a serverless cloud platform optimized for AI/ML workloads, offering on-demand GPU access with automatic scaling. The [mlflow-modal-deploy](https://github.com/debu-sinha/mlflow-modal-deploy) plugin enables one-command deployment of MLflow models to Modal's infrastructure.
 
-If you are new to MLflow model deployment, please read [MLflow Deployment](/docs/3.11.1/ml/deployment.md) first to understand the basic concepts of MLflow models and deployments.
+If you are new to MLflow model deployment, please read [MLflow Deployment](/docs/latest/ml/deployment.md) first to understand the basic concepts of MLflow models and deployments.
 
 ## How it Works[​](#how-it-works "Direct link to How it Works")
 
@@ -49,7 +49,7 @@ export MODAL_TOKEN_SECRET=your-token-secret
 
 #### Create an MLflow Model[​](#create-an-mlflow-model "Direct link to Create an MLflow Model")
 
-Before deploying, you must have an MLflow Model. If you don't have one, you can create a sample scikit-learn model by following the [MLflow Tracking Quickstart](/docs/3.11.1/ml/getting-started.md). Remember to note down the model URI, such as `runs:/<run_id>/model` (or `models:/<model_name>/<model_version>` if you registered the model in the [MLflow Model Registry](/docs/3.11.1/ml/model-registry.md)).
+Before deploying, you must have an MLflow Model. If you don't have one, you can create a sample scikit-learn model by following the [MLflow Tracking Quickstart](/docs/latest/ml/getting-started.md). Remember to note down the model URI, such as `runs:/<run_id>/model` (or `models:/<model_name>/<model_version>` if you registered the model in the [MLflow Model Registry](/docs/latest/ml/model-registry.md)).
 
 ### Step 1: Test Your Model Locally[​](#step-1-test-your-model-locally "Direct link to Step 1: Test Your Model Locally")
 
@@ -302,12 +302,12 @@ Check the [Modal Dashboard](https://modal.com/apps) for detailed build and runti
 
 The mlflow-modal-deploy plugin integrates with the standard MLflow deployments interface:
 
-* [CLI Reference](/docs/3.11.1/api_reference/cli.html#mlflow-deployments)
-* [Python API Documentation](/docs/3.11.1/api_reference/python_api/mlflow.deployments.html#mlflow.deployments)
+* [CLI Reference](/docs/latest/api_reference/cli.html#mlflow-deployments)
+* [Python API Documentation](/docs/latest/api_reference/python_api/mlflow.deployments.html#mlflow.deployments)
 
 ## Useful Links[​](#deployment-modal-references "Direct link to Useful Links")
 
 * [mlflow-modal-deploy GitHub Repository](https://github.com/debu-sinha/mlflow-modal-deploy) - Source code, issue tracker, and contribution guidelines.
 * [Modal Documentation](https://modal.com/docs) - Comprehensive Modal platform documentation.
 * [Modal GPU Guide](https://modal.com/docs/guide/gpu) - Detailed information on GPU types and configuration.
-* [MLflow Model Format](/docs/3.11.1/ml/model.md) - Understanding MLflow model packaging and flavors.
+* [MLflow Model Format](/docs/latest/ml/model.md) - Understanding MLflow model packaging and flavors.

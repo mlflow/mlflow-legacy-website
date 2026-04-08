@@ -2,7 +2,7 @@
 
 MLflow Assistant
 
-Need help setting up MLflow? Try [MLflow Assistant](/docs/3.11.1/genai/getting-started/try-assistant.md) - a powerful AI assistant that can help you set up MLflow for your project.
+Need help setting up MLflow? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that can help you set up MLflow for your project.
 
 This guide shows you how to connect your development environment to an MLflow Experiment. You can run MLflow on your local machine, self-host the open source MLflow service, or use a managed offering, such as Databricks Managed MLflow.
 
@@ -35,13 +35,13 @@ pip install --upgrade "mlflow>=3.1"
 
 info
 
-See [Secure Installs](/docs/3.11.1/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
+See [Secure Installs](/docs/latest/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
 
 <br />
 
 #### Step 2: Configure Tracking[​](#step-2-configure-tracking "Direct link to Step 2: Configure Tracking")
 
-MLflow supports different backends for tracking your experiment data. Choose one of the following options to get started. Refer to the [Self Hosting Guide](/docs/3.11.1/self-hosting.md) for detailed setup and configurations.
+MLflow supports different backends for tracking your experiment data. Choose one of the following options to get started. Refer to the [Self Hosting Guide](/docs/latest/self-hosting.md) for detailed setup and configurations.
 
 **Option A: Database (Recommended)**
 
@@ -75,7 +75,7 @@ File system backend is in Keep-the-Light-On (KTLO) mode and will not receive mos
 
 **Option C: Remote Tracking Server**
 
-Start a remote MLflow tracking server following the [Self Hosting Guide](/docs/3.11.1/self-hosting.md). Then configure your client to use the remote server:
+Start a remote MLflow tracking server following the [Self Hosting Guide](/docs/latest/self-hosting.md). Then configure your client to use the remote server:
 
 python
 
@@ -140,7 +140,7 @@ When using the remote tracking server, you may hit an access denied error when a
 
 > Invalid Host header - possible DNS rebinding attack detected
 
-The common cause for this error is the tracking server does not allow requests from your origin to prevent clickjacking attacks. You need to set up an allowlist of CORS origins in the tracking server configuration in this case. Refer to the [Network Security Guide](/docs/3.11.1/self-hosting/security/network.md#cors-origins) for more details.
+The common cause for this error is the tracking server does not allow requests from your origin to prevent clickjacking attacks. You need to set up an allowlist of CORS origins in the tracking server configuration in this case. Refer to the [Network Security Guide](/docs/latest/self-hosting/security/network.md#cors-origins) for more details.
 
 #### Step 1: Install MLflow[​](#step-1-install-mlflow-1 "Direct link to Step 1: Install MLflow")
 
@@ -244,7 +244,7 @@ dbutils.library.restartPython()
 
 #### Step 2: Create a Notebook[​](#step-2-create-a-notebook "Direct link to Step 2: Create a Notebook")
 
-Creating a Databricks Notebook will create an MLflow Experiment that is the container for your ML projects. Learn more about Experiments in the [MLflow documentation](/docs/3.11.1/ml/tracking.md).
+Creating a Databricks Notebook will create an MLflow Experiment that is the container for your ML projects. Learn more about Experiments in the [MLflow documentation](/docs/latest/ml/tracking.md).
 
 1. Open your Databricks workspace
 2. Go to **New** at the top of the left sidebar

@@ -4,7 +4,7 @@ Explore the full functionality of the Model Registry in this tutorial — from r
 
 ## Model Registry[​](#model-registry "Direct link to Model Registry")
 
-Throughout this tutorial we will leverage a local tracking server and model registry for simplicity. However, for production use cases we recommend using a [remote tracking server](/docs/3.11.1/ml/tracking/tutorials/remote-server.md).
+Throughout this tutorial we will leverage a local tracking server and model registry for simplicity. However, for production use cases we recommend using a [remote tracking server](/docs/latest/ml/tracking/tutorials/remote-server.md).
 
 ### Step 0: Install Dependencies[​](#step-0-install-dependencies "Direct link to Step 0: Install Dependencies")
 
@@ -21,7 +21,7 @@ To use the MLflow model registry, you need to add your MLflow models to it. This
 * `mlflow.<model_flavor>.log_model(registered_model_name=<model_name>)`: register the model **while** logging it to the tracking server.
 * `mlflow.register_model(<model_uri>, <model_name>)`: register the model **after** logging it to the tracking server. Note that you'll have to log the model before running this command to get a model URI.
 
-MLflow has lots of model flavors. In the below example, we'll leverage scikit-learn's RandomForestRegressor to demonstrate the simplest way to register a model, but note that you can leverage any [supported model flavor](/docs/3.11.1/ml/model.md#models_built-in-model-flavors). In the code snippet below, we start an mlflow run and train a random forest model. We then log some relevant hyper-parameters, the model mean-squared-error (MSE), and finally log and register the model itself.
+MLflow has lots of model flavors. In the below example, we'll leverage scikit-learn's RandomForestRegressor to demonstrate the simplest way to register a model, but note that you can leverage any [supported model flavor](/docs/latest/ml/model.md#models_built-in-model-flavors). In the code snippet below, we start an mlflow run and train a random forest model. We then log some relevant hyper-parameters, the model mean-squared-error (MSE), and finally log and register the model itself.
 
 python
 
@@ -70,8 +70,8 @@ Great! We've registered a model.
 
 Before moving on, let's highlight some important implementation notes.
 
-* To register a model, you can leverage the `registered_model_name` parameter in the [`mlflow.sklearn.log_model()`](/docs/3.11.1/api_reference/python_api/mlflow.sklearn.html#mlflow.sklearn.log_model) or call [`mlflow.register_model()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.register_model) after logging the model. Generally, we suggest the former because it's more concise.
-* [Model Signatures](/docs/3.11.1/ml/model/signatures.md) provide validation for our model inputs and outputs. The `input_example` in `log_model()` automatically infers and logs a signature. Again, we suggest using this implementation because it's concise.
+* To register a model, you can leverage the `registered_model_name` parameter in the [`mlflow.sklearn.log_model()`](/docs/latest/api_reference/python_api/mlflow.sklearn.html#mlflow.sklearn.log_model) or call [`mlflow.register_model()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.register_model) after logging the model. Generally, we suggest the former because it's more concise.
+* [Model Signatures](/docs/latest/ml/model/signatures.md) provide validation for our model inputs and outputs. The `input_example` in `log_model()` automatically infers and logs a signature. Again, we suggest using this implementation because it's concise.
 
 ## Explore the Registered Model[​](#explore-the-registered-model "Direct link to Explore the Registered Model")
 
@@ -120,7 +120,7 @@ mlruns/
 
 The tracking server is organized by *Experiment ID* and *Run ID* and is responsible for storing our experiment artifacts, parameters, and metrics. The model registry, on the other hand, only stores metadata with pointers to our tracking server.
 
-As you can see, flavors that support [autologging](/docs/3.11.1/ml/tracking/autolog.md) provide lots of additional information out-of-the-box. Also note that even if we don't have autologging for our model of interest, we can easily store this information with explicit logging calls.
+As you can see, flavors that support [autologging](/docs/latest/ml/tracking/autolog.md) provide lots of additional information out-of-the-box. Also note that even if we don't have autologging for our model of interest, we can easily store this information with explicit logging calls.
 
 One more interesting callout is that by default you get three way to manage your model's environment: `python_env.yaml` (python virtualenv), `requirements.txt` (PyPi requirements), and `conda.yaml` (conda env).
 
@@ -152,15 +152,15 @@ Assuming there are no errors, you can go to your web browser and visit `http://l
 First, let's leave the experiment tracking tab and visit the model registry.
 
 ![Model information from the mlflow
-ui.](/docs/3.11.1/assets/images/model-registry-ui-111bfc57063e0dd58d54597daafb1b7b.png)
+ui.](/docs/latest/assets/images/model-registry-ui-111bfc57063e0dd58d54597daafb1b7b.png)
 
-Next, let's add tags and a model version alias to [facilitate model deployment](/docs/3.11.1/ml/model-registry/workflow.md#deploy-and-organize-models-with-aliases-and-tags). You can add or edit tags and aliases by clicking on the corresponding `Add` link or pencil icon in the model version table. Let's...
+Next, let's add tags and a model version alias to [facilitate model deployment](/docs/latest/ml/model-registry/workflow.md#deploy-and-organize-models-with-aliases-and-tags). You can add or edit tags and aliases by clicking on the corresponding `Add` link or pencil icon in the model version table. Let's...
 
 1. Add a model version tag with a key of `problem_type` and value of `regression`.
 2. Add a model version alias of `the_best_model_ever`.
 
 ![Model information from the mlflow
-ui.](/docs/3.11.1/assets/images/model-alias-and-tags-0318d486b2bf16992f488de5a00ce474.png)
+ui.](/docs/latest/assets/images/model-alias-and-tags-0318d486b2bf16992f488de5a00ce474.png)
 
 ## Load a Registered Model[​](#load-a-registered-model "Direct link to Load a Registered Model")
 
@@ -186,7 +186,7 @@ y_pred_new = model.predict(X_new)
 print(y_pred_new)
 ```
 
-Note that if you're not using sklearn, if your model flavor is supported, you should use the specific model flavor load method e.g. `mlflow.<flavor>.load_model()`. If the model flavor is not supported, you should leverage [`mlflow.pyfunc.load_model()`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.load_model). Throughout this tutorial we leverage sklearn for demonstration purposes.
+Note that if you're not using sklearn, if your model flavor is supported, you should use the specific model flavor load method e.g. `mlflow.<flavor>.load_model()`. If the model flavor is not supported, you should leverage [`mlflow.pyfunc.load_model()`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.load_model). Throughout this tutorial we leverage sklearn for demonstration purposes.
 
 ### Example 0: Load via Tracking Server[​](#example-0-load-via-tracking-server "Direct link to Example 0: Load via Tracking Server")
 

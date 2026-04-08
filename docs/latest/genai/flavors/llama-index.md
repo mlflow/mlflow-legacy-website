@@ -4,30 +4,30 @@
 
 **LlamaIndex** 🦙 is a powerful data-centric framework designed to seamlessly connect custom data sources to large language models (LLMs). It offers a comprehensive suite of data structures and tools that simplify the process of ingesting, structuring, and accessing private or domain-specific data for use with LLMs. LlamaIndex excels in enabling context-aware AI applications by providing efficient indexing and retrieval mechanisms, making it easier to build advanced QA systems, chatbots, and other AI-driven applications that require integration of external knowledge.
 
-![Overview of LlamaIndex and MLflow integration](/docs/3.11.1/assets/images/llama-index-gateway-936f2cc158a2ca4809ac2d8134fd6904.png)
+![Overview of LlamaIndex and MLflow integration](/docs/latest/assets/images/llama-index-gateway-936f2cc158a2ca4809ac2d8134fd6904.png)
 
 ## Why use LlamaIndex with MLflow?[​](#why-use-llamaindex-with-mlflow "Direct link to Why use LlamaIndex with MLflow?")
 
 The integration of the LlamaIndex library with MLflow provides a seamless experience for managing and deploying LlamaIndex engines. The following are some of the key benefits of using LlamaIndex with MLflow:
 
-* [MLflow Tracking](/docs/3.11.1/ml/tracking.md) allows you to track your indices within MLflow and manage the many moving parts that comprise your LlamaIndex project, such as prompts, LLMs, workflows, tools, global configurations, and more.
-* [MLflow Model](/docs/3.11.1/ml/model.md) packages your LlamaIndex index/engine/workflows with all its dependency versions, input and output interfaces, and other essential metadata. This allows you to deploy your LlamaIndex models for inference with ease, knowing that the environment is consistent across different stages of the AI development workflow.
-* [MLflow Evaluate](/docs/3.11.1/genai/eval-monitor.md) provides native capabilities within MLflow to evaluate LLM applications and AI agents. This capability facilitates the efficient assessment of inference results from your LlamaIndex models, ensuring robust performance analytics and facilitating quick iterations.
-* [MLflow Tracing](/docs/3.11.1/genai/tracing.md) is a powerful observability tool for monitoring and debugging what happens inside the LlamaIndex models, helping you identify potential bottlenecks or issues quickly. With its powerful automatic logging capability, you can instrument your LlamaIndex application without needing to add any code apart from running a single command.
+* [MLflow Tracking](/docs/latest/ml/tracking.md) allows you to track your indices within MLflow and manage the many moving parts that comprise your LlamaIndex project, such as prompts, LLMs, workflows, tools, global configurations, and more.
+* [MLflow Model](/docs/latest/ml/model.md) packages your LlamaIndex index/engine/workflows with all its dependency versions, input and output interfaces, and other essential metadata. This allows you to deploy your LlamaIndex models for inference with ease, knowing that the environment is consistent across different stages of the AI development workflow.
+* [MLflow Evaluate](/docs/latest/genai/eval-monitor.md) provides native capabilities within MLflow to evaluate LLM applications and AI agents. This capability facilitates the efficient assessment of inference results from your LlamaIndex models, ensuring robust performance analytics and facilitating quick iterations.
+* [MLflow Tracing](/docs/latest/genai/tracing.md) is a powerful observability tool for monitoring and debugging what happens inside the LlamaIndex models, helping you identify potential bottlenecks or issues quickly. With its powerful automatic logging capability, you can instrument your LlamaIndex application without needing to add any code apart from running a single command.
 
 ## Getting Started[​](#getting-started "Direct link to Getting Started")
 
 In these introductory tutorials, you will learn the most fundamental components of LlamaIndex and how to leverage the integration with MLflow to bring better maintainability and observability to your LlamaIndex applications.
 
-[LlamaIndex Workflows with MLflow](/docs/3.11.1/genai/flavors/llama-index/notebooks/llama_index_workflow_tutorial.md)
+[LlamaIndex Workflows with MLflow](/docs/latest/genai/flavors/llama-index/notebooks/llama_index_workflow_tutorial.md)
 
-[Get started with MLflow and LLamaIndex by building a simple agentic Workflow. Learn how to log and load the Workflow for inference, as well as enable tracing for observability.](/docs/3.11.1/genai/flavors/llama-index/notebooks/llama_index_workflow_tutorial.md)[](/docs/3.11.1/genai/flavors/llama-index/notebooks/llama_index_quickstart.md)
+[Get started with MLflow and LLamaIndex by building a simple agentic Workflow. Learn how to log and load the Workflow for inference, as well as enable tracing for observability.](/docs/latest/genai/flavors/llama-index/notebooks/llama_index_workflow_tutorial.md)[](/docs/latest/genai/flavors/llama-index/notebooks/llama_index_quickstart.md)
 
-[Building Index with MLflow](/docs/3.11.1/genai/flavors/llama-index/notebooks/llama_index_quickstart.md)
+[Building Index with MLflow](/docs/latest/genai/flavors/llama-index/notebooks/llama_index_quickstart.md)
 
-[](/docs/3.11.1/genai/flavors/llama-index/notebooks/llama_index_quickstart.md)
+[](/docs/latest/genai/flavors/llama-index/notebooks/llama_index_quickstart.md)
 
-[Get started with MLflow and LlamaIndex by exploring the simplest possible index configuration of a VectorStoreIndex.](/docs/3.11.1/genai/flavors/llama-index/notebooks/llama_index_quickstart.md)
+[Get started with MLflow and LlamaIndex by exploring the simplest possible index configuration of a VectorStoreIndex.](/docs/latest/genai/flavors/llama-index/notebooks/llama_index_quickstart.md)
 
 ## Concepts[​](#concepts "Direct link to Concepts")
 
@@ -77,7 +77,7 @@ index = VectorStoreIndex.from_documents(documents)
 
 #### Logging the Index to MLflow[​](#logging-the-index-to-mlflow "Direct link to Logging the Index to MLflow")
 
-You can log the `index` object to the MLflow experiment using the [`mlflow.llama_index.log_model()`](/docs/3.11.1/api_reference/python_api/mlflow.llama_index.html#mlflow.llama_index.log_model) function.
+You can log the `index` object to the MLflow experiment using the [`mlflow.llama_index.log_model()`](/docs/latest/api_reference/python_api/mlflow.llama_index.html#mlflow.llama_index.log_model) function.
 
 One key step here is to specify the `engine_type` parameter. The choice of engine type does not affect the index itself, but dictates the interface of how you query the index when you load it back for inference.
 
@@ -107,7 +107,7 @@ note
 
 The above code snippet passes the index object directly to the `log_model` function. This method only works with the default `SimpleVectorStore` vector store, which simply keeps the embedded documents in memory. If your index uses **external vector stores** such as `QdrantVectorStore` or `DatabricksVectorSearch`, you can use the Model-from-Code logging method. See the [How to log an index with external vector stores](#how-to-log-and-load-an-index-with-external-vector-stores) for more details.
 
-![MLflow artifacts for the LlamaIndex index](/docs/3.11.1/assets/images/llama-index-artifacts-7ee58594f8de2b683d6c9138019a11f7.png)
+![MLflow artifacts for the LlamaIndex index](/docs/latest/assets/images/llama-index-artifacts-7ee58594f8de2b683d6c9138019a11f7.png)
 
 tip
 
@@ -115,7 +115,7 @@ Under the hood, MLflow calls `as_query_engine()` / `as_chat_engine()` / `as_retr
 
 #### Loading the Index Back for inference[​](#loading-the-index-back-for-inference "Direct link to Loading the Index Back for inference")
 
-The saved index can be loaded back for inference using the [`mlflow.pyfunc.load_model()`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.load_model) function. This function gives an MLflow Python Model backed by the LlamaIndex engine, with the engine type specified during logging.
+The saved index can be loaded back for inference using the [`mlflow.pyfunc.load_model()`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.load_model) function. This function gives an MLflow Python Model backed by the LlamaIndex engine, with the engine type specified during logging.
 
 python
 
@@ -136,7 +136,7 @@ print(response)
 
 tip
 
-To load the index itself back instead of the engine, use the [`mlflow.llama_index.load_model()`](/docs/3.11.1/api_reference/python_api/mlflow.llama_index.html#mlflow.llama_index.load_model) function.
+To load the index itself back instead of the engine, use the [`mlflow.llama_index.load_model()`](/docs/latest/api_reference/python_api/mlflow.llama_index.html#mlflow.llama_index.load_model) function.
 
 python
 
@@ -146,7 +146,7 @@ index = mlflow.llama_index.load_model("runs:/<run_id>/index")
 
 ### Enable Tracing[​](#enable-tracing "Direct link to Enable Tracing")
 
-You can enable tracing for your LlamaIndex code by calling the [`mlflow.llama_index.autolog()`](/docs/3.11.1/api_reference/python_api/mlflow.llama_index.html#mlflow.llama_index.autolog) function. MLflow automatically logs the input and output of the LlamaIndex execution to the active MLflow experiment, providing you with a detailed view of the model's behavior.
+You can enable tracing for your LlamaIndex code by calling the [`mlflow.llama_index.autolog()`](/docs/latest/api_reference/python_api/mlflow.llama_index.html#mlflow.llama_index.autolog) function. MLflow automatically logs the input and output of the LlamaIndex execution to the active MLflow experiment, providing you with a detailed view of the model's behavior.
 
 python
 
@@ -161,7 +161,7 @@ response = chat_engine.chat("What was the first program the author wrote?")
 
 Then you can navigate to the MLflow UI, select the experiment, and open the "Traces" tab to find the logged trace for the prediction made by the engine. It is impressive to see how the chat engine coordinates and executes a number of tasks to answer your question!
 
-![Trace view in MLflow UI](/docs/3.11.1/assets/images/llama-index-trace-91095f2d69e2e6b66a23da37706be082.png)
+![Trace view in MLflow UI](/docs/latest/assets/images/llama-index-trace-91095f2d69e2e6b66a23da37706be082.png)
 
 You can disable tracing by running the same function with the `disable` parameter set to `True`:
 
@@ -179,9 +179,9 @@ The tracing supports async prediction and streaming response, however, it does n
 
 ### How to log and load an index with external vector stores?[​](#how-to-log-and-load-an-index-with-external-vector-stores "Direct link to How to log and load an index with external vector stores?")
 
-If your index uses the default `SimpleVectorStore`, you can log the index directly to MLflow using the [`mlflow.llama_index.log_model()`](/docs/3.11.1/api_reference/python_api/mlflow.llama_index.html#mlflow.llama_index.log_model) function. MLflow persists the in-memory index data (embedded documents) to MLflow artifact store, which allows loading the index back with the same data without re-indexing the documents.
+If your index uses the default `SimpleVectorStore`, you can log the index directly to MLflow using the [`mlflow.llama_index.log_model()`](/docs/latest/api_reference/python_api/mlflow.llama_index.html#mlflow.llama_index.log_model) function. MLflow persists the in-memory index data (embedded documents) to MLflow artifact store, which allows loading the index back with the same data without re-indexing the documents.
 
-However, when the index uses external vector stores like `DatabricksVectorSearch` and `QdrantVectorStore`, the index data is stored remotely and they do not support local serialization. Thereby, you cannot log the index with these stores directly. For such cases, you can use the [Model-from-Code](/docs/3.11.1/ml/model/models-from-code.md) logging that provides more control over the index saving process and allow you to use the external vector store.
+However, when the index uses external vector stores like `DatabricksVectorSearch` and `QdrantVectorStore`, the index data is stored remotely and they do not support local serialization. Thereby, you cannot log the index with these stores directly. For such cases, you can use the [Model-from-Code](/docs/latest/ml/model/models-from-code.md) logging that provides more control over the index saving process and allow you to use the external vector store.
 
 To use model-from-code logging, you first need to create a separate Python file that defines the index. If you are on Jupyter notebook, you can use the `%%writefile` magic command to save the cell code to a Python file.
 
@@ -208,7 +208,7 @@ index = VectorStoreIndex.from_vector_store(vector_store=vector_store)
 mlflow.models.set_model(index)
 ```
 
-Then you can log the index by passing the Python file path to the [`mlflow.llama_index.log_model()`](/docs/3.11.1/api_reference/python_api/mlflow.llama_index.html#mlflow.llama_index.log_model) function. The global [Settings](https://docs.llamaindex.ai/en/stable/module_guides/supporting_modules/settings) object is saved normally as part of the model.
+Then you can log the index by passing the Python file path to the [`mlflow.llama_index.log_model()`](/docs/latest/api_reference/python_api/mlflow.llama_index.html#mlflow.llama_index.log_model) function. The global [Settings](https://docs.llamaindex.ai/en/stable/module_guides/supporting_modules/settings) object is saved normally as part of the model.
 
 python
 
@@ -223,7 +223,7 @@ with mlflow.start_run():
     )
 ```
 
-The logged index can be loaded back using the [`mlflow.llama_index.load_model()`](/docs/3.11.1/api_reference/python_api/mlflow.llama_index.html#mlflow.llama_index.load_model) or [`mlflow.pyfunc.load_model()`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.load_model) function, in the same way as with the local index.
+The logged index can be loaded back using the [`mlflow.llama_index.load_model()`](/docs/latest/api_reference/python_api/mlflow.llama_index.html#mlflow.llama_index.load_model) or [`mlflow.pyfunc.load_model()`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.load_model) function, in the same way as with the local index.
 
 python
 
@@ -238,7 +238,7 @@ The object that is passed to the `set_model()` method must be a LlamaIndex index
 
 ### How to log and load a LlamaIndex Workflow?[​](#how-to-log-and-load-a-llamaindex-workflow "Direct link to How to log and load a LlamaIndex Workflow?")
 
-Mlflow supports logging and loading a LlamaIndex Workflow via the [Model-from-Code](/docs/3.11.1/ml/model/models-from-code.md) feature. For a detailed example of logging and loading a LlamaIndex Workflow, see the [LlamaIndex Workflows with MLflow](/docs/3.11.1/genai/flavors/llama-index/notebooks/llama_index_workflow_tutorial.md) notebook.
+Mlflow supports logging and loading a LlamaIndex Workflow via the [Model-from-Code](/docs/latest/ml/model/models-from-code.md) feature. For a detailed example of logging and loading a LlamaIndex Workflow, see the [LlamaIndex Workflows with MLflow](/docs/latest/genai/flavors/llama-index/notebooks/llama_index_workflow_tutorial.md) notebook.
 
 python
 
@@ -253,7 +253,7 @@ with mlflow.start_run():
     )
 ```
 
-The logged workflow can be loaded back using the [`mlflow.llama_index.load_model()`](/docs/3.11.1/api_reference/python_api/mlflow.llama_index.html#mlflow.llama_index.load_model) or [`mlflow.pyfunc.load_model()`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.load_model) function.
+The logged workflow can be loaded back using the [`mlflow.llama_index.load_model()`](/docs/latest/api_reference/python_api/mlflow.llama_index.html#mlflow.llama_index.load_model) or [`mlflow.pyfunc.load_model()`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.load_model) function.
 
 python
 
@@ -270,7 +270,7 @@ pyfunc.predict({"input": "What is MLflow?"})
 
 warning
 
-The MLflow PyFunc Model does not support async inference. When you load the workflow with [`mlflow.pyfunc.load_model()`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.load_model), the `predict` method becomes **synchronous** and will block until the workflow execution is completed. This also applies when deploying the logged LlamaIndex workflow to a production endpoint using [MLflow Deployment](/docs/3.11.1/genai/serving.md) or Databricks [Model Serving](https://docs.databricks.com/en/machine-learning/model-serving/index.html).
+The MLflow PyFunc Model does not support async inference. When you load the workflow with [`mlflow.pyfunc.load_model()`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.load_model), the `predict` method becomes **synchronous** and will block until the workflow execution is completed. This also applies when deploying the logged LlamaIndex workflow to a production endpoint using [MLflow Deployment](/docs/latest/genai/serving.md) or Databricks [Model Serving](https://docs.databricks.com/en/machine-learning/model-serving/index.html).
 
 ### I have an index logged with `query` engine type. Can I load it back a `chat` engine?[​](#i-have-an-index-logged-with-query-engine-type-can-i-load-it-back-a-chat-engine "Direct link to i-have-an-index-logged-with-query-engine-type-can-i-load-it-back-a-chat-engine")
 

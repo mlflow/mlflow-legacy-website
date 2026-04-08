@@ -8,12 +8,12 @@ MLflow provides built-in judges designed specifically for evaluating tool-callin
 
 | Judge                                                                                             | What does it evaluate?                                       | Requires ground-truth? | Requires traces?      |
 | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ | ---------------------- | --------------------- |
-| [ToolCallCorrectness](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/tool-call/correctness.md) | Are the tool calls and arguments correct for the user query? | No                     | ⚠️ **Trace Required** |
-| [ToolCallEfficiency](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/tool-call/efficiency.md)   | Are the tool calls efficient without redundancy?             | No                     | ⚠️ **Trace Required** |
+| [ToolCallCorrectness](/docs/latest/genai/eval-monitor/scorers/llm-judge/tool-call/correctness.md) | Are the tool calls and arguments correct for the user query? | No                     | ⚠️ **Trace Required** |
+| [ToolCallEfficiency](/docs/latest/genai/eval-monitor/scorers/llm-judge/tool-call/efficiency.md)   | Are the tool calls efficient without redundancy?             | No                     | ⚠️ **Trace Required** |
 
 tip
 
-All tool call judges require MLflow Traces with at least one span marked as `span_type="TOOL"`. Use the [@mlflow.trace](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.trace) decorator with `span_type="TOOL"` on your tool functions.
+All tool call judges require MLflow Traces with at least one span marked as `span_type="TOOL"`. Use the [@mlflow.trace](/docs/latest/api_reference/python_api/mlflow.html#mlflow.trace) decorator with `span_type="TOOL"` on your tool functions.
 
 ## Prerequisites for running the examples[​](#prerequisites-for-running-the-examples "Direct link to Prerequisites for running the examples")
 
@@ -25,7 +25,7 @@ All tool call judges require MLflow Traces with at least one span marked as `spa
    pip install --upgrade mlflow
    ```
 
-2. Create an MLflow experiment by following the [setup your environment quickstart](/docs/3.11.1/genai/getting-started/connect-environment.md).
+2. Create an MLflow experiment by following the [setup your environment quickstart](/docs/latest/genai/getting-started/connect-environment.md).
 
 3. (Optional, if using OpenAI models) Use the native OpenAI SDK to connect to OpenAI-hosted models. Select a model from the [available OpenAI models](https://platform.openai.com/docs/models).
 
@@ -140,24 +140,24 @@ Each tool call judge evaluates tool spans separately:
 
 You can change the judge model by using the `model` argument in the judge definition. The model must be specified in the format `<provider>:/<model-name>`, where `<provider>` is the name of your model provider (e.g. `openai`, `anthropic`, `gemini`).
 
-For a list of supported models, see [selecting judge models](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges.md#selecting-judge-models).
+For a list of supported models, see [selecting judge models](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md#selecting-judge-models).
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [ToolCallCorrectness](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/tool-call/correctness.md)
+### [ToolCallCorrectness](/docs/latest/genai/eval-monitor/scorers/llm-judge/tool-call/correctness.md)
 
-[Evaluate if tool calls and arguments are correct](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/tool-call/correctness.md)
+[Evaluate if tool calls and arguments are correct](/docs/latest/genai/eval-monitor/scorers/llm-judge/tool-call/correctness.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/tool-call/correctness.md)
+[Learn more →](/docs/latest/genai/eval-monitor/scorers/llm-judge/tool-call/correctness.md)
 
-### [ToolCallEfficiency](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/tool-call/efficiency.md)
+### [ToolCallEfficiency](/docs/latest/genai/eval-monitor/scorers/llm-judge/tool-call/efficiency.md)
 
-[Check for redundant or unnecessary tool calls](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/tool-call/efficiency.md)
+[Check for redundant or unnecessary tool calls](/docs/latest/genai/eval-monitor/scorers/llm-judge/tool-call/efficiency.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/tool-call/efficiency.md)
+[Learn more →](/docs/latest/genai/eval-monitor/scorers/llm-judge/tool-call/efficiency.md)
 
-### [Build evaluation datasets](/docs/3.11.1/genai/datasets.md)
+### [Build evaluation datasets](/docs/latest/genai/datasets.md)
 
-[Create ground truth datasets for testing agents](/docs/3.11.1/genai/datasets.md)
+[Create ground truth datasets for testing agents](/docs/latest/genai/datasets.md)
 
-[Learn more →](/docs/3.11.1/genai/datasets.md)
+[Learn more →](/docs/latest/genai/datasets.md)

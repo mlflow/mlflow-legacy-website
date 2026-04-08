@@ -8,24 +8,24 @@ The `dspy` flavor is under active development and is marked as Experimental. Pub
 
 [DSPy](https://dspy-docs.vercel.app/) is a framework for algorithmically optimizing LM prompts and weights. It's designed to improve the process of prompt engineering by replacing hand-crafted prompt strings with modular components. These modules are concise, well-defined, and maintain high quality and expressive power, making prompt creation more efficient and scalable. By parameterizing these modules and treating prompting as an optimization problem, DSPy can adapt better to different language models, potentially outperforming prompts crafted by experts. This modularity also enables easier exploration of complex pipelines, allowing for fine-tuning performance based on specific tasks or nuanced metrics.
 
-![Overview of DSPy and MLflow integration](/docs/3.11.1/assets/images/dspy-integration-architecture-ee130c78236e38d9728f2a818bf024e9.png)
+![Overview of DSPy and MLflow integration](/docs/latest/assets/images/dspy-integration-architecture-ee130c78236e38d9728f2a818bf024e9.png)
 
 ## Why use DSPy with MLflow?[​](#why-use-dspy-with-mlflow "Direct link to Why use DSPy with MLflow?")
 
 The native integration of the DSPy library with MLflow helps users manage the development lifecycle with DSPy. The following are some of the key benefits of using DSPy with MLflow:
 
-* [MLflow Tracking](/docs/3.11.1/ml/tracking.md) allows you to track your DSPy program's training and execution. With the MLflow APIs, you can log a variety of artifacts and organize training runs, thereby increasing visibility into your model performance.
-* [MLflow Model](/docs/3.11.1/ml/model.md) packages your compiled DSPy program along with its dependency versions, input and output interfaces and other essential metadata. This allows you to deploy your compiled DSPy program with ease, knowing that the environment is consistent across different stages of the AI development workflow.
-* [MLflow Evaluate](/docs/3.11.1/genai/eval-monitor.md) provides native capabilities within MLflow to evaluate LLM applications and AI agents. This capability facilitates the efficient assessment of inference results from your DSPy compiled program, ensuring robust performance analytics and facilitating quick iterations.
-* [MLflow Tracing](/docs/3.11.1/genai/tracing.md) is a powerful observability tool for monitoring and debugging what happens inside the DSPy models, helping you identify potential bottlenecks or issues quickly. With its powerful automatic logging capability, you can instrument your DSPy application without needing to add any code apart from running a single command.
+* [MLflow Tracking](/docs/latest/ml/tracking.md) allows you to track your DSPy program's training and execution. With the MLflow APIs, you can log a variety of artifacts and organize training runs, thereby increasing visibility into your model performance.
+* [MLflow Model](/docs/latest/ml/model.md) packages your compiled DSPy program along with its dependency versions, input and output interfaces and other essential metadata. This allows you to deploy your compiled DSPy program with ease, knowing that the environment is consistent across different stages of the AI development workflow.
+* [MLflow Evaluate](/docs/latest/genai/eval-monitor.md) provides native capabilities within MLflow to evaluate LLM applications and AI agents. This capability facilitates the efficient assessment of inference results from your DSPy compiled program, ensuring robust performance analytics and facilitating quick iterations.
+* [MLflow Tracing](/docs/latest/genai/tracing.md) is a powerful observability tool for monitoring and debugging what happens inside the DSPy models, helping you identify potential bottlenecks or issues quickly. With its powerful automatic logging capability, you can instrument your DSPy application without needing to add any code apart from running a single command.
 
 ## Getting Started[​](#getting-started "Direct link to Getting Started")
 
 In this introductory tutorial, you will learn the most fundamental components of DSPy and how to leverage the integration with MLflow to store, retrieve, and use a DSPy program.
 
-[DSPy Quickstart](/docs/3.11.1/genai/flavors/dspy/notebooks/dspy_quickstart.md)
+[DSPy Quickstart](/docs/latest/genai/flavors/dspy/notebooks/dspy_quickstart.md)
 
-[Get started with MLflow and DSPy by exploring the simplest possible configuration of a DSPy program.](/docs/3.11.1/genai/flavors/dspy/notebooks/dspy_quickstart.md)
+[Get started with MLflow and DSPy by exploring the simplest possible configuration of a DSPy program.](/docs/latest/genai/flavors/dspy/notebooks/dspy_quickstart.md)
 
 ## Concepts[​](#concepts "Direct link to Concepts")
 
@@ -47,9 +47,9 @@ A program is a set of modules connected into a pipeline to perform complex tasks
 
 ## Automatic Tracing[​](#automatic-tracing "Direct link to Automatic Tracing")
 
-[](/docs/3.11.1/images/llms/tracing/dspy-tracing.mp4)
+[](/docs/latest/images/llms/tracing/dspy-tracing.mp4)
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing.md) tracing is a powerful feature that allows you to monitor and debug your DSPy programs. With MLflow, you can enable auto tracing just by calling the [`mlflow.dspy.autolog()`](/docs/3.11.1/api_reference/python_api/mlflow.dspy.html#mlflow.dspy.autolog) function in your code.
+[MLflow Tracing](/docs/latest/genai/tracing.md) tracing is a powerful feature that allows you to monitor and debug your DSPy programs. With MLflow, you can enable auto tracing just by calling the [`mlflow.dspy.autolog()`](/docs/latest/api_reference/python_api/mlflow.dspy.html#mlflow.dspy.autolog) function in your code.
 
 python
 
@@ -61,7 +61,7 @@ mlflow.dspy.autolog()
 
 Once enabled, MLflow will generate traces whenever your DSPy program is executed and record them in your MLflow Experiment.
 
-Learn more about MLflow DSPy tracing capabilities [here](/docs/3.11.1/genai/tracing/integrations/listing/dspy.md).
+Learn more about MLflow DSPy tracing capabilities [here](/docs/latest/genai/tracing/integrations/listing/dspy.md).
 
 ## Tracking DSPy Program in MLflow Experiment[​](#tracking-dspy-program-in-mlflow-experiment "Direct link to Tracking DSPy Program in MLflow Experiment")
 
@@ -104,9 +104,9 @@ Typically you'd want to leverage a [compiled DSPy](https://dspy.ai/learn/optimiz
 
 #### Logging the Program to MLflow[​](#logging-the-program-to-mlflow "Direct link to Logging the Program to MLflow")
 
-You can log the `dspy.Module` object to an MLflow run using the [`mlflow.dspy.log_model()`](/docs/3.11.1/api_reference/python_api/mlflow.dspy.html#mlflow.dspy.log_model) function.
+You can log the `dspy.Module` object to an MLflow run using the [`mlflow.dspy.log_model()`](/docs/latest/api_reference/python_api/mlflow.dspy.html#mlflow.dspy.log_model) function.
 
-We will also specify a [model signature](/docs/3.11.1/ml/model/signatures.md#automatic-signature-inference). An MLflow model signature defines the expected schema for model inputs and outputs, ensuring consistency and correctness during model inference.
+We will also specify a [model signature](/docs/latest/ml/model/signatures.md#automatic-signature-inference). An MLflow model signature defines the expected schema for model inputs and outputs, ensuring consistency and correctness during model inference.
 
 python
 
@@ -123,11 +123,11 @@ with mlflow.start_run():
     )
 ```
 
-![MLflow artifacts for the DSPy program](/docs/3.11.1/assets/images/dspy-artifacts-e5f816ebc8919118392f3e066edece68.png)
+![MLflow artifacts for the DSPy program](/docs/latest/assets/images/dspy-artifacts-e5f816ebc8919118392f3e066edece68.png)
 
 #### Loading the Module for inference[​](#loading-the-module-for-inference "Direct link to Loading the Module for inference")
 
-The saved module can be loaded back for inference using the [`mlflow.pyfunc.load_model()`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.load_model) function. This function gives an MLflow Python Model backed by the DSPy module.
+The saved module can be loaded back for inference using the [`mlflow.pyfunc.load_model()`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.load_model) function. This function gives an MLflow Python Model backed by the DSPy module.
 
 python
 
@@ -199,7 +199,7 @@ python
 ...
 ```
 
-To load the DSPy program itself back instead of the PyFunc-wrapped model, use the [`mlflow.dspy.load_model()`](/docs/3.11.1/api_reference/python_api/mlflow.dspy.html#mlflow.dspy.load_model) function.
+To load the DSPy program itself back instead of the PyFunc-wrapped model, use the [`mlflow.dspy.load_model()`](/docs/latest/api_reference/python_api/mlflow.dspy.html#mlflow.dspy.load_model) function.
 
 python
 
@@ -209,7 +209,7 @@ model = mlflow.dspy.load_model(model_uri)
 
 ## Optimizer Autologging[​](#optimizer-autologging "Direct link to Optimizer Autologging")
 
-The MLflow DSPy flavor supports autologging for DSPy optimizers. See the [Optimizer Autologging](/docs/3.11.1/genai/flavors/dspy/optimizer.md) page for details.
+The MLflow DSPy flavor supports autologging for DSPy optimizers. See the [Optimizer Autologging](/docs/latest/genai/flavors/dspy/optimizer.md) page for details.
 
 ## FAQ[​](#faq "Direct link to FAQ")
 
@@ -219,7 +219,7 @@ DSPy compiles models by updating various LLM parameters, such as prompts, hyperp
 
 ### What can be serialized by MLflow?[​](#what-can-be-serialized-by-mlflow "Direct link to What can be serialized by MLflow?")
 
-When using [`mlflow.dspy.log_model()`](/docs/3.11.1/api_reference/python_api/mlflow.dspy.html#mlflow.dspy.log_model) or [`mlflow.dspy.save_model()`](/docs/3.11.1/api_reference/python_api/mlflow.dspy.html#mlflow.dspy.save_model) in MLflow, the DSPy program is serialized and saved to the tracking server as a `.pkl` file. This enables easy deployment. Under the hood, MLflow uses `cloudpickle` to serialize the DSPy object, but some DSPy artifacts are note serializable. Relevant examples are listed below.
+When using [`mlflow.dspy.log_model()`](/docs/latest/api_reference/python_api/mlflow.dspy.html#mlflow.dspy.log_model) or [`mlflow.dspy.save_model()`](/docs/latest/api_reference/python_api/mlflow.dspy.html#mlflow.dspy.save_model) in MLflow, the DSPy program is serialized and saved to the tracking server as a `.pkl` file. This enables easy deployment. Under the hood, MLflow uses `cloudpickle` to serialize the DSPy object, but some DSPy artifacts are note serializable. Relevant examples are listed below.
 
 * API tokens. These should be managed separately and passed securely via environment variables.
 * The DSPy trace object, which is primarily used during training, not inference.

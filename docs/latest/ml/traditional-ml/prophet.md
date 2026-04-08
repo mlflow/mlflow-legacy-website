@@ -325,20 +325,20 @@ with mlflow.start_run():
 
 ## Learn More[​](#learn-more "Direct link to Learn More")
 
-### [Model Registry](/docs/3.11.1/ml/model-registry.md)
+### [Model Registry](/docs/latest/ml/model-registry.md)
 
-[Version and deploy Prophet models](/docs/3.11.1/ml/model-registry.md)
+[Version and deploy Prophet models](/docs/latest/ml/model-registry.md)
 
-[Learn more →](/docs/3.11.1/ml/model-registry.md)
+[Learn more →](/docs/latest/ml/model-registry.md)
 
-### [MLflow Tracking](/docs/3.11.1/ml/tracking.md)
+### [MLflow Tracking](/docs/latest/ml/tracking.md)
 
-[Track experiments and metrics](/docs/3.11.1/ml/tracking.md)
+[Track experiments and metrics](/docs/latest/ml/tracking.md)
 
-[Learn more →](/docs/3.11.1/ml/tracking.md)
+[Learn more →](/docs/latest/ml/tracking.md)
 
-### [Model Evaluation](/docs/3.11.1/ml/evaluation.md)
+### [Model Evaluation](/docs/latest/ml/evaluation.md)
 
-[Evaluate forecasting performance](/docs/3.11.1/ml/evaluation.md)
+[Evaluate forecasting performance](/docs/latest/ml/evaluation.md)
 
-[Learn more →](/docs/3.11.1/ml/evaluation.md)
+[Learn more →](/docs/latest/ml/evaluation.md)

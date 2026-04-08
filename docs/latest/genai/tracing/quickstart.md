@@ -2,7 +2,7 @@
 
 MLflow Assistant
 
-Need help setting up tracing? Try [MLflow Assistant](/docs/3.11.1/genai/getting-started/try-assistant.md) - a powerful AI assistant that can add MLflow tracing to your project automatically.
+Need help setting up tracing? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that can add MLflow tracing to your project automatically.
 
 This quickstart guide will walk you through setting up a simple LLM application with MLflow Tracing. In less than 10 minutes, you'll enable tracing, run a basic application, and explore the generated traces in the MLflow UI.
 
@@ -26,7 +26,7 @@ uvx mlflow server
 
 info
 
-See [Secure Installs](/docs/3.11.1/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
+See [Secure Installs](/docs/latest/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
 
 **Python Environment**: Python 3.10+
 
@@ -41,7 +41,7 @@ mlflow server
 
 info
 
-See [Secure Installs](/docs/3.11.1/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
+See [Secure Installs](/docs/latest/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
 
 MLflow provides a Docker Compose file to start a local MLflow server with a PostgreSQL database and a MinIO server.
 
@@ -64,7 +64,7 @@ The traces your LLM application or AI agent will send to the MLflow server are g
 
 Let's create a new MLflow experiment using the MLflow UI so that you can start sending your traces.
 
-![New Experiment](/docs/3.11.1/images/llms/tracing/quickstart/mlflow-ui-new-experiment.png)
+![New Experiment](/docs/latest/images/llms/tracing/quickstart/mlflow-ui-new-experiment.png)
 
 1. Navigate to the MLflow UI in your browser at <http://localhost:5000>.
 2. Click on the
@@ -99,7 +99,7 @@ info
 
 While this guide features an example using the OpenAI SDK, the same steps apply to other LLM providers, including Anthropic, Google, Bedrock, and many others.
 
-For a comprehensive list of LLM providers supported by MLflow, see the [LLM Integrations Overview](/docs/3.11.1/genai/tracing/integrations.md).
+For a comprehensive list of LLM providers supported by MLflow, see the [LLM Integrations Overview](/docs/latest/genai/tracing/integrations.md).
 
 ## Start Tracing[​](#start-tracing "Direct link to Start Tracing")
 
@@ -194,7 +194,7 @@ if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
 ```
 
-For a deeper dive into using MLflow together with OpenTelemetry, see the [OpenTelemetry guide](/docs/3.11.1/genai/tracing/opentelemetry.md).
+For a deeper dive into using MLflow together with OpenTelemetry, see the [OpenTelemetry guide](/docs/latest/genai/tracing/opentelemetry.md).
 
 ## View Your Traces on the MLflow UI[​](#view-your-traces-on-the-mlflow-ui "Direct link to View Your Traces on the MLflow UI")
 
@@ -202,11 +202,11 @@ After running the code above, go to the MLflow UI and select the "My Application
 
 Learn More About Tracing UI
 
-The "Traces" page includes rich information about the trace and supports various actions such as searching, filtering, adding feedbacks, and more. See [View Traces](/docs/3.11.1/genai/tracing/observe-with-traces/ui.md) for comprehensive guide about how to get the most out of the MLflow Tracing UI.
+The "Traces" page includes rich information about the trace and supports various actions such as searching, filtering, adding feedbacks, and more. See [View Traces](/docs/latest/genai/tracing/observe-with-traces/ui.md) for comprehensive guide about how to get the most out of the MLflow Tracing UI.
 
-![Single Trace](/docs/3.11.1/images/llms/tracing/quickstart/single-openai-trace-list.png)
+![Single Trace](/docs/latest/images/llms/tracing/quickstart/single-openai-trace-list.png)
 
-![Single Trace](/docs/3.11.1/images/llms/tracing/quickstart/single-openai-trace-detail.png)
+![Single Trace](/docs/latest/images/llms/tracing/quickstart/single-openai-trace-detail.png)
 
 ## Track Multi-Turn Conversations with Sessions[​](#track-multi-turn-conversations-with-sessions "Direct link to Track Multi-Turn Conversations with Sessions")
 
@@ -261,26 +261,26 @@ const chatCompletion = mlflow.trace(
 );
 ```
 
-For more details on tracking users and sessions, see the [Track Users & Sessions guide](/docs/3.11.1/genai/tracing/track-users-sessions.md).
+For more details on tracking users and sessions, see the [Track Users & Sessions guide](/docs/latest/genai/tracing/track-users-sessions.md).
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
 Congrats on sending your first trace with MLflow! Now that you've got the basics working, here are the recommended next steps to deepen your understanding of tracing:
 
-### [Automatic Tracing](/docs/3.11.1/genai/tracing/app-instrumentation/automatic.md)
+### [Automatic Tracing](/docs/latest/genai/tracing/app-instrumentation/automatic.md)
 
-[Explore one-line automatic tracing for popular LLM and AI agent frameworks](/docs/3.11.1/genai/tracing/app-instrumentation/automatic.md)
+[Explore one-line automatic tracing for popular LLM and AI agent frameworks](/docs/latest/genai/tracing/app-instrumentation/automatic.md)
 
-[Enable auto-tracing →](/docs/3.11.1/genai/tracing/app-instrumentation/automatic.md)
+[Enable auto-tracing →](/docs/latest/genai/tracing/app-instrumentation/automatic.md)
 
-### [Automatic Issue Detection](/docs/3.11.1/genai/eval-monitor/ai-insights/detect-issues.md)
+### [Automatic Issue Detection](/docs/latest/genai/eval-monitor/ai-insights/detect-issues.md)
 
-[Use AI to automatically identify quality and operational issues across your traces](/docs/3.11.1/genai/eval-monitor/ai-insights/detect-issues.md)
+[Use AI to automatically identify quality and operational issues across your traces](/docs/latest/genai/eval-monitor/ai-insights/detect-issues.md)
 
-[Detect issues →](/docs/3.11.1/genai/eval-monitor/ai-insights/detect-issues.md)
+[Detect issues →](/docs/latest/genai/eval-monitor/ai-insights/detect-issues.md)
 
-### [Evaluation Quickstart](/docs/3.11.1/genai/eval-monitor/quickstart.md)
+### [Evaluation Quickstart](/docs/latest/genai/eval-monitor/quickstart.md)
 
-[Learn how to systematically evaluate your GenAI application's quality with LLM judges and automated testing](/docs/3.11.1/genai/eval-monitor/quickstart.md)
+[Learn how to systematically evaluate your GenAI application's quality with LLM judges and automated testing](/docs/latest/genai/eval-monitor/quickstart.md)
 
-[Start evaluating →](/docs/3.11.1/genai/eval-monitor/quickstart.md)
+[Start evaluating →](/docs/latest/genai/eval-monitor/quickstart.md)

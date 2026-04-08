@@ -1,10 +1,10 @@
 # Tracing Semantic Kernel
 
-![Semantic Kernel Tracing via autolog](/docs/3.11.1/images/llms/tracing/semantic-kernel-tracing.png)
+![Semantic Kernel Tracing via autolog](/docs/latest/images/llms/tracing/semantic-kernel-tracing.png)
 
 [Semantic Kernel](https://learn.microsoft.com/en-us/semantic-kernel/overview/) is a lightweight, open-source SDK that functions as AI middleware, enabling you to integrate AI models into your C#, Python, or Java codebase via a uniform API layer. By abstracting model interactions, it lets you swap in new models without rewriting your application logic.
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing.md) provides automatic tracing capability for Semantic Kernel. By enabling auto tracing for Semantic Kernel via the [`mlflow.semantic_kernel.autolog()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.semantic_kernel.autolog) function, MLflow will capture traces for LLM invocations and log them to the active MLflow Experiment.
+[MLflow Tracing](/docs/latest/genai/tracing.md) provides automatic tracing capability for Semantic Kernel. By enabling auto tracing for Semantic Kernel via the [`mlflow.semantic_kernel.autolog()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.semantic_kernel.autolog) function, MLflow will capture traces for LLM invocations and log them to the active MLflow Experiment.
 
 MLflow trace automatically captures the following information about Semantic Kernel calls:
 
@@ -90,13 +90,13 @@ print("AI says:", answer)
 
 ## Tracking Token Usage and Cost[​](#tracking-token-usage-and-cost "Direct link to Tracking Token Usage and Cost")
 
-MLflow automatically tracks token usage and cost for Semantic Kernel. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/3.11.1/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
+MLflow automatically tracks token usage and cost for Semantic Kernel. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/latest/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
 
 ## Combine with the MLflow Tracing SDK[​](#combine-with-the-mlflow-tracing-sdk "Direct link to Combine with the MLflow Tracing SDK")
 
-Since this integration is built on OpenTelemetry, you can combine the automatically generated traces with the [MLflow Tracing SDK](/docs/3.11.1/genai/tracing.md) to add custom spans, set tags, and log assessments within the same trace. This is useful when you want to enrich the auto-generated traces with additional application-specific context.
+Since this integration is built on OpenTelemetry, you can combine the automatically generated traces with the [MLflow Tracing SDK](/docs/latest/genai/tracing.md) to add custom spans, set tags, and log assessments within the same trace. This is useful when you want to enrich the auto-generated traces with additional application-specific context.
 
-To enable this, set the `MLFLOW_USE_DEFAULT_TRACER_PROVIDER` environment variable to `false` and call [`mlflow.tracing.set_destination()`](/docs/3.11.1/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.set_destination) to merge spans from both SDKs into a single trace.
+To enable this, set the `MLFLOW_USE_DEFAULT_TRACER_PROVIDER` environment variable to `false` and call [`mlflow.tracing.set_destination()`](/docs/latest/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.set_destination) to merge spans from both SDKs into a single trace.
 
 python
 
@@ -121,7 +121,7 @@ with mlflow.start_span("custom_step") as span:
     span.set_outputs({"result": "success"})
 ```
 
-For detailed instructions and examples, see [Combining the OpenTelemetry SDK and the MLflow Tracing SDK](/docs/3.11.1/genai/tracing/app-instrumentation/opentelemetry.md#combining-the-opentelemetry-sdk-and-the-mlflow-tracing-sdk).
+For detailed instructions and examples, see [Combining the OpenTelemetry SDK and the MLflow Tracing SDK](/docs/latest/genai/tracing/app-instrumentation/opentelemetry.md#combining-the-opentelemetry-sdk-and-the-mlflow-tracing-sdk).
 
 ## Disable Auto-tracing[​](#disable-auto-tracing "Direct link to Disable Auto-tracing")
 

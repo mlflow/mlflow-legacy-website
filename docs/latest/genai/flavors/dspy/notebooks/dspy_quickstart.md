@@ -242,7 +242,7 @@ Prediction(
 
 Now, you can observe how DSPy translates your query and interacts with the LLM. This feature is extremely valuable for debugging, iteratively refining components within your system, and monitoring models in production. While the module in this tutorial is relatively simple, the tracing feature becomes even more powerful as your model grows in complexity.
 
-![MLflow DSPy Trace](/docs/3.11.1/assets/images/dspy-trace-bd339ce15bda9cbb5f88a48a24c2bbf4.png)
+![MLflow DSPy Trace](/docs/latest/assets/images/dspy-trace-bd339ce15bda9cbb5f88a48a24c2bbf4.png)
 
 ## Compilation[​](#compilation "Direct link to Compilation")
 

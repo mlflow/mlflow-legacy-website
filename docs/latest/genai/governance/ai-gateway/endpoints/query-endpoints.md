@@ -18,7 +18,7 @@ The following table summarizes all the ways you can query gateway endpoints:
 
 To see code examples for your endpoint, navigate to the Endpoints list and click either the Use button or the endpoint name itself. This opens a modal with comprehensive usage examples tailored to your specific endpoint.
 
-![Usage Modal](/docs/3.11.1/assets/images/usage-modal-d8b20f050157839fcbc443a603535b89.png)
+![Usage Modal](/docs/latest/assets/images/usage-modal-d8b20f050157839fcbc443a603535b89.png)
 
 The usage modal organizes examples into two categories: unified APIs that work across any provider, and passthrough APIs that expose provider-specific features. Within each category, the **Try it** tab lets you send a test request directly from the UI.
 
@@ -199,7 +199,7 @@ print(response.choices[0].message.content)
 
 The Passthrough API relays requests to the provider's LLM endpoint using its native formats, allowing you to use their native client SDKs with the MLflow Gateway. While unified APIs work for most use cases, passthrough APIs give you full access to provider-specific features that may not be available through the unified interface.
 
-For detailed information on passthrough APIs for each provider, see [Model Providers](/docs/3.11.1/genai/governance/ai-gateway/endpoints/model-providers.md).
+For detailed information on passthrough APIs for each provider, see [Model Providers](/docs/latest/genai/governance/ai-gateway/endpoints/model-providers.md).
 
 ### OpenAI Passthrough[​](#openai-passthrough "Direct link to OpenAI Passthrough")
 
@@ -416,7 +416,7 @@ print(response.choices[0].message.content)
 
 ## Using Gateway Endpoints with Workspaces[​](#using-gateway-endpoints-with-workspaces "Direct link to Using Gateway Endpoints with Workspaces")
 
-When [workspaces](/docs/3.11.1/self-hosting/workspaces/getting-started.md) are enabled on your MLflow server, you can specify the target workspace for a request by including the `X-MLFLOW-WORKSPACE` header.
+When [workspaces](/docs/latest/self-hosting/workspaces/getting-started.md) are enabled on your MLflow server, you can specify the target workspace for a request by including the `X-MLFLOW-WORKSPACE` header.
 
 note
 
@@ -479,11 +479,11 @@ The workspace header applies to all gateway API endpoints, including:
 * OpenAI-compatible API (`/gateway/mlflow/v1/*`)
 * Passthrough APIs (`/gateway/openai/v1/*`, `/gateway/anthropic/v1/*`, `/gateway/gemini/v1beta/models/{endpoint_name}:*`)
 
-For more details on workspace configuration and management, see the [Workspaces documentation](/docs/3.11.1/self-hosting/workspaces/getting-started.md).
+For more details on workspace configuration and management, see the [Workspaces documentation](/docs/latest/self-hosting/workspaces/getting-started.md).
 
 ## Using Gateway Endpoints with MLflow Judges[​](#using-gateway-endpoints-with-mlflow-judges "Direct link to Using Gateway Endpoints with MLflow Judges")
 
-AI Gateway endpoints can be used as the backing LLM for MLflow's [LLM Judges](/docs/3.11.1/genai/eval-monitor/scorers.md#llms-as-judges). This allows you to run judge evaluations through the gateway, benefiting from centralized API key management and cost tracking.
+AI Gateway endpoints can be used as the backing LLM for MLflow's [LLM Judges](/docs/latest/genai/eval-monitor/scorers.md#llms-as-judges). This allows you to run judge evaluations through the gateway, benefiting from centralized API key management and cost tracking.
 
 To use a gateway endpoint as a judge model, use the `gateway:/` prefix followed by your endpoint name:
 
@@ -518,4 +518,4 @@ coherence_judge = make_judge(
 )
 ```
 
-For more details on creating and using LLM judges, see the [LLM Judges documentation](/docs/3.11.1/genai/eval-monitor/scorers.md#llms-as-judges).
+For more details on creating and using LLM judges, see the [LLM Judges documentation](/docs/latest/genai/eval-monitor/scorers.md#llms-as-judges).

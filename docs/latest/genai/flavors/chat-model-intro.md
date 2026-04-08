@@ -2,11 +2,11 @@
 
 attention
 
-Starting in MLflow 3.0.0, we recommend [`ResponsesAgent`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent) instead of [`ChatModel`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel). See more details in the [ResponsesAgent Introduction](/docs/3.11.1/genai/flavors/responses-agent-intro.md).
+Starting in MLflow 3.0.0, we recommend [`ResponsesAgent`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent) instead of [`ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel). See more details in the [ResponsesAgent Introduction](/docs/latest/genai/flavors/responses-agent-intro.md).
 
-MLflow's [`ChatModel`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) class provides a standardized way to create production-ready conversational AI models. The resulting models are fully integrated with MLflow's tracking, evaluation, and lifecycle management capabilities. They can be shared with others in the MLflow Model Registry, deployed as a REST API, or loaded in a notebook for interactive use. Furthermore, they are compatible with the widely-adopted OpenAI chat API spec, making them easy to integrate with other AI systems and tools.
+MLflow's [`ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) class provides a standardized way to create production-ready conversational AI models. The resulting models are fully integrated with MLflow's tracking, evaluation, and lifecycle management capabilities. They can be shared with others in the MLflow Model Registry, deployed as a REST API, or loaded in a notebook for interactive use. Furthermore, they are compatible with the widely-adopted OpenAI chat API spec, making them easy to integrate with other AI systems and tools.
 
-If you're already familiar with [`PythonModel`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel), you might wonder why [`ChatModel`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) is needed. As LLM applications and AI agents grow more complex, mapping inputs, outputs, and parameters with a custom `PythonModel` can be challenging. `ChatModel` simplifies this by offering a structured, OpenAI-compatible schema for conversational AI models.
+If you're already familiar with [`PythonModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel), you might wonder why [`ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) is needed. As LLM applications and AI agents grow more complex, mapping inputs, outputs, and parameters with a custom `PythonModel` can be challenging. `ChatModel` simplifies this by offering a structured, OpenAI-compatible schema for conversational AI models.
 
 |             | ChatModel                                                                                                                 | PythonModel                                                                                                                                                                                                            |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -22,22 +22,22 @@ This guide will take you through the basics of using the ChatModel API to define
 1. How to map your application logic to the `ChatModel`'s input/output schema
 2. How to use the pre-defined inference parameters supported by ChatModels
 3. How to pass custom parameters to a ChatModel using `custom_inputs`
-4. How [`ChatModel`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) compares to [`PythonModel`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel) for defining custom chat models
+4. How [`ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) compares to [`PythonModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel) for defining custom chat models
 
 To illustrate these points, this guide will walk you through building a custom `ChatModel`, using a locally-hosted Ollama model as our example. There is no built-in Ollama model flavor, so creating a custom `ChatModel` provides a way to use MLflow's extensive tracking, evaluation, and lifecycle management capabilities with Ollama models.
 
 ## Prerequisites[​](#prerequisites "Direct link to Prerequisites")
 
 * Familiarity with MLflow logging APIs and LLM concepts.
-* MLflow version 2.17.0 or higher installed for use of [`ChatModel`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel).
+* MLflow version 2.17.0 or higher installed for use of [`ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel).
 
 ## Understanding ChatModel: Input/Output Mapping[​](#understanding-chatmodel-inputoutput-mapping "Direct link to Understanding ChatModel: Input/Output Mapping")
 
-The [`mlflow.pyfunc.ChatModel`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) interface sits between your application and MLflow's ecosystem, providing a layer of standardization that makes it easier to integrate your application with MLflow's other features and to deploy your model in an accessible, production-ready format.
+The [`mlflow.pyfunc.ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) interface sits between your application and MLflow's ecosystem, providing a layer of standardization that makes it easier to integrate your application with MLflow's other features and to deploy your model in an accessible, production-ready format.
 
 To that end, when defining a custom `ChatModel`, the key task is to map your application's logic to the `ChatModel`'s standardized interface. *This mapping exercise is the fundamental part of creating a custom* `ChatModel`.
 
-![ChatModel Interface](/docs/3.11.1/assets/images/interface_1-eef793eaf139821002cfdb770dcd608d.png)
+![ChatModel Interface](/docs/latest/assets/images/interface_1-eef793eaf139821002cfdb770dcd608d.png)
 
 When using a custom ChatModel, the `predict` method expects standardized inputs that look like this:
 
@@ -74,11 +74,11 @@ python
 }
 ```
 
-You can find details of the full chat response object [here](/docs/3.11.1/api_reference/python_api/mlflow.types.html#mlflow.types.llm.ChatCompletionResponse).
+You can find details of the full chat response object [here](/docs/latest/api_reference/python_api/mlflow.types.html#mlflow.types.llm.ChatCompletionResponse).
 
 These input/output schemas are compatible with the widely-adopted OpenAI spec, making `ChatModel` s easy to use in a wide variety of contexts.
 
-To demonstrate this mapping process, we will show how to use the [`mlflow.pyfunc.ChatModel`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) class to log Meta's Llama 3.2 1B model via the Ollama llm client, which does not have a native MLflow flavor.
+To demonstrate this mapping process, we will show how to use the [`mlflow.pyfunc.ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) class to log Meta's Llama 3.2 1B model via the Ollama llm client, which does not have a native MLflow flavor.
 
 ## Building Your First ChatModel[​](#building-your-first-chatmodel "Direct link to Building Your First ChatModel")
 
@@ -161,7 +161,7 @@ Here are a few things to note about the Ollama inputs and outputs:
 
 Let's start with a simple version of a custom `ChatModel` that handles inputs/output messages but does not yet handle inference parameters. To accomplish this, we need to:
 
-1. Define a class that extends [`mlflow.pyfunc.ChatModel`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel)
+1. Define a class that extends [`mlflow.pyfunc.ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel)
 2. Implement the `load_context` method, which will handle the initialization of the Ollama client
 3. Implement the `predict` method, which will handle the input/output mapping
 
@@ -215,7 +215,7 @@ In the above code, we mapped the `ChatModel` inputs to the Ollama inputs, and th
 * The `messages` key in the `ChatModel` input schema is a list of `ChatMessage` objects. We converted this to a list of dictionaries with `role` and `content` keys, which is the expected input format for Ollama.
 * The `ChatCompletionResponse` that the `predict` method returns must be created using the `ChatCompletionResponse` dataclass, but the nested message and choice data can be provided as dictionaries that match the expected schema. MLflow will automatically convert these dictionaries to the appropriate dataclass objects. In our case, we created a `ChatCompletionResponse` but provided the choices and messages as dictionaries.
 
-In a notebook environment, we can save the model to a file called `ollama_model.py` with the `%%writefile` magic command and call `set_model(SimpleOllamaModel())`. This is the "models from code" approach to model logging, which you can read more about [here](/docs/3.11.1/ml/model/models-from-code.md).
+In a notebook environment, we can save the model to a file called `ollama_model.py` with the `%%writefile` magic command and call `set_model(SimpleOllamaModel())`. This is the "models from code" approach to model logging, which you can read more about [here](/docs/latest/ml/model/models-from-code.md).
 
 Now we can log this model to MLflow as follows, passing the path to the file containing the model definition we just created:
 
@@ -293,7 +293,7 @@ result = model.predict({
 })
 ```
 
-You can find the full list of supported parameters [here](/docs/3.11.1/api_reference/python_api/mlflow.types.html#mlflow.types.llm.ChatParams). Furthermore, you can pass arbitrary additional parameters to a ChatModel via the `custom_inputs` key in the input, which we will cover in more detail in the next section.
+You can find the full list of supported parameters [here](/docs/latest/api_reference/python_api/mlflow.types.html#mlflow.types.llm.ChatParams). Furthermore, you can pass arbitrary additional parameters to a ChatModel via the `custom_inputs` key in the input, which we will cover in more detail in the next section.
 
 **Comparison to Parameter Handling in Custom PyFunc Models**
 
@@ -604,7 +604,7 @@ with mlflow.start_run():
     )
 ```
 
-With a custom [`PythonModel`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel), we need to manually define the input example so that a model signature can be inferred using the example. This is a significant difference from the ChatModel API, which automatically configures a signature that conforms to the standard OpenAI-compatible input/output/parameter schemas. To learn more about auto inference of model signature based on an input example, see the [model signature example](/docs/3.11.1/ml/model/signatures.md#automatic-signature-inference) section for details.
+With a custom [`PythonModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel), we need to manually define the input example so that a model signature can be inferred using the example. This is a significant difference from the ChatModel API, which automatically configures a signature that conforms to the standard OpenAI-compatible input/output/parameter schemas. To learn more about auto inference of model signature based on an input example, see the [model signature example](/docs/latest/ml/model/signatures.md#automatic-signature-inference) section for details.
 
 There is also one notable difference in how we call the loaded model's `predict` method: parameters are passed as a dictionary via the `params` keyword argument, rather than in the dictionary containing the messages.
 
@@ -642,7 +642,7 @@ python
 }
 ```
 
-In summary, `ChatModel` provides a more structured approach to defining custom chat models, with a focus on standardized, OpenAI-compatible inputs and outputs. While it requires a bit more setup work to map the input/output schemas between the `ChatModel` schema and the application it wraps, it can be easier to use than a fully custom [`PythonModel`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel) as it handles the often-challenging task of defining input/output/parameter schemas. The [`PythonModel`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel) approach, on the other hand, provides the most flexibility but requires the developer to manually handle all of the input/output/parameter mapping logic.
+In summary, `ChatModel` provides a more structured approach to defining custom chat models, with a focus on standardized, OpenAI-compatible inputs and outputs. While it requires a bit more setup work to map the input/output schemas between the `ChatModel` schema and the application it wraps, it can be easier to use than a fully custom [`PythonModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel) as it handles the often-challenging task of defining input/output/parameter schemas. The [`PythonModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel) approach, on the other hand, provides the most flexibility but requires the developer to manually handle all of the input/output/parameter mapping logic.
 
 ## Conclusion[​](#conclusion "Direct link to Conclusion")
 
@@ -651,7 +651,7 @@ In this guide, you have learned:
 * How to map the input/output schemas between the ChatModel API and your application
 * How to configure commonly-used chat model inference parameters with the ChatModel API
 * How to pass custom parameters to a `ChatModel` using the `custom_inputs` key
-* How [`ChatModel`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) compares to the [`PythonModel`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel) for defining custom chat models
+* How [`ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) compares to the [`PythonModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel) for defining custom chat models
 
 You should now have a good sense of what the ChatModel API is and how it can be used to define custom chat models.
 
@@ -660,4 +660,4 @@ You should now have a good sense of what the ChatModel API is and how it can be 
 * Out of the box support for MLflow Tracing, which is useful for debugging and monitoring your chat models, especially in models with multiple components or calls to LLM APIs.
 * Support for customizing the model's configuration using an external configuration file.
 
-To learn more about these and other advanced features of the ChatModel API, you can read [this guide](/docs/3.11.1/genai/flavors/chat-model-guide.md).
+To learn more about these and other advanced features of the ChatModel API, you can read [this guide](/docs/latest/genai/flavors/chat-model-guide.md).

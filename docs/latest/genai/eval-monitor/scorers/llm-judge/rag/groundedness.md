@@ -14,7 +14,7 @@ This built-in LLM judge is designed for evaluating RAG applications that need to
    pip install --upgrade mlflow
    ```
 
-2. Create an MLflow experiment by following the [setup your environment quickstart](/docs/3.11.1/genai/getting-started/connect-environment.md).
+2. Create an MLflow experiment by following the [setup your environment quickstart](/docs/latest/genai/getting-started/connect-environment.md).
 
 3. (Optional, if using OpenAI models) Use the native OpenAI SDK to connect to OpenAI-hosted models. Select a model from the [available OpenAI models](https://platform.openai.com/docs/models).
 
@@ -81,11 +81,11 @@ results = mlflow.genai.evaluate(
 
 tip
 
-For a complete RAG application example with these judges, see the [RAG Evaluation guide](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/rag.md).
+For a complete RAG application example with these judges, see the [RAG Evaluation guide](/docs/latest/genai/eval-monitor/scorers/llm-judge/rag.md).
 
 ## Interpret results[​](#interpret-results "Direct link to Interpret results")
 
-The RetrievalGroundedness judge evaluates each retriever span separately and returns a separate Feedback object for each retriever span in your trace. Each [`Feedback`](/docs/3.11.1/api_reference/python_api/mlflow.entities.html#mlflow.entities.Feedback) object contains:
+The RetrievalGroundedness judge evaluates each retriever span separately and returns a separate Feedback object for each retriever span in your trace. Each [`Feedback`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.Feedback) object contains:
 
 * **value**: "yes" if response is grounded in the retrieved context, "no" if it contains hallucinations
 
@@ -101,24 +101,24 @@ The RetrievalGroundedness judge evaluates each retriever span separately and ret
 
 You can change the judge model by using the `model` argument in the judge definition. The model must be specified in the format `<provider>:/<model-name>`, where `<provider>` is the name of your model provider (e.g. `openai`, `anthropic`, `gemini`).
 
-For a list of supported models, see [selecting judge models](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges.md#selecting-judge-models).
+For a list of supported models, see [selecting judge models](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md#selecting-judge-models).
 
 ## Next steps[​](#next-steps "Direct link to Next steps")
 
-### [Evaluate context sufficiency](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/rag/context-sufficiency.md)
+### [Evaluate context sufficiency](/docs/latest/genai/eval-monitor/scorers/llm-judge/rag/context-sufficiency.md)
 
-[Check if your retriever provides adequate information](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/rag/context-sufficiency.md)
+[Check if your retriever provides adequate information](/docs/latest/genai/eval-monitor/scorers/llm-judge/rag/context-sufficiency.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/rag/context-sufficiency.md)
+[Learn more →](/docs/latest/genai/eval-monitor/scorers/llm-judge/rag/context-sufficiency.md)
 
-### [Evaluate context relevance](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/rag/relevance.md#retrievalrelevance-judge)
+### [Evaluate context relevance](/docs/latest/genai/eval-monitor/scorers/llm-judge/rag/relevance.md#retrievalrelevance-judge)
 
-[Ensure retrieved documents are relevant to queries](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/rag/relevance.md#retrievalrelevance-judge)
+[Ensure retrieved documents are relevant to queries](/docs/latest/genai/eval-monitor/scorers/llm-judge/rag/relevance.md#retrievalrelevance-judge)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/rag/relevance.md#retrievalrelevance-judge)
+[Learn more →](/docs/latest/genai/eval-monitor/scorers/llm-judge/rag/relevance.md#retrievalrelevance-judge)
 
-### [Run comprehensive RAG evaluation](/docs/3.11.1/genai/eval-monitor/quickstart.md)
+### [Run comprehensive RAG evaluation](/docs/latest/genai/eval-monitor/quickstart.md)
 
-[Combine multiple judges for complete RAG assessment](/docs/3.11.1/genai/eval-monitor/quickstart.md)
+[Combine multiple judges for complete RAG assessment](/docs/latest/genai/eval-monitor/quickstart.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/quickstart.md)
+[Learn more →](/docs/latest/genai/eval-monitor/quickstart.md)

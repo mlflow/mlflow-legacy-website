@@ -28,7 +28,7 @@ pip install mlflow
 
 info
 
-See [Secure Installs](/docs/3.11.1/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
+See [Secure Installs](/docs/latest/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
 
 Then, start the server with:
 
@@ -53,14 +53,14 @@ mlflow.set_tracking_uri("http://localhost:5000")
 
 Now, you are ready to start your experiment!
 
-* [Tracing QuickStart](/docs/3.11.1/genai/tracing/quickstart.md)
-* [LLM Evaluation Quickstart](/docs/3.11.1/genai/eval-monitor/quickstart.md)
-* [Prompt Management Quickstart](/docs/3.11.1/genai/prompt-registry.md#getting-started)
-* [Model Training Quickstart](/docs/3.11.1/ml/tracking/quickstart.md)
+* [Tracing QuickStart](/docs/latest/genai/tracing/quickstart.md)
+* [LLM Evaluation Quickstart](/docs/latest/genai/eval-monitor/quickstart.md)
+* [Prompt Management Quickstart](/docs/latest/genai/prompt-registry.md#getting-started)
+* [Model Training Quickstart](/docs/latest/ml/tracking/quickstart.md)
 
 tip
 
-For production deployments or custom backend configurations, see [Backend Store](/docs/3.11.1/self-hosting/architecture/backend-store.md) documentation.
+For production deployments or custom backend configurations, see [Backend Store](/docs/latest/self-hosting/architecture/backend-store.md) documentation.
 
 ## Other Deployment Options[​](#other-deployment-options "Direct link to Other Deployment Options")
 
@@ -104,17 +104,17 @@ MLflow, at a high level, consists of the following components:
 
 Each component is designed to be pluggable, so you can customize it to meet your needs. For example, you can start with a single host mode with SQLite backend and local file system for storing artifacts. To scale up, you can switch backend store to PostgreSQL cluster and point artifact store to cloud storage such as S3, GCS, or Azure Blob Storage.
 
-To learn more about the architecture and available backend options, see [Architecture](/docs/3.11.1/self-hosting/architecture/overview.md).
+To learn more about the architecture and available backend options, see [Architecture](/docs/latest/self-hosting/architecture/overview.md).
 
 ## Workspaces[​](#workspaces "Direct link to Workspaces")
 
-MLflow supports [workspaces](/docs/3.11.1/self-hosting/workspaces.md) to organize experiments, registered models, prompts, and artifacts on a shared MLflow instance. Workspaces add logical separation and workspace-level permissions so teams can collaborate without running separate servers. Workspaces are opt-in and require a SQL database backend.
+MLflow supports [workspaces](/docs/latest/self-hosting/workspaces.md) to organize experiments, registered models, prompts, and artifacts on a shared MLflow instance. Workspaces add logical separation and workspace-level permissions so teams can collaborate without running separate servers. Workspaces are opt-in and require a SQL database backend.
 
 ## Access Control & Security[​](#access-control--security "Direct link to Access Control & Security")
 
-MLflow support [username/password login](/docs/3.11.1/self-hosting/security/basic-http-auth.md) via basic HTTP authentication, [SSO (Single Sign-On)](/docs/3.11.1/self-hosting/security/sso.md), and [custom authentication plugins](/docs/3.11.1/self-hosting/security/custom.md).
+MLflow support [username/password login](/docs/latest/self-hosting/security/basic-http-auth.md) via basic HTTP authentication, [SSO (Single Sign-On)](/docs/latest/self-hosting/security/sso.md), and [custom authentication plugins](/docs/latest/self-hosting/security/custom.md).
 
-MLflow also provides built-in [network protection](/docs/3.11.1/self-hosting/security/network.md) middleware to protect your tracking server from network exposure.
+MLflow also provides built-in [network protection](/docs/latest/self-hosting/security/network.md) middleware to protect your tracking server from network exposure.
 
 Try Managed MLflow
 
@@ -122,7 +122,7 @@ Need highly secure MLflow server? Check out [Databricks Managed MLflow](https://
 
 ## FAQs[​](#faqs "Direct link to FAQs")
 
-See [Troubleshooting & FAQs](/docs/3.11.1/self-hosting/troubleshooting.md) for more information.
+See [Troubleshooting & FAQs](/docs/latest/self-hosting/troubleshooting.md) for more information.
 
 ACCESS DENIED?
 
@@ -146,4 +146,4 @@ mlflow server --allowed-hosts "mlflow.company.com,localhost:*" \
 
 **Note**: These security options are only available with the default FastAPI-based server (uvicorn). They are not supported when using Flask directly or with `--gunicorn-opts` or `--waitress-opts`.
 
-Refer to the [Network Security Guide](/docs/3.11.1/self-hosting/security/network.md) for detailed configuration options.
+Refer to the [Network Security Guide](/docs/latest/self-hosting/security/network.md) for detailed configuration options.

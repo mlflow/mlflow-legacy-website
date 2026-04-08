@@ -14,7 +14,7 @@ This built-in LLM judge is designed for evaluating application responses against
    pip install --upgrade mlflow
    ```
 
-2. Create an MLflow experiment by following the [setup your environment quickstart](/docs/3.11.1/genai/getting-started/connect-environment.md).
+2. Create an MLflow experiment by following the [setup your environment quickstart](/docs/latest/genai/getting-started/connect-environment.md).
 
 3. (Optional, if using OpenAI models) Use the native OpenAI SDK to connect to OpenAI-hosted models. Select a model from the [available OpenAI models](https://platform.openai.com/docs/models).
 
@@ -131,7 +131,7 @@ Use `expected_facts` rather than `expected_response` for more flexible evaluatio
 
 You can change the judge model by using the `model` argument in the judge definition. The model must be specified in the format `<provider>:/<model-name>`, where `<provider>` is the name of your model provider (e.g. `openai`, `anthropic`, `gemini`).
 
-For a list of supported models, see [selecting judge models](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges.md#selecting-judge-models).
+For a list of supported models, see [selecting judge models](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md#selecting-judge-models).
 
 ## Interpret results[​](#interpret-results "Direct link to Interpret results")
 
@@ -142,20 +142,20 @@ The judge returns a Feedback object with:
 
 ## Next steps[​](#next-steps "Direct link to Next steps")
 
-### [Explore other built-in judges](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/predefined.md#available-judges)
+### [Explore other built-in judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md#available-judges)
 
-[Learn about other built-in quality evaluation judges](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/predefined.md#available-judges)
+[Learn about other built-in quality evaluation judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md#available-judges)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/predefined.md#available-judges)
+[Learn more →](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md#available-judges)
 
-### [Create custom judges](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges.md)
+### [Create custom judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md)
 
-[Build domain-specific evaluation judges](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges.md)
+[Build domain-specific evaluation judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges.md)
+[Learn more →](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md)
 
-### [Build evaluation datasets](/docs/3.11.1/genai/datasets.md)
+### [Build evaluation datasets](/docs/latest/genai/datasets.md)
 
-[Create test cases with ground truth for testing](/docs/3.11.1/genai/datasets.md)
+[Create test cases with ground truth for testing](/docs/latest/genai/datasets.md)
 
-[Learn more →](/docs/3.11.1/genai/datasets.md)
+[Learn more →](/docs/latest/genai/datasets.md)

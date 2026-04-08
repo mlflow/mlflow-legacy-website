@@ -2,17 +2,17 @@
 
 MLflow Expectations provide a systematic way to capture ground truth - the correct or desired outputs that your AI should produce. By establishing these reference points, you create the foundation for meaningful evaluation and continuous improvement of your LLM applications and AI agents.
 
-For complete API documentation and implementation details, see the [`mlflow.log_expectation()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.log_expectation) reference.
+For complete API documentation and implementation details, see the [`mlflow.log_expectation()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.log_expectation) reference.
 
 ## What are Expectations?[​](#what-are-expectations "Direct link to What are Expectations?")
 
-[Expectations](/docs/3.11.1/genai/concepts/expectations.md) define the "gold standard" for what your AI should produce given specific inputs. They represent the correct answer, desired behavior, or ideal output as determined by domain experts. Think of expectations as the answer key against which actual AI performance is measured.
+[Expectations](/docs/latest/genai/concepts/expectations.md) define the "gold standard" for what your AI should produce given specific inputs. They represent the correct answer, desired behavior, or ideal output as determined by domain experts. Think of expectations as the answer key against which actual AI performance is measured.
 
-Unlike [feedback](/docs/3.11.1/genai/assessments/feedback.md) that evaluates what happened, expectations establish what should happen. They're always created by humans who have the expertise to define correct outcomes.
+Unlike [feedback](/docs/latest/genai/assessments/feedback.md) that evaluates what happened, expectations establish what should happen. They're always created by humans who have the expertise to define correct outcomes.
 
 ## Prerequisites[​](#prerequisites "Direct link to Prerequisites")
 
-Before using the [Expectations API](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.log_expectation), ensure you have:
+Before using the [Expectations API](/docs/latest/api_reference/python_api/mlflow.html#mlflow.log_expectation), ensure you have:
 
 * MLflow 3.2.0 or later installed
 * An active MLflow tracking server or local tracking setup
@@ -138,7 +138,7 @@ The expectation will be immediately attached to the trace, establishing the grou
 
 ### Log Ground Truth via API[​](#log-ground-truth-via-api "Direct link to Log Ground Truth via API")
 
-Use the programmatic [`mlflow.log_expectation()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.log_expectation) API when you need to automate expectation creation, integrate with existing annotation tools, or build custom ground truth collection workflows.
+Use the programmatic [`mlflow.log_expectation()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.log_expectation) API when you need to automate expectation creation, integrate with existing annotation tools, or build custom ground truth collection workflows.
 
 * Single Annotations
 * Batch Annotations
@@ -425,20 +425,20 @@ Expectations are most powerful when combined with systematic evaluation:
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [Expectations Concepts](/docs/3.11.1/genai/concepts/expectations.md)
+### [Expectations Concepts](/docs/latest/genai/concepts/expectations.md)
 
-[Deep dive into expectations architecture and schema](/docs/3.11.1/genai/concepts/expectations.md)
+[Deep dive into expectations architecture and schema](/docs/latest/genai/concepts/expectations.md)
 
-[Learn more →](/docs/3.11.1/genai/concepts/expectations.md)
+[Learn more →](/docs/latest/genai/concepts/expectations.md)
 
-### [Automated and Human Feedback](/docs/3.11.1/genai/assessments/feedback.md)
+### [Automated and Human Feedback](/docs/latest/genai/assessments/feedback.md)
 
-[Learn how to collect quality evaluations from multiple sources](/docs/3.11.1/genai/assessments/feedback.md)
+[Learn how to collect quality evaluations from multiple sources](/docs/latest/genai/assessments/feedback.md)
 
-[Start collecting →](/docs/3.11.1/genai/assessments/feedback.md)
+[Start collecting →](/docs/latest/genai/assessments/feedback.md)
 
-### [LLM Evaluation](/docs/3.11.1/genai/eval-monitor.md)
+### [LLM Evaluation](/docs/latest/genai/eval-monitor.md)
 
-[Learn how to systematically evaluate and improve your LLM applications and AI agents](/docs/3.11.1/genai/eval-monitor.md)
+[Learn how to systematically evaluate and improve your LLM applications and AI agents](/docs/latest/genai/eval-monitor.md)
 
-[Start evaluating →](/docs/3.11.1/genai/eval-monitor.md)
+[Start evaluating →](/docs/latest/genai/eval-monitor.md)

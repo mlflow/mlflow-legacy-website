@@ -1,8 +1,8 @@
 # Tracing Ollama
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing/integrations.md) provides automatic tracing capability for [Ollama](https://ollama.com/) models through the OpenAI SDK integration. Because Ollama exposes an OpenAI-compatible API, you can simply use `mlflow.openai.autolog()` to trace Ollama calls.
+[MLflow Tracing](/docs/latest/genai/tracing/integrations.md) provides automatic tracing capability for [Ollama](https://ollama.com/) models through the OpenAI SDK integration. Because Ollama exposes an OpenAI-compatible API, you can simply use `mlflow.openai.autolog()` to trace Ollama calls.
 
-![Ollama Tracing via autolog](/docs/3.11.1/images/llms/tracing/openai-function-calling.png)
+![Ollama Tracing via autolog](/docs/latest/images/llms/tracing/openai-function-calling.png)
 
 MLflow trace automatically captures the following information about Ollama calls:
 
@@ -146,7 +146,7 @@ const response = await client.chat.completions.create({
 
 Browse to your MLflow UI (for example, <http://localhost:5000>) and open the `Ollama` experiment to see traces for the calls above.
 
-![Ollama Tracing](/docs/3.11.1/images/llms/tracing/basic-openai-trace.png)
+![Ollama Tracing](/docs/latest/images/llms/tracing/basic-openai-trace.png)
 
 → View *[Next Steps](#next-steps)* for learning about more MLflow features like user feedback tracking, prompt management, and evaluation.
 
@@ -164,15 +164,15 @@ To request support for additional APIs, please open a [feature request](https://
 
 ## Streaming and Async Support[​](#streaming-and-async-support "Direct link to Streaming and Async Support")
 
-MLflow supports tracing for streaming and async Ollama APIs. Visit the [OpenAI Tracing documentation](/docs/3.11.1/genai/tracing/integrations/listing/openai.md) for example code snippets for tracing streaming and async calls through OpenAI SDK.
+MLflow supports tracing for streaming and async Ollama APIs. Visit the [OpenAI Tracing documentation](/docs/latest/genai/tracing/integrations/listing/openai.md) for example code snippets for tracing streaming and async calls through OpenAI SDK.
 
 ## Combine with Manual Tracing[​](#combine-with-manual-tracing "Direct link to Combine with Manual Tracing")
 
-To control the tracing behavior more precisely, MLflow provides [Manual Tracing SDK](/docs/3.11.1/genai/tracing/app-instrumentation/manual-tracing.md) to create spans for your custom code. Manual tracing can be used in conjunction with auto-tracing to create a custom trace while keeping the auto-tracing convenience. For more details, please refer to the [Combine with Manual Tracing](/docs/3.11.1/genai/tracing/integrations/listing/openai.md#combine-with-manual-tracing) section in the OpenAI Tracing documentation.
+To control the tracing behavior more precisely, MLflow provides [Manual Tracing SDK](/docs/latest/genai/tracing/app-instrumentation/manual-tracing.md) to create spans for your custom code. Manual tracing can be used in conjunction with auto-tracing to create a custom trace while keeping the auto-tracing convenience. For more details, please refer to the [Combine with Manual Tracing](/docs/latest/genai/tracing/integrations/listing/openai.md#combine-with-manual-tracing) section in the OpenAI Tracing documentation.
 
 ## Tracking Token Usage and Cost[​](#tracking-token-usage-and-cost "Direct link to Tracking Token Usage and Cost")
 
-MLflow automatically tracks token usage and cost for Ollama models through the OpenAI SDK integration. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/3.11.1/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
+MLflow automatically tracks token usage and cost for Ollama models through the OpenAI SDK integration. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/latest/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
 
 note
 
@@ -184,20 +184,20 @@ Auto tracing for Ollama (through OpenAI SDK) can be disabled globally by calling
 
 ## Next steps[​](#next-steps "Direct link to Next steps")
 
-### [Track User Feedback](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+### [Track User Feedback](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-[Record user feedback on traces for tracking user satisfaction.](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+[Record user feedback on traces for tracking user satisfaction.](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-[Learn about feedback →](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+[Learn about feedback →](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-### [Manage Prompts](/docs/3.11.1/genai/prompt-registry.md)
+### [Manage Prompts](/docs/latest/genai/prompt-registry.md)
 
-[Learn how to manage prompts with MLflow's prompt registry.](/docs/3.11.1/genai/prompt-registry.md)
+[Learn how to manage prompts with MLflow's prompt registry.](/docs/latest/genai/prompt-registry.md)
 
-[Manage prompts →](/docs/3.11.1/genai/prompt-registry.md)
+[Manage prompts →](/docs/latest/genai/prompt-registry.md)
 
-### [Evaluate Traces](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+### [Evaluate Traces](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Evaluate traces with LLM judges to understand and improve your AI application's behavior.](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Evaluate traces with LLM judges to understand and improve your AI application's behavior.](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Evaluate traces →](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Evaluate traces →](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)

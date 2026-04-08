@@ -1,8 +1,8 @@
 # Tracing Claude Code
 
-![Claude Code Tracing via CLI autolog](/docs/3.11.1/assets/images/claude-code-tracing-b1f69a5ecbf65655844589733ee28896.png)
+![Claude Code Tracing via CLI autolog](/docs/latest/assets/images/claude-code-tracing-b1f69a5ecbf65655844589733ee28896.png)
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing.md) provides automatic tracing for Claude Code:
+[MLflow Tracing](/docs/latest/genai/tracing.md) provides automatic tracing for Claude Code:
 
 1. **CLI tracing**: Automatically trace interactive Claude Code CLI conversations
 2. **SDK tracing**: Trace Claude Agent SDK usage in Python applications
@@ -203,7 +203,7 @@ evaluate(data=eval_data, predict_fn=predict_fn, scorers=[relevance])
 
 ## Tracking Token Usage and Cost[​](#tracking-token-usage-and-cost "Direct link to Tracking Token Usage and Cost")
 
-MLflow automatically tracks token usage and cost for Claude Code conversations. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/3.11.1/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
+MLflow automatically tracks token usage and cost for Claude Code conversations. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/latest/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
 
 ## Troubleshooting[​](#troubleshooting "Direct link to Troubleshooting")
 

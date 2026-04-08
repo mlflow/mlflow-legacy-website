@@ -2,7 +2,7 @@
 
 Conversation evaluation enables you to assess entire conversation sessions rather than individual turns. This is essential for evaluating conversational AI systems where quality emerges over multiple interactions, such as user frustration patterns, conversation completeness, or overall dialogue coherence.
 
-![Multi-turn evaluation results](/docs/3.11.1/images/genai/multi-turn-view.png)
+![Multi-turn evaluation results](/docs/latest/images/genai/multi-turn-view.png)
 
 Experimental Feature
 
@@ -80,7 +80,7 @@ results = mlflow.genai.evaluate(
 )
 ```
 
-[Learn more about conversation simulation →](/docs/3.11.1/genai/eval-monitor/running-evaluation/conversation-simulation.md)
+[Learn more about conversation simulation →](/docs/latest/genai/eval-monitor/running-evaluation/conversation-simulation.md)
 
 ## Overview[​](#overview "Direct link to Overview")
 
@@ -121,7 +121,7 @@ uvx mlflow server
 
 info
 
-See [Secure Installs](/docs/3.11.1/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
+See [Secure Installs](/docs/latest/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
 
 **Python Environment**: Python 3.10+
 
@@ -136,7 +136,7 @@ mlflow server
 
 info
 
-See [Secure Installs](/docs/3.11.1/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
+See [Secure Installs](/docs/latest/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
 
 MLflow provides a Docker Compose file to start a local MLflow server with a PostgreSQL database and a MinIO server.
 
@@ -183,7 +183,7 @@ def my_chatbot(question, session_id):
     return generate_response(question)
 ```
 
-![Sessions View UI](/docs/3.11.1/images/genai/sessions-view-ui.png)
+![Sessions View UI](/docs/latest/images/genai/sessions-view-ui.png)
 
 ### Step 2: Retrieve and evaluate sessions[​](#step-2-retrieve-and-evaluate-sessions "Direct link to Step 2: Retrieve and evaluate sessions")
 
@@ -210,7 +210,7 @@ results = mlflow.genai.evaluate(
 )
 ```
 
-You can also retrieve complete sessions directly using [`mlflow.search_sessions`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.search_sessions):
+You can also retrieve complete sessions directly using [`mlflow.search_sessions`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.search_sessions):
 
 python
 
@@ -275,17 +275,17 @@ results = mlflow.genai.evaluate(
 )
 ```
 
-For complete documentation on conversation simulation, including test case definition, predict function interfaces, and configuration options, see the [Conversation Simulation guide](/docs/3.11.1/genai/eval-monitor/running-evaluation/conversation-simulation.md).
+For complete documentation on conversation simulation, including test case definition, predict function interfaces, and configuration options, see the [Conversation Simulation guide](/docs/latest/genai/eval-monitor/running-evaluation/conversation-simulation.md).
 
 ## Multi-Turn Judges[​](#multi-turn-judges "Direct link to Multi-Turn Judges")
 
 ### Built-in Judges[​](#built-in-judges "Direct link to Built-in Judges")
 
-MLflow provides built-in multi-turn judges including `ConversationCompleteness`, `UserFrustration`, `KnowledgeRetention`, and more. See the [Built-in Judges](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/predefined.md#multi-turn) page for the full list, usage examples, and API documentation.
+MLflow provides built-in multi-turn judges including `ConversationCompleteness`, `UserFrustration`, `KnowledgeRetention`, and more. See the [Built-in Judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md#multi-turn) page for the full list, usage examples, and API documentation.
 
 ### Custom Judges[​](#custom-judges "Direct link to Custom Judges")
 
-You can create custom multi-turn judges using [make\_judge](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.judges.make_judge) with the `{{ conversation }}` template variable:
+You can create custom multi-turn judges using [make\_judge](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.judges.make_judge) with the `{{ conversation }}` template variable:
 
 python
 
@@ -332,7 +332,7 @@ Assessments include metadata identifying them as conversation-level:
 
 ## Working with Specific Sessions[​](#working-with-specific-sessions "Direct link to Working with Specific Sessions")
 
-To evaluate a specific session, use [`mlflow.search_traces`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.search_traces) with a filter string:
+To evaluate a specific session, use [`mlflow.search_traces`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.search_traces) with a filter string:
 
 python
 
@@ -356,20 +356,20 @@ results = mlflow.genai.evaluate(
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [Session Tracing Guide](/docs/3.11.1/genai/tracing/track-users-sessions.md)
+### [Session Tracing Guide](/docs/latest/genai/tracing/track-users-sessions.md)
 
-[Learn how to track users and sessions in your conversational AI applications for better evaluation.](/docs/3.11.1/genai/tracing/track-users-sessions.md)
+[Learn how to track users and sessions in your conversational AI applications for better evaluation.](/docs/latest/genai/tracing/track-users-sessions.md)
 
-[Learn about sessions →](/docs/3.11.1/genai/tracing/track-users-sessions.md)
+[Learn about sessions →](/docs/latest/genai/tracing/track-users-sessions.md)
 
-### [Built-in Judges](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/predefined.md#multi-turn)
+### [Built-in Judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md#multi-turn)
 
-[Explore built-in judges for conversation completeness, user frustration, and other multi-turn metrics.](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/predefined.md#multi-turn)
+[Explore built-in judges for conversation completeness, user frustration, and other multi-turn metrics.](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md#multi-turn)
 
-[View judges →](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/predefined.md#multi-turn)
+[View judges →](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md#multi-turn)
 
-### [Conversation Simulation](/docs/3.11.1/genai/eval-monitor/running-evaluation/conversation-simulation.md)
+### [Conversation Simulation](/docs/latest/genai/eval-monitor/running-evaluation/conversation-simulation.md)
 
-[Generate synthetic conversations to test your agent with diverse scenarios and user behaviors.](/docs/3.11.1/genai/eval-monitor/running-evaluation/conversation-simulation.md)
+[Generate synthetic conversations to test your agent with diverse scenarios and user behaviors.](/docs/latest/genai/eval-monitor/running-evaluation/conversation-simulation.md)
 
-[Simulate conversations →](/docs/3.11.1/genai/eval-monitor/running-evaluation/conversation-simulation.md)
+[Simulate conversations →](/docs/latest/genai/eval-monitor/running-evaluation/conversation-simulation.md)

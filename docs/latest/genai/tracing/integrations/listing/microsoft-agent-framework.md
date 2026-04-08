@@ -1,8 +1,8 @@
 # Tracing Microsoft Agent Framework
 
-![Microsoft Agent Framework Tracing](/docs/3.11.1/images/llms/tracing/microsoft-agent-framework-tracing.png)
+![Microsoft Agent Framework Tracing](/docs/latest/images/llms/tracing/microsoft-agent-framework-tracing.png)
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing.md) provides automatic tracing capability for [Microsoft Agent Framework](https://github.com/microsoft/agent-framework?tab=readme-ov-file), a flexible and modular AI agents framework developed by Microsoft. MLflow supports tracing for Microsoft Agent Framework through the [OpenTelemetry](/docs/3.11.1/genai/tracing/opentelemetry.md) integration.
+[MLflow Tracing](/docs/latest/genai/tracing.md) provides automatic tracing capability for [Microsoft Agent Framework](https://github.com/microsoft/agent-framework?tab=readme-ov-file), a flexible and modular AI agents framework developed by Microsoft. MLflow supports tracing for Microsoft Agent Framework through the [OpenTelemetry](/docs/latest/genai/tracing/opentelemetry.md) integration.
 
 ## Step 1: Install libraries[​](#step-1-install-libraries "Direct link to Step 1: Install libraries")
 
@@ -22,7 +22,7 @@ bash
 mlflow server --backend-store-uri sqlite:///mlflow.db --port 5000
 ```
 
-This example uses SQLite as the backend store. To use other types of SQL databases such as PostgreSQL, MySQL, and MSSQL, change the store URI as described in the [backend store documentation](/docs/3.11.1/self-hosting/architecture/backend-store.md). OpenTelemetry ingestion is not supported with file-based backend stores.
+This example uses SQLite as the backend store. To use other types of SQL databases such as PostgreSQL, MySQL, and MSSQL, change the store URI as described in the [backend store documentation](/docs/latest/self-hosting/architecture/backend-store.md). OpenTelemetry ingestion is not supported with file-based backend stores.
 
 ## Step 3: Configure OpenTelemetry[​](#step-3-configure-opentelemetry "Direct link to Step 3: Configure OpenTelemetry")
 
@@ -101,9 +101,9 @@ Open the MLflow UI at `http://localhost:5000` and navigate to the experiment to 
 
 ## Combine with the MLflow Tracing SDK[​](#combine-with-the-mlflow-tracing-sdk "Direct link to Combine with the MLflow Tracing SDK")
 
-Since this integration is built on OpenTelemetry, you can combine the automatically generated traces with the [MLflow Tracing SDK](/docs/3.11.1/genai/tracing.md) to add custom spans, set tags, and log assessments within the same trace. This is useful when you want to enrich the auto-generated traces with additional application-specific context.
+Since this integration is built on OpenTelemetry, you can combine the automatically generated traces with the [MLflow Tracing SDK](/docs/latest/genai/tracing.md) to add custom spans, set tags, and log assessments within the same trace. This is useful when you want to enrich the auto-generated traces with additional application-specific context.
 
-To enable this, set the `MLFLOW_USE_DEFAULT_TRACER_PROVIDER` environment variable to `false` and call [`mlflow.tracing.set_destination()`](/docs/3.11.1/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.set_destination) to merge spans from both SDKs into a single trace.
+To enable this, set the `MLFLOW_USE_DEFAULT_TRACER_PROVIDER` environment variable to `false` and call [`mlflow.tracing.set_destination()`](/docs/latest/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.set_destination) to merge spans from both SDKs into a single trace.
 
 python
 
@@ -126,10 +126,10 @@ with mlflow.start_span("custom_step") as span:
     span.set_outputs({"result": "success"})
 ```
 
-For detailed instructions and examples, see [Combining the OpenTelemetry SDK and the MLflow Tracing SDK](/docs/3.11.1/genai/tracing/app-instrumentation/opentelemetry.md#combining-the-opentelemetry-sdk-and-the-mlflow-tracing-sdk).
+For detailed instructions and examples, see [Combining the OpenTelemetry SDK and the MLflow Tracing SDK](/docs/latest/genai/tracing/app-instrumentation/opentelemetry.md#combining-the-opentelemetry-sdk-and-the-mlflow-tracing-sdk).
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-* [Evaluate the Agent](/docs/3.11.1/genai/eval-monitor/running-evaluation/agents.md): Learn how to evaluate the agent's performance.
-* [Manage Prompts](/docs/3.11.1/genai/prompt-registry.md): Learn how to manage prompts for the agent.
-* [Automatic Agent Optimization](/docs/3.11.1/genai/prompt-registry/optimize-prompts.md): Learn how to automatically optimize the agent end-to-end with state-of-the-art optimization algorithms.
+* [Evaluate the Agent](/docs/latest/genai/eval-monitor/running-evaluation/agents.md): Learn how to evaluate the agent's performance.
+* [Manage Prompts](/docs/latest/genai/prompt-registry.md): Learn how to manage prompts for the agent.
+* [Automatic Agent Optimization](/docs/latest/genai/prompt-registry/optimize-prompts.md): Learn how to automatically optimize the agent end-to-end with state-of-the-art optimization algorithms.

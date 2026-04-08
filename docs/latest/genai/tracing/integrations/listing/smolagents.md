@@ -1,8 +1,8 @@
 # Tracing Smolagents
 
-![Smolagents tracing via autolog](/docs/3.11.1/assets/images/smolagents-tracing-ce4f2c411221b1c5d54a65e704e6a945.png)
+![Smolagents tracing via autolog](/docs/latest/assets/images/smolagents-tracing-ce4f2c411221b1c5d54a65e704e6a945.png)
 
-MLflow Tracing provides automatic tracing capability when using Smolagents. When Smolagents auto-tracing is enabled by calling the [`mlflow.smolagents.autolog()`](/docs/3.11.1/api_reference/python_api/mlflow.smolagents.html#mlflow.smolagents.autolog) function, usage of the Smolagents SDK will automatically record generated traces during interactive development.
+MLflow Tracing provides automatic tracing capability when using Smolagents. When Smolagents auto-tracing is enabled by calling the [`mlflow.smolagents.autolog()`](/docs/latest/api_reference/python_api/mlflow.smolagents.html#mlflow.smolagents.autolog) function, usage of the Smolagents SDK will automatically record generated traces during interactive development.
 
 Note that only synchronous calls are supported, and that asynchronous API and streaming methods are not traced.
 
@@ -27,7 +27,7 @@ result = agent.run(
 
 ## Token Usage[​](#token-usage "Direct link to Token Usage")
 
-MLflow automatically tracks token usage for Smolagents. See the [Token Usage and Cost Tracking](/docs/3.11.1/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
+MLflow automatically tracks token usage for Smolagents. See the [Token Usage and Cost Tracking](/docs/latest/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
 
 note
 

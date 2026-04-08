@@ -3,7 +3,7 @@
 MLflow tracking server is a stand-alone HTTP server that serves multiple REST API endpoints for tracking runs/experiments. While MLflow Tracking can be used in local environment, hosting a tracking server is powerful in the team development workflow:
 
 * **Collaboration**: Multiple users can log runs to the same endpoint, and query runs and models logged by other users.
-* **Sharing Results**: The tracking server also serves [Tracking UI](/docs/3.11.1/ml/tracking.md#tracking_ui) endpoint, where team members can easily explore each other's results.
+* **Sharing Results**: The tracking server also serves [Tracking UI](/docs/latest/ml/tracking.md#tracking_ui) endpoint, where team members can easily explore each other's results.
 * **Centralized Access**: The tracking server can be run as a proxy for the remote access for metadata and artifacts, making it easier to secure and audit access to data.
 
 ## Start the Tracking Server[​](#start-the-tracking-server "Direct link to Start the Tracking Server")
@@ -33,7 +33,7 @@ important
 
 The server listens on <http://localhost:5000> by default and only accepts connections from the local machine. To let the server accept connections from other machines, you will need to pass `--host 0.0.0.0` to listen on all network interfaces (or a specific interface address). This is typically required configuration when running the server **in a Kubernetes pod or a Docker container**.
 
-MLflow 3.5.0+ includes built-in security middleware to protect against DNS rebinding and CORS attacks. When using `--host 0.0.0.0`, configure the `--allowed-hosts` option to specify which domains can access your server. See [Security Configuration](/docs/3.11.1/self-hosting/security/network.md) for details.
+MLflow 3.5.0+ includes built-in security middleware to protect against DNS rebinding and CORS attacks. When using `--host 0.0.0.0`, configure the `--allowed-hosts` option to specify which domains can access your server. See [Security Configuration](/docs/latest/self-hosting/security/network.md) for details.
 
 Read-only Filesystems
 
@@ -50,9 +50,9 @@ mlflow server \
 
 ## Logging to a Tracking Server[​](#logging_to_a_tracking_server "Direct link to Logging to a Tracking Server")
 
-Once the tracking server is started, connect your local clients by setting the `MLFLOW_TRACKING_URI` environment variable to the server's URI, along with its scheme and port (for example, `http://10.0.0.1:5000`) or call [`mlflow.set_tracking_uri()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.set_tracking_uri).
+Once the tracking server is started, connect your local clients by setting the `MLFLOW_TRACKING_URI` environment variable to the server's URI, along with its scheme and port (for example, `http://10.0.0.1:5000`) or call [`mlflow.set_tracking_uri()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.set_tracking_uri).
 
-MLflow APIs like [`mlflow.start_run()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.start_run), [`mlflow.log_param()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.log_param), [`mlflow.start_trace()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.start_trace) make API requests to your remote tracking server and log the data.
+MLflow APIs like [`mlflow.start_run()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.start_run), [`mlflow.log_param()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.log_param), [`mlflow.start_trace()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.start_trace) make API requests to your remote tracking server and log the data.
 
 * Python
 * TypeScript
@@ -126,7 +126,7 @@ client.logParam(run.getRunId(), "a", "1")
 
 ## Configure Server[​](#configure-server "Direct link to Configure Server")
 
-This section describes how to configure the tracking server for some common use cases. The section requires you to have a basic knowledge about the tracking server architecture, please visit [Architecture Overview](/docs/3.11.1/self-hosting/architecture/overview.md) if you are not familiar with it yet.
+This section describes how to configure the tracking server for some common use cases. The section requires you to have a basic knowledge about the tracking server architecture, please visit [Architecture Overview](/docs/latest/self-hosting/architecture/overview.md) if you are not familiar with it yet.
 
 ### Backend Store[​](#backend-store "Direct link to Backend Store")
 
@@ -168,7 +168,7 @@ With this setting, MLflow server works as a proxy for accessing remote artifacts
 
 important
 
-If you are using remote storage, you have to configure the credentials for the server to access the artifacts. Be aware of that The MLflow artifact proxied access service enables users to have an *assumed role of access to all artifacts* that are accessible to the Tracking Server. Refer [Manage Access](/docs/3.11.1/self-hosting/architecture/artifact-store.md#artifacts-stores-manage-access) for further details.
+If you are using remote storage, you have to configure the credentials for the server to access the artifacts. Be aware of that The MLflow artifact proxied access service enables users to have an *assumed role of access to all artifacts* that are accessible to the Tracking Server. Refer [Manage Access](/docs/latest/self-hosting/architecture/artifact-store.md#artifacts-stores-manage-access) for further details.
 
 The tracking server resolves the uri `mlflow-artifacts:/` in tracking request from the client to an otherwise explicit object store destination (e.g., "s3:/my\_bucket/mlartifacts") for interfacing with artifacts. The following patterns will all resolve to the configured proxied object store location (in above example, `s3://my-root-bucket/mlartifacts`):
 
@@ -205,7 +205,7 @@ note
 
 If the MLflow server is started with `--no-serve-artifacts` option, the client directly pushes artifacts to the artifact store. It does not proxy these through the tracking server by default.
 
-For this reason, the client needs direct access to the artifact store. For instructions on setting up these credentials, see [Artifact Stores documentation](/docs/3.11.1/self-hosting/architecture/artifact-store.md#artifacts-stores-manage-access).
+For this reason, the client needs direct access to the artifact store. For instructions on setting up these credentials, see [Artifact Stores documentation](/docs/latest/self-hosting/architecture/artifact-store.md#artifacts-stores-manage-access).
 
 note
 
@@ -269,7 +269,7 @@ mlflow server --host 0.0.0.0 \
   --cors-allowed-origins "https://app.company.com"
 ```
 
-For detailed configuration options, see [Security Configuration](/docs/3.11.1/self-hosting/security/network.md).
+For detailed configuration options, see [Security Configuration](/docs/latest/self-hosting/security/network.md).
 
 ### Authentication and Encryption[​](#authentication-and-encryption "Direct link to Authentication and Encryption")
 
@@ -286,7 +286,7 @@ You can pass authentication headers to MLflow using these environment variables:
 * `MLFLOW_TRACKING_SERVER_CERT_PATH` - Path to a CA bundle to use. Sets the `verify` param of the `requests.request` function (see [requests main interface](https://requests.readthedocs.io/en/master/api)). When you use a self-signed server certificate you can use this to verify it on client side. If this is set `MLFLOW_TRACKING_INSECURE_TLS` must not be set (false).
 * `MLFLOW_TRACKING_CLIENT_CERT_PATH` - Path to ssl client cert file (.pem). Sets the `cert` param of the `requests.request` function (see [requests main interface](https://requests.readthedocs.io/en/master/api)). This can be used to use a (self-signed) client certificate.
 
-For notebook integration and UI embedding options, see [Network Security](/docs/3.11.1/self-hosting/security/network.md) configuration.
+For notebook integration and UI embedding options, see [Network Security](/docs/latest/self-hosting/security/network.md) configuration.
 
 ## Tracking Server versioning[​](#tracking-server-versioning "Direct link to Tracking Server versioning")
 

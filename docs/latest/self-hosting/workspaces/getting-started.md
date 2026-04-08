@@ -286,6 +286,6 @@ export MLFLOW_WORKSPACE=your-workspace-name
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-* [Configuration](/docs/3.11.1/self-hosting/workspaces/configuration.md) - Learn about server configuration options
-* [Workspace Providers](/docs/3.11.1/self-hosting/workspaces/workspace-providers.md) - Understand the provider architecture
-* [Permissions](/docs/3.11.1/self-hosting/workspaces/permissions.md) - Configure workspace-scoped access control
+* [Configuration](/docs/latest/self-hosting/workspaces/configuration.md) - Learn about server configuration options
+* [Workspace Providers](/docs/latest/self-hosting/workspaces/workspace-providers.md) - Understand the provider architecture
+* [Permissions](/docs/latest/self-hosting/workspaces/permissions.md) - Configure workspace-scoped access control

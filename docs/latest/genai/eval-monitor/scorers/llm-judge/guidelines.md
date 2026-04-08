@@ -55,7 +55,7 @@ Guidelines judges evaluate whether text meets your specified criteria. The judge
    pip install --upgrade mlflow
    ```
 
-2. Create an MLflow experiment by following the [setup your environment quickstart](/docs/3.11.1/genai/getting-started/connect-environment.md).
+2. Create an MLflow experiment by following the [setup your environment quickstart](/docs/latest/genai/getting-started/connect-environment.md).
 
 3. (Optional, if using OpenAI models) Use the native OpenAI SDK to connect to OpenAI-hosted models. Select a model from the [available OpenAI models](https://platform.openai.com/docs/models).
 
@@ -124,7 +124,7 @@ clarity = Guidelines(
 results = mlflow.genai.evaluate(data=data, scorers=[english, clarity])
 ```
 
-![Guidelines judge result](/docs/3.11.1/images/genai/eval-monitor/guidelines-judge-results.png)
+![Guidelines judge result](/docs/latest/images/genai/eval-monitor/guidelines-judge-results.png)
 
 ### Parameters[​](#parameters "Direct link to Parameters")
 
@@ -166,11 +166,11 @@ data = [
 results = mlflow.genai.evaluate(data=data, scorers=[ExpectationsGuidelines()])
 ```
 
-![Expectations Guidelines judge results](/docs/3.11.1/images/genai/eval-monitor/expectations-guidelines-judge-results.png)
+![Expectations Guidelines judge results](/docs/latest/images/genai/eval-monitor/expectations-guidelines-judge-results.png)
 
 ## Return values[​](#return-values "Direct link to Return values")
 
-Guidelines judges return an [mlflow.entities.Feedback](/docs/3.11.1/api_reference/python_api/mlflow.entities.html#mlflow.entities.Feedback) object containing:
+Guidelines judges return an [mlflow.entities.Feedback](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.Feedback) object containing:
 
 * `value`: Either `"yes"` (meets guidelines) or `"no"` (fails guidelines)
 * `rationale`: Detailed explanation of why the content passed or failed
@@ -436,24 +436,24 @@ results = mlflow.genai.evaluate(data=document_extraction_data, scorers=[Expectat
 
 You can change the judge model by using the `model` argument in the judge definition. The model must be specified in the format `<provider>:/<model-name>`, where `<provider>` is the name of your model provider (e.g. `openai`, `anthropic`, `gemini`).
 
-For a list of supported models, see [selecting judge models](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges.md#selecting-judge-models).
+For a list of supported models, see [selecting judge models](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md#selecting-judge-models).
 
 ## Next steps[​](#next-steps "Direct link to Next steps")
 
-### [Use built-in LLM judges](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/predefined.md#available-judges)
+### [Use built-in LLM judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md#available-judges)
 
-[Evaluate quality with MLflow's other research-backed, built-in LLM judges](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/predefined.md#available-judges)
+[Evaluate quality with MLflow's other research-backed, built-in LLM judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md#available-judges)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/predefined.md#available-judges)
+[Learn more →](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md#available-judges)
 
-### [Create custom LLM judges](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges.md)
+### [Create custom LLM judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md)
 
-[Build custom judges for your specific needs](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges.md)
+[Build custom judges for your specific needs](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges.md)
+[Learn more →](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md)
 
-### [Align judges with human feedback](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/alignment.md)
+### [Align judges with human feedback](/docs/latest/genai/eval-monitor/scorers/llm-judge/alignment.md)
 
-[Improve judge accuracy to match your quality standards](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/alignment.md)
+[Improve judge accuracy to match your quality standards](/docs/latest/genai/eval-monitor/scorers/llm-judge/alignment.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/alignment.md)
+[Learn more →](/docs/latest/genai/eval-monitor/scorers/llm-judge/alignment.md)

@@ -2,7 +2,7 @@
 
 MLflow Assistant
 
-Need help with this setup? Try [MLflow Assistant](/docs/3.11.1/genai/getting-started/try-assistant.md) - a powerful AI assistant that understands your codebase and can set up MLflow for you.
+Need help with this setup? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that understands your codebase and can set up MLflow for you.
 
 MLflow is open source, and you can set up the MLflow server using either `pip` or `docker`.
 
@@ -24,7 +24,7 @@ uvx mlflow server
 
 info
 
-See [Secure Installs](/docs/3.11.1/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
+See [Secure Installs](/docs/latest/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
 
 **Python Environment**: Python 3.10+
 
@@ -39,7 +39,7 @@ mlflow server
 
 info
 
-See [Secure Installs](/docs/3.11.1/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
+See [Secure Installs](/docs/latest/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
 
 MLflow provides a Docker Compose file to start a local MLflow server with a PostgreSQL database and a MinIO server.
 
@@ -58,9 +58,9 @@ Refer to the [instruction](https://github.com/mlflow/mlflow/tree/master/docker-c
 
 This will start the server at port 5000 on your local machine and you can access the MLflow web UI at <http://localhost:5000>.
 
-![MLflow UI Home](/docs/3.11.1/images/quickstart/quickstart_ui_home.png)
+![MLflow UI Home](/docs/latest/images/quickstart/quickstart_ui_home.png)
 
-If you are looking for more guidance about self-hosting the MLflow server, please see the [Self-Hosting Guide](/docs/3.11.1/self-hosting.md) for more details.
+If you are looking for more guidance about self-hosting the MLflow server, please see the [Self-Hosting Guide](/docs/latest/self-hosting.md) for more details.
 
 info
 
@@ -70,4 +70,4 @@ If you are using MLflow on Databricks, please visit [this](https://docs.databric
 
 Now that you have started the MLflow server, let's start tracing your LLM application or AI agent.
 
-Follow [this quickstart](/docs/3.11.1/genai/tracing/quickstart.md) to send your LLM application or AI agent traces to the MLflow server.
+Follow [this quickstart](/docs/latest/genai/tracing/quickstart.md) to send your LLM application or AI agent traces to the MLflow server.

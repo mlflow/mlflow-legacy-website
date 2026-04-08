@@ -1,10 +1,10 @@
 # Tracing Agno
 
-![Agno Tracing via autolog](/docs/3.11.1/images/llms/agno/agno-tracing-basic.png)
+![Agno Tracing via autolog](/docs/latest/images/llms/agno/agno-tracing-basic.png)
 
 [Agno](https://github.com/agno-agi/agno) is a flexible agent framework for orchestrating LLMs, reasoning steps, tools, and memory into a unified pipeline.
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing/integrations.md) provides automatic tracing capability for Agno. By enabling auto tracing for Agno by calling the [`mlflow.agno.autolog()`](/docs/3.11.1/api_reference/python_api/mlflow.agno.html#mlflow.agno.autolog) function, MLflow will capture traces for Agent invocation and log them to the active MLflow Experiment.
+[MLflow Tracing](/docs/latest/genai/tracing/integrations.md) provides automatic tracing capability for Agno. By enabling auto tracing for Agno by calling the [`mlflow.agno.autolog()`](/docs/latest/api_reference/python_api/mlflow.agno.html#mlflow.agno.autolog) function, MLflow will capture traces for Agent invocation and log them to the active MLflow Experiment.
 
 python
 
@@ -133,11 +133,11 @@ reasoning_finance_team.print_response(
 )
 ```
 
-![Agno Tracing via autolog](/docs/3.11.1/images/llms/agno/agno-tracing.png)
+![Agno Tracing via autolog](/docs/latest/images/llms/agno/agno-tracing.png)
 
 ## Tracking Token Usage and Cost[​](#tracking-token-usage-and-cost "Direct link to Tracking Token Usage and Cost")
 
-MLflow automatically tracks token usage and cost for Agno. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/3.11.1/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
+MLflow automatically tracks token usage and cost for Agno. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/latest/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
 
 ### Disable auto-tracing[​](#disable-auto-tracing "Direct link to Disable auto-tracing")
 

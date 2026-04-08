@@ -1,12 +1,12 @@
 # Tracing Koog
 
-![Koog Logo](/docs/3.11.1/images/logos/koog.png)
+![Koog Logo](/docs/latest/images/logos/koog.png)
 
 #### Integration via OpenTelemetry
 
 Koog<!-- --> can be integrated with MLflow via OpenTelemetry. Configure <!-- -->Koog<!-- -->'s OpenTelemetry exporter to send traces to MLflow's OTLP endpoint.
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing.md) provides automatic tracing capability for [Koog](https://github.com/JetBrains/koog), JetBrains' framework for building AI agents in Kotlin. MLflow supports tracing for Koog through the [OpenTelemetry](/docs/3.11.1/genai/tracing/opentelemetry.md) integration — Koog's built-in OpenTelemetry feature sends traces directly to MLflow's OTLP endpoint with no additional adapters needed.
+[MLflow Tracing](/docs/latest/genai/tracing.md) provides automatic tracing capability for [Koog](https://github.com/JetBrains/koog), JetBrains' framework for building AI agents in Kotlin. MLflow supports tracing for Koog through the [OpenTelemetry](/docs/latest/genai/tracing/opentelemetry.md) integration — Koog's built-in OpenTelemetry feature sends traces directly to MLflow's OTLP endpoint with no additional adapters needed.
 
 ## Step 1: Start the MLflow Tracking Server[​](#step-1-start-the-mlflow-tracking-server "Direct link to Step 1: Start the MLflow Tracking Server")
 
@@ -26,7 +26,7 @@ bash
 mlflow server
 ```
 
-To use other types of SQL databases such as PostgreSQL, MySQL, and MSSQL, change the store URI as described in the [backend store documentation](/docs/3.11.1/self-hosting/architecture/backend-store.md).
+To use other types of SQL databases such as PostgreSQL, MySQL, and MSSQL, change the store URI as described in the [backend store documentation](/docs/latest/self-hosting/architecture/backend-store.md).
 
 In your application, configure the server endpoint and set the MLflow experiment ID in the OTLP header `x-mlflow-experiment-id`.
 
@@ -88,7 +88,7 @@ mlflow experiments create --experiment-name "koog-agent-traces"
 
 Run your Koog agent, then open the MLflow UI at `http://localhost:5000` and navigate to the **Traces** tab to see detailed execution spans, including agent lifecycle events, LLM calls, and tool executions.
 
-![Koog Tracing](/docs/3.11.1/assets/images/koog-tracing-03957e45fbf8444190b33267b67733ba.png)
+![Koog Tracing](/docs/latest/assets/images/koog-tracing-03957e45fbf8444190b33267b67733ba.png)
 
 ## Enable Verbose Tracing[​](#enable-verbose-tracing "Direct link to Enable Verbose Tracing")
 
@@ -129,12 +129,12 @@ install(OpenTelemetry) {
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-* [Evaluate the Agent](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md): Learn how to evaluate the agent's performance.
-* [Collect User Feedback](/docs/3.11.1/genai/tracing/collect-user-feedback.md): Learn how to collect user feedback on traces for improving the agent.
-* [Search Traces](/docs/3.11.1/genai/tracing/search-traces.md): Learn how to search and analyze traces for insights.
+* [Evaluate the Agent](/docs/latest/genai/eval-monitor/running-evaluation/traces.md): Learn how to evaluate the agent's performance.
+* [Collect User Feedback](/docs/latest/genai/tracing/collect-user-feedback.md): Learn how to collect user feedback on traces for improving the agent.
+* [Search Traces](/docs/latest/genai/tracing/search-traces.md): Learn how to search and analyze traces for insights.
 
 ## Reference[​](#reference "Direct link to Reference")
 
-* [Collect OpenTelemetry Traces into MLflow](/docs/3.11.1/genai/tracing/opentelemetry/ingest.md) — complete reference for sending OpenTelemetry traces to MLflow
+* [Collect OpenTelemetry Traces into MLflow](/docs/latest/genai/tracing/opentelemetry/ingest.md) — complete reference for sending OpenTelemetry traces to MLflow
 * [Koog OpenTelemetry Support](https://docs.koog.ai/opentelemetry-support/) — background on Koog's OpenTelemetry feature
 * [Koog MLflow Export Guide](https://docs.koog.ai/opentelemetry-mlflow-exporter/) — Koog's guide for MLflow integration

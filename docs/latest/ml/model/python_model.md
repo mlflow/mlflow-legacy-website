@@ -2,25 +2,25 @@
 
 ## Introduction to MLflow PythonModel[​](#introduction-to-mlflow-pythonmodel "Direct link to Introduction to MLflow PythonModel")
 
-The [`mlflow.pyfunc`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc) module provides [save\_model()](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.save_model) and
+The [`mlflow.pyfunc`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc) module provides [save\_model()](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.save_model) and
 
-[log\_model()](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.log_model) utilities for creating MLflow Models with the `python_function` flavor that contain user-specified code and *artifact* (file) dependencies.
+[log\_model()](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.log_model) utilities for creating MLflow Models with the `python_function` flavor that contain user-specified code and *artifact* (file) dependencies.
 
 The MLflow PythonModel enables you to implement custom model logic while leveraging MLflow's packaging and deployment capabilities.
 
-There are two ways to define a PythonModel: Subclassing [`mlflow.pyfunc.PythonModel()`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel) or defining a callable. This guide provides a complete walkthrough on how to define and use a custom PythonModel.
+There are two ways to define a PythonModel: Subclassing [`mlflow.pyfunc.PythonModel()`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel) or defining a callable. This guide provides a complete walkthrough on how to define and use a custom PythonModel.
 
 ### Define a custom PythonModel[​](#define-a-custom-pythonmodel "Direct link to Define a custom PythonModel")
 
 #### Option 1: Subclass PythonModel[​](#option-1-subclass-pythonmodel "Direct link to Option 1: Subclass PythonModel")
 
-The [`mlflow.pyfunc`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc) module provides a [generic PythonModel class](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel) that can be used to define your own customized model. By subclassing it, the model can be seamlessly integrated with other MLflow components.
+The [`mlflow.pyfunc`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc) module provides a [generic PythonModel class](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel) that can be used to define your own customized model. By subclassing it, the model can be seamlessly integrated with other MLflow components.
 
 Methods of PythonModel:
 
 * **predict** A valid PythonModel must implement the predict method, which defines the model's prediction logic. This method is called by MLflow when the model is loaded as a PyFunc model using `mlflow.pyfunc.load_model` and the `predict` function is invoked.
 * **predict\_stream** The predict\_stream method should be implemented if the model is intended for use in streaming environments. MLflow invokes this method when the model is loaded as a PyFunc model with `mlflow.pyfunc.load_model` and `predict_stream` is called.
-* **load\_context** Implement the load\_context method if the model requires additional context to be loaded. For more details, refer to [load\_context()](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel.load_context).
+* **load\_context** Implement the load\_context method if the model requires additional context to be loaded. For more details, refer to [load\_context()](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel.load_context).
 
 tip
 
@@ -60,7 +60,7 @@ def predict(model_input: list[str]) -> list[str]:
 
 ### Log the model[​](#log-the-model "Direct link to Log the model")
 
-Use the pyfunc module to log a custom model with [`mlflow.pyfunc.log_model()`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.log_model).
+Use the pyfunc module to log a custom model with [`mlflow.pyfunc.log_model()`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.log_model).
 
 python
 
@@ -77,7 +77,7 @@ with mlflow.start_run():
 
 ### Validate the model before deployment[​](#validate-the-model-before-deployment "Direct link to Validate the model before deployment")
 
-Use [`mlflow.models.predict()`](/docs/3.11.1/api_reference/python_api/mlflow.models.html#mlflow.models.predict) API to validate the model dependencies and input data before deploy it. Check [MLflow Model Validation](/docs/3.11.1/ml/model.md#validate-models-before-deployment) for more details.
+Use [`mlflow.models.predict()`](/docs/latest/api_reference/python_api/mlflow.models.html#mlflow.models.predict) API to validate the model dependencies and input data before deploy it. Check [MLflow Model Validation](/docs/latest/ml/model.md#validate-models-before-deployment) for more details.
 
 python
 
@@ -106,7 +106,7 @@ pyfunc_model.predict(["hello", "world"])
 
 ### Deploy the model[​](#deploy-the-model "Direct link to Deploy the model")
 
-The final step to use your model in production is to deploy it. Follow [MLflow Model Deployment](/docs/3.11.1/ml/model.md#deployment_plugin) guide to deploy the model.
+The final step to use your model in production is to deploy it. Follow [MLflow Model Deployment](/docs/latest/ml/model.md#deployment_plugin) guide to deploy the model.
 
 ## Type hint usage in PythonModel[​](#type-hint-usage-in-pythonmodel "Direct link to Type hint usage in PythonModel")
 
@@ -209,7 +209,7 @@ class CustomModel(mlflow.pyfunc.PythonModel):
 
 ### Type hints data validation in PythonModel[​](#type-hints-data-validation-in-pythonmodel "Direct link to Type hints data validation in PythonModel")
 
-By subclassing [`mlflow.pyfunc.PythonModel()`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel), you can get data validation based on the type hints for free. The data validation works for both a PythonModel instance and a loaded PyFunc model.
+By subclassing [`mlflow.pyfunc.PythonModel()`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel), you can get data validation based on the type hints for free. The data validation works for both a PythonModel instance and a loaded PyFunc model.
 
 Below example demonstrates how data validation works based on the `CustomModel` defined above.
 

@@ -10,7 +10,7 @@ The MLflow DSPy flavor provides a convenient way to automatically track the opti
 
 ## Enable Autologging[​](#enable-autologging "Direct link to Enable Autologging")
 
-To enable autologging for DSPy optimization, call [`mlflow.dspy.autolog()`](/docs/3.11.1/api_reference/python_api/mlflow.dspy.html#mlflow.dspy.autolog) at the beginning of your script or notebook with the following parameters. This will automatically log traces for your program execution as well as other metrics and artifacts such as program states, train datasets, and evaluation results depending on the configuration. Note that the optimizer autologging feature is available since MLflow `2.21.1`.
+To enable autologging for DSPy optimization, call [`mlflow.dspy.autolog()`](/docs/latest/api_reference/python_api/mlflow.dspy.html#mlflow.dspy.autolog) at the beginning of your script or notebook with the following parameters. This will automatically log traces for your program execution as well as other metrics and artifacts such as program states, train datasets, and evaluation results depending on the configuration. Note that the optimizer autologging feature is available since MLflow `2.21.1`.
 
 python
 
@@ -25,7 +25,7 @@ mlflow.dspy.autolog(log_compiles=True, log_evals=True, log_traces_from_compile=T
 
 | Target                     | Default | Parameter                 | Description                                                                                                                                        |
 | -------------------------- | ------- | ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Traces                     | `true`  | `log_traces`              | Whether to generate and log traces for the program. See [MLflow Tracing](/docs/3.11.1/genai/tracing.md) for more details about tracing feature.    |
+| Traces                     | `true`  | `log_traces`              | Whether to generate and log traces for the program. See [MLflow Tracing](/docs/latest/genai/tracing.md) for more details about tracing feature.    |
 | Traces during Optimization | `false` | `log_traces_from_compile` | MLflow does not generate traces for program calls during optimization by default. Set `True` to see traces for programs calls during optimization. |
 | Traces during Evaluation   | `True`  | `log_traces_from_eval`    | If set `True`, MLflow generates traces for program calls during evaluation.                                                                        |
 | Optimization               | `false` | `log_compiles`            | If set to `True`, a MLflow run is created for each `Teleprompter.compile` call, and metrics and artifacts for the optimization are logged.         |

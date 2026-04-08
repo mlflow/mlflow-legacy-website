@@ -2,7 +2,7 @@
 
 The MLflow AI Assistant is a powerful AI-powered helper that transforms cutting-edge coding agents like Claude Code into experienced AI engineers by your side. Unlike typical chatbots, MLflow AI Assistant is **aware of your codebase and context**. It is not just a question-answering tool, but a full-fledged AI engineer that can find root causes for issues, set up quality tests, and apply [LLMOps](https://mlflow.org/llmops) best practices to your project.
 
-![MLflow AI Assistant](/docs/3.11.1/images/assistant/hero.png)
+![MLflow AI Assistant](/docs/latest/images/assistant/hero.png)
 
 ## What's Unique About MLflow AI Assistant?[​](#whats-unique-about-mlflow-ai-assistant "Direct link to What's Unique About MLflow AI Assistant?")
 
@@ -42,7 +42,7 @@ Just ask **"How do I set up MLflow for my project?"** and the assistant will gui
 
 <br />
 
-![Set Up MLflow](/docs/3.11.1/images/assistant/assistant-setup-mlflow.png)
+![Set Up MLflow](/docs/latest/images/assistant/assistant-setup-mlflow.png)
 
 #### Analyze Traces and Debug Issues[​](#analyze-traces-and-debug-issues "Direct link to Analyze Traces and Debug Issues")
 
@@ -54,7 +54,7 @@ When something goes wrong, the assistant can search through your traces, identif
 
 <br />
 
-![Debug Issues](/docs/3.11.1/images/assistant/assistant-debug-issue.png)
+![Debug Issues](/docs/latest/images/assistant/assistant-debug-issue.png)
 
 #### Analyze Bulk Data and Identify Patterns[​](#analyze-bulk-data-and-identify-patterns "Direct link to Analyze Bulk Data and Identify Patterns")
 
@@ -66,7 +66,7 @@ The assistant can analyze bulk data stored in your experiments and identify patt
 
 <br />
 
-![Analyze Data](/docs/3.11.1/images/assistant/assistant-analyze-trend.png)
+![Analyze Data](/docs/latest/images/assistant/assistant-analyze-trend.png)
 
 #### Setting Up Robust Evaluation For Your Project[​](#setting-up-robust-evaluation-for-your-project "Direct link to Setting Up Robust Evaluation For Your Project")
 
@@ -78,7 +78,7 @@ Evaluation is important for the success of ML/AI projects, however, getting it r
 
 <br />
 
-![LLM Judge](/docs/3.11.1/images/assistant/assistant-recommend-judge.png)
+![LLM Judge](/docs/latest/images/assistant/assistant-recommend-judge.png)
 
 #### Improve Prompt Templates with AI Wizard[​](#improve-prompt-templates-with-ai-wizard "Direct link to Improve Prompt Templates with AI Wizard")
 
@@ -90,7 +90,7 @@ Prompt engineering is still a critical part of building LLM applications, yet ma
 
 <br />
 
-![LLM Judge](/docs/3.11.1/images/assistant/assistant-improve-prompt.png)
+![LLM Judge](/docs/latest/images/assistant/assistant-improve-prompt.png)
 
 warning
 

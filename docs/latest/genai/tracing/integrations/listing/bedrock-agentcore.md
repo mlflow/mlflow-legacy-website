@@ -1,6 +1,6 @@
 # Tracing Amazon Bedrock AgentCore
 
-![Amazon Bedrock AgentCore Logo](/docs/3.11.1/images/logos/bedrock-logo.png)
+![Amazon Bedrock AgentCore Logo](/docs/latest/images/logos/bedrock-logo.png)
 
 #### Integration via OpenTelemetry
 
@@ -22,7 +22,7 @@ bash
 mlflow server
 ```
 
-To use other types of SQL databases such as PostgreSQL, MySQL, and MSSQL, change the store URI as described in the [backend store documentation](/docs/3.11.1/self-hosting/architecture/backend-store.md).
+To use other types of SQL databases such as PostgreSQL, MySQL, and MSSQL, change the store URI as described in the [backend store documentation](/docs/latest/self-hosting/architecture/backend-store.md).
 
 In your application, configure the server endpoint and set the MLflow experiment ID in the OTLP header `x-mlflow-experiment-id`.
 
@@ -43,7 +43,7 @@ Refer to the [Amazon Bedrock AgentCore Observability documentation](https://docs
 
 ## Combine with the MLflow Tracing SDK[​](#combine-with-the-mlflow-tracing-sdk "Direct link to Combine with the MLflow Tracing SDK")
 
-You can combine the auto-generated OpenTelemetry traces with the [MLflow Tracing SDK](/docs/3.11.1/genai/tracing.md) to add custom spans, set tags, and log assessments within the same trace.
+You can combine the auto-generated OpenTelemetry traces with the [MLflow Tracing SDK](/docs/latest/genai/tracing.md) to add custom spans, set tags, and log assessments within the same trace.
 
 python
 
@@ -66,8 +66,8 @@ with mlflow.start_span("custom_step") as span:
     span.set_outputs({"result": "success"})
 ```
 
-See [Combining the OpenTelemetry SDK and the MLflow Tracing SDK](/docs/3.11.1/genai/tracing/app-instrumentation/opentelemetry.md#combining-the-opentelemetry-sdk-and-the-mlflow-tracing-sdk) for details.
+See [Combining the OpenTelemetry SDK and the MLflow Tracing SDK](/docs/latest/genai/tracing/app-instrumentation/opentelemetry.md#combining-the-opentelemetry-sdk-and-the-mlflow-tracing-sdk) for details.
 
 ## Reference[​](#reference "Direct link to Reference")
 
-For complete step-by-step instructions on sending traces to MLflow from OpenTelemetry compatible frameworks, see the [Collect OpenTelemetry Traces into MLflow](/docs/3.11.1/genai/tracing/opentelemetry/ingest.md).
+For complete step-by-step instructions on sending traces to MLflow from OpenTelemetry compatible frameworks, see the [Collect OpenTelemetry Traces into MLflow](/docs/latest/genai/tracing/opentelemetry/ingest.md).

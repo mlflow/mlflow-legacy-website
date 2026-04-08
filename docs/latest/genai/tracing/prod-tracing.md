@@ -2,13 +2,13 @@
 
 When you deploy an agent or LLM application to production, real users behave differently than test data—they find edge cases, ask unexpected questions, and expose issues you didn't anticipate. This guide covers how to configure MLflow Tracing for production environments—including automatic (online) quality evaluation—to catch these issues early and continuously improve your application.
 
-[](/docs/3.11.1/images/llms/tracing/overview_demo.mp4)
+[](/docs/latest/images/llms/tracing/overview_demo.mp4)
 
 ## Production Checklist[​](#production-checklist "Direct link to Production Checklist")
 
 We recommend the following steps before deploying to production. Each topic is covered in more detail below.
 
-* [ ] **[Use a production-grade SQL database](/docs/3.11.1/self-hosting/architecture/backend-store.md#relational-database-default)** — Use PostgreSQL, MySQL, or similar for reliability at scale
+* [ ] **[Use a production-grade SQL database](/docs/latest/self-hosting/architecture/backend-store.md#relational-database-default)** — Use PostgreSQL, MySQL, or similar for reliability at scale
 * [ ] **[Enable async trace logging](#asynchronous-trace-logging)** — Upload traces in the background to avoid adding latency to your app
 * <!-- -->
   \[Optional] **[Use the production tracing SDK](#using-the-production-tracing-sdk)** — Faster startup and smaller footprint than the full `mlflow` package
@@ -27,7 +27,7 @@ For production deployments, we recommend the [Production Tracing SDK](#using-the
 
 #### Using the Production Tracing SDK[​](#using-the-production-tracing-sdk "Direct link to Using the Production Tracing SDK")
 
-The [Production Tracing SDK (`mlflow-tracing`)](/docs/3.11.1/genai/tracing/lightweight-sdk.md) is a smaller package that only includes the minimum set of dependencies to instrument your code/models/agents with MLflow Tracing.
+The [Production Tracing SDK (`mlflow-tracing`)](/docs/latest/genai/tracing/lightweight-sdk.md) is a smaller package that only includes the minimum set of dependencies to instrument your code/models/agents with MLflow Tracing.
 
 **⚡️ Faster Deployment**: Significantly smaller package size and fewer dependencies enable quicker deployments in containers and serverless environments
 
@@ -43,7 +43,7 @@ When installing the MLflow Tracing SDK, make sure the environment **does not hav
 
 ## Automatic (Online) Quality Evaluation[​](#automatic-online-quality-evaluation "Direct link to Automatic (Online) Quality Evaluation")
 
-MLflow's [automatic evaluation](/docs/3.11.1/genai/eval-monitor/automatic-evaluations.md) enables continuous quality monitoring of production traffic using LLM judges. Judges run asynchronously on incoming traces without blocking your application, evaluating for issues like:
+MLflow's [automatic evaluation](/docs/latest/genai/eval-monitor/automatic-evaluations.md) enables continuous quality monitoring of production traffic using LLM judges. Judges run asynchronously on incoming traces without blocking your application, evaluating for issues like:
 
 * **Hallucinations and factual accuracy**
 * **PII leakage and safety violations**
@@ -52,9 +52,9 @@ MLflow's [automatic evaluation](/docs/3.11.1/genai/eval-monitor/automatic-evalua
 
 ### Setting Up Production Judges[​](#setting-up-production-judges "Direct link to Setting Up Production Judges")
 
-You can configure LLM judges to automatically evaluate a sample of your production traces using the UI or SDK. Judges can be set up with sampling rates to control costs and filter strings to target specific traces. For detailed setup instructions and configuration options, see [Automatic Evaluation](/docs/3.11.1/genai/eval-monitor/automatic-evaluations.md).
+You can configure LLM judges to automatically evaluate a sample of your production traces using the UI or SDK. Judges can be set up with sampling rates to control costs and filter strings to target specific traces. For detailed setup instructions and configuration options, see [Automatic Evaluation](/docs/latest/genai/eval-monitor/automatic-evaluations.md).
 
-[](/docs/3.11.1/images/llms/tracing/automatic-evaluation-ui-setup.mp4)
+[](/docs/latest/images/llms/tracing/automatic-evaluation-ui-setup.mp4)
 
 <br />
 
@@ -175,7 +175,7 @@ Adding user IDs, session IDs, and environment metadata to your traces makes it e
 
 ### Tracking Request, Session, and User Context[​](#tracking-request-session-and-user-context "Direct link to Tracking Request, Session, and User Context")
 
-Production applications need to track multiple pieces of context simultaneously. For detailed guidance, see [Track Users & Sessions](/docs/3.11.1/genai/tracing/track-users-sessions.md). The following example demonstrates how to track all of these in a FastAPI application.
+Production applications need to track multiple pieces of context simultaneously. For detailed guidance, see [Track Users & Sessions](/docs/latest/genai/tracing/track-users-sessions.md). The following example demonstrates how to track all of these in a FastAPI application.
 
 python
 
@@ -225,7 +225,7 @@ def handle_chat(request: Request, chat_request: ChatRequest):
 
 ### Feedback Collection[​](#feedback-collection "Direct link to Feedback Collection")
 
-Capturing user feedback on specific interactions is essential for understanding quality and improving your LLM application or AI agent. For detailed guidance, see [Collect User Feedback](/docs/3.11.1/genai/tracing/collect-user-feedback.md). The following example demonstrates how to collect feedback in a FastAPI application.
+Capturing user feedback on specific interactions is essential for understanding quality and improving your LLM application or AI agent. For detailed guidance, see [Collect User Feedback](/docs/latest/genai/tracing/collect-user-feedback.md). The following example demonstrates how to collect feedback in a FastAPI application.
 
 python
 
@@ -286,7 +286,7 @@ def handle_chat_feedback(
 
 ### Querying Traces with Context[​](#querying-traces-with-context "Direct link to Querying Traces with Context")
 
-Once you've enriched traces with user, session, and environment context, you can query them to debug issues for specific users, analyze conversation flows within sessions, or compare behavior across deployments. For detailed guidance, see [Search Traces](/docs/3.11.1/genai/tracing/search-traces.md). The following example demonstrates how to query traces by user, session, and environment.
+Once you've enriched traces with user, session, and environment context, you can query them to debug issues for specific users, analyze conversation flows within sessions, or compare behavior across deployments. For detailed guidance, see [Search Traces](/docs/latest/genai/tracing/search-traces.md). The following example demonstrates how to query traces by user, session, and environment.
 
 python
 
@@ -316,20 +316,20 @@ production_traces = mlflow.search_traces(
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [Automatic Evaluation](/docs/3.11.1/genai/eval-monitor/automatic-evaluations.md)
+### [Automatic Evaluation](/docs/latest/genai/eval-monitor/automatic-evaluations.md)
 
-[Set up LLM judges to automatically monitor quality on production traffic.](/docs/3.11.1/genai/eval-monitor/automatic-evaluations.md)
+[Set up LLM judges to automatically monitor quality on production traffic.](/docs/latest/genai/eval-monitor/automatic-evaluations.md)
 
-[Set up automatic evaluation →](/docs/3.11.1/genai/eval-monitor/automatic-evaluations.md)
+[Set up automatic evaluation →](/docs/latest/genai/eval-monitor/automatic-evaluations.md)
 
-### [Searching for Traces](/docs/3.11.1/genai/tracing/search-traces.md)
+### [Searching for Traces](/docs/latest/genai/tracing/search-traces.md)
 
-[Understand how to access trace data for analysis with UI or API.](/docs/3.11.1/genai/tracing/search-traces.md)
+[Understand how to access trace data for analysis with UI or API.](/docs/latest/genai/tracing/search-traces.md)
 
-[Learn to search traces →](/docs/3.11.1/genai/tracing/search-traces.md)
+[Learn to search traces →](/docs/latest/genai/tracing/search-traces.md)
 
-### [Track Users & Sessions](/docs/3.11.1/genai/tracing/track-users-sessions.md)
+### [Track Users & Sessions](/docs/latest/genai/tracing/track-users-sessions.md)
 
-[Implement user and session context tracking for better monitoring insights.](/docs/3.11.1/genai/tracing/track-users-sessions.md)
+[Implement user and session context tracking for better monitoring insights.](/docs/latest/genai/tracing/track-users-sessions.md)
 
-[Track users & sessions →](/docs/3.11.1/genai/tracing/track-users-sessions.md)
+[Track users & sessions →](/docs/latest/genai/tracing/track-users-sessions.md)

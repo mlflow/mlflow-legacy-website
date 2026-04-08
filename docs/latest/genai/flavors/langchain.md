@@ -16,15 +16,15 @@ MLflow gives you complete visibility into your LangChain agents and applications
 
 ### MLflow Evaluate[​](#mlflow-evaluate "Direct link to MLflow Evaluate")
 
-[MLflow Evaluate](/docs/3.11.1/genai/eval-monitor.md) provides native capabilities within MLflow to evaluate language models. With this feature you can easily utilize automated evaluation algorithms on the results of your LangChain application's inference results. This capability facilitates the efficient assessment of inference results from your LangChain application, ensuring robust performance analytics.
+[MLflow Evaluate](/docs/latest/genai/eval-monitor.md) provides native capabilities within MLflow to evaluate language models. With this feature you can easily utilize automated evaluation algorithms on the results of your LangChain application's inference results. This capability facilitates the efficient assessment of inference results from your LangChain application, ensuring robust performance analytics.
 
 ### Observability[​](#observability "Direct link to Observability")
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing.md) is a new feature of MLflow that allows you to trace how data flows through your LangChain chain/agents/etc. This feature provides a visual representation of the data flow, making it easier to understand the behavior of your LangChain application and identify potential bottlenecks or issues. With its powerful [Automatic Tracing](/docs/3.11.1/genai/tracing/app-instrumentation/automatic.md) capability, you can instrument your LangChain application without any code change but just running `mlflow.langchain.autolog()` command once.
+[MLflow Tracing](/docs/latest/genai/tracing.md) is a new feature of MLflow that allows you to trace how data flows through your LangChain chain/agents/etc. This feature provides a visual representation of the data flow, making it easier to understand the behavior of your LangChain application and identify potential bottlenecks or issues. With its powerful [Automatic Tracing](/docs/latest/genai/tracing/app-instrumentation/automatic.md) capability, you can instrument your LangChain application without any code change but just running `mlflow.langchain.autolog()` command once.
 
 ## Automatic Logging[​](#automatic-logging "Direct link to Automatic Logging")
 
-Autologging is a powerful one stop solution to achieve all the above benefits with just one line of code `mlflow.langchain.autolog()`. By enabling autologging, you can automatically log all the components of your LangChain application, including chains, agents, and retrievers, with minimal effort. This feature simplifies the process of tracking and managing your LangChain application, allowing you to focus on developing and improving your models. For more information on how to use this feature, refer to the [MLflow LangChain Autologging Documentation](/docs/3.11.1/genai/flavors/langchain/autologging.md).
+Autologging is a powerful one stop solution to achieve all the above benefits with just one line of code `mlflow.langchain.autolog()`. By enabling autologging, you can automatically log all the components of your LangChain application, including chains, agents, and retrievers, with minimal effort. This feature simplifies the process of tracking and managing your LangChain application, allowing you to focus on developing and improving your models. For more information on how to use this feature, refer to the [MLflow LangChain Autologging Documentation](/docs/latest/genai/flavors/langchain/autologging.md).
 
 ## Supported Elements in MLflow LangChain Integration[​](#supported-elements-in-mlflow-langchain-integration "Direct link to Supported Elements in MLflow LangChain Integration")
 
@@ -53,15 +53,15 @@ Sequences of actions or steps hardcoded in code. Chains in LangChain combine var
 
 The figure below shows an example of interfacing directly with a SaaS LLM via API calls with no context to the history of the conversation in the top portion. The bottom portion shows the same queries being submitted to a LangChain chain that incorporates a conversation history state such that the entire conversation's history is included with each subsequent input. Preserving conversational context in this manner is key to creating a "chat bot".
 
-![The importance of stateful storage of conversation history for chat applications](/docs/3.11.1/assets/images/stateful-chains-0848141cc5a49caea27639994dbc0b6d.png)
+![The importance of stateful storage of conversation history for chat applications](/docs/latest/assets/images/stateful-chains-0848141cc5a49caea27639994dbc0b6d.png)
 
 Dynamic constructs that use language models to choose a sequence of actions. Unlike chains, agents decide the order of actions based on inputs, tools available, and intermediate outcomes.
 
-![Complex LLM queries with LangChain agents](/docs/3.11.1/assets/images/langchain-agents-250b50942032f0cd16fd75c653dfc606.png)
+![Complex LLM queries with LangChain agents](/docs/latest/assets/images/langchain-agents-250b50942032f0cd16fd75c653dfc606.png)
 
 Components in RetrievalQA chains responsible for sourcing relevant documents or data. Retrievers are key in applications where LLMs need to reference specific external information for accurate responses.
 
-![MLflow LangChain RetrievalQA architecture](/docs/3.11.1/assets/images/langchain-retrievalqa-062004e33f90253db67a531616dbe0b0.png)
+![MLflow LangChain RetrievalQA architecture](/docs/latest/assets/images/langchain-retrievalqa-062004e33f90253db67a531616dbe0b0.png)
 
 ## Getting Started with the MLflow LangChain Flavor - Tutorials and Guides[​](#getting-started-with-the-mlflow-langchain-flavor---tutorials-and-guides "Direct link to Getting Started with the MLflow LangChain Flavor - Tutorials and Guides")
 
@@ -69,17 +69,17 @@ Components in RetrievalQA chains responsible for sourcing relevant documents or 
 
 In this introductory tutorial, you will learn the most fundamental components of LangChain and how to leverage the integration with MLflow to store, retrieve, and use a chain.
 
-[LangChain Quickstart](/docs/3.11.1/genai/flavors/langchain/notebooks/langchain-quickstart.md)
+[LangChain Quickstart](/docs/latest/genai/flavors/langchain/notebooks/langchain-quickstart.md)
 
-[Get started with MLflow and LangChain by exploring the simplest possible chain configuration of a prompt and model chained to create a single-purpose utility application.](/docs/3.11.1/genai/flavors/langchain/notebooks/langchain-quickstart.md)
+[Get started with MLflow and LangChain by exploring the simplest possible chain configuration of a prompt and model chained to create a single-purpose utility application.](/docs/latest/genai/flavors/langchain/notebooks/langchain-quickstart.md)
 
 ### Advanced Tutorials[​](#advanced-tutorials "Direct link to Advanced Tutorials")
 
 In these tutorials, you can learn about more complex usages of LangChain with MLflow. It is highly advised to read through the introductory tutorial prior to exploring these more advanced use cases.
 
-[RAG tutorial with LangChain](/docs/3.11.1/genai/flavors/langchain/notebooks/langchain-retriever.md)
+[RAG tutorial with LangChain](/docs/latest/genai/flavors/langchain/notebooks/langchain-retriever.md)
 
-[Learn how to build a LangChain RAG with MLflow integration to answer highly specific questions about the legality of business ventures.](/docs/3.11.1/genai/flavors/langchain/notebooks/langchain-retriever.md)
+[Learn how to build a LangChain RAG with MLflow integration to answer highly specific questions about the legality of business ventures.](/docs/latest/genai/flavors/langchain/notebooks/langchain-retriever.md)
 
 ### Logging models from Code[​](#logging-models-from-code "Direct link to Logging models from Code")
 
@@ -93,9 +93,9 @@ The feature provides several benefits to manage LangChain models:
 
 3. **Readability**: The serialized objects are often hardly readable by humans. Model-from-code allows you to review your model definition via code.
 
-Refer to the [Models From Code feature documentation](/docs/3.11.1/ml/model/models-from-code.md) for more information about this feature.
+Refer to the [Models From Code feature documentation](/docs/latest/ml/model/models-from-code.md) for more information about this feature.
 
-In order to use this feature, you will utilize the [`mlflow.models.set_model()`](/docs/3.11.1/api_reference/python_api/mlflow.models.html#mlflow.models.set_model) API to define the chain that you would like to log as an MLflow model. After having this set within your code that defines your chain, when logging your model, you will specify the **path** to the file that defines your chain.
+In order to use this feature, you will utilize the [`mlflow.models.set_model()`](/docs/latest/api_reference/python_api/mlflow.models.html#mlflow.models.set_model) API to define the chain that you would like to log as an MLflow model. After having this set within your code that defines your chain, when logging your model, you will specify the **path** to the file that defines your chain.
 
 The following example demonstrates how to log a simple chain with this method:
 
@@ -202,17 +202,17 @@ The following example demonstrates how to log a simple chain with this method:
 
    You can see the model is logged as a code on MLflow UI:
 
-   ![Logging a LangChain model from a code script file](/docs/3.11.1/assets/images/langchain-code-model-e83e8e4a2dadcb329c2bb7e0fa1d1bd7.png)
+   ![Logging a LangChain model from a code script file](/docs/latest/assets/images/langchain-code-model-e83e8e4a2dadcb329c2bb7e0fa1d1bd7.png)
 
 warning
 
 When logging models from code, make sure that your code does not contain any sensitive information, such as API keys, passwords, or other confidential data. The code will be stored in plain text in the MLflow model artifact, and anyone with access to the artifact will be able to view the code.
 
-## [Detailed Documentation](/docs/3.11.1/genai/flavors/langchain/guide.md)[​](#detailed-documentation "Direct link to detailed-documentation")
+## [Detailed Documentation](/docs/latest/genai/flavors/langchain/guide.md)[​](#detailed-documentation "Direct link to detailed-documentation")
 
 To learn more about the details of the MLflow LangChain flavor, read the detailed guide below.
 
-[View the Comprehensive Guide](/docs/3.11.1/genai/flavors/langchain/guide.md)
+[View the Comprehensive Guide](/docs/latest/genai/flavors/langchain/guide.md)
 
 ## FAQ[​](#faq "Direct link to FAQ")
 
@@ -230,13 +230,13 @@ To learn more about the details of the MLflow LangChain flavor, read the detaile
 
   A change within LangChain that [forces users to opt-in to pickle deserialization](https://github.com/langchain-ai/langchain/pull/18696) can create some issues with loading chains, vector stores, retrievers, and agents that have been logged using MLflow. Because the option is not exposed per component to set this argument on the loader function, you will need to ensure that you are setting this option directly within the defined loader function when logging the model. LangChain components that do not set this value will be saved without issue, but a `ValueError` will be raised when loading if unset.
 
-  To fix this, simply re-log your model, specifying the option `allow_dangerous_deserialization=True` in your defined loader function. See the tutorial [for LangChain retrievers](/docs/3.11.1/genai/flavors/langchain/notebooks/langchain-retriever.md#establishing-retrievalqa-chain-and-logging-with-mlflow) for an example of specifying this option when logging a `FAISS` vector store instance within a `loader_fn` declaration.
+  To fix this, simply re-log your model, specifying the option `allow_dangerous_deserialization=True` in your defined loader function. See the tutorial [for LangChain retrievers](/docs/latest/genai/flavors/langchain/notebooks/langchain-retriever.md#establishing-retrievalqa-chain-and-logging-with-mlflow) for an example of specifying this option when logging a `FAISS` vector store instance within a `loader_fn` declaration.
 
 ### I can't save my chain, agent, or retriever with MLflow.[​](#i-cant-save-my-chain-agent-or-retriever-with-mlflow "Direct link to I can't save my chain, agent, or retriever with MLflow.")
 
 tip
 
-If you're encountering issues with logging or saving LangChain components with MLflow, see the [models from code](/docs/3.11.1/ml/model/models-from-code.md) feature documentation to determine if logging your model from a script file provides a simpler and more robust logging solution!
+If you're encountering issues with logging or saving LangChain components with MLflow, see the [models from code](/docs/latest/ml/model/models-from-code.md) feature documentation to determine if logging your model from a script file provides a simpler and more robust logging solution!
 
 * **Serialization Challenges with Cloudpickle**: Serialization with cloudpickle can encounter limitations depending on the complexity of the objects.
 
@@ -268,7 +268,7 @@ If you're encountering issues with logging or saving LangChain components with M
 
 ### How can I log an agent built with LangGraph to MLflow?[​](#how-can-i-log-an-agent-built-with-langgraph-to-mlflow "Direct link to How can I log an agent built with LangGraph to MLflow?")
 
-The LangGraph integration with MLflow is designed to utilize the [Models From Code feature](/docs/3.11.1/ml/model/models-from-code.md) in MLflow to broaden and simplify the support of agent serialization.
+The LangGraph integration with MLflow is designed to utilize the [Models From Code feature](/docs/latest/ml/model/models-from-code.md) in MLflow to broaden and simplify the support of agent serialization.
 
 To log a LangGraph agent, you can define your agent code within a script, as shown below, saved to a file `langgraph.py`:
 

@@ -32,7 +32,7 @@ print(feedback.value)  # "factual" or "hallucinated"
 print(feedback.metadata["score"])  # Numeric score
 ```
 
-Or use them in [mlflow.genai.evaluate](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.evaluate):
+Or use them in [mlflow.genai.evaluate](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.evaluate):
 
 python
 
@@ -72,15 +72,15 @@ Phoenix scorers evaluate different aspects of LLM outputs:
 
 | Scorer                                                                                                              | What does it evaluate?                                              | Phoenix Docs                                                                                                      |
 | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| [Hallucination](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.phoenix.Hallucination) | Does the output contain fabricated information not in the context?  | [Link](https://docs.arize.com/phoenix/evaluation/how-to-evals/running-pre-tested-evals/hallucinations)            |
-| [Relevance](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.phoenix.Relevance)         | Is the retrieved context relevant to the input query?               | [Link](https://docs.arize.com/phoenix/evaluation/how-to-evals/running-pre-tested-evals/relevance)                 |
-| [Toxicity](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.phoenix.Toxicity)           | Does the output contain toxic or harmful content?                   | [Link](https://docs.arize.com/phoenix/evaluation/how-to-evals/running-pre-tested-evals/toxicity)                  |
-| [QA](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.phoenix.QA)                       | Does the answer correctly address the question based on reference?  | [Link](https://docs.arize.com/phoenix/evaluation/how-to-evals/running-pre-tested-evals/q-and-a-on-retrieved-data) |
-| [Summarization](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.phoenix.Summarization) | Is the summary accurate and complete relative to the original text? | [Link](https://docs.arize.com/phoenix/evaluation/how-to-evals/running-pre-tested-evals/summarization)             |
+| [Hallucination](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.phoenix.Hallucination) | Does the output contain fabricated information not in the context?  | [Link](https://docs.arize.com/phoenix/evaluation/how-to-evals/running-pre-tested-evals/hallucinations)            |
+| [Relevance](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.phoenix.Relevance)         | Is the retrieved context relevant to the input query?               | [Link](https://docs.arize.com/phoenix/evaluation/how-to-evals/running-pre-tested-evals/relevance)                 |
+| [Toxicity](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.phoenix.Toxicity)           | Does the output contain toxic or harmful content?                   | [Link](https://docs.arize.com/phoenix/evaluation/how-to-evals/running-pre-tested-evals/toxicity)                  |
+| [QA](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.phoenix.QA)                       | Does the answer correctly address the question based on reference?  | [Link](https://docs.arize.com/phoenix/evaluation/how-to-evals/running-pre-tested-evals/q-and-a-on-retrieved-data) |
+| [Summarization](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.phoenix.Summarization) | Is the summary accurate and complete relative to the original text? | [Link](https://docs.arize.com/phoenix/evaluation/how-to-evals/running-pre-tested-evals/summarization)             |
 
 ## Creating Scorers by Name[​](#creating-scorers-by-name "Direct link to Creating Scorers by Name")
 
-You can also create Phoenix scorers dynamically using [get\_scorer](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.phoenix.get_scorer):
+You can also create Phoenix scorers dynamically using [get\_scorer](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.phoenix.get_scorer):
 
 python
 
@@ -102,20 +102,20 @@ feedback = scorer(
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [Evaluate Agents](/docs/3.11.1/genai/eval-monitor/running-evaluation/agents.md)
+### [Evaluate Agents](/docs/latest/genai/eval-monitor/running-evaluation/agents.md)
 
-[Learn specialized techniques for evaluating AI agents with tool usage](/docs/3.11.1/genai/eval-monitor/running-evaluation/agents.md)
+[Learn specialized techniques for evaluating AI agents with tool usage](/docs/latest/genai/eval-monitor/running-evaluation/agents.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/running-evaluation/agents.md)
+[Learn more →](/docs/latest/genai/eval-monitor/running-evaluation/agents.md)
 
-### [Evaluate Traces](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+### [Evaluate Traces](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Evaluate production traces to understand application behavior](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Evaluate production traces to understand application behavior](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Learn more →](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-### [Built-in Judges](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/predefined.md)
+### [Built-in Judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md)
 
-[Explore MLflow's built-in evaluation judges](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/predefined.md)
+[Explore MLflow's built-in evaluation judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/predefined.md)
+[Learn more →](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md)

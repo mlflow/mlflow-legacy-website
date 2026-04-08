@@ -2,7 +2,7 @@
 
 AI Agents are an emerging pattern of LLM applications that can use tools, make decisions, and execute multi-step workflows. However, evaluating the performance of those complex agents is challenging. MLflow provides a powerful toolkit to systematically evaluate the agent behavior precisely using traces and scorers.
 
-![Agent Evaluation](/docs/3.11.1/images/mlflow-3/eval-monitor/agent-evaluation-hero.png)
+![Agent Evaluation](/docs/latest/images/mlflow-3/eval-monitor/agent-evaluation-hero.png)
 
 ## Workflow[​](#workflow "Direct link to Workflow")
 
@@ -52,7 +52,7 @@ uvx mlflow server
 
 info
 
-See [Secure Installs](/docs/3.11.1/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
+See [Secure Installs](/docs/latest/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
 
 **Python Environment**: Python 3.10+
 
@@ -67,7 +67,7 @@ mlflow server
 
 info
 
-See [Secure Installs](/docs/3.11.1/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
+See [Secure Installs](/docs/latest/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
 
 MLflow provides a Docker Compose file to start a local MLflow server with a PostgreSQL database and a MinIO server.
 
@@ -86,7 +86,7 @@ Refer to the [instruction](https://github.com/mlflow/mlflow/tree/master/docker-c
 
 ### Step 1: Build an agent[​](#step-1-build-an-agent "Direct link to Step 1: Build an agent")
 
-Create a math agent that can use tools to answer questions. We use [OpenAI Agents](/docs/3.11.1/genai/tracing/integrations/listing/openai-agent.md) to build the tool-calling agent in a few lines of code.
+Create a math agent that can use tools to answer questions. We use [OpenAI Agents](/docs/latest/genai/tracing/integrations/listing/openai-agent.md) to build the tool-calling agent in a few lines of code.
 
 python
 
@@ -226,12 +226,12 @@ tip
 
 MLflow provides built-in scorers for evaluating agent tool usage:
 
-* [ToolCallCorrectness](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ToolCallCorrectness): Evaluates if tool calls and arguments are correct for the user query
-* [ToolCallEfficiency](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ToolCallEfficiency): Evaluates if tool calls are efficient without redundancy
+* [ToolCallCorrectness](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ToolCallCorrectness): Evaluates if tool calls and arguments are correct for the user query
+* [ToolCallEfficiency](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.ToolCallEfficiency): Evaluates if tool calls are efficient without redundancy
 
-These scorers automatically analyze traces to assess tool usage patterns. See the [Built-in Judges](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/predefined.md) guide for more details.
+These scorers automatically analyze traces to assess tool usage patterns. See the [Built-in Judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md) guide for more details.
 
-For custom evaluation patterns, you can create your own scorers that parse traces. See the [Custom Scorers](/docs/3.11.1/genai/eval-monitor/scorers/custom.md) guide.
+For custom evaluation patterns, you can create your own scorers that parse traces. See the [Custom Scorers](/docs/latest/genai/eval-monitor/scorers/custom.md) guide.
 
 ### Step 4: Run the evaluation[​](#step-4-run-the-evaluation "Direct link to Step 4: Run the evaluation")
 
@@ -255,11 +255,11 @@ results = mlflow.genai.evaluate(
 
 Once the evaluation is done, open the MLflow UI in your browser and navigate to the experiment page. You should see MLflow creates a new Run and logs the evaluation results.
 
-![Agent Evaluation](/docs/3.11.1/images/mlflow-3/eval-monitor/agent-evaluation-result.png)
+![Agent Evaluation](/docs/latest/images/mlflow-3/eval-monitor/agent-evaluation-result.png)
 
 It seems the agent does not call tools in the correct order for the second test case. Let's click on the row to **open the trace and inspect what happened under the hood**.
 
-![Agent Evaluation](/docs/3.11.1/images/mlflow-3/eval-monitor/agent-evaluation-trace.png)
+![Agent Evaluation](/docs/latest/images/mlflow-3/eval-monitor/agent-evaluation-trace.png)
 
 By looking at the trace, we can figure out the agent computes the answer in three steps (1) compute 100 \_ 2 (2) compute 150 \_ 2 (3) subtract the two results. However, the more effective way is (1) subtract 100 from 150 (2) multiply the result by 2. In the next version, we can update the system instruction to use tools in a more effective way.
 
@@ -275,7 +275,7 @@ export MLFLOW_GENAI_EVAL_MAX_WORKERS=10
 
 ## Evaluating MLflow Models[​](#evaluating-mlflow-models "Direct link to Evaluating MLflow Models")
 
-In MLflow 2.x, you can pass the model URI directly to the `model` argument of the legacy [`mlflow.evaluate()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.evaluate) API (deprecated). The new evaluation API in MLflow **3.x** still supports evaluating MLflow Models, but the workflow is slightly different.
+In MLflow 2.x, you can pass the model URI directly to the `model` argument of the legacy [`mlflow.evaluate()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.evaluate) API (deprecated). The new evaluation API in MLflow **3.x** still supports evaluating MLflow Models, but the workflow is slightly different.
 
 python
 
@@ -342,24 +342,24 @@ results = mlflow.genai.evaluate(
 )
 ```
 
-For complete documentation on multi-turn evaluation, see [Evaluate Conversations](/docs/3.11.1/genai/eval-monitor/running-evaluation/multi-turn.md) and [Conversation Simulation](/docs/3.11.1/genai/eval-monitor/running-evaluation/conversation-simulation.md).
+For complete documentation on multi-turn evaluation, see [Evaluate Conversations](/docs/latest/genai/eval-monitor/running-evaluation/multi-turn.md) and [Conversation Simulation](/docs/latest/genai/eval-monitor/running-evaluation/conversation-simulation.md).
 
 ## Next steps[​](#next-steps "Direct link to Next steps")
 
-### [Customize Scorers](/docs/3.11.1/genai/eval-monitor/scorers.md)
+### [Customize Scorers](/docs/latest/genai/eval-monitor/scorers.md)
 
-[Build advanced evaluation criteria and metrics specifically designed for agent behaviors and tool usage patterns.](/docs/3.11.1/genai/eval-monitor/scorers.md)
+[Build advanced evaluation criteria and metrics specifically designed for agent behaviors and tool usage patterns.](/docs/latest/genai/eval-monitor/scorers.md)
 
-[Create custom scorers →](/docs/3.11.1/genai/eval-monitor/scorers.md)
+[Create custom scorers →](/docs/latest/genai/eval-monitor/scorers.md)
 
-### [Evaluate Production Traces](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+### [Evaluate Production Traces](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Analyze real agent executions in production environments to understand performance and identify improvement opportunities.](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Analyze real agent executions in production environments to understand performance and identify improvement opportunities.](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Analyze traces →](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Analyze traces →](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-### [Evaluate Conversations](/docs/3.11.1/genai/eval-monitor/running-evaluation/multi-turn.md)
+### [Evaluate Conversations](/docs/latest/genai/eval-monitor/running-evaluation/multi-turn.md)
 
-[Assess multi-turn conversations with specialized scorers for dialogue quality and user satisfaction.](/docs/3.11.1/genai/eval-monitor/running-evaluation/multi-turn.md)
+[Assess multi-turn conversations with specialized scorers for dialogue quality and user satisfaction.](/docs/latest/genai/eval-monitor/running-evaluation/multi-turn.md)
 
-[Evaluate conversations →](/docs/3.11.1/genai/eval-monitor/running-evaluation/multi-turn.md)
+[Evaluate conversations →](/docs/latest/genai/eval-monitor/running-evaluation/multi-turn.md)

@@ -2,9 +2,9 @@
 
 MLflow Assistant
 
-Need help setting up tracking? Try [MLflow Assistant](/docs/3.11.1/genai/getting-started/try-assistant.md) - a powerful AI assistant that can help you set up MLflow tracking for your project.
+Need help setting up tracking? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that can help you set up MLflow tracking for your project.
 
-![MLflow UI System metrics page](/docs/3.11.1/images/tutorials/introductory/deep-learning/ui-system-metrics.png)
+![MLflow UI System metrics page](/docs/latest/images/tutorials/introductory/deep-learning/ui-system-metrics.png)
 
 In this tutorial, we demonstrate how to use MLflow to track deep learning experiments with Pytorch. By combining MLflow
 
@@ -24,7 +24,7 @@ bash
 pip install mlflow torch torchvision
 ```
 
-Then, follow the instructions in the [Set Up MLflow](/docs/3.11.1/ml/getting-started/running-notebooks.md) guide to set up MLflow.
+Then, follow the instructions in the [Set Up MLflow](/docs/latest/ml/getting-started/running-notebooks.md) guide to set up MLflow.
 
 ## Step 1: Create a new experiment[​](#step-1-create-a-new-experiment "Direct link to Step 1: Create a new experiment")
 
@@ -222,11 +222,11 @@ mlflow server --port 5000
 
 When opening the site, you will see a screen similar to the following:
 
-![MLflow UI Home page](/docs/3.11.1/images/tutorials/introductory/deep-learning/ui-home.png)
+![MLflow UI Home page](/docs/latest/images/tutorials/introductory/deep-learning/ui-home.png)
 
 The "Experiments" section shows a list of (recently created) experiments. Click on the "Deep Learning Experiment" experiment we've created for this tutorial.
 
-![MLflow UI Run list page](/docs/3.11.1/images/tutorials/introductory/hyperparameter-tuning/ui-run-list.png)
+![MLflow UI Run list page](/docs/latest/images/tutorials/introductory/hyperparameter-tuning/ui-run-list.png)
 
 Click the Run in the table to view the details of the run. The overview page shows metadata such as the run duration, start time, training parameters, tags, etc. Navigate to the **Model metrics** and **System metrics** tabs to view the performance and system metrics logged during training.
 
@@ -234,11 +234,11 @@ Click the Run in the table to view the details of the run. The overview page sho
 * Model Metrics
 * System Metrics
 
-![MLflow UI Overview page](/docs/3.11.1/images/tutorials/introductory/deep-learning/ui-run-overview.png)
+![MLflow UI Overview page](/docs/latest/images/tutorials/introductory/deep-learning/ui-run-overview.png)
 
-![MLflow UI Model metrics page](/docs/3.11.1/images/tutorials/introductory/deep-learning/ui-model-metrics.png)
+![MLflow UI Model metrics page](/docs/latest/images/tutorials/introductory/deep-learning/ui-model-metrics.png)
 
-![MLflow UI System metrics page](/docs/3.11.1/images/tutorials/introductory/deep-learning/ui-system-metrics.png)
+![MLflow UI System metrics page](/docs/latest/images/tutorials/introductory/deep-learning/ui-system-metrics.png)
 
 ## Step 6: Load back the model and run inference[​](#step-6-load-back-the-model-and-run-inference "Direct link to Step 6: Load back the model and run inference")
 
@@ -281,7 +281,7 @@ with mlflow.start_run(run_id=run.info.run_id) as run:
 
 Congratulations on working through the MLflow Deep Learning Quickstart! You should now have a basic understanding of how to combine MLflow with deep learning frameworks such as PyTorch to track your experiments and models.
 
-* [MLflow for Deep Learning](/docs/3.11.1/ml/deep-learning.md): Learn more about MLflow integration with deep learning frameworks.
-* [MLflow for GenAI](/docs/3.11.1/genai.md): Learn how to use MLflow for GenAI/LLM development.
-* [MLflow Tracking](/docs/3.11.1/ml/tracking.md): Learn more about the MLflow Tracking APIs.
-* [Self-hosting Guide](/docs/3.11.1/self-hosting.md): Learn how to self-host the MLflow Tracking Server and set it up for team collaboration.
+* [MLflow for Deep Learning](/docs/latest/ml/deep-learning.md): Learn more about MLflow integration with deep learning frameworks.
+* [MLflow for GenAI](/docs/latest/genai.md): Learn how to use MLflow for GenAI/LLM development.
+* [MLflow Tracking](/docs/latest/ml/tracking.md): Learn more about the MLflow Tracking APIs.
+* [Self-hosting Guide](/docs/latest/self-hosting.md): Learn how to self-host the MLflow Tracking Server and set it up for team collaboration.

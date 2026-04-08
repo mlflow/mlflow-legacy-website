@@ -36,7 +36,7 @@ Shared endpoint configurations and standardized access patterns across developme
 
 To start the demo, click on the "Start Demo" button on the top page of the MLflow UI.
 
-![MLflow GenAI Demo UI](/docs/3.11.1/images/llms/demo/demo.png)
+![MLflow GenAI Demo UI](/docs/latest/images/llms/demo/demo.png)
 
 #### **Starting from CLI**[​](#starting-from-cli "Direct link to starting-from-cli")
 
@@ -50,44 +50,44 @@ uvx mlflow demo
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [Quickstart](/docs/3.11.1/genai/governance/ai-gateway/quickstart.md)
+### [Quickstart](/docs/latest/genai/governance/ai-gateway/quickstart.md)
 
-[Get your AI Gateway running in minutes with a simple walkthrough](/docs/3.11.1/genai/governance/ai-gateway/quickstart.md)
+[Get your AI Gateway running in minutes with a simple walkthrough](/docs/latest/genai/governance/ai-gateway/quickstart.md)
 
-[Get started →](/docs/3.11.1/genai/governance/ai-gateway/quickstart.md)
+[Get started →](/docs/latest/genai/governance/ai-gateway/quickstart.md)
 
-### [API Keys](/docs/3.11.1/genai/governance/ai-gateway/api-keys/create-and-manage.md)
+### [API Keys](/docs/latest/genai/governance/ai-gateway/api-keys/create-and-manage.md)
 
-[Create and manage API keys for secure credential management](/docs/3.11.1/genai/governance/ai-gateway/api-keys/create-and-manage.md)
+[Create and manage API keys for secure credential management](/docs/latest/genai/governance/ai-gateway/api-keys/create-and-manage.md)
 
-[Manage keys →](/docs/3.11.1/genai/governance/ai-gateway/api-keys/create-and-manage.md)
+[Manage keys →](/docs/latest/genai/governance/ai-gateway/api-keys/create-and-manage.md)
 
-### [Endpoints](/docs/3.11.1/genai/governance/ai-gateway/endpoints/create-and-manage.md)
+### [Endpoints](/docs/latest/genai/governance/ai-gateway/endpoints/create-and-manage.md)
 
-[Create, configure, and query AI model endpoints](/docs/3.11.1/genai/governance/ai-gateway/endpoints/create-and-manage.md)
+[Create, configure, and query AI model endpoints](/docs/latest/genai/governance/ai-gateway/endpoints/create-and-manage.md)
 
-[Configure endpoints →](/docs/3.11.1/genai/governance/ai-gateway/endpoints/create-and-manage.md)
+[Configure endpoints →](/docs/latest/genai/governance/ai-gateway/endpoints/create-and-manage.md)
 
-### [Traffic Routing](/docs/3.11.1/genai/governance/ai-gateway/traffic-routing-fallbacks.md)
+### [Traffic Routing](/docs/latest/genai/governance/ai-gateway/traffic-routing-fallbacks.md)
 
-[Configure traffic splitting and fallbacks for high availability](/docs/3.11.1/genai/governance/ai-gateway/traffic-routing-fallbacks.md)
+[Configure traffic splitting and fallbacks for high availability](/docs/latest/genai/governance/ai-gateway/traffic-routing-fallbacks.md)
 
-[Learn routing →](/docs/3.11.1/genai/governance/ai-gateway/traffic-routing-fallbacks.md)
+[Learn routing →](/docs/latest/genai/governance/ai-gateway/traffic-routing-fallbacks.md)
 
-### [Usage Tracking](/docs/3.11.1/genai/governance/ai-gateway/usage-tracking.md)
+### [Usage Tracking](/docs/latest/genai/governance/ai-gateway/usage-tracking.md)
 
-[Monitor endpoint usage, performance, token consumption, and costs](/docs/3.11.1/genai/governance/ai-gateway/usage-tracking.md)
+[Monitor endpoint usage, performance, token consumption, and costs](/docs/latest/genai/governance/ai-gateway/usage-tracking.md)
 
-[View metrics →](/docs/3.11.1/genai/governance/ai-gateway/usage-tracking.md)
+[View metrics →](/docs/latest/genai/governance/ai-gateway/usage-tracking.md)
 
-### [Budget Alerts & Limits](/docs/3.11.1/genai/governance/ai-gateway/budget-alerts-limits.md)
+### [Budget Alerts & Limits](/docs/latest/genai/governance/ai-gateway/budget-alerts-limits.md)
 
-[Set spending limits and configure alerts for cost management](/docs/3.11.1/genai/governance/ai-gateway/budget-alerts-limits.md)
+[Set spending limits and configure alerts for cost management](/docs/latest/genai/governance/ai-gateway/budget-alerts-limits.md)
 
-[Manage budgets →](/docs/3.11.1/genai/governance/ai-gateway/budget-alerts-limits.md)
+[Manage budgets →](/docs/latest/genai/governance/ai-gateway/budget-alerts-limits.md)
 
-### [Authentication](/docs/3.11.1/self-hosting/security/basic-http-auth.md#ai-gateway-permissions)
+### [Authentication](/docs/latest/self-hosting/security/basic-http-auth.md#ai-gateway-permissions)
 
-[Configure HTTP Basic Authentication for AI Gateway resources](/docs/3.11.1/self-hosting/security/basic-http-auth.md#ai-gateway-permissions)
+[Configure HTTP Basic Authentication for AI Gateway resources](/docs/latest/self-hosting/security/basic-http-auth.md#ai-gateway-permissions)
 
-[Learn more →](/docs/3.11.1/self-hosting/security/basic-http-auth.md#ai-gateway-permissions)
+[Learn more →](/docs/latest/self-hosting/security/basic-http-auth.md#ai-gateway-permissions)

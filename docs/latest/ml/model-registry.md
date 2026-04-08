@@ -21,7 +21,7 @@ The Model Registry introduces a few concepts that describe and facilitate the fu
 
 | Concept                      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Model                        | An MLflow Model is created with one of the model flavor's **`mlflow.<model_flavor>.log_model()`** methods, or **[`mlflow.create_external_model()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.create_external_model)** API since MLflow 3. Once logged, this model can then be registered with the Model Registry.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| Model                        | An MLflow Model is created with one of the model flavor's **`mlflow.<model_flavor>.log_model()`** methods, or **[`mlflow.create_external_model()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.create_external_model)** API since MLflow 3. Once logged, this model can then be registered with the Model Registry.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | Registered Model             | An MLflow Model can be registered with the Model Registry. A registered model has a unique name, contains versions, aliases, tags, and other metadata.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | Model Version                | Each registered model can have one or many versions. When a new model is added to the Model Registry, it is added as version 1. Each new model registered to the same model name **increments the version number**. Model versions have tags, which can be useful for tracking attributes of the model version (e.g. *`pre_deploy_checks: "PASSED"`*)                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | Model URI                    | You can refer to the registered model by using a URI of this format: `models:/<model-name>/<model-version>`, e.g., if you have a registered model with name "MyModel" and version 1, the URI referring to the model is: `models:/MyModel/1`".                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
@@ -68,15 +68,15 @@ mlflow.<flavor>.load_model("models:/<YOUR_MODEL_NAME>/<YOUR_MODEL_VERSION>")
 
 1. Open the details page for the MLflow Run containing the logged MLflow model you'd like to register. Select the model folder containing the intended MLflow model in the **Artifacts** section.
 
-![](/docs/3.11.1/assets/images/oss_registry_1_register-a71f2ea36d15265894cf0ea1810dd95f.png)
+![](/docs/latest/assets/images/oss_registry_1_register-a71f2ea36d15265894cf0ea1810dd95f.png)
 
 2. Click the **Register Model** button, which will trigger a modal form to pop up.
 
 3. In the **Model** dropdown menu on the form, you can either select "Create New Model" (which creates a new registered model with your MLflow model as its initial version) or select an existing registered model (which registers your model under it as a new version). The screenshot below demonstrates registering the MLflow model to a new registered model named `"iris_model_testing"`.
 
-![](/docs/3.11.1/assets/images/oss_registry_2_dialog-1ac2c5e115d621eb507274c577093173.png)
+![](/docs/latest/assets/images/oss_registry_2_dialog-1ac2c5e115d621eb507274c577093173.png)
 
-To learn more about the OSS Model Registry, refer to the [tutorial on the model registry](/docs/3.11.1/ml/model-registry/tutorial.md).
+To learn more about the OSS Model Registry, refer to the [tutorial on the model registry](/docs/latest/ml/model-registry/tutorial.md).
 
 ### Model Registry in Databricks[​](#model-registry-in-databricks "Direct link to Model Registry in Databricks")
 
@@ -120,7 +120,7 @@ mlflow.register_model(model_uri="<YOUR_MODEL_URI>", name="<YOUR_MODEL_NAME>")
 
 warning
 
-ML model versions in UC must have a [model signature](/docs/3.11.1/ml/model/signatures.md). If you want to set a signature on a model that's already logged or saved, the [`mlflow.models.set_signature()`](/docs/3.11.1/api_reference/python_api/mlflow.models.html#mlflow.models.set_signature) API is available for this purpose.
+ML model versions in UC must have a [model signature](/docs/latest/ml/model/signatures.md). If you want to set a signature on a model that's already logged or saved, the [`mlflow.models.set_signature()`](/docs/latest/api_reference/python_api/mlflow.models.html#mlflow.models.set_signature) API is available for this purpose.
 
 After registering the model, you can load it back with the model name and version
 
@@ -136,11 +136,11 @@ mlflow.<flavor>.load_model("models:/<YOUR_MODEL_NAME>/<YOUR_MODEL_VERSION>")
 
 2. In the dialog, select Unity Catalog, and select a destination model from the drop down list.
 
-![](/docs/3.11.1/assets/images/uc_register_model_1_dialog-dbc7806e79613776eb84159fa6c394e2.png)
+![](/docs/latest/assets/images/uc_register_model_1_dialog-dbc7806e79613776eb84159fa6c394e2.png)
 
 3. Click Register.
 
-![](/docs/3.11.1/assets/images/uc_register_model_2_button-e6b3b94bde6506bda3be82836db5e019.png)
+![](/docs/latest/assets/images/uc_register_model_2_button-e6b3b94bde6506bda3be82836db5e019.png)
 
 Registering a model can take time. To monitor progress, navigate to the destination model in Unity Catalog and refresh periodically.
 

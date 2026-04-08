@@ -61,7 +61,7 @@ Autologging captures all model parameters, training metrics, the trained model, 
 
 Tracking Server Setup
 
-Running locally? MLflow stores experiments in the current directory by default. For team collaboration or remote tracking, **[set up a tracking server](/docs/3.11.1/ml/tracking/tutorials/remote-server.md)**.
+Running locally? MLflow stores experiments in the current directory by default. For team collaboration or remote tracking, **[set up a tracking server](/docs/latest/ml/tracking/tutorials/remote-server.md)**.
 
 ## Autologging[​](#autologging "Direct link to Autologging")
 
@@ -191,24 +191,24 @@ with mlflow.start_run():
 
 Nested Runs
 
-The `nested=True` parameter creates child runs for each trial under the parent run, enabling hierarchical organization of hyperparameter tuning experiments. Learn more about **[hierarchical runs](/docs/3.11.1/ml/tracking/tracking-api.md#hierarchical-runs-with-parent-child-relationships)**.
+The `nested=True` parameter creates child runs for each trial under the parent run, enabling hierarchical organization of hyperparameter tuning experiments. Learn more about **[hierarchical runs](/docs/latest/ml/tracking/tracking-api.md#hierarchical-runs-with-parent-child-relationships)**.
 
 ## Learn More[​](#learn-more "Direct link to Learn More")
 
-### [Model Registry](/docs/3.11.1/ml/model-registry.md)
+### [Model Registry](/docs/latest/ml/model-registry.md)
 
-[Register and manage scikit-learn model versions with aliases for deployment workflows.](/docs/3.11.1/ml/model-registry.md)
+[Register and manage scikit-learn model versions with aliases for deployment workflows.](/docs/latest/ml/model-registry.md)
 
-[Learn more →](/docs/3.11.1/ml/model-registry.md)
+[Learn more →](/docs/latest/ml/model-registry.md)
 
-### [Model Deployment](/docs/3.11.1/ml/deployment.md)
+### [Model Deployment](/docs/latest/ml/deployment.md)
 
-[Deploy scikit-learn models to production using MLflow's serving capabilities and cloud integrations.](/docs/3.11.1/ml/deployment.md)
+[Deploy scikit-learn models to production using MLflow's serving capabilities and cloud integrations.](/docs/latest/ml/deployment.md)
 
-[Learn more →](/docs/3.11.1/ml/deployment.md)
+[Learn more →](/docs/latest/ml/deployment.md)
 
-### [Model Evaluation](/docs/3.11.1/ml/evaluation.md)
+### [Model Evaluation](/docs/latest/ml/evaluation.md)
 
-[Evaluate scikit-learn models using MLflow's comprehensive evaluation framework with built-in metrics.](/docs/3.11.1/ml/evaluation.md)
+[Evaluate scikit-learn models using MLflow's comprehensive evaluation framework with built-in metrics.](/docs/latest/ml/evaluation.md)
 
-[Learn more →](/docs/3.11.1/ml/evaluation.md)
+[Learn more →](/docs/latest/ml/evaluation.md)

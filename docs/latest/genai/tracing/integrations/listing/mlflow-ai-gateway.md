@@ -1,10 +1,10 @@
 # Tracing MLflow AI Gateway
 
-[MLflow AI Gateway](/docs/3.11.1/genai/governance/ai-gateway.md) is a unified, centralized interface for accessing multiple LLM providers. It simplifies API key management, provides a consistent API across providers, and enables seamless switching between models from OpenAI, Anthropic, Google, and other providers.
+[MLflow AI Gateway](/docs/latest/genai/governance/ai-gateway.md) is a unified, centralized interface for accessing multiple LLM providers. It simplifies API key management, provides a consistent API across providers, and enables seamless switching between models from OpenAI, Anthropic, Google, and other providers.
 
 Since MLflow AI Gateway exposes an OpenAI-compatible API, you can use MLflow's automatic tracing integrations to capture detailed traces of your LLM interactions.
 
-![MLflow AI Gateway Tracing](/docs/3.11.1/images/llms/tracing/basic-openai-trace.png)
+![MLflow AI Gateway Tracing](/docs/latest/images/llms/tracing/basic-openai-trace.png)
 
 ## Integration Options[​](#integration-options "Direct link to Integration Options")
 
@@ -12,10 +12,10 @@ There are two ways to trace LLM calls through MLflow AI Gateway:
 
 | Approach                | Description                                                                                                                          | Best For                                                   |
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------- |
-| **Server-side Tracing** | Gateway automatically logs all requests when [usage tracking](/docs/3.11.1/genai/governance/ai-gateway/usage-tracking.md) is enabled | Centralized tracing for all requests through the gateway   |
+| **Server-side Tracing** | Gateway automatically logs all requests when [usage tracking](/docs/latest/genai/governance/ai-gateway/usage-tracking.md) is enabled | Centralized tracing for all requests through the gateway   |
 | **Client-side Tracing** | Use OpenAI SDK with MLflow autolog                                                                                                   | Combining LLM traces with your agent or application traces |
 
-When both are used together with a `traceparent` header, the gateway creates a linked span under the agent's trace for end-to-end visibility. See [Distributed Tracing](/docs/3.11.1/genai/tracing/app-instrumentation/distributed-tracing.md#ai-gateway-integration) for details.
+When both are used together with a `traceparent` header, the gateway creates a linked span under the agent's trace for end-to-end visibility. See [Distributed Tracing](/docs/latest/genai/tracing/app-instrumentation/distributed-tracing.md#ai-gateway-integration) for details.
 
 ## Prerequisite[​](#prerequisite "Direct link to Prerequisite")
 
@@ -39,7 +39,7 @@ mlflow server
 
 ### Create Endpoint[​](#create-endpoint "Direct link to Create Endpoint")
 
-Create an endpoint in MLflow AI Gateway to route requests to your LLM provider. See the [AI Gateway Quickstart](/docs/3.11.1/genai/governance/ai-gateway/quickstart.md) for detailed setup instructions.
+Create an endpoint in MLflow AI Gateway to route requests to your LLM provider. See the [AI Gateway Quickstart](/docs/latest/genai/governance/ai-gateway/quickstart.md) for detailed setup instructions.
 
 ## Query Gateway[​](#query-gateway "Direct link to Query Gateway")
 
@@ -50,7 +50,7 @@ You can trace LLM calls through MLflow AI Gateway using any of the following app
 * Gemini SDK
 * LangChain
 
-Since MLflow AI Gateway exposes an OpenAI-compatible API, you can use MLflow's [OpenAI automatic tracing](/docs/3.11.1/genai/tracing/integrations/listing/openai.md) integration to trace calls.
+Since MLflow AI Gateway exposes an OpenAI-compatible API, you can use MLflow's [OpenAI automatic tracing](/docs/latest/genai/tracing/integrations/listing/openai.md) integration to trace calls.
 
 python
 
@@ -77,7 +77,7 @@ response = client.chat.completions.create(
 print(response.choices[0].message.content)
 ```
 
-You can use MLflow's [Anthropic automatic tracing](/docs/3.11.1/genai/tracing/integrations/listing/anthropic.md) integration to trace calls through MLflow AI Gateway.
+You can use MLflow's [Anthropic automatic tracing](/docs/latest/genai/tracing/integrations/listing/anthropic.md) integration to trace calls through MLflow AI Gateway.
 
 python
 
@@ -107,7 +107,7 @@ response = client.messages.create(
 print(response.content[0].text)
 ```
 
-You can use MLflow's [Gemini automatic tracing](/docs/3.11.1/genai/tracing/integrations/listing/gemini.md) integration to trace calls through MLflow AI Gateway.
+You can use MLflow's [Gemini automatic tracing](/docs/latest/genai/tracing/integrations/listing/gemini.md) integration to trace calls through MLflow AI Gateway.
 
 python
 
@@ -136,7 +136,7 @@ response = client.models.generate_content(
 print(response.text)
 ```
 
-You can use MLflow's [LangChain automatic tracing](/docs/3.11.1/genai/tracing/integrations/listing/langchain.md) integration to trace calls through MLflow AI Gateway.
+You can use MLflow's [LangChain automatic tracing](/docs/latest/genai/tracing/integrations/listing/langchain.md) integration to trace calls through MLflow AI Gateway.
 
 python
 
@@ -180,20 +180,20 @@ Open the MLflow UI at <http://localhost:5000> (or your custom MLflow server URL)
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [Track User Feedback](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+### [Track User Feedback](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-[Record user feedback on traces for tracking user satisfaction.](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+[Record user feedback on traces for tracking user satisfaction.](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-[Learn about feedback →](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+[Learn about feedback →](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-### [Manage Prompts](/docs/3.11.1/genai/prompt-registry.md)
+### [Manage Prompts](/docs/latest/genai/prompt-registry.md)
 
-[Learn how to manage prompts with MLflow's prompt registry.](/docs/3.11.1/genai/prompt-registry.md)
+[Learn how to manage prompts with MLflow's prompt registry.](/docs/latest/genai/prompt-registry.md)
 
-[Manage prompts →](/docs/3.11.1/genai/prompt-registry.md)
+[Manage prompts →](/docs/latest/genai/prompt-registry.md)
 
-### [Evaluate Traces](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+### [Evaluate Traces](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Evaluate traces with LLM judges to understand and improve your AI application's behavior.](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Evaluate traces with LLM judges to understand and improve your AI application's behavior.](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Evaluate traces →](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Evaluate traces →](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)

@@ -4,7 +4,7 @@ MLflow offers a wide range of pre-defined model flavors, but there are instances
 
 tip
 
-MLflow 2.12.2 introduced the feature "models from code", which greatly simplifies the process of serializing and deploying custom models through the use of script serialization. While the tutorial here is valuable as a point of reference, we strongly recommend migrating custom model implementations to this new paradigm. You can learn more about models from code within the [Models From Code Guide](/docs/3.11.1/ml/model/models-from-code.md).
+MLflow 2.12.2 introduced the feature "models from code", which greatly simplifies the process of serializing and deploying custom models through the use of script serialization. While the tutorial here is valuable as a point of reference, we strongly recommend migrating custom model implementations to this new paradigm. You can learn more about models from code within the [Models From Code Guide](/docs/latest/ml/model/models-from-code.md).
 
 What's in this tutorial?
 
@@ -28,6 +28,6 @@ This guide aims to walk you through the intricacies of PyFuncs, explaining the w
 
 By the end of this tutorial, you'll have a clear understanding of how to leverage custom PyFuncs in MLflow to cater to specialized needs, ensuring flexibility without compromising on the ease of use.
 
-* [Models, Flavors, and PyFuncs in MLflow](/docs/3.11.1/ml/traditional-ml/tutorials/creating-custom-pyfunc/part1-named-flavors.md)
-* [Understanding Pyfunc Components](/docs/3.11.1/ml/traditional-ml/tutorials/creating-custom-pyfunc/part2-pyfunc-components.md)
-* [Full Notebooks](/docs/3.11.1/ml/traditional-ml/tutorials/creating-custom-pyfunc/notebooks.md)
+* [Models, Flavors, and PyFuncs in MLflow](/docs/latest/ml/traditional-ml/tutorials/creating-custom-pyfunc/part1-named-flavors.md)
+* [Understanding Pyfunc Components](/docs/latest/ml/traditional-ml/tutorials/creating-custom-pyfunc/part2-pyfunc-components.md)
+* [Full Notebooks](/docs/latest/ml/traditional-ml/tutorials/creating-custom-pyfunc/notebooks.md)

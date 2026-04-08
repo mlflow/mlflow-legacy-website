@@ -4,7 +4,7 @@
 
 Welcome to this interactive tutorial designed to introduce you to LlamaIndex Workflow and its integration with MLflow. This tutorial is structured as a notebook to provide a hands-on, practical learning experience with **Workflow**, LlamaIndex's novel approach to design LLM applications, and managing the development process with MLflow.
 
-![LlamaIndex Workflow Graph](/docs/3.11.1/assets/images/llama_index_workflow_graph-b212ec728fbcb5e758bd72a3fc374d2d.png)
+![LlamaIndex Workflow Graph](/docs/latest/assets/images/llama_index_workflow_graph-b212ec728fbcb5e758bd72a3fc374d2d.png)
 
 ## What you will learn[​](#what-you-will-learn "Direct link to What you will learn")
 
@@ -374,7 +374,7 @@ The generated traces are automatically recorded to your MLflow Experiment.
 3. Open the experiment "MLflow LlamaIndex Workflow Tutorial".
 4. Navigate to the "Trace" tab below the experiment name header.
 
-![LlamaIndex Workflow Trace](/docs/3.11.1/assets/images/llama_index_workflow_trace-9056bcd2314ab61a6d7b89a35587a961.png)
+![LlamaIndex Workflow Trace](/docs/latest/assets/images/llama_index_workflow_trace-9056bcd2314ab61a6d7b89a35587a961.png)
 
 The Trace records the individual steps inside the workflow execution with its inputs, outputs, and additional metadata such as latency. Let's do a quick exercise to find the following information on the Trace UI.
 
@@ -473,7 +473,7 @@ Let's open the MLflow UI again to see which information is being tracked in the 
 
 The artifacts tab shows various files saved by MLflow in the Run. See the below image and open the annotated files to check which information is stored in each file.
 
-![LlamaIndex Workflow Artifacts](/docs/3.11.1/assets/images/llama_index_workflow_artifacts-5d43cb612c34e8291b3da6f261aa487d.png)
+![LlamaIndex Workflow Artifacts](/docs/latest/assets/images/llama_index_workflow_artifacts-5d43cb612c34e8291b3da6f261aa487d.png)
 
 ## Load the Model Back for Inference[​](#load-the-model-back-for-inference "Direct link to Load the Model Back for Inference")
 

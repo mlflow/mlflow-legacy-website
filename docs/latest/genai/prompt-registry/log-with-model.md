@@ -22,13 +22,13 @@ with mlflow.start_run():
 
 warning
 
-The `prompts` parameter for associating prompts with models is only supported for LLM and AI agent flavors such as OpenAI, LangChain, LlamaIndex, DSPy, etc. Please refer to the [supported flavors](/docs/3.11.1/genai/flavors.md) for the full list.
+The `prompts` parameter for associating prompts with models is only supported for LLM and AI agent flavors such as OpenAI, LangChain, LlamaIndex, DSPy, etc. Please refer to the [supported flavors](/docs/latest/genai/flavors.md) for the full list.
 
 ## Example 1: Logging Prompts with LangChain[​](#example-1-logging-prompts-with-langchain "Direct link to Example 1: Logging Prompts with LangChain")
 
 ### 1. Create a prompt[​](#1-create-a-prompt "Direct link to 1. Create a prompt")
 
-If you haven't already created a prompt, follow [the instructions in this page](/docs/3.11.1/genai/prompt-registry/create-and-edit-prompts.md) to create a new prompt.
+If you haven't already created a prompt, follow [the instructions in this page](/docs/latest/genai/prompt-registry/create-and-edit-prompts.md) to create a new prompt.
 
 ### 2. Define a Chain using the registered prompts[​](#2-define-a-chain-using-the-registered-prompts "Direct link to 2. Define a Chain using the registered prompts")
 
@@ -73,15 +73,15 @@ with mlflow.start_run(run_name="summarizer-model"):
 
 Now you can view the associated prompts to the model in MLflow UI:
 
-![Associated Prompts](/docs/3.11.1/assets/images/prompt-logged-model-5db16e3e39f3bbd4ca3138c96dff045e.png)
+![Associated Prompts](/docs/latest/assets/images/prompt-logged-model-5db16e3e39f3bbd4ca3138c96dff045e.png)
 
 Moreover, you can view the list of models (runs) that use a specific prompt in the prompt details page:
 
-![Associated Prompts](/docs/3.11.1/assets/images/prompt-logged-model-links-b4c073f2c15e203ec34d7ef35c840112.png)
+![Associated Prompts](/docs/latest/assets/images/prompt-logged-model-links-b4c073f2c15e203ec34d7ef35c840112.png)
 
 ## Example 2: Automatic Prompt Logging with Models-from-Code[​](#example-2-automatic-prompt-logging-with-models-from-code "Direct link to Example 2: Automatic Prompt Logging with Models-from-Code")
 
-[Models-from-Code](/docs/3.11.1/ml/model/models-from-code.md) is a feature that allows you to define and log models in code. Logging a model with code brings several benefits, such as portability, readability, avoiding serialization, and more.
+[Models-from-Code](/docs/latest/ml/model/models-from-code.md) is a feature that allows you to define and log models in code. Logging a model with code brings several benefits, such as portability, readability, avoiding serialization, and more.
 
 Combining with MLflow Prompt Registry, the feature unlocks even more flexibility to manage prompt versions. Notably, if your model code uses a prompt from MLflow Prompt Registry, MLflow **automatically** logs it with the model for you.
 
@@ -175,7 +175,7 @@ with mlflow.start_run():
 
 We didn't specify the `prompts` parameter this time, but MLflow automatically logs the prompt loaded within the script to the logged model. Now you can view the associated prompt in MLflow UI:
 
-![Associated Prompts](/docs/3.11.1/assets/images/prompt-logged-graph-0b4cd4a6c6e28f2afeffea5a9bcee188.png)
+![Associated Prompts](/docs/latest/assets/images/prompt-logged-graph-0b4cd4a6c6e28f2afeffea5a9bcee188.png)
 
 ### 4. Load the graph back and invoke[​](#4-load-the-graph-back-and-invoke "Direct link to 4. Load the graph back and invoke")
 
@@ -200,4 +200,4 @@ graph.invoke({
 })
 ```
 
-![Chatbot](/docs/3.11.1/assets/images/prompt-logged-trace-f531e466499e24d2b8541d655237ea91.png)
+![Chatbot](/docs/latest/assets/images/prompt-logged-trace-f531e466499e24d2b8541d655237ea91.png)

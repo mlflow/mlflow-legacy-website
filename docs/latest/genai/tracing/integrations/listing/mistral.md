@@ -1,8 +1,8 @@
 # Tracing Mistral
 
-![Mistral tracing via autolog](/docs/3.11.1/images/llms/mistral/mistral-tracing.png)
+![Mistral tracing via autolog](/docs/latest/images/llms/mistral/mistral-tracing.png)
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing.md) ensures observability for your interactions with Mistral AI models. When Mistral auto-tracing is enabled by calling the [`mlflow.mistral.autolog()`](/docs/3.11.1/api_reference/python_api/mlflow.mistral.html#mlflow.mistral.autolog) function, usage of the Mistral SDK will automatically record generated traces during interactive development.
+[MLflow Tracing](/docs/latest/genai/tracing.md) ensures observability for your interactions with Mistral AI models. When Mistral auto-tracing is enabled by calling the [`mlflow.mistral.autolog()`](/docs/latest/api_reference/python_api/mlflow.mistral.html#mlflow.mistral.autolog) function, usage of the Mistral SDK will automatically record generated traces during interactive development.
 
 MLflow automatically captures the following information about Mistral calls:
 
@@ -144,7 +144,7 @@ print(chat_response.choices[0].message)
 
 ## Tracking Token Usage and Cost[​](#tracking-token-usage-and-cost "Direct link to Tracking Token Usage and Cost")
 
-MLflow automatically tracks token usage and cost for Mistral. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/3.11.1/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
+MLflow automatically tracks token usage and cost for Mistral. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/latest/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
 
 ## Disable auto-tracing[​](#disable-auto-tracing "Direct link to Disable auto-tracing")
 

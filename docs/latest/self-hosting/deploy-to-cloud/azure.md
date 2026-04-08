@@ -10,7 +10,7 @@ This guide walks you through deploying the MLflow server to Azure Container App,
 
 The overall deployment architecture is as follows:
 
-![overall architecture](/docs/3.11.1/assets/images/azure-self-hosting-arch-752bb78ff1cadc10b778f069c09dac1b.png)
+![overall architecture](/docs/latest/assets/images/azure-self-hosting-arch-752bb78ff1cadc10b778f069c09dac1b.png)
 
 The deployment architecture has a couple of advantages:
 
@@ -38,19 +38,19 @@ Select menu: Storage center -> Object storage -> Blob Storage -> Resources -> Cr
 
 The created storage account and blob data container are as follows:
 
-![azure blob storage](/docs/3.11.1/assets/images/azure-blob-storage-9d44f268265df7c24544a2ba91a0bf6f.png)
+![azure blob storage](/docs/latest/assets/images/azure-blob-storage-9d44f268265df7c24544a2ba91a0bf6f.png)
 
 ## Step 2: Create a virtual network[​](#step-2-create-a-virtual-network "Direct link to Step 2: Create a virtual network")
 
 Select menu: Network foundation -> Virtual networks -> Create, create a virtual network with name like "mlflow-vnet". We need to add 2 subnets ("aca-infra-subnet" for the container app, "db-subnet" for the database) as follows:
 
-![azure vnet](/docs/3.11.1/assets/images/azure-vnet-cb1394454e6bb69672808e57f55298f5.png)
+![azure vnet](/docs/latest/assets/images/azure-vnet-cb1394454e6bb69672808e57f55298f5.png)
 
 ## Step 3: Create an instance of Azure Database[​](#step-3-create-an-instance-of-azure-database "Direct link to Step 3: Create an instance of Azure Database")
 
 Select menu: Azure Database for PostgreSQL flexible servers -> Create, set server name like "mlflow-db1", administrator login name and password, and set network connectivity to "Private access (VNet integration)", then select the VNet and the "db-subnet" subnet as follows:
 
-![azure db vnet](/docs/3.11.1/assets/images/azure-db-vnet-9a14b9ea27939e96cb9304f998b340df.png)
+![azure db vnet](/docs/latest/assets/images/azure-db-vnet-9a14b9ea27939e96cb9304f998b340df.png)
 
 The database URL used by MLflow is like:
 

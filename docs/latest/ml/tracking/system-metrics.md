@@ -33,8 +33,8 @@ pip install pyrsmi
 There are three ways to enable or disable system metrics logging:
 
 * Set the environment variable `MLFLOW_ENABLE_SYSTEM_METRICS_LOGGING` to `false` to turn off system metrics logging, or `true` to enable it for all MLflow runs.
-* Use [`mlflow.enable_system_metrics_logging()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.enable_system_metrics_logging) to enable and [`mlflow.disable_system_metrics_logging()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.disable_system_metrics_logging) to disable system metrics logging for all MLflow runs.
-* Use `log_system_metrics` parameter in [`mlflow.start_run()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.start_run) to control system metrics logging for the current MLflow run, i.e., `mlflow.start_run(log_system_metrics=True)` will enable system metrics logging.
+* Use [`mlflow.enable_system_metrics_logging()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.enable_system_metrics_logging) to enable and [`mlflow.disable_system_metrics_logging()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.disable_system_metrics_logging) to disable system metrics logging for all MLflow runs.
+* Use `log_system_metrics` parameter in [`mlflow.start_run()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.start_run) to control system metrics logging for the current MLflow run, i.e., `mlflow.start_run(log_system_metrics=True)` will enable system metrics logging.
 
 ### Using the Environment Variable to Control System Metrics Logging[​](#using-the-environment-variable-to-control-system-metrics-logging "Direct link to Using the Environment Variable to Control System Metrics Logging")
 
@@ -125,7 +125,7 @@ print(mlflow.MlflowClient().get_run(run.info.run_id).data)
 
 ### Enabling System Metrics Logging for a Single Run[​](#enabling-system-metrics-logging-for-a-single-run "Direct link to Enabling System Metrics Logging for a Single Run")
 
-In addition to controlling system metrics logging globally, you can also control it for a single run. To do so, set `log_system_metrics` as `True` or `False` accordingly in [`mlflow.start_run()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.start_run):
+In addition to controlling system metrics logging globally, you can also control it for a single run. To do so, set `log_system_metrics` as `True` or `False` accordingly in [`mlflow.start_run()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.start_run):
 
 python
 
@@ -182,13 +182,13 @@ with mlflow.start_run() as run:
 
 Navigate to `http://127.0.0.1:5000` in your browser and open your run. You should see system metrics under the metrics section, similar as shown by the screenshot below:
 
-![system metrics on MLflow UI](/docs/3.11.1/assets/images/system-metrics-view-df348283b66821ca21f20d9170464250.png)
+![system metrics on MLflow UI](/docs/latest/assets/images/system-metrics-view-df348283b66821ca21f20d9170464250.png)
 
 ## Customizing System Metrics Logging[​](#customizing-system-metrics-logging "Direct link to Customizing System Metrics Logging")
 
 ### Customizing Logging Frequency[​](#customizing-logging-frequency "Direct link to Customizing Logging Frequency")
 
-By default, system metrics are sampled every 10 seconds and are directly logged after sampling. You can customize the sampling frequency by setting environment variable `MLFLOW_SYSTEM_METRICS_SAMPLING_INTERVAL` to an integer representing the logging frequency in seconds or by using [`mlflow.set_system_metrics_sampling_interval()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.set_system_metrics_sampling_interval) to set the interval, as shown below. In addition to setting the frequency of system metrics logging, you can also customize the number of samples to aggregate. You can also customize the number of samples to aggregate before logging by setting environment variable `MLFLOW_SYSTEM_METRICS_SAMPLES_BEFORE_LOGGING` or using [`mlflow.set_system_metrics_samples_before_logging()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.set_system_metrics_samples_before_logging). The actual logging time window is the product of `MLFLOW_SYSTEM_METRICS_SAMPLING_INTERVAL` and `MLFLOW_SYSTEM_METRICS_SAMPLES_BEFORE_LOGGING`. For example, if you set sample interval to 2 seconds and samples before logging to 3, then system metrics will be collected every 2 seconds, then after 3 samples are collected (2 \* 3 = 6s), we aggregate the metrics and log to MLflow server. The aggregation logic depends on different system metrics. For example, for `cpu_utilization_percentage` it's the average of the samples.
+By default, system metrics are sampled every 10 seconds and are directly logged after sampling. You can customize the sampling frequency by setting environment variable `MLFLOW_SYSTEM_METRICS_SAMPLING_INTERVAL` to an integer representing the logging frequency in seconds or by using [`mlflow.set_system_metrics_sampling_interval()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.set_system_metrics_sampling_interval) to set the interval, as shown below. In addition to setting the frequency of system metrics logging, you can also customize the number of samples to aggregate. You can also customize the number of samples to aggregate before logging by setting environment variable `MLFLOW_SYSTEM_METRICS_SAMPLES_BEFORE_LOGGING` or using [`mlflow.set_system_metrics_samples_before_logging()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.set_system_metrics_samples_before_logging). The actual logging time window is the product of `MLFLOW_SYSTEM_METRICS_SAMPLING_INTERVAL` and `MLFLOW_SYSTEM_METRICS_SAMPLES_BEFORE_LOGGING`. For example, if you set sample interval to 2 seconds and samples before logging to 3, then system metrics will be collected every 2 seconds, then after 3 samples are collected (2 \* 3 = 6s), we aggregate the metrics and log to MLflow server. The aggregation logic depends on different system metrics. For example, for `cpu_utilization_percentage` it's the average of the samples.
 
 python
 

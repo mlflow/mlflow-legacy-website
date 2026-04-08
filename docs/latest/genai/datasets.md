@@ -14,9 +14,9 @@ You can think of them as test suites or benchmarks for your LLM functionality.
 
 SQL Backend Required
 
-Evaluation Datasets require an MLflow Tracking Server with a **[SQL backend](/docs/3.11.1/self-hosting/architecture/backend-store.md#types-of-backend-stores)** (PostgreSQL, MySQL, SQLite, or MSSQL). This feature is **not available** in FileStore (local file system-based tracking). If you need a simple local configuration for MLflow, use the sqlite option when starting MLflow.
+Evaluation Datasets require an MLflow Tracking Server with a **[SQL backend](/docs/latest/self-hosting/architecture/backend-store.md#types-of-backend-stores)** (PostgreSQL, MySQL, SQLite, or MSSQL). This feature is **not available** in FileStore (local file system-based tracking). If you need a simple local configuration for MLflow, use the sqlite option when starting MLflow.
 
-* An evaluation dataset is attached to an MLflow experiment. If you do not already have an experiment, see [Create an MLflow Experiment](/docs/3.11.1/genai/tracing/quickstart.md) to create one.
+* An evaluation dataset is attached to an MLflow experiment. If you do not already have an experiment, see [Create an MLflow Experiment](/docs/latest/genai/tracing/quickstart.md) to create one.
 
 ## Data sources for evaluation datasets[​](#data-sources-for-evaluation-datasets "Direct link to Data sources for evaluation datasets")
 
@@ -25,7 +25,7 @@ You can use any of the following to create an evaluation dataset:
 * Existing traces. If you have already captured traces from an LLM application or AI agent, you can use them to create an evaluation dataset based on real-world scenarios.
 * Manually created examples. Define test cases by hand using dictionaries or DataFrames. This is useful for targeting specific edge cases or creating "golden" test cases that must always pass.
 
-This page describes how to create an MLflow evaluation dataset. You can create datasets from traces using either the MLflow Monitoring UI or the SDK. You can also use other types of datasets, such as Pandas DataFrames or a list of dictionaries. See [Evaluation examples](/docs/3.11.1/genai/eval-monitor/running-evaluation/eval-examples.md) for more examples.
+This page describes how to create an MLflow evaluation dataset. You can create datasets from traces using either the MLflow Monitoring UI or the SDK. You can also use other types of datasets, such as Pandas DataFrames or a list of dictionaries. See [Evaluation examples](/docs/latest/genai/eval-monitor/running-evaluation/eval-examples.md) for more examples.
 
 ## Create or update a dataset using the UI[​](#create-or-update-a-dataset-using-the-ui "Direct link to Create or update a dataset using the UI")
 
@@ -37,17 +37,17 @@ Follow these steps to use the UI to create a dataset or add to a dataset from ex
 
 3. In the left sidebar, click **Traces**.
 
-   ![Traces tab in sidebar](/docs/3.11.1/images/genai/traces-tab.png)
+   ![Traces tab in sidebar](/docs/latest/images/genai/traces-tab.png)
 
 4. Use the checkboxes to the left of the trace list to select traces to export to your dataset. To select all traces, click the box next to **Trace ID**.
 
-   [](/docs/3.11.1/images/genai/select-traces.mp4)
+   [](/docs/latest/images/genai/select-traces.mp4)
 
 5. Click **Actions**. From the drop-down menu, select **Add to evaluation dataset**.
 
 6. The **Export traces to evaluation dataset** dialog appears.
 
-   ![Add to dataset dialog](/docs/3.11.1/images/genai/add-to-dataset-dialog.png)
+   ![Add to dataset dialog](/docs/latest/images/genai/add-to-dataset-dialog.png)
 
    If evaluation datasets exist for this experiment, they appear in the dialog.
 
@@ -70,7 +70,7 @@ This section describes several options for adding records to the evaluation data
 
 One of the most effective ways to build a relevant evaluation dataset is by curating examples directly from your application's historical interactions captured by MLflow Tracing.
 
-Programmatically search for traces and then add them to the dataset using `search_traces()`. Use filters to identify traces by success, failure, use in production, or other properties. See [Search traces](/docs/3.11.1/genai/tracing/search-traces.md#search-traces-overview). You can also add ground-truth expectations to your traces before or after adding them to an evaluation dataset using [`log_expectation()`](https://mlflow.org/docs/latest/api_reference/python_api/mlflow.html?highlight=log_expectation#mlflow.log_expectation).
+Programmatically search for traces and then add them to the dataset using `search_traces()`. Use filters to identify traces by success, failure, use in production, or other properties. See [Search traces](/docs/latest/genai/tracing/search-traces.md#search-traces-overview). You can also add ground-truth expectations to your traces before or after adding them to an evaluation dataset using [`log_expectation()`](https://mlflow.org/docs/latest/api_reference/python_api/mlflow.html?highlight=log_expectation#mlflow.log_expectation).
 
 python
 
@@ -149,7 +149,7 @@ correlation = traces_df["span.attributes.usage.total_tokens"].corr(traces_df["ta
 print(f"Correlation between token usage and quality: {correlation}")
 ```
 
-For complete trace query syntax and examples, see [Search Query Syntax](/docs/3.11.1/genai/tracing/search-traces.md#search-query-syntax).
+For complete trace query syntax and examples, see [Search Query Syntax](/docs/latest/genai/tracing/search-traces.md#search-query-syntax).
 
 **Qualitative trace selection**
 
@@ -162,9 +162,9 @@ Review individual traces to identify patterns requiring human judgment:
 
 Once you've identified representative traces, add them to your dataset using the search and merge methods described above.
 
-You can also use AI Insights features like [Analyze Experiment](/docs/3.11.1/genai/eval-monitor/ai-insights/ai-issue-discovery.md) to automatically discover quality and operational issues across your traces.
+You can also use AI Insights features like [Analyze Experiment](/docs/latest/genai/eval-monitor/ai-insights/ai-issue-discovery.md) to automatically discover quality and operational issues across your traces.
 
-You can curate examples from scratch. Your data must match (or be transformed to match) the [evaluation dataset schema](/docs/3.11.1/genai/concepts/evaluation-datasets.md#record-structure).
+You can curate examples from scratch. Your data must match (or be transformed to match) the [evaluation dataset schema](/docs/latest/genai/concepts/evaluation-datasets.md#record-structure).
 
 python
 
@@ -265,7 +265,7 @@ df = pd.DataFrame([
 dataset.merge_records(df)
 ```
 
-Store test cases for [conversation simulation](/docs/3.11.1/genai/eval-monitor/running-evaluation/conversation-simulation.md) to enable reproducible multi-turn testing:
+Store test cases for [conversation simulation](/docs/latest/genai/eval-monitor/running-evaluation/conversation-simulation.md) to enable reproducible multi-turn testing:
 
 python
 
@@ -362,20 +362,20 @@ dataset = dataset.merge_records(new_cases)
 
 Ready to improve your LLM and AI agent testing? Start with these resources:
 
-### [Dataset Structure](/docs/3.11.1/genai/concepts/evaluation-datasets.md)
+### [Dataset Structure](/docs/latest/genai/concepts/evaluation-datasets.md)
 
-[Understand how evaluation datasets organize test inputs, expectations, and metadata](/docs/3.11.1/genai/concepts/evaluation-datasets.md)
+[Understand how evaluation datasets organize test inputs, expectations, and metadata](/docs/latest/genai/concepts/evaluation-datasets.md)
 
-[Learn the concepts →](/docs/3.11.1/genai/concepts/evaluation-datasets.md)
+[Learn the concepts →](/docs/latest/genai/concepts/evaluation-datasets.md)
 
-### [Setting Expectations](/docs/3.11.1/genai/assessments/expectations.md)
+### [Setting Expectations](/docs/latest/genai/assessments/expectations.md)
 
-[Learn how to define ground truth and expected outputs for your AI system](/docs/3.11.1/genai/assessments/expectations.md)
+[Learn how to define ground truth and expected outputs for your AI system](/docs/latest/genai/assessments/expectations.md)
 
-[Define expectations →](/docs/3.11.1/genai/assessments/expectations.md)
+[Define expectations →](/docs/latest/genai/assessments/expectations.md)
 
-### [Evaluation Framework](/docs/3.11.1/genai/eval-monitor.md)
+### [Evaluation Framework](/docs/latest/genai/eval-monitor.md)
 
-[Run systematic evaluations using your datasets with automated scorers](/docs/3.11.1/genai/eval-monitor.md)
+[Run systematic evaluations using your datasets with automated scorers](/docs/latest/genai/eval-monitor.md)
 
-[Learn evaluation →](/docs/3.11.1/genai/eval-monitor.md)
+[Learn evaluation →](/docs/latest/genai/eval-monitor.md)

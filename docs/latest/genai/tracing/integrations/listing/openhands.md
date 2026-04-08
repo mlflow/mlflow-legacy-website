@@ -1,8 +1,8 @@
 # Tracing OpenHands
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing.md) provides automatic tracing for [OpenHands](https://github.com/All-Hands-AI/OpenHands), a leading open-source AI agent framework for autonomous software development. OpenHands agents interact with code, terminals, file systems, and the web, and support multiple LLM providers including Claude, OpenAI, and open-source models.
+[MLflow Tracing](/docs/latest/genai/tracing.md) provides automatic tracing for [OpenHands](https://github.com/All-Hands-AI/OpenHands), a leading open-source AI agent framework for autonomous software development. OpenHands agents interact with code, terminals, file systems, and the web, and support multiple LLM providers including Claude, OpenAI, and open-source models.
 
-![OpenHands Tracing](/docs/3.11.1/images/llms/openhands/openhands-trace.png)
+![OpenHands Tracing](/docs/latest/images/llms/openhands/openhands-trace.png)
 
 OpenHands emits [OpenTelemetry](https://opentelemetry.io/) traces natively, and MLflow accepts them out of the box. Whether you use OpenHands through the [SDK](https://docs.openhands.dev/sdk) or the [CLI](https://docs.openhands.dev/overview/quickstart), after setting up the connection, MLflow will automatically capture traces of your OpenHands agent runs. The trace automatically captures information such as:
 
@@ -41,7 +41,7 @@ uv tool install openhands --python 3.12
 
 ### Start MLflow Server
 
-[Start an MLflow server](/docs/3.11.1/genai/getting-started/connect-environment.md) if you haven't already. This step is common to both the SDK and CLI.
+[Start an MLflow server](/docs/latest/genai/getting-started/connect-environment.md) if you haven't already. This step is common to both the SDK and CLI.
 
 bash
 
@@ -49,7 +49,7 @@ bash
 mlflow server
 ```
 
-Or using [Docker Compose](/docs/3.11.1/self-hosting.md#docker-compose):
+Or using [Docker Compose](/docs/latest/self-hosting.md#docker-compose):
 
 bash
 
@@ -139,11 +139,11 @@ Once the agent finishes, navigate to the MLflow UI (e.g. `http://localhost:5000`
 
 MLflow automatically tracks token usage for each LLM call within OpenHands agent runs. The token usage and cost will be displayed in the Overview dashboard and the trace detail page.
 
-![OpenHands Token Usage](/docs/3.11.1/images/llms/openhands/openhands-token-usage.png)
+![OpenHands Token Usage](/docs/latest/images/llms/openhands/openhands-token-usage.png)
 
 Governing OpenHands Agents with AI Gateway
 
-[AI Gateway](/docs/3.11.1/genai/governance/ai-gateway.md) provides centralized governance for all LLM traffic from OpenHands, including budget control, usage tracking, and secret management.
+[AI Gateway](/docs/latest/genai/governance/ai-gateway.md) provides centralized governance for all LLM traffic from OpenHands, including budget control, usage tracking, and secret management.
 
 To route OpenHands LLM calls through MLflow AI Gateway, set the `base_url` to the AI Gateway endpoint URL:
 
@@ -158,27 +158,27 @@ llm = LLM(
 
 This gives you:
 
-* **Budget control** - set [budget policies](/docs/3.11.1/genai/governance/ai-gateway/budget-alerts-limits.md) to alert or reject when spending exceeds a threshold
+* **Budget control** - set [budget policies](/docs/latest/genai/governance/ai-gateway/budget-alerts-limits.md) to alert or reject when spending exceeds a threshold
 * **Usage tracking** - every LLM call is logged with token-level cost visibility
 * **Secret management** - store API keys securely in the gateway instead of your scripts
 * **Fallback routing** - define fallback chains for provider availability
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [Track User Feedback](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+### [Track User Feedback](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-[Record user feedback on traces for tracking user satisfaction.](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+[Record user feedback on traces for tracking user satisfaction.](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-[Learn about feedback →](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+[Learn about feedback →](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-### [Manage Prompts](/docs/3.11.1/genai/prompt-registry.md)
+### [Manage Prompts](/docs/latest/genai/prompt-registry.md)
 
-[Learn how to manage prompts with MLflow's prompt registry.](/docs/3.11.1/genai/prompt-registry.md)
+[Learn how to manage prompts with MLflow's prompt registry.](/docs/latest/genai/prompt-registry.md)
 
-[Manage prompts →](/docs/3.11.1/genai/prompt-registry.md)
+[Manage prompts →](/docs/latest/genai/prompt-registry.md)
 
-### [Evaluate Traces](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+### [Evaluate Traces](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Evaluate traces with LLM judges to understand and improve your AI application's behavior.](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Evaluate traces with LLM judges to understand and improve your AI application's behavior.](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Evaluate traces →](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Evaluate traces →](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)

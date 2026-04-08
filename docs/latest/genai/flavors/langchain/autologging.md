@@ -14,7 +14,7 @@ pip install 'mlflow[genai,langchain]' --upgrade
 
 ## Quickstart[​](#quickstart "Direct link to Quickstart")
 
-To enable autologging for LangChain models, call [`mlflow.langchain.autolog()`](/docs/3.11.1/api_reference/python_api/mlflow.langchain.html#mlflow.langchain.autolog) at the beginning of your script or notebook. This will automatically log the traces by default as well as other artifacts such as models, input examples, and model signatures if you explicitly enable them. For more information about the configuration, please refer to the [Configure Autologging](#configure-autologging) section.
+To enable autologging for LangChain models, call [`mlflow.langchain.autolog()`](/docs/latest/api_reference/python_api/mlflow.langchain.html#mlflow.langchain.autolog) at the beginning of your script or notebook. This will automatically log the traces by default as well as other artifacts such as models, input examples, and model signatures if you explicitly enable them. For more information about the configuration, please refer to the [Configure Autologging](#configure-autologging) section.
 
 python
 
@@ -32,17 +32,17 @@ mlflow.langchain.autolog()
 
 Once you have invoked the chain, you can view the logged traces and artifacts in the MLflow UI.
 
-![LangChain Tracing with MLflow](/docs/3.11.1/images/llms/tracing/langgraph-agent-trace.png)
+![LangChain Tracing with MLflow](/docs/latest/images/llms/tracing/langgraph-agent-trace.png)
 
 ## Configure Autologging[​](#configure-autologging "Direct link to Configure Autologging")
 
-MLflow LangChain autologging can log various information about the model and its inference. **By default, only trace logging is enabled**, but you can enable autologging of other information by setting the corresponding parameters when calling [`mlflow.langchain.autolog()`](/docs/3.11.1/api_reference/python_api/mlflow.langchain.html#mlflow.langchain.autolog). For other configurations, please refer to the API documentation.
+MLflow LangChain autologging can log various information about the model and its inference. **By default, only trace logging is enabled**, but you can enable autologging of other information by setting the corresponding parameters when calling [`mlflow.langchain.autolog()`](/docs/latest/api_reference/python_api/mlflow.langchain.html#mlflow.langchain.autolog). For other configurations, please refer to the API documentation.
 
 | Target           | Default | Parameter              | Description                                                                                                                                                                                                                                                                                                                                                                                                     |
 | ---------------- | ------- | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Traces           | `true`  | `log_traces`           | Whether to generate and log traces for the model. See [MLflow Tracing](/docs/3.11.1/genai/tracing.md) for more details about tracing feature.                                                                                                                                                                                                                                                                   |
+| Traces           | `true`  | `log_traces`           | Whether to generate and log traces for the model. See [MLflow Tracing](/docs/latest/genai/tracing.md) for more details about tracing feature.                                                                                                                                                                                                                                                                   |
 | Model Artifacts  | `false` | `log_models`           | If set to `True`, the LangChain model will be logged when it is invoked. Supported models are `Chain`, `AgentExecutor`, `BaseRetriever`, `SimpleChatModel`, `ChatPromptTemplate`, and subset of `Runnable` types. Please refer to the [MLflow repository](https://github.com/mlflow/mlflow/blob/d2955cc90b6c5d7c931a8476b85f66e63990ca96/mlflow/langchain/utils.py#L183) for the full list of supported models. |
-| Model Signatures | `false` | `log_model_signatures` | If set to `True`, [ModelSignatures](/docs/3.11.1/api_reference/python_api/mlflow.models.html#mlflow.models.ModelSignature) describing model inputs and outputs are collected and logged along with Langchain model artifacts during inference. This option is only available when `log_models` is enabled.                                                                                                      |
+| Model Signatures | `false` | `log_model_signatures` | If set to `True`, [ModelSignatures](/docs/latest/api_reference/python_api/mlflow.models.html#mlflow.models.ModelSignature) describing model inputs and outputs are collected and logged along with Langchain model artifacts during inference. This option is only available when `log_models` is enabled.                                                                                                      |
 | Input Example    | `false` | `log_input_examples`   | If set to `True`, input examples from inference data are collected and logged along with LangChain model artifacts during inference. This option is only available when `log_models` is enabled.                                                                                                                                                                                                                |
 
 For example, to disable logging of traces, and instead enable model logging, run the following code:
@@ -131,7 +131,7 @@ print(loaded_model.predict(inputs))
 
 ## Tracing LangGraph[​](#tracing-langgraph "Direct link to Tracing LangGraph")
 
-MLflow support automatic tracing for LangGraph, an open-source library from LangChain for building stateful, multi-actor applications with LLMs, used to create agent and multi-agent workflows. To enable auto-tracing for LangGraph, use the same [`mlflow.langchain.autolog()`](/docs/3.11.1/api_reference/python_api/mlflow.langchain.html#mlflow.langchain.autolog) function.
+MLflow support automatic tracing for LangGraph, an open-source library from LangChain for building stateful, multi-actor applications with LLMs, used to create agent and multi-agent workflows. To enable auto-tracing for LangGraph, use the same [`mlflow.langchain.autolog()`](/docs/latest/api_reference/python_api/mlflow.langchain.html#mlflow.langchain.autolog) function.
 
 python
 
@@ -243,11 +243,11 @@ MLflow supports autologging for async functions (e.g., `ainvoke`, `abatch`, `ast
 
 ## FAQ[​](#faq "Direct link to FAQ")
 
-If you encounter any issues with MLflow LangChain flavor, please also refer to [FAQ](/docs/3.11.1/genai/flavors/langchain.md#faq). If you still have questions, please feel free to open an issue in [MLflow Github repo](https://github.com/mlflow/mlflow/issues).
+If you encounter any issues with MLflow LangChain flavor, please also refer to [FAQ](/docs/latest/genai/flavors/langchain.md#faq). If you still have questions, please feel free to open an issue in [MLflow Github repo](https://github.com/mlflow/mlflow/issues).
 
 ### How to suppress the warning messages during autologging?[​](#how-to-suppress-the-warning-messages-during-autologging "Direct link to How to suppress the warning messages during autologging?")
 
-MLflow Langchain Autologging calls various logging functions and LangChain utilities under the hood. Some of them may generate warning messages that are not critical to the autologging process. If you want to suppress these warning messages, pass `silent=True` to the [`mlflow.langchain.autolog()`](/docs/3.11.1/api_reference/python_api/mlflow.langchain.html#mlflow.langchain.autolog) function.
+MLflow Langchain Autologging calls various logging functions and LangChain utilities under the hood. Some of them may generate warning messages that are not critical to the autologging process. If you want to suppress these warning messages, pass `silent=True` to the [`mlflow.langchain.autolog()`](/docs/latest/api_reference/python_api/mlflow.langchain.html#mlflow.langchain.autolog) function.
 
 python
 
@@ -298,7 +298,7 @@ runnable.invoke("Hi")
 
 The above code will create a trace like the following:
 
-![Customize Span Names in LangChain Traces](/docs/3.11.1/assets/images/langchain-name-customize-ca9014274c05b7f16d671e87f2ee7d5b.png)
+![Customize Span Names in LangChain Traces](/docs/latest/assets/images/langchain-name-customize-ca9014274c05b7f16d671e87f2ee7d5b.png)
 
 ### How to add extra metadata to a span?[​](#how-to-add-extra-metadata-to-a-span "Direct link to How to add extra metadata to a span?")
 

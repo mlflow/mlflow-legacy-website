@@ -32,11 +32,11 @@ The OIDC plugin requires an Identity Provider (IDP) service that supports the OI
 
 2. Create an application for MLflow, select application type as "Regular Web Application". View the "Domain", "Client ID", "Client Secret" values of the application on the application basic information page, these values will be used when deploying the MLflow server with the OIDC plugin.
 
-![App basic information](/docs/3.11.1/assets/images/sso-okta-app-info-9365af0cc69abd2c1eaea6618f9cc4f1.png)
+![App basic information](/docs/latest/assets/images/sso-okta-app-info-9365af0cc69abd2c1eaea6618f9cc4f1.png)
 
 3. Configure allowed callback URL for the Okta application, assuming the MLflow server is deployed at "<http://localhost:8080>", then the callback URL is "<http://localhost:8080/callback>"
 
-![callback setting](/docs/3.11.1/assets/images/sso-callback-setting-3124cf89e452a185873109970f304ed8.png)
+![callback setting](/docs/latest/assets/images/sso-callback-setting-3124cf89e452a185873109970f304ed8.png)
 
 4. Configure and deploy a "post-login" trigger for assigning the user's group membership
 
@@ -65,21 +65,21 @@ exports.onExecutePostLogin = async (event, api) => {
 
 then click the "Deploy" button.
 
-![custom action setting](/docs/3.11.1/assets/images/sso-custom-action-574a3cb8aba9e4b4b4229fe01762180e.png)
+![custom action setting](/docs/latest/assets/images/sso-custom-action-574a3cb8aba9e4b4b4229fe01762180e.png)
 
 Then in Okta account sidebar menu: Actions -> Triggers -> Sign up & Login: post-login, install the trigger as follows:
 
-![install trigger](/docs/3.11.1/assets/images/sso-install-trigger-584703948bc9098b8aafd3ac32671ec2.png)
+![install trigger](/docs/latest/assets/images/sso-install-trigger-584703948bc9098b8aafd3ac32671ec2.png)
 
 #### Google Identity Platform configuration[​](#google-identity-platform-configuration "Direct link to Google Identity Platform configuration")
 
 1. Register a Google Cloud account and open the [console page](https://console.cloud.google.com/). In the console, select **APIs & Services** → **Credentials** → **Create credentials** → **OAuth client ID**. Choose **Application type: Web application**, enter the client name, and add the callback URL (for example, `http://localhost:8080/callback`) to **Authorized redirect URIs**.
 
-![Google oauth credentials creation](/docs/3.11.1/assets/images/google-create-oauth-credentials-aeeea9a4110a5c0d8eafbabf8b3a9e45.png)
+![Google oauth credentials creation](/docs/latest/assets/images/google-create-oauth-credentials-aeeea9a4110a5c0d8eafbabf8b3a9e45.png)
 
 2. Open [Google Identity Platform console](https://console.cloud.google.com/customer-identity), add a provider with type "OpenID Connect" as follows:
 
-![Google OIDC provider creation](/docs/3.11.1/assets/images/google-create-oidc-provider-b1a972bfcd943f5cbe6bab1cd5062d0e.png)
+![Google OIDC provider creation](/docs/latest/assets/images/google-create-oidc-provider-b1a972bfcd943f5cbe6bab1cd5062d0e.png)
 
 3. Unlike Okta Auth0, Google Identity Platform does not support the post-login trigger, so that we can't configure the user group setting there. Instead, we need to write a simple plugin as follows. The example group configuration plugin assigns the administrator group to a certain user, and assign the plain group to other users.
 
@@ -112,23 +112,23 @@ The plugin Python file will be used by the mlflow server's OIDC auth plugin, see
 
 #### Aws Cognito configuration[​](#aws-cognito-configuration "Direct link to Aws Cognito configuration")
 
-1. In AWS console, select menu: Amazon Cognito -> User pools -> Create user pool, and create a user pool as follows, note that the field "Required attributes for sign-up" should contain "name", and set the a return URL to the OIDC redirect URL like "<http://localhost:8080/callback>". ![AWS Cognito user pool creation](/docs/3.11.1/assets/images/aws-cognito-create-user-pool-3260b334b6966123897324ef3fd6aec6.png)
+1. In AWS console, select menu: Amazon Cognito -> User pools -> Create user pool, and create a user pool as follows, note that the field "Required attributes for sign-up" should contain "name", and set the a return URL to the OIDC redirect URL like "<http://localhost:8080/callback>". ![AWS Cognito user pool creation](/docs/latest/assets/images/aws-cognito-create-user-pool-3260b334b6966123897324ef3fd6aec6.png)
 
-2. In the created user pool, select menu: Applications -> App Clients -> Create app client, and create a app client of Traditional web application, and set the return URL to the OIDC redirect URL like "<http://localhost:8080/callback>". Then, edit the "Managed login pages configuration" for the app client as follows: ![AWS Cognito app setting](/docs/3.11.1/assets/images/aws-cognito-app-setting-26a95c4194f4421e89263205591ba0b4.png)
+2. In the created user pool, select menu: Applications -> App Clients -> Create app client, and create a app client of Traditional web application, and set the return URL to the OIDC redirect URL like "<http://localhost:8080/callback>". Then, edit the "Managed login pages configuration" for the app client as follows: ![AWS Cognito app setting](/docs/latest/assets/images/aws-cognito-app-setting-26a95c4194f4421e89263205591ba0b4.png)
 
-3. In the created user pool, select menu: User Management -> Groups -> Create Group, create 2 user groups: "mlflow" and "mlflow-admin" as follows: ![AWS user groups](/docs/3.11.1/assets/images/aws-cognito-create-groups-2dd0e1f8053579ca209fe7642d8f39f9.png)
+3. In the created user pool, select menu: User Management -> Groups -> Create Group, create 2 user groups: "mlflow" and "mlflow-admin" as follows: ![AWS user groups](/docs/latest/assets/images/aws-cognito-create-groups-2dd0e1f8053579ca209fe7642d8f39f9.png)
 
-4. In the created user pool, select menu: User Management -> Users -> Create user, Create users and assign user to either "mlflow" or "mlflow-admin" group as follows: ![AWS users](/docs/3.11.1/assets/images/aws-cognito-create-users-a711396427723b0a2115419dff15d27f.png)
+4. In the created user pool, select menu: User Management -> Users -> Create user, Create users and assign user to either "mlflow" or "mlflow-admin" group as follows: ![AWS users](/docs/latest/assets/images/aws-cognito-create-users-a711396427723b0a2115419dff15d27f.png)
 
 #### Azure Entra ID configuration[​](#azure-entra-id-configuration "Direct link to Azure Entra ID configuration")
 
-1. In the Azure portal Microsoft Entra ID portal, select menu: Manage -> App registrations, register an application as follows: ![Azure create app](/docs/3.11.1/assets/images/azure-entra-create-app-d0aeb62a22351c3594dedb1510aa6d2f.png)
+1. In the Azure portal Microsoft Entra ID portal, select menu: Manage -> App registrations, register an application as follows: ![Azure create app](/docs/latest/assets/images/azure-entra-create-app-d0aeb62a22351c3594dedb1510aa6d2f.png)
 
-2. In the Azure portal Microsoft Entra ID portal, select menu: Manage -> Groups -> New group, create 2 groups "mlflow" and "mlflow-admin" as follows: ![Azure create groups](/docs/3.11.1/assets/images/azure-entra-groups-a2275666b418232a275c74b374b0ed38.png)
+2. In the Azure portal Microsoft Entra ID portal, select menu: Manage -> Groups -> New group, create 2 groups "mlflow" and "mlflow-admin" as follows: ![Azure create groups](/docs/latest/assets/images/azure-entra-groups-a2275666b418232a275c74b374b0ed38.png)
 
-3. In the Azure portal Microsoft Entra ID portal, select menu: Manage -> Users -> New user, create users and assign users to mlflow or mlflow-admin groups as follows: ![Azure create users](/docs/3.11.1/assets/images/azure-entra-add-users-8854e51e233ceb4bae29514db02d15e3.png)
+3. In the Azure portal Microsoft Entra ID portal, select menu: Manage -> Users -> New user, create users and assign users to mlflow or mlflow-admin groups as follows: ![Azure create users](/docs/latest/assets/images/azure-entra-add-users-8854e51e233ceb4bae29514db02d15e3.png)
 
-4. In the registered application, select menu: Manage -> Token configuration -> Add groups claim, add group claims as follows: ![Azure group claims](/docs/3.11.1/assets/images/azure-entra-add-group-claim-1b430409d4f47f7d87cd2d34a9b9e1a1.png)
+4. In the registered application, select menu: Manage -> Token configuration -> Add groups claim, add group claims as follows: ![Azure group claims](/docs/latest/assets/images/azure-entra-add-group-claim-1b430409d4f47f7d87cd2d34a9b9e1a1.png)
 
 ### Deploy MLflow server with the OIDC plugin[​](#deploy-mlflow-server-with-the-oidc-plugin "Direct link to Deploy MLflow server with the OIDC plugin")
 
@@ -229,11 +229,11 @@ mlflow server --app-name oidc-auth --host 0.0.0.0 --port 8080
 
 Then you can open URL "<http://localhost:8080/>" and it will jump to the OIDC login page, log in as an Okta / Google / AWS / Azure user, after login, it will jump to the OIDC permission configuration page as follows:
 
-![custom action setting](/docs/3.11.1/assets/images/oidc-page-969e8ee4b1ef0c80bdbbfe0b2681b3c8.png)
+![custom action setting](/docs/latest/assets/images/oidc-page-969e8ee4b1ef0c80bdbbfe0b2681b3c8.png)
 
 If the current login user is assigned to the administrator group, then you can configure the permissions for other users through the OIDC permission UI portal as follows:
 
-![custom action setting](/docs/3.11.1/assets/images/oidc-permission-settings-8ac69a84d731c14100a8527cfeea66a3.png)
+![custom action setting](/docs/latest/assets/images/oidc-permission-settings-8ac69a84d731c14100a8527cfeea66a3.png)
 
 After login via OIDC, open "<http://localhost:8080/>" again and then it will jump to the MLflow UI main page.
 
@@ -241,7 +241,7 @@ After login via OIDC, open "<http://localhost:8080/>" again and then it will jum
 
 The MLflow OIDC plugin allows MLflow client to connect to the MLflow server via the MLflow basic auth protocol. First, you need to generate an "access token" on the OIDC permission page as follows:
 
-![custom action setting](/docs/3.11.1/assets/images/sso-access-token-e12e7c6c03cb5819c0ebb8de421ef7f4.png)
+![custom action setting](/docs/latest/assets/images/sso-access-token-e12e7c6c03cb5819c0ebb8de421ef7f4.png)
 
 Note: Each time you create a new access token, it invalidates the previous one. Only the latest generated token is valid.
 

@@ -2,17 +2,17 @@
 
 attention
 
-Starting in MLflow 3.0.0, we recommend [`ResponsesAgent`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent) instead of [`ChatModel`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel). See more details in the [ResponsesAgent Introduction](/docs/3.11.1/genai/flavors/responses-agent-intro.md).
+Starting in MLflow 3.0.0, we recommend [`ResponsesAgent`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent) instead of [`ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel). See more details in the [ResponsesAgent Introduction](/docs/latest/genai/flavors/responses-agent-intro.md).
 
 Advanced Large Language Models (LLMs) such as the MPT-7B instruct transformer are intricate and have requirements that don't align with traditional MLflow flavors. This demands a deeper understanding and the need for custom solutions.
 
 note
 
-This tutorial utilizes the [`mlflow.pyfunc.PythonModel`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel) class to create a custom PyFunc model for building custom LLM and AI agent solutions. It is recommended to utilize the newer [`mlflow.pyfunc.ChatModel`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) class for building custom implementations due to a simplified development experience and an easier approach to deployment. To learn more, see [the guide to building LLM applications and AI agents with ChatModel](/docs/3.11.1/genai/flavors/chat-model-guide.md).
+This tutorial utilizes the [`mlflow.pyfunc.PythonModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel) class to create a custom PyFunc model for building custom LLM and AI agent solutions. It is recommended to utilize the newer [`mlflow.pyfunc.ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) class for building custom implementations due to a simplified development experience and an easier approach to deployment. To learn more, see [the guide to building LLM applications and AI agents with ChatModel](/docs/latest/genai/flavors/chat-model-guide.md).
 
 tip
 
-MLflow 2.12.2 introduced the feature "models from code", which greatly simplifies the process of serializing and deploying custom models through the use of script serialization. While the tutorial here is valuable as a point of reference, we strongly recommend migrating custom model implementations to this new paradigm. You can learn more about models from code within the [Models From Code Guide](/docs/3.11.1/ml/model/models-from-code.md).
+MLflow 2.12.2 introduced the feature "models from code", which greatly simplifies the process of serializing and deploying custom models through the use of script serialization. While the tutorial here is valuable as a point of reference, we strongly recommend migrating custom model implementations to this new paradigm. You can learn more about models from code within the [Models From Code Guide](/docs/latest/ml/model/models-from-code.md).
 
 What's in this tutorial?
 
@@ -35,6 +35,6 @@ By the conclusion of this guide, you'll possess a deep understanding of how to d
 
 ## Explore the Tutorial[​](#explore-the-tutorial "Direct link to Explore the Tutorial")
 
-[Serving LLMs with MLflow: Leveraging Custom PyFunc](/docs/3.11.1/genai/flavors/custom-pyfunc-for-llms/notebooks/custom-pyfunc-advanced-llm.md)
+[Serving LLMs with MLflow: Leveraging Custom PyFunc](/docs/latest/genai/flavors/custom-pyfunc-for-llms/notebooks/custom-pyfunc-advanced-llm.md)
 
-[Learn how to use the MLflow Custom Pyfunc Model to serve Large Language Models (LLMs) in a RESTful environment.](/docs/3.11.1/genai/flavors/custom-pyfunc-for-llms/notebooks/custom-pyfunc-advanced-llm.md)
+[Learn how to use the MLflow Custom Pyfunc Model to serve Large Language Models (LLMs) in a RESTful environment.](/docs/latest/genai/flavors/custom-pyfunc-for-llms/notebooks/custom-pyfunc-advanced-llm.md)

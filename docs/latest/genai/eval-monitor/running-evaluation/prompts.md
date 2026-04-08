@@ -1,8 +1,8 @@
 # Evaluating Prompts
 
-Prompts are the core components of LLM applications and AI agents. However, iterating over prompts can be challenging because it is hard to know if the new prompt is better than the old one. MLflow provides a framework to systematically evaluate prompt templates and track performance over time. MLflow can also [optimize prompts automatically](https://mlflow.org/prompt-optimization) using algorithms that improve your prompts based on evaluation data. See the [optimization guide](/docs/3.11.1/genai/prompt-registry/optimize-prompts.md) to get started.
+Prompts are the core components of LLM applications and AI agents. However, iterating over prompts can be challenging because it is hard to know if the new prompt is better than the old one. MLflow provides a framework to systematically evaluate prompt templates and track performance over time. MLflow can also [optimize prompts automatically](https://mlflow.org/prompt-optimization) using algorithms that improve your prompts based on evaluation data. See the [optimization guide](/docs/latest/genai/prompt-registry/optimize-prompts.md) to get started.
 
-![Prompt Evaluation](/docs/3.11.1/images/mlflow-3/eval-monitor/prompt-evaluation-hero.png)
+![Prompt Evaluation](/docs/latest/images/mlflow-3/eval-monitor/prompt-evaluation-hero.png)
 
 ## Workflow[​](#workflow "Direct link to Workflow")
 
@@ -56,7 +56,7 @@ uvx mlflow server
 
 info
 
-See [Secure Installs](/docs/3.11.1/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
+See [Secure Installs](/docs/latest/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
 
 **Python Environment**: Python 3.10+
 
@@ -71,7 +71,7 @@ mlflow server
 
 info
 
-See [Secure Installs](/docs/3.11.1/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
+See [Secure Installs](/docs/latest/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
 
 MLflow provides a Docker Compose file to start a local MLflow server with a PostgreSQL database and a MinIO server.
 
@@ -90,7 +90,7 @@ Refer to the [instruction](https://github.com/mlflow/mlflow/tree/master/docker-c
 
 ### Step 1: Create prompt templates[​](#step-1-create-prompt-templates "Direct link to Step 1: Create prompt templates")
 
-Let's define a simple prompt template to evaluate. We use [MLflow Prompt Registry](/docs/3.11.1/genai/prompt-registry.md) to save the prompt and version control it, but it is optional for evaluation.
+Let's define a simple prompt template to evaluate. We use [MLflow Prompt Registry](/docs/latest/genai/prompt-registry.md) to save the prompt and version control it, but it is optional for evaluation.
 
 python
 
@@ -168,7 +168,7 @@ def predict_fn(question: str) -> str:
 
 ### Step 4: Define task-specific scorers[​](#step-4-define-task-specific-scorers "Direct link to Step 4: Define task-specific scorers")
 
-Finally, let's define a few [scorers](/docs/3.11.1/genai/eval-monitor/scorers.md) that decide the evaluation criteria. Here we use two types of scorers:
+Finally, let's define a few [scorers](/docs/latest/genai/eval-monitor/scorers.md) that decide the evaluation criteria. Here we use two types of scorers:
 
 * Built-in LLM scorers for evaluating the qualitative aspects of the response.
 * Custom heuristic scorer for evaluating the coverage of the key concepts.
@@ -222,11 +222,11 @@ mlflow.genai.evaluate(
 
 Once the evaluation is done, open the MLflow UI in your browser and navigate to the experiment page. You should see MLflow creates a new Run and logs the evaluation results.
 
-![Prompt Evaluation](/docs/3.11.1/images/mlflow-3/eval-monitor/prompt-evaluation-results.png)
+![Prompt Evaluation](/docs/latest/images/mlflow-3/eval-monitor/prompt-evaluation-results.png)
 
 By clicking on the each row in the result, you can open the trace and see the detailed score and rationale.
 
-![Prompt Evaluation](/docs/3.11.1/images/mlflow-3/eval-monitor/prompt-evaluation-trace.png)
+![Prompt Evaluation](/docs/latest/images/mlflow-3/eval-monitor/prompt-evaluation-trace.png)
 
 ## Iterating on Prompts[​](#iterating-on-prompts "Direct link to Iterating on Prompts")
 
@@ -261,28 +261,28 @@ Once you have multiple evaluation runs, you can compare the result side-by-side 
 
 To see the comparison view, open the evaluation result page for one of the runs, and pick another run to compare from the dropdown on the top.
 
-![Prompt Evaluation](/docs/3.11.1/images/mlflow-3/eval-monitor/prompt-evaluation-dropdown.png)
+![Prompt Evaluation](/docs/latest/images/mlflow-3/eval-monitor/prompt-evaluation-dropdown.png)
 
 MLflow will load the evaluation results for the two runs and display the comparison view. In this example, you can see the overall concise scorer is improved 33%, but the concept coverage is dropped 11%. The little arrow ↗️/↘️ in each row indicates where the change is coming from.
 
-![Prompt Evaluation](/docs/3.11.1/images/mlflow-3/eval-monitor/prompt-evaluation-compare.png)
+![Prompt Evaluation](/docs/latest/images/mlflow-3/eval-monitor/prompt-evaluation-compare.png)
 
 ## Next steps[​](#next-steps "Direct link to Next steps")
 
-### [Customize Scorers](/docs/3.11.1/genai/eval-monitor/scorers.md)
+### [Customize Scorers](/docs/latest/genai/eval-monitor/scorers.md)
 
-[Build specialized evaluation metrics for your specific use cases and requirements.](/docs/3.11.1/genai/eval-monitor/scorers.md)
+[Build specialized evaluation metrics for your specific use cases and requirements.](/docs/latest/genai/eval-monitor/scorers.md)
 
-[Learn about custom scorers →](/docs/3.11.1/genai/eval-monitor/scorers.md)
+[Learn about custom scorers →](/docs/latest/genai/eval-monitor/scorers.md)
 
-### [Evaluate Agents](/docs/3.11.1/genai/eval-monitor/running-evaluation/agents.md)
+### [Evaluate Agents](/docs/latest/genai/eval-monitor/running-evaluation/agents.md)
 
-[Evaluate complex AI agents with tool calling and multi-step workflows.](/docs/3.11.1/genai/eval-monitor/running-evaluation/agents.md)
+[Evaluate complex AI agents with tool calling and multi-step workflows.](/docs/latest/genai/eval-monitor/running-evaluation/agents.md)
 
-[Evaluate agents →](/docs/3.11.1/genai/eval-monitor/running-evaluation/agents.md)
+[Evaluate agents →](/docs/latest/genai/eval-monitor/running-evaluation/agents.md)
 
-### [Optimize Prompts](/docs/3.11.1/genai/prompt-registry/optimize-prompts.md)
+### [Optimize Prompts](/docs/latest/genai/prompt-registry/optimize-prompts.md)
 
-[Use automated optimization techniques to systematically improve your prompts.](/docs/3.11.1/genai/prompt-registry/optimize-prompts.md)
+[Use automated optimization techniques to systematically improve your prompts.](/docs/latest/genai/prompt-registry/optimize-prompts.md)
 
-[Optimize prompts →](/docs/3.11.1/genai/prompt-registry/optimize-prompts.md)
+[Optimize prompts →](/docs/latest/genai/prompt-registry/optimize-prompts.md)

@@ -1,10 +1,10 @@
 # Code-based scorer examples
 
-In MLflow Evaluation, [custom code-based scorers](/docs/3.11.1/genai/eval-monitor/scorers/custom.md) allow you to define flexible evaluation metrics for your AI agent or application. This set of examples illustrate many patterns for using code-based scorers with different options for inputs, outputs, implementation, and error handling.
+In MLflow Evaluation, [custom code-based scorers](/docs/latest/genai/eval-monitor/scorers/custom.md) allow you to define flexible evaluation metrics for your AI agent or application. This set of examples illustrate many patterns for using code-based scorers with different options for inputs, outputs, implementation, and error handling.
 
 The image below illustrates some custom scorers' outputs as metrics in the MLflow UI.
 
-![Code-based Scorers Results](/docs/3.11.1/images/genai/eval-monitor/code-scorer-results.png)
+![Code-based Scorers Results](/docs/latest/images/genai/eval-monitor/code-scorer-results.png)
 
 ## Prerequisites[​](#prerequisites "Direct link to Prerequisites")
 
@@ -57,7 +57,7 @@ sample_app([{"role": "user", "content": "What is the capital of France?"}])
 
 ### Generate traces[​](#generate-traces "Direct link to Generate traces")
 
-The `eval_dataset` below is used by [`mlflow.genai.evaluate()`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.evaluate) to generate traces, using a placeholder scorer.
+The `eval_dataset` below is used by [`mlflow.genai.evaluate()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.evaluate) to generate traces, using a placeholder scorer.
 
 python
 
@@ -114,11 +114,11 @@ generated_traces = mlflow.search_traces(run_id=eval_results.run_id)
 generated_traces
 ```
 
-The [`mlflow.search_traces()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.search_traces) function above returns a Pandas DataFrame of traces, for use in some examples below.
+The [`mlflow.search_traces()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.search_traces) function above returns a Pandas DataFrame of traces, for use in some examples below.
 
 ## Example 1: Access data from the `Trace`[​](#example-1-access-data-from-the-trace "Direct link to example-1-access-data-from-the-trace")
 
-Access the full MLflow [Trace](/docs/3.11.1/genai/concepts/trace.md) object to use various details (spans, inputs, outputs, attributes, timing) for fine-grained metric calculation.
+Access the full MLflow [Trace](/docs/latest/genai/concepts/trace.md) object to use various details (spans, inputs, outputs, attributes, timing) for fine-grained metric calculation.
 
 This scorer checks if the total execution time of the trace is within an acceptable range.
 
@@ -157,9 +157,9 @@ span_check_eval_results = mlflow.genai.evaluate(
 
 ## Example 2: Wrap a predefined LLM judge[​](#example-2-wrap-a-predefined-llm-judge "Direct link to Example 2: Wrap a predefined LLM judge")
 
-Create a custom scorer that wraps MLflow's [built-in LLM judges](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/predefined.md#available-judges). Use this to preprocess trace data for the judge or post-process its feedback.
+Create a custom scorer that wraps MLflow's [built-in LLM judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md#available-judges). Use this to preprocess trace data for the judge or post-process its feedback.
 
-This example demonstrates how to wrap the [`is_context_relevant`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.judges.is_context_relevant) judge to evaluate whether the assistant's response is relevant to the user's query. Specifically, the `inputs` field for `sample_app` is a dictionary like: `{"messages": [{"role": ..., "content": ...}, ...]}`. This scorer extracts the content of the last user message to pass to the relevance judge.
+This example demonstrates how to wrap the [`is_context_relevant`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.judges.is_context_relevant) judge to evaluate whether the assistant's response is relevant to the user's query. Specifically, the `inputs` field for `sample_app` is a dictionary like: `{"messages": [{"role": ..., "content": ...}, ...]}`. This scorer extracts the content of the last user message to pass to the relevance judge.
 
 python
 
@@ -200,10 +200,10 @@ custom_relevance_eval_results = mlflow.genai.evaluate(
 
 ## Example 3: Use `expectations`[​](#example-3-use-expectations "Direct link to example-3-use-expectations")
 
-Expectations are ground truth values or labels and are often important for offline evaluation. When running [`mlflow.genai.evaluate()`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.evaluate), you can specify expectations in the `data` argument in two ways:
+Expectations are ground truth values or labels and are often important for offline evaluation. When running [`mlflow.genai.evaluate()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.evaluate), you can specify expectations in the `data` argument in two ways:
 
 1. `expectations` column or field: For example, if the `data` argument is a list of dictionaries or a Pandas DataFrame, each row can contain an `expectations` key. The value associated with this key is passed directly to your custom scorer.
-2. `trace` column or field: For example, if the `data` argument is the dataframe returned by [`mlflow.search_traces()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.search_traces), it will include a `trace` field that includes any `Expectation` data associated with the Traces.
+2. `trace` column or field: For example, if the `data` argument is the dataframe returned by [`mlflow.search_traces()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.search_traces), it will include a `trace` field that includes any `Expectation` data associated with the Traces.
 
 This example also demonstrates using a custom scorer along with the predefined `Safety` scorer.
 
@@ -300,9 +300,9 @@ keyword_presence_eval_results = mlflow.genai.evaluate(
 
 ## Example 4: Return multiple feedback objects[​](#example-4-return-multiple-feedback-objects "Direct link to Example 4: Return multiple feedback objects")
 
-A single scorer can return a list of [`Feedback`](/docs/3.11.1/api_reference/python_api/mlflow.entities.html#mlflow.entities.Feedback) objects, allowing one scorer to assess multiple quality facets (such as PII, sentiment, and conciseness) simultaneously.
+A single scorer can return a list of [`Feedback`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.Feedback) objects, allowing one scorer to assess multiple quality facets (such as PII, sentiment, and conciseness) simultaneously.
 
-Each `Feedback` object should have a unique `name`, which becomes the metric name in the results. See the details on [metric names](/docs/3.11.1/genai/eval-monitor/scorers/custom.md#metric-naming-behavior).
+Each `Feedback` object should have a unique `name`, which becomes the metric name in the results. See the details on [metric names](/docs/latest/genai/eval-monitor/scorers/custom.md#metric-naming-behavior).
 
 This example demonstrates a scorer that returns two distinct pieces of feedback for each trace:
 
@@ -337,11 +337,11 @@ multi_feedback_eval_results = mlflow.genai.evaluate(
 
 The result will have two columns: `is_not_empty_check` and `response_char_length` as assessments.
 
-![Multiple feedback results](/docs/3.11.1/images/genai/eval-monitor/multiple-feedback-results.png)
+![Multiple feedback results](/docs/latest/images/genai/eval-monitor/multiple-feedback-results.png)
 
 ## Example 5: Use your own LLM for a judge[​](#example-5-use-your-own-llm-for-a-judge "Direct link to Example 5: Use your own LLM for a judge")
 
-Integrate a custom or externally hosted LLM within a scorer. The scorer handles API calls, input/output formatting, and generates [`Feedback`](/docs/3.11.1/api_reference/python_api/mlflow.entities.html#mlflow.entities.Feedback) from your LLM's response, giving full control over the judging process.
+Integrate a custom or externally hosted LLM within a scorer. The scorer handles API calls, input/output formatting, and generates [`Feedback`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.Feedback) from your LLM's response, giving full control over the judging process.
 
 You can also set the `source` field in the `Feedback` object to indicate the source of the assessment is an LLM judge.
 
@@ -426,11 +426,11 @@ By opening the trace in the UI and clicking on the `answer_quality` assessment, 
 
 The new assessment supersedes the original judge assessment. The edit history is preserved for future reference.
 
-![Custom LLM judge in UI](/docs/3.11.1/images/genai/eval-monitor/custom-llm-judge-ui.png)
+![Custom LLM judge in UI](/docs/latest/images/genai/eval-monitor/custom-llm-judge-ui.png)
 
 ## Example 6: Class-based scorer definition[​](#example-6-class-based-scorer-definition "Direct link to Example 6: Class-based scorer definition")
 
-If a scorer requires state, then the [`@scorer`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.scorer) decorator-based definition may not suffice. Instead, use the [`Scorer`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.Scorer) base class for more complex scorers. The `Scorer` class is a [Pydantic object](https://docs.pydantic.dev/latest/concepts/models/), so you can define additional fields and use them in the `__call__` method.
+If a scorer requires state, then the [`@scorer`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.scorer) decorator-based definition may not suffice. Instead, use the [`Scorer`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.Scorer) base class for more complex scorers. The `Scorer` class is a [Pydantic object](https://docs.pydantic.dev/latest/concepts/models/), so you can define additional fields and use them in the `__call__` method.
 
 python
 
@@ -516,7 +516,7 @@ results = mlflow.genai.evaluate(data=generated_traces, scorers=[resilient_scorer
 
 ## Example 8: Naming conventions in scorers[​](#example-8-naming-conventions-in-scorers "Direct link to Example 8: Naming conventions in scorers")
 
-The following examples illustrate the [naming behavior for code-based scorers](/docs/3.11.1/genai/eval-monitor/scorers/custom.md#metric-naming-behavior). The behavior can be summarized as:
+The following examples illustrate the [naming behavior for code-based scorers](/docs/latest/genai/eval-monitor/scorers/custom.md#metric-naming-behavior). The behavior can be summarized as:
 
 1. If the scorer returns one or more `Feedback` objects, then `Feedback.name` fields take precedence, if specified.
 2. For a primitive return value or unnamed `Feedback`, the function name (for the `@scorer` decorator) or the `Scorer.name` field (for the `Scorer` class) is used.
@@ -630,7 +630,7 @@ mlflow.genai.evaluate(
 
 ## Example 9: Chaining evaluation results[​](#example-9-chaining-evaluation-results "Direct link to Example 9: Chaining evaluation results")
 
-If one scorer indicates problems with a subset of traces, you can collect that subset of traces for further iteration using [`mlflow.search_traces()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.search_traces). The example below finds general "Safety" failures and then analyzes the failed subset of traces using a more customized scorer (a toy example of assessment using a content policy document). Alternatively, you might use the subset of problematic traces to iterate on your AI app itself and improve its performance on the challenging inputs.
+If one scorer indicates problems with a subset of traces, you can collect that subset of traces for further iteration using [`mlflow.search_traces()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.search_traces). The example below finds general "Safety" failures and then analyzes the failed subset of traces using a more customized scorer (a toy example of assessment using a content policy document). Alternatively, you might use the subset of problematic traces to iterate on your AI app itself and improve its performance on the challenging inputs.
 
 python
 
@@ -671,7 +671,7 @@ if len(safety_failures) > 0:
 
 ## Example 10: Conditional logic with guidelines[​](#example-10-conditional-logic-with-guidelines "Direct link to Example 10: Conditional logic with guidelines")
 
-You can wrap [Guidelines judges](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/guidelines.md) in custom code-based scorers to apply different guidelines based on user attributes or other context.
+You can wrap [Guidelines judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/guidelines.md) in custom code-based scorers to apply different guidelines based on user attributes or other context.
 
 python
 
@@ -734,20 +734,20 @@ results = mlflow.genai.evaluate(data=eval_data, scorers=[premium_service_validat
 
 ## Next steps[​](#next-steps "Direct link to Next steps")
 
-### [Custom LLM judges](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges.md)
+### [Custom LLM judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md)
 
-[Learn about semantic evaluation using LLM judges](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges.md)
+[Learn about semantic evaluation using LLM judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges.md)
+[Learn more →](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md)
 
-### [Develop code-based scorers](/docs/3.11.1/genai/eval-monitor/scorers/custom/tutorial.md)
+### [Develop code-based scorers](/docs/latest/genai/eval-monitor/scorers/custom/tutorial.md)
 
-[Step through the development workflow for custom scorers](/docs/3.11.1/genai/eval-monitor/scorers/custom/tutorial.md)
+[Step through the development workflow for custom scorers](/docs/latest/genai/eval-monitor/scorers/custom/tutorial.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/scorers/custom/tutorial.md)
+[Learn more →](/docs/latest/genai/eval-monitor/scorers/custom/tutorial.md)
 
-### [Build evaluation datasets](/docs/3.11.1/genai/datasets.md)
+### [Build evaluation datasets](/docs/latest/genai/datasets.md)
 
-[Create test data for your scorers](/docs/3.11.1/genai/datasets.md)
+[Create test data for your scorers](/docs/latest/genai/datasets.md)
 
-[Learn more →](/docs/3.11.1/genai/datasets.md)
+[Learn more →](/docs/latest/genai/datasets.md)

@@ -2,7 +2,7 @@
 
 availability
 
-Models from Code is available in MLflow 2.12.2 and above. For earlier versions, use the legacy serialization methods outlined in the [Custom Python Model](/docs/3.11.1/ml/model.md#custom-python-models) documentation.
+Models from Code is available in MLflow 2.12.2 and above. For earlier versions, use the legacy serialization methods outlined in the [Custom Python Model](/docs/latest/ml/model.md#custom-python-models) documentation.
 
 target use cases
 
@@ -18,7 +18,7 @@ The key difference lies in how models are represented during serialization:
 
 **Models From Code** - Saves simple Python scripts with your model definition, making them readable, debuggable, and portable across environments.
 
-![Models from code comparison with legacy serialization](/docs/3.11.1/assets/images/models_from_code_journey-de9843c474c53ab2434d43a56b6ac3be.png)
+![Models from code comparison with legacy serialization](/docs/latest/assets/images/models_from_code_journey-de9843c474c53ab2434d43a56b6ac3be.png)
 
 ### Key Advantages[​](#key-advantages "Direct link to Key Advantages")
 
@@ -151,7 +151,7 @@ result = loaded_model.predict([2.2, 3.1, 4.7])
 print(result)  # {'2.2': 4.59, '3.1': 8.57, '4.7': 25.99}
 ```
 
-![The MLflow UI showing the stored model code as a serialized python script](/docs/3.11.1/assets/images/basic_model_from_code_ui-d31f6ac1bd0841c97400f569fdb779cb.png)
+![The MLflow UI showing the stored model code as a serialized python script](/docs/latest/assets/images/basic_model_from_code_ui-d31f6ac1bd0841c97400f569fdb779cb.png)
 
 This example shows how to work with multiple Python files using the `code_paths` feature.
 
@@ -250,7 +250,7 @@ print(
 )  # 1628.89
 ```
 
-![The MLflow UI showing models from code usage along with dependent code\_paths script stored in the model artifacts](/docs/3.11.1/assets/images/model_from_code_code_paths-3b33bcd962d79ed834c40fa25fa14988.png)
+![The MLflow UI showing models from code usage along with dependent code\_paths script stored in the model artifacts](/docs/latest/assets/images/model_from_code_code_paths-3b33bcd962d79ed834c40fa25fa14988.png)
 
 This example demonstrates MLflow's native LangChain Models from Code support for building AI applications.
 
@@ -376,7 +376,7 @@ response = landscape_advisor.invoke(query)
 print(response)
 ```
 
-![The MLflow UI showing models from code usage and the mfc.py script that defines the LangChain LCEL chain definition](/docs/3.11.1/assets/images/langchain_model_from_code-8813a0926cbf8c6d8d03b2fe5dcd6d91.png)
+![The MLflow UI showing models from code usage and the mfc.py script that defines the LangChain LCEL chain definition](/docs/latest/assets/images/langchain_model_from_code-8813a0926cbf8c6d8d03b2fe5dcd6d91.png)
 
 ## Troubleshooting Common Issues[​](#troubleshooting-common-issues "Direct link to Troubleshooting Common Issues")
 
@@ -455,7 +455,7 @@ def predict(self, context, model_input):
 
 **Immediate Actions**:
 
-1. Delete the MLflow run: Use the UI or [`delete_run()` API](/docs/3.11.1/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.delete_run)
+1. Delete the MLflow run: Use the UI or [`delete_run()` API](/docs/latest/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.delete_run)
 2. Clean up artifacts: Run `mlflow gc` CLI command
 3. Rotate compromised credentials
 4. Re-log the model with proper security practices
@@ -628,6 +628,6 @@ mlflow.pyfunc.log_model(python_model="my_model.py", name="model")
 
 For more information on related topics:
 
-* [Model API Documentation](/docs/3.11.1/ml/model.md#model-api)
-* [Managing Dependencies in MLflow Models](/docs/3.11.1/ml/model/dependencies.md)
-* [Custom Python Models](/docs/3.11.1/ml/model.md#custom-python-models)
+* [Model API Documentation](/docs/latest/ml/model.md#model-api)
+* [Managing Dependencies in MLflow Models](/docs/latest/ml/model/dependencies.md)
+* [Custom Python Models](/docs/latest/ml/model.md#custom-python-models)

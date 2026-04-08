@@ -12,35 +12,35 @@ Click an integration below to get started with detailed setup instructions.
 
 ## Available Integrations[​](#available-integrations "Direct link to Available Integrations")
 
-[![DeepEval](/docs/3.11.1/images/logos/deepeval-logo.png)](/docs/3.11.1/genai/eval-monitor/scorers/third-party/deepeval.md)
+[![DeepEval](/docs/latest/images/logos/deepeval-logo.png)](/docs/latest/genai/eval-monitor/scorers/third-party/deepeval.md)
 
-### [DeepEval](/docs/3.11.1/genai/eval-monitor/scorers/third-party/deepeval.md)
+### [DeepEval](/docs/latest/genai/eval-monitor/scorers/third-party/deepeval.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/scorers/third-party/deepeval.md)
+[Learn more →](/docs/latest/genai/eval-monitor/scorers/third-party/deepeval.md)
 
-[![RAGAS](/docs/3.11.1/images/logos/ragas-logo.png)](/docs/3.11.1/genai/eval-monitor/scorers/third-party/ragas.md)
+[![RAGAS](/docs/latest/images/logos/ragas-logo.png)](/docs/latest/genai/eval-monitor/scorers/third-party/ragas.md)
 
-### [RAGAS](/docs/3.11.1/genai/eval-monitor/scorers/third-party/ragas.md)
+### [RAGAS](/docs/latest/genai/eval-monitor/scorers/third-party/ragas.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/scorers/third-party/ragas.md)
+[Learn more →](/docs/latest/genai/eval-monitor/scorers/third-party/ragas.md)
 
-[![Arize Phoenix](/docs/3.11.1/images/logos/arize-phoenix-logo.png)](/docs/3.11.1/genai/eval-monitor/scorers/third-party/phoenix.md)
+[![Arize Phoenix](/docs/latest/images/logos/arize-phoenix-logo.png)](/docs/latest/genai/eval-monitor/scorers/third-party/phoenix.md)
 
-### [Arize Phoenix](/docs/3.11.1/genai/eval-monitor/scorers/third-party/phoenix.md)
+### [Arize Phoenix](/docs/latest/genai/eval-monitor/scorers/third-party/phoenix.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/scorers/third-party/phoenix.md)
+[Learn more →](/docs/latest/genai/eval-monitor/scorers/third-party/phoenix.md)
 
-[![TruLens](/docs/3.11.1/images/logos/trulens-logo.png)](/docs/3.11.1/genai/eval-monitor/scorers/third-party/trulens.md)
+[![TruLens](/docs/latest/images/logos/trulens-logo.png)](/docs/latest/genai/eval-monitor/scorers/third-party/trulens.md)
 
-### [TruLens](/docs/3.11.1/genai/eval-monitor/scorers/third-party/trulens.md)
+### [TruLens](/docs/latest/genai/eval-monitor/scorers/third-party/trulens.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/scorers/third-party/trulens.md)
+[Learn more →](/docs/latest/genai/eval-monitor/scorers/third-party/trulens.md)
 
-[![Guardrails AI](/docs/3.11.1/images/logos/guardrails-ai-logo.jpeg)](/docs/3.11.1/genai/eval-monitor/scorers/third-party/guardrails.md)
+[![Guardrails AI](/docs/latest/images/logos/guardrails-ai-logo.jpeg)](/docs/latest/genai/eval-monitor/scorers/third-party/guardrails.md)
 
-### [Guardrails AI](/docs/3.11.1/genai/eval-monitor/scorers/third-party/guardrails.md)
+### [Guardrails AI](/docs/latest/genai/eval-monitor/scorers/third-party/guardrails.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/scorers/third-party/guardrails.md)
+[Learn more →](/docs/latest/genai/eval-monitor/scorers/third-party/guardrails.md)
 
 Missing an Integration?
 

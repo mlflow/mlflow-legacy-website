@@ -1,10 +1,10 @@
 # Tracing Instructor
 
-![Instructor Tracing via autolog](/docs/3.11.1/assets/images/instructor-tracing-9d197095322fed09f9b5f0b28577542c.png)
+![Instructor Tracing via autolog](/docs/latest/assets/images/instructor-tracing-9d197095322fed09f9b5f0b28577542c.png)
 
 [Instructor](https://python.useinstructor.com/) is an open-source Python library built on top of Pydantic, simplifying structured LLM outputs with validation, retries, and streaming.
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing.md) works with Instructor by enabling auto-tracing for the underlying LLM libraries. For example, if you use Instructor for OpenAI LLMs, you can enable tracing with `mlflow.openai.autolog()` and the generated traces will capture the structured outputs from Instructor.
+[MLflow Tracing](/docs/latest/genai/tracing.md) works with Instructor by enabling auto-tracing for the underlying LLM libraries. For example, if you use Instructor for OpenAI LLMs, you can enable tracing with `mlflow.openai.autolog()` and the generated traces will capture the structured outputs from Instructor.
 
 Similarly, you can also trace Instructor with other LLM providers, such as Anthropic, Gemini, and LiteLLM, by enabling the corresponding autologging in MLflow.
 

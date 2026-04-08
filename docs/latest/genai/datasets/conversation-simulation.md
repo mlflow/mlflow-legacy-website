@@ -1,6 +1,6 @@
 # Conversation Simulation Datasets
 
-Store and manage test cases for [conversation simulation](/docs/3.11.1/genai/eval-monitor/running-evaluation/conversation-simulation.md) using MLflow Evaluation Datasets. This enables reproducible multi-turn testing across agent versions.
+Store and manage test cases for [conversation simulation](/docs/latest/genai/eval-monitor/running-evaluation/conversation-simulation.md) using MLflow Evaluation Datasets. This enables reproducible multi-turn testing across agent versions.
 
 ## Why Use Datasets for Simulation?[​](#why-use-datasets-for-simulation "Direct link to Why Use Datasets for Simulation?")
 
@@ -185,20 +185,20 @@ results_v2 = mlflow.genai.evaluate(
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [Conversation Simulation](/docs/3.11.1/genai/eval-monitor/running-evaluation/conversation-simulation.md)
+### [Conversation Simulation](/docs/latest/genai/eval-monitor/running-evaluation/conversation-simulation.md)
 
-[Learn how to simulate conversations with your agent](/docs/3.11.1/genai/eval-monitor/running-evaluation/conversation-simulation.md)
+[Learn how to simulate conversations with your agent](/docs/latest/genai/eval-monitor/running-evaluation/conversation-simulation.md)
 
-[Simulate conversations →](/docs/3.11.1/genai/eval-monitor/running-evaluation/conversation-simulation.md)
+[Simulate conversations →](/docs/latest/genai/eval-monitor/running-evaluation/conversation-simulation.md)
 
-### [Evaluation Datasets](/docs/3.11.1/genai/datasets.md)
+### [Evaluation Datasets](/docs/latest/genai/datasets.md)
 
-[Learn more about MLflow Evaluation Datasets](/docs/3.11.1/genai/datasets.md)
+[Learn more about MLflow Evaluation Datasets](/docs/latest/genai/datasets.md)
 
-[View datasets guide →](/docs/3.11.1/genai/datasets.md)
+[View datasets guide →](/docs/latest/genai/datasets.md)
 
-### [Evaluate Conversations](/docs/3.11.1/genai/eval-monitor/running-evaluation/multi-turn.md)
+### [Evaluate Conversations](/docs/latest/genai/eval-monitor/running-evaluation/multi-turn.md)
 
-[Evaluate multi-turn conversations with session-level scorers](/docs/3.11.1/genai/eval-monitor/running-evaluation/multi-turn.md)
+[Evaluate multi-turn conversations with session-level scorers](/docs/latest/genai/eval-monitor/running-evaluation/multi-turn.md)
 
-[Evaluate sessions →](/docs/3.11.1/genai/eval-monitor/running-evaluation/multi-turn.md)
+[Evaluate sessions →](/docs/latest/genai/eval-monitor/running-evaluation/multi-turn.md)

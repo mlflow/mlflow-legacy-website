@@ -1,10 +1,10 @@
 # Tracing LlamaIndex🦙
 
-[](/docs/3.11.1/images/llms/tracing/llamaindex-tracing.mp4)
+[](/docs/latest/images/llms/tracing/llamaindex-tracing.mp4)
 
 [LlamaIndex](https://www.llamaindex.ai/) is an open-source framework for building agentic generative AI applications that allow large language models to work with your data in any format.
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing.md) provides automatic tracing capability for LlamaIndex. You can enable tracing for LlamaIndex by calling the [`mlflow.llama_index.autolog()`](/docs/3.11.1/api_reference/python_api/mlflow.llama_index.html#mlflow.llama_index.autolog) function, and nested traces are automatically logged to the active MLflow Experiment upon invocation of LlamaIndex engines and workflows.
+[MLflow Tracing](/docs/latest/genai/tracing.md) provides automatic tracing capability for LlamaIndex. You can enable tracing for LlamaIndex by calling the [`mlflow.llama_index.autolog()`](/docs/latest/api_reference/python_api/mlflow.llama_index.html#mlflow.llama_index.autolog) function, and nested traces are automatically logged to the active MLflow Experiment upon invocation of LlamaIndex engines and workflows.
 
 python
 
@@ -16,7 +16,7 @@ mlflow.llama_index.autolog()
 
 tip
 
-MLflow LlamaIndex integration is not only about tracing. MLflow offers full tracking experience for LlamaIndex, including model tracking, index management, and evaluation. Please checkout the **[MLflow LlamaIndex Flavor](/docs/3.11.1/genai/flavors/llama-index.md)** to learn more!
+MLflow LlamaIndex integration is not only about tracing. MLflow offers full tracking experience for LlamaIndex, including model tracking, index management, and evaluation. Please checkout the **[MLflow LlamaIndex Flavor](/docs/latest/genai/flavors/llama-index.md)** to learn more!
 
 ### Example Usage[​](#example-usage "Direct link to Example Usage")
 
@@ -61,7 +61,7 @@ response = query_engine.query("What was the first program the author wrote?")
 
 ## Tracking Token Usage and Cost[​](#tracking-token-usage-and-cost "Direct link to Tracking Token Usage and Cost")
 
-MLflow automatically tracks token usage and cost for LlamaIndex. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/3.11.1/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
+MLflow automatically tracks token usage and cost for LlamaIndex. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/latest/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
 
 ### LlamaIndex workflow[​](#llamaindex-workflow "Direct link to LlamaIndex workflow")
 

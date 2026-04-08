@@ -18,8 +18,8 @@ Throughout this guide, our focal points will be:
 
 If you're keen on navigating directly to a specific topic within this guide, the links below will lead you right to the desired section:
 
-* [Full Notebooks](/docs/3.11.1/ml/traditional-ml/tutorials/hyperparameter-tuning/notebooks.md)
-* [The Parent-Child relationship with runs](/docs/3.11.1/ml/traditional-ml/tutorials/hyperparameter-tuning/part1-child-runs.md)
-* [Logging plots with MLflow](/docs/3.11.1/ml/traditional-ml/tutorials/hyperparameter-tuning/part2-logging-plots.md)
+* [Full Notebooks](/docs/latest/ml/traditional-ml/tutorials/hyperparameter-tuning/notebooks.md)
+* [The Parent-Child relationship with runs](/docs/latest/ml/traditional-ml/tutorials/hyperparameter-tuning/part1-child-runs.md)
+* [Logging plots with MLflow](/docs/latest/ml/traditional-ml/tutorials/hyperparameter-tuning/part2-logging-plots.md)
 
 To get started with this guide, click NEXT below.

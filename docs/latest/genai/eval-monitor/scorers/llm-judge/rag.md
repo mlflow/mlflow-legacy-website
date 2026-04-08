@@ -12,13 +12,13 @@ MLflow provides built-in judges designed specifically for evaluating RAG applica
 
 | Judge                                                                                                             | What does it evaluate?                                    | Requires ground-truth? | Requires traces?      |
 | ----------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- | ---------------------- | --------------------- |
-| [RetrievalRelevance](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/rag/relevance.md#retrievalrelevance-judge) | Are retrieved documents relevant to the user's request?   | No                     | ⚠️ **Trace Required** |
-| [RetrievalGroundedness](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/rag/groundedness.md)                    | Is the app's response grounded in retrieved information?  | No                     | ⚠️ **Trace Required** |
-| [RetrievalSufficiency](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/rag/context-sufficiency.md)              | Do retrieved documents contain all necessary information? | Yes                    | ⚠️ **Trace Required** |
+| [RetrievalRelevance](/docs/latest/genai/eval-monitor/scorers/llm-judge/rag/relevance.md#retrievalrelevance-judge) | Are retrieved documents relevant to the user's request?   | No                     | ⚠️ **Trace Required** |
+| [RetrievalGroundedness](/docs/latest/genai/eval-monitor/scorers/llm-judge/rag/groundedness.md)                    | Is the app's response grounded in retrieved information?  | No                     | ⚠️ **Trace Required** |
+| [RetrievalSufficiency](/docs/latest/genai/eval-monitor/scorers/llm-judge/rag/context-sufficiency.md)              | Do retrieved documents contain all necessary information? | Yes                    | ⚠️ **Trace Required** |
 
 tip
 
-All RAG judges require MLflow Traces with at least one span marked as `span_type="RETRIEVER"`. Use the [@mlflow.trace](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.trace) decorator with `span_type="RETRIEVER"` on your retrieval functions.
+All RAG judges require MLflow Traces with at least one span marked as `span_type="RETRIEVER"`. Use the [@mlflow.trace](/docs/latest/api_reference/python_api/mlflow.html#mlflow.trace) decorator with `span_type="RETRIEVER"` on your retrieval functions.
 
 ## Prerequisites for running the examples[​](#prerequisites-for-running-the-examples "Direct link to Prerequisites for running the examples")
 
@@ -30,7 +30,7 @@ All RAG judges require MLflow Traces with at least one span marked as `span_type
    pip install --upgrade mlflow
    ```
 
-2. Create an MLflow experiment by following the [setup your environment quickstart](/docs/3.11.1/genai/getting-started/connect-environment.md).
+2. Create an MLflow experiment by following the [setup your environment quickstart](/docs/latest/genai/getting-started/connect-environment.md).
 
 3. (Optional, if using OpenAI models) Use the native OpenAI SDK to connect to OpenAI-hosted models. Select a model from the [available OpenAI models](https://platform.openai.com/docs/models).
 
@@ -161,24 +161,24 @@ Each RAG judge evaluates retriever spans separately:
 
 You can change the judge model by using the `model` argument in the judge definition. The model must be specified in the format `<provider>:/<model-name>`, where `<provider>` is the name of your model provider (e.g. `openai`, `anthropic`, `gemini`).
 
-For a list of supported models, see [selecting judge models](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges.md#selecting-judge-models).
+For a list of supported models, see [selecting judge models](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md#selecting-judge-models).
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [RetrievalRelevance](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/rag/relevance.md#retrievalrelevance-judge)
+### [RetrievalRelevance](/docs/latest/genai/eval-monitor/scorers/llm-judge/rag/relevance.md#retrievalrelevance-judge)
 
-[Evaluate if retrieved documents are relevant to queries](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/rag/relevance.md#retrievalrelevance-judge)
+[Evaluate if retrieved documents are relevant to queries](/docs/latest/genai/eval-monitor/scorers/llm-judge/rag/relevance.md#retrievalrelevance-judge)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/rag/relevance.md#retrievalrelevance-judge)
+[Learn more →](/docs/latest/genai/eval-monitor/scorers/llm-judge/rag/relevance.md#retrievalrelevance-judge)
 
-### [RetrievalGroundedness](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/rag/groundedness.md)
+### [RetrievalGroundedness](/docs/latest/genai/eval-monitor/scorers/llm-judge/rag/groundedness.md)
 
-[Check if responses are grounded in retrieved context](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/rag/groundedness.md)
+[Check if responses are grounded in retrieved context](/docs/latest/genai/eval-monitor/scorers/llm-judge/rag/groundedness.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/rag/groundedness.md)
+[Learn more →](/docs/latest/genai/eval-monitor/scorers/llm-judge/rag/groundedness.md)
 
-### [RetrievalSufficiency](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/rag/context-sufficiency.md)
+### [RetrievalSufficiency](/docs/latest/genai/eval-monitor/scorers/llm-judge/rag/context-sufficiency.md)
 
-[Verify retrieved context contains all necessary information](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/rag/context-sufficiency.md)
+[Verify retrieved context contains all necessary information](/docs/latest/genai/eval-monitor/scorers/llm-judge/rag/context-sufficiency.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/rag/context-sufficiency.md)
+[Learn more →](/docs/latest/genai/eval-monitor/scorers/llm-judge/rag/context-sufficiency.md)

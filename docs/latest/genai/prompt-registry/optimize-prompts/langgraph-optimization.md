@@ -1,8 +1,8 @@
 # Optimizing Prompts for LangGraph
 
-![LangGraph Logo](/docs/3.11.1/images/logos/langgraph-logo.png)
+![LangGraph Logo](/docs/latest/images/logos/langgraph-logo.png)
 
-This guide demonstrates how to leverage [`mlflow.genai.optimize_prompts()`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.optimize_prompts) alongside [LangGraph](https://langchain-ai.github.io/langgraph/) to enhance your agent's prompts automatically. The [`mlflow.genai.optimize_prompts()`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.optimize_prompts) API is framework-agnostic, enabling you to perform end-to-end prompt optimization of your graphs from any framework using state-of-the-art techniques. For more information about the API, please visit [Optimize Prompts](/docs/3.11.1/genai/prompt-registry/optimize-prompts.md).
+This guide demonstrates how to leverage [`mlflow.genai.optimize_prompts()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.optimize_prompts) alongside [LangGraph](https://langchain-ai.github.io/langgraph/) to enhance your agent's prompts automatically. The [`mlflow.genai.optimize_prompts()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.optimize_prompts) API is framework-agnostic, enabling you to perform end-to-end prompt optimization of your graphs from any framework using state-of-the-art techniques. For more information about the API, please visit [Optimize Prompts](/docs/latest/genai/prompt-registry/optimize-prompts.md).
 
 ## Prerequisites[​](#prerequisites "Direct link to Prerequisites")
 

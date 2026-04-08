@@ -4,7 +4,7 @@
 
 ## Using the MLflow Tracing SDK[​](#using-the-mlflow-tracing-sdk "Direct link to Using the MLflow Tracing SDK")
 
-The MLflow Tracing SDK is built on top of the OpenTelemetry SDK. If you want to instrument your AI applications with minimal effort, use the [MLflow Tracing SDK](/docs/3.11.1/genai/tracing/quickstart.md).
+The MLflow Tracing SDK is built on top of the OpenTelemetry SDK. If you want to instrument your AI applications with minimal effort, use the [MLflow Tracing SDK](/docs/latest/genai/tracing/quickstart.md).
 
 python
 
@@ -20,7 +20,7 @@ response = client.responses.create(model="gpt-4o-mini", input="Hello, world!")
 
 ## Using Other OpenTelemetry Libraries[​](#using-other-opentelemetry-libraries "Direct link to Using Other OpenTelemetry Libraries")
 
-You may want to trace LLMs or frameworks that are not [supported](/docs/3.11.1/genai/tracing/integrations.md) by the MLflow Tracing SDK, or instrument applications written in languages other than Python and TypeScript/JavaScript.
+You may want to trace LLMs or frameworks that are not [supported](/docs/latest/genai/tracing/integrations.md) by the MLflow Tracing SDK, or instrument applications written in languages other than Python and TypeScript/JavaScript.
 
 MLflow Server exposes an OTLP endpoint at `/v1/traces` ([OTLP](https://opentelemetry.io/docs/specs/otlp/)) that accepts traces from any OpenTelemetry instrumentation, allowing you to trace applications written in other languages such as Java, Go, Rust, etc. To export traces to MLflow, set `OTEL_EXPORTER_OTLP_TRACES_ENDPOINT` to the MLflow server endpoint and set the `x-mlflow-experiment-id` header to the MLflow experiment ID.
 
@@ -31,11 +31,11 @@ export OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://localhost:5000/v1/traces
 export OTEL_EXPORTER_OTLP_TRACES_HEADERS=x-mlflow-experiment-id=123
 ```
 
-For more details about the MLflow OpenTelemetry integration, see [Collect OpenTelemetry Traces into MLflow](/docs/3.11.1/genai/tracing/opentelemetry/ingest.md).
+For more details about the MLflow OpenTelemetry integration, see [Collect OpenTelemetry Traces into MLflow](/docs/latest/genai/tracing/opentelemetry/ingest.md).
 
 ## Combining the OpenTelemetry SDK and the MLflow Tracing SDK[​](#combining-the-opentelemetry-sdk-and-the-mlflow-tracing-sdk "Direct link to Combining the OpenTelemetry SDK and the MLflow Tracing SDK")
 
-Since the MLflow Tracing SDK is built on top of the OpenTelemetry SDK, you can combine them to get the best of both worlds. To use both SDKs in a single application, set the `MLFLOW_USE_DEFAULT_TRACER_PROVIDER` environment variable to `false`. Then, you should invoke [`mlflow.tracing.set_destination()`](/docs/3.11.1/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.set_destination) to add MLflow's span processors to the existing trace provider, ensuring spans from both OpenTelemetry and MLflow to be combined into a single trace.
+Since the MLflow Tracing SDK is built on top of the OpenTelemetry SDK, you can combine them to get the best of both worlds. To use both SDKs in a single application, set the `MLFLOW_USE_DEFAULT_TRACER_PROVIDER` environment variable to `false`. Then, you should invoke [`mlflow.tracing.set_destination()`](/docs/latest/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.set_destination) to add MLflow's span processors to the existing trace provider, ensuring spans from both OpenTelemetry and MLflow to be combined into a single trace.
 
 The following example shows how to combine MLflow's OpenAI auto-tracing with OpenTelemetry's native FastAPI instrumentation.
 
@@ -78,15 +78,15 @@ async def answer_question(query: Request) -> Response:
 
 Spans generated from both SDKs will be merged into a single trace.
 
-![The MLflow UI showing the MLflow and OpenTelemetry combined spans](/docs/3.11.1/images/llms/tracing/opentelemetry/mlflow-otel-combined.png)
+![The MLflow UI showing the MLflow and OpenTelemetry combined spans](/docs/latest/images/llms/tracing/opentelemetry/mlflow-otel-combined.png)
 
 ### Setting Up TraceProvider By Yourself[​](#setting-up-traceprovider-by-yourself "Direct link to Setting Up TraceProvider By Yourself")
 
-You can explicitly configure your own `TracerProvider` (for example, to add custom processors or exporters). Setting `MLFLOW_USE_DEFAULT_TRACER_PROVIDER` to `false` and calling [`mlflow.tracing.set_destination()`](/docs/3.11.1/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.set_destination) ensures MLflow and OpenTelemetry spans are combined into a single trace.
+You can explicitly configure your own `TracerProvider` (for example, to add custom processors or exporters). Setting `MLFLOW_USE_DEFAULT_TRACER_PROVIDER` to `false` and calling [`mlflow.tracing.set_destination()`](/docs/latest/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.set_destination) ensures MLflow and OpenTelemetry spans are combined into a single trace.
 
 important
 
-[`mlflow.tracing.set_destination()`](/docs/3.11.1/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.set_destination) must be invoked after you explicitly configured the trace provider.
+[`mlflow.tracing.set_destination()`](/docs/latest/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.set_destination) must be invoked after you explicitly configured the trace provider.
 
 python
 
@@ -126,4 +126,4 @@ with otel_tracer.start_as_current_span("http_request") as external_span:
 
 Both the OpenTelemetry span (`http_request`) and the MLflow span (`model_prediction`) will appear in the same trace in the MLflow UI.
 
-![The MLflow UI showing the MLflow and OpenTelemetry combined spans when trace provider is set](/docs/3.11.1/images/llms/tracing/opentelemetry/mlflow-otel-trace-provider.png)
+![The MLflow UI showing the MLflow and OpenTelemetry combined spans when trace provider is set](/docs/latest/images/llms/tracing/opentelemetry/mlflow-otel-trace-provider.png)

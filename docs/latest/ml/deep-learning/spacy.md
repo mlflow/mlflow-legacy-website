@@ -105,14 +105,14 @@ predictions = predictor.predict(["Text to process"])
 
 ## Learn More[​](#learn-more "Direct link to Learn More")
 
-### [Model Registry](/docs/3.11.1/ml/model-registry.md)
+### [Model Registry](/docs/latest/ml/model-registry.md)
 
-[Version and manage spaCy models](/docs/3.11.1/ml/model-registry.md)
+[Version and manage spaCy models](/docs/latest/ml/model-registry.md)
 
-[Learn more →](/docs/3.11.1/ml/model-registry.md)
+[Learn more →](/docs/latest/ml/model-registry.md)
 
-### [MLflow Tracking](/docs/3.11.1/ml/tracking.md)
+### [MLflow Tracking](/docs/latest/ml/tracking.md)
 
-[Track experiments, parameters, and metrics](/docs/3.11.1/ml/tracking.md)
+[Track experiments, parameters, and metrics](/docs/latest/ml/tracking.md)
 
-[Learn more →](/docs/3.11.1/ml/tracking.md)
+[Learn more →](/docs/latest/ml/tracking.md)

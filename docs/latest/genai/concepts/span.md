@@ -2,9 +2,9 @@
 
 ## What is a Span?[​](#what-is-a-span "Direct link to What is a Span?")
 
-The Span object is a fundamental building block in the [Trace](/docs/3.11.1/genai/concepts/trace.md) data model. It is a container for the information about the individual steps of the trace, such as LLM calls, tool execution, retrieval, etc. Spans form a hierarchical tree structure within a single trace, which represents the execution flow of the trace.
+The Span object is a fundamental building block in the [Trace](/docs/latest/genai/concepts/trace.md) data model. It is a container for the information about the individual steps of the trace, such as LLM calls, tool execution, retrieval, etc. Spans form a hierarchical tree structure within a single trace, which represents the execution flow of the trace.
 
-![Example of a Span for a Tool Calling Agent](/docs/3.11.1/images/llms/tracing/schema/span_architecture.png)
+![Example of a Span for a Tool Calling Agent](/docs/latest/images/llms/tracing/schema/span_architecture.png)
 
 Example of a Span for a Tool Calling Agent
 
@@ -67,7 +67,7 @@ Span types are a way to categorize spans within a trace. MLflow provides a set o
 | `"MEMORY"`     | Represents a memory operation, such as persisting context in a long-term memory db.    |
 | `"UNKNOWN"`    | A default span type that is used when no other span type is specified.                 |
 
-When you are using [automatic tracing](/docs/3.11.1/genai/tracing/app-instrumentation/automatic.md), the span type is automatically set by MLflow. To set a span type for manually created spans, you can pass the `span_type` parameter to the [`mlflow.trace()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.trace) decorator or [`mlflow.start_span()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.start_span) context manager. When you are using [automatic tracing](/docs/3.11.1/genai/tracing/app-instrumentation/automatic.md), the span type is automatically set by MLflow.
+When you are using [automatic tracing](/docs/latest/genai/tracing/app-instrumentation/automatic.md), the span type is automatically set by MLflow. To set a span type for manually created spans, you can pass the `span_type` parameter to the [`mlflow.trace()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.trace) decorator or [`mlflow.start_span()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.start_span) context manager. When you are using [automatic tracing](/docs/latest/genai/tracing/app-instrumentation/automatic.md), the span type is automatically set by MLflow.
 
 python
 
@@ -109,7 +109,7 @@ retriever_spans = trace.search_spans(span_type=SpanType.RETRIEVER)
 
 **Searching spans on UI:**
 
-![Search Spans by Type](/docs/3.11.1/assets/images/search_spans_by_type-ddb1e2356a4b8ba83b6cb59c04fffc89.png)
+![Search Spans by Type](/docs/latest/assets/images/search_spans_by_type-ddb1e2356a4b8ba83b6cb59c04fffc89.png)
 
 ## Specialized Span Schemas[​](#specialized-span-schemas "Direct link to Specialized Span Schemas")
 

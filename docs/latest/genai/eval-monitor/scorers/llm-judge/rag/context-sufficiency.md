@@ -14,7 +14,7 @@ This built-in LLM judge is designed for evaluating RAG systems where you need to
    pip install --upgrade mlflow
    ```
 
-2. Create an MLflow experiment by following the [setup your environment quickstart](/docs/3.11.1/genai/getting-started/connect-environment.md).
+2. Create an MLflow experiment by following the [setup your environment quickstart](/docs/latest/genai/getting-started/connect-environment.md).
 
 3. (Optional, if using OpenAI models) Use the native OpenAI SDK to connect to OpenAI-hosted models. Select a model from the [available OpenAI models](https://platform.openai.com/docs/models).
 
@@ -94,11 +94,11 @@ results = mlflow.genai.evaluate(
 
 tip
 
-For a complete RAG application example with this judge, see the [RAG Evaluation guide](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/rag.md).
+For a complete RAG application example with this judge, see the [RAG Evaluation guide](/docs/latest/genai/eval-monitor/scorers/llm-judge/rag.md).
 
 ## Interpret results[​](#interpret-results "Direct link to Interpret results")
 
-The RetrievalSufficiency judge evaluates each retriever span separately and returns a separate Feedback object for each retriever span in your trace. Each [`Feedback`](/docs/3.11.1/api_reference/python_api/mlflow.entities.html#mlflow.entities.Feedback) object contains:
+The RetrievalSufficiency judge evaluates each retriever span separately and returns a separate Feedback object for each retriever span in your trace. Each [`Feedback`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.Feedback) object contains:
 
 * **value**: "yes" if the retrieved documents contain all the information needed to generate the expected facts, "no" if the retrieved documents are missing critical information
 * **rationale**: Explanation of which expected facts the context covers or lacks
@@ -109,24 +109,24 @@ This helps you identify when your retrieval system is failing to fetch all neces
 
 You can change the judge model by using the `model` argument in the judge definition. The model must be specified in the format `<provider>:/<model-name>`, where `<provider>` is the name of your model provider (e.g. `openai`, `anthropic`, `gemini`).
 
-For a list of supported models, see [selecting judge models](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges.md#selecting-judge-models).
+For a list of supported models, see [selecting judge models](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md#selecting-judge-models).
 
 ## Next steps[​](#next-steps "Direct link to Next steps")
 
-### [Evaluate context relevance](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/rag/relevance.md#retrievalrelevance-judge)
+### [Evaluate context relevance](/docs/latest/genai/eval-monitor/scorers/llm-judge/rag/relevance.md#retrievalrelevance-judge)
 
-[Ensure retrieved documents are relevant before checking sufficiency](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/rag/relevance.md#retrievalrelevance-judge)
+[Ensure retrieved documents are relevant before checking sufficiency](/docs/latest/genai/eval-monitor/scorers/llm-judge/rag/relevance.md#retrievalrelevance-judge)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/rag/relevance.md#retrievalrelevance-judge)
+[Learn more →](/docs/latest/genai/eval-monitor/scorers/llm-judge/rag/relevance.md#retrievalrelevance-judge)
 
-### [Evaluate groundedness](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/rag/groundedness.md)
+### [Evaluate groundedness](/docs/latest/genai/eval-monitor/scorers/llm-judge/rag/groundedness.md)
 
-[Verify that responses use only the provided context](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/rag/groundedness.md)
+[Verify that responses use only the provided context](/docs/latest/genai/eval-monitor/scorers/llm-judge/rag/groundedness.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/rag/groundedness.md)
+[Learn more →](/docs/latest/genai/eval-monitor/scorers/llm-judge/rag/groundedness.md)
 
-### [Build evaluation datasets](/docs/3.11.1/genai/datasets.md)
+### [Build evaluation datasets](/docs/latest/genai/datasets.md)
 
-[Create ground truth datasets with expected facts for testing](/docs/3.11.1/genai/datasets.md)
+[Create ground truth datasets with expected facts for testing](/docs/latest/genai/datasets.md)
 
-[Learn more →](/docs/3.11.1/genai/datasets.md)
+[Learn more →](/docs/latest/genai/datasets.md)

@@ -456,11 +456,11 @@ Note that the creation and management of serving endpoints is handled differentl
 1. **Import Errors**: Ensure all dependencies are specified in the conda environment
 2. **Artifact Loading**: Verify artifact paths are correct and accessible
 3. **Memory Issues**: Monitor memory usage with large models or datasets
-4. **Serialization**: Use [`models-from-code`](/docs/3.11.1/ml/model/models-from-code.md) feature when logging models that are not picklable
+4. **Serialization**: Use [`models-from-code`](/docs/latest/ml/model/models-from-code.md) feature when logging models that are not picklable
 
 ### Debugging Tips[​](#debugging-tips "Direct link to Debugging Tips")
 
-* 🧾 **Enable [tracing](/docs/3.11.1/genai/tracing.md)** to track execution flow
+* 🧾 **Enable [tracing](/docs/latest/genai/tracing.md)** to track execution flow
 * 🧪 **Test components individually** before integration
 * 📊 **Use small test datasets** for initial validation
 * 🖥️ **Monitor resource usage** during development

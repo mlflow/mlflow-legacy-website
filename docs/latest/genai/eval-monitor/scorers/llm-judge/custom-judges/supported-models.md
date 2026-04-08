@@ -9,7 +9,7 @@ You can also explicitly specify a model from any of the following sources:
 
 ## AI Gateway Endpoints[​](#ai-gateway-endpoints "Direct link to AI Gateway Endpoints")
 
-[AI Gateway](/docs/3.11.1/genai/governance/ai-gateway.md) endpoints are the recommended way to configure judge models, especially when creating judges from the UI. Benefits include:
+[AI Gateway](/docs/latest/genai/governance/ai-gateway.md) endpoints are the recommended way to configure judge models, especially when creating judges from the UI. Benefits include:
 
 * **Run judges directly from the UI** - Test and execute judges without leaving the browser
 * **Centralized API key management** - No need to configure API keys locally

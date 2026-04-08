@@ -1,8 +1,8 @@
 # Tracing Spring AI
 
-![Spring AI Tracing](/docs/3.11.1/assets/images/spring-ai-tracing-f802506208759be1fcd131364a71df3d.png)
+![Spring AI Tracing](/docs/latest/assets/images/spring-ai-tracing-f802506208759be1fcd131364a71df3d.png)
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing.md) provides automatic tracing capability for [Spring AI](https://spring.io/projects/spring-ai), the Spring framework for building AI applications. MLflow supports tracing for Spring AI through the [OpenTelemetry](/docs/3.11.1/genai/tracing/opentelemetry.md) integration.
+[MLflow Tracing](/docs/latest/genai/tracing.md) provides automatic tracing capability for [Spring AI](https://spring.io/projects/spring-ai), the Spring framework for building AI applications. MLflow supports tracing for Spring AI through the [OpenTelemetry](/docs/latest/genai/tracing/opentelemetry.md) integration.
 
 ## Step 1: Create a Spring AI Project[​](#step-1-create-a-spring-ai-project "Direct link to Step 1: Create a Spring AI Project")
 
@@ -106,7 +106,7 @@ bash
 mlflow server --port 5000
 ```
 
-By default, MLflow uses SQLite as the backend store. To use other types of SQL databases such as PostgreSQL, MySQL, and MSSQL, change the store URI as described in the [backend store documentation](/docs/3.11.1/self-hosting/architecture/backend-store.md). OpenTelemetry ingestion is not supported with file-based backend stores.
+By default, MLflow uses SQLite as the backend store. To use other types of SQL databases such as PostgreSQL, MySQL, and MSSQL, change the store URI as described in the [backend store documentation](/docs/latest/self-hosting/architecture/backend-store.md). OpenTelemetry ingestion is not supported with file-based backend stores.
 
 ## Step 3: Configure OpenTelemetry[​](#step-3-configure-opentelemetry "Direct link to Step 3: Configure OpenTelemetry")
 
@@ -278,6 +278,6 @@ After making chat requests, open the MLflow UI at `http://localhost:5000` and na
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-* [Evaluate the Agent](/docs/3.11.1/genai/eval-monitor/running-evaluation/agents.md): Learn how to evaluate the agent's performance.
-* [Manage Prompts](/docs/3.11.1/genai/prompt-registry.md): Learn how to manage prompts for the agent.
-* [Automatic Agent Optimization](/docs/3.11.1/genai/prompt-registry/optimize-prompts.md): Learn how to automatically optimize the agent end-to-end with state-of-the-art optimization algorithms.
+* [Evaluate the Agent](/docs/latest/genai/eval-monitor/running-evaluation/agents.md): Learn how to evaluate the agent's performance.
+* [Manage Prompts](/docs/latest/genai/prompt-registry.md): Learn how to manage prompts for the agent.
+* [Automatic Agent Optimization](/docs/latest/genai/prompt-registry/optimize-prompts.md): Learn how to automatically optimize the agent end-to-end with state-of-the-art optimization algorithms.

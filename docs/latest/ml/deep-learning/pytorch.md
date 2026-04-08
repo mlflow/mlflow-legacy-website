@@ -6,7 +6,7 @@
 
 MLflow's PyTorch integration provides experiment tracking, model versioning, and deployment capabilities for deep learning workflows.
 
-[](/docs/3.11.1/images/deep-learning/dl-training-ui.mp4)
+[](/docs/latest/images/deep-learning/dl-training-ui.mp4)
 
 ## Why MLflow + PyTorch?[​](#why-mlflow--pytorch "Direct link to Why MLflow + PyTorch?")
 
@@ -200,7 +200,7 @@ For PyTorch training, monitoring GPU metrics is especially valuable for:
 
 Advanced Configuration
 
-You can customize system metrics collection frequency and behavior. See the **[System Metrics documentation](/docs/3.11.1/ml/tracking/system-metrics.md)** for detailed configuration options.
+You can customize system metrics collection frequency and behavior. See the **[System Metrics documentation](/docs/latest/ml/tracking/system-metrics.md)** for detailed configuration options.
 
 ## Model Logging with Signatures[​](#model-logging-with-signatures "Direct link to Model Logging with Signatures")
 
@@ -588,14 +588,14 @@ def train_distributed():
 
 ## Learn More[​](#learn-more "Direct link to Learn More")
 
-### [Model Registry](/docs/3.11.1/ml/model-registry.md)
+### [Model Registry](/docs/latest/ml/model-registry.md)
 
-[Version and manage PyTorch models](/docs/3.11.1/ml/model-registry.md)
+[Version and manage PyTorch models](/docs/latest/ml/model-registry.md)
 
-[Learn more →](/docs/3.11.1/ml/model-registry.md)
+[Learn more →](/docs/latest/ml/model-registry.md)
 
-### [MLflow Tracking](/docs/3.11.1/ml/tracking.md)
+### [MLflow Tracking](/docs/latest/ml/tracking.md)
 
-[Track experiments, parameters, and metrics](/docs/3.11.1/ml/tracking.md)
+[Track experiments, parameters, and metrics](/docs/latest/ml/tracking.md)
 
-[Learn more →](/docs/3.11.1/ml/tracking.md)
+[Learn more →](/docs/latest/ml/tracking.md)

@@ -4,7 +4,7 @@ warning
 
 The features described in this guide are intended for advanced users familiar with Transformers and MLflow. Please understand the limitations and potential risks associated with these features before use.
 
-The [MLflow Transformers flavor](/docs/3.11.1/ml/deep-learning/transformers.md) allows you to track various Transformers models in MLflow. However, logging large models such as Large Language Models (LLMs) can be resource-intensive due to their size and memory requirements. This guide outlines MLflow's features for reducing memory and disk usage when logging models, enabling you to work with large models in resource-constrained environments.
+The [MLflow Transformers flavor](/docs/latest/ml/deep-learning/transformers.md) allows you to track various Transformers models in MLflow. However, logging large models such as Large Language Models (LLMs) can be resource-intensive due to their size and memory requirements. This guide outlines MLflow's features for reducing memory and disk usage when logging models, enabling you to work with large models in resource-constrained environments.
 
 ## Overview[​](#overview "Direct link to Overview")
 
@@ -76,7 +76,7 @@ with mlflow.start_run():
     )
 ```
 
-In the above example, we pass a path to the local model checkpoint/weight as the model argument in the [`mlflow.transformers.log_model()`](/docs/3.11.1/api_reference/python_api/mlflow.transformers.html#mlflow.transformers.log_model) API, instead of a pipeline instance. MLflow will inspect the model metadata of the checkpoint and log the model weights without loading them into memory. This way, you can log an enormous multi-billion parameter model to MLflow with minimal computational resources.
+In the above example, we pass a path to the local model checkpoint/weight as the model argument in the [`mlflow.transformers.log_model()`](/docs/latest/api_reference/python_api/mlflow.transformers.html#mlflow.transformers.log_model) API, instead of a pipeline instance. MLflow will inspect the model metadata of the checkpoint and log the model weights without loading them into memory. This way, you can log an enormous multi-billion parameter model to MLflow with minimal computational resources.
 
 ### Important Notes[​](#important-notes "Direct link to Important Notes")
 
@@ -84,7 +84,7 @@ Please be aware of the following requirements and limitations when using this fe
 
 1. The checkpoint directory **must** contain a valid config.json file and the model weight files. If a tokenizer is required, its state file must also be present in the checkpoint directory. You can save the tokenizer state in your checkpoint directory by calling `tokenizer.save_pretrained("path/to/local/checkpoint")` method.
 2. You **must** specify the `task` argument with the appropriate task name that the model is designed for.
-3. MLflow may not accurately infer model dependencies in this mode. Please refer to [Managing Dependencies in MLflow Models](/docs/3.11.1/ml/model/dependencies.md) for more information on managing dependencies for your model.
+3. MLflow may not accurately infer model dependencies in this mode. Please refer to [Managing Dependencies in MLflow Models](/docs/latest/ml/model/dependencies.md) for more information on managing dependencies for your model.
 
 warning
 
@@ -94,7 +94,7 @@ Ensure you specify the correct task argument, as an incompatible task will cause
 
 Typically, when MLflow logs an ML model, it saves a copy of the model weight to the artifact store. However, this is not optimal when you use a pretrained model from HuggingFace Hub and have no intention of fine-tuning or otherwise manipulating the model or its weights before logging it. For this very common case, copying the (typically very large) model weights is redundant while developing prompts, testing inference parameters, and otherwise is little more than an unnecessary waste of storage space.
 
-To address this issue, MLflow 2.11.0 introduced a new argument `save_pretrained` in the [`mlflow.transformers.save_model()`](/docs/3.11.1/api_reference/python_api/mlflow.transformers.html#mlflow.transformers.save_model) and [`mlflow.transformers.log_model()`](/docs/3.11.1/api_reference/python_api/mlflow.transformers.html#mlflow.transformers.log_model) APIs. When with argument is set to `False`, MLflow will forego saving the pretrained model weights, opting instead to store a reference to the underlying repository entry on the HuggingFace Hub; specifically, the repository name and the unique commit hash of the model weights are stored when your components or pipeline are logged. When loading back such a *reference-only* model, MLflow will check the repository name and commit hash from the saved metadata, and either download the model weight from the HuggingFace Hub or use the locally cached model from your HuggingFace local cache directory.
+To address this issue, MLflow 2.11.0 introduced a new argument `save_pretrained` in the [`mlflow.transformers.save_model()`](/docs/latest/api_reference/python_api/mlflow.transformers.html#mlflow.transformers.save_model) and [`mlflow.transformers.log_model()`](/docs/latest/api_reference/python_api/mlflow.transformers.html#mlflow.transformers.log_model) APIs. When with argument is set to `False`, MLflow will forego saving the pretrained model weights, opting instead to store a reference to the underlying repository entry on the HuggingFace Hub; specifically, the repository name and the unique commit hash of the model weights are stored when your components or pipeline are logged. When loading back such a *reference-only* model, MLflow will check the repository name and commit hash from the saved metadata, and either download the model weight from the HuggingFace Hub or use the locally cached model from your HuggingFace local cache directory.
 
 Here is the example of using `save_pretrained` argument for logging a model
 
@@ -133,7 +133,7 @@ flavors:
         ...
 ```
 
-Before production deployments, you may want to persist the model weight instead of the repository reference. To do so, you can use the [`mlflow.transformers.persist_pretrained_model()`](/docs/3.11.1/api_reference/python_api/mlflow.transformers.html#mlflow.transformers.persist_pretrained_model) API to download the model weight from the HuggingFace Hub and save it to the artifact location. Please refer to the [OSS Model Registry or Legacy Workspace Model Registry](#persist-pretrained-guide) section for more information.
+Before production deployments, you may want to persist the model weight instead of the repository reference. To do so, you can use the [`mlflow.transformers.persist_pretrained_model()`](/docs/latest/api_reference/python_api/mlflow.transformers.html#mlflow.transformers.persist_pretrained_model) API to download the model weight from the HuggingFace Hub and save it to the artifact location. Please refer to the [OSS Model Registry or Legacy Workspace Model Registry](#persist-pretrained-guide) section for more information.
 
 ### Registering Reference-Only Models for Production[​](#registering-reference-only-models-for-production "Direct link to Registering Reference-Only Models for Production")
 
@@ -166,7 +166,7 @@ mlflow.register_model(model_info.model_uri, "your.model.name")
 
 ### OSS Model Registry or Legacy Workspace Model Registry[​](#persist-pretrained-guide "Direct link to OSS Model Registry or Legacy Workspace Model Registry")
 
-For OSS Model Registry or the legacy Workspace Model Registry in Databricks, you need to manually persist the model weight to the artifact store before registering the model. You can use the [`mlflow.transformers.persist_pretrained_model()`](/docs/3.11.1/api_reference/python_api/mlflow.transformers.html#mlflow.transformers.persist_pretrained_model) API to download the model weight from the HuggingFace Hub and save it to the artifact location. The process **does NOT require re-logging a model** but efficiently update the existing model and metadata in-place.
+For OSS Model Registry or the legacy Workspace Model Registry in Databricks, you need to manually persist the model weight to the artifact store before registering the model. You can use the [`mlflow.transformers.persist_pretrained_model()`](/docs/latest/api_reference/python_api/mlflow.transformers.html#mlflow.transformers.persist_pretrained_model) API to download the model weight from the HuggingFace Hub and save it to the artifact location. The process **does NOT require re-logging a model** but efficiently update the existing model and metadata in-place.
 
 python
 

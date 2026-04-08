@@ -1,6 +1,6 @@
 # Workspace Permissions
 
-Workspace-scoped permissions provide convenient access control for all resources within a workspace when [authentication](/docs/3.11.1/self-hosting/security/basic-http-auth.md) is enabled.
+Workspace-scoped permissions provide convenient access control for all resources within a workspace when [authentication](/docs/latest/self-hosting/security/basic-http-auth.md) is enabled.
 
 ## Overview[​](#overview "Direct link to Overview")
 
@@ -234,6 +234,6 @@ If a workspace doesn't appear in `mlflow.list_workspaces()`:
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-* [Configuration](/docs/3.11.1/self-hosting/workspaces/configuration.md) - Server configuration options
-* [Workspace Providers](/docs/3.11.1/self-hosting/workspaces/workspace-providers.md) - Implement custom providers
-* [Authentication](/docs/3.11.1/self-hosting/security/basic-http-auth.md) - Set up MLflow authentication
+* [Configuration](/docs/latest/self-hosting/workspaces/configuration.md) - Server configuration options
+* [Workspace Providers](/docs/latest/self-hosting/workspaces/workspace-providers.md) - Implement custom providers
+* [Authentication](/docs/latest/self-hosting/security/basic-http-auth.md) - Set up MLflow authentication

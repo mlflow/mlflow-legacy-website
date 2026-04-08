@@ -4,7 +4,7 @@
 
 Looking for Databricks Foundation Model APIs?
 
-This guide covers tracing LLM calls through **Databricks AI Gateway**. If you're using Databricks Foundation Model APIs directly, see the [Databricks Integration](/docs/3.11.1/genai/tracing/integrations/listing/databricks.md) guide instead.
+This guide covers tracing LLM calls through **Databricks AI Gateway**. If you're using Databricks Foundation Model APIs directly, see the [Databricks Integration](/docs/latest/genai/tracing/integrations/listing/databricks.md) guide instead.
 
 ## What is Databricks AI Gateway?[​](#what-is-databricks-ai-gateway "Direct link to What is Databricks AI Gateway?")
 
@@ -88,7 +88,7 @@ mlflow.init({
 });
 ```
 
-When you want to self-host MLflow outside Databricks, follow the [Self-hosting](/docs/3.11.1/self-hosting.md) guide to set up your MLflow server and set the tracking URI accordingly.
+When you want to self-host MLflow outside Databricks, follow the [Self-hosting](/docs/latest/self-hosting.md) guide to set up your MLflow server and set the tracking URI accordingly.
 
 3
 
@@ -161,20 +161,20 @@ console.log(response.choices[0].message.content);
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [Track User Feedback](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+### [Track User Feedback](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-[Record user feedback on traces for tracking user satisfaction.](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+[Record user feedback on traces for tracking user satisfaction.](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-[Learn about feedback →](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+[Learn about feedback →](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-### [Manage Prompts](/docs/3.11.1/genai/prompt-registry.md)
+### [Manage Prompts](/docs/latest/genai/prompt-registry.md)
 
-[Learn how to manage prompts with MLflow's prompt registry.](/docs/3.11.1/genai/prompt-registry.md)
+[Learn how to manage prompts with MLflow's prompt registry.](/docs/latest/genai/prompt-registry.md)
 
-[Manage prompts →](/docs/3.11.1/genai/prompt-registry.md)
+[Manage prompts →](/docs/latest/genai/prompt-registry.md)
 
-### [Evaluate Traces](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+### [Evaluate Traces](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Evaluate traces with LLM judges to understand and improve your AI application's behavior.](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Evaluate traces with LLM judges to understand and improve your AI application's behavior.](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Evaluate traces →](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Evaluate traces →](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)

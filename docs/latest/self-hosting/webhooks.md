@@ -19,7 +19,7 @@ MLflow webhooks enable real-time notifications when specific events occur in the
 
 Authorization
 
-When [MLflow Authentication](/docs/3.11.1/self-hosting/security/basic-http-auth.md) is enabled, all webhook operations (create, list, get, update, delete, and test) require **admin privileges**. Non-admin users will receive a `403 Forbidden` response when attempting to access webhook endpoints.
+When [MLflow Authentication](/docs/latest/self-hosting/security/basic-http-auth.md) is enabled, all webhook operations (create, list, get, update, delete, and test) require **admin privileges**. Non-admin users will receive a `403 Forbidden` response when attempting to access webhook endpoints.
 
 ## Supported Events[​](#supported-events "Direct link to Supported Events")
 
@@ -27,21 +27,21 @@ MLflow webhooks support the following Model Registry, Prompt Registry, and AI Ga
 
 | Event                         | Description                                             | Payload Schema                                                                                                                                  |
 | ----------------------------- | ------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `registered_model.created`    | Triggered when a new registered model is created        | [`RegisteredModelCreatedPayload`](/docs/3.11.1/api_reference/python_api/mlflow.webhooks.html#mlflow.webhooks.RegisteredModelCreatedPayload)     |
-| `model_version.created`       | Triggered when a new model version is created           | [`ModelVersionCreatedPayload`](/docs/3.11.1/api_reference/python_api/mlflow.webhooks.html#mlflow.webhooks.ModelVersionCreatedPayload)           |
-| `model_version_tag.set`       | Triggered when a tag is set on a model version          | [`ModelVersionTagSetPayload`](/docs/3.11.1/api_reference/python_api/mlflow.webhooks.html#mlflow.webhooks.ModelVersionTagSetPayload)             |
-| `model_version_tag.deleted`   | Triggered when a tag is deleted from a model version    | [`ModelVersionTagDeletedPayload`](/docs/3.11.1/api_reference/python_api/mlflow.webhooks.html#mlflow.webhooks.ModelVersionTagDeletedPayload)     |
-| `model_version_alias.created` | Triggered when an alias is created for a model version  | [`ModelVersionAliasCreatedPayload`](/docs/3.11.1/api_reference/python_api/mlflow.webhooks.html#mlflow.webhooks.ModelVersionAliasCreatedPayload) |
-| `model_version_alias.deleted` | Triggered when an alias is deleted from a model version | [`ModelVersionAliasDeletedPayload`](/docs/3.11.1/api_reference/python_api/mlflow.webhooks.html#mlflow.webhooks.ModelVersionAliasDeletedPayload) |
-| `prompt.created`              | Triggered when a new prompt is created                  | [`PromptCreatedPayload`](/docs/3.11.1/api_reference/python_api/mlflow.webhooks.html#mlflow.webhooks.PromptCreatedPayload)                       |
-| `prompt_version.created`      | Triggered when a new prompt version is created          | [`PromptVersionCreatedPayload`](/docs/3.11.1/api_reference/python_api/mlflow.webhooks.html#mlflow.webhooks.PromptVersionCreatedPayload)         |
-| `prompt_tag.set`              | Triggered when a tag is set on a prompt                 | [`PromptTagSetPayload`](/docs/3.11.1/api_reference/python_api/mlflow.webhooks.html#mlflow.webhooks.PromptTagSetPayload)                         |
-| `prompt_tag.deleted`          | Triggered when a tag is deleted from a prompt           | [`PromptTagDeletedPayload`](/docs/3.11.1/api_reference/python_api/mlflow.webhooks.html#mlflow.webhooks.PromptTagDeletedPayload)                 |
-| `prompt_version_tag.set`      | Triggered when a tag is set on a prompt version         | [`PromptVersionTagSetPayload`](/docs/3.11.1/api_reference/python_api/mlflow.webhooks.html#mlflow.webhooks.PromptVersionTagSetPayload)           |
-| `prompt_version_tag.deleted`  | Triggered when a tag is deleted from a prompt version   | [`PromptVersionTagDeletedPayload`](/docs/3.11.1/api_reference/python_api/mlflow.webhooks.html#mlflow.webhooks.PromptVersionTagDeletedPayload)   |
-| `prompt_alias.created`        | Triggered when an alias is created for a prompt version | [`PromptAliasCreatedPayload`](/docs/3.11.1/api_reference/python_api/mlflow.webhooks.html#mlflow.webhooks.PromptAliasCreatedPayload)             |
-| `prompt_alias.deleted`        | Triggered when an alias is deleted from a prompt        | [`PromptAliasDeletedPayload`](/docs/3.11.1/api_reference/python_api/mlflow.webhooks.html#mlflow.webhooks.PromptAliasDeletedPayload)             |
-| `budget_policy.exceeded`      | Triggered when a budget policy limit is exceeded        | [`BudgetPolicyExceededPayload`](/docs/3.11.1/api_reference/python_api/mlflow.webhooks.html#mlflow.webhooks.BudgetPolicyExceededPayload)         |
+| `registered_model.created`    | Triggered when a new registered model is created        | [`RegisteredModelCreatedPayload`](/docs/latest/api_reference/python_api/mlflow.webhooks.html#mlflow.webhooks.RegisteredModelCreatedPayload)     |
+| `model_version.created`       | Triggered when a new model version is created           | [`ModelVersionCreatedPayload`](/docs/latest/api_reference/python_api/mlflow.webhooks.html#mlflow.webhooks.ModelVersionCreatedPayload)           |
+| `model_version_tag.set`       | Triggered when a tag is set on a model version          | [`ModelVersionTagSetPayload`](/docs/latest/api_reference/python_api/mlflow.webhooks.html#mlflow.webhooks.ModelVersionTagSetPayload)             |
+| `model_version_tag.deleted`   | Triggered when a tag is deleted from a model version    | [`ModelVersionTagDeletedPayload`](/docs/latest/api_reference/python_api/mlflow.webhooks.html#mlflow.webhooks.ModelVersionTagDeletedPayload)     |
+| `model_version_alias.created` | Triggered when an alias is created for a model version  | [`ModelVersionAliasCreatedPayload`](/docs/latest/api_reference/python_api/mlflow.webhooks.html#mlflow.webhooks.ModelVersionAliasCreatedPayload) |
+| `model_version_alias.deleted` | Triggered when an alias is deleted from a model version | [`ModelVersionAliasDeletedPayload`](/docs/latest/api_reference/python_api/mlflow.webhooks.html#mlflow.webhooks.ModelVersionAliasDeletedPayload) |
+| `prompt.created`              | Triggered when a new prompt is created                  | [`PromptCreatedPayload`](/docs/latest/api_reference/python_api/mlflow.webhooks.html#mlflow.webhooks.PromptCreatedPayload)                       |
+| `prompt_version.created`      | Triggered when a new prompt version is created          | [`PromptVersionCreatedPayload`](/docs/latest/api_reference/python_api/mlflow.webhooks.html#mlflow.webhooks.PromptVersionCreatedPayload)         |
+| `prompt_tag.set`              | Triggered when a tag is set on a prompt                 | [`PromptTagSetPayload`](/docs/latest/api_reference/python_api/mlflow.webhooks.html#mlflow.webhooks.PromptTagSetPayload)                         |
+| `prompt_tag.deleted`          | Triggered when a tag is deleted from a prompt           | [`PromptTagDeletedPayload`](/docs/latest/api_reference/python_api/mlflow.webhooks.html#mlflow.webhooks.PromptTagDeletedPayload)                 |
+| `prompt_version_tag.set`      | Triggered when a tag is set on a prompt version         | [`PromptVersionTagSetPayload`](/docs/latest/api_reference/python_api/mlflow.webhooks.html#mlflow.webhooks.PromptVersionTagSetPayload)           |
+| `prompt_version_tag.deleted`  | Triggered when a tag is deleted from a prompt version   | [`PromptVersionTagDeletedPayload`](/docs/latest/api_reference/python_api/mlflow.webhooks.html#mlflow.webhooks.PromptVersionTagDeletedPayload)   |
+| `prompt_alias.created`        | Triggered when an alias is created for a prompt version | [`PromptAliasCreatedPayload`](/docs/latest/api_reference/python_api/mlflow.webhooks.html#mlflow.webhooks.PromptAliasCreatedPayload)             |
+| `prompt_alias.deleted`        | Triggered when an alias is deleted from a prompt        | [`PromptAliasDeletedPayload`](/docs/latest/api_reference/python_api/mlflow.webhooks.html#mlflow.webhooks.PromptAliasDeletedPayload)             |
+| `budget_policy.exceeded`      | Triggered when a budget policy limit is exceeded        | [`BudgetPolicyExceededPayload`](/docs/latest/api_reference/python_api/mlflow.webhooks.html#mlflow.webhooks.BudgetPolicyExceededPayload)         |
 
 ## Quick Start[​](#quick-start "Direct link to Quick Start")
 
@@ -68,7 +68,7 @@ print(f"Created webhook: {webhook.webhook_id}")
 
 ### Testing a Webhook[​](#testing-a-webhook "Direct link to Testing a Webhook")
 
-Before putting your webhook into production, test it with example payloads using [`MlflowClient.test_webhook()`](/docs/3.11.1/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.test_webhook):
+Before putting your webhook into production, test it with example payloads using [`MlflowClient.test_webhook()`](/docs/latest/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.test_webhook):
 
 python
 
@@ -131,7 +131,7 @@ result = client.test_webhook(
 
 ### Listing Webhooks[​](#listing-webhooks "Direct link to Listing Webhooks")
 
-Use [`MlflowClient.list_webhooks()`](/docs/3.11.1/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.list_webhooks) to retrieve webhooks. This method returns paginated results:
+Use [`MlflowClient.list_webhooks()`](/docs/latest/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.list_webhooks) to retrieve webhooks. This method returns paginated results:
 
 python
 
@@ -169,7 +169,7 @@ print(f"Total webhooks: {len(all_webhooks)}")
 
 ### Getting a Specific Webhook[​](#getting-a-specific-webhook "Direct link to Getting a Specific Webhook")
 
-Use [`MlflowClient.get_webhook()`](/docs/3.11.1/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.get_webhook) to retrieve details of a specific webhook:
+Use [`MlflowClient.get_webhook()`](/docs/latest/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.get_webhook) to retrieve details of a specific webhook:
 
 python
 
@@ -184,7 +184,7 @@ print(f"Events: {webhook.events}")
 
 ### Updating a Webhook[​](#updating-a-webhook "Direct link to Updating a Webhook")
 
-Use [`MlflowClient.update_webhook()`](/docs/3.11.1/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.update_webhook) to modify webhook configuration:
+Use [`MlflowClient.update_webhook()`](/docs/latest/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.update_webhook) to modify webhook configuration:
 
 python
 
@@ -203,7 +203,7 @@ client.update_webhook(
 
 ### Deleting a Webhook[​](#deleting-a-webhook "Direct link to Deleting a Webhook")
 
-Use [`MlflowClient.delete_webhook()`](/docs/3.11.1/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.delete_webhook) to remove a webhook:
+Use [`MlflowClient.delete_webhook()`](/docs/latest/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.delete_webhook) to remove a webhook:
 
 python
 
@@ -539,9 +539,9 @@ if __name__ == "__main__":
 
 For complete API documentation, see:
 
-* [`MlflowClient.create_webhook()`](/docs/3.11.1/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.create_webhook)
-* [`MlflowClient.list_webhooks()`](/docs/3.11.1/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.list_webhooks)
-* [`MlflowClient.get_webhook()`](/docs/3.11.1/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.get_webhook)
-* [`MlflowClient.update_webhook()`](/docs/3.11.1/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.update_webhook)
-* [`MlflowClient.delete_webhook()`](/docs/3.11.1/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.delete_webhook)
-* [`MlflowClient.test_webhook()`](/docs/3.11.1/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.test_webhook)
+* [`MlflowClient.create_webhook()`](/docs/latest/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.create_webhook)
+* [`MlflowClient.list_webhooks()`](/docs/latest/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.list_webhooks)
+* [`MlflowClient.get_webhook()`](/docs/latest/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.get_webhook)
+* [`MlflowClient.update_webhook()`](/docs/latest/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.update_webhook)
+* [`MlflowClient.delete_webhook()`](/docs/latest/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.delete_webhook)
+* [`MlflowClient.test_webhook()`](/docs/latest/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.test_webhook)

@@ -1,13 +1,13 @@
 [Skip to main content](#__docusaurus_skipToContent_fallback)
 
-[![MLflow Logo](/docs/3.11.1/images/logo-light.svg)![MLflow Logo](/docs/3.11.1/images/logo-dark.svg)](/docs/3.11.1/)
+[![MLflow Logo](/docs/latest/images/logo-light.svg)![MLflow Logo](/docs/latest/images/logo-dark.svg)](/docs/latest/)
 
 [Documentation](#)
 
-* [LLMs & Agents](/docs/3.11.1/genai.md)
-* [Machine Learning](/docs/3.11.1/ml.md)
+* [LLMs & Agents](/docs/latest/genai.md)
+* [Machine Learning](/docs/latest/ml.md)
 
-[API Reference](https://mlflow.org/docs/3.11.1/api_reference/index.html)[Self-Hosting](/docs/3.11.1/self-hosting.md)[Community](/docs/3.11.1/community.md)
+[API Reference](https://mlflow.org/docs/latest/api_reference/index.html)[Self-Hosting](/docs/latest/self-hosting.md)[Community](/docs/latest/community.md)
 
 [GitHub](https://github.com/mlflow/mlflow)
 
@@ -27,6 +27,6 @@ Type your search here
 
 [Blog](https://mlflow.org/blog)
 
-[Docs](/docs/3.11.1/)
+[Docs](/docs/latest/)
 
 [Ambassador Program](https://mlflow.org/ambassadors)

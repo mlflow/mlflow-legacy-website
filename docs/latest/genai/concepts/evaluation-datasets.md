@@ -2,7 +2,7 @@
 
 SQL Backend Required
 
-Evaluation Datasets require an MLflow Tracking Server with a **[SQL backend](/docs/3.11.1/self-hosting/architecture/backend-store.md#types-of-backend-stores)** (PostgreSQL, MySQL, SQLite, or MSSQL). This feature is **not available** in FileStore (local mode) due to the relational data requirements for managing dataset records, associations, and schema evolution.
+Evaluation Datasets require an MLflow Tracking Server with a **[SQL backend](/docs/latest/self-hosting/architecture/backend-store.md#types-of-backend-stores)** (PostgreSQL, MySQL, SQLite, or MSSQL). This feature is **not available** in FileStore (local mode) due to the relational data requirements for managing dataset records, associations, and schema evolution.
 
 ## What are Evaluation Datasets?[​](#what-are-evaluation-datasets "Direct link to What are Evaluation Datasets?")
 
@@ -12,7 +12,7 @@ Unlike static test files, evaluation datasets are **living validation collection
 
 They can be viewed directly within the MLflow UI.
 
-[](/docs/3.11.1/images/eval-datasets.mp4)
+[](/docs/latest/images/eval-datasets.mp4)
 
 ## Core Components[​](#core-components "Direct link to Core Components")
 
@@ -36,7 +36,7 @@ Links to MLflow experiments enable tracking which datasets were used for which m
 
 ## Dataset Object Schema[​](#dataset-object-schema "Direct link to Dataset Object Schema")
 
-The [`mlflow.entities.EvaluationDataset()`](/docs/3.11.1/api_reference/python_api/mlflow.entities.html#mlflow.entities.EvaluationDataset) object contains the following fields:
+The [`mlflow.entities.EvaluationDataset()`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.EvaluationDataset) object contains the following fields:
 
 | Field              | Type                  | Description                                                              |
 | ------------------ | --------------------- | ------------------------------------------------------------------------ |
@@ -98,7 +98,7 @@ json
 
 ### Record Identity and Deduplication[​](#record-identity-and-deduplication "Direct link to Record Identity and Deduplication")
 
-Records are uniquely identified by a **hash of their inputs**. When merging records with [`mlflow.entities.EvaluationDataset.merge_records()`](/docs/3.11.1/api_reference/python_api/mlflow.entities.html#mlflow.entities.EvaluationDataset.merge_records), if a record with identical inputs already exists, its expectations and tags are merged rather than creating a duplicate. This enables iterative refinement of test cases without data duplication.
+Records are uniquely identified by a **hash of their inputs**. When merging records with [`mlflow.entities.EvaluationDataset.merge_records()`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.EvaluationDataset.merge_records), if a record with identical inputs already exists, its expectations and tags are merged rather than creating a duplicate. This enables iterative refinement of test cases without data duplication.
 
 ## Schema Evolution[​](#schema-evolution "Direct link to Schema Evolution")
 
@@ -108,20 +108,20 @@ When new fields are introduced in subsequent records, they're automatically inco
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [SDK Guide](/docs/3.11.1/genai/datasets/sdk-guide.md)
+### [SDK Guide](/docs/latest/genai/datasets/sdk-guide.md)
 
-[Complete reference for creating and managing evaluation datasets via the MLflow SDK](/docs/3.11.1/genai/datasets/sdk-guide.md)
+[Complete reference for creating and managing evaluation datasets via the MLflow SDK](/docs/latest/genai/datasets/sdk-guide.md)
 
-[View SDK guide →](/docs/3.11.1/genai/datasets/sdk-guide.md)
+[View SDK guide →](/docs/latest/genai/datasets/sdk-guide.md)
 
-### [End-to-End Workflow](/docs/3.11.1/genai/datasets/end-to-end-workflow.md)
+### [End-to-End Workflow](/docs/latest/genai/datasets/end-to-end-workflow.md)
 
-[Learn the complete evaluation-driven development workflow from building to production](/docs/3.11.1/genai/datasets/end-to-end-workflow.md)
+[Learn the complete evaluation-driven development workflow from building to production](/docs/latest/genai/datasets/end-to-end-workflow.md)
 
-[See workflow →](/docs/3.11.1/genai/datasets/end-to-end-workflow.md)
+[See workflow →](/docs/latest/genai/datasets/end-to-end-workflow.md)
 
-### [Expectations](/docs/3.11.1/genai/assessments/expectations.md)
+### [Expectations](/docs/latest/genai/assessments/expectations.md)
 
-[Learn how to define ground truth and quality criteria for your test cases](/docs/3.11.1/genai/assessments/expectations.md)
+[Learn how to define ground truth and quality criteria for your test cases](/docs/latest/genai/assessments/expectations.md)
 
-[Understand expectations →](/docs/3.11.1/genai/assessments/expectations.md)
+[Understand expectations →](/docs/latest/genai/assessments/expectations.md)

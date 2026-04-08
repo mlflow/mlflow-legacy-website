@@ -1,10 +1,10 @@
 # ResponsesAgent for Model Serving
 
-The [ResponsesAgent](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent) class in MLflow provides a specialized interface for serving generative AI models that handle structured responses with tool calling capabilities. This agent is designed to work seamlessly with MLflow's serving infrastructure while providing compatibility with OpenAI-style APIs.
+The [ResponsesAgent](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent) class in MLflow provides a specialized interface for serving generative AI models that handle structured responses with tool calling capabilities. This agent is designed to work seamlessly with MLflow's serving infrastructure while providing compatibility with OpenAI-style APIs.
 
 ## Overview[​](#overview "Direct link to Overview")
 
-The [`ResponsesAgent`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent) extends MLflow's PyFunc model interface to support conversational AI applications that require advanced capabilities such as multi-turn dialogue, tool-calling, multi-agent orchestration, and compatibility with OpenAI's Responses API and MLflow model tracking.
+The [`ResponsesAgent`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent) extends MLflow's PyFunc model interface to support conversational AI applications that require advanced capabilities such as multi-turn dialogue, tool-calling, multi-agent orchestration, and compatibility with OpenAI's Responses API and MLflow model tracking.
 
 * 📦 Structured request/response handling
 * 🛠️ Tool calling and function execution
@@ -52,18 +52,18 @@ To create your own agent, subclass `mlflow.pyfunc.ResponsesAgent` and implement 
 
 #### Creating agent output[​](#creating-agent-output "Direct link to Creating agent output")
 
-When implementing your agent, you'll work with two main output types: [`ResponsesAgentResponse`](/docs/3.11.1/api_reference/python_api/mlflow.types.html#mlflow.types.responses.ResponsesAgentResponse) and [`ResponsesAgentStreamEvent`](/docs/3.11.1/api_reference/python_api/mlflow.types.html#mlflow.types.responses.ResponsesAgentResponse). These are the only pydantic objects you should create directly. The remaining classes in `mlflow.types.responses_helpers` are only for validating dictionaries.
+When implementing your agent, you'll work with two main output types: [`ResponsesAgentResponse`](/docs/latest/api_reference/python_api/mlflow.types.html#mlflow.types.responses.ResponsesAgentResponse) and [`ResponsesAgentStreamEvent`](/docs/latest/api_reference/python_api/mlflow.types.html#mlflow.types.responses.ResponsesAgentResponse). These are the only pydantic objects you should create directly. The remaining classes in `mlflow.types.responses_helpers` are only for validating dictionaries.
 
 If you want to return outputs that don't fit into the standard interface, you can use the `custom_outputs` field.
 
 Below are some helper methods you can use to create common outputs within the ResponsesAgent interface:
 
-* [`mlflow.pyfunc.ResponsesAgent.create_reasoning_item()`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent.create_reasoning_item)
-* [`mlflow.pyfunc.ResponsesAgent.create_text_output_item()`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent.create_text_output_item)
-* [`mlflow.pyfunc.ResponsesAgent.create_function_call_item()`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent.create_function_call_item)
-* [`mlflow.pyfunc.ResponsesAgent.create_function_call_output_item()`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent.create_function_call_output_item)
-* [`mlflow.pyfunc.ResponsesAgent.create_text_delta()`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent.create_text_delta) (only for streaming)
-* [`mlflow.pyfunc.ResponsesAgent.create_annotation_added()`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent.create_annotation_added) (only for streaming)
+* [`mlflow.pyfunc.ResponsesAgent.create_reasoning_item()`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent.create_reasoning_item)
+* [`mlflow.pyfunc.ResponsesAgent.create_text_output_item()`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent.create_text_output_item)
+* [`mlflow.pyfunc.ResponsesAgent.create_function_call_item()`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent.create_function_call_item)
+* [`mlflow.pyfunc.ResponsesAgent.create_function_call_output_item()`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent.create_function_call_output_item)
+* [`mlflow.pyfunc.ResponsesAgent.create_text_delta()`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent.create_text_delta) (only for streaming)
+* [`mlflow.pyfunc.ResponsesAgent.create_annotation_added()`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent.create_annotation_added) (only for streaming)
 
 Here's an example of a complete tool calling sequence using `ResponsesAgentResponse` with a custom output:
 
@@ -188,7 +188,7 @@ class SimpleResponsesAgent(ResponsesAgent):
 
 ### Logging and Serving[​](#logging-and-serving "Direct link to Logging and Serving")
 
-Log your agent using the [Models-from-code](/docs/3.11.1/ml/model/models-from-code.md) approach. This approach is framework-agnostic and supports all authoring frameworks:
+Log your agent using the [Models-from-code](/docs/latest/ml/model/models-from-code.md) approach. This approach is framework-agnostic and supports all authoring frameworks:
 
 python
 
@@ -641,7 +641,7 @@ endpoint = client.create_endpoint(
 
 ## Schema and Types[​](#schema-and-types "Direct link to Schema and Types")
 
-ResponsesAgent works with structured schemas for requests and responses, check [ResponsesAgentRequest](/docs/3.11.1/api_reference/python_api/mlflow.types.html#mlflow.types.responses.ResponsesAgentRequest) and [ResponsesAgentResponse](/docs/3.11.1/api_reference/python_api/mlflow.types.html#mlflow.types.responses.ResponsesAgentResponse) for detailed structure.
+ResponsesAgent works with structured schemas for requests and responses, check [ResponsesAgentRequest](/docs/latest/api_reference/python_api/mlflow.types.html#mlflow.types.responses.ResponsesAgentRequest) and [ResponsesAgentResponse](/docs/latest/api_reference/python_api/mlflow.types.html#mlflow.types.responses.ResponsesAgentResponse) for detailed structure.
 
 python
 
@@ -733,7 +733,7 @@ python
 
 ### Debugging[​](#debugging "Direct link to Debugging")
 
-**Enable [tracing](/docs/3.11.1/genai/tracing.md)** for troubleshooting, if your model is traced:
+**Enable [tracing](/docs/latest/genai/tracing.md)** for troubleshooting, if your model is traced:
 
 python
 

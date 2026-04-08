@@ -46,7 +46,7 @@ Custom Python functions for deterministic evaluation. Perfect for metrics that c
 
 ## Scorer Output Structure[​](#scorer-output-structure "Direct link to Scorer Output Structure")
 
-All scorers in MLflow produce standardized output that integrates seamlessly with the evaluation framework. Scorers return a [`mlflow.entities.Feedback()`](/docs/3.11.1/api_reference/python_api/mlflow.entities.html#mlflow.entities.Feedback) object containing:
+All scorers in MLflow produce standardized output that integrates seamlessly with the evaluation framework. Scorers return a [`mlflow.entities.Feedback()`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.Feedback) object containing:
 
 | Field       | Type             | Description                                                                |
 | ----------- | ---------------- | -------------------------------------------------------------------------- |
@@ -279,7 +279,7 @@ feedback = aligned_judge(inputs={"query": "..."}, outputs={"response": "..."})
 
 ### The Plugin Architecture[​](#the-plugin-architecture "Direct link to The Plugin Architecture")
 
-MLflow's alignment system uses a plugin architecture, allowing you to create custom optimizers by extending the [AlignmentOptimizer](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.judges.base.AlignmentOptimizer) base class:
+MLflow's alignment system uses a plugin architecture, allowing you to create custom optimizers by extending the [AlignmentOptimizer](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.judges.base.AlignmentOptimizer) base class:
 
 python
 
@@ -375,26 +375,26 @@ print(f"Reading Level: {results.metrics.get('reading_level/mode', 'N/A')}")
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [LLM-based Scorers](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges.md)
+### [LLM-based Scorers](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md)
 
-[Learn about using LLMs as judges for evaluation](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges.md)
+[Learn about using LLMs as judges for evaluation](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md)
 
-[Explore LLM judges →](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges.md)
+[Explore LLM judges →](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md)
 
-### [Judge Alignment](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/alignment.md)
+### [Judge Alignment](/docs/latest/genai/eval-monitor/scorers/llm-judge/alignment.md)
 
-[Align judges with human feedback for domain expertise](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/alignment.md)
+[Align judges with human feedback for domain expertise](/docs/latest/genai/eval-monitor/scorers/llm-judge/alignment.md)
 
-[Learn alignment →](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/alignment.md)
+[Learn alignment →](/docs/latest/genai/eval-monitor/scorers/llm-judge/alignment.md)
 
-### [Code-based Scorers](/docs/3.11.1/genai/eval-monitor/scorers/custom.md)
+### [Code-based Scorers](/docs/latest/genai/eval-monitor/scorers/custom.md)
 
-[Create custom Python functions for evaluation](/docs/3.11.1/genai/eval-monitor/scorers/custom.md)
+[Create custom Python functions for evaluation](/docs/latest/genai/eval-monitor/scorers/custom.md)
 
-[Build custom scorers →](/docs/3.11.1/genai/eval-monitor/scorers/custom.md)
+[Build custom scorers →](/docs/latest/genai/eval-monitor/scorers/custom.md)
 
-### [Evaluation Guide](/docs/3.11.1/genai/eval-monitor/quickstart.md)
+### [Evaluation Guide](/docs/latest/genai/eval-monitor/quickstart.md)
 
-[Learn how to run comprehensive evaluations](/docs/3.11.1/genai/eval-monitor/quickstart.md)
+[Learn how to run comprehensive evaluations](/docs/latest/genai/eval-monitor/quickstart.md)
 
-[Start evaluating →](/docs/3.11.1/genai/eval-monitor/quickstart.md)
+[Start evaluating →](/docs/latest/genai/eval-monitor/quickstart.md)

@@ -26,7 +26,7 @@ In the accompanying notebook to this subsection of this guide, you will observe 
 
 **The Central Issue: Statefulness**
 
-![Notebook state](/docs/3.11.1/assets/images/notebook-dangers-433eb6afa332607d1c3e7af4d59a3024.svg)
+![Notebook state](/docs/latest/assets/images/notebook-dangers-433eb6afa332607d1c3e7af4d59a3024.svg)
 
 Failing to execute all cells in order can lead to misleading plots
 
@@ -243,7 +243,7 @@ with mlflow.start_run() as run:
 
 If we head over to the MLflow UI after executing this training cell, we can see all of our plots that have been defined within the artifact viewer pane. Whether the plots were logged with the `log_figure()` API or were fetched from the local file system and logged via `log_artifacts()`, we're able to see the run-relevant plots associated with our data and our trained model, capturing the state at which the run was conducted.
 
-[](/docs/3.11.1/images/guides/introductory/hyperparameter-tuning-with-child-runs/plots-in-ui.mp4)
+[](/docs/latest/images/guides/introductory/hyperparameter-tuning-with-child-runs/plots-in-ui.mp4)
 
 Viewing logged plots and figures in the MLflow UI
 
