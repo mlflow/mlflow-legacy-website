@@ -8,7 +8,7 @@ After an evaluation completes, you can find the resulting runs on the experiment
 
 To inspect per-row evaluation results, open the **Traces** tab on the run overview page.
 
-![Detailed Evaluation Results](/docs/3.11.1/images/mlflow-3/eval-monitor/quickstart-eval-result.png)
+![Detailed Evaluation Results](/docs/latest/images/mlflow-3/eval-monitor/quickstart-eval-result.png)
 
 ## How to change the concurrency of the evaluation?[​](#how-to-change-the-concurrency-of-the-evaluation "Direct link to How to change the concurrency of the evaluation?")
 
@@ -109,7 +109,7 @@ with mlflow.start_run(run_name="My Evaluation Run") as run:
 
 ## How do I use Databricks Model Serving endpoints as the predict function?[​](#how-do-i-use-databricks-model-serving-endpoints-as-the-predict-function "Direct link to How do I use Databricks Model Serving endpoints as the predict function?")
 
-MLflow provides [`mlflow.genai.to_predict_fn()`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.to_predict_fn), which wraps a Databricks Model Serving endpoint so it behaves like a predict function compatible with the evaluation framework.
+MLflow provides [`mlflow.genai.to_predict_fn()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.to_predict_fn), which wraps a Databricks Model Serving endpoint so it behaves like a predict function compatible with the evaluation framework.
 
 The wrapper:
 
@@ -134,15 +134,15 @@ mlflow.genai.evaluate(
 
 ## How to migrate from MLflow 2 LLM Evaluation?[​](#how-to-migrate-from-mlflow-2-llm-evaluation "Direct link to How to migrate from MLflow 2 LLM Evaluation?")
 
-See the [Migrating from MLflow 2 LLM Evaluation](/docs/3.11.1/genai/eval-monitor/legacy-llm-evaluation.md) guide.
+See the [Migrating from MLflow 2 LLM Evaluation](/docs/latest/genai/eval-monitor/legacy-llm-evaluation.md) guide.
 
 ## How do I track the cost of LLM judges?[​](#how-do-i-track-the-cost-of-llm-judges "Direct link to How do I track the cost of LLM judges?")
 
 MLflow visualizes the cost of LLM judges in the assessment pane of the trace details page. When you open an assessment logged by an LLM judge, you can see the cost incurred for running the judge model. This feature is available only when you have the [LiteLLM](https://github.com/BerriAI/litellm) library installed.
 
-![LLM Judge Cost](/docs/3.11.1/images/mlflow-3/eval-monitor/tracking-judge-cost.png)
+![LLM Judge Cost](/docs/latest/images/mlflow-3/eval-monitor/tracking-judge-cost.png)
 
-Managing the balance between cost and accuracy is important. To use a more cost-effective LLM model while maintaining accuracy, you can leverage the [LLM Judge Alignment](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/alignment.md) feature.
+Managing the balance between cost and accuracy is important. To use a more cost-effective LLM model while maintaining accuracy, you can leverage the [LLM Judge Alignment](/docs/latest/genai/eval-monitor/scorers/llm-judge/alignment.md) feature.
 
 ## How do I pass additional inference parameters to judge LLMs?[​](#how-do-i-pass-additional-inference-parameters-to-judge-llms "Direct link to How do I pass additional inference parameters to judge LLMs?")
 
@@ -198,7 +198,7 @@ To view the scorer trace, you can open the assessment pane of the trace details 
 
 ## How do I programmatically access evaluation results?[​](#how-do-i-programmatically-access-evaluation-results "Direct link to How do I programmatically access evaluation results?")
 
-The [`mlflow.genai.evaluate()`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.evaluate) function returns an [`mlflow.genai.evaluation.entities.EvaluationResult()`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.evaluation.entities.EvaluationResult) object that contains all evaluation results. Here's how to access different parts of the results:
+The [`mlflow.genai.evaluate()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.evaluate) function returns an [`mlflow.genai.evaluation.entities.EvaluationResult()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.evaluation.entities.EvaluationResult) object that contains all evaluation results. Here's how to access different parts of the results:
 
 ### Accessing Aggregated Metrics[​](#accessing-aggregated-metrics "Direct link to Accessing Aggregated Metrics")
 
@@ -221,7 +221,7 @@ print(result.metrics)
 correctness_score = result.metrics.get("correctness/mean")
 ```
 
-To get metrics for an existing evaluation run, you can use [`mlflow.get_run()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.get_run) API:
+To get metrics for an existing evaluation run, you can use [`mlflow.get_run()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.get_run) API:
 
 python
 
@@ -244,7 +244,7 @@ result.result_df.to_csv("evaluation_results.csv", index=False)
 
 ### Accessing Traces from Results[​](#accessing-traces-from-results "Direct link to Accessing Traces from Results")
 
-You can get the traces for the evaluation run by using [`mlflow.search_traces()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.search_traces) API:
+You can get the traces for the evaluation run by using [`mlflow.search_traces()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.search_traces) API:
 
 python
 

@@ -1,10 +1,10 @@
 # Tracing LiteLLM🚄
 
-![LiteLLM Tracing via autolog](/docs/3.11.1/images/llms/litellm/litellm-tracing.png)
+![LiteLLM Tracing via autolog](/docs/latest/images/llms/litellm/litellm-tracing.png)
 
 [LiteLLM](https://www.litellm.ai/) is an open-source LLM Gateway that allow accessing 100+ LLMs in the unified interface.
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing/integrations.md) provides automatic tracing capability for LiteLLM. By enabling auto tracing for LiteLLM by calling the [`mlflow.litellm.autolog()`](/docs/3.11.1/api_reference/python_api/mlflow.litellm.html#mlflow.litellm.autolog) function, MLflow will capture traces for LLM invocation and log them to the active MLflow Experiment.
+[MLflow Tracing](/docs/latest/genai/tracing/integrations.md) provides automatic tracing capability for LiteLLM. By enabling auto tracing for LiteLLM by calling the [`mlflow.litellm.autolog()`](/docs/latest/api_reference/python_api/mlflow.litellm.html#mlflow.litellm.autolog) function, MLflow will capture traces for LLM invocation and log them to the active MLflow Experiment.
 
 MLflow trace automatically captures the following information about LiteLLM calls:
 

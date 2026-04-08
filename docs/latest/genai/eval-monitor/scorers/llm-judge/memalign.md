@@ -52,7 +52,7 @@ pip install mlflow dspy jinja2 tqdm
 
 ## Basic Usage[​](#basic-usage "Direct link to Basic Usage")
 
-See [make\_judge documentation](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges.md) for details on creating judges.
+See [make\_judge documentation](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md) for details on creating judges.
 
 python
 
@@ -99,7 +99,7 @@ aligned_judge = judge.align(traces=alignment_traces, optimizer=optimizer)
 
 | Parameter         | Type  | Default                                                                                                           | Description                                                                                                                                                                                                   |
 | ----------------- | ----- | ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `reflection_lm`   | `str` | See [Supported Judge Models](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges/supported-models.md) | Model used for extracting guidelines from feedback. See [Supported Judge Models](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges/supported-models.md) section for which models are supported. |
+| `reflection_lm`   | `str` | See [Supported Judge Models](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges/supported-models.md) | Model used for extracting guidelines from feedback. See [Supported Judge Models](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges/supported-models.md) section for which models are supported. |
 | `retrieval_k`     | `int` | `5`                                                                                                               | Number of relevant examples to retrieve from episodic memory during inference.                                                                                                                                |
 | `embedding_model` | `str` | `"openai:/text-embedding-3-small"`                                                                                | Model for episodic memory retrieval. Must be in `<provider>:/<model-name>` format.                                                                                                                            |
 

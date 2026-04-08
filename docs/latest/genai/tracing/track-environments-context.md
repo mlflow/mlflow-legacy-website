@@ -59,7 +59,7 @@ You can define custom metadata or override the automatically populated metadata 
 
 ## Setting Metadata[​](#setting-metadata "Direct link to Setting Metadata")
 
-To set metadata on a trace from your application, use the [`mlflow.update_current_trace()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.update_current_trace) API and pass the metadata in the `metadata` parameter.
+To set metadata on a trace from your application, use the [`mlflow.update_current_trace()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.update_current_trace) API and pass the metadata in the `metadata` parameter.
 
 python
 
@@ -141,10 +141,10 @@ def handle_chat(request: Request, chat_request: ChatRequest):
 
 ### Using the MLflow UI[​](#using-the-mlflow-ui "Direct link to Using the MLflow UI")
 
-In the MLflow UI (Traces Tab) and the [`mlflow.search_traces()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.search_traces) API, you can search for traces by context metadata using the following search queries:
+In the MLflow UI (Traces Tab) and the [`mlflow.search_traces()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.search_traces) API, you can search for traces by context metadata using the following search queries:
 
 * `metadata.environment = 'production'`
 * `metadata.app_version = '2.1.0'`
 * ``metadata.`mlflow.trace.session` = 'session-abc-456'``
 
-View the full list of supported filter syntax in the [Search Traces](/docs/3.11.1/genai/tracing/search-traces.md) guide.
+View the full list of supported filter syntax in the [Search Traces](/docs/latest/genai/tracing/search-traces.md) guide.

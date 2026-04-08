@@ -1,10 +1,10 @@
 # Tracing PydanticAI
 
-![PydanticAI Tracing via autolog](/docs/3.11.1/assets/images/pydanticai-tracing-794fbcf11fdb1407e2be31fefaec5536.png)
+![PydanticAI Tracing via autolog](/docs/latest/assets/images/pydanticai-tracing-794fbcf11fdb1407e2be31fefaec5536.png)
 
 [​PydanticAI](https://ai.pydantic.dev/) is a Python framework designed to simplify the development of production-grade generative AI applications. It brings type safety, ergonomic API design, and a developer-friendly experience to LLM and AI agent app development.​
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing.md) provides automatic tracing capability for [​PydanticAI](https://ai.pydantic.dev/), an open source framework for building multi-agent applications. By enabling auto tracing for ​PydanticAI by calling the [`mlflow.pydantic_ai.autolog()`](/docs/3.11.1/api_reference/python_api/mlflow.pydantic_ai.html#mlflow.pydantic_ai.autolog) function, MLflow will capture nested traces for ​PydanticAI workflow execution and log them to the active MLflow Experiment.
+[MLflow Tracing](/docs/latest/genai/tracing.md) provides automatic tracing capability for [​PydanticAI](https://ai.pydantic.dev/), an open source framework for building multi-agent applications. By enabling auto tracing for ​PydanticAI by calling the [`mlflow.pydantic_ai.autolog()`](/docs/latest/api_reference/python_api/mlflow.pydantic_ai.html#mlflow.pydantic_ai.autolog) function, MLflow will capture nested traces for ​PydanticAI workflow execution and log them to the active MLflow Experiment.
 
 python
 
@@ -184,7 +184,7 @@ await main()
 
 MLflow Tracing automatically captures tool-related interactions from the MCP server in PydanticAI, including call\_tool and list\_tools operations. These actions are recorded as individual spans in the trace UI.
 
-![PydanticAI MCP Server tracing via autolog](/docs/3.11.1/assets/images/pydanticai-mcp-tracing-539c1eadbc3bf818d47f3daec180391a.png)
+![PydanticAI MCP Server tracing via autolog](/docs/latest/assets/images/pydanticai-mcp-tracing-539c1eadbc3bf818d47f3daec180391a.png)
 
 The example below demonstrates how to run an MCP server using PydanticAI with MLflow tracing enabled. All tool invocation and listing operations are automatically captured as trace spans in the UI, along with relevant metadata.
 
@@ -237,7 +237,7 @@ MLflow supports tracing for PydanticAI's streaming APIs, including both async (`
 
 ### Async Streaming with `run_stream`[​](#async-streaming-with-run_stream "Direct link to async-streaming-with-run_stream")
 
-![PydanticAI run\_stream Tracing](/docs/3.11.1/assets/images/pydanticai-run-stream-tracing-5506a5fe5cae34f5d7aad05e0e990b07.png)
+![PydanticAI run\_stream Tracing](/docs/latest/assets/images/pydanticai-run-stream-tracing-5506a5fe5cae34f5d7aad05e0e990b07.png)
 
 python
 
@@ -264,7 +264,7 @@ asyncio.run(main())
 
 ### Sync Streaming with `run_stream_sync`[​](#sync-streaming-with-run_stream_sync "Direct link to sync-streaming-with-run_stream_sync")
 
-![PydanticAI run\_stream\_sync Tracing](/docs/3.11.1/assets/images/pydanticai-run-stream-sync-tracing-83a16166f581b65ae7e40f97147d48af.png)
+![PydanticAI run\_stream\_sync Tracing](/docs/latest/assets/images/pydanticai-run-stream-sync-tracing-83a16166f581b65ae7e40f97147d48af.png)
 
 The `run_stream_sync` method (available in PydanticAI 1.10.0+) provides synchronous streaming:
 
@@ -294,7 +294,7 @@ Both streaming methods will create traces that include:
 
 ## Tracking Token Usage and Cost[​](#tracking-token-usage-and-cost "Direct link to Tracking Token Usage and Cost")
 
-MLflow automatically tracks token usage and cost for PydanticAI. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/3.11.1/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
+MLflow automatically tracks token usage and cost for PydanticAI. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/latest/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
 
 ### Disable auto-tracing[​](#disable-auto-tracing "Direct link to Disable auto-tracing")
 

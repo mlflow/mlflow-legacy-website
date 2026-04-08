@@ -6,7 +6,7 @@
 
 Feedback serves as the bridge between running your application and understanding its quality, enabling you to systematically track performance across different dimensions like correctness, relevance, safety, and adherence to guidelines.
 
-![Feedbacks attached to traces](/docs/3.11.1/images/llms/tracing/genai-human-feedback.png)
+![Feedbacks attached to traces](/docs/latest/images/llms/tracing/genai-human-feedback.png)
 
 Feedbacks attached to traces
 
@@ -30,9 +30,9 @@ Quality checks are often performed by multiple annotators to ensure the robustne
 
 ## Core Structure[​](#core-structure "Direct link to Core Structure")
 
-![Feedback Architecture](/docs/3.11.1/assets/images/feedback_architecture-4294fe94ea1d82f20b5b16edddeab840.png)
+![Feedback Architecture](/docs/latest/assets/images/feedback_architecture-4294fe94ea1d82f20b5b16edddeab840.png)
 
-Feedback is often created by different sources, such as human annotators, LLM judges, or real user's feedback in the application. The [`Feedback`](/docs/3.11.1/api_reference/python_api/mlflow.entities.html#mlflow.entities.Feedback) object in MLflow is a standard container for storing these signals along with metadata to track how they are created. Feedbacks are associated with a Trace, or a particular Span in the Trace.
+Feedback is often created by different sources, such as human annotators, LLM judges, or real user's feedback in the application. The [`Feedback`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.Feedback) object in MLflow is a standard container for storing these signals along with metadata to track how they are created. Feedbacks are associated with a Trace, or a particular Span in the Trace.
 
 ## Feedback Object Schema[​](#feedback-object-schema "Direct link to Feedback Object Schema")
 
@@ -108,20 +108,20 @@ json
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [Feedback Guide](/docs/3.11.1/genai/assessments/feedback.md)
+### [Feedback Guide](/docs/latest/genai/assessments/feedback.md)
 
-[Complete guide for using mlflow.log\_feedback with practical examples and code samples](/docs/3.11.1/genai/assessments/feedback.md)
+[Complete guide for using mlflow.log\_feedback with practical examples and code samples](/docs/latest/genai/assessments/feedback.md)
 
-[View the feedback guide →](/docs/3.11.1/genai/assessments/feedback.md)
+[View the feedback guide →](/docs/latest/genai/assessments/feedback.md)
 
-### [Expectations Concepts](/docs/3.11.1/genai/concepts/expectations.md)
+### [Expectations Concepts](/docs/latest/genai/concepts/expectations.md)
 
-[Learn how to define ground truth expectations for comprehensive evaluation](/docs/3.11.1/genai/concepts/expectations.md)
+[Learn how to define ground truth expectations for comprehensive evaluation](/docs/latest/genai/concepts/expectations.md)
 
-[Learn about expectations →](/docs/3.11.1/genai/concepts/expectations.md)
+[Learn about expectations →](/docs/latest/genai/concepts/expectations.md)
 
-### [Ground Truth Expectations](/docs/3.11.1/genai/assessments/expectations.md)
+### [Ground Truth Expectations](/docs/latest/genai/assessments/expectations.md)
 
-[Understand how to define expected outputs for comprehensive evaluation](/docs/3.11.1/genai/assessments/expectations.md)
+[Understand how to define expected outputs for comprehensive evaluation](/docs/latest/genai/assessments/expectations.md)
 
-[Learn about expectations →](/docs/3.11.1/genai/assessments/expectations.md)
+[Learn about expectations →](/docs/latest/genai/assessments/expectations.md)

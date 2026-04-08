@@ -2,7 +2,7 @@
 
 [OpenTelemetry](https://opentelemetry.io/) is a CNCF-backed project that provides vendor-neutral observability APIs and SDKs to instrument your applications and collect telemetry data in a consistent way. MLflow Tracing is fully compatible with OpenTelemetry, making it free from vendor lock-in.
 
-![OpenTelemetry](/docs/3.11.1/images/llms/tracing/opentelemetry/hero.png)
+![OpenTelemetry](/docs/latest/images/llms/tracing/opentelemetry/hero.png)
 
 #### Ingest OpenTelemetry Traces into MLflow
 
@@ -18,7 +18,7 @@ MLflow both ingests and exports traces in the OpenTelemetry GenAI Semantic Conve
 
 ## OpenTelemetry-native MLflow Tracing SDK[​](#opentelemetry-native-mlflow-tracing-sdk "Direct link to OpenTelemetry-native MLflow Tracing SDK")
 
-To get started with vendor-neutral tracing quickly, you can use the OpenTelemetry-native MLflow Tracing SDK. The SDK provides a convenient one-line auto-tracing experience for [popular LLM and AI agent frameworks](/docs/3.11.1/genai/tracing/integrations.md) and enhances general OpenTelemetry traces with rich AI-specific metadata such as prompts, token usage, model name, etc. See [Quickstart](/docs/3.11.1/genai/tracing/quickstart.md) to get started with the MLflow Tracing SDK.
+To get started with vendor-neutral tracing quickly, you can use the OpenTelemetry-native MLflow Tracing SDK. The SDK provides a convenient one-line auto-tracing experience for [popular LLM and AI agent frameworks](/docs/latest/genai/tracing/integrations.md) and enhances general OpenTelemetry traces with rich AI-specific metadata such as prompts, token usage, model name, etc. See [Quickstart](/docs/latest/genai/tracing/quickstart.md) to get started with the MLflow Tracing SDK.
 
 python
 
@@ -38,16 +38,16 @@ The MLflow Tracing SDK also works seamlessly with applications already instrumen
 
 MLflow Server exposes an OTLP endpoint at `/v1/traces` ([OTLP](https://opentelemetry.io/docs/specs/otlp/)). This endpoint allows you to collect traces from applications written in any language that supports the OpenTelemetry protocol, such as Java, Go, Rust, etc.
 
-See [Collect OpenTelemetry Traces into MLflow](/docs/3.11.1/genai/tracing/opentelemetry/ingest.md) for more details on how to collect traces into MLflow Server.
+See [Collect OpenTelemetry Traces into MLflow](/docs/latest/genai/tracing/opentelemetry/ingest.md) for more details on how to collect traces into MLflow Server.
 
 ## Export MLflow Traces/Metrics via OTLP[​](#export-mlflow-tracesmetrics-via-otlp "Direct link to Export MLflow Traces/Metrics via OTLP")
 
-MLflow traces and metrics can be exported to other OpenTelemetry-compatible backends such as Datadog, Grafana, Prometheus, etc., to integrate with your existing observability platform. You can also use [dual export](/docs/3.11.1/genai/tracing/opentelemetry/export.md#dual-export) to send traces to both MLflow and an OpenTelemetry-compatible backend simultaneously.
+MLflow traces and metrics can be exported to other OpenTelemetry-compatible backends such as Datadog, Grafana, Prometheus, etc., to integrate with your existing observability platform. You can also use [dual export](/docs/latest/genai/tracing/opentelemetry/export.md#dual-export) to send traces to both MLflow and an OpenTelemetry-compatible backend simultaneously.
 
-See [Export MLflow Traces/Metrics via OTLP](/docs/3.11.1/genai/tracing/opentelemetry/export.md) for more details.
+See [Export MLflow Traces/Metrics via OTLP](/docs/latest/genai/tracing/opentelemetry/export.md) for more details.
 
 ## OpenTelemetry GenAI Semantic Conventions[​](#opentelemetry-genai-semantic-conventions "Direct link to OpenTelemetry GenAI Semantic Conventions")
 
 MLflow natively supports [OpenTelemetry GenAI Semantic Conventions](https://opentelemetry.io/docs/specs/semconv/gen-ai/gen-ai-spans/), the industry standard for describing AI and LLM telemetry. MLflow can both ingest GenAI semconv traces from external tools and export its own traces in GenAI semconv format for consumption by any compliant backend.
 
-See [GenAI Semantic Conventions](/docs/3.11.1/genai/tracing/opentelemetry/genai-semconv.md) for setup instructions and details.
+See [GenAI Semantic Conventions](/docs/latest/genai/tracing/opentelemetry/genai-semconv.md) for setup instructions and details.

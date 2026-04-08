@@ -1,14 +1,14 @@
 # Managing Dependencies in MLflow Models
 
-[MLflow Model](/docs/3.11.1/ml/model.md) is a standard format that packages a machine learning model with its dependencies and other metadata. Building a model with its dependencies allows for reproducibility and portability across a variety of platforms and tools.
+[MLflow Model](/docs/latest/ml/model.md) is a standard format that packages a machine learning model with its dependencies and other metadata. Building a model with its dependencies allows for reproducibility and portability across a variety of platforms and tools.
 
-When you create an MLflow model using the [MLflow Tracking APIs](/docs/3.11.1/ml/tracking.md), for instance, [`mlflow.pytorch.log_model()`](/docs/3.11.1/api_reference/python_api/mlflow.pytorch.html#mlflow.pytorch.log_model), MLflow automatically infers the required dependencies for the model flavor you're using and records them as a part of Model metadata. Then, when you serve the model for prediction, MLflow automatically installs the dependencies to the environment. Therefore, you normally won't need to worry about managing dependencies in MLflow Model.
+When you create an MLflow model using the [MLflow Tracking APIs](/docs/latest/ml/tracking.md), for instance, [`mlflow.pytorch.log_model()`](/docs/latest/api_reference/python_api/mlflow.pytorch.html#mlflow.pytorch.log_model), MLflow automatically infers the required dependencies for the model flavor you're using and records them as a part of Model metadata. Then, when you serve the model for prediction, MLflow automatically installs the dependencies to the environment. Therefore, you normally won't need to worry about managing dependencies in MLflow Model.
 
 However, in some cases, you may need to add or modify some dependencies. This page provides a high-level description of how MLflow manages dependencies and guidance for how to customize dependencies for your use case.
 
 tip
 
-One tip for improving MLflow's dependency inference accuracy is to add an `input_example` when saving your model. This enables MLflow to perform a model prediction before saving the model, thereby capturing the dependencies used during the prediction. Please refer to [Model Input Example](/docs/3.11.1/ml/model/signatures.md) for additional, detailed usage of this parameter.
+One tip for improving MLflow's dependency inference accuracy is to add an `input_example` when saving your model. This enables MLflow to perform a model prediction before saving the model, thereby capturing the dependencies used during the prediction. Please refer to [Model Input Example](/docs/latest/ml/model/signatures.md) for additional, detailed usage of this parameter.
 
 * [How MLflow Records Model Dependencies](#how-mlflow-records-dependencies)
 * [Using uv for Dependency Management](#uv-dependency-management)
@@ -34,7 +34,7 @@ my_model/
 └── requirements.txt
 ```
 
-Model dependencies are defined by the following files (For other files, please refer to the guidance provided in the section discussing [Storage Format](/docs/3.11.1/ml/model.md#storage-format)):
+Model dependencies are defined by the following files (For other files, please refer to the guidance provided in the section discussing [Storage Format](/docs/latest/ml/model.md#storage-format)):
 
 * `python_env.yaml` - This file contains the information required to restore the model environment using virtualenv (1) python version (2) build tools like pip, setuptools, and wheel (3) pip requirements of the model (a reference to requirements.txt)
 * `requirements.txt` - Defines the set of pip dependencies required to run the model.
@@ -193,7 +193,7 @@ mlflow.sklearn.log_model(model, name="model")
 
 ### Auto-Detection[​](#auto-detection "Direct link to Auto-Detection")
 
-By default, uv project detection is enabled. MLflow looks for `uv.lock` and `pyproject.toml` in the current working directory when you log a model with any flavor, including [`mlflow.sklearn.log_model()`](/docs/3.11.1/api_reference/python_api/mlflow.sklearn.html#mlflow.sklearn.log_model), [`mlflow.pytorch.log_model()`](/docs/3.11.1/api_reference/python_api/mlflow.pytorch.html#mlflow.pytorch.log_model), [`mlflow.transformers.log_model()`](/docs/3.11.1/api_reference/python_api/mlflow.transformers.html#mlflow.transformers.log_model), [`mlflow.pyfunc.log_model()`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.log_model), and others. All flavors that call `infer_pip_requirements` benefit from uv auto-detection.
+By default, uv project detection is enabled. MLflow looks for `uv.lock` and `pyproject.toml` in the current working directory when you log a model with any flavor, including [`mlflow.sklearn.log_model()`](/docs/latest/api_reference/python_api/mlflow.sklearn.html#mlflow.sklearn.log_model), [`mlflow.pytorch.log_model()`](/docs/latest/api_reference/python_api/mlflow.pytorch.html#mlflow.pytorch.log_model), [`mlflow.transformers.log_model()`](/docs/latest/api_reference/python_api/mlflow.transformers.html#mlflow.transformers.log_model), [`mlflow.pyfunc.log_model()`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.log_model), and others. All flavors that call `infer_pip_requirements` benefit from uv auto-detection.
 
 To disable auto-detection, set the `MLFLOW_UV_AUTO_DETECT` environment variable:
 
@@ -273,7 +273,7 @@ For a complete, runnable example with a uv project (including `pyproject.toml`, 
 
 tip
 
-The `uv_project_path`, `uv_groups`, and `uv_extras` parameters are available on [`mlflow.pyfunc.log_model()`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.log_model) and [`mlflow.pyfunc.save_model()`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.save_model). For other flavors (sklearn, pytorch, transformers, etc.), uv auto-detection works automatically when `uv.lock` and `pyproject.toml` exist in the current working directory.
+The `uv_project_path`, `uv_groups`, and `uv_extras` parameters are available on [`mlflow.pyfunc.log_model()`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.log_model) and [`mlflow.pyfunc.save_model()`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.save_model). For other flavors (sklearn, pytorch, transformers, etc.), uv auto-detection works automatically when `uv.lock` and `pyproject.toml` exist in the current working directory.
 
 warning
 
@@ -321,7 +321,7 @@ In this case, MLflow will install Pandas 2.0.3 in addition to the inferred depen
 
 note
 
-Once you log the model with dependencies, it is advisable to test it in a sandbox environment to avoid any dependency issues when deploying the model to production. Since MLflow 2.10.0, you can use the [`mlflow.models.predict()`](/docs/3.11.1/api_reference/python_api/mlflow.models.html#mlflow.models.predict) API to quickly test your model in a virtual environment. Please refer to [Validating Environment for Prediction](#validating-environment-for-prediction) for more details.
+Once you log the model with dependencies, it is advisable to test it in a sandbox environment to avoid any dependency issues when deploying the model to production. Since MLflow 2.10.0, you can use the [`mlflow.models.predict()`](/docs/latest/api_reference/python_api/mlflow.models.html#mlflow.models.predict) API to quickly test your model in a virtual environment. Please refer to [Validating Environment for Prediction](#validating-environment-for-prediction) for more details.
 
 ## Defining All Dependencies by Yourself[​](#defining-all-dependencies-by-yourself "Direct link to Defining All Dependencies by Yourself")
 
@@ -360,7 +360,7 @@ Please be careful when declaring dependencies that are different from those used
 
 note
 
-Once you log the model with dependencies, it is advisable to test it in a sandbox environment to avoid any dependency issues when deploying the model to production. Since MLflow 2.10.0, you can use the [`mlflow.models.predict()`](/docs/3.11.1/api_reference/python_api/mlflow.models.html#mlflow.models.predict) API to quickly test your model in a virtual environment. Please refer to [Validating Environment for Prediction](#validating-environment-for-prediction) for more details.
+Once you log the model with dependencies, it is advisable to test it in a sandbox environment to avoid any dependency issues when deploying the model to production. Since MLflow 2.10.0, you can use the [`mlflow.models.predict()`](/docs/latest/api_reference/python_api/mlflow.models.html#mlflow.models.predict) API to quickly test your model in a virtual environment. Please refer to [Validating Environment for Prediction](#validating-environment-for-prediction) for more details.
 
 ## Saving Extra Code dependencies with an MLflow Model - Automatic inference[​](#saving-code-dependencies "Direct link to Saving Extra Code dependencies with an MLflow Model - Automatic inference")
 
@@ -736,7 +736,7 @@ Validating your model before deployment is a critical step to ensure production 
 
 ### Testing offline prediction with a virtual environment[​](#testing-offline-prediction-with-a-virtual-environment "Direct link to Testing offline prediction with a virtual environment")
 
-You can use MLflow Models **predict** API via Python or CLI to make test predictions with your model. This will load your model from the model URI, create a virtual environment with the model dependencies (defined in MLflow Model), and run offline predictions with the model. Please refer to [`mlflow.models.predict()`](/docs/3.11.1/api_reference/python_api/mlflow.models.html#mlflow.models.predict) or the [CLI reference](/docs/3.11.1/api_reference/cli.html#mlflow-models) for more detailed usage for the predict API.
+You can use MLflow Models **predict** API via Python or CLI to make test predictions with your model. This will load your model from the model URI, create a virtual environment with the model dependencies (defined in MLflow Model), and run offline predictions with the model. Please refer to [`mlflow.models.predict()`](/docs/latest/api_reference/python_api/mlflow.models.html#mlflow.models.predict) or the [CLI reference](/docs/latest/api_reference/cli.html#mlflow-models) for more detailed usage for the predict API.
 
 note
 
@@ -762,15 +762,15 @@ bash
 mlflow models predict -m runs:/<run_id>/model-i <input_path>
 ```
 
-Using the [`mlflow.models.predict()`](/docs/3.11.1/api_reference/python_api/mlflow.models.html#mlflow.models.predict) API is convenient for testing your model and inference environment quickly. However, it may not be a perfect simulation of the serving because it does not start the online inference server. That said, it's a great way to test whether your prediction inputs are correctly formatted.
+Using the [`mlflow.models.predict()`](/docs/latest/api_reference/python_api/mlflow.models.html#mlflow.models.predict) API is convenient for testing your model and inference environment quickly. However, it may not be a perfect simulation of the serving because it does not start the online inference server. That said, it's a great way to test whether your prediction inputs are correctly formatted.
 
-Formatting is subject to the types supported by the `predict()` method of your logged model. If the model was logged with a signature, the input data should be viewable from the MLflow UI or via [`mlflow.models.get_model_info()`](/docs/3.11.1/api_reference/python_api/mlflow.models.html#mlflow.models.get_model_info), which has the field `signature`.
+Formatting is subject to the types supported by the `predict()` method of your logged model. If the model was logged with a signature, the input data should be viewable from the MLflow UI or via [`mlflow.models.get_model_info()`](/docs/latest/api_reference/python_api/mlflow.models.html#mlflow.models.get_model_info), which has the field `signature`.
 
 More generally, MLflow has the ability to support a variety of flavor-specific input types, such as a tensorflow tensor. MLflow also supports types that are not specific to a given flavor, such as a pandas DataFrame, numpy ndarray, python Dict, python List, scipy.sparse matrix, and spark data frame.
 
 ### Testing online inference endpoint with a virtual environment[​](#testing-online-inference-endpoint-with-a-virtual-environment "Direct link to Testing online inference endpoint with a virtual environment")
 
-If you want to test your model by actually running the online inference server, you can use the MLflow `serve` API. This will create a virtual environment with your model and dependencies, similarly to the `predict` API, but will start the inference server and expose the REST endpoints. Then you can send a test request and validate the response. Please refer to the [CLI reference](/docs/3.11.1/api_reference/cli.html#mlflow-models) for more detailed usage for the `serve` API.
+If you want to test your model by actually running the online inference server, you can use the MLflow `serve` API. This will create a virtual environment with your model and dependencies, similarly to the `predict` API, but will start the inference server and expose the REST endpoints. Then you can send a test request and validate the response. Please refer to the [CLI reference](/docs/latest/api_reference/cli.html#mlflow-models) for more detailed usage for the `serve` API.
 
 bash
 
@@ -788,7 +788,7 @@ In this case, you can use a Docker container to test your model. While it doesn'
 
 ### Testing online inference endpoint with a Docker container[​](#testing-online-inference-endpoint-with-a-docker-container "Direct link to Testing online inference endpoint with a Docker container")
 
-MLflow `build-docker` API for CLI and Python is capable of building an Ubuntu-based Docker image for serving your model. The image will contain your model and dependencies, as well as having an entrypoint that is used to start the inference server. Similarly to the *serve* API, you can send a test request and validate the response. Please refer to the [CLI reference](/docs/3.11.1/api_reference/cli.html#mlflow-models) for more detailed usage for the `build-docker` API.
+MLflow `build-docker` API for CLI and Python is capable of building an Ubuntu-based Docker image for serving your model. The image will contain your model and dependencies, as well as having an entrypoint that is used to start the inference server. Similarly to the *serve* API, you can send a test request and validate the response. Please refer to the [CLI reference](/docs/latest/api_reference/cli.html#mlflow-models) for more detailed usage for the `build-docker` API.
 
 bash
 
@@ -809,7 +809,7 @@ One of the most common issues experienced during model deployment centers around
 
 hint
 
-To reduce the possibility of dependency errors, you can add `input_example` when saving your model. This enables MLflow to perform a model prediction before saving the model, thereby capturing the dependencies used during the prediction. Please refer to [Model Input Example](/docs/3.11.1/ml/model/signatures.md) for additional, detailed usage of this parameter.
+To reduce the possibility of dependency errors, you can add `input_example` when saving your model. This enables MLflow to perform a model prediction before saving the model, thereby capturing the dependencies used during the prediction. Please refer to [Model Input Example](/docs/latest/ml/model/signatures.md) for additional, detailed usage of this parameter.
 
 #### 1. Check the missing dependencies[​](#1-check-the-missing-dependencies "Direct link to 1. Check the missing dependencies")
 
@@ -823,7 +823,7 @@ ModuleNotFoundError: No module named 'cv2'
 
 #### 2. Try adding the dependencies using the `predict` API[​](#2-try-adding-the-dependencies-using-the-predict-api "Direct link to 2-try-adding-the-dependencies-using-the-predict-api")
 
-Now that you know the missing dependencies, you can create a new model version with the correct dependencies. However, creating a new model for trying new dependencies might be a bit tedious, particularly because you may need to iterate multiple times to find the correct solution. Instead, you can use the [`mlflow.models.predict()`](/docs/3.11.1/api_reference/python_api/mlflow.models.html#mlflow.models.predict) API to test your change without actually needing to re-log the model repeatedly while troubleshooting the installation errors.
+Now that you know the missing dependencies, you can create a new model version with the correct dependencies. However, creating a new model for trying new dependencies might be a bit tedious, particularly because you may need to iterate multiple times to find the correct solution. Instead, you can use the [`mlflow.models.predict()`](/docs/latest/api_reference/python_api/mlflow.models.html#mlflow.models.predict) API to test your change without actually needing to re-log the model repeatedly while troubleshooting the installation errors.
 
 To do so, use the **pip-requirements-override** option to specify pip dependencies like `opencv-python==4.8.0`.
 
@@ -861,7 +861,7 @@ The `pip-requirements-override` option is available since MLflow 2.10.0.
 
 #### 3. Update the model metadata[​](#3-update-the-model-metadata "Direct link to 3. Update the model metadata")
 
-Once you find the correct dependencies, you can update the logged model's dependencies using [`mlflow.models.update_model_requirements()`](/docs/3.11.1/api_reference/python_api/mlflow.models.html#mlflow.models.update_model_requirements) API.
+Once you find the correct dependencies, you can update the logged model's dependencies using [`mlflow.models.update_model_requirements()`](/docs/latest/api_reference/python_api/mlflow.models.html#mlflow.models.update_model_requirements) API.
 
 python
 
@@ -947,4 +947,4 @@ dependencies:
 
 If you would like to change the channel used in a model's environment, you can re-register the model to the model registry with a new `conda.yaml`. You can do this by specifying the channel in the `conda_env` parameter of `log_model()`.
 
-For more information on the `log_model()` API, see the MLflow documentation for the model flavor you are working with, for example, [`mlflow.sklearn.log_model()`](/docs/3.11.1/api_reference/python_api/mlflow.sklearn.html#mlflow.sklearn.log_model).
+For more information on the `log_model()` API, see the MLflow documentation for the model flavor you are working with, for example, [`mlflow.sklearn.log_model()`](/docs/latest/api_reference/python_api/mlflow.sklearn.html#mlflow.sklearn.log_model).

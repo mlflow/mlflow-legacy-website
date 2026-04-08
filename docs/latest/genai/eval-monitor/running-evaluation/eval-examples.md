@@ -26,7 +26,7 @@ results = mlflow.genai.evaluate(
 )
 ```
 
-To create datasets from traces or scratch, see [Build evaluation datasets](/docs/3.11.1/genai/datasets.md).
+To create datasets from traces or scratch, see [Build evaluation datasets](/docs/latest/genai/datasets.md).
 
 ### Evaluate using a list of dictionaries[​](#evaluate-using-a-list-of-dictionaries "Direct link to Evaluate using a list of dictionaries")
 
@@ -65,7 +65,7 @@ results = mlflow.genai.evaluate(
 )
 ```
 
-For production, convert to an [MLflow Evaluation Dataset](/docs/3.11.1/genai/datasets.md).
+For production, convert to an [MLflow Evaluation Dataset](/docs/latest/genai/datasets.md).
 
 ### Evaluate using a Pandas DataFrame[​](#evaluate-using-a-pandas-dataframe "Direct link to Evaluate using a Pandas DataFrame")
 
@@ -105,7 +105,7 @@ results = mlflow.genai.evaluate(
 
 Use Spark DataFrames for large-scale evaluations or if you need to filter the records in an MLflow Evaluation Dataset before running the evaluation.
 
-The DataFrame must comply with the [evaluation dataset schema](/docs/3.11.1/genai/datasets/sdk-guide.md#evaluation-dataset-schema).
+The DataFrame must comply with the [evaluation dataset schema](/docs/latest/genai/datasets/sdk-guide.md#evaluation-dataset-schema).
 
 python
 

@@ -249,20 +249,20 @@ Configuration is automatically validated when starting the server. Any errors wi
 
 Once your gateway is running, learn how to configure providers and endpoints:
 
-### [Configuration Guide](/docs/3.11.1/genai/governance/ai-gateway/legacy/configuration.md)
+### [Configuration Guide](/docs/latest/genai/governance/ai-gateway/legacy/configuration.md)
 
-[Learn how to configure providers, endpoints, and advanced settings](/docs/3.11.1/genai/governance/ai-gateway/legacy/configuration.md)
+[Learn how to configure providers, endpoints, and advanced settings](/docs/latest/genai/governance/ai-gateway/legacy/configuration.md)
 
-[Configure providers →](/docs/3.11.1/genai/governance/ai-gateway/legacy/configuration.md)
+[Configure providers →](/docs/latest/genai/governance/ai-gateway/legacy/configuration.md)
 
-### [Usage Guide](/docs/3.11.1/genai/governance/ai-gateway/legacy/usage.md)
+### [Usage Guide](/docs/latest/genai/governance/ai-gateway/legacy/usage.md)
 
-[Start querying endpoints with Python client and REST APIs](/docs/3.11.1/genai/governance/ai-gateway/legacy/usage.md)
+[Start querying endpoints with Python client and REST APIs](/docs/latest/genai/governance/ai-gateway/legacy/usage.md)
 
-[Start using →](/docs/3.11.1/genai/governance/ai-gateway/legacy/usage.md)
+[Start using →](/docs/latest/genai/governance/ai-gateway/legacy/usage.md)
 
-### [Main AI Gateway](/docs/3.11.1/genai/governance/ai-gateway.md)
+### [Main AI Gateway](/docs/latest/genai/governance/ai-gateway.md)
 
-[Explore the modern AI Gateway with enhanced features and UI management](/docs/3.11.1/genai/governance/ai-gateway.md)
+[Explore the modern AI Gateway with enhanced features and UI management](/docs/latest/genai/governance/ai-gateway.md)
 
-[View AI Gateway →](/docs/3.11.1/genai/governance/ai-gateway.md)
+[View AI Gateway →](/docs/latest/genai/governance/ai-gateway.md)

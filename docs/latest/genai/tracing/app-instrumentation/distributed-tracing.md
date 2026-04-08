@@ -2,16 +2,16 @@
 
 When your application spans multiple services, you may want to connect spans from these services into a single trace for tracking the end-to-end execution in one place. MLflow supports this via **Distributed Tracing**, by propagating the active trace context over HTTP so that spans recorded in different services are stitched together.
 
-![Distributed trace in the MLflow UI showing spans from both client and server](/docs/3.11.1/images/llms/tracing/distributed-tracing-sample.png)
+![Distributed trace in the MLflow UI showing spans from both client and server](/docs/latest/images/llms/tracing/distributed-tracing-sample.png)
 
 ## How It Works[​](#how-it-works "Direct link to How It Works")
 
 MLflow is OpenTelemetry-compatible, so trace context is propagated through the HTTP headers following the [W3C TraceContext](https://www.w3.org/TR/trace-context/) specification. MLflow provides two APIs to simplify handling the headers at the client and server sides:
 
-* Use [get\_tracing\_context\_headers\_for\_http\_request](/docs/3.11.1/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.get_tracing_context_headers_for_http_request) in the **client side** (caller service) to get headers containing the current trace context.
-* Use [set\_tracing\_context\_from\_http\_request\_headers](/docs/3.11.1/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.set_tracing_context_from_http_request_headers) in the **server side** (callee service) to extract the trace and span information from the incoming request headers.
+* Use [get\_tracing\_context\_headers\_for\_http\_request](/docs/latest/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.get_tracing_context_headers_for_http_request) in the **client side** (caller service) to get headers containing the current trace context.
+* Use [set\_tracing\_context\_from\_http\_request\_headers](/docs/latest/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.set_tracing_context_from_http_request_headers) in the **server side** (callee service) to extract the trace and span information from the incoming request headers.
 
-![Distributed tracing flow](/docs/3.11.1/assets/images/distributed-tracing-flow-be4470321832a938323b4a3f9960e3b0.png)
+![Distributed tracing flow](/docs/latest/assets/images/distributed-tracing-flow-be4470321832a938323b4a3f9960e3b0.png)
 
 ## Prerequisites[​](#prerequisites "Direct link to Prerequisites")
 
@@ -125,7 +125,7 @@ Open the MLflow UI at `http://localhost:5000` and navigate to the **distributed-
 
 ## AI Gateway Integration[​](#ai-gateway-integration "Direct link to AI Gateway Integration")
 
-When an agent calls an [MLflow AI Gateway](/docs/3.11.1/genai/governance/ai-gateway.md) endpoint with usage tracking enabled, the gateway automatically creates a trace for each request. If the agent also sends a `traceparent` header, the gateway will create a lightweight span under the agent's trace that links to the full gateway trace and includes token usage.
+When an agent calls an [MLflow AI Gateway](/docs/latest/genai/governance/ai-gateway.md) endpoint with usage tracking enabled, the gateway automatically creates a trace for each request. If the agent also sends a `traceparent` header, the gateway will create a lightweight span under the agent's trace that links to the full gateway trace and includes token usage.
 
 An important note for AI Gateway integration is that the gateway trace and the agent trace are stored in **different** experiments, while they are linked together through a span attribute. The gateway trace is a full trace with request/response payloads and token usage, while the agent trace includes a lightweight span `gateway/<endpoint_name>` that contains a link to the gateway trace and token usage in span attributes. This design allows aggregating gateway usage across experiments while avoiding storing duplicated payloads.
 
@@ -158,7 +158,7 @@ with mlflow.start_span("my-agent"):
 
 note
 
-The gateway endpoint must have [usage tracking](/docs/3.11.1/genai/governance/ai-gateway/usage-tracking.md) enabled for both the gateway trace and the distributed span to be created.
+The gateway endpoint must have [usage tracking](/docs/latest/genai/governance/ai-gateway/usage-tracking.md) enabled for both the gateway trace and the distributed span to be created.
 
 ## Limitation in Databricks[​](#limitation-in-databricks "Direct link to Limitation in Databricks")
 

@@ -4,11 +4,11 @@ Capturing user feedback is critical for understanding the real-world quality of 
 
 ## Adding Feedback with MLflow UI[​](#adding-feedback-with-mlflow-ui "Direct link to Adding Feedback with MLflow UI")
 
-[](/docs/3.11.1/images/llms/tracing/logging-feedback.mp4)
+[](/docs/latest/images/llms/tracing/logging-feedback.mp4)
 
 ## Adding Feedback with API[​](#adding-feedback-with-api "Direct link to Adding Feedback with API")
 
-To annotate traces with feedback programmatically, use the [`mlflow.log_feedback()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.log_feedback) API.
+To annotate traces with feedback programmatically, use the [`mlflow.log_feedback()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.log_feedback) API.
 
 python
 
@@ -25,9 +25,9 @@ mlflow.log_feedback(
 )
 ```
 
-If you have a `Feedback` object already (e.g., a response from LLM-as-a-Judge), you can log it directly using the [`mlflow.log_assessment()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.log_assessment) API. This is equivalent to using the
+If you have a `Feedback` object already (e.g., a response from LLM-as-a-Judge), you can log it directly using the [`mlflow.log_assessment()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.log_assessment) API. This is equivalent to using the
 
-[`mlflow.log_feedback()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.log_feedback) API with unpacked fields.
+[`mlflow.log_feedback()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.log_feedback) API with unpacked fields.
 
 python
 
@@ -76,20 +76,20 @@ The `source` field of the feedback provides information about where the feedback
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [Feedback Concepts](/docs/3.11.1/genai/concepts/feedback.md)
+### [Feedback Concepts](/docs/latest/genai/concepts/feedback.md)
 
-[Deep dive into feedback architecture, schema, and best practices](/docs/3.11.1/genai/concepts/feedback.md)
+[Deep dive into feedback architecture, schema, and best practices](/docs/latest/genai/concepts/feedback.md)
 
-[Learn concepts →](/docs/3.11.1/genai/concepts/feedback.md)
+[Learn concepts →](/docs/latest/genai/concepts/feedback.md)
 
-### [Search and Analyze Traces](/docs/3.11.1/genai/tracing/search-traces.md)
+### [Search and Analyze Traces](/docs/latest/genai/tracing/search-traces.md)
 
-[Query traces with feedback data and analyze patterns for quality insights](/docs/3.11.1/genai/tracing/search-traces.md)
+[Query traces with feedback data and analyze patterns for quality insights](/docs/latest/genai/tracing/search-traces.md)
 
-[Start analyzing →](/docs/3.11.1/genai/tracing/search-traces.md)
+[Start analyzing →](/docs/latest/genai/tracing/search-traces.md)
 
-### [Evaluate Traces](/docs/3.11.1/genai/eval-monitor.md)
+### [Evaluate Traces](/docs/latest/genai/eval-monitor.md)
 
-[Learn how to evaluate traces with feedback data and analyze patterns for quality insights](/docs/3.11.1/genai/eval-monitor.md)
+[Learn how to evaluate traces with feedback data and analyze patterns for quality insights](/docs/latest/genai/eval-monitor.md)
 
-[Start evaluating →](/docs/3.11.1/genai/eval-monitor.md)
+[Start evaluating →](/docs/latest/genai/eval-monitor.md)

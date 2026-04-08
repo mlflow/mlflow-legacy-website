@@ -8,7 +8,7 @@ note
 
 SQL Backend Required
 
-Evaluation Datasets require an MLflow Tracking Server with a **[SQL backend](/docs/3.11.1/self-hosting/architecture/backend-store.md#types-of-backend-stores)** (PostgreSQL, MySQL, SQLite, or MSSQL). This feature is **not available** with FileStore (local file system-based tracking).
+Evaluation Datasets require an MLflow Tracking Server with a **[SQL backend](/docs/latest/self-hosting/architecture/backend-store.md#types-of-backend-stores)** (PostgreSQL, MySQL, SQLite, or MSSQL). This feature is **not available** with FileStore (local file system-based tracking).
 
 ## Prerequisites[​](#prerequisites "Direct link to Prerequisites")
 
@@ -20,7 +20,7 @@ pip install --upgrade 'mlflow>=3.4' openai
 
 ## Step 1: Build & Trace Your Application[​](#step-1-build--trace-your-application "Direct link to Step 1: Build & Trace Your Application")
 
-Start with a traced LLM application. This example shows a customer support bot, but the pattern applies to any LLM application. You can use the [mlflow.trace decorator](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.trace) for manual instrumentation or [enable automatic tracing for OpenAI](/docs/3.11.1/api_reference/python_api/mlflow.openai.html#mlflow.openai.autolog) as shown below.
+Start with a traced LLM application. This example shows a customer support bot, but the pattern applies to any LLM application. You can use the [mlflow.trace decorator](/docs/latest/api_reference/python_api/mlflow.html#mlflow.trace) for manual instrumentation or [enable automatic tracing for OpenAI](/docs/latest/api_reference/python_api/mlflow.openai.html#mlflow.openai.autolog) as shown below.
 
 python
 
@@ -78,7 +78,7 @@ bot = CustomerSupportBot()
 
 ## Step 2: Capture Production Traces[​](#step-2-capture-production-traces "Direct link to Step 2: Capture Production Traces")
 
-Run your application with real or test scenarios to capture traces. Later, you'll use [mlflow.search\_traces()](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.search_traces) to retrieve these traces for annotation and dataset creation.
+Run your application with real or test scenarios to capture traces. Later, you'll use [mlflow.search\_traces()](/docs/latest/api_reference/python_api/mlflow.html#mlflow.search_traces) to retrieve these traces for annotation and dataset creation.
 
 python
 
@@ -98,9 +98,9 @@ for question in test_questions:
 
 ## Step 3: Add Ground Truth Expectations[​](#step-3-add-ground-truth-expectations "Direct link to Step 3: Add Ground Truth Expectations")
 
-Add expectations to your traces to define what you expect as a response coming from your application. Use [mlflow.log\_expectation()](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.log_expectation) to annotate traces with ground truth values that will serve as your evaluation baseline. You can also directly apply expectations within the UI.
+Add expectations to your traces to define what you expect as a response coming from your application. Use [mlflow.log\_expectation()](/docs/latest/api_reference/python_api/mlflow.html#mlflow.log_expectation) to annotate traces with ground truth values that will serve as your evaluation baseline. You can also directly apply expectations within the UI.
 
-![Adding Expectations in UI](/docs/3.11.1/images/add-expectation-ui.png)
+![Adding Expectations in UI](/docs/latest/images/add-expectation-ui.png)
 
 python
 
@@ -133,7 +133,7 @@ for trace in traces:
 
 ## Step 4: Create an Evaluation Dataset[​](#step-4-create-an-evaluation-dataset "Direct link to Step 4: Create an Evaluation Dataset")
 
-Transform your annotated traces into a reusable evaluation dataset. Use [create\_dataset()](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.datasets.create_dataset) to initialize your dataset and [merge\_records()](/docs/3.11.1/api_reference/python_api/mlflow.entities.html#mlflow.entities.EvaluationDataset.merge_records) to add test cases from multiple sources.
+Transform your annotated traces into a reusable evaluation dataset. Use [create\_dataset()](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.datasets.create_dataset) to initialize your dataset and [merge\_records()](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.EvaluationDataset.merge_records) to add test cases from multiple sources.
 
 python
 
@@ -173,7 +173,7 @@ dataset.merge_records(manual_tests)
 
 ## Step 5: Run Systematic Evaluation[​](#step-5-run-systematic-evaluation "Direct link to Step 5: Run Systematic Evaluation")
 
-Evaluate your application against the dataset using built-in and custom scorers. Use [mlflow.genai.evaluate()](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.evaluate) to run comprehensive evaluations with scorers like [Correctness](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Correctness) for factual accuracy assessment. You can also create custom scorers using the [@scorer decorator](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.scorer) to evaluate domain-specific criteria.
+Evaluate your application against the dataset using built-in and custom scorers. Use [mlflow.genai.evaluate()](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.evaluate) to run comprehensive evaluations with scorers like [Correctness](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Correctness) for factual accuracy assessment. You can also create custom scorers using the [@scorer decorator](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.scorer) to evaluate domain-specific criteria.
 
 python
 
@@ -252,20 +252,20 @@ if not low_scores.empty:
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [Custom Scorers](/docs/3.11.1/genai/eval-monitor/scorers.md)
+### [Custom Scorers](/docs/latest/genai/eval-monitor/scorers.md)
 
-[Build sophisticated scorers for complex evaluation criteria](/docs/3.11.1/genai/eval-monitor/scorers.md)
+[Build sophisticated scorers for complex evaluation criteria](/docs/latest/genai/eval-monitor/scorers.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/scorers.md)
+[Learn more →](/docs/latest/genai/eval-monitor/scorers.md)
 
-### [SDK Reference](/docs/3.11.1/genai/datasets/sdk-guide.md)
+### [SDK Reference](/docs/latest/genai/datasets/sdk-guide.md)
 
-[Deep dive into dataset management APIs](/docs/3.11.1/genai/datasets/sdk-guide.md)
+[Deep dive into dataset management APIs](/docs/latest/genai/datasets/sdk-guide.md)
 
-[View guide →](/docs/3.11.1/genai/datasets/sdk-guide.md)
+[View guide →](/docs/latest/genai/datasets/sdk-guide.md)
 
-### [Production Monitoring](/docs/3.11.1/genai/tracing/prod-tracing.md)
+### [Production Monitoring](/docs/latest/genai/tracing/prod-tracing.md)
 
-[Set up continuous evaluation for production](/docs/3.11.1/genai/tracing/prod-tracing.md)
+[Set up continuous evaluation for production](/docs/latest/genai/tracing/prod-tracing.md)
 
-[Learn more →](/docs/3.11.1/genai/tracing/prod-tracing.md)
+[Learn more →](/docs/latest/genai/tracing/prod-tracing.md)

@@ -1,6 +1,6 @@
 # Track Users & Sessions
 
-[](/docs/3.11.1/images/llms/tracing/chat-sessions-demo.mp4)
+[](/docs/latest/images/llms/tracing/chat-sessions-demo.mp4)
 
 Many real-world AI applications use sessions to maintain multi-turn user interactions. MLflow Tracing provides built-in support for associating traces with users and grouping them into sessions. Tracking users and sessions in your LLM application or AI agent provides essential context for understanding user behavior, analyzing conversation flows, and improving personalization.
 
@@ -15,7 +15,7 @@ When you use these standard metadata fields, MLflow automatically enables filter
 
 ## Basic Usage[​](#basic-usage "Direct link to Basic Usage")
 
-To record user and session information in your application, use the [`mlflow.update_current_trace()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.update_current_trace) API and pass the user and session IDs in the metadata.
+To record user and session information in your application, use the [`mlflow.update_current_trace()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.update_current_trace) API and pass the user and session IDs in the metadata.
 
 * Python
 * TypeScript
@@ -256,20 +256,20 @@ print(f"Success rate: {success_rate}")
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [Evaluate Conversations](/docs/3.11.1/genai/eval-monitor/running-evaluation/multi-turn.md)
+### [Evaluate Conversations](/docs/latest/genai/eval-monitor/running-evaluation/multi-turn.md)
 
-[Assess multi-turn session quality with conversation-level scorers](/docs/3.11.1/genai/eval-monitor/running-evaluation/multi-turn.md)
+[Assess multi-turn session quality with conversation-level scorers](/docs/latest/genai/eval-monitor/running-evaluation/multi-turn.md)
 
-[Evaluate sessions →](/docs/3.11.1/genai/eval-monitor/running-evaluation/multi-turn.md)
+[Evaluate sessions →](/docs/latest/genai/eval-monitor/running-evaluation/multi-turn.md)
 
-### [Search Traces](/docs/3.11.1/genai/tracing/search-traces.md)
+### [Search Traces](/docs/latest/genai/tracing/search-traces.md)
 
-[Master advanced filtering techniques for user and session analysis](/docs/3.11.1/genai/tracing/search-traces.md)
+[Master advanced filtering techniques for user and session analysis](/docs/latest/genai/tracing/search-traces.md)
 
-[Learn search →](/docs/3.11.1/genai/tracing/search-traces.md)
+[Learn search →](/docs/latest/genai/tracing/search-traces.md)
 
-### [Production Monitoring](/docs/3.11.1/genai/tracing/prod-tracing.md)
+### [Production Monitoring](/docs/latest/genai/tracing/prod-tracing.md)
 
-[Set up comprehensive production observability with user context](/docs/3.11.1/genai/tracing/prod-tracing.md)
+[Set up comprehensive production observability with user context](/docs/latest/genai/tracing/prod-tracing.md)
 
-[Monitor production →](/docs/3.11.1/genai/tracing/prod-tracing.md)
+[Monitor production →](/docs/latest/genai/tracing/prod-tracing.md)

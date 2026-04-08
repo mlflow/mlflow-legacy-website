@@ -15,7 +15,7 @@ MLflow provides two built-in LLM judges to assess relevance in your LLM applicat
    pip install --upgrade mlflow
    ```
 
-2. Create an MLflow experiment by following the [setup your environment quickstart](/docs/3.11.1/genai/getting-started/connect-environment.md).
+2. Create an MLflow experiment by following the [setup your environment quickstart](/docs/latest/genai/getting-started/connect-environment.md).
 
 3. (Optional, if using OpenAI models) Use the native OpenAI SDK to connect to OpenAI-hosted models. Select a model from the [available OpenAI models](https://platform.openai.com/docs/models).
 
@@ -45,7 +45,7 @@ MLflow provides two built-in LLM judges to assess relevance in your LLM applicat
 
 This judge evaluates if your app's response directly addresses the user's input without deviating into unrelated topics.
 
-You can invoke the judge directly with a single input for testing, or pass it to [mlflow.genai.evaluate](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.evaluate) for running full evaluation on a dataset.
+You can invoke the judge directly with a single input for testing, or pass it to [mlflow.genai.evaluate](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.evaluate) for running full evaluation on a dataset.
 
 **Requirements:**
 
@@ -84,7 +84,7 @@ result = mlflow.genai.evaluate(data=data, scorers=[RelevanceToQuery()])
 
 ### RetrievalRelevance Judge[​](#retrievalrelevance-judge "Direct link to RetrievalRelevance Judge")
 
-This judge evaluates if each document returned by your app's retriever(s) is relevant to the input request. It evaluates each retriever span separately and returns a separate [`Feedback`](/docs/3.11.1/api_reference/python_api/mlflow.entities.html#mlflow.entities.Feedback) object for each retriever span in your trace.
+This judge evaluates if each document returned by your app's retriever(s) is relevant to the input request. It evaluates each retriever span separately and returns a separate [`Feedback`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.Feedback) object for each retriever span in your trace.
 
 **Requirements:**
 
@@ -122,28 +122,28 @@ results = mlflow.genai.evaluate(
 
 tip
 
-For a complete RAG application example with these judges, see the [RAG Evaluation guide](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/rag.md).
+For a complete RAG application example with these judges, see the [RAG Evaluation guide](/docs/latest/genai/eval-monitor/scorers/llm-judge/rag.md).
 
 ## Select the LLM that powers the judge[​](#select-the-llm-that-powers-the-judge "Direct link to Select the LLM that powers the judge")
 
 You can change the judge model by using the `model` argument in the judge definition. The model must be specified in the format `<provider>:/<model-name>`, where `<provider>` is the name of your model provider (e.g. `openai`, `anthropic`, `gemini`).
 
-For a list of supported models, see [selecting judge models](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges.md#selecting-judge-models).
+For a list of supported models, see [selecting judge models](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md#selecting-judge-models).
 
 ## Interpret results[​](#interpret-results "Direct link to Interpret results")
 
-The judge returns a [`Feedback`](/docs/3.11.1/api_reference/python_api/mlflow.entities.html#mlflow.entities.Feedback) object containing:
+The judge returns a [`Feedback`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.Feedback) object containing:
 
 * **value**: "yes" if context is relevant, "no" if not
 * **rationale**: Explanation of why the judge found the context relevant or irrelevant
 
 ## Next steps[​](#next-steps "Direct link to Next steps")
 
-### [Explore other built-in judges](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/predefined.md#available-judges)
+### [Explore other built-in judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md#available-judges)
 
-[Learn about groundedness, safety, and correctness judges](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/predefined.md#available-judges)
+[Learn about groundedness, safety, and correctness judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md#available-judges)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/predefined.md#available-judges)
+[Learn more →](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md#available-judges)
 
 ### [Create custom judges](#)
 
@@ -151,8 +151,8 @@ The judge returns a [`Feedback`](/docs/3.11.1/api_reference/python_api/mlflow.en
 
 [Learn more →](#)
 
-### [Evaluate RAG applications](/docs/3.11.1/genai/eval-monitor/quickstart.md)
+### [Evaluate RAG applications](/docs/latest/genai/eval-monitor/quickstart.md)
 
-[Apply relevance judges in comprehensive RAG evaluation](/docs/3.11.1/genai/eval-monitor/quickstart.md)
+[Apply relevance judges in comprehensive RAG evaluation](/docs/latest/genai/eval-monitor/quickstart.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/quickstart.md)
+[Learn more →](/docs/latest/genai/eval-monitor/quickstart.md)

@@ -306,20 +306,20 @@ except requests.RequestException as e:
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [Gateway Overview](/docs/3.11.1/genai/governance/ai-gateway.md)
+### [Gateway Overview](/docs/latest/genai/governance/ai-gateway.md)
 
-[Return to the AI Gateway overview page](/docs/3.11.1/genai/governance/ai-gateway.md)
+[Return to the AI Gateway overview page](/docs/latest/genai/governance/ai-gateway.md)
 
-[View overview →](/docs/3.11.1/genai/governance/ai-gateway.md)
+[View overview →](/docs/latest/genai/governance/ai-gateway.md)
 
-### [Configuration Guide](/docs/3.11.1/genai/governance/ai-gateway/legacy/configuration.md)
+### [Configuration Guide](/docs/latest/genai/governance/ai-gateway/legacy/configuration.md)
 
-[Learn how to configure providers and advanced settings](/docs/3.11.1/genai/governance/ai-gateway/legacy/configuration.md)
+[Learn how to configure providers and advanced settings](/docs/latest/genai/governance/ai-gateway/legacy/configuration.md)
 
-[Configure providers →](/docs/3.11.1/genai/governance/ai-gateway/legacy/configuration.md)
+[Configure providers →](/docs/latest/genai/governance/ai-gateway/legacy/configuration.md)
 
-### [Setup Guide](/docs/3.11.1/genai/governance/ai-gateway/legacy/setup.md)
+### [Setup Guide](/docs/latest/genai/governance/ai-gateway/legacy/setup.md)
 
-[Get started with installation and environment setup](/docs/3.11.1/genai/governance/ai-gateway/legacy/setup.md)
+[Get started with installation and environment setup](/docs/latest/genai/governance/ai-gateway/legacy/setup.md)
 
-[View setup →](/docs/3.11.1/genai/governance/ai-gateway/legacy/setup.md)
+[View setup →](/docs/latest/genai/governance/ai-gateway/legacy/setup.md)

@@ -18,7 +18,7 @@ Join the conversation and get help from our vibrant community:
 
 [Join Slack →](https://mlflow.org/slack)
 
-[![X](/docs/3.11.1/images/logos/x-logo-black.png)![X](/docs/3.11.1/images/logos/x-logo-white.png)](https://x.com/mlflow)
+[![X](/docs/latest/images/logos/x-logo-black.png)![X](/docs/latest/images/logos/x-logo-white.png)](https://x.com/mlflow)
 
 ### [X](https://x.com/mlflow)
 

@@ -2,20 +2,20 @@
 
 Custom LLM judges let you define complex and nuanced judging guidelines for LLM applications and AI agents using natural language.
 
-While MLflow [built-in LLM judges](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/predefined.md#available-judges) offer excellent starting points for common quality dimensions, custom judges created using `make_judge()` give you full control over evaluation criteria. You can create these judges using either the **UI** or the **SDK**.
+While MLflow [built-in LLM judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md#available-judges) offer excellent starting points for common quality dimensions, custom judges created using `make_judge()` give you full control over evaluation criteria. You can create these judges using either the **UI** or the **SDK**.
 
 Try the Judge Builder UI
 
-The fastest way to create LLM judges is through the **Judge Builder UI** - no code required. Navigate to your experiment's **Judges** tab to create and test judges visually. See the [Create a Custom Judge](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges/create-custom-judge.md#step-2-define-custom-judges) page for details.
+The fastest way to create LLM judges is through the **Judge Builder UI** - no code required. Navigate to your experiment's **Judges** tab to create and test judges visually. See the [Create a Custom Judge](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges/create-custom-judge.md#step-2-define-custom-judges) page for details.
 
 Version Requirements
 
 * **UI**: The Judge Builder UI requires **MLflow >= 3.9.0**.
-* **SDK**: The `make_judge` API requires **MLflow >= 3.4.0**. For earlier versions, use the deprecated [custom\_prompt\_judge](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.judges.custom_prompt_judge) instead.
+* **SDK**: The `make_judge` API requires **MLflow >= 3.4.0**. For earlier versions, use the deprecated [custom\_prompt\_judge](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.judges.custom_prompt_judge) instead.
 
 ## Prompts and template variables[​](#prompts-and-template-variables "Direct link to Prompts and template variables")
 
-To create a judge, you provide a prompt with natural language instructions on how to assess the quality of your agent. [`make_judge()`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.judges.make_jduge) accepts template variables to access the agent's inputs, outputs, expected outputs or behaviors, and even complete traces.
+To create a judge, you provide a prompt with natural language instructions on how to assess the quality of your agent. [`make_judge()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.judges.make_jduge) accepts template variables to access the agent's inputs, outputs, expected outputs or behaviors, and even complete traces.
 
 Your instructions must include at least one template variable, but you don't need to use all of them.
 
@@ -62,7 +62,7 @@ tool_usage_judge = make_judge(
 
 For trace-based judges to analyze the full trace, the `model` argument must be specified in `make_judge()`.
 
-For a complete tutorial, see [Create a custom judge using make\_judge()](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges/create-custom-judge.md).
+For a complete tutorial, see [Create a custom judge using make\_judge()](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges/create-custom-judge.md).
 
 ## Selecting Judge Models[​](#selecting-judge-models "Direct link to Selecting Judge Models")
 
@@ -78,7 +78,7 @@ Correctness(model="anthropic:/claude-4-opus")
 Correctness(model="google:/gemini-2.0-flash")
 ```
 
-For detailed information on supported models, AI Gateway configuration, and guidance on choosing the right model for your use case, see [Supported Judge Models](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges/supported-models.md).
+For detailed information on supported models, AI Gateway configuration, and guidance on choosing the right model for your use case, see [Supported Judge Models](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges/supported-models.md).
 
 ## Best practices for writing judge instructions[​](#best-practices-for-writing-judge-instructions "Direct link to Best practices for writing judge instructions")
 
@@ -97,24 +97,24 @@ Break down complex evaluations. For complex evaluation tasks, structure your ins
 
 ## Align judges with human experts[​](#align-judges-with-human-experts "Direct link to Align judges with human experts")
 
-The base judge is a starting point. As you gather expert feedback on your application's outputs, you can align the LLM judges to the feedback to further improve judge accuracy. See [Align judges with humans](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/alignment.md).
+The base judge is a starting point. As you gather expert feedback on your application's outputs, you can align the LLM judges to the feedback to further improve judge accuracy. See [Align judges with humans](/docs/latest/genai/eval-monitor/scorers/llm-judge/alignment.md).
 
 ## Next steps[​](#next-steps "Direct link to Next steps")
 
-### [Create a custom judge](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges/create-custom-judge.md)
+### [Create a custom judge](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges/create-custom-judge.md)
 
-[Get a hands-on tutorial that demonstrates both standard and trace-based judges.](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges/create-custom-judge.md)
+[Get a hands-on tutorial that demonstrates both standard and trace-based judges.](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges/create-custom-judge.md)
 
-[Create custom judge →](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges/create-custom-judge.md)
+[Create custom judge →](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges/create-custom-judge.md)
 
-### [Collect Human Feedback](/docs/3.11.1/genai/assessments/feedback.md)
+### [Collect Human Feedback](/docs/latest/genai/assessments/feedback.md)
 
-[Learn how to collect human feedback for evaluation.](/docs/3.11.1/genai/assessments/feedback.md)
+[Learn how to collect human feedback for evaluation.](/docs/latest/genai/assessments/feedback.md)
 
-[Collect feedback →](/docs/3.11.1/genai/assessments/feedback.md)
+[Collect feedback →](/docs/latest/genai/assessments/feedback.md)
 
-### [Aligning Judges with Human Feedback](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/alignment.md)
+### [Aligning Judges with Human Feedback](/docs/latest/genai/eval-monitor/scorers/llm-judge/alignment.md)
 
-[Learn how to align your scorer with human feedback.](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/alignment.md)
+[Learn how to align your scorer with human feedback.](/docs/latest/genai/eval-monitor/scorers/llm-judge/alignment.md)
 
-[Learn alignment →](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/alignment.md)
+[Learn alignment →](/docs/latest/genai/eval-monitor/scorers/llm-judge/alignment.md)

@@ -4,7 +4,7 @@ This tutorial addresses a common scenario in machine learning: serving multiple 
 
 tip
 
-MLflow 2.12.2 introduced the feature "models from code", which greatly simplifies the process of serializing and deploying custom models through the use of script serialization. While the tutorial here is valuable as a point of reference, we strongly recommend migrating custom model implementations to this new paradigm. You can learn more about models from code within the [Models From Code Guide](/docs/3.11.1/ml/model/models-from-code.md).
+MLflow 2.12.2 introduced the feature "models from code", which greatly simplifies the process of serializing and deploying custom models through the use of script serialization. While the tutorial here is valuable as a point of reference, we strongly recommend migrating custom model implementations to this new paradigm. You can learn more about models from code within the [Models From Code Guide](/docs/latest/ml/model/models-from-code.md).
 
 Here are some reasons to consider this design:
 
@@ -24,16 +24,16 @@ After completing this tutorial, you'll be equipped to efficiently serve multiple
 
 ## What is PyFunc?[​](#what-is-pyfunc "Direct link to What is PyFunc?")
 
-Custom PyFunc models are a powerful MLflow feature that lets users customize model functionality where named flavors may be lacking. Going forward we assume basic working knowledge of PyFunc, so if you're unfamiliar, check out the [Creating Custom PyFunc](/docs/3.11.1/ml/traditional-ml/tutorials/creating-custom-pyfunc.md) tutorial.
+Custom PyFunc models are a powerful MLflow feature that lets users customize model functionality where named flavors may be lacking. Going forward we assume basic working knowledge of PyFunc, so if you're unfamiliar, check out the [Creating Custom PyFunc](/docs/latest/ml/traditional-ml/tutorials/creating-custom-pyfunc.md) tutorial.
 
 ## What do I need to do?[​](#what-do-i-need-to-do "Direct link to What do I need to do?")
 
-To create an MME, you'll create a child implementation of [`PythonModel`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel). More specifically, we'll need to focus on the below components...
+To create an MME, you'll create a child implementation of [`PythonModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel). More specifically, we'll need to focus on the below components...
 
-* [`PythonModel.load_context()`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel.load_context): This method defines artifacts from the specified PythonModelContext that can be used by `predict()` when evaluating inputs. When loading an MLflow model with load\_model(), this method is called as soon as the PythonModel is constructed. In our example, this method will load our models from MLflow model registry.
-* [`PythonModel.predict()`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel.predict): This method evaluates a pyfunc-compatible input and produces a pyfunc-compatible output. In our example, it analyzes the input payload and, based on its parameters, selects and applies the appropriate model to return predictions.
-* [`ModelSignatures`](/docs/3.11.1/api_reference/python_api/mlflow.models.html#mlflow.models.ModelSignature): This class defines the expected input, output and params format. In our example, the signature object will be passed when registering our custom PyFunc model and inputs to the model will be validated against the signature.
+* [`PythonModel.load_context()`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel.load_context): This method defines artifacts from the specified PythonModelContext that can be used by `predict()` when evaluating inputs. When loading an MLflow model with load\_model(), this method is called as soon as the PythonModel is constructed. In our example, this method will load our models from MLflow model registry.
+* [`PythonModel.predict()`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel.predict): This method evaluates a pyfunc-compatible input and produces a pyfunc-compatible output. In our example, it analyzes the input payload and, based on its parameters, selects and applies the appropriate model to return predictions.
+* [`ModelSignatures`](/docs/latest/api_reference/python_api/mlflow.models.html#mlflow.models.ModelSignature): This class defines the expected input, output and params format. In our example, the signature object will be passed when registering our custom PyFunc model and inputs to the model will be validated against the signature.
 
 Ready to see this in action? Check out the accompanying notebooks for a hands-on experience. Let's dive in!
 
-[View the Notebook](/docs/3.11.1/ml/traditional-ml/tutorials/serving-multiple-models-with-pyfunc/notebooks/MME_Tutorial.md)
+[View the Notebook](/docs/latest/ml/traditional-ml/tutorials/serving-multiple-models-with-pyfunc/notebooks/MME_Tutorial.md)

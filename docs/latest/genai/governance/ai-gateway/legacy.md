@@ -4,7 +4,7 @@ The Gateway Server provides a YAML-based configuration approach for deploying an
 
 note
 
-For new deployments, we recommend using the [Gateway Quickstart](/docs/3.11.1/genai/governance/ai-gateway/quickstart.md) which provides a modern web interface for managing endpoints, API keys, and routing configurations with zero-downtime updates.
+For new deployments, we recommend using the [Gateway Quickstart](/docs/latest/genai/governance/ai-gateway/quickstart.md) which provides a modern web interface for managing endpoints, API keys, and routing configurations with zero-downtime updates.
 
 ## Supported Providers[​](#supported-providers "Direct link to Supported Providers")
 
@@ -48,20 +48,20 @@ The Gateway Server uses YAML files for all configuration. To update endpoints or
 
 Choose your next step to configure and use the Gateway Server:
 
-### [Setup](/docs/3.11.1/genai/governance/ai-gateway/legacy/setup.md)
+### [Setup](/docs/latest/genai/governance/ai-gateway/legacy/setup.md)
 
-[Install MLflow, configure environment, and start your gateway server](/docs/3.11.1/genai/governance/ai-gateway/legacy/setup.md)
+[Install MLflow, configure environment, and start your gateway server](/docs/latest/genai/governance/ai-gateway/legacy/setup.md)
 
-[Get started →](/docs/3.11.1/genai/governance/ai-gateway/legacy/setup.md)
+[Get started →](/docs/latest/genai/governance/ai-gateway/legacy/setup.md)
 
-### [Configuration](/docs/3.11.1/genai/governance/ai-gateway/legacy/configuration.md)
+### [Configuration](/docs/latest/genai/governance/ai-gateway/legacy/configuration.md)
 
-[Configure providers, endpoints, and advanced routing settings](/docs/3.11.1/genai/governance/ai-gateway/legacy/configuration.md)
+[Configure providers, endpoints, and advanced routing settings](/docs/latest/genai/governance/ai-gateway/legacy/configuration.md)
 
-[Configure →](/docs/3.11.1/genai/governance/ai-gateway/legacy/configuration.md)
+[Configure →](/docs/latest/genai/governance/ai-gateway/legacy/configuration.md)
 
-### [Usage](/docs/3.11.1/genai/governance/ai-gateway/legacy/usage.md)
+### [Usage](/docs/latest/genai/governance/ai-gateway/legacy/usage.md)
 
-[Query endpoints with Python client and REST APIs](/docs/3.11.1/genai/governance/ai-gateway/legacy/usage.md)
+[Query endpoints with Python client and REST APIs](/docs/latest/genai/governance/ai-gateway/legacy/usage.md)
 
-[Learn usage →](/docs/3.11.1/genai/governance/ai-gateway/legacy/usage.md)
+[Learn usage →](/docs/latest/genai/governance/ai-gateway/legacy/usage.md)

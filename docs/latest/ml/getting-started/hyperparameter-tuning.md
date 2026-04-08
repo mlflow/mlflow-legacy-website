@@ -2,9 +2,9 @@
 
 MLflow Assistant
 
-Need help setting up tracking? Try [MLflow Assistant](/docs/3.11.1/genai/getting-started/try-assistant.md) - a powerful AI assistant that can help you set up MLflow tracking for your project.
+Need help setting up tracking? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that can help you set up MLflow tracking for your project.
 
-![MLflow UI Chart page](/docs/3.11.1/images/tutorials/introductory/hyperparameter-tuning/ui-compare-metrics.png)
+![MLflow UI Chart page](/docs/latest/images/tutorials/introductory/hyperparameter-tuning/ui-compare-metrics.png)
 
 Hyperparameter tuning is an important process for improving the performance of a machine learning model, however, it can be cumbersome to manually track and compare the different trials. MLflow provides a powerful framework for hyperparameter tuning that allows you to systematically explore the hyperparameter space and find the best model.
 
@@ -25,11 +25,11 @@ bash
 pip install mlflow optuna
 ```
 
-Then, follow the instructions in the [Set Up MLflow](/docs/3.11.1/ml/getting-started/running-notebooks.md) guide to set up MLflow.
+Then, follow the instructions in the [Set Up MLflow](/docs/latest/ml/getting-started/running-notebooks.md) guide to set up MLflow.
 
 Team Collaboration and Managed Setup
 
-For production environments or team collaboration, consider hosting a shared [MLflow Tracking Server](/docs/3.11.1/self-hosting.md). For a fully-managed solution, get started with Databricks Free Trial by visiting the [Databricks Trial Signup Page](https://signup.databricks.com/?destination_url=/ml/experiments-signup?source=OSS_DOCS\&dbx_source=TRY_MLFLOW\&signup_experience_step=EXPRESS\&provider=MLFLOW\&utm_source=OSS_DOCS) and follow the instructions outlined there.
+For production environments or team collaboration, consider hosting a shared [MLflow Tracking Server](/docs/latest/self-hosting.md). For a fully-managed solution, get started with Databricks Free Trial by visiting the [Databricks Trial Signup Page](https://signup.databricks.com/?destination_url=/ml/experiments-signup?source=OSS_DOCS\&dbx_source=TRY_MLFLOW\&signup_experience_step=EXPRESS\&provider=MLFLOW\&utm_source=OSS_DOCS) and follow the instructions outlined there.
 
 ## Step 1: Create a new experiment[​](#step-1-create-a-new-experiment "Direct link to Step 1: Create a new experiment")
 
@@ -136,19 +136,19 @@ mlflow server --port 5000
 
 When opening the site, you will see a screen similar to the following:
 
-![MLflow UI Home page](/docs/3.11.1/images/tutorials/introductory/hyperparameter-tuning/ui-home.png)
+![MLflow UI Home page](/docs/latest/images/tutorials/introductory/hyperparameter-tuning/ui-home.png)
 
 The "Experiments" section shows a list of (recently created) experiments. Click on the "Hyperparameter Tuning Experiment" experiment we've created for this tutorial.
 
-![MLflow UI Run list page](/docs/3.11.1/images/tutorials/introductory/hyperparameter-tuning/ui-run-list.png)
+![MLflow UI Run list page](/docs/latest/images/tutorials/introductory/hyperparameter-tuning/ui-run-list.png)
 
 Click the chart icon on the top left corner to view a visual representation of the tuning result. You can further click each child run to see the detailed metrics and parameters for each trial.
 
-![MLflow UI Chart page](/docs/3.11.1/images/tutorials/introductory/hyperparameter-tuning/ui-compare-metrics.png)
+![MLflow UI Chart page](/docs/latest/images/tutorials/introductory/hyperparameter-tuning/ui-compare-metrics.png)
 
 ## Step 5: Register Your Best Model[​](#step-5-register-your-best-model "Direct link to Step 5: Register Your Best Model")
 
-Once you identified the best trial, you can register the model into [MLflow Model Registry](/docs/3.11.1/ml/model-registry.md) for promoting it to production.
+Once you identified the best trial, you can register the model into [MLflow Model Registry](/docs/latest/ml/model-registry.md) for promoting it to production.
 
 python
 
@@ -165,7 +165,7 @@ mlflow.register_model(
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-* [MLflow Tracking](/docs/3.11.1/ml/tracking.md): Learn more about the MLflow Tracking APIs.
-* [MLflow Model Registry](/docs/3.11.1/ml/model-registry.md): Learn how to register and manage model lifecycle in the MLflow Model Registry.
-* [MLflow for Deep Learning](/docs/3.11.1/ml/deep-learning.md): Learn how to use MLflow for deep learning frameworks such as PyTorch, TensorFlow, etc.
-* [Self-hosting Guide](/docs/3.11.1/self-hosting.md): Learn how to self-host the MLflow Tracking Server and set it up for team collaboration.
+* [MLflow Tracking](/docs/latest/ml/tracking.md): Learn more about the MLflow Tracking APIs.
+* [MLflow Model Registry](/docs/latest/ml/model-registry.md): Learn how to register and manage model lifecycle in the MLflow Model Registry.
+* [MLflow for Deep Learning](/docs/latest/ml/deep-learning.md): Learn how to use MLflow for deep learning frameworks such as PyTorch, TensorFlow, etc.
+* [Self-hosting Guide](/docs/latest/self-hosting.md): Learn how to self-host the MLflow Tracking Server and set it up for team collaboration.

@@ -77,9 +77,9 @@ In self-hosting mode, you will be responsible for running the tracking server in
 3. Configure artifact store (S3, Azure Blob, GCS, etc.)
 4. Start server: `mlflow server --backend-store-uri postgresql://... --default-artifact-root s3://...`
 
-Refer to the [tracking server setup guide](/docs/3.11.1/ml/tracking.md#tracking-setup) for detailed guidance.
+Refer to the [tracking server setup guide](/docs/latest/ml/tracking.md#tracking-setup) for detailed guidance.
 
-[](/docs/3.11.1/images/llms/tracing/tracing-top.mp4)
+[](/docs/latest/images/llms/tracing/tracing-top.mp4)
 
 [Databricks Lakehouse Monitoring for GenAI](https://docs.databricks.com/aws/en/generative-ai/agent-evaluation/monitoring) is a go-to solution for monitoring your LLM application or AI agent with MLflow Tracing. It provides access to a robust, fully functional monitoring dashboard for operational excellence and quality analysis.
 
@@ -102,13 +102,13 @@ export OTEL_EXPORTER_OTLP_TRACES_ENDPOINT="http://your-collector:4317/v1/traces"
 export OTEL_SERVICE_NAME="genai-app"
 ```
 
-Refer to the [OpenTelemetry Integration](/docs/3.11.1/genai/tracing/opentelemetry/export.md) documentation for detailed setup instructions.
+Refer to the [OpenTelemetry Integration](/docs/latest/genai/tracing/opentelemetry/export.md) documentation for detailed setup instructions.
 
-![OpenTelemetry Backend Examples](/docs/3.11.1/assets/images/otel-backend-examples-336441b516d95409d8cc820a128ac376.png)
+![OpenTelemetry Backend Examples](/docs/latest/assets/images/otel-backend-examples-336441b516d95409d8cc820a128ac376.png)
 
 [MLflow on Amazon SageMaker](https://aws.amazon.com/sagemaker-ai/experiments/) is a fully managed service offered as part of the SageMaker platform by AWS, including tracing and other MLflow features such as model registry.
 
-MLflow Tracing offers a one-line solution for [tracing Amazon Bedrock](/docs/3.11.1/genai/tracing/integrations/listing/bedrock.md), making it the best suitable solution for monitoring LLM applications and AI agents powered by AWS and Amazon Bedrock.
+MLflow Tracing offers a one-line solution for [tracing Amazon Bedrock](/docs/latest/genai/tracing/integrations/listing/bedrock.md), making it the best suitable solution for monitoring LLM applications and AI agents powered by AWS and Amazon Bedrock.
 
 ![Managed MLflow on SageMaker](https://d1.awsstatic.com/deploy-mlflow-models.3eb857c5790a44b461845a630e3a231229838443.png)
 
@@ -129,35 +129,35 @@ Refer to the [Nebius documentation](https://nebius.com/services/managed-mlflow) 
 
 The Production Tracing SDK includes all essential tracing functionalities for monitoring your LLM applications and AI agents. Click the cards below to learn more about each supported feature.
 
-[⚡️ Automatic Tracing for AI Libraries](/docs/3.11.1/genai/tracing/integrations.md)
+[⚡️ Automatic Tracing for AI Libraries](/docs/latest/genai/tracing/integrations.md)
 
 ***
 
-[MLflow Tracing SDK supports one-line integration with all of the most popular LLM and AI agent frameworks including OpenAI, Anthropic, LangChain, LlamaIndex, Hugging Face, DSPy, and any LLM provider that conforms to OpenAI API format. This automatic tracing capability allows you to monitor your LLM application or AI agent with minimal effort and easily switch between different libraries.](/docs/3.11.1/genai/tracing/integrations.md)
+[MLflow Tracing SDK supports one-line integration with all of the most popular LLM and AI agent frameworks including OpenAI, Anthropic, LangChain, LlamaIndex, Hugging Face, DSPy, and any LLM provider that conforms to OpenAI API format. This automatic tracing capability allows you to monitor your LLM application or AI agent with minimal effort and easily switch between different libraries.](/docs/latest/genai/tracing/integrations.md)
 
-[⚙️ Manual Instrumentation](/docs/3.11.1/genai/tracing/app-instrumentation/manual-tracing.md)
-
-***
-
-[MLflow Tracing SDK provides a simple and intuitive API for manually instrumenting your LLM application or AI agent. Manual instrumentation and automatic tracing can be used together, allowing you to trace advanced applications containing custom code and have fine-grained control over the tracing behavior.](/docs/3.11.1/genai/tracing/app-instrumentation/manual-tracing.md)
-
-[🏷️ Tagging and Filtering Traces](/docs/3.11.1/genai/tracing/track-users-sessions.md)
+[⚙️ Manual Instrumentation](/docs/latest/genai/tracing/app-instrumentation/manual-tracing.md)
 
 ***
 
-[By annotating traces with custom tags, you can add more context to your traces to group them and simplify the process of searching for them later. This is useful when you want to trace an application that runs across multiple request sessions or track specific user interactions.](/docs/3.11.1/genai/tracing/track-users-sessions.md)
+[MLflow Tracing SDK provides a simple and intuitive API for manually instrumenting your LLM application or AI agent. Manual instrumentation and automatic tracing can be used together, allowing you to trace advanced applications containing custom code and have fine-grained control over the tracing behavior.](/docs/latest/genai/tracing/app-instrumentation/manual-tracing.md)
 
-[🔍 Advanced Search and Querying](/docs/3.11.1/genai/tracing/search-traces.md)
-
-***
-
-[Search and filter traces using powerful SQL-like syntax based on execution time, status, tags, metadata, and other attributes. Perfect for debugging issues, analyzing performance patterns, and monitoring production applications.](/docs/3.11.1/genai/tracing/search-traces.md)
-
-[📊 Production Monitoring](/docs/3.11.1/genai/tracing/prod-tracing.md)
+[🏷️ Tagging and Filtering Traces](/docs/latest/genai/tracing/track-users-sessions.md)
 
 ***
 
-[Configure asynchronous logging, handle high-volume tracing, and integrate with enterprise observability platforms. Includes comprehensive production deployment patterns and best practices for scaling your tracing infrastructure.](/docs/3.11.1/genai/tracing/prod-tracing.md)
+[By annotating traces with custom tags, you can add more context to your traces to group them and simplify the process of searching for them later. This is useful when you want to trace an application that runs across multiple request sessions or track specific user interactions.](/docs/latest/genai/tracing/track-users-sessions.md)
+
+[🔍 Advanced Search and Querying](/docs/latest/genai/tracing/search-traces.md)
+
+***
+
+[Search and filter traces using powerful SQL-like syntax based on execution time, status, tags, metadata, and other attributes. Perfect for debugging issues, analyzing performance patterns, and monitoring production applications.](/docs/latest/genai/tracing/search-traces.md)
+
+[📊 Production Monitoring](/docs/latest/genai/tracing/prod-tracing.md)
+
+***
+
+[Configure asynchronous logging, handle high-volume tracing, and integrate with enterprise observability platforms. Includes comprehensive production deployment patterns and best practices for scaling your tracing infrastructure.](/docs/latest/genai/tracing/prod-tracing.md)
 
 ## Production Configuration Example[​](#production-configuration-example "Direct link to Production Configuration Example")
 

@@ -4,7 +4,7 @@ MLflow's alignment system is designed as a **plugin architecture**, allowing you
 
 ## Creating a Custom Optimizer[​](#creating-a-custom-optimizer "Direct link to Creating a Custom Optimizer")
 
-To create a custom alignment optimizer, extend the [AlignmentOptimizer](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.judges.base.AlignmentOptimizer) abstract base class:
+To create a custom alignment optimizer, extend the [AlignmentOptimizer](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.judges.base.AlignmentOptimizer) abstract base class:
 
 python
 

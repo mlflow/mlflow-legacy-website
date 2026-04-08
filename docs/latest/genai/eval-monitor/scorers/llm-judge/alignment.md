@@ -140,11 +140,11 @@ else:
 
 MLflow provides multiple alignment optimizers:
 
-* [**SIMBA**](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/simba.md) (default) - Uses DSPy's SIMBA algorithm for prompt optimization
-* [**GEPA**](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/gepa.md) - Uses DSPy's GEPA algorithm with LLM-driven reflection for iterative refinement
-* [**MemAlign**](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/memalign.md) (experimental) - Uses a dual-memory system for fast and cheap few-shot alignment
+* [**SIMBA**](/docs/latest/genai/eval-monitor/scorers/llm-judge/simba.md) (default) - Uses DSPy's SIMBA algorithm for prompt optimization
+* [**GEPA**](/docs/latest/genai/eval-monitor/scorers/llm-judge/gepa.md) - Uses DSPy's GEPA algorithm with LLM-driven reflection for iterative refinement
+* [**MemAlign**](/docs/latest/genai/eval-monitor/scorers/llm-judge/memalign.md) (experimental) - Uses a dual-memory system for fast and cheap few-shot alignment
 
-You can also [create custom optimizers](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-optimizers.md) to implement domain-specific alignment strategies.
+You can also [create custom optimizers](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-optimizers.md) to implement domain-specific alignment strategies.
 
 ## Collecting Feedback for Alignment[​](#collecting-feedback-for-alignment "Direct link to Collecting Feedback for Alignment")
 
@@ -174,7 +174,7 @@ The MLflow UI provides an intuitive interface for reviewing traces and adding fe
 
 The UI automatically logs feedback in the correct format for alignment.
 
-![MLflow UI Feedback Interface](/docs/3.11.1/images/assessments/add_feedback_ui.png)
+![MLflow UI Feedback Interface](/docs/latest/images/assessments/add_feedback_ui.png)
 
 **When to use:** You have existing ground truth labels from your data.
 
@@ -268,20 +268,20 @@ def test_alignment_improvement(original_judge, aligned_judge, test_traces: list)
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [Create Custom Judges](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges.md)
+### [Create Custom Judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md)
 
-[Learn to create domain-specific judges with make\_judge.](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges.md)
+[Learn to create domain-specific judges with make\_judge.](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md)
 
-[Create judges →](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges.md)
+[Create judges →](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md)
 
-### [Development Workflow](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/workflow.md)
+### [Development Workflow](/docs/latest/genai/eval-monitor/scorers/llm-judge/workflow.md)
 
-[See complete workflow from creation to aligned production judge.](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/workflow.md)
+[See complete workflow from creation to aligned production judge.](/docs/latest/genai/eval-monitor/scorers/llm-judge/workflow.md)
 
-[View workflow →](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/workflow.md)
+[View workflow →](/docs/latest/genai/eval-monitor/scorers/llm-judge/workflow.md)
 
-### [Dataset Integration](/docs/3.11.1/genai/datasets.md)
+### [Dataset Integration](/docs/latest/genai/datasets.md)
 
-[Use judges with evaluation datasets for systematic testing.](/docs/3.11.1/genai/datasets.md)
+[Use judges with evaluation datasets for systematic testing.](/docs/latest/genai/datasets.md)
 
-[Learn integration →](/docs/3.11.1/genai/datasets.md)
+[Learn integration →](/docs/latest/genai/datasets.md)

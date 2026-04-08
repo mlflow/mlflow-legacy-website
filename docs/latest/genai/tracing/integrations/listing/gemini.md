@@ -1,8 +1,8 @@
 # Tracing Gemini
 
-![Gemini Tracing via autolog](/docs/3.11.1/images/llms/gemini/gemini-tracing.png)
+![Gemini Tracing via autolog](/docs/latest/images/llms/gemini/gemini-tracing.png)
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing/integrations.md) provides automatic tracing capability for Google Gemini. By enabling auto tracing for Gemini by calling the [`mlflow.gemini.autolog()`](/docs/3.11.1/api_reference/python_api/mlflow.gemini.html#mlflow.gemini.autolog) function, MLflow will capture nested traces and log them to the active MLflow Experiment upon invocation of Gemini Python SDK. In Typescript, you can instead use the `tracedGemini` function to wrap the Gemini client.
+[MLflow Tracing](/docs/latest/genai/tracing/integrations.md) provides automatic tracing capability for Google Gemini. By enabling auto tracing for Gemini by calling the [`mlflow.gemini.autolog()`](/docs/latest/api_reference/python_api/mlflow.gemini.html#mlflow.gemini.autolog) function, MLflow will capture nested traces and log them to the active MLflow Experiment upon invocation of Gemini Python SDK. In Typescript, you can instead use the `tracedGemini` function to wrap the Gemini client.
 
 MLflow trace automatically captures the following information about Gemini calls:
 
@@ -244,7 +244,7 @@ result = client.models.embed_content(model="text-embedding-004", contents="Hello
 
 ## Tracking Token Usage and Cost[​](#tracking-token-usage-and-cost "Direct link to Tracking Token Usage and Cost")
 
-MLflow automatically tracks token usage and cost for Gemini API calls. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/3.11.1/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
+MLflow automatically tracks token usage and cost for Gemini API calls. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/latest/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
 
 Token usage and cost tracking is supported for both Python and TypeScript/JavaScript implementations.
 
@@ -254,20 +254,20 @@ Auto tracing for Gemini can be disabled globally by calling `mlflow.gemini.autol
 
 ## Next steps[​](#next-steps "Direct link to Next steps")
 
-### [Track User Feedback](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+### [Track User Feedback](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-[Record user feedback on traces for tracking user satisfaction.](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+[Record user feedback on traces for tracking user satisfaction.](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-[Learn about feedback →](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+[Learn about feedback →](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-### [Manage Prompts](/docs/3.11.1/genai/prompt-registry.md)
+### [Manage Prompts](/docs/latest/genai/prompt-registry.md)
 
-[Learn how to manage prompts with MLflow's prompt registry.](/docs/3.11.1/genai/prompt-registry.md)
+[Learn how to manage prompts with MLflow's prompt registry.](/docs/latest/genai/prompt-registry.md)
 
-[Manage prompts →](/docs/3.11.1/genai/prompt-registry.md)
+[Manage prompts →](/docs/latest/genai/prompt-registry.md)
 
-### [Evaluate Traces](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+### [Evaluate Traces](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Evaluate traces with LLM judges to understand and improve your AI application's behavior.](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Evaluate traces with LLM judges to understand and improve your AI application's behavior.](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Evaluate traces →](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Evaluate traces →](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)

@@ -10,7 +10,7 @@ This guide walks you through deploying the MLflow server to Google Cloud Run, th
 
 The overall deployment architecture is as follows:
 
-![overall architecture](/docs/3.11.1/assets/images/gcp-deployment-arch-1e4cbc4611b1c869a4516bcc41e40712.png)
+![overall architecture](/docs/latest/assets/images/gcp-deployment-arch-1e4cbc4611b1c869a4516bcc41e40712.png)
 
 The deployment architecture has a couple of advantages:
 
@@ -63,19 +63,19 @@ docker push <google-docker-repository-path>/mlflow-gcp:v3.10.0
 
 In Google Cloud "Cloud Storage" console, create a bucket with name like "mlflow-artifact-12345" as follows, note that you should turn on "Public access prevention" option to block public access to the bucket.
 
-![create bucket](/docs/3.11.1/assets/images/gcp-create-bucket-0f8ccfa4d6723c8cdb67d64171c1d23b.png)
+![create bucket](/docs/latest/assets/images/gcp-create-bucket-0f8ccfa4d6723c8cdb67d64171c1d23b.png)
 
 ## Step 3: Grant user role to the default compute service account[​](#step-3-grant-user-role-to-the-default-compute-service-account "Direct link to Step 3: Grant user role to the default compute service account")
 
 In Google Cloud "IAM & Admin" console, click "grant access", then assign the "Storage Object User" role to the default compute service account as follows:
 
-![storage iam role](/docs/3.11.1/assets/images/storage-iam-role-1e685fd99465eff77745dbfc3f83270d.png)
+![storage iam role](/docs/latest/assets/images/storage-iam-role-1e685fd99465eff77745dbfc3f83270d.png)
 
 ## Step 4: Create cloud SQL instance[​](#step-4-create-cloud-sql-instance "Direct link to Step 4: Create cloud SQL instance")
 
 In Google Cloud "Cloud SQL" console, click "Create an instance" button to create a "PostgreSQL" instance as follows:
 
-![create cloud SQL instance](/docs/3.11.1/assets/images/gcp-create-cloud-sql-instance-21b02568bf9967e4ce927fff4db76aa9.png)
+![create cloud SQL instance](/docs/latest/assets/images/gcp-create-cloud-sql-instance-21b02568bf9967e4ce927fff4db76aa9.png)
 
 The database connection string used by MLflow is like:
 
@@ -98,7 +98,7 @@ In Google Cloud "Cloud Run" console, click "Deploy container" button to create a
 
 After created the cloud run instance, you can view the application URL like `https://<instance-name>-<unique-id>.<region>.run.app` on the instance console page, and you can also view the instance metrics and logs as follows:
 
-![cloud run instance](/docs/3.11.1/assets/images/gcp-cloud-run-instance-d14de9d4b799d2b71f0d4bc7cca57c73.png)
+![cloud run instance](/docs/latest/assets/images/gcp-cloud-run-instance-d14de9d4b799d2b71f0d4bc7cca57c73.png)
 
 ### Integration with MLflow authentication[​](#integration-with-mlflow-authentication "Direct link to Integration with MLflow authentication")
 

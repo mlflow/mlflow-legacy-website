@@ -1,10 +1,10 @@
 # Artifact Stores
 
-The artifact store is a core component in [MLflow Tracking](/docs/3.11.1/ml/tracking.md) where MLflow stores (typically large) artifacts for each run such as model weights (e.g. a pickled scikit-learn model), images (e.g. PNGs), model and data files (e.g. [Parquet](https://parquet.apache.org/) file). Note that metadata like parameters, metrics, and tags are stored in a [backend store](/docs/3.11.1/self-hosting/architecture/backend-store.md) (e.g., PostGres, MySQL, or MSSQL Database), the other component of the MLflow Tracking.
+The artifact store is a core component in [MLflow Tracking](/docs/latest/ml/tracking.md) where MLflow stores (typically large) artifacts for each run such as model weights (e.g. a pickled scikit-learn model), images (e.g. PNGs), model and data files (e.g. [Parquet](https://parquet.apache.org/) file). Note that metadata like parameters, metrics, and tags are stored in a [backend store](/docs/latest/self-hosting/architecture/backend-store.md) (e.g., PostGres, MySQL, or MSSQL Database), the other component of the MLflow Tracking.
 
 ## Configuring an Artifact Store[​](#configuring-an-artifact-store "Direct link to Configuring an Artifact Store")
 
-MLflow by default stores artifacts in a local (file system) `./mlruns` directory, but also supports various locations suitable for large data: Amazon S3, Azure Blob Storage, Google Cloud Storage, Backblaze B2, SFTP server, and NFS. You can connect those remote storages via the MLflow Tracking server. See [tracking server setup](/docs/3.11.1/self-hosting/architecture/tracking-server.md#tracking-server-artifact-store) and the specific section for your storage in [supported storages](/docs/3.11.1/self-hosting/architecture/artifact-store.md#artifacts-store-supported-storages) for guidance on how to connect to the remote storage of your choice.
+MLflow by default stores artifacts in a local (file system) `./mlruns` directory, but also supports various locations suitable for large data: Amazon S3, Azure Blob Storage, Google Cloud Storage, Backblaze B2, SFTP server, and NFS. You can connect those remote storages via the MLflow Tracking server. See [tracking server setup](/docs/latest/self-hosting/architecture/tracking-server.md#tracking-server-artifact-store) and the specific section for your storage in [supported storages](/docs/latest/self-hosting/architecture/artifact-store.md#artifacts-store-supported-storages) for guidance on how to connect to the remote storage of your choice.
 
 ### Managing Artifact Store Access[​](#artifacts-stores-manage-access "Direct link to Managing Artifact Store Access")
 
@@ -20,7 +20,7 @@ You can set the environment variable `MLFLOW_ARTIFACT_UPLOAD_DOWNLOAD_TIMEOUT` (
 
 ### Setting a Default Artifact Location for Logging[​](#setting-a-default-artifact-location-for-logging "Direct link to Setting a Default Artifact Location for Logging")
 
-MLflow automatically records the `artifact_uri` property as a part of [`mlflow.entities.RunInfo`](/docs/3.11.1/api_reference/python_api/mlflow.entities.html#mlflow.entities.RunInfo) so that you can retrieve the location of the artifacts for historical runs using the [`mlflow.get_artifact_uri()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.get_artifact_uri) API. Also, `artifact_location` is a property recorded on [`mlflow.entities.Experiment`](/docs/3.11.1/api_reference/python_api/mlflow.entities.html#mlflow.entities.Experiment) for setting the default location to store artifacts for all runs for models within a given experiment.
+MLflow automatically records the `artifact_uri` property as a part of [`mlflow.entities.RunInfo`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.RunInfo) so that you can retrieve the location of the artifacts for historical runs using the [`mlflow.get_artifact_uri()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.get_artifact_uri) API. Also, `artifact_location` is a property recorded on [`mlflow.entities.Experiment`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.Experiment) for setting the default location to store artifacts for all runs for models within a given experiment.
 
 important
 
@@ -184,7 +184,7 @@ The HDFS artifact store is accessed using the `pyarrow.fs` module, refer to the 
 
 ## Deletion Behavior[​](#deletion-behavior "Direct link to Deletion Behavior")
 
-In order to allow MLflow Runs to be restored, Run metadata and artifacts are not automatically removed from the backend store or artifact store when a Run is deleted. The [mlflow gc](/docs/3.11.1/api_reference/cli.html#mlflow-gc) CLI is provided for permanently removing Run metadata and artifacts for deleted runs.
+In order to allow MLflow Runs to be restored, Run metadata and artifacts are not automatically removed from the backend store or artifact store when a Run is deleted. The [mlflow gc](/docs/latest/api_reference/cli.html#mlflow-gc) CLI is provided for permanently removing Run metadata and artifacts for deleted runs.
 
 ## Multipart upload for proxied artifact access[​](#multipart-upload-for-proxied-artifact-access "Direct link to Multipart upload for proxied artifact access")
 

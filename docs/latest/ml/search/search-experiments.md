@@ -1,6 +1,6 @@
 # Search Experiments
 
-[`mlflow.search_experiments()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.search_experiments) and [`MlflowClient.search_experiments()`](/docs/3.11.1/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.search_experiments) support the same filter string syntax as [`mlflow.search_runs()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.search_runs) and [`MlflowClient.search_runs`](/docs/3.11.1/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.search_runs), but the supported identifiers and comparators are different.
+[`mlflow.search_experiments()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.search_experiments) and [`MlflowClient.search_experiments()`](/docs/latest/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.search_experiments) support the same filter string syntax as [`mlflow.search_runs()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.search_runs) and [`MlflowClient.search_runs`](/docs/latest/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.search_runs), but the supported identifiers and comparators are different.
 
 * [Syntax](#syntax)
 
@@ -10,7 +10,7 @@
 
 ## Syntax[​](#syntax "Direct link to Syntax")
 
-See [Search Runs Syntax](/docs/3.11.1/ml/search/search-runs.md#search-runs-syntax) for more information.
+See [Search Runs Syntax](/docs/latest/ml/search/search-runs.md#search-runs-syntax) for more information.
 
 ### Identifier[​](#identifier "Direct link to Identifier")
 

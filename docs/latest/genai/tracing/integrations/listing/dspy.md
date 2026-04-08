@@ -1,10 +1,10 @@
 # Tracing DSPy🧩
 
-[](/docs/3.11.1/images/llms/tracing/dspy-tracing.mp4)
+[](/docs/latest/images/llms/tracing/dspy-tracing.mp4)
 
 [DSPy](https://dspy.ai/) is an open-source framework for building modular AI systems and offers algorithms for optimizing their prompts and weights.
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing/integrations.md) provides automatic tracing capability for DSPy. You can enable tracing for DSPy by calling the [`mlflow.dspy.autolog()`](/docs/3.11.1/api_reference/python_api/mlflow.dspy.html#mlflow.dspy.autolog) function, and nested traces are automatically logged to the active MLflow Experiment upon invocation of DSPy modules.
+[MLflow Tracing](/docs/latest/genai/tracing/integrations.md) provides automatic tracing capability for DSPy. You can enable tracing for DSPy by calling the [`mlflow.dspy.autolog()`](/docs/latest/api_reference/python_api/mlflow.dspy.html#mlflow.dspy.autolog) function, and nested traces are automatically logged to the active MLflow Experiment upon invocation of DSPy modules.
 
 python
 
@@ -16,7 +16,7 @@ mlflow.dspy.autolog()
 
 tip
 
-MLflow DSPy integration is not only about tracing. MLflow offers full tracking experience for DSPy, including model tracking, index management, and evaluation. Please see the **[MLflow DSPy Flavor](/docs/3.11.1/genai/flavors/dspy.md)** to learn more!
+MLflow DSPy integration is not only about tracing. MLflow offers full tracking experience for DSPy, including model tracking, index management, and evaluation. Please see the **[MLflow DSPy Flavor](/docs/latest/genai/flavors/dspy.md)** to learn more!
 
 ### Example Usage[​](#example-usage "Direct link to Example Usage")
 
@@ -132,13 +132,13 @@ If you open the MLflow UI and go to the "CoT Evaluation" run, you will see the e
 
 note
 
-You can disable tracing for these steps by calling the [`mlflow.dspy.autolog()`](/docs/3.11.1/api_reference/python_api/mlflow.dspy.html#mlflow.dspy.autolog) function with the `log_traces_from_eval` parameters set to `False`.
+You can disable tracing for these steps by calling the [`mlflow.dspy.autolog()`](/docs/latest/api_reference/python_api/mlflow.dspy.html#mlflow.dspy.autolog) function with the `log_traces_from_eval` parameters set to `False`.
 
 ### Tracing during Compilation (Optimization)[​](#tracing-during-compilation-optimization "Direct link to Tracing during Compilation (Optimization)")
 
 [Compilation (optimization)](https://dspy.ai/learn/optimization/overview/) is the core concept of DSPy. Through compilation, DSPy automatically optimizes the prompts and weights of your DSPy program to achieve the best performance.
 
-By default, MLflow does **NOT** generate traces during complication, because complication can trigger hundreds or thousands of invocations of DSPy modules. To enable tracing for compilation, you can call the [`mlflow.dspy.autolog()`](/docs/3.11.1/api_reference/python_api/mlflow.dspy.html#mlflow.dspy.autolog) function with the `log_traces_from_compile` parameter set to `True`.
+By default, MLflow does **NOT** generate traces during complication, because complication can trigger hundreds or thousands of invocations of DSPy modules. To enable tracing for compilation, you can call the [`mlflow.dspy.autolog()`](/docs/latest/api_reference/python_api/mlflow.dspy.html#mlflow.dspy.autolog) function with the `log_traces_from_compile` parameter set to `True`.
 
 python
 
@@ -156,7 +156,7 @@ optimized = tp.compile(cot, trainset=trainset)
 
 ### Token Usage[​](#token-usage "Direct link to Token Usage")
 
-MLflow automatically tracks token usage for DSPy. See the [Token Usage and Cost Tracking](/docs/3.11.1/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
+MLflow automatically tracks token usage for DSPy. See the [Token Usage and Cost Tracking](/docs/latest/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
 
 note
 

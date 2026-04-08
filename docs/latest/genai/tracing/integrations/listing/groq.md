@@ -1,8 +1,8 @@
 # Tracing Groq
 
-![Groq tracing via autolog](/docs/3.11.1/images/llms/groq/groq-tracing.png)
+![Groq tracing via autolog](/docs/latest/images/llms/groq/groq-tracing.png)
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing.md) provides automatic tracing capability when using Groq. When Groq auto-tracing is enabled by calling the [`mlflow.groq.autolog()`](/docs/3.11.1/api_reference/python_api/mlflow.groq.html#mlflow.groq.autolog) function, usage of the Groq SDK will automatically record generated traces during interactive development.
+[MLflow Tracing](/docs/latest/genai/tracing.md) provides automatic tracing capability when using Groq. When Groq auto-tracing is enabled by calling the [`mlflow.groq.autolog()`](/docs/latest/api_reference/python_api/mlflow.groq.html#mlflow.groq.autolog) function, usage of the Groq SDK will automatically record generated traces during interactive development.
 
 MLflow automatically captures the following information about Groq calls:
 
@@ -108,7 +108,7 @@ Note that only synchronous calls are supported, and that asynchronous API and st
 
 ## Tracking Token Usage and Cost[​](#tracking-token-usage-and-cost "Direct link to Tracking Token Usage and Cost")
 
-MLflow automatically tracks token usage and cost for Groq. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/3.11.1/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
+MLflow automatically tracks token usage and cost for Groq. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/latest/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
 
 note
 

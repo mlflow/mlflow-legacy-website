@@ -1,10 +1,10 @@
 # Tracing LangGraph🦜🕸️
 
-![LangGraph Tracing via autolog](/docs/3.11.1/images/llms/tracing/langgraph-agent-trace.png)
+![LangGraph Tracing via autolog](/docs/latest/images/llms/tracing/langgraph-agent-trace.png)
 
 [LangGraph](https://www.langchain.com/langgraph) is an open-source library for building stateful, multi-actor applications with LLMs, used to create agent and multi-agent workflows.
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing.md) provides automatic tracing capability for LangGraph, as a extension of its LangChain integration. By enabling auto-tracing for LangChain by calling the [`mlflow.langchain.autolog()`](/docs/3.11.1/api_reference/python_api/mlflow.langchain.html#mlflow.langchain.autolog) function, MLflow will automatically capture the graph execution into a trace and log it to the active MLflow Experiment. In TypeScript, you can pass the MLflow LangChain callback to the `callbacks` option.
+[MLflow Tracing](/docs/latest/genai/tracing.md) provides automatic tracing capability for LangGraph, as a extension of its LangChain integration. By enabling auto-tracing for LangChain by calling the [`mlflow.langchain.autolog()`](/docs/latest/api_reference/python_api/mlflow.langchain.html#mlflow.langchain.autolog) function, MLflow will automatically capture the graph execution into a trace and log it to the active MLflow Experiment. In TypeScript, you can pass the MLflow LangChain callback to the `callbacks` option.
 
 * Python
 * JS / TS
@@ -28,7 +28,7 @@ MLflow support tracing for LangGraph in both Python and TypeScript/JavaScript. P
 
 ### 1. Start MLflow[​](#1-start-mlflow "Direct link to 1. Start MLflow")
 
-Start the MLflow server following the [Self-Hosting Guide](/docs/3.11.1/self-hosting.md), if you don't have one already.
+Start the MLflow server following the [Self-Hosting Guide](/docs/latest/self-hosting.md), if you don't have one already.
 
 ### 2. Install dependencies[​](#2-install-dependencies "Direct link to 2. Install dependencies")
 
@@ -99,7 +99,7 @@ Visit `http://localhost:5000` (or your custom MLflow tracking server URL) to vie
 
 ### 1. Start MLflow[​](#1-start-mlflow-1 "Direct link to 1. Start MLflow")
 
-Start the MLflow server following the [Self-Hosting Guide](/docs/3.11.1/self-hosting.md), if you don't have one already.
+Start the MLflow server following the [Self-Hosting Guide](/docs/latest/self-hosting.md), if you don't have one already.
 
 ### 2. Install the required dependencies:[​](#2-install-the-required-dependencies "Direct link to 2. Install the required dependencies:")
 
@@ -151,11 +151,11 @@ Visit `http://localhost:5000` (or your custom MLflow tracking server URL) to vie
 
 ## Tracking Token Usage and Cost[​](#tracking-token-usage-and-cost "Direct link to Tracking Token Usage and Cost")
 
-MLflow automatically tracks token usage and cost for LangGraph. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/3.11.1/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
+MLflow automatically tracks token usage and cost for LangGraph. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/latest/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
 
 ## Adding spans within a node or a tool[​](#adding-spans-within-a-node-or-a-tool "Direct link to Adding spans within a node or a tool")
 
-By combining auto-tracing with the [manual tracing APIs](/docs/3.11.1/genai/tracing/app-instrumentation/manual-tracing.md), you can add child spans inside a node or tool, to get more detailed insights for the step.
+By combining auto-tracing with the [manual tracing APIs](/docs/latest/genai/tracing/app-instrumentation/manual-tracing.md), you can add child spans inside a node or tool, to get more detailed insights for the step.
 
 Let's take LangGraph's [Code Assistant](https://langchain-ai.github.io/langgraph/tutorials/code_assistant/langgraph_code_assistant/#graph) tutorial for example. The `check_code` node actually consists of two different validations for the generated code. You may want to add span for each validation to see which validation were executed. To do so, simply create manual spans inside the node function.
 
@@ -217,7 +217,7 @@ def code_check(state: GraphState):
 
 This way, the span for the `check_code` node will have child spans, which record whether the each validation fails or not, with their exception details.
 
-![LangGraph Child Span](/docs/3.11.1/assets/images/langgraph-child-span-076b0cb599aeabce965b36602d5fda82.png)
+![LangGraph Child Span](/docs/latest/assets/images/langgraph-child-span-076b0cb599aeabce965b36602d5fda82.png)
 
 Async Context Propagation
 
@@ -250,15 +250,15 @@ graph.invoke(inputs, {"configurable": {"thread_id": "1"}})
 
 The thread ID will be recorded in the trace metadata and displayed in the MLflow Trace UI.
 
-![LangGraph Thread ID](/docs/3.11.1/assets/images/langgraph-thread-id-f180f62c969e783d2a312a5d69ccd2fd.png)
+![LangGraph Thread ID](/docs/latest/assets/images/langgraph-thread-id-f180f62c969e783d2a312a5d69ccd2fd.png)
 
 By navigating to the Session tab on the side bar, you can view all the traces in the session.
 
-![LangGraph Session Page](/docs/3.11.1/assets/images/langgraph-session-page-c27d68787ae5bbefa08c8bb485273697.png)
+![LangGraph Session Page](/docs/latest/assets/images/langgraph-session-page-c27d68787ae5bbefa08c8bb485273697.png)
 
 ## Combine with the MLflow Tracing SDK (JS / TS)[​](#combine-with-the-mlflow-tracing-sdk-js--ts "Direct link to Combine with the MLflow Tracing SDK (JS / TS)")
 
-When using LangGraph.js with OpenTelemetry-based tracing, you can combine the automatically generated traces with the [MLflow Tracing SDK](/docs/3.11.1/genai/tracing.md) (`@mlflow/core`) to add custom spans, set tags, and update trace metadata within the same trace.
+When using LangGraph.js with OpenTelemetry-based tracing, you can combine the automatically generated traces with the [MLflow Tracing SDK](/docs/latest/genai/tracing.md) (`@mlflow/core`) to add custom spans, set tags, and update trace metadata within the same trace.
 
 typescript
 
@@ -287,7 +287,7 @@ const result = await withSpan(
 );
 ```
 
-For detailed instructions and examples, see [Combining the OpenTelemetry SDK and the MLflow Tracing SDK](/docs/3.11.1/genai/tracing/app-instrumentation/opentelemetry.md#combining-the-opentelemetry-sdk-and-the-mlflow-tracing-sdk).
+For detailed instructions and examples, see [Combining the OpenTelemetry SDK and the MLflow Tracing SDK](/docs/latest/genai/tracing/app-instrumentation/opentelemetry.md#combining-the-opentelemetry-sdk-and-the-mlflow-tracing-sdk).
 
 ## Disable auto-tracing[​](#disable-auto-tracing "Direct link to Disable auto-tracing")
 

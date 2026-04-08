@@ -2,7 +2,7 @@
 
 Managing changes of prompts is crucial for maintaining quality, improving performance, and ensuring consistency across different environments. This page provides a comprehensive guide to change management in MLflow Prompt Registry.
 
-![Aliases List](/docs/3.11.1/assets/images/prompt-aliases-list-abcce1795c6c37ec5b7d90afefde7cf3.png)
+![Aliases List](/docs/latest/assets/images/prompt-aliases-list-abcce1795c6c37ec5b7d90afefde7cf3.png)
 
 ## Commit-based Versioning[​](#commit-based-versioning "Direct link to Commit-based Versioning")
 
@@ -20,7 +20,7 @@ Hard-coding prompt text in source code is indeed a common practice, but it has s
 
 MLflow Prompt Registry UI provides a side-by-side comparison of prompt versions, highlighting the changes between versions. To compare prompt versions in the MLflow UI, click on the **Compare** tab in the prompt details page and select the versions you want to compare.
 
-![Compare Prompt Versions](/docs/3.11.1/assets/images/compare-prompt-versions-cfb444eca59dc0c2e14b98d480aa2c17.png)
+![Compare Prompt Versions](/docs/latest/assets/images/compare-prompt-versions-cfb444eca59dc0c2e14b98d480aa2c17.png)
 
 ## Aliases[​](#aliases "Direct link to Aliases")
 
@@ -33,7 +33,7 @@ The common use case for aliases is to build a robust **deployment pipeline** for
 * UI
 * Python
 
-![Create Prompt Alias](/docs/3.11.1/assets/images/create-prompt-alias-eada243c60800b04059e6a5311a5b492.png)
+![Create Prompt Alias](/docs/latest/assets/images/create-prompt-alias-eada243c60800b04059e6a5311a5b492.png)
 
 1. Open the existing prompt version in the MLflow UI.
 2. Click on the **Add** button next to the **Aliases** section.

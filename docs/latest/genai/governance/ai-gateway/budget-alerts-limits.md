@@ -11,13 +11,13 @@ Spend resets automatically at the start of each new time window. When workspaces
 
 Navigate to **AI Gateway > Budgets** in the MLflow UI to view and manage your budget policies.
 
-![Budget policies list](/docs/3.11.1/images/budget-policies-list.png)
+![Budget policies list](/docs/latest/images/budget-policies-list.png)
 
 ### Creating a Budget Policy[​](#creating-a-budget-policy "Direct link to Creating a Budget Policy")
 
 Click **Create budget policy** to open the creation dialog. Specify the budget amount (USD), reset period, and the action to take when the threshold is exceeded.
 
-![Create budget policy dialog](/docs/3.11.1/images/budget-policies-create.png)
+![Create budget policy dialog](/docs/latest/images/budget-policies-create.png)
 
 ## Alert Webhooks[​](#alert-webhooks "Direct link to Alert Webhooks")
 
@@ -69,7 +69,7 @@ Accumulated spend resets to zero at the start of each new window.
 
 ## Authorization[​](#authorization "Direct link to Authorization")
 
-When [authentication](/docs/3.11.1/self-hosting/security/basic-http-auth.md) is enabled for the tracking server, only admin users can create, update, or delete budget policies.
+When [authentication](/docs/latest/self-hosting/security/basic-http-auth.md) is enabled for the tracking server, only admin users can create, update, or delete budget policies.
 
 ## Budget Tracker Strategies[​](#budget-tracker-strategies "Direct link to Budget Tracker Strategies")
 

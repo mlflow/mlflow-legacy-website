@@ -2,7 +2,7 @@
 
 [Kong AI Gateway](https://konghq.com/products/kong-ai-gateway) is an enterprise-grade API gateway that provides a unified OpenAI-compatible API to access multiple LLM providers including OpenAI, Anthropic, Azure, AWS Bedrock, Google Gemini, and more. It offers built-in rate limiting, caching, load balancing, and observability.
 
-![Kong AI Gateway Tracing](/docs/3.11.1/images/llms/tracing/basic-openai-trace.png)
+![Kong AI Gateway Tracing](/docs/latest/images/llms/tracing/basic-openai-trace.png)
 
 Since <!-- -->Kong AI Gateway<!-- --> exposes an OpenAI-compatible API, you can use MLflow's OpenAI autolog integration to automatically trace all your LLM calls through the gateway.
 
@@ -279,20 +279,20 @@ MLflow will automatically capture the complete streamed response in the trace.
 
 ## Next Steps
 
-### [Track User Feedback](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+### [Track User Feedback](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-[Record user feedback on traces for tracking user satisfaction.](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+[Record user feedback on traces for tracking user satisfaction.](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-[Learn about feedback →](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+[Learn about feedback →](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-### [Manage Prompts](/docs/3.11.1/genai/prompt-registry.md)
+### [Manage Prompts](/docs/latest/genai/prompt-registry.md)
 
-[Learn how to manage prompts with MLflow's prompt registry.](/docs/3.11.1/genai/prompt-registry.md)
+[Learn how to manage prompts with MLflow's prompt registry.](/docs/latest/genai/prompt-registry.md)
 
-[Manage prompts →](/docs/3.11.1/genai/prompt-registry.md)
+[Manage prompts →](/docs/latest/genai/prompt-registry.md)
 
-### [Evaluate Traces](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+### [Evaluate Traces](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Evaluate traces with LLM judges to understand and improve your AI application's behavior.](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Evaluate traces with LLM judges to understand and improve your AI application's behavior.](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Evaluate traces →](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Evaluate traces →](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)

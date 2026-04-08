@@ -84,7 +84,7 @@ for i in range(10):
 
 The code above creates 10 MLflow runs with different metrics, params, tags and dataset information. After successful execution, if you return to the MLflow UI in your browser, you should find all of these runs under the experiment "search-run-guide", as shown by the following screenshot:
 
-![testing runs](/docs/3.11.1/assets/images/created_mlflow_runs-ba9cdc82478269e4af7b43ad5a6c8733.png)
+![testing runs](/docs/latest/assets/images/created_mlflow_runs-ba9cdc82478269e4af7b43ad5a6c8733.png)
 
 In real-world production deployments of MLflow, it's common to have thousands or even hundreds of thousands of runs. In such cases, it's important to be able to filter and search for runs based on specific criteria.
 
@@ -156,7 +156,7 @@ This section describes the syntax formatting, focusing on "left side" and "right
 
 **Visual Representation of Search Components:**
 
-![search components](/docs/3.11.1/assets/images/search_syntax-8db1091a58dda699e58cd3846c12cace.png)
+![search components](/docs/latest/assets/images/search_syntax-8db1091a58dda699e58cd3846c12cace.png)
 
 **Valid Syntax for Left and Right Side Elements:**
 
@@ -321,7 +321,7 @@ params.model LIKE "GPT%" AND params.batch_size = "2"
 
 #### 3 - Searching By Tags[​](#mlflow_tags "Direct link to 3 - Searching By Tags")
 
-Tags are metadata that typically provide additional context about the run. Tags can include values like user name, team, etc. They are logged manually via `mlflow.set_tag` or `mlflow.set_tags`. In addition, [system tags](/docs/3.11.1/ml/tracking/tracking-api.md), such as `mlflow.user`, are automatically logged.
+Tags are metadata that typically provide additional context about the run. Tags can include values like user name, team, etc. They are logged manually via `mlflow.set_tag` or `mlflow.set_tags`. In addition, [system tags](/docs/latest/ml/tracking/tracking-api.md), such as `mlflow.user`, are automatically logged.
 
 To search for runs by filtering on tags, you must include the `tags` or `mlflow` prefixes in the left side of the inequality. Note that tags are **stored as strings**, so you must use string comparators, such as `=` and `!=`.
 
@@ -362,7 +362,7 @@ Run metadata are a variety of user-specified and system-generated attributes tha
 
 To search for runs by filtering on the metadata of runs, you must include the `attributes` prefix in the left side of the inequality. Note that run metadata can be either a string or a numeric depending on the attribute, so you must use the appropriate comparator. For a complete list of attributes, see
 
-[mlflow.entities.RunInfo](/docs/3.11.1/api_reference/python_api/mlflow.entities.html#mlflow.entities.RunInfo), however note that not all fields in the RunInfo object are searchable.
+[mlflow.entities.RunInfo](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.RunInfo), however note that not all fields in the RunInfo object are searchable.
 
 To search for runs by filtering on tags, you must include the `tags` or `mlflow` prefixes in the left side of the inequality. Note that tags are **stored as strings**, so you must use string comparators, such as `=` and `!=`.
 
@@ -457,7 +457,7 @@ When scaling out to large production systems, typically you'll want to interact 
 
 ### Python[​](#python "Direct link to Python")
 
-[`mlflow.client.MlflowClient.search_runs()`](/docs/3.11.1/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.search_runs) or [`mlflow.search_runs()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.search_runs) take the same arguments as the above UI examples and more! They return all the runs that match the specified filters. Your best resource is the docstrings for each of these functions, but here are some useful examples.
+[`mlflow.client.MlflowClient.search_runs()`](/docs/latest/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.search_runs) or [`mlflow.search_runs()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.search_runs) take the same arguments as the above UI examples and more! They return all the runs that match the specified filters. Your best resource is the docstrings for each of these functions, but here are some useful examples.
 
 #### 1 - Complex Filter[​](#1---complex-filter "Direct link to 1 - Complex Filter")
 
@@ -503,7 +503,7 @@ text
 
 #### 2 - `run_view_type`[​](#2---run_view_type "Direct link to 2---run_view_type")
 
-The `run_view_type` parameter exposes additional filtering options, as noted in the [mlflow.entities.ViewType](/docs/3.11.1/api_reference/python_api/mlflow.entities.html#mlflow.entities.ViewType) enum. For example, if you want to filter only active runs, which is a dropdown in the UI, simply pass `run_view_type=ViewType.ACTIVE_ONLY`.
+The `run_view_type` parameter exposes additional filtering options, as noted in the [mlflow.entities.ViewType](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.ViewType) enum. For example, if you want to filter only active runs, which is a dropdown in the UI, simply pass `run_view_type=ViewType.ACTIVE_ONLY`.
 
 python
 
@@ -569,7 +569,7 @@ gpt_4_runs_global = mlflow.search_runs(
 )
 ```
 
-Finally, there are additional useful features in the [`mlflow.client.MlflowClient.search_runs()`](/docs/3.11.1/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.search_runs) or [`mlflow.search_runs()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.search_runs) methods, so be sure to check out the documentation for more details.
+Finally, there are additional useful features in the [`mlflow.client.MlflowClient.search_runs()`](/docs/latest/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.search_runs) or [`mlflow.search_runs()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.search_runs) methods, so be sure to check out the documentation for more details.
 
 ### R[​](#r "Direct link to R")
 

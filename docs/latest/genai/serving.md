@@ -457,14 +457,14 @@ Get Started
 
 The examples in each section are designed to be practical and ready-to-use. Start with the Quick Start above, then explore the use cases that match your deployment needs.
 
-### [Custom Applications](/docs/3.11.1/genai/serving/custom-apps.md)
+### [Custom Applications](/docs/latest/genai/serving/custom-apps.md)
 
-[Build sophisticated serving logic with custom preprocessing, routing, and business rules](/docs/3.11.1/genai/serving/custom-apps.md)
+[Build sophisticated serving logic with custom preprocessing, routing, and business rules](/docs/latest/genai/serving/custom-apps.md)
 
-[Build custom apps →](/docs/3.11.1/genai/serving/custom-apps.md)
+[Build custom apps →](/docs/latest/genai/serving/custom-apps.md)
 
-### [Responses Agents](/docs/3.11.1/genai/serving/responses-agent.md)
+### [Responses Agents](/docs/latest/genai/serving/responses-agent.md)
 
-[Handle complex response patterns and multi-step inference workflows](/docs/3.11.1/genai/serving/responses-agent.md)
+[Handle complex response patterns and multi-step inference workflows](/docs/latest/genai/serving/responses-agent.md)
 
-[Learn about agents →](/docs/3.11.1/genai/serving/responses-agent.md)
+[Learn about agents →](/docs/latest/genai/serving/responses-agent.md)

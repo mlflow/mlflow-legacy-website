@@ -73,7 +73,7 @@ mlflow.tensorflow.autolog(
 
 ## Manual Logging with Keras Callback[​](#manual-logging-with-keras-callback "Direct link to Manual Logging with Keras Callback")
 
-For more control, use [`mlflow.tensorflow.MlflowCallback()`](/docs/3.11.1/api_reference/python_api/mlflow.tensorflow.html#mlflow.tensorflow.MlflowCallback):
+For more control, use [`mlflow.tensorflow.MlflowCallback()`](/docs/latest/api_reference/python_api/mlflow.tensorflow.html#mlflow.tensorflow.MlflowCallback):
 
 python
 
@@ -108,7 +108,7 @@ with mlflow.start_run() as run:
 
 ## Model Logging[​](#model-logging "Direct link to Model Logging")
 
-Save Keras models with [`mlflow.tensorflow.log_model()`](/docs/3.11.1/api_reference/python_api/mlflow.tensorflow.html#mlflow.tensorflow.log_model):
+Save Keras models with [`mlflow.tensorflow.log_model()`](/docs/latest/api_reference/python_api/mlflow.tensorflow.html#mlflow.tensorflow.log_model):
 
 python
 
@@ -172,14 +172,14 @@ client.set_registered_model_alias(
 
 ## Learn More[​](#learn-more "Direct link to Learn More")
 
-### [Model Registry](/docs/3.11.1/ml/model-registry.md)
+### [Model Registry](/docs/latest/ml/model-registry.md)
 
-[Version and manage Keras models](/docs/3.11.1/ml/model-registry.md)
+[Version and manage Keras models](/docs/latest/ml/model-registry.md)
 
-[Learn more →](/docs/3.11.1/ml/model-registry.md)
+[Learn more →](/docs/latest/ml/model-registry.md)
 
-### [MLflow Tracking](/docs/3.11.1/ml/tracking.md)
+### [MLflow Tracking](/docs/latest/ml/tracking.md)
 
-[Track experiments, parameters, and metrics](/docs/3.11.1/ml/tracking.md)
+[Track experiments, parameters, and metrics](/docs/latest/ml/tracking.md)
 
-[Learn more →](/docs/3.11.1/ml/tracking.md)
+[Learn more →](/docs/latest/ml/tracking.md)

@@ -2,7 +2,7 @@
 
 Automatically identify quality and operational issues in your LLM application using AI-powered analysis of traces directly within the MLflow UI.
 
-[](/docs/3.11.1/images/genai/issue-detection/issue-detection.mp4)
+[](/docs/latest/images/genai/issue-detection/issue-detection.mp4)
 
 ## Why Automatic Issue Detection?[​](#why-automatic-issue-detection "Direct link to Why Automatic Issue Detection?")
 
@@ -96,15 +96,15 @@ Issue detection is available from anywhere you view traces: overview dashboard, 
 
 1. **Which issue categories to look for**: Select the CLEARS dimensions most relevant to your use case
 
-![Issue detection categories](/docs/3.11.1/images/genai/issue-detection/categories.png)
+![Issue detection categories](/docs/latest/images/genai/issue-detection/categories.png)
 
 2. **Which LLM to use for analysis**: Choose between an existing MLflow AI Gateway endpoint or connect directly to a provider (OpenAI, Anthropic, Gemini, etc.) using an API key. Cost tracking is supported across all options.
 
-![Issue detection endpoints selection](/docs/3.11.1/images/genai/issue-detection/endpoint-selection.png)
+![Issue detection endpoints selection](/docs/latest/images/genai/issue-detection/endpoint-selection.png)
 
-![Issue detection models selection](/docs/3.11.1/images/genai/issue-detection/model-selection.png)
+![Issue detection models selection](/docs/latest/images/genai/issue-detection/model-selection.png)
 
-You can analyze all traces in your experiment or select a specific subset. For multi-turn conversations, you can group traces by [session](/docs/3.11.1/genai/tracing/track-users-sessions.md) to get conversation-aware analysis.
+You can analyze all traces in your experiment or select a specific subset. For multi-turn conversations, you can group traces by [session](/docs/latest/genai/tracing/track-users-sessions.md) to get conversation-aware analysis.
 
 ### Real-Time Analysis[​](#real-time-analysis "Direct link to Real-Time Analysis")
 
@@ -116,13 +116,13 @@ Once configured, analysis begins immediately and runs asynchronously. You can wa
 
 Once the job finishes, you'll also see the estimated LLM cost for the analysis.
 
-![Issue detection in progress](/docs/3.11.1/images/genai/issue-detection/issue-detection-progress.png)
+![Issue detection in progress](/docs/latest/images/genai/issue-detection/issue-detection-progress.png)
 
 ### Understanding Results[​](#understanding-results "Direct link to Understanding Results")
 
 When analysis completes, you receive an AI-generated summary highlighting key findings, severity distribution, and recommended next steps. This summary gives you immediate context before diving into individual issues.
 
-![Detection complete with summary](/docs/3.11.1/images/genai/issue-detection/summary.png)
+![Detection complete with summary](/docs/latest/images/genai/issue-detection/summary.png)
 
 ## Working with Detected Issues[​](#working-with-detected-issues "Direct link to Working with Detected Issues")
 
@@ -148,7 +148,7 @@ Which CLEARS dimensions this issue relates to (correctness, latency, execution, 
 
 Issues maintain full lineage to the traces they were detected from, so you can always navigate from an issue back to the specific traces that surfaced it.
 
-![Detected issues overview](/docs/3.11.1/images/genai/issue-detection/issue-cards.png)
+![Detected issues overview](/docs/latest/images/genai/issue-detection/issue-cards.png)
 
 ### Investigating Issues[​](#investigating-issues "Direct link to Investigating Issues")
 
@@ -159,7 +159,7 @@ When you select an issue, you can explore all affected traces. Each trace shows 
 * **Identify root causes**: Look for common factors in affected traces
 * **Gather examples**: Collect representative cases for debugging or evaluation datasets, and use them to verify whether the issue is fixed after making changes
 
-![Issue with affected traces](/docs/3.11.1/images/genai/issue-detection/issue-details.png)
+![Issue with affected traces](/docs/latest/images/genai/issue-detection/issue-details.png)
 
 ### Managing and Triaging Issues[​](#managing-and-triaging-issues "Direct link to Managing and Triaging Issues")
 
@@ -173,7 +173,7 @@ Issues are classified into three states:
 
 You can filter by status to focus on what needs attention. Issues identified by the discovery job are initially marked as Pending, and can be triaged to Resolved or Rejected as you investigate.
 
-![Managing issue status](/docs/3.11.1/images/genai/issue-detection/issue-status.png)
+![Managing issue status](/docs/latest/images/genai/issue-detection/issue-status.png)
 
 #### Refining Issues[​](#refining-issues "Direct link to Refining Issues")
 
@@ -184,7 +184,7 @@ As you review issues, you can refine them to better reflect your domain knowledg
 
 These refinements help align discovered issues with your team's understanding and priorities.
 
-![Editing issue details](/docs/3.11.1/images/genai/issue-detection/edit-issue.png)
+![Editing issue details](/docs/latest/images/genai/issue-detection/edit-issue.png)
 
 #### Tracking Progress[​](#tracking-progress "Direct link to Tracking Progress")
 
@@ -223,7 +223,7 @@ Issue detection requires LLM calls to analyze each trace. Costs scale with:
 
 More capable models (e.g. `gpt-5.4`) generally produce better issue detection quality, and the cost is reasonable, typically a few dollars for hundreds of traces. We recommend starting with a stronger model to get the best results out of the box.
 
-To control costs at scale, connect via an [MLflow AI Gateway](/docs/3.11.1/genai/governance/ai-gateway.md) endpoint and use its built-in budget controls to cap spending across detection runs.
+To control costs at scale, connect via an [MLflow AI Gateway](/docs/latest/genai/governance/ai-gateway.md) endpoint and use its built-in budget controls to cap spending across detection runs.
 
 ## When to Use Issue Detection[​](#when-to-use-issue-detection "Direct link to When to Use Issue Detection")
 
@@ -231,6 +231,6 @@ Issue detection complements other MLflow evaluation and monitoring capabilities:
 
 | Use Issue Detection When...                                        | Use Other Tools When...                                                                                                                                             |
 | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| You want to detect unknown problems                                | You know the specific quality dimensions or hypotheses to test: use [MLflow Evaluation Judges](/docs/3.11.1/genai/eval-monitor/scorers.md)                          |
-| You need to analyze many traces at once                            | You're debugging a single trace: use [MLflow Trace UI](/docs/3.11.1/genai/tracing/observe-with-traces/ui.md)                                                        |
-| You want to track, triage, and resolve identified issues over time | You need continuous production monitoring: use [Automatic Evaluations](/docs/3.11.1/genai/eval-monitor/automatic-evaluations.md) to score every trace as it arrives |
+| You want to detect unknown problems                                | You know the specific quality dimensions or hypotheses to test: use [MLflow Evaluation Judges](/docs/latest/genai/eval-monitor/scorers.md)                          |
+| You need to analyze many traces at once                            | You're debugging a single trace: use [MLflow Trace UI](/docs/latest/genai/tracing/observe-with-traces/ui.md)                                                        |
+| You want to track, triage, and resolve identified issues over time | You need continuous production monitoring: use [Automatic Evaluations](/docs/latest/genai/eval-monitor/automatic-evaluations.md) to score every trace as it arrives |

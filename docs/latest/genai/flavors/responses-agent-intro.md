@@ -2,14 +2,14 @@
 
 ## What is a ResponsesAgent?[​](#what-is-a-responsesagent "Direct link to What is a ResponsesAgent?")
 
-[`ResponsesAgent`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent) is a subclass of `PythonModel` that provides a framework-agnostic way to create an agent model. Authoring an agent using `ResponsesAgent` provides the following benefits:
+[`ResponsesAgent`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent) is a subclass of `PythonModel` that provides a framework-agnostic way to create an agent model. Authoring an agent using `ResponsesAgent` provides the following benefits:
 
 * Support for returning multiple output messages, including intermediate outputs from tool-calling
 * Support for multi-agent scenarios
 * Ensure compatibility with MLflow logging, tracing, and model serving
 * Ensure your model is compatible with OpenAI Responses API, making it compatible with OpenAI's responses client and other downstream UIs/applications
 
-We recommend [`ResponsesAgent`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent) instead of [`ChatModel`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) and [`ChatAgent`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatAgent), as it has all the benefits of `ChatAgent` and supports additional features like annotations.
+We recommend [`ResponsesAgent`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent) instead of [`ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) and [`ChatAgent`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatAgent), as it has all the benefits of `ChatAgent` and supports additional features like annotations.
 
 ## Author a ResponsesAgent[​](#author-a-responsesagent "Direct link to Author a ResponsesAgent")
 
@@ -19,20 +19,20 @@ To create your own agent, subclass `mlflow.pyfunc.ResponsesAgent` and implement 
 
 ### Creating agent output[​](#creating-agent-output "Direct link to Creating agent output")
 
-When implementing your agent, you'll work with two main output types: [`ResponsesAgentResponse`](/docs/3.11.1/api_reference/python_api/mlflow.types.html#mlflow.types.responses.ResponsesAgentResponse) and [`ResponsesAgentStreamEvent`](/docs/3.11.1/api_reference/python_api/mlflow.types.html#mlflow.types.responses.ResponsesAgentResponse). These are the only pydantic objects you should create directly. The remaining classes in `mlflow.types.responses_helpers` are only for validating dictionaries.
+When implementing your agent, you'll work with two main output types: [`ResponsesAgentResponse`](/docs/latest/api_reference/python_api/mlflow.types.html#mlflow.types.responses.ResponsesAgentResponse) and [`ResponsesAgentStreamEvent`](/docs/latest/api_reference/python_api/mlflow.types.html#mlflow.types.responses.ResponsesAgentResponse). These are the only pydantic objects you should create directly. The remaining classes in `mlflow.types.responses_helpers` are only for validating dictionaries.
 
 If you want to return outputs that don't fit into the standard interface, you can use the `custom_outputs` field.
 
 Below are some helper methods you can use to create common outputs within the ResponsesAgent interface:
 
-* [`mlflow.types.responses.create_reasoning_item()`](/docs/3.11.1/api_reference/python_api/mlflow.types.html#mlflow.types.responses.create_reasoning_item)
-* [`mlflow.types.responses.create_text_output_item()`](/docs/3.11.1/api_reference/python_api/mlflow.types.html#mlflow.types.responses.create_text_output_item)
-* [`mlflow.types.responses.create_function_call_item()`](/docs/3.11.1/api_reference/python_api/mlflow.types.html#mlflow.types.responses.create_function_call_item)
-* [`mlflow.types.responses.create_function_call_output_item()`](/docs/3.11.1/api_reference/python_api/mlflow.types.html#mlflow.types.responses.create_function_call_output_item)
-* [`mlflow.types.responses.create_mcp_approval_request_item()`](/docs/3.11.1/api_reference/python_api/mlflow.types.html#mlflow.types.responses.create_mcp_approval_request_item)
-* [`mlflow.types.responses.create_mcp_approval_response_item()`](/docs/3.11.1/api_reference/python_api/mlflow.types.html#mlflow.types.responses.create_mcp_approval_response_item)
-* [`mlflow.types.responses.create_text_delta()`](/docs/3.11.1/api_reference/python_api/mlflow.types.html#mlflow.types.responses.create_text_delta) (only for streaming)
-* [`mlflow.types.responses.create_annotation_added()`](/docs/3.11.1/api_reference/python_api/mlflow.types.html#mlflow.types.responses.create_annotation_added) (only for streaming)
+* [`mlflow.types.responses.create_reasoning_item()`](/docs/latest/api_reference/python_api/mlflow.types.html#mlflow.types.responses.create_reasoning_item)
+* [`mlflow.types.responses.create_text_output_item()`](/docs/latest/api_reference/python_api/mlflow.types.html#mlflow.types.responses.create_text_output_item)
+* [`mlflow.types.responses.create_function_call_item()`](/docs/latest/api_reference/python_api/mlflow.types.html#mlflow.types.responses.create_function_call_item)
+* [`mlflow.types.responses.create_function_call_output_item()`](/docs/latest/api_reference/python_api/mlflow.types.html#mlflow.types.responses.create_function_call_output_item)
+* [`mlflow.types.responses.create_mcp_approval_request_item()`](/docs/latest/api_reference/python_api/mlflow.types.html#mlflow.types.responses.create_mcp_approval_request_item)
+* [`mlflow.types.responses.create_mcp_approval_response_item()`](/docs/latest/api_reference/python_api/mlflow.types.html#mlflow.types.responses.create_mcp_approval_response_item)
+* [`mlflow.types.responses.create_text_delta()`](/docs/latest/api_reference/python_api/mlflow.types.html#mlflow.types.responses.create_text_delta) (only for streaming)
+* [`mlflow.types.responses.create_annotation_added()`](/docs/latest/api_reference/python_api/mlflow.types.html#mlflow.types.responses.create_annotation_added) (only for streaming)
 
 Here's an example of a complete tool calling sequence using `ResponsesAgentResponse` with a custom output:
 
@@ -157,7 +157,7 @@ class SimpleResponsesAgent(ResponsesAgent):
 
 ## Log your agent[​](#log-your-agent "Direct link to Log your agent")
 
-Log your agent using the [Models-from-code](/docs/3.11.1/ml/model/models-from-code.md) approach. This approach is framework-agnostic and supports all authoring frameworks:
+Log your agent using the [Models-from-code](/docs/latest/ml/model/models-from-code.md) approach. This approach is framework-agnostic and supports all authoring frameworks:
 
 python
 
@@ -220,7 +220,7 @@ When migrating from `ChatAgent` to `ResponsesAgent`, the primary task involves a
 * [Responses vs Chat Completions](https://platform.openai.com/docs/guides/responses-vs-chat-completions)
 * [Responses API Docs](https://platform.openai.com/docs/api-reference/responses)
 
-The `ResponsesAgent` interface extends all functionality previously available in [`ChatAgent`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatAgent), while introducing new features. Below, we outline the key differences in message representation between the two interfaces for common use cases:
+The `ResponsesAgent` interface extends all functionality previously available in [`ChatAgent`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatAgent), while introducing new features. Below, we outline the key differences in message representation between the two interfaces for common use cases:
 
 ### Standard Text Response[​](#standard-text-response "Direct link to Standard Text Response")
 

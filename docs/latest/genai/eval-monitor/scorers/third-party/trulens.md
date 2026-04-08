@@ -77,10 +77,10 @@ Evaluate retrieval quality and answer generation in RAG systems:
 
 | Scorer                                                                                                                    | What does it evaluate?                                | TruLens Docs                                                                                                                   |
 | ------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| [Groundedness](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.trulens.Groundedness)         | Is the response grounded in the provided context?     | [Link](https://www.trulens.org/reference/trulens/feedback/#trulens.feedback.LLMProvider.groundedness_measure_with_cot_reasons) |
-| [ContextRelevance](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.trulens.ContextRelevance) | Is the retrieved context relevant to the input query? | [Link](https://www.trulens.org/reference/trulens/feedback/#trulens.feedback.LLMProvider.context_relevance_with_cot_reasons)    |
-| [AnswerRelevance](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.trulens.AnswerRelevance)   | Is the output relevant to the input query?            | [Link](https://www.trulens.org/reference/trulens/feedback/#trulens.feedback.LLMProvider.relevance_with_cot_reasons)            |
-| [Coherence](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.trulens.Coherence)               | Is the output coherent and logically consistent?      | [Link](https://www.trulens.org/reference/trulens/feedback/#trulens.feedback.LLMProvider.coherence_with_cot_reasons)            |
+| [Groundedness](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.trulens.Groundedness)         | Is the response grounded in the provided context?     | [Link](https://www.trulens.org/reference/trulens/feedback/#trulens.feedback.LLMProvider.groundedness_measure_with_cot_reasons) |
+| [ContextRelevance](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.trulens.ContextRelevance) | Is the retrieved context relevant to the input query? | [Link](https://www.trulens.org/reference/trulens/feedback/#trulens.feedback.LLMProvider.context_relevance_with_cot_reasons)    |
+| [AnswerRelevance](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.trulens.AnswerRelevance)   | Is the output relevant to the input query?            | [Link](https://www.trulens.org/reference/trulens/feedback/#trulens.feedback.LLMProvider.relevance_with_cot_reasons)            |
+| [Coherence](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.trulens.Coherence)               | Is the output coherent and logically consistent?      | [Link](https://www.trulens.org/reference/trulens/feedback/#trulens.feedback.LLMProvider.coherence_with_cot_reasons)            |
 
 ### Agent Trace Metrics[​](#agent-trace-metrics "Direct link to Agent Trace Metrics")
 
@@ -88,12 +88,12 @@ Evaluate AI agent execution traces using [goal-plan-action alignment](https://ar
 
 | Scorer                                                                                                                          | What does it evaluate?                                              | TruLens Docs                                                                                                                   |
 | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| [LogicalConsistency](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.trulens.LogicalConsistency)   | Is the agent's reasoning logically consistent throughout execution? | [Link](https://www.trulens.org/reference/trulens/feedback/#trulens.feedback.LLMProvider.logical_consistency_with_cot_reasons)  |
-| [ExecutionEfficiency](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.trulens.ExecutionEfficiency) | Does the agent take an optimal path without unnecessary steps?      | [Link](https://www.trulens.org/reference/trulens/feedback/#trulens.feedback.LLMProvider.execution_efficiency_with_cot_reasons) |
-| [PlanAdherence](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.trulens.PlanAdherence)             | Does the agent follow its stated plan during execution?             | [Link](https://www.trulens.org/reference/trulens/feedback/#trulens.feedback.LLMProvider.plan_adherence_with_cot_reasons)       |
-| [PlanQuality](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.trulens.PlanQuality)                 | Is the agent's plan well-structured and appropriate for the goal?   | [Link](https://www.trulens.org/reference/trulens/feedback/#trulens.feedback.LLMProvider.plan_quality_with_cot_reasons)         |
-| [ToolSelection](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.trulens.ToolSelection)             | Does the agent choose the appropriate tools for each step?          | [Link](https://www.trulens.org/reference/trulens/feedback/#trulens.feedback.LLMProvider.tool_selection_with_cot_reasons)       |
-| [ToolCalling](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.trulens.ToolCalling)                 | Does the agent invoke tools with correct parameters?                | [Link](https://www.trulens.org/reference/trulens/feedback/#trulens.feedback.LLMProvider.tool_calling_with_cot_reasons)         |
+| [LogicalConsistency](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.trulens.LogicalConsistency)   | Is the agent's reasoning logically consistent throughout execution? | [Link](https://www.trulens.org/reference/trulens/feedback/#trulens.feedback.LLMProvider.logical_consistency_with_cot_reasons)  |
+| [ExecutionEfficiency](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.trulens.ExecutionEfficiency) | Does the agent take an optimal path without unnecessary steps?      | [Link](https://www.trulens.org/reference/trulens/feedback/#trulens.feedback.LLMProvider.execution_efficiency_with_cot_reasons) |
+| [PlanAdherence](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.trulens.PlanAdherence)             | Does the agent follow its stated plan during execution?             | [Link](https://www.trulens.org/reference/trulens/feedback/#trulens.feedback.LLMProvider.plan_adherence_with_cot_reasons)       |
+| [PlanQuality](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.trulens.PlanQuality)                 | Is the agent's plan well-structured and appropriate for the goal?   | [Link](https://www.trulens.org/reference/trulens/feedback/#trulens.feedback.LLMProvider.plan_quality_with_cot_reasons)         |
+| [ToolSelection](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.trulens.ToolSelection)             | Does the agent choose the appropriate tools for each step?          | [Link](https://www.trulens.org/reference/trulens/feedback/#trulens.feedback.LLMProvider.tool_selection_with_cot_reasons)       |
+| [ToolCalling](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.trulens.ToolCalling)                 | Does the agent invoke tools with correct parameters?                | [Link](https://www.trulens.org/reference/trulens/feedback/#trulens.feedback.LLMProvider.tool_calling_with_cot_reasons)         |
 
 Agent trace scorers require a `trace` argument and evaluate the full execution trace:
 
@@ -115,7 +115,7 @@ results = mlflow.genai.evaluate(
 
 ## Creating Scorers by Name[​](#creating-scorers-by-name "Direct link to Creating Scorers by Name")
 
-You can also create TruLens scorers dynamically using [get\_scorer](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.trulens.get_scorer):
+You can also create TruLens scorers dynamically using [get\_scorer](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.trulens.get_scorer):
 
 python
 
@@ -158,20 +158,20 @@ Refer to the [TruLens documentation](https://www.trulens.org/) for additional de
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [Evaluate Agents](/docs/3.11.1/genai/eval-monitor/running-evaluation/agents.md)
+### [Evaluate Agents](/docs/latest/genai/eval-monitor/running-evaluation/agents.md)
 
-[Learn specialized techniques for evaluating AI agents with tool usage](/docs/3.11.1/genai/eval-monitor/running-evaluation/agents.md)
+[Learn specialized techniques for evaluating AI agents with tool usage](/docs/latest/genai/eval-monitor/running-evaluation/agents.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/running-evaluation/agents.md)
+[Learn more →](/docs/latest/genai/eval-monitor/running-evaluation/agents.md)
 
-### [Evaluate Traces](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+### [Evaluate Traces](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Evaluate production traces to understand application behavior](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Evaluate production traces to understand application behavior](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Learn more →](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-### [Built-in Judges](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/predefined.md)
+### [Built-in Judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md)
 
-[Explore MLflow's built-in evaluation judges](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/predefined.md)
+[Explore MLflow's built-in evaluation judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/predefined.md)
+[Learn more →](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md)

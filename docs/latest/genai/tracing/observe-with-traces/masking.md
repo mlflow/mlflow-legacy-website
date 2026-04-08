@@ -6,7 +6,7 @@ Traces capture powerful insights for debugging and monitoring your application, 
 
 MLflow allows you to configure a list of post-processing hooks that are applied to each span in a trace. Each span processor is a function that takes a span as input and updates it in place.
 
-1. Define a custom filtering function and call [`mlflow.tracing.configure`](/docs/3.11.1/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.configure) to register it.
+1. Define a custom filtering function and call [`mlflow.tracing.configure`](/docs/latest/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.configure) to register it.
 2. Whenever a new span is created, the registered filters are applied to it sequentially.
 3. MLflow sends the filtered span to the backend.
 
@@ -14,7 +14,7 @@ Since the filters are applied at **client side** before sending the span to the 
 
 ## Filtering Function[​](#filtering-function "Direct link to Filtering Function")
 
-A filtering function must take a single argument, which is a [`Span`](/docs/3.11.1/api_reference/python_api/mlflow.entities.html#mlflow.entities.span.Span) object. It can mutate the span in-place. It must not return a value.
+A filtering function must take a single argument, which is a [`Span`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.span.Span) object. It can mutate the span in-place. It must not return a value.
 
 python
 
@@ -60,11 +60,11 @@ predict("My e-mail address is test@example.com")
 
 The generated trace will have the e-mail address redacted in the inputs:
 
-![Redacting e-mail address from trace](/docs/3.11.1/assets/images/pii_masking_simple-281c75ff804afc78ac10c28e50f17db2.png)
+![Redacting e-mail address from trace](/docs/latest/assets/images/pii_masking_simple-281c75ff804afc78ac10c28e50f17db2.png)
 
 ## Example 2: Applying a Filter to Particular Spans[​](#example-2-applying-a-filter-to-particular-spans "Direct link to Example 2: Applying a Filter to Particular Spans")
 
-The filtering function registered at [`mlflow.tracing.configure`](/docs/3.11.1/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.configure) is applied to all spans. If your trace contains many nested spans, you may want to apply the filter only to certain spans. Also, the input/output format is typically different for different span types, so you may need to apply different filtering logic.
+The filtering function registered at [`mlflow.tracing.configure`](/docs/latest/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.configure) is applied to all spans. If your trace contains many nested spans, you may want to apply the filter only to certain spans. Also, the input/output format is typically different for different span types, so you may need to apply different filtering logic.
 
 In the following example, we'll redact the bank account number from the trace, but using different filtering logic depending on the span type.
 
@@ -144,7 +144,7 @@ result = graph.invoke({
 
 The generated trace will have the bank account number redacted from all messages:
 
-![Redacting bank account number from trace](/docs/3.11.1/assets/images/pii_masking_langgraph-3aa1511ba847aa30b8de3bd2e8d8639b.png)
+![Redacting bank account number from trace](/docs/latest/assets/images/pii_masking_langgraph-3aa1511ba847aa30b8de3bd2e8d8639b.png)
 
 ## Example 3: Redacting PII using Microsoft Presidio[​](#example-3-redacting-pii-using-microsoft-presidio "Direct link to Example 3: Redacting PII using Microsoft Presidio")
 
@@ -221,11 +221,11 @@ customer_support_agent(
 
 The generated trace will have the PII redacted:
 
-![Redacting PII from trace](/docs/3.11.1/assets/images/pii_masking_presidio-c94cbe4aee76f4c75dd7183f29e62858.png)
+![Redacting PII from trace](/docs/latest/assets/images/pii_masking_presidio-c94cbe4aee76f4c75dd7183f29e62858.png)
 
 ## Resetting the Filter[​](#resetting-the-filter "Direct link to Resetting the Filter")
 
-To reset the filter, call [`mlflow.tracing.configure`](/docs/3.11.1/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.configure) with an empty list of span processors.
+To reset the filter, call [`mlflow.tracing.configure`](/docs/latest/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.configure) with an empty list of span processors.
 
 python
 
@@ -233,7 +233,7 @@ python
 mlflow.tracing.configure(span_processors=[])
 ```
 
-Alternatively, you can call [`mlflow.tracing.reset`](/docs/3.11.1/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.reset) to reset the entire tracing configuration.
+Alternatively, you can call [`mlflow.tracing.reset`](/docs/latest/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.reset) to reset the entire tracing configuration.
 
 python
 

@@ -287,21 +287,21 @@ MLflow logs artifacts associated with your model and its environment during the 
 
 By storing these objects, MLflow is able to recreate the environment in which you logged your model.
 
-![llama\_index\_mlflow\_ui\_run](/docs/3.11.1/assets/images/llama_index_mlflow_ui_run-d2570e3471609c9a78e643e999ea8c05.png)
+![llama\_index\_mlflow\_ui\_run](/docs/latest/assets/images/llama_index_mlflow_ui_run-d2570e3471609c9a78e643e999ea8c05.png)
 
 **Important:** MLflow will not serialize API keys. Those must be present in your model loading environment as environment variables.
 
 We also created a record of the model in the model registry. By simply specifying `registered_model_name` and `input_example` when logging the model, we get robust signature inference and an instance in the model registry, as shown below.
 
-![llama\_index\_mlflow\_ui\_registered\_model](/docs/3.11.1/assets/images/llama_index_mlflow_ui_registered_model-95e77775bc60bf8f810e13699394e949.png)
+![llama\_index\_mlflow\_ui\_registered\_model](/docs/latest/assets/images/llama_index_mlflow_ui_registered_model-95e77775bc60bf8f810e13699394e949.png)
 
 Finally, let's explore the traces we logged. In the `Experiments` tab we can click on `Tracing` to view the logged traces for our two inference calls. Tracing effectively shows a callback-based stacktrace for what ocurred in our inference system.
 
-![llama\_index\_tracing\_quickstart](/docs/3.11.1/assets/images/llama_index_tracing_quickstart-b3265e68e3b0d35172bc038f2b75d3ef.png)
+![llama\_index\_tracing\_quickstart](/docs/latest/assets/images/llama_index_tracing_quickstart-b3265e68e3b0d35172bc038f2b75d3ef.png)
 
 If we click on our first trace, we can see some really cool details about our inputs, outputs, and the duration of each step in the chain.
 
-![llama\_index\_single\_trace\_quickstart](/docs/3.11.1/assets/images/llama_index_single_trace_quickstart-d214fc3b3e5d95040d4e74cea5f02bf1.png)
+![llama\_index\_single\_trace\_quickstart](/docs/latest/assets/images/llama_index_single_trace_quickstart-d214fc3b3e5d95040d4e74cea5f02bf1.png)
 
 ## Customization and Next Steps[​](#customization-and-next-steps "Direct link to Customization and Next Steps")
 

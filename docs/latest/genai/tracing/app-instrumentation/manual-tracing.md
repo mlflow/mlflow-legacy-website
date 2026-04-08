@@ -1,6 +1,6 @@
 # Manual Tracing
 
-In addition to the [Auto Tracing](/docs/3.11.1/genai/tracing/app-instrumentation/automatic.md) integrations, you can instrument your LLM application or AI agent by using MLflow's manual tracing APIs.
+In addition to the [Auto Tracing](/docs/latest/genai/tracing/app-instrumentation/automatic.md) integrations, you can instrument your LLM application or AI agent by using MLflow's manual tracing APIs.
 
 ## Decorator[​](#decorator "Direct link to Decorator")
 
@@ -73,7 +73,7 @@ class MyClass {
 }
 ```
 
-![Tracing Decorator](/docs/3.11.1/assets/images/trace-decorator-8ae22208121b562582947549f8b9a46e.png)
+![Tracing Decorator](/docs/latest/assets/images/trace-decorator-8ae22208121b562582947549f8b9a46e.png)
 
 note
 
@@ -155,7 +155,7 @@ getWeather('San Francisco');
 The `mlflow.trace` decorator accepts following arguments to customize the span to be created:
 
 * 🏷️ **`name` parameter** to override the span name from the default (the name of decorated function)
-* 🎯 **`span_type` parameter** to set the type of span. Set either one of built-in [Span Types](/docs/3.11.1/genai/concepts/span.md#span-types) or a string.
+* 🎯 **`span_type` parameter** to set the type of span. Set either one of built-in [Span Types](/docs/latest/genai/concepts/span.md#span-types) or a string.
 * 🏗️ **`attributes` parameter** to add custom attributes to the span.
 
 - Python
@@ -194,7 +194,7 @@ Alternatively, you can update the span dynamically inside the function.
 * Python
 * TypeScript
 
-Use the [`mlflow.get_current_active_span()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.get_current_active_span) API.
+Use the [`mlflow.get_current_active_span()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.get_current_active_span) API.
 
 python
 
@@ -232,7 +232,7 @@ class MyClass {
 
 ## Adding Trace Tags[​](#adding-trace-tags "Direct link to Adding Trace Tags")
 
-Tags can be added to traces to provide additional metadata at the trace level. There are a few different ways to set tags on a trace. Please refer to the [how-to guide](/docs/3.11.1/genai/tracing/attach-tags.md) for the other methods.
+Tags can be added to traces to provide additional metadata at the trace level. There are a few different ways to set tags on a trace. Please refer to the [how-to guide](/docs/latest/genai/tracing/attach-tags.md) for the other methods.
 
 * Python
 * TypeScript
@@ -366,7 +366,7 @@ with mlflow.start_span(name="multimodal-call") as span:
     span.set_outputs({"content": result})
 ```
 
-See [Image and Audio (Multimodal) Content in Traces](/docs/3.11.1/genai/tracing/observe-with-traces/multimodal.md#manual-tracing) for more examples.
+See [Image and Audio (Multimodal) Content in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md#manual-tracing) for more examples.
 
 ## Code Block[​](#code-block "Direct link to Code Block")
 
@@ -377,7 +377,7 @@ Similarly to the decorator, the code block automatically captures parent-child r
 * Python
 * TypeScript
 
-Use the [`mlflow.start_span()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.start_span) context manager.
+Use the [`mlflow.start_span()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.start_span) context manager.
 
 python
 
@@ -525,7 +525,7 @@ myClass.startSession();
 
 If an `Exception` is raised during processing of a trace-instrumented operation, an indication will be shown within the UI that the invocation was not successful and a partial capture of data will be available to aid in debugging. Additionally, details about the Exception that was raised will be included within `Events` of the partially completed span, further aiding the identification of where issues are occurring within your code.
 
-[](/docs/3.11.1/images/llms/tracing/trace-exception.mp4)
+[](/docs/latest/images/llms/tracing/trace-exception.mp4)
 
 ***
 
@@ -537,7 +537,7 @@ The below documentation applies only to the MLflow Python SDK.
 
 When applying multiple decorators to a single function, decorator order matters. For **custom decorators** (e.g., timing, logging), place `@mlflow.trace` as the **outermost** decorator (the one at the very top). This ensures that MLflow can capture the entire execution of the function, including the behavior of any inner decorators.
 
-**Exception for framework route decorators:** For web frameworks (Flask, FastAPI, etc.), the order is **reversed**—the framework decorator (e.g., `@app.route`, `@app.post`) should be outermost, and `@mlflow.trace` should be the inner decorator. This ensures the framework registers the trace-instrumented function. See [Production Tracing](/docs/3.11.1/genai/tracing/prod-tracing.md) for examples.
+**Exception for framework route decorators:** For web frameworks (Flask, FastAPI, etc.), the order is **reversed**—the framework decorator (e.g., `@app.route`, `@app.post`) should be outermost, and `@mlflow.trace` should be the inner decorator. This ensures the framework registers the trace-instrumented function. See [Production Tracing](/docs/latest/genai/tracing/prod-tracing.md) for examples.
 
 If `@mlflow.trace` is not in the correct position for your decorator type, its visibility into the function's execution may be limited or incorrect, potentially leading to incomplete traces or misrepresentation of the function's inputs, outputs, and execution time.
 
@@ -653,7 +653,7 @@ The following is an advanced example that uses the `output_reducer` to consolida
 
 tip
 
-Of course, we recommend using the [auto-tracing for OpenAI](/docs/3.11.1/genai/tracing/integrations/listing/openai.md) for examples like this, which does the same job but with one-liner code. The example below is for demonstration purposes.
+Of course, we recommend using the [auto-tracing for OpenAI](/docs/latest/genai/tracing/integrations/listing/openai.md) for examples like this, which does the same job but with one-liner code. The example below is for demonstration purposes.
 
 * Python
 
@@ -772,7 +772,7 @@ questions = [
 main(questions)
 ```
 
-![Multi threaded tracing](/docs/3.11.1/assets/images/tracing-multi-thread-acfb6f382ce45e030c95b7c0536749bf.png)
+![Multi threaded tracing](/docs/latest/assets/images/tracing-multi-thread-acfb6f382ce45e030c95b7c0536749bf.png)
 
 tip
 
@@ -813,20 +813,20 @@ asyncio.run(async_pipeline(["item1", "item2", "item3"]))
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [Combining with Auto-Tracing](/docs/3.11.1/genai/tracing/app-instrumentation/automatic.md#combining-manual-and-automatic-tracing)
+### [Combining with Auto-Tracing](/docs/latest/genai/tracing/app-instrumentation/automatic.md#combining-manual-and-automatic-tracing)
 
-[Mix automatic and manual tracing for optimal observability](/docs/3.11.1/genai/tracing/app-instrumentation/automatic.md#combining-manual-and-automatic-tracing)
+[Mix automatic and manual tracing for optimal observability](/docs/latest/genai/tracing/app-instrumentation/automatic.md#combining-manual-and-automatic-tracing)
 
-[Learn more →](/docs/3.11.1/genai/tracing/app-instrumentation/automatic.md#combining-manual-and-automatic-tracing)
+[Learn more →](/docs/latest/genai/tracing/app-instrumentation/automatic.md#combining-manual-and-automatic-tracing)
 
-### [Trace Concepts](/docs/3.11.1/genai/concepts/trace.md)
+### [Trace Concepts](/docs/latest/genai/concepts/trace.md)
 
-[Understand the structure and components of MLflow traces](/docs/3.11.1/genai/concepts/trace.md)
+[Understand the structure and components of MLflow traces](/docs/latest/genai/concepts/trace.md)
 
-[Explore concepts →](/docs/3.11.1/genai/concepts/trace.md)
+[Explore concepts →](/docs/latest/genai/concepts/trace.md)
 
-### [Querying Traces](/docs/3.11.1/genai/tracing/search-traces.md)
+### [Querying Traces](/docs/latest/genai/tracing/search-traces.md)
 
-[Programmatically search and analyze your traces](/docs/3.11.1/genai/tracing/search-traces.md)
+[Programmatically search and analyze your traces](/docs/latest/genai/tracing/search-traces.md)
 
-[Search traces →](/docs/3.11.1/genai/tracing/search-traces.md)
+[Search traces →](/docs/latest/genai/tracing/search-traces.md)

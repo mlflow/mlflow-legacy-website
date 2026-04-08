@@ -6,11 +6,11 @@ warning
 * This feature is not supported in [Databricks Git Folders](https://docs.databricks.com/aws/en/repos/) yet due to limitations in accessing Git metadata.
 * MLflow >= 3.4 is required for this feature.
 
-This guide demonstrates how to track versions of your LLM application or AI agent when your app's code resides in Git or a similar version control system. MLflow provides automatic Git-based versioning through the [`mlflow.genai.enable_git_model_versioning()`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.enable_git_model_versioning) API, which seamlessly tracks your application versions based on Git state.
+This guide demonstrates how to track versions of your LLM application or AI agent when your app's code resides in Git or a similar version control system. MLflow provides automatic Git-based versioning through the [`mlflow.genai.enable_git_model_versioning()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.enable_git_model_versioning) API, which seamlessly tracks your application versions based on Git state.
 
 When enabled, MLflow automatically:
 
-* Creates or reuses a LoggedModel based on your current [git state](/docs/3.11.1/genai/version-tracking/track-application-versions-with-mlflow.md#git-state-tracked-by-mlflow)
+* Creates or reuses a LoggedModel based on your current [git state](/docs/latest/genai/version-tracking/track-application-versions-with-mlflow.md#git-state-tracked-by-mlflow)
 * Links all traces to this `LoggedModel` version
 * Captures Git metadata including diffs for uncommitted changes
 * Manages version transitions as your code evolves
@@ -45,7 +45,7 @@ Works naturally with your existing Git workflow. No changes to development proce
 
 ## How MLflow Captures Git Context[​](#how-mlflow-captures-git-context "Direct link to How MLflow Captures Git Context")
 
-With [`mlflow.genai.enable_git_model_versioning()`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.enable_git_model_versioning), MLflow automatically manages version tracking based on your Git state. Each unique combination of branch, commit, and dirty state creates or reuses a LoggedModel version.
+With [`mlflow.genai.enable_git_model_versioning()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.enable_git_model_versioning), MLflow automatically manages version tracking based on your Git state. Each unique combination of branch, commit, and dirty state creates or reuses a LoggedModel version.
 
 #### Automatic Git Detection
 
@@ -77,11 +77,11 @@ bash
 export OPENAI_API_KEY="your-api-key-here"
 ```
 
-Create an MLflow experiment by following the [getting started guide](/docs/3.11.1/ml/getting-started.md).
+Create an MLflow experiment by following the [getting started guide](/docs/latest/ml/getting-started.md).
 
 ## Step 1: Enable Git-based version tracking[​](#step-1-enable-git-based-version-tracking "Direct link to Step 1: Enable Git-based version tracking")
 
-The simplest way to enable Git-based version tracking is to call [`mlflow.genai.enable_git_model_versioning()`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.enable_git_model_versioning) at the start of your application:
+The simplest way to enable Git-based version tracking is to call [`mlflow.genai.enable_git_model_versioning()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.enable_git_model_versioning) at the start of your application:
 
 python
 
@@ -210,11 +210,11 @@ This ensures complete reproducibility of your application versions.
 
 Go to the MLflow Experiment UI. In the **Traces** tab, you can see the version of the app that generated each trace. In the **Models** tab, you can see each LoggedModel alongside its parameters and linked traces.
 
-![](/docs/3.11.1/assets/images/git-versioning-9f4cec5218edc37fcf578c340a2a1a75.png)
+![](/docs/latest/assets/images/git-versioning-9f4cec5218edc37fcf578c340a2a1a75.png)
 
 ### Use the SDK[​](#use-the-sdk "Direct link to Use the SDK")
 
-You can use [`mlflow.search_traces()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.search_traces) to query for traces from a LoggedModel:
+You can use [`mlflow.search_traces()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.search_traces) to query for traces from a LoggedModel:
 
 python
 
@@ -228,7 +228,7 @@ traces = mlflow.search_traces(model_id=context.active_model.model_id)
 print(traces)
 ```
 
-You can use [`mlflow.get_logged_model()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.get_logged_model) to get details of the LoggedModel including Git metadata:
+You can use [`mlflow.get_logged_model()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.get_logged_model) to get details of the LoggedModel including Git metadata:
 
 python
 
@@ -260,14 +260,14 @@ for tag_key, tag_value in git_tags.items():
 
 Now that you understand the basics of Git-based application versioning with MLflow, you can explore these related topics:
 
-### [Compare App Versions](/docs/3.11.1/genai/version-tracking/compare-app-versions.md)
+### [Compare App Versions](/docs/latest/genai/version-tracking/compare-app-versions.md)
 
-[Learn systematic approaches to evaluate different versions using trace-based comparison](/docs/3.11.1/genai/version-tracking/compare-app-versions.md)
+[Learn systematic approaches to evaluate different versions using trace-based comparison](/docs/latest/genai/version-tracking/compare-app-versions.md)
 
-[Learn more →](/docs/3.11.1/genai/version-tracking/compare-app-versions.md)
+[Learn more →](/docs/latest/genai/version-tracking/compare-app-versions.md)
 
-### [Version Tracking Quickstart](/docs/3.11.1/genai/version-tracking/quickstart.md)
+### [Version Tracking Quickstart](/docs/latest/genai/version-tracking/quickstart.md)
 
-[Get started quickly with a hands-on guide to version tracking in MLflow](/docs/3.11.1/genai/version-tracking/quickstart.md)
+[Get started quickly with a hands-on guide to version tracking in MLflow](/docs/latest/genai/version-tracking/quickstart.md)
 
-[Learn more →](/docs/3.11.1/genai/version-tracking/quickstart.md)
+[Learn more →](/docs/latest/genai/version-tracking/quickstart.md)

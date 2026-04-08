@@ -1,10 +1,10 @@
 # Tracing AG2🤖
 
-![AG2 Tracing via autolog](/docs/3.11.1/assets/images/ag2-trace-729f69365b00a8a7d17f6d0722658818.png)
+![AG2 Tracing via autolog](/docs/latest/assets/images/ag2-trace-729f69365b00a8a7d17f6d0722658818.png)
 
 [AG2](https://ag2.ai/) is an open-source framework for building and orchestrating AI agent interactions.
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing/integrations.md) provides automatic tracing capability for AG2, an open-source multi-agent framework. By enabling auto tracing for AG2 by calling the [`mlflow.ag2.autolog()`](/docs/3.11.1/api_reference/python_api/mlflow.ag2.html#mlflow.ag2.autolog) function, MLflow will capture nested traces and logged them to the active MLflow Experiment upon agents execution. Note that since AG2 is built based on [AutoGen 0.2](https://microsoft.github.io/autogen/0.2/), this integration can be used when you use AutoGen 0.2.
+[MLflow Tracing](/docs/latest/genai/tracing/integrations.md) provides automatic tracing capability for AG2, an open-source multi-agent framework. By enabling auto tracing for AG2 by calling the [`mlflow.ag2.autolog()`](/docs/latest/api_reference/python_api/mlflow.ag2.html#mlflow.ag2.autolog) function, MLflow will capture nested traces and logged them to the active MLflow Experiment upon agents execution. Note that since AG2 is built based on [AutoGen 0.2](https://microsoft.github.io/autogen/0.2/), this integration can be used when you use AutoGen 0.2.
 
 python
 
@@ -93,7 +93,7 @@ response = user_proxy.initiate_chat(assistant, message="What is (44231 + 13312 /
 
 ## Tracking Token Usage and Cost[​](#tracking-token-usage-and-cost "Direct link to Tracking Token Usage and Cost")
 
-MLflow automatically tracks token usage and cost for AG2. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/3.11.1/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
+MLflow automatically tracks token usage and cost for AG2. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/latest/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
 
 ### Disable auto-tracing[​](#disable-auto-tracing "Direct link to Disable auto-tracing")
 

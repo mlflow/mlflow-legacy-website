@@ -134,7 +134,7 @@ def question(name):
 question("1+1")  # The prompt is linked to the trace created for this call
 ```
 
-![UI for Prompt-trace linkage](/docs/3.11.1/assets/images/prompt-trace-linking-43d4316e252e9827f284e49e49d85494.png)
+![UI for Prompt-trace linkage](/docs/latest/assets/images/prompt-trace-linking-43d4316e252e9827f284e49e49d85494.png)
 
 ### Linking with Run[​](#linking-with-run "Direct link to Linking with Run")
 
@@ -159,7 +159,7 @@ with mlflow.start_run():
     response.choices[0].message.content
 ```
 
-![Prompt-run linking in run overview](/docs/3.11.1/assets/images/prompt-run-linking-bb4b4223e592f314fc06c9c9194b91bb.png)
+![Prompt-run linking in run overview](/docs/latest/assets/images/prompt-run-linking-bb4b4223e592f314fc06c9c9194b91bb.png)
 
 ## Linking Prompts to Logged Models for Full Lineage[​](#linking-prompts-to-logged-models-for-full-lineage "Direct link to Linking Prompts to Logged Models for Full Lineage")
 

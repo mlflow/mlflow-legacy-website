@@ -1,6 +1,6 @@
 # Evaluating Prompts
 
-Combining [MLflow Prompt Registry](/docs/3.11.1/genai/prompt-registry.md) with [MLflow LLM Evaluation](/docs/3.11.1/genai/eval-monitor.md) enables you to evaluate prompt performance across different models and datasets, and track the evaluation results in a centralized registry. You can also inspect model outputs from the **traces** logged during evaluation to understand how the model responds to different prompts.
+Combining [MLflow Prompt Registry](/docs/latest/genai/prompt-registry.md) with [MLflow LLM Evaluation](/docs/latest/genai/eval-monitor.md) enables you to evaluate prompt performance across different models and datasets, and track the evaluation results in a centralized registry. You can also inspect model outputs from the **traces** logged during evaluation to understand how the model responds to different prompts.
 
 Key Benefits of MLflow Prompt Evaluation
 
@@ -37,7 +37,7 @@ os.environ["OPENAI_API_KEY"] = getpass("Enter your OpenAI API key: ")
 * UI
 * Python
 
-![Create Prompt UI](/docs/3.11.1/assets/images/create-prompt-ui-03c88144e65d28eb7847b2ae5d8dd49a.png)
+![Create Prompt UI](/docs/latest/assets/images/create-prompt-ui-03c88144e65d28eb7847b2ae5d8dd49a.png)
 
 1. Run `mlflow server` in your terminal to start the MLflow UI.
 2. Navigate to the **Prompts** tab in the MLflow UI.
@@ -45,7 +45,7 @@ os.environ["OPENAI_API_KEY"] = getpass("Enter your OpenAI API key: ")
 4. Fill in the prompt details such as name, prompt template text, and commit message (optional).
 5. Click **Create** to register the prompt.
 
-To create a new prompt using the Python API, use [`mlflow.genai.register_prompt()`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.register_prompt) API:
+To create a new prompt using the Python API, use [`mlflow.genai.register_prompt()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.register_prompt) API:
 
 python
 
@@ -146,7 +146,7 @@ def predict_fn(sentences: str) -> str:
 
 ### 4. Run Evaluation[​](#4-run-evaluation "Direct link to 4. Run Evaluation")
 
-Run the [`mlflow.genai.evaluate()`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.evaluate) API to evaluate the model with the prepared data and prompt. In this example, we will use the following two built-in metrics.
+Run the [`mlflow.genai.evaluate()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.evaluate) API to evaluate the model with the prepared data and prompt. In this example, we will use the following two built-in metrics.
 
 python
 
@@ -177,4 +177,4 @@ results = mlflow.genai.evaluate(
 
 You can view the evaluation results in the MLflow UI. Navigate to the **Experiments** tab, select the **Evaluations** tab, and click on the evaluation run to view the evaluation result.
 
-![Evaluation Results](/docs/3.11.1/assets/images/prompt-evaluation-result-2a8eb8bdd0d27413488af07919dd844b.png)
+![Evaluation Results](/docs/latest/assets/images/prompt-evaluation-result-2a8eb8bdd0d27413488af07919dd844b.png)

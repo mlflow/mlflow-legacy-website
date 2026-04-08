@@ -1,10 +1,10 @@
 # Tracing FireworksAI
 
-![FireworksAI Tracing via autolog](/docs/3.11.1/images/llms/tracing/fireworks-ai-tracing.png)
+![FireworksAI Tracing via autolog](/docs/latest/images/llms/tracing/fireworks-ai-tracing.png)
 
 [FireworksAI](https://fireworks.ai) is an inference and customization engine for open source AI. It provides day zero access to the latest SOTA OSS models and allows developers to build lightning AI applications.
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing.md) provides automatic tracing capability for FireworksAI through the OpenAI SDK compatibility. FireworksAI is [OpenAI SDK compatible](https://fireworks.ai/docs/tools-sdks/openai-compatibility#openai-compatibility), you can use the [`mlflow.openai.autolog()`](/docs/3.11.1/api_reference/python_api/mlflow.openai.html#mlflow.openai.autolog) function to enable automatic tracing. MLflow will capture traces for LLM invocations and log them to the active MLflow Experiment.
+[MLflow Tracing](/docs/latest/genai/tracing.md) provides automatic tracing capability for FireworksAI through the OpenAI SDK compatibility. FireworksAI is [OpenAI SDK compatible](https://fireworks.ai/docs/tools-sdks/openai-compatibility#openai-compatibility), you can use the [`mlflow.openai.autolog()`](/docs/latest/api_reference/python_api/mlflow.openai.html#mlflow.openai.autolog) function to enable automatic tracing. MLflow will capture traces for LLM invocations and log them to the active MLflow Experiment.
 
 MLflow automatically captures the following information about FireworksAI calls:
 
@@ -133,7 +133,7 @@ const response = await client.chat.completions.create({
 
 Browse to the MLflow UI at <http://localhost:5000> (or your MLflow server URL) and you should see the traces for the FireworksAI API calls.
 
-![FireworksAI Tracing in MLflow UI](/docs/3.11.1/images/llms/tracing/fireworks-ai-tracing.png)
+![FireworksAI Tracing in MLflow UI](/docs/latest/images/llms/tracing/fireworks-ai-tracing.png)
 
 → View [Next Steps](#next-steps) for learning about more MLflow features like user feedback tracking, prompt management, and evaluation.
 
@@ -361,7 +361,7 @@ answer = run_tool_agent(question)
 
 ## Tracking Token Usage and Cost[​](#tracking-token-usage-and-cost "Direct link to Tracking Token Usage and Cost")
 
-MLflow automatically tracks token usage and cost for FireworksAI. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/3.11.1/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
+MLflow automatically tracks token usage and cost for FireworksAI. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/latest/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
 
 ## Disable auto-tracing[​](#disable-auto-tracing "Direct link to Disable auto-tracing")
 
@@ -369,20 +369,20 @@ Auto tracing for FireworksAI can be disabled globally by calling `mlflow.openai.
 
 ## Next steps[​](#next-steps "Direct link to Next steps")
 
-### [Track User Feedback](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+### [Track User Feedback](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-[Record user feedback on traces for tracking user satisfaction.](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+[Record user feedback on traces for tracking user satisfaction.](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-[Learn about feedback →](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+[Learn about feedback →](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-### [Manage Prompts](/docs/3.11.1/genai/prompt-registry.md)
+### [Manage Prompts](/docs/latest/genai/prompt-registry.md)
 
-[Learn how to manage prompts with MLflow's prompt registry.](/docs/3.11.1/genai/prompt-registry.md)
+[Learn how to manage prompts with MLflow's prompt registry.](/docs/latest/genai/prompt-registry.md)
 
-[Manage prompts →](/docs/3.11.1/genai/prompt-registry.md)
+[Manage prompts →](/docs/latest/genai/prompt-registry.md)
 
-### [Evaluate Traces](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+### [Evaluate Traces](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Evaluate traces with LLM judges to understand and improve your AI application's behavior.](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Evaluate traces with LLM judges to understand and improve your AI application's behavior.](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Evaluate traces →](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Evaluate traces →](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)

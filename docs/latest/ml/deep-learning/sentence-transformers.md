@@ -180,41 +180,41 @@ with mlflow.start_run():
 
 ### Quickstart[​](#quickstart "Direct link to Quickstart")
 
-[Sentence Transformers Quickstart](/docs/3.11.1/ml/deep-learning/sentence-transformers/tutorials/quickstart/sentence-transformers-quickstart.md)
+[Sentence Transformers Quickstart](/docs/latest/ml/deep-learning/sentence-transformers/tutorials/quickstart/sentence-transformers-quickstart.md)
 
-[Learn the basics of using Sentence Transformers with MLflow](/docs/3.11.1/ml/deep-learning/sentence-transformers/tutorials/quickstart/sentence-transformers-quickstart.md)
+[Learn the basics of using Sentence Transformers with MLflow](/docs/latest/ml/deep-learning/sentence-transformers/tutorials/quickstart/sentence-transformers-quickstart.md)
 
 ### Advanced Tutorials[​](#advanced-tutorials "Direct link to Advanced Tutorials")
 
-[Semantic Similarity](/docs/3.11.1/ml/deep-learning/sentence-transformers/tutorials/semantic-similarity/semantic-similarity-sentence-transformers.md)
+[Semantic Similarity](/docs/latest/ml/deep-learning/sentence-transformers/tutorials/semantic-similarity/semantic-similarity-sentence-transformers.md)
 
-[Determine similarity scores between sentences using embeddings](/docs/3.11.1/ml/deep-learning/sentence-transformers/tutorials/semantic-similarity/semantic-similarity-sentence-transformers.md)[](/docs/3.11.1/ml/deep-learning/sentence-transformers/tutorials/semantic-search/semantic-search-sentence-transformers.md)
+[Determine similarity scores between sentences using embeddings](/docs/latest/ml/deep-learning/sentence-transformers/tutorials/semantic-similarity/semantic-similarity-sentence-transformers.md)[](/docs/latest/ml/deep-learning/sentence-transformers/tutorials/semantic-search/semantic-search-sentence-transformers.md)
 
-[Semantic Search](/docs/3.11.1/ml/deep-learning/sentence-transformers/tutorials/semantic-search/semantic-search-sentence-transformers.md)
+[Semantic Search](/docs/latest/ml/deep-learning/sentence-transformers/tutorials/semantic-search/semantic-search-sentence-transformers.md)
 
-[](/docs/3.11.1/ml/deep-learning/sentence-transformers/tutorials/semantic-search/semantic-search-sentence-transformers.md)
+[](/docs/latest/ml/deep-learning/sentence-transformers/tutorials/semantic-search/semantic-search-sentence-transformers.md)
 
-[Find the most similar embeddings within a corpus of text](/docs/3.11.1/ml/deep-learning/sentence-transformers/tutorials/semantic-search/semantic-search-sentence-transformers.md)[](/docs/3.11.1/ml/deep-learning/sentence-transformers/tutorials/paraphrase-mining/paraphrase-mining-sentence-transformers.md)
+[Find the most similar embeddings within a corpus of text](/docs/latest/ml/deep-learning/sentence-transformers/tutorials/semantic-search/semantic-search-sentence-transformers.md)[](/docs/latest/ml/deep-learning/sentence-transformers/tutorials/paraphrase-mining/paraphrase-mining-sentence-transformers.md)
 
-[Paraphrase Mining](/docs/3.11.1/ml/deep-learning/sentence-transformers/tutorials/paraphrase-mining/paraphrase-mining-sentence-transformers.md)
+[Paraphrase Mining](/docs/latest/ml/deep-learning/sentence-transformers/tutorials/paraphrase-mining/paraphrase-mining-sentence-transformers.md)
 
-[](/docs/3.11.1/ml/deep-learning/sentence-transformers/tutorials/paraphrase-mining/paraphrase-mining-sentence-transformers.md)
+[](/docs/latest/ml/deep-learning/sentence-transformers/tutorials/paraphrase-mining/paraphrase-mining-sentence-transformers.md)
 
-[Identify semantically similar sentences in a text corpus](/docs/3.11.1/ml/deep-learning/sentence-transformers/tutorials/paraphrase-mining/paraphrase-mining-sentence-transformers.md)
+[Identify semantically similar sentences in a text corpus](/docs/latest/ml/deep-learning/sentence-transformers/tutorials/paraphrase-mining/paraphrase-mining-sentence-transformers.md)
 
 ## Learn More[​](#learn-more "Direct link to Learn More")
 
-### [Model Registry](/docs/3.11.1/ml/model-registry.md)
+### [Model Registry](/docs/latest/ml/model-registry.md)
 
-[Version and manage Sentence Transformer models](/docs/3.11.1/ml/model-registry.md)
+[Version and manage Sentence Transformer models](/docs/latest/ml/model-registry.md)
 
-[Learn more →](/docs/3.11.1/ml/model-registry.md)
+[Learn more →](/docs/latest/ml/model-registry.md)
 
-### [MLflow Tracking](/docs/3.11.1/ml/tracking.md)
+### [MLflow Tracking](/docs/latest/ml/tracking.md)
 
-[Track experiments, parameters, and metrics](/docs/3.11.1/ml/tracking.md)
+[Track experiments, parameters, and metrics](/docs/latest/ml/tracking.md)
 
-[Learn more →](/docs/3.11.1/ml/tracking.md)
+[Learn more →](/docs/latest/ml/tracking.md)
 
 ### [Sentence Transformers Library](https://www.sbert.net/)
 

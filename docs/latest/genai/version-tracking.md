@@ -1,8 +1,8 @@
 # Version Tracking for LLM Applications and AI Agents
 
-MLflow's **[LoggedModel](/docs/3.11.1/api_reference/python_api/mlflow.entities.html#mlflow.entities.LoggedModel)** provides systematic version control for your entire LLM application or AI agent—code, configurations, evaluations, and traces. Stop losing track of what works and start building with confidence through complete application lifecycle management.
+MLflow's **[LoggedModel](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.LoggedModel)** provides systematic version control for your entire LLM application or AI agent—code, configurations, evaluations, and traces. Stop losing track of what works and start building with confidence through complete application lifecycle management.
 
-![MLflow UI showing LoggedModel with linked traces for version tracking](/docs/3.11.1/images/mlflow-3/genai/logged_model_autolog_traces.png)
+![MLflow UI showing LoggedModel with linked traces for version tracking](/docs/latest/images/mlflow-3/genai/logged_model_autolog_traces.png)
 
 ## Why Version Control Matters for LLM Applications and AI Agents[​](#why-version-control-matters-for-llm-applications-and-ai-agents "Direct link to Why Version Control Matters for LLM Applications and AI Agents")
 
@@ -189,16 +189,16 @@ For Databricks-hosted MLflow Tracking: `pip install --upgrade 'mlflow[databricks
 
 Once you've mastered basic version tracking, explore these advanced patterns for production LLM applications and AI agents.
 
-### [Track Application Versions](/docs/3.11.1/genai/version-tracking/track-application-versions-with-mlflow.md)
+### [Track Application Versions](/docs/latest/genai/version-tracking/track-application-versions-with-mlflow.md)
 
-[Learn comprehensive patterns for versioning complex LLM applications and AI agents with external code management](/docs/3.11.1/genai/version-tracking/track-application-versions-with-mlflow.md)
+[Learn comprehensive patterns for versioning complex LLM applications and AI agents with external code management](/docs/latest/genai/version-tracking/track-application-versions-with-mlflow.md)
 
-[Master versioning →](/docs/3.11.1/genai/version-tracking/track-application-versions-with-mlflow.md)
+[Master versioning →](/docs/latest/genai/version-tracking/track-application-versions-with-mlflow.md)
 
-### [Deployment Strategies](/docs/3.11.1/genai/serving.md)
+### [Deployment Strategies](/docs/latest/genai/serving.md)
 
-[Deploy versioned applications with confidence using MLflow's serving capabilities](/docs/3.11.1/genai/serving.md)
+[Deploy versioned applications with confidence using MLflow's serving capabilities](/docs/latest/genai/serving.md)
 
-[Deploy versions →](/docs/3.11.1/genai/serving.md)
+[Deploy versions →](/docs/latest/genai/serving.md)
 
 Start with the code examples above, then explore the advanced capabilities as your application grows in complexity.

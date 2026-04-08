@@ -43,7 +43,7 @@ text
 
 ### Prerequisites[​](#prerequisites "Direct link to Prerequisites")
 
-* MLflow MCP server (see [MCP setup guide](/docs/3.11.1/genai/mcp.md))
+* MLflow MCP server (see [MCP setup guide](/docs/latest/genai/mcp.md))
 * A coding agent with MCP support (e.g., Claude Code, Cursor, Windsurf, etc.) configured to connect to MLflow MCP server
 * MLflow experiment with logged traces
 
@@ -85,9 +85,9 @@ The tool will ask you to configure authentication:
 
 * **Databricks**: Provide workspace URL and personal access token, or use a Databricks CLI profile
 * **Local MLflow**: Specify tracking URI (SQLite, PostgreSQL, MySQL, or file store)
-* **Environment Variables**: Use pre-configured MLflow environment variables like `MLFLOW_TRACKING_URI` (see [environment setup guide](/docs/3.11.1/genai/getting-started/connect-environment.md))
+* **Environment Variables**: Use pre-configured MLflow environment variables like `MLFLOW_TRACKING_URI` (see [environment setup guide](/docs/latest/genai/getting-started/connect-environment.md))
 
-![Setup and Authentication](/docs/3.11.1/images/genai/ai-issue-discovery/setup-authentication.png)
+![Setup and Authentication](/docs/latest/images/genai/ai-issue-discovery/setup-authentication.png)
 
 ### 2. Experiment Selection[​](#2-experiment-selection "Direct link to 2. Experiment Selection")
 
@@ -95,7 +95,7 @@ The tool will ask you to configure authentication:
 * Select the experiment containing traces to analyze
 * Verify trace availability and data structure
 
-![Experiment Selection](/docs/3.11.1/images/genai/ai-issue-discovery/experiment-selection.png)
+![Experiment Selection](/docs/latest/images/genai/ai-issue-discovery/experiment-selection.png)
 
 ### 3. Agent Purpose Identification[​](#3-agent-purpose-identification "Direct link to 3. Agent Purpose Identification")
 
@@ -107,7 +107,7 @@ The tool examines trace inputs and outputs to understand:
 
 You'll be asked to confirm or correct this understanding before analysis continues.
 
-![Agent Purpose Identification](/docs/3.11.1/images/genai/ai-issue-discovery/agent-purpose.png)
+![Agent Purpose Identification](/docs/latest/images/genai/ai-issue-discovery/agent-purpose.png)
 
 ### 4. Hypothesis-Driven Analysis[​](#4-hypothesis-driven-analysis "Direct link to 4. Hypothesis-Driven Analysis")
 
@@ -125,7 +125,7 @@ The tool systematically tests hypotheses about potential issues:
 * Response appropriateness for query types
 * Context handling and conversation flow
 
-![Hypothesis-Driven Analysis](/docs/3.11.1/images/genai/ai-issue-discovery/hypothesis-analysis.png)
+![Hypothesis-Driven Analysis](/docs/latest/images/genai/ai-issue-discovery/hypothesis-analysis.png)
 
 ### 5. Report Generation[​](#5-report-generation "Direct link to 5. Report Generation")
 
@@ -136,7 +136,7 @@ The tool generates a comprehensive markdown report containing:
 * **Strengths**: What's working well in your application
 * **Recommendations**: Actionable improvements based on findings
 
-![Report Generation](/docs/3.11.1/images/genai/ai-issue-discovery/report-generation.png)
+![Report Generation](/docs/latest/images/genai/ai-issue-discovery/report-generation.png)
 
 ## Report Content[​](#report-content "Direct link to Report Content")
 

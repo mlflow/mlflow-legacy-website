@@ -22,9 +22,9 @@ You can initiate a new prompt in the MLflow Prompt Registry in two primary ways:
    * **Structured output (JSON schema)** — a JSON object that defines the expected response format for the prompt. The schema is stored with the prompt version and shown on the version detail page. See [Structured Output](https://mlflow.org/docs/latest/genai/prompt-registry/structured-output/) for details and examples.
    * **Model configuration** — set model parameters such as the model name, temperature, and other inference settings to associate with this prompt version. See [Model Configuration](https://mlflow.org/docs/latest/genai/prompt-registry/#model-configuration) for details and examples.
 
-![Registered Prompt in UI](/docs/3.11.1/assets/images/registered-prompt-d457d27524f55e7575e9a129e53487e4.png)
+![Registered Prompt in UI](/docs/latest/assets/images/registered-prompt-d457d27524f55e7575e9a129e53487e4.png)
 
-To create a new prompt programmatically, use the [`mlflow.genai.register_prompt()`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.register_prompt) function. This is particularly useful for automating prompt creation or managing prompts as part of a larger script.
+To create a new prompt programmatically, use the [`mlflow.genai.register_prompt()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.register_prompt) function. This is particularly useful for automating prompt creation or managing prompts as part of a larger script.
 
 python
 
@@ -88,9 +88,9 @@ Once a prompt version is created, its template and initial metadata are **immuta
 4. Modify the template, update metadata, or change tags as needed.
 5. Provide a new **Commit Message** describing the changes you made for this new version.
 
-![Update Prompt UI](/docs/3.11.1/assets/images/update-prompt-ui-9fe89b08b9318729754441fbe67f0a90.png)
+![Update Prompt UI](/docs/latest/assets/images/update-prompt-ui-9fe89b08b9318729754441fbe67f0a90.png)
 
-To create a new version of an existing prompt, you again use the [`mlflow.genai.register_prompt()`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.register_prompt) function, but this time, you provide the `name` of an existing prompt. MLflow will automatically increment the version number.
+To create a new version of an existing prompt, you again use the [`mlflow.genai.register_prompt()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.register_prompt) function, but this time, you provide the `name` of an existing prompt. MLflow will automatically increment the version number.
 
 python
 
@@ -130,4 +130,4 @@ If you need to change a prompt, you always create a new version.
 
 The MLflow UI provides tools to compare different versions of a prompt. This typically includes a side-by-side diff view, allowing you to easily see what changed in the template text, metadata, or tags between versions.
 
-![Compare Prompt Versions](/docs/3.11.1/assets/images/compare-prompt-versions-cfb444eca59dc0c2e14b98d480aa2c17.png)
+![Compare Prompt Versions](/docs/latest/assets/images/compare-prompt-versions-cfb444eca59dc0c2e14b98d480aa2c17.png)

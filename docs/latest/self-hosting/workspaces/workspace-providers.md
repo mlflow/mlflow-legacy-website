@@ -113,6 +113,6 @@ Providers can use these for custom authorization logic.
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-* [Permissions](/docs/3.11.1/self-hosting/workspaces/permissions.md) - Configure workspace-scoped permissions
-* [Getting Started](/docs/3.11.1/self-hosting/workspaces/getting-started.md) - Set up your first workspace
-* [Configuration](/docs/3.11.1/self-hosting/workspaces/configuration.md) - Server configuration options
+* [Permissions](/docs/latest/self-hosting/workspaces/permissions.md) - Configure workspace-scoped permissions
+* [Getting Started](/docs/latest/self-hosting/workspaces/getting-started.md) - Set up your first workspace
+* [Configuration](/docs/latest/self-hosting/workspaces/configuration.md) - Server configuration options

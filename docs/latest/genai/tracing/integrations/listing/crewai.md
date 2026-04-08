@@ -1,10 +1,10 @@
 # Tracing CrewAI
 
-[](/docs/3.11.1/images/llms/crewai/crewai-tracing.mp4)
+[](/docs/latest/images/llms/crewai/crewai-tracing.mp4)
 
 [CrewAI](https://www.crewai.com/) is an open-source framework for orchestrating role-playing, autonomous AI agent.
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing/integrations.md) provides automatic tracing capability for [CrewAI](https://www.crewai.com/), an open source framework for building multi-agent applications. By enabling auto tracing for CrewAI by calling the [`mlflow.crewai.autolog()`](/docs/3.11.1/api_reference/python_api/mlflow.crewai.html#mlflow.crewai.autolog) function, , MLflow will capture nested traces for CrewAI workflow execution and logged them to the active MLflow Experiment.
+[MLflow Tracing](/docs/latest/genai/tracing/integrations.md) provides automatic tracing capability for [CrewAI](https://www.crewai.com/), an open source framework for building multi-agent applications. By enabling auto tracing for CrewAI by calling the [`mlflow.crewai.autolog()`](/docs/latest/api_reference/python_api/mlflow.crewai.html#mlflow.crewai.autolog) function, , MLflow will capture nested traces for CrewAI workflow execution and logged them to the active MLflow Experiment.
 
 python
 
@@ -186,7 +186,7 @@ result = trip_crew.run()
 
 ## Tracking Token Usage and Cost[​](#tracking-token-usage-and-cost "Direct link to Tracking Token Usage and Cost")
 
-MLflow automatically tracks token usage and cost for CrewAI. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/3.11.1/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
+MLflow automatically tracks token usage and cost for CrewAI. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/latest/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
 
 ### Disable auto-tracing[​](#disable-auto-tracing "Direct link to Disable auto-tracing")
 

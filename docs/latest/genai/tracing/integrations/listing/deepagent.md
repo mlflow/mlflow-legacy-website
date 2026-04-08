@@ -1,10 +1,10 @@
 # Tracing LangChain Deep Agent
 
-![Deep Agent Tracing in MLflow](/docs/3.11.1/images/llms/tracing/deepagent-tracing.png)
+![Deep Agent Tracing in MLflow](/docs/latest/images/llms/tracing/deepagent-tracing.png)
 
 [LangChain Deep Agent](https://docs.langchain.com/oss/python/deepagents/quickstart) is an open-source library for building autonomous agents that can plan, research, and execute complex tasks. Deep Agent is built on top of LangGraph, providing a high-level abstraction for creating sophisticated agents with built-in capabilities like todo management, file operations, and spawning specialized subagents.
 
-Since Deep Agent is built on LangGraph, [MLflow Tracing](/docs/3.11.1/genai/tracing.md) works out of the box via [`mlflow.langchain.autolog()`](/docs/3.11.1/api_reference/python_api/mlflow.langchain.html#mlflow.langchain.autolog). This automatically captures the entire agent execution including planning, tool calls, and subagent interactions.
+Since Deep Agent is built on LangGraph, [MLflow Tracing](/docs/latest/genai/tracing.md) works out of the box via [`mlflow.langchain.autolog()`](/docs/latest/api_reference/python_api/mlflow.langchain.html#mlflow.langchain.autolog). This automatically captures the entire agent execution including planning, tool calls, and subagent interactions.
 
 python
 
@@ -129,7 +129,7 @@ Browse to the MLflow UI at <http://localhost:5000> (or your MLflow server URL) t
 
 ## Tracking Token Usage and Cost[​](#tracking-token-usage-and-cost "Direct link to Tracking Token Usage and Cost")
 
-MLflow automatically tracks token usage and cost for Deep Agent. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/3.11.1/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
+MLflow automatically tracks token usage and cost for Deep Agent. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/latest/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
 
 ## Disable Auto-Tracing[​](#disable-auto-tracing "Direct link to Disable Auto-Tracing")
 

@@ -2,7 +2,7 @@
 
 [Databricks](https://www.databricks.com/) offers a unified platform for data, analytics and AI. Databricks Foundation Model APIs provide an OpenAI-compatible API format for accessing state-of-the-art models such as OpenAI GPT, Anthropic Claude, Google Gemini, and more, through a single platform. Since Databricks Foundation Model APIs are OpenAI-compatible, you can use MLflow tracing to trace your interactions with Databricks Foundation Model APIs.
 
-![Tracing via autolog](/docs/3.11.1/images/llms/tracing/openai-function-calling.png)
+![Tracing via autolog](/docs/latest/images/llms/tracing/openai-function-calling.png)
 
 ## Managed MLflow on Databricks[​](#managed-mlflow-on-databricks "Direct link to Managed MLflow on Databricks")
 
@@ -93,36 +93,36 @@ const response = await client.chat.completions.create({
 
 Browse to your MLflow UI (for example, <http://localhost:5000>) and open the `Databricks` experiment to see traces for the calls above.
 
-![Databricks Tracing](/docs/3.11.1/images/llms/tracing/basic-openai-trace.png)
+![Databricks Tracing](/docs/latest/images/llms/tracing/basic-openai-trace.png)
 
 -> View *[Next Steps](#next-steps)* for learning about more MLflow features like user feedback tracking, prompt management, and evaluation.
 
 ## Streaming and Async Support[​](#streaming-and-async-support "Direct link to Streaming and Async Support")
 
-MLflow supports tracing for streaming and async Databricks APIs. Visit the [OpenAI Tracing documentation](/docs/3.11.1/genai/tracing/integrations/listing/openai.md) for example code snippets for tracing streaming and async calls through OpenAI SDK.
+MLflow supports tracing for streaming and async Databricks APIs. Visit the [OpenAI Tracing documentation](/docs/latest/genai/tracing/integrations/listing/openai.md) for example code snippets for tracing streaming and async calls through OpenAI SDK.
 
 ## Combine with frameworks or manual tracing[​](#combine-with-frameworks-or-manual-tracing "Direct link to Combine with frameworks or manual tracing")
 
-The automatic tracing capability in MLflow is designed to work seamlessly with the [Manual Tracing SDK](/docs/3.11.1/genai/tracing/app-instrumentation/manual-tracing.md) or multi-framework integrations. Please refer to the [Combining with frameworks or manual tracing](/docs/3.11.1/genai/tracing/integrations/listing/openai.md#combine-with-manual-tracing) for example code snippets.
+The automatic tracing capability in MLflow is designed to work seamlessly with the [Manual Tracing SDK](/docs/latest/genai/tracing/app-instrumentation/manual-tracing.md) or multi-framework integrations. Please refer to the [Combining with frameworks or manual tracing](/docs/latest/genai/tracing/integrations/listing/openai.md#combine-with-manual-tracing) for example code snippets.
 
-![Databricks Tracing with Manual Tracing](/docs/3.11.1/images/llms/tracing/openai-trace-with-manual-span.png)
+![Databricks Tracing with Manual Tracing](/docs/latest/images/llms/tracing/openai-trace-with-manual-span.png)
 
 ## Next steps[​](#next-steps "Direct link to Next steps")
 
-### [Track User Feedback](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+### [Track User Feedback](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-[Record user feedback on traces for tracking user satisfaction.](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+[Record user feedback on traces for tracking user satisfaction.](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-[Learn about feedback ->](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+[Learn about feedback ->](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-### [Manage Prompts](/docs/3.11.1/genai/prompt-registry.md)
+### [Manage Prompts](/docs/latest/genai/prompt-registry.md)
 
-[Learn how to manage prompts with MLflow's prompt registry.](/docs/3.11.1/genai/prompt-registry.md)
+[Learn how to manage prompts with MLflow's prompt registry.](/docs/latest/genai/prompt-registry.md)
 
-[Manage prompts ->](/docs/3.11.1/genai/prompt-registry.md)
+[Manage prompts ->](/docs/latest/genai/prompt-registry.md)
 
-### [Evaluate Traces](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+### [Evaluate Traces](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Evaluate traces with LLM judges to understand and improve your AI application's behavior.](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Evaluate traces with LLM judges to understand and improve your AI application's behavior.](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Evaluate traces ->](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Evaluate traces ->](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)

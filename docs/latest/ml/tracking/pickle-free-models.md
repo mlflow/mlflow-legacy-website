@@ -67,7 +67,7 @@ with mlflow.start_run():
     )
 ```
 
-See [`mlflow.sklearn.log_model()`](/docs/3.11.1/api_reference/python_api/mlflow.sklearn.html#mlflow.sklearn.log_model) and [`mlflow.sklearn.save_model()`](/docs/3.11.1/api_reference/python_api/mlflow.sklearn.html#mlflow.sklearn.save_model) for full parameters.
+See [`mlflow.sklearn.log_model()`](/docs/latest/api_reference/python_api/mlflow.sklearn.html#mlflow.sklearn.log_model) and [`mlflow.sklearn.save_model()`](/docs/latest/api_reference/python_api/mlflow.sklearn.html#mlflow.sklearn.save_model) for full parameters.
 
 ## Pickle-free format for PyTorch model[​](#pickle-free-format-for-pytorch-model "Direct link to Pickle-free format for PyTorch model")
 
@@ -102,7 +102,7 @@ with mlflow.start_run():
     )
 ```
 
-See [`mlflow.pytorch.log_model()`](/docs/3.11.1/api_reference/python_api/mlflow.pytorch.html#mlflow.pytorch.log_model) and [`mlflow.pytorch.save_model()`](/docs/3.11.1/api_reference/python_api/mlflow.pytorch.html#mlflow.pytorch.save_model) for details.
+See [`mlflow.pytorch.log_model()`](/docs/latest/api_reference/python_api/mlflow.pytorch.html#mlflow.pytorch.log_model) and [`mlflow.pytorch.save_model()`](/docs/latest/api_reference/python_api/mlflow.pytorch.html#mlflow.pytorch.save_model) for details.
 
 ## Pickle-free format for LightGBM model[​](#pickle-free-format-for-lightgbm-model "Direct link to Pickle-free format for LightGBM model")
 
@@ -131,15 +131,15 @@ with mlflow.start_run():
     )
 ```
 
-See [`mlflow.lightgbm.log_model()`](/docs/3.11.1/api_reference/python_api/mlflow.lightgbm.html#mlflow.lightgbm.log_model) and [`mlflow.lightgbm.save_model()`](/docs/3.11.1/api_reference/python_api/mlflow.lightgbm.html#mlflow.lightgbm.save_model) for details.
+See [`mlflow.lightgbm.log_model()`](/docs/latest/api_reference/python_api/mlflow.lightgbm.html#mlflow.lightgbm.log_model) and [`mlflow.lightgbm.save_model()`](/docs/latest/api_reference/python_api/mlflow.lightgbm.html#mlflow.lightgbm.save_model) for details.
 
 ## Pickle-free format for LangChain model[​](#pickle-free-format-for-langchain-model "Direct link to Pickle-free format for LangChain model")
 
-LangChain model supports saving as **Models From Code** artifacts, which avoids pickle entirely. For details and examples, see [Models From Code](/docs/3.11.1/ml/model/models-from-code.md).
+LangChain model supports saving as **Models From Code** artifacts, which avoids pickle entirely. For details and examples, see [Models From Code](/docs/latest/ml/model/models-from-code.md).
 
 ## Pickle-free format for custom Python model[​](#pickle-free-format-for-custom-python-model "Direct link to Pickle-free format for custom Python model")
 
-Custom Python model supports saving as **Models From Code** artifacts, which avoids pickle entirely. For details and examples, see [Models From Code](/docs/3.11.1/ml/model/models-from-code.md).
+Custom Python model supports saving as **Models From Code** artifacts, which avoids pickle entirely. For details and examples, see [Models From Code](/docs/latest/ml/model/models-from-code.md).
 
 ## Global configuration to force MLflow pickle-free model loading[​](#global-configuration-to-force-mlflow-pickle-free-model-loading "Direct link to Global configuration to force MLflow pickle-free model loading")
 

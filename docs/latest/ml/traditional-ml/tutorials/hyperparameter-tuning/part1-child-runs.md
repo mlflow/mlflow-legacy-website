@@ -8,7 +8,7 @@ Machine learning projects often involve intricate relationships. These connectio
 
 In our foundational MLflow tutorial, we highlighted a fundamental relationship: the association between **tags**, **experiments**, and **runs**. This association is crucial when dealing with complex ML projects, such as forecasting models for individual products in a supermarket, as presented in our example. The diagram below offers a visual representation:
 
-![Tags, experiments, and runs relationships](/docs/3.11.1/assets/images/tag-exp-run-relationship-fc898eccc4bb05fe59f41372ab5f6b50.svg)
+![Tags, experiments, and runs relationships](/docs/latest/assets/images/tag-exp-run-relationship-fc898eccc4bb05fe59f41372ab5f6b50.svg)
 
 A model grouping hierarchy
 
@@ -36,7 +36,7 @@ Model tuning is paramount. Methods range from grid search (though typically not 
 
 But here lies the challenge: How do we systematically store the extensive data produced during hyperparameter tuning?
 
-![Challenges with hyperparameter data storage](/docs/3.11.1/assets/images/what-to-do-with-hyperparam-runs-f300784edeacd21609ad71852b184bd5.svg)
+![Challenges with hyperparameter data storage](/docs/latest/assets/images/what-to-do-with-hyperparam-runs-f300784edeacd21609ad71852b184bd5.svg)
 
 The quandary of storing hyperparameter data
 
@@ -120,7 +120,7 @@ consume(starmap(execute_tuning, ((x,) for x in range(5))))
 
 After executing this, we can navigate to the MLflow UI to see the results of the iterations and compare each run's error metrics to the parameters that were selected.
 
-[](/docs/3.11.1/images/guides/introductory/hyperparameter-tuning-with-child-runs/no-child-first.mp4)
+[](/docs/latest/images/guides/introductory/hyperparameter-tuning-with-child-runs/no-child-first.mp4)
 
 Initial Hyperparameter tuning execution
 
@@ -149,7 +149,7 @@ This may become a serious problem for analysis if we:
 
 Let's take a look at the UI and see if it is clear which iteration a particular run is a member of.
 
-[](/docs/3.11.1/images/guides/introductory/hyperparameter-tuning-with-child-runs/no-child-more.mp4)
+[](/docs/latest/images/guides/introductory/hyperparameter-tuning-with-child-runs/no-child-more.mp4)
 
 Challenges with iterative tuning without child run encapsulation
 
@@ -258,7 +258,7 @@ consume(starmap(execute_tuning, ((x, param_1_values, param_2_values, ident) for 
 
 Once we execute these three tuning run tests, we can view the results in the UI:
 
-[](/docs/3.11.1/images/guides/introductory/hyperparameter-tuning-with-child-runs/child-runs.mp4)
+[](/docs/latest/images/guides/introductory/hyperparameter-tuning-with-child-runs/child-runs.mp4)
 
 Encapsulating tests with child runs
 
@@ -280,7 +280,7 @@ The notebook contains an example implementation of this, but it is recommended t
 
 The results in the UI for this challenge are shown below.
 
-[](/docs/3.11.1/images/guides/introductory/hyperparameter-tuning-with-child-runs/parent-child-challenge.mp4)
+[](/docs/latest/images/guides/introductory/hyperparameter-tuning-with-child-runs/parent-child-challenge.mp4)
 
 Adding best child run data to parent run
 

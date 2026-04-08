@@ -219,26 +219,26 @@ client.transition_model_version_stage(
 
 ## Learn More[​](#learn-more "Direct link to Learn More")
 
-### [Model Registry](/docs/3.11.1/ml/model-registry.md)
+### [Model Registry](/docs/latest/ml/model-registry.md)
 
-[Manage model versions, aliases, and lifecycle stages for production deployment workflows.](/docs/3.11.1/ml/model-registry.md)
+[Manage model versions, aliases, and lifecycle stages for production deployment workflows.](/docs/latest/ml/model-registry.md)
 
-[View registry docs →](/docs/3.11.1/ml/model-registry.md)
+[View registry docs →](/docs/latest/ml/model-registry.md)
 
-### [Model Signatures](/docs/3.11.1/ml/model/signatures.md)
+### [Model Signatures](/docs/latest/ml/model/signatures.md)
 
-[Define input and output schemas for model validation and type checking.](/docs/3.11.1/ml/model/signatures.md)
+[Define input and output schemas for model validation and type checking.](/docs/latest/ml/model/signatures.md)
 
-[Learn about signatures →](/docs/3.11.1/ml/model/signatures.md)
+[Learn about signatures →](/docs/latest/ml/model/signatures.md)
 
-### [Model Deployment](/docs/3.11.1/ml/deployment.md)
+### [Model Deployment](/docs/latest/ml/deployment.md)
 
-[Deploy Spark models with MLflow serving, batch inference, and cloud platforms.](/docs/3.11.1/ml/deployment.md)
+[Deploy Spark models with MLflow serving, batch inference, and cloud platforms.](/docs/latest/ml/deployment.md)
 
-[Deploy models →](/docs/3.11.1/ml/deployment.md)
+[Deploy models →](/docs/latest/ml/deployment.md)
 
-### [MLflow Tracking](/docs/3.11.1/ml/tracking.md)
+### [MLflow Tracking](/docs/latest/ml/tracking.md)
 
-[Track experiments, parameters, metrics, and artifacts across ML workflows.](/docs/3.11.1/ml/tracking.md)
+[Track experiments, parameters, metrics, and artifacts across ML workflows.](/docs/latest/ml/tracking.md)
 
-[View tracking docs →](/docs/3.11.1/ml/tracking.md)
+[View tracking docs →](/docs/latest/ml/tracking.md)

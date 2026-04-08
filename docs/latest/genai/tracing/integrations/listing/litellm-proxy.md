@@ -2,11 +2,11 @@
 
 [LiteLLM Proxy](https://docs.litellm.ai/docs/proxy/quick_start) is a self-hosted LLM gateway that provides a unified OpenAI-compatible API to access 100+ LLM providers. It offers features like load balancing, spend tracking, and rate limiting across multiple providers.
 
-![LiteLLM Proxy Tracing](/docs/3.11.1/images/llms/litellm-proxy/litellm-proxy-tracing.png)
+![LiteLLM Proxy Tracing](/docs/latest/images/llms/litellm-proxy/litellm-proxy-tracing.png)
 
 Looking for LiteLLM SDK?
 
-This guide covers the **LiteLLM Proxy Server**. If you're using the LiteLLM Python SDK directly in your application, see the [LiteLLM SDK Integration](/docs/3.11.1/genai/tracing/integrations/listing/litellm.md) guide instead.
+This guide covers the **LiteLLM Proxy Server**. If you're using the LiteLLM Python SDK directly in your application, see the [LiteLLM SDK Integration](/docs/latest/genai/tracing/integrations/listing/litellm.md) guide instead.
 
 ## Integration Options[​](#integration-options "Direct link to Integration Options")
 
@@ -365,20 +365,20 @@ console.log(answer);
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [Track User Feedback](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+### [Track User Feedback](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-[Record user feedback on traces for tracking user satisfaction.](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+[Record user feedback on traces for tracking user satisfaction.](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-[Learn about feedback →](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+[Learn about feedback →](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-### [Manage Prompts](/docs/3.11.1/genai/prompt-registry.md)
+### [Manage Prompts](/docs/latest/genai/prompt-registry.md)
 
-[Learn how to manage prompts with MLflow's prompt registry.](/docs/3.11.1/genai/prompt-registry.md)
+[Learn how to manage prompts with MLflow's prompt registry.](/docs/latest/genai/prompt-registry.md)
 
-[Manage prompts →](/docs/3.11.1/genai/prompt-registry.md)
+[Manage prompts →](/docs/latest/genai/prompt-registry.md)
 
-### [Evaluate Traces](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+### [Evaluate Traces](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Evaluate traces with LLM judges to understand and improve your AI application's behavior.](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Evaluate traces with LLM judges to understand and improve your AI application's behavior.](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Evaluate traces →](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Evaluate traces →](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)

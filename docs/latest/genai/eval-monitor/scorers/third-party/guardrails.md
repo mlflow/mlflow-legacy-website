@@ -64,16 +64,16 @@ Detect harmful content, PII, and other safety issues in LLM outputs:
 
 | Scorer                                                                                                                     | What does it evaluate?                                          | Guardrails Hub                                                             |
 | -------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| [ToxicLanguage](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.guardrails.ToxicLanguage)     | Does the output contain toxic or offensive language?            | [Link](https://guardrailsai.com/hub/validator/guardrails/toxic_language)   |
-| [NSFWText](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.guardrails.NSFWText)               | Does the output contain NSFW or explicit content?               | [Link](https://guardrailsai.com/hub/validator/guardrails/nsfw_text)        |
-| [DetectJailbreak](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.guardrails.DetectJailbreak) | Does the input contain a jailbreak or prompt injection attempt? | [Link](https://guardrailsai.com/hub/validator/guardrails/detect_jailbreak) |
-| [DetectPII](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.guardrails.DetectPII)             | Does the output contain personally identifiable information?    | [Link](https://guardrailsai.com/hub/validator/guardrails/detect_pii)       |
-| [SecretsPresent](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.guardrails.SecretsPresent)   | Does the output contain API keys, tokens, or other secrets?     | [Link](https://guardrailsai.com/hub/validator/guardrails/secrets_present)  |
-| [GibberishText](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.guardrails.GibberishText)     | Does the output contain nonsensical or incoherent text?         | [Link](https://guardrailsai.com/hub/validator/guardrails/gibberish_text)   |
+| [ToxicLanguage](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.guardrails.ToxicLanguage)     | Does the output contain toxic or offensive language?            | [Link](https://guardrailsai.com/hub/validator/guardrails/toxic_language)   |
+| [NSFWText](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.guardrails.NSFWText)               | Does the output contain NSFW or explicit content?               | [Link](https://guardrailsai.com/hub/validator/guardrails/nsfw_text)        |
+| [DetectJailbreak](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.guardrails.DetectJailbreak) | Does the input contain a jailbreak or prompt injection attempt? | [Link](https://guardrailsai.com/hub/validator/guardrails/detect_jailbreak) |
+| [DetectPII](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.guardrails.DetectPII)             | Does the output contain personally identifiable information?    | [Link](https://guardrailsai.com/hub/validator/guardrails/detect_pii)       |
+| [SecretsPresent](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.guardrails.SecretsPresent)   | Does the output contain API keys, tokens, or other secrets?     | [Link](https://guardrailsai.com/hub/validator/guardrails/secrets_present)  |
+| [GibberishText](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.guardrails.GibberishText)     | Does the output contain nonsensical or incoherent text?         | [Link](https://guardrailsai.com/hub/validator/guardrails/gibberish_text)   |
 
 ## Creating Scorers by Name[​](#creating-scorers-by-name "Direct link to Creating Scorers by Name")
 
-You can also create Guardrails AI scorers dynamically using [get\_scorer](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.guardrails.get_scorer):
+You can also create Guardrails AI scorers dynamically using [get\_scorer](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.guardrails.get_scorer):
 
 python
 
@@ -121,20 +121,20 @@ Refer to the [Guardrails AI documentation](https://guardrailsai.com/) and the [G
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [Evaluate Agents](/docs/3.11.1/genai/eval-monitor/running-evaluation/agents.md)
+### [Evaluate Agents](/docs/latest/genai/eval-monitor/running-evaluation/agents.md)
 
-[Learn specialized techniques for evaluating AI agents with tool usage](/docs/3.11.1/genai/eval-monitor/running-evaluation/agents.md)
+[Learn specialized techniques for evaluating AI agents with tool usage](/docs/latest/genai/eval-monitor/running-evaluation/agents.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/running-evaluation/agents.md)
+[Learn more →](/docs/latest/genai/eval-monitor/running-evaluation/agents.md)
 
-### [Evaluate Traces](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+### [Evaluate Traces](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Evaluate production traces to understand application behavior](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Evaluate production traces to understand application behavior](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Learn more →](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-### [Built-in Judges](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/predefined.md)
+### [Built-in Judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md)
 
-[Explore MLflow's built-in evaluation judges](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/predefined.md)
+[Explore MLflow's built-in evaluation judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/predefined.md)
+[Learn more →](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md)

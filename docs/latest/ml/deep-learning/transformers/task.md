@@ -20,11 +20,11 @@ This page provides an overview of how to use the `task` parameter in the MLflow 
 
 In the MLflow Transformers flavor, `task` plays a crucial role in determining the input and output format of the model. The `task` is a fundamental concept in the Transformers library, which describe the structure of each model's API (inputs and outputs) and are used to determine which Inference API and widget we want to display for any given model.
 
-MLflow utilizes this concept to determine the input and output format of the model, persists the correct [Model Signature](/docs/3.11.1/ml/model.md#model-signatures-and-input-examples), and provides a consistent [Pyfunc Inference API](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#inference-api) for serving different types of models. Additionally, on top of the native Transformers task types, MLflow defines a few additional task types to support more complex use cases, such as chat-style applications.
+MLflow utilizes this concept to determine the input and output format of the model, persists the correct [Model Signature](/docs/latest/ml/model.md#model-signatures-and-input-examples), and provides a consistent [Pyfunc Inference API](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#inference-api) for serving different types of models. Additionally, on top of the native Transformers task types, MLflow defines a few additional task types to support more complex use cases, such as chat-style applications.
 
 ## Native Transformers Task Types[​](#native-transformers-task-types "Direct link to Native Transformers Task Types")
 
-For native Transformers tasks, MLflow will automatically infer the task type from the pipeline when you save a pipeline with [`mlflow.transformers.log_model()`](/docs/3.11.1/api_reference/python_api/mlflow.transformers.html#mlflow.transformers.log_model). You can also specify the task type explicitly by passing the `task` parameter. The full list of supported task types is available in the [Transformers documentation](https://huggingface.co/tasks), but note that **not all task types are supported in MLflow**.
+For native Transformers tasks, MLflow will automatically infer the task type from the pipeline when you save a pipeline with [`mlflow.transformers.log_model()`](/docs/latest/api_reference/python_api/mlflow.transformers.html#mlflow.transformers.log_model). You can also specify the task type explicitly by passing the `task` parameter. The full list of supported task types is available in the [Transformers documentation](https://huggingface.co/tasks), but note that **not all task types are supported in MLflow**.
 
 python
 
@@ -82,9 +82,9 @@ This feature is only available in MLflow 2.11.0 and above. Also, the `llm/v1/cha
 
 | Task                 | Supported pipeline   | Input                                                 | Output                                                                                                                                                                                                                         |
 | -------------------- | -------------------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `llm/v1/chat`        | `text-generation`    | [Chat API spec](/docs/3.11.1/genai/serving.md)        | Returns a [Chat Completion](https://platform.openai.com/docs/api-reference/chat/object) object in the json format.                                                                                                             |
-| `llm/v1/completions` | `text-generation`    | [Completions API spec](/docs/3.11.1/genai/serving.md) | Returns a [Completion](https://platform.openai.com/docs/guides/text-generation/completions-api) object in the json format.                                                                                                     |
-| `llm/v1/embeddings`  | `feature-extraction` | [Embeddings API spec](/docs/3.11.1/genai/serving.md)  | Returns a list of [Embedding](https://platform.openai.com/docs/api-reference/embeddings/object) object. Additionally, the model returns `usage` field, which contains the number of tokens used for the embeddings generation. |
+| `llm/v1/chat`        | `text-generation`    | [Chat API spec](/docs/latest/genai/serving.md)        | Returns a [Chat Completion](https://platform.openai.com/docs/api-reference/chat/object) object in the json format.                                                                                                             |
+| `llm/v1/completions` | `text-generation`    | [Completions API spec](/docs/latest/genai/serving.md) | Returns a [Completion](https://platform.openai.com/docs/guides/text-generation/completions-api) object in the json format.                                                                                                     |
+| `llm/v1/embeddings`  | `feature-extraction` | [Embeddings API spec](/docs/latest/genai/serving.md)  | Returns a list of [Embedding](https://platform.openai.com/docs/api-reference/embeddings/object) object. Additionally, the model returns `usage` field, which contains the number of tokens used for the embeddings generation. |
 
 note
 
@@ -92,7 +92,7 @@ The Completion API is considered as legacy, but it is still supported in MLflow 
 
 ### Code Example of Using `llm/v1` Tasks[​](#code-example-of-using-llmv1-tasks "Direct link to code-example-of-using-llmv1-tasks")
 
-The following code snippet demonstrates how to log a Transformers pipeline with the `llm/v1/chat` task type, and use the model for chat-style inference. Check out the [notebook tutorial](/docs/3.11.1/ml/deep-learning/transformers/tutorials/conversational/pyfunc-chat-model.md) to see more examples in action!
+The following code snippet demonstrates how to log a Transformers pipeline with the `llm/v1/chat` task type, and use the model for chat-style inference. Check out the [notebook tutorial](/docs/latest/ml/deep-learning/transformers/tutorials/conversational/pyfunc-chat-model.md) to see more examples in action!
 
 python
 
@@ -154,7 +154,7 @@ print(prediction)
 # >>   'usage': {'completion_tokens': 7, 'prompt_tokens': 13, 'total_tokens': 20}}]
 ```
 
-Note that the input and output modifications only apply when the model is loaded with [`mlflow.pyfunc.load_model()`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.load_model) (e.g. when serving the model with the `mlflow models serve` CLI tool). If you want to load just the raw pipeline, you can use [`mlflow.transformers.load_model()`](/docs/3.11.1/api_reference/python_api/mlflow.transformers.html#mlflow.transformers.load_model).
+Note that the input and output modifications only apply when the model is loaded with [`mlflow.pyfunc.load_model()`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.load_model) (e.g. when serving the model with the `mlflow models serve` CLI tool). If you want to load just the raw pipeline, you can use [`mlflow.transformers.load_model()`](/docs/latest/api_reference/python_api/mlflow.transformers.html#mlflow.transformers.load_model).
 
 ## Provisioned Throughput on Databricks Model Serving[​](#provisioned-throughput-on-databricks-model-serving "Direct link to Provisioned Throughput on Databricks Model Serving")
 
@@ -162,7 +162,7 @@ Note that the input and output modifications only apply when the model is loaded
 
 tip
 
-When logging large models, you can use `save_pretrained=False` to avoid creating a local copy of the model weights for saving time and disk space. Please refer to the [documentation](/docs/3.11.1/ml/deep-learning/transformers/large-models.md#transformers-save-pretrained-guide) for more details.
+When logging large models, you can use `save_pretrained=False` to avoid creating a local copy of the model weights for saving time and disk space. Please refer to the [documentation](/docs/latest/ml/deep-learning/transformers/large-models.md#transformers-save-pretrained-guide) for more details.
 
 ## FAQ[​](#faq "Direct link to FAQ")
 

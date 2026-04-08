@@ -1,10 +1,10 @@
 # Tracing txtai
 
-![txtai Tracing via autolog](/docs/3.11.1/assets/images/txtai-rag-tracing-507199b924f1c7ed180e0d940758e2dc.png)
+![txtai Tracing via autolog](/docs/latest/assets/images/txtai-rag-tracing-507199b924f1c7ed180e0d940758e2dc.png)
 
 [txtai](https://github.com/neuml/txtai?tab=readme-ov-file) is an all-in-one embeddings database for semantic search, LLM orchestration and language model workflows.
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing.md) provides automatic tracing capability for txtai. Auto tracing for txtai can be enabled by calling the `mlflow.txtai.autolog` function, MLflow will capture traces for LLM invocation, embeddings, vector search, and log them to the active MLflow Experiment.
+[MLflow Tracing](/docs/latest/genai/tracing.md) provides automatic tracing capability for txtai. Auto tracing for txtai can be enabled by calling the `mlflow.txtai.autolog` function, MLflow will capture traces for LLM invocation, embeddings, vector search, and log them to the active MLflow Experiment.
 
 To get started, install the [MLflow txtai extension](https://github.com/neuml/mlflow-txtai/tree/master):
 
@@ -50,7 +50,7 @@ textractor = Textractor()
 textractor("https://github.com/neuml/txtai")
 ```
 
-![txtai Textractor Tracing via autolog](/docs/3.11.1/assets/images/txtai-textractor-tracing-15f2e1b268fc3fc4921c06e5e9a87cd8.png)
+![txtai Textractor Tracing via autolog](/docs/latest/assets/images/txtai-textractor-tracing-15f2e1b268fc3fc4921c06e5e9a87cd8.png)
 
 You can easily trace a [RAG pipeline](https://neuml.github.io/txtai/pipeline/text/rag/).
 
@@ -86,7 +86,7 @@ rag = RAG(
 rag("Tell me about the Roman Empire", maxlength=2048)
 ```
 
-![txtai Rag Tracing via autolog](/docs/3.11.1/assets/images/txtai-rag-tracing-507199b924f1c7ed180e0d940758e2dc.png)
+![txtai Rag Tracing via autolog](/docs/latest/assets/images/txtai-rag-tracing-507199b924f1c7ed180e0d940758e2dc.png)
 
 You can effortlessly trace the internals of a [txtai agent](https://neuml.github.io/txtai/agent/) designed to research questions on astronomy.
 
@@ -149,7 +149,7 @@ Write a detailed list with explanations of 10 candidate stars that could potenti
 )
 ```
 
-![txtai Agent Tracing via autolog](/docs/3.11.1/assets/images/txtai-agent-tracing-f69f47a9de38c40814ea985887782850.png)
+![txtai Agent Tracing via autolog](/docs/latest/assets/images/txtai-agent-tracing-f69f47a9de38c40814ea985887782850.png)
 
 ### More Information[​](#more-information "Direct link to More Information")
 

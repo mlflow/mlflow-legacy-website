@@ -68,7 +68,7 @@ uvx mlflow server
 
 info
 
-See [Secure Installs](/docs/3.11.1/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
+See [Secure Installs](/docs/latest/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
 
 **Python Environment**: Python 3.10+
 
@@ -83,7 +83,7 @@ mlflow server
 
 info
 
-See [Secure Installs](/docs/3.11.1/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
+See [Secure Installs](/docs/latest/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
 
 MLflow provides a Docker Compose file to start a local MLflow server with a PostgreSQL database and a MinIO server.
 
@@ -263,7 +263,7 @@ Guidelines can cover several categories:
 
 tip
 
-Simulation guidelines are particularly valuable when using [`generate_test_cases`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.simulators.generate_test_cases) to extract test cases from production sessions. The function automatically infers guidelines that help reproduce the original conversation trajectory.
+Simulation guidelines are particularly valuable when using [`generate_test_cases`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.simulators.generate_test_cases) to extract test cases from production sessions. The function automatically infers guidelines that help reproduce the original conversation trajectory.
 
 ### Context[​](#context "Direct link to Context")
 
@@ -324,7 +324,7 @@ Experimental Feature
 
 The `generate_test_cases` API is experimental in MLflow 3.10.0. The API and behavior may change in future releases.
 
-Generate test cases from existing conversation sessions using [`generate_test_cases`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.simulators.generate_test_cases). This is useful for creating test cases that reflect real user behavior from production conversations:
+Generate test cases from existing conversation sessions using [`generate_test_cases`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.simulators.generate_test_cases). This is useful for creating test cases that reflect real user behavior from production conversations:
 
 python
 
@@ -353,7 +353,7 @@ simulator = ConversationSimulator(test_cases=test_cases)
 
 ## Track Test Cases as MLflow Dataset[​](#track-test-cases-as-mlflow-dataset "Direct link to Track Test Cases as MLflow Dataset")
 
-For reproducible testing, persist your test cases as an [MLflow Evaluation Dataset](/docs/3.11.1/genai/datasets.md):
+For reproducible testing, persist your test cases as an [MLflow Evaluation Dataset](/docs/latest/genai/datasets.md):
 
 python
 
@@ -372,7 +372,7 @@ dataset = get_dataset(name="conversation_test_cases")
 simulator = ConversationSimulator(test_cases=dataset)
 ```
 
-See [Conversation Simulation Datasets](/docs/3.11.1/genai/datasets/conversation-simulation.md) for more details on managing test case datasets.
+See [Conversation Simulation Datasets](/docs/latest/genai/datasets/conversation-simulation.md) for more details on managing test case datasets.
 
 ## Agent Function Interface[​](#agent-function-interface "Direct link to Agent Function Interface")
 
@@ -501,7 +501,7 @@ simulator = ConversationSimulator(
 )
 ```
 
-Supported model formats follow the pattern `"<provider>:/<model>"`. See [Supported Models](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges/supported-models.md) for the full list of supported providers.
+Supported model formats follow the pattern `"<provider>:/<model>"`. See [Supported Models](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges/supported-models.md) for the full list of supported providers.
 
 ### Conversation Stopping[​](#conversation-stopping "Direct link to Conversation Stopping")
 
@@ -521,20 +521,20 @@ Navigate to the **Sessions** tab in your experiment to view conversations groupe
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [Evaluate Conversations](/docs/3.11.1/genai/eval-monitor/running-evaluation/multi-turn.md)
+### [Evaluate Conversations](/docs/latest/genai/eval-monitor/running-evaluation/multi-turn.md)
 
-[Learn about static conversation evaluation and multi-turn scorers.](/docs/3.11.1/genai/eval-monitor/running-evaluation/multi-turn.md)
+[Learn about static conversation evaluation and multi-turn scorers.](/docs/latest/genai/eval-monitor/running-evaluation/multi-turn.md)
 
-[View conversation evaluation →](/docs/3.11.1/genai/eval-monitor/running-evaluation/multi-turn.md)
+[View conversation evaluation →](/docs/latest/genai/eval-monitor/running-evaluation/multi-turn.md)
 
-### [Multi-Turn Scorers](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/predefined.md#multi-turn)
+### [Multi-Turn Scorers](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md#multi-turn)
 
-[Explore predefined scorers for conversation completeness, user frustration, and more.](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/predefined.md#multi-turn)
+[Explore predefined scorers for conversation completeness, user frustration, and more.](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md#multi-turn)
 
-[View scorers →](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/predefined.md#multi-turn)
+[View scorers →](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md#multi-turn)
 
-### [Evaluation Datasets](/docs/3.11.1/genai/datasets.md)
+### [Evaluation Datasets](/docs/latest/genai/datasets.md)
 
-[Persist your test cases in evaluation datasets for reproducible testing.](/docs/3.11.1/genai/datasets.md)
+[Persist your test cases in evaluation datasets for reproducible testing.](/docs/latest/genai/datasets.md)
 
-[Learn about datasets →](/docs/3.11.1/genai/datasets.md)
+[Learn about datasets →](/docs/latest/genai/datasets.md)

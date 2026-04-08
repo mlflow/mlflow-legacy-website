@@ -2,7 +2,7 @@
 
 ## Using MLServer as the Inference Server[​](#using-mlserver-as-the-inference-server "Direct link to Using MLServer as the Inference Server")
 
-By default, MLflow deployment uses [FastAPI](https://fastapi.tiangolo.com/), a widely used ASGI web application framework for Python, to serve the inference endpoint. However, FastAPI does not support horizontal scaling natively and might not be suitable for production use cases at scale. To address this gap, MLflow integrates with [MLServer](https://mlserver.readthedocs.io/en/latest) as an alternative deployment option, which is used as a core Python inference server in Kubernetes-native frameworks like [Seldon Core](https://docs.seldon.ai/seldon-core-2) and [KServe](https://kserve.github.io/website) (formerly known as KFServing). Using MLServer, you can take advantage of the scalability and reliability of Kubernetes to serve your model at scale. See [Serving Framework](/docs/3.11.1/ml/deployment/deploy-model-locally.md#serving-frameworks) for the detailed comparison between FastAPI and MLServer, and why MLServer is a better choice for ML production use cases.
+By default, MLflow deployment uses [FastAPI](https://fastapi.tiangolo.com/), a widely used ASGI web application framework for Python, to serve the inference endpoint. However, FastAPI does not support horizontal scaling natively and might not be suitable for production use cases at scale. To address this gap, MLflow integrates with [MLServer](https://mlserver.readthedocs.io/en/latest) as an alternative deployment option, which is used as a core Python inference server in Kubernetes-native frameworks like [Seldon Core](https://docs.seldon.ai/seldon-core-2) and [KServe](https://kserve.github.io/website) (formerly known as KFServing). Using MLServer, you can take advantage of the scalability and reliability of Kubernetes to serve your model at scale. See [Serving Framework](/docs/latest/ml/deployment/deploy-model-locally.md#serving-frameworks) for the detailed comparison between FastAPI and MLServer, and why MLServer is a better choice for ML production use cases.
 
 ## Building a Docker Image for MLflow Model[​](#build-docker-for-deployment "Direct link to Building a Docker Image for MLflow Model")
 
@@ -17,7 +17,7 @@ bash
 mlflow models build-docker -m runs:/<run_id>/model -n <image_name> --enable-mlserver
 ```
 
-If you want to use the bare-bones FastAPI server instead of MLServer, remove the `--enable-mlserver` flag. For other options, see the [build-docker](/docs/3.11.1/api_reference/cli.html#mlflow-models-build-docker) command documentation.
+If you want to use the bare-bones FastAPI server instead of MLServer, remove the `--enable-mlserver` flag. For other options, see the [build-docker](/docs/latest/api_reference/cli.html#mlflow-models-build-docker) command documentation.
 
 python
 
@@ -31,7 +31,7 @@ mlflow.models.build_docker(
 )
 ```
 
-If you want to use the bare-bones FastAPI server instead of MLServer, remove `enable_mlserver=True`. For other options, see the [mlflow.models.build\_docker](/docs/3.11.1/api_reference/python_api/mlflow.models.html#mlflow.models.build_docker) function documentation.
+If you want to use the bare-bones FastAPI server instead of MLServer, remove `enable_mlserver=True`. For other options, see the [mlflow.models.build\_docker](/docs/latest/api_reference/python_api/mlflow.models.html#mlflow.models.build_docker) function documentation.
 
 important
 
@@ -48,6 +48,6 @@ Please refer to the following partner documentations for deploying MLflow Models
 
 You can also learn how to train a model in MLflow and deploy to Kubernetes in the following tutorial:
 
-[Develop ML model with MLflow and deploy to Kubernetes](/docs/3.11.1/ml/deployment/deploy-model-to-kubernetes/tutorial.md)
+[Develop ML model with MLflow and deploy to Kubernetes](/docs/latest/ml/deployment/deploy-model-to-kubernetes/tutorial.md)
 
-[This tutorial walks you through the end-to-end ML development process from training a machine learning model, compare the performance, and deploy the model to Kubernetes using KServe.](/docs/3.11.1/ml/deployment/deploy-model-to-kubernetes/tutorial.md)
+[This tutorial walks you through the end-to-end ML development process from training a machine learning model, compare the performance, and deploy the model to Kubernetes using KServe.](/docs/latest/ml/deployment/deploy-model-to-kubernetes/tutorial.md)

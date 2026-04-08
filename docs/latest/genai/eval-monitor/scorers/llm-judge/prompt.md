@@ -2,22 +2,22 @@
 
 Recommendation: Use make\_judge Instead
 
-The `custom_prompt_judge` API is being phased out. We strongly recommend using the [make\_judge](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.judges.make_judge) API instead, which provides:
+The `custom_prompt_judge` API is being phased out. We strongly recommend using the [make\_judge](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.judges.make_judge) API instead, which provides:
 
 * More flexible template-based instructions
 * Better version control and collaboration features
 * Support for both field-based and Agent-as-a-Judge evaluation
 * Alignment capabilities with human feedback
 
-See the [make\_judge documentation](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges.md) for migration guidance.
+See the [make\_judge documentation](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md) for migration guidance.
 
-The [custom\_prompt\_judge](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.judges.custom_prompt_judge) API is designed to help you quickly and easily create LLM scorers when you need full control over the judge's prompt or need to return multiple output values beyond "pass" / "fail", for example, "great", "ok", "bad".
+The [custom\_prompt\_judge](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.judges.custom_prompt_judge) API is designed to help you quickly and easily create LLM scorers when you need full control over the judge's prompt or need to return multiple output values beyond "pass" / "fail", for example, "great", "ok", "bad".
 
 You provide a prompt template that has placeholders for specific fields in your app's trace and define the output choices the judge can select. The LLM judge model uses these inputs to select the best output choice and provides a rationale for its selection.
 
 tip
 
-We recommend starting with [guidelines-based judges](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/guidelines.md) and only using prompt-based judges if you need more control or can't write your evaluation criteria as pass/fail guidelines. Guidelines-based judges have the distinct advantage of being easy to explain to business stakeholders and can often be directly written by domain experts.
+We recommend starting with [guidelines-based judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/guidelines.md) and only using prompt-based judges if you need more control or can't write your evaluation criteria as pass/fail guidelines. Guidelines-based judges have the distinct advantage of being easy to explain to business stakeholders and can often be directly written by domain experts.
 
 ## Example Usage[​](#example-usage "Direct link to Example Usage")
 
@@ -71,11 +71,11 @@ The prompt template for the judge must have:
 
 Handling Parsing Errors
 
-MLflow uses raw prompt-based instructions for handling structured outputs to make the API generic to all LLM providers. This may not be strict enough to enforce structured outputs in all cases. If you see output parsing errors frequently, consider using [code-based custom scorers](/docs/3.11.1/genai/eval-monitor/scorers/custom.md) and invoke the specific structured output API for the LLM provider you are using to get more reliable results.
+MLflow uses raw prompt-based instructions for handling structured outputs to make the API generic to all LLM providers. This may not be strict enough to enforce structured outputs in all cases. If you see output parsing errors frequently, consider using [code-based custom scorers](/docs/latest/genai/eval-monitor/scorers/custom.md) and invoke the specific structured output API for the LLM provider you are using to get more reliable results.
 
 ## Maintaining Your Prompt[​](#maintaining-your-prompt "Direct link to Maintaining Your Prompt")
 
-Writing good prompts for LLM judges requires iterative testing and refinement. [MLflow Prompt Registry](/docs/3.11.1/genai/prompt-registry.md) is a great tool to help you manage and version control your prompts and share them with your team.
+Writing good prompts for LLM judges requires iterative testing and refinement. [MLflow Prompt Registry](/docs/latest/genai/prompt-registry.md) is a great tool to help you manage and version control your prompts and share them with your team.
 
 python
 
@@ -88,11 +88,11 @@ register_prompt(
 )
 ```
 
-![Prompt Registry](/docs/3.11.1/images/mlflow-3/eval-monitor/scorers/prompt-registry.png)
+![Prompt Registry](/docs/latest/images/mlflow-3/eval-monitor/scorers/prompt-registry.png)
 
 ## Selecting Judge Models[​](#selecting-judge-models "Direct link to Selecting Judge Models")
 
-MLflow supports all major LLM providers, such as OpenAI, Anthropic, Google, xAI, and more. See [Supported Models](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges/supported-models.md) for more details.
+MLflow supports all major LLM providers, such as OpenAI, Anthropic, Google, xAI, and more. See [Supported Models](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges/supported-models.md) for more details.
 
 python
 
@@ -108,20 +108,20 @@ custom_prompt_judge(
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [Evaluate Agents](/docs/3.11.1/genai/eval-monitor/running-evaluation/agents.md)
+### [Evaluate Agents](/docs/latest/genai/eval-monitor/running-evaluation/agents.md)
 
-[Learn how to evaluate AI agents with specialized techniques and scorers](/docs/3.11.1/genai/eval-monitor/running-evaluation/agents.md)
+[Learn how to evaluate AI agents with specialized techniques and scorers](/docs/latest/genai/eval-monitor/running-evaluation/agents.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/running-evaluation/agents.md)
+[Learn more →](/docs/latest/genai/eval-monitor/running-evaluation/agents.md)
 
-### [Prompt Registry](/docs/3.11.1/genai/prompt-registry.md)
+### [Prompt Registry](/docs/latest/genai/prompt-registry.md)
 
-[Version control and manage your judge prompts with MLflow Prompt Registry](/docs/3.11.1/genai/prompt-registry.md)
+[Version control and manage your judge prompts with MLflow Prompt Registry](/docs/latest/genai/prompt-registry.md)
 
-[Learn more →](/docs/3.11.1/genai/prompt-registry.md)
+[Learn more →](/docs/latest/genai/prompt-registry.md)
 
-### [Collect User Feedback](/docs/3.11.1/genai/assessments/feedback.md)
+### [Collect User Feedback](/docs/latest/genai/assessments/feedback.md)
 
-[Integrate user feedback to continuously improve your evaluation criteria and model performance](/docs/3.11.1/genai/assessments/feedback.md)
+[Integrate user feedback to continuously improve your evaluation criteria and model performance](/docs/latest/genai/assessments/feedback.md)
 
-[Learn more →](/docs/3.11.1/genai/assessments/feedback.md)
+[Learn more →](/docs/latest/genai/assessments/feedback.md)

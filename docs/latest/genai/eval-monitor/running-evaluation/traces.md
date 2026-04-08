@@ -1,10 +1,10 @@
 # Evaluating (Production) Traces
 
-[Traces](/docs/3.11.1/genai/tracing.md) are the core data of MLflow. They capture the complete execution flow of your LLM applications. Evaluating traces is a powerful way to understand the performance of your LLM applications and get insights for quality improvement.
+[Traces](/docs/latest/genai/tracing.md) are the core data of MLflow. They capture the complete execution flow of your LLM applications. Evaluating traces is a powerful way to understand the performance of your LLM applications and get insights for quality improvement.
 
 Evaluating traces is also a useful trick for offline evaluation. Instead of running prediction on every evaluation run, you can generate traces at once and re-use them for multiple evaluation runs, to reduce the computation and LLM costs.
 
-![Evaluate traces overview](/docs/3.11.1/images/mlflow-3/eval-monitor/trace-evaluation-hero.png)
+![Evaluate traces overview](/docs/latest/images/mlflow-3/eval-monitor/trace-evaluation-hero.png)
 
 ## Workflow[​](#workflow "Direct link to Workflow")
 
@@ -54,7 +54,7 @@ uvx mlflow server
 
 info
 
-See [Secure Installs](/docs/3.11.1/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
+See [Secure Installs](/docs/latest/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
 
 **Python Environment**: Python 3.10+
 
@@ -69,7 +69,7 @@ mlflow server
 
 info
 
-See [Secure Installs](/docs/3.11.1/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
+See [Secure Installs](/docs/latest/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
 
 MLflow provides a Docker Compose file to start a local MLflow server with a PostgreSQL database and a MinIO server.
 
@@ -214,11 +214,11 @@ for req in test_requests:
 
 This generates a list of traces as follows:
 
-![Simulated traces](/docs/3.11.1/images/mlflow-3/eval-monitor/trace-evaluation-list.png)
+![Simulated traces](/docs/latest/images/mlflow-3/eval-monitor/trace-evaluation-list.png)
 
 ### Step 1: Search and retrieve traces[​](#step-1-search-and-retrieve-traces "Direct link to Step 1: Search and retrieve traces")
 
-Traces stored in the MLflow backend can be retrieved using the [`mlflow.search_traces()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.search_traces) API. The following code retrieves all traces from the last 24 hours. See [Searching for traces](/docs/3.11.1/genai/tracing/search-traces.md) for the full supported syntax.
+Traces stored in the MLflow backend can be retrieved using the [`mlflow.search_traces()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.search_traces) API. The following code retrieves all traces from the last 24 hours. See [Searching for traces](/docs/latest/genai/tracing/search-traces.md) for the full supported syntax.
 
 python
 
@@ -231,17 +231,17 @@ yesterday = datetime.now() - timedelta(days=1)
 traces = mlflow.search_traces(filter_string=f"timestamp > {int(yesterday.timestamp() * 1000)}")
 ```
 
-The API returns a set of traces as a pandas DataFrame, where various data in the trace is expanded into columns. The dataframe can be directly passed into the [`mlflow.genai.evaluate()`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.evaluate) function for evaluation.
+The API returns a set of traces as a pandas DataFrame, where various data in the trace is expanded into columns. The dataframe can be directly passed into the [`mlflow.genai.evaluate()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.evaluate) function for evaluation.
 
 ### Step 2: Define application-specific scorers[​](#step-2-define-application-specific-scorers "Direct link to Step 2: Define application-specific scorers")
 
-[Scorer](/docs/3.11.1/genai/eval-monitor/scorers.md) is the core component of evaluation, which defines the criteria for evaluating the quality of the traces. MLflow provides a set of built-in scorers for common evaluation criteria, and you can also define your own custom scorers for application-specific criteria.
+[Scorer](/docs/latest/genai/eval-monitor/scorers.md) is the core component of evaluation, which defines the criteria for evaluating the quality of the traces. MLflow provides a set of built-in scorers for common evaluation criteria, and you can also define your own custom scorers for application-specific criteria.
 
 In this example, we use three different types of scorers:
 
-* [RetrievalGroundedness](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.RetrievalGroundedness): Built-in scorer checks if the output is grounded in the retrieved data.
-* [RelevanceToQuery](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.RelevanceToQuery): Built-in scorer checks if the output is relevant to the user's request.
-* [Guidelines](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Guidelines): Built-in scorer that allows you to judge the output against custom guidelines using LLMs.
+* [RetrievalGroundedness](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.RetrievalGroundedness): Built-in scorer checks if the output is grounded in the retrieved data.
+* [RelevanceToQuery](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.RelevanceToQuery): Built-in scorer checks if the output is relevant to the user's request.
+* [Guidelines](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Guidelines): Built-in scorer that allows you to judge the output against custom guidelines using LLMs.
 
 These scorers uses LLM for judging the criteria. The default model is `openai:/gpt-4.1-mini`. You can also specify a different model by passing the `model` parameter to the scorer constructor.
 
@@ -268,11 +268,11 @@ email_scorers = [
 
 Scoring Intermediate Information in Traces
 
-Scorers have access to the complete MLflow traces, including spans, attributes, and outputs. This allows you to evaluate the agent's behavior precisely, not only the final output, such as the **tool call trajectory**, the **sub-agents routing**, the **retrieved document recall**, etc. See [Parsing Traces for Scoring](/docs/3.11.1/genai/eval-monitor/scorers/custom.md#parsing-traces-for-scoring) for more details.
+Scorers have access to the complete MLflow traces, including spans, attributes, and outputs. This allows you to evaluate the agent's behavior precisely, not only the final output, such as the **tool call trajectory**, the **sub-agents routing**, the **retrieved document recall**, etc. See [Parsing Traces for Scoring](/docs/latest/genai/eval-monitor/scorers/custom.md#parsing-traces-for-scoring) for more details.
 
 ### Step 3: Evaluate trace quality[​](#step-3-evaluate-trace-quality "Direct link to Step 3: Evaluate trace quality")
 
-Now we are ready to run the evaluation. One notable difference from other examples is that we don't need to specify a `predict_fn` function. The [`mlflow.genai.evaluate()`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.evaluate) function will automatically extract the inputs, outputs, and other intermediate information from the trace object and use them for scoring.
+Now we are ready to run the evaluation. One notable difference from other examples is that we don't need to specify a `predict_fn` function. The [`mlflow.genai.evaluate()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.evaluate) function will automatically extract the inputs, outputs, and other intermediate information from the trace object and use them for scoring.
 
 python
 
@@ -285,7 +285,7 @@ results = mlflow.genai.evaluate(
 
 Once the evaluation is done, open the MLflow UI in your browser and navigate to the experiment page. You should see MLflow creates a new Run and logs the evaluation results.
 
-![Evaluate traces result](/docs/3.11.1/images/mlflow-3/eval-monitor/trace-evaluation-result.png)
+![Evaluate traces result](/docs/latest/images/mlflow-3/eval-monitor/trace-evaluation-result.png)
 
 By clicking on the each row in the result, you can open the trace and see the detailed score and rationale.
 
@@ -295,15 +295,15 @@ Some evaluation criteria require ground truths to be defined. MLflow allows you 
 
 To annotate a trace with ground truth or manual feedback, open the trace in the MLflow UI and click the **Assessments** button to add expectations or feedback directly through the web interface.
 
-![Annotate traces with ground truth](/docs/3.11.1/images/mlflow-3/eval-monitor/trace-evaluation-assessments.png)
+![Annotate traces with ground truth](/docs/latest/images/mlflow-3/eval-monitor/trace-evaluation-assessments.png)
 
-Alternatively, you can also annotate traces with ground truth or manual feedbacks using the [`mlflow.log_expectation()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.log_expectation) and the [`mlflow.log_feedback()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.log_feedback) APIs respectively.
+Alternatively, you can also annotate traces with ground truth or manual feedbacks using the [`mlflow.log_expectation()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.log_expectation) and the [`mlflow.log_feedback()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.log_feedback) APIs respectively.
 
 ## Recording End-user Feedbacks from Production[​](#recording-end-user-feedbacks-from-production "Direct link to Recording End-user Feedbacks from Production")
 
-Using the [`mlflow.log_feedback()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.log_feedback) API, you can record end-user feedbacks from your production application directly and monitor them in MLflow.
+Using the [`mlflow.log_feedback()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.log_feedback) API, you can record end-user feedbacks from your production application directly and monitor them in MLflow.
 
-![Annotate traces with feedback](/docs/3.11.1/images/mlflow-3/eval-monitor/trace-evaluation-user-feedback.png)
+![Annotate traces with feedback](/docs/latest/images/mlflow-3/eval-monitor/trace-evaluation-user-feedback.png)
 
 python
 
@@ -359,20 +359,20 @@ async def feedback(request: FeedbackRequest):
 
 ## Next steps[​](#next-steps "Direct link to Next steps")
 
-### [Custom Scorers](/docs/3.11.1/genai/eval-monitor/scorers.md)
+### [Custom Scorers](/docs/latest/genai/eval-monitor/scorers.md)
 
-[Build advanced evaluation criteria and metrics tailored to your specific trace analysis needs.](/docs/3.11.1/genai/eval-monitor/scorers.md)
+[Build advanced evaluation criteria and metrics tailored to your specific trace analysis needs.](/docs/latest/genai/eval-monitor/scorers.md)
 
-[Create custom scorers →](/docs/3.11.1/genai/eval-monitor/scorers.md)
+[Create custom scorers →](/docs/latest/genai/eval-monitor/scorers.md)
 
-### [Production Monitoring](/docs/3.11.1/genai/tracing/prod-tracing.md)
+### [Production Monitoring](/docs/latest/genai/tracing/prod-tracing.md)
 
-[Optimize trace collection in production environments for efficient monitoring and analysis.](/docs/3.11.1/genai/tracing/prod-tracing.md)
+[Optimize trace collection in production environments for efficient monitoring and analysis.](/docs/latest/genai/tracing/prod-tracing.md)
 
-[Set up monitoring →](/docs/3.11.1/genai/tracing/prod-tracing.md)
+[Set up monitoring →](/docs/latest/genai/tracing/prod-tracing.md)
 
-### [Tracing Integrations](/docs/3.11.1/genai/tracing/integrations.md)
+### [Tracing Integrations](/docs/latest/genai/tracing/integrations.md)
 
-[Use MLflow Tracing with other LLM providers and frameworks, such as LangGraph, Pydantic AI.](/docs/3.11.1/genai/tracing/integrations.md)
+[Use MLflow Tracing with other LLM providers and frameworks, such as LangGraph, Pydantic AI.](/docs/latest/genai/tracing/integrations.md)
 
-[Explore integrations →](/docs/3.11.1/genai/tracing/integrations.md)
+[Explore integrations →](/docs/latest/genai/tracing/integrations.md)

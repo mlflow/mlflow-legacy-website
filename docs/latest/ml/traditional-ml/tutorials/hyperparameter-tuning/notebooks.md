@@ -14,7 +14,7 @@ The main notebook of this guide provides a working end-to-end example of perform
 * **Recording trials** to ensure that iterative tuning events can benefit from prior tests, reducing the search space to get better results, faster.
 * **Batch inference** with our best saved model.
 
-[View the Notebook](/docs/3.11.1/ml/traditional-ml/tutorials/hyperparameter-tuning/notebooks/hyperparameter-tuning-with-child-runs.md)
+[View the Notebook](/docs/latest/ml/traditional-ml/tutorials/hyperparameter-tuning/notebooks/hyperparameter-tuning-with-child-runs.md)
 
 ## Supplementary Notebook - Parent Child Run Relationships[​](#supplementary-notebook---parent-child-run-relationships "Direct link to Supplementary Notebook - Parent Child Run Relationships")
 
@@ -26,7 +26,7 @@ There is a challenge at the end of this notebook that encourages you to explore 
 
 **We encourage you to try it out!**
 
-[View the Notebook](/docs/3.11.1/ml/traditional-ml/tutorials/hyperparameter-tuning/notebooks/parent-child-runs.md)
+[View the Notebook](/docs/latest/ml/traditional-ml/tutorials/hyperparameter-tuning/notebooks/parent-child-runs.md)
 
 ## Supplementary Notebook - Logging Plots in MLflow[​](#supplementary-notebook---logging-plots-in-mlflow "Direct link to Supplementary Notebook - Logging Plots in MLflow")
 
@@ -36,7 +36,7 @@ note
 
 There is a challenge at the end of this notebook that encourages you to learn about batch logging of directories of plots. We highly encourage you to try out the challenge and gain a deeper understanding of how co-related plots and figures can be organized within your logged MLflow runs to ensure that auditing and navigation is easier for reviewers.
 
-[View the Notebook](/docs/3.11.1/ml/traditional-ml/tutorials/hyperparameter-tuning/notebooks/logging-plots-in-mlflow.md)
+[View the Notebook](/docs/latest/ml/traditional-ml/tutorials/hyperparameter-tuning/notebooks/logging-plots-in-mlflow.md)
 
 ## Run the Notebooks in your Environment[​](#run-the-notebooks-in-your-environment "Direct link to Run the Notebooks in your Environment")
 

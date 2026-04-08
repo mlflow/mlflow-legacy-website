@@ -2,11 +2,11 @@
 
 MLflow Assistant
 
-Need help setting up evaluation? Try [MLflow Assistant](/docs/3.11.1/genai/getting-started/try-assistant.md) - a powerful AI assistant that can help you set up evaluation for your project.
+Need help setting up evaluation? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that can help you set up evaluation for your project.
 
 This quickstart guide will walk you through evaluating your LLM applications and AI agents with MLflow's comprehensive evaluation framework. In less than 5 minutes, you'll learn how to evaluate LLM outputs, use built-in and custom evaluation criteria, and analyze results in the MLflow UI.
 
-![Simple Evaluation Results](/docs/3.11.1/images/mlflow-3/eval-monitor/quickstart-eval-hero.png)
+![Simple Evaluation Results](/docs/latest/images/mlflow-3/eval-monitor/quickstart-eval-hero.png)
 
 ## Prerequisites[​](#prerequisites "Direct link to Prerequisites")
 
@@ -24,7 +24,7 @@ The code examples in this guide use the OpenAI SDK; however, MLflow's evaluation
 
 ## Step 1: Set up your environment[​](#step-1-set-up-your-environment "Direct link to Step 1: Set up your environment")
 
-MLflow stores evaluation results in a [MLflow Tracking Server](/docs/3.11.1/self-hosting/architecture/tracking-server.md).
+MLflow stores evaluation results in a [MLflow Tracking Server](/docs/latest/self-hosting/architecture/tracking-server.md).
 
 Start a local MLflow Tracking Server by executing one of the following methods.
 
@@ -44,7 +44,7 @@ uvx mlflow server
 
 info
 
-See [Secure Installs](/docs/3.11.1/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
+See [Secure Installs](/docs/latest/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
 
 **Python Environment**: Python 3.10+
 
@@ -59,7 +59,7 @@ mlflow server
 
 info
 
-See [Secure Installs](/docs/3.11.1/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
+See [Secure Installs](/docs/latest/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
 
 MLflow provides a Docker Compose file to start a local MLflow server with a PostgreSQL database and a MinIO server.
 
@@ -78,7 +78,7 @@ Refer to the [instruction](https://github.com/mlflow/mlflow/tree/master/docker-c
 
 ## Step 2: Create an evaluation script[​](#step-2-create-an-evaluation-script "Direct link to Step 2: Create an evaluation script")
 
-Create a file named `quickstart_eval.py`. This script will contain your mock agent, evaluation dataset, scorers, and the evaluation execution. Alternatively, you may run this in a [notebook](/docs/3.11.1/genai/eval-monitor/notebooks/quickstart-eval.md).
+Create a file named `quickstart_eval.py`. This script will contain your mock agent, evaluation dataset, scorers, and the evaluation execution. Alternatively, you may run this in a [notebook](/docs/latest/genai/eval-monitor/notebooks/quickstart-eval.md).
 
 Start with the environment setup:
 
@@ -182,9 +182,9 @@ scorers = [
 
 Here we use three scorers:
 
-* [Correctness](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Correctness): Evaluates if the answer is factually correct, using the "expected\_response" field in the dataset.
-* [Guidelines](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Guidelines): Evaluates if the answer meets the given guidelines.
-* `is_concise`: A custom scorer defined using the [scorer](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.scorer) decorator to judge if the answer is concise (less than 5 words).
+* [Correctness](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Correctness): Evaluates if the answer is factually correct, using the "expected\_response" field in the dataset.
+* [Guidelines](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Guidelines): Evaluates if the answer meets the given guidelines.
+* `is_concise`: A custom scorer defined using the [scorer](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.scorer) decorator to judge if the answer is concise (less than 5 words).
 
 The first two scorers use LLMs to evaluate the response, so-called **[LLM-as-a-Judge](https://mlflow.org/llm-evaluation)**. This is a powerful technique to assess the quality of the response, because it provides a human-like evaluation for complex language tasks while being more scalable and cost-effective than human evaluation.
 
@@ -333,15 +333,15 @@ if __name__ == "__main__":
 
 After running the code above, go to the MLflow UI and navigate to the "Evaluation Quickstart" experiment. You'll see the evaluation results with detailed metrics for each scorer.
 
-![Detailed Evaluation Results](/docs/3.11.1/images/mlflow-3/eval-monitor/quickstart-eval-result.png)
+![Detailed Evaluation Results](/docs/latest/images/mlflow-3/eval-monitor/quickstart-eval-result.png)
 
 By clicking on the each row in the table, you can see the detailed rationale behind the score and the trace of the prediction.
 
-![Detailed Score Rationale](/docs/3.11.1/images/mlflow-3/eval-monitor/quickstart-eval-trace.png)
+![Detailed Score Rationale](/docs/latest/images/mlflow-3/eval-monitor/quickstart-eval-trace.png)
 
 You can compare evaluation runs, too. Click on "Evaluation runs" menu (on the left) and select a run that you want to compare to a baseline run.
 
-![Compare Evaluation Runs](/docs/3.11.1/images/mlflow-3/eval-monitor/quickstart-eval-runs-compare.png)
+![Compare Evaluation Runs](/docs/latest/images/mlflow-3/eval-monitor/quickstart-eval-runs-compare.png)
 
 ## Summary[​](#summary "Direct link to Summary")
 

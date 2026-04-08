@@ -2,11 +2,11 @@
 
 MLflow Feedback provides a comprehensive system for capturing quality evaluations from multiple sources - whether automated AI judges, programmatic rules, or human reviewers. This systematic approach to feedback collection enables you to understand and improve your LLM application or AI agent's performance at scale.
 
-For complete API documentation and implementation details, see the [`mlflow.log_feedback()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.log_feedback) reference.
+For complete API documentation and implementation details, see the [`mlflow.log_feedback()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.log_feedback) reference.
 
 ## What is Feedback?[​](#what-is-feedback "Direct link to What is Feedback?")
 
-[Feedback](/docs/3.11.1/genai/concepts/feedback.md) captures evaluations of how well your AI performed. It measures the actual quality of what your AI produced across various dimensions like accuracy, relevance, safety, and helpfulness. Unlike [expectations](/docs/3.11.1/genai/assessments/expectations.md) that define what should happen, feedback tells you what actually happened and how well it met your quality standards.
+[Feedback](/docs/latest/genai/concepts/feedback.md) captures evaluations of how well your AI performed. It measures the actual quality of what your AI produced across various dimensions like accuracy, relevance, safety, and helpfulness. Unlike [expectations](/docs/latest/genai/assessments/expectations.md) that define what should happen, feedback tells you what actually happened and how well it met your quality standards.
 
 ## Prerequisites[​](#prerequisites "Direct link to Prerequisites")
 
@@ -79,7 +79,7 @@ Generate high-quality training datasets from feedback, especially human correcti
 
 ### Via API[​](#via-api "Direct link to Via API")
 
-Use the programmatic [`mlflow.log_feedback()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.log_feedback) API when you need to automate feedback collection at scale, integrate with existing systems, or build custom evaluation workflows. The API enables you to collect feedback from all three sources programmatically.
+Use the programmatic [`mlflow.log_feedback()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.log_feedback) API when you need to automate feedback collection at scale, integrate with existing systems, or build custom evaluation workflows. The API enables you to collect feedback from all three sources programmatically.
 
 ## Step-by-Step Guides[​](#step-by-step-guides "Direct link to Step-by-Step Guides")
 
@@ -455,20 +455,20 @@ mlflow.log_feedback(
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [Feedback Concepts](/docs/3.11.1/genai/concepts/feedback.md)
+### [Feedback Concepts](/docs/latest/genai/concepts/feedback.md)
 
-[Deep dive into feedback architecture and schema](/docs/3.11.1/genai/concepts/feedback.md)
+[Deep dive into feedback architecture and schema](/docs/latest/genai/concepts/feedback.md)
 
-[Learn concepts →](/docs/3.11.1/genai/concepts/feedback.md)
+[Learn concepts →](/docs/latest/genai/concepts/feedback.md)
 
-### [Ground Truth Expectations](/docs/3.11.1/genai/assessments/expectations.md)
+### [Ground Truth Expectations](/docs/latest/genai/assessments/expectations.md)
 
-[Learn how to define expected outputs for evaluation](/docs/3.11.1/genai/assessments/expectations.md)
+[Learn how to define expected outputs for evaluation](/docs/latest/genai/assessments/expectations.md)
 
-[Start annotating →](/docs/3.11.1/genai/assessments/expectations.md)
+[Start annotating →](/docs/latest/genai/assessments/expectations.md)
 
-### [LLM Evaluation](/docs/3.11.1/genai/eval-monitor.md)
+### [LLM Evaluation](/docs/latest/genai/eval-monitor.md)
 
-[Learn how to systematically evaluate and improve your LLM applications and AI agents](/docs/3.11.1/genai/eval-monitor.md)
+[Learn how to systematically evaluate and improve your LLM applications and AI agents](/docs/latest/genai/eval-monitor.md)
 
-[Start evaluating →](/docs/3.11.1/genai/eval-monitor.md)
+[Start evaluating →](/docs/latest/genai/eval-monitor.md)

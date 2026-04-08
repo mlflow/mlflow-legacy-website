@@ -6,7 +6,7 @@ Endpoints define how requests are routed to AI models. Each endpoint can use a s
 
 Navigate to the AI Gateway section at `http://localhost:5000/#/gateway`. The Endpoints tab shows all your configured endpoints.
 
-![Gateway Overview](/docs/3.11.1/assets/images/gateway-overview-2bbf3cf41c12806962300767a53094c0.png)
+![Gateway Overview](/docs/latest/assets/images/gateway-overview-2bbf3cf41c12806962300767a53094c0.png)
 
 ## Creating an Endpoint[​](#creating-an-endpoint "Direct link to Creating an Endpoint")
 
@@ -44,11 +44,11 @@ Navigate to the AI Gateway section at `http://localhost:5000/#/gateway`. The End
 
 7. Click **Create Endpoint**
 
-![Create Endpoint](/docs/3.11.1/assets/images/create-endpoint-4b5244302954cd8e676b9f929168a048.png)
+![Create Endpoint](/docs/latest/assets/images/create-endpoint-4b5244302954cd8e676b9f929168a048.png)
 
 ### Advanced Routing Options[​](#advanced-routing-options "Direct link to Advanced Routing Options")
 
-For endpoints that need traffic splitting or fallbacks, see [Traffic Routing & Fallbacks](/docs/3.11.1/genai/governance/ai-gateway/traffic-routing-fallbacks.md).
+For endpoints that need traffic splitting or fallbacks, see [Traffic Routing & Fallbacks](/docs/latest/genai/governance/ai-gateway/traffic-routing-fallbacks.md).
 
 ## Managing Existing Endpoints[​](#managing-existing-endpoints "Direct link to Managing Existing Endpoints")
 

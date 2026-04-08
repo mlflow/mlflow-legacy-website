@@ -69,7 +69,7 @@ system_prompt = mlflow.genai.register_prompt(
 
 Navigate to the **Prompts** tab to see your registered prompt:
 
-![The MLflow UI showing a prompt version](/docs/3.11.1/images/mlflow-3/genai/chatbot_prompt.png)
+![The MLflow UI showing a prompt version](/docs/latest/images/mlflow-3/genai/chatbot_prompt.png)
 
 ## Step 2: Build a LangChain Conversational Chain[​](#step-2-build-a-langchain-conversational-chain "Direct link to Step 2: Build a LangChain Conversational Chain")
 
@@ -136,15 +136,15 @@ mlflow.search_traces(model_id=active_model_id)
 
 1. **View the Logged Model**: Check the **Models** tab in your experiment:
 
-![The MLflow UI showing the logged models in an experiment](/docs/3.11.1/images/mlflow-3/genai/logged_models_tab.png)
+![The MLflow UI showing the logged models in an experiment](/docs/latest/images/mlflow-3/genai/logged_models_tab.png)
 
 2. **Access Model Details**: Click on your model to view its unique `model_id`:
 
-![The MLflow UI showing the logged model details page](/docs/3.11.1/images/mlflow-3/genai/logged_model_page.png)
+![The MLflow UI showing the logged model details page](/docs/latest/images/mlflow-3/genai/logged_model_page.png)
 
 3. **Analyze Generated Traces**: Navigate to the **Traces** tab to examine individual interactions:
 
-![The MLflow UI showing the logged model autolog traces lineage](/docs/3.11.1/images/mlflow-3/genai/logged_model_autolog_traces.png)
+![The MLflow UI showing the logged model autolog traces lineage](/docs/latest/images/mlflow-3/genai/logged_model_autolog_traces.png)
 
 ## Step 4: Evaluate Model Performance[​](#step-4-evaluate-model-performance "Direct link to Step 4: Evaluate Model Performance")
 
@@ -262,26 +262,26 @@ What you've accomplished:
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [Track Application Versions](/docs/3.11.1/genai/version-tracking/track-application-versions-with-mlflow.md)
+### [Track Application Versions](/docs/latest/genai/version-tracking/track-application-versions-with-mlflow.md)
 
-[Learn advanced version tracking patterns for production LLM applications and AI agents](/docs/3.11.1/genai/version-tracking/track-application-versions-with-mlflow.md)
+[Learn advanced version tracking patterns for production LLM applications and AI agents](/docs/latest/genai/version-tracking/track-application-versions-with-mlflow.md)
 
-[Learn more →](/docs/3.11.1/genai/version-tracking/track-application-versions-with-mlflow.md)
+[Learn more →](/docs/latest/genai/version-tracking/track-application-versions-with-mlflow.md)
 
-### [Compare App Versions](/docs/3.11.1/genai/version-tracking/compare-app-versions.md)
+### [Compare App Versions](/docs/latest/genai/version-tracking/compare-app-versions.md)
 
-[Analyze performance differences between versions using trace-based comparison](/docs/3.11.1/genai/version-tracking/compare-app-versions.md)
+[Analyze performance differences between versions using trace-based comparison](/docs/latest/genai/version-tracking/compare-app-versions.md)
 
-[Learn more →](/docs/3.11.1/genai/version-tracking/compare-app-versions.md)
+[Learn more →](/docs/latest/genai/version-tracking/compare-app-versions.md)
 
-### [Prompt Registry](/docs/3.11.1/genai/prompt-registry.md)
+### [Prompt Registry](/docs/latest/genai/prompt-registry.md)
 
-[Manage prompts at scale with MLflow's centralized prompt registry](/docs/3.11.1/genai/prompt-registry.md)
+[Manage prompts at scale with MLflow's centralized prompt registry](/docs/latest/genai/prompt-registry.md)
 
-[Learn more →](/docs/3.11.1/genai/prompt-registry.md)
+[Learn more →](/docs/latest/genai/prompt-registry.md)
 
-### [Evaluation & Monitoring](/docs/3.11.1/genai/eval-monitor.md)
+### [Evaluation & Monitoring](/docs/latest/genai/eval-monitor.md)
 
-[Build comprehensive evaluation pipelines for production LLM applications and AI agents](/docs/3.11.1/genai/eval-monitor.md)
+[Build comprehensive evaluation pipelines for production LLM applications and AI agents](/docs/latest/genai/eval-monitor.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor.md)
+[Learn more →](/docs/latest/genai/eval-monitor.md)

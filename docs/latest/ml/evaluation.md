@@ -4,7 +4,7 @@ Classic ML Evaluation System
 
 This documentation covers MLflow's **classic evaluation system** (`mlflow.models.evaluate`) which uses `EvaluationMetric` and `make_metric` for custom metrics.
 
-**For GenAI/LLM evaluation**, please use the system at [GenAI Evaluation](/docs/3.11.1/genai/eval-monitor.md) which uses:
+**For GenAI/LLM evaluation**, please use the system at [GenAI Evaluation](/docs/latest/genai/eval-monitor.md) which uses:
 
 * `mlflow.genai.evaluate()` instead of `mlflow.models.evaluate()`
 * `Scorer` objects instead of `EvaluationMetric`
@@ -192,7 +192,7 @@ eval_table = result.tables["eval_results_table"]
 
 warning
 
-MLflow 2.18.0 moved model validation from [`mlflow.models.evaluate()`](/docs/3.11.1/api_reference/python_api/mlflow.models.html#mlflow.models.evaluate) to [`mlflow.validate_evaluation_results()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.validate_evaluation_results).
+MLflow 2.18.0 moved model validation from [`mlflow.models.evaluate()`](/docs/latest/api_reference/python_api/mlflow.models.html#mlflow.models.evaluate) to [`mlflow.validate_evaluation_results()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.validate_evaluation_results).
 
 Validate evaluation metrics against thresholds:
 
@@ -349,7 +349,7 @@ Classic System Only
 
 The `make_metric` function is part of MLflow's classic evaluation system.
 
-For GenAI/LLM custom metrics, use the [@scorer decorator](/docs/3.11.1/genai/eval-monitor/scorers/custom.md) instead.
+For GenAI/LLM custom metrics, use the [@scorer decorator](/docs/latest/genai/eval-monitor/scorers/custom.md) instead.
 
 Create custom metrics with `make_metric`:
 
@@ -569,7 +569,7 @@ The [Trubrics](https://github.com/trubrics/trubrics-sdk) plugin provides a valid
 
 ## API Reference[​](#api-reference "Direct link to API Reference")
 
-* [`mlflow.models.evaluate()`](/docs/3.11.1/api_reference/python_api/mlflow.models.html#mlflow.models.evaluate) - Main evaluation API
-* [`mlflow.validate_evaluation_results()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.validate_evaluation_results) - Validate evaluation results
-* [`mlflow.models.make_metric()`](/docs/3.11.1/api_reference/python_api/mlflow.models.html#mlflow.models.make_metric) - Create custom metrics
-* [`mlflow.metrics.base.MetricValue()`](/docs/3.11.1/api_reference/python_api/mlflow.metrics.html#mlflow.metrics.base.MetricValue) - Metric return value
+* [`mlflow.models.evaluate()`](/docs/latest/api_reference/python_api/mlflow.models.html#mlflow.models.evaluate) - Main evaluation API
+* [`mlflow.validate_evaluation_results()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.validate_evaluation_results) - Validate evaluation results
+* [`mlflow.models.make_metric()`](/docs/latest/api_reference/python_api/mlflow.models.html#mlflow.models.make_metric) - Create custom metrics
+* [`mlflow.metrics.base.MetricValue()`](/docs/latest/api_reference/python_api/mlflow.metrics.html#mlflow.metrics.base.MetricValue) - Metric return value

@@ -2,7 +2,7 @@
 
 MLflow's evaluation and monitoring capabilities help you systematically measure, improve, and maintain the quality of your LLM applications and AI agents throughout their lifecycle from development through production.
 
-[](/docs/3.11.1/images/mlflow-3/eval-monitor/evaluation-result-video.mp4)
+[](/docs/latest/images/mlflow-3/eval-monitor/evaluation-result-video.mp4)
 
 <br />
 
@@ -12,7 +12,7 @@ MLflow's evaluation and monitoring capabilities help you systematically measure,
 
 To start the demo, click on the "Start Demo" button on the top page of the MLflow UI.
 
-![MLflow GenAI Demo UI](/docs/3.11.1/images/llms/demo/demo.png)
+![MLflow GenAI Demo UI](/docs/latest/images/llms/demo/demo.png)
 
 #### **Starting from CLI**[​](#starting-from-cli "Direct link to starting-from-cli")
 
@@ -26,7 +26,7 @@ uvx mlflow demo
 
 A core tenet of MLflow's evaluation capabilities is **Evaluation-Driven Development**. This is an emerging practice to tackle the challenge of building high-quality LLM/Agentic applications. MLflow is an open source AI engineering platform that is designed to support this practice and help you quickly build production-quality AI agents and LLM applications.
 
-![Evaluation Driven Development](/docs/3.11.1/images/mlflow-3/eval-monitor/evaluation-driven-development.png)
+![Evaluation Driven Development](/docs/latest/images/mlflow-3/eval-monitor/evaluation-driven-development.png)
 
 ## Key Capabilities[​](#key-capabilities "Direct link to Key Capabilities")
 
@@ -42,9 +42,9 @@ Before you can evaluate your LLM application or AI agent, you need test data. **
 
 Think of Evaluation Datasets as your "test database" - a single source of truth for all the data needed to evaluate your AI systems. They transform ad-hoc testing into systematic quality assurance.
 
-[Learn more →](/docs/3.11.1/genai/datasets.md)
+[Learn more →](/docs/latest/genai/datasets.md)
 
-![Trace Dataset](/docs/3.11.1/assets/images/genai-trace-dataset-0db517dfd5b8e13ae6732b0a1b0b098f.png)
+![Trace Dataset](/docs/latest/assets/images/genai-trace-dataset-0db517dfd5b8e13ae6732b0a1b0b098f.png)
 
 #### Track Annotation and Human Feedbacks[​](#track-annotation-and-human-feedbacks "Direct link to Track Annotation and Human Feedbacks")
 
@@ -52,9 +52,9 @@ Human feedback is essential for building high-quality LLM applications and AI ag
 
 Feedbacks are attached to traces and recorded with metadata, including user, timestamp, revisions, etc.
 
-[Learn more →](/docs/3.11.1/genai/assessments/feedback.md)
+[Learn more →](/docs/latest/genai/assessments/feedback.md)
 
-![Trace Feedback](/docs/3.11.1/assets/images/genai-human-feedback-9a8ea2ba10a5f7c7bb192aea22345b19.png)
+![Trace Feedback](/docs/latest/assets/images/genai-human-feedback-9a8ea2ba10a5f7c7bb192aea22345b19.png)
 
 #### Scale Quality Assessment with Automation[​](#scale-quality-assessment-with-automation "Direct link to Scale Quality Assessment with Automation")
 
@@ -62,9 +62,9 @@ Quality assessment is a critical part of building high-quality LLM applications 
 
 MLflow offers various built-in [LLM-as-a-Judge](https://mlflow.org/llm-evaluation) scorers to help automate the process, as well as a flexible toolset to build your own LLM judges with ease.
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor.md)
+[Learn more →](/docs/latest/genai/eval-monitor.md)
 
-![Trace Evaluation](/docs/3.11.1/assets/images/genai-trace-evaluation-5b5e6ba86f0f0f06ee27db356e4e59e4.png)
+![Trace Evaluation](/docs/latest/assets/images/genai-trace-evaluation-5b5e6ba86f0f0f06ee27db356e4e59e4.png)
 
 #### Evaluate and Enhance quality[​](#evaluate-and-enhance-quality "Direct link to Evaluate and Enhance quality")
 
@@ -72,17 +72,17 @@ Systematically assessing and improving the quality of LLM applications and AI ag
 
 Being the industry's most-trusted open source [AI engineering platform](https://mlflow.org/genai) for agents and LLM applications, MLflow provides a strong foundation for tracking your evaluation results and effectively collaborating with your team.
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/quickstart.md)
+[Learn more →](/docs/latest/genai/eval-monitor/quickstart.md)
 
-![Trace Evaluation](/docs/3.11.1/assets/images/genai-evaluation-compare-e16ede1d0aa60604dd3eb43ecda3d631.png)
+![Trace Evaluation](/docs/latest/assets/images/genai-evaluation-compare-e16ede1d0aa60604dd3eb43ecda3d631.png)
 
 #### Monitor Applications in Production[​](#monitor-applications-in-production "Direct link to Monitor Applications in Production")
 
 Understanding and optimizing LLM application and AI agent performance is crucial for efficient operations. [MLflow Tracing](https://mlflow.org/llm-tracing) captures key metrics like latency and token usage at each step, as well as various quality metrics, helping you identify bottlenecks, monitor efficiency, and find optimization opportunities.
 
-[Learn more →](/docs/3.11.1/genai/tracing/prod-tracing.md)
+[Learn more →](/docs/latest/genai/tracing/prod-tracing.md)
 
-![Monitoring](/docs/3.11.1/assets/images/genai-monitoring-8ebda32e5cc07cb9cc97cb0297e583c3.png)
+![Monitoring](/docs/latest/assets/images/genai-monitoring-8ebda32e5cc07cb9cc97cb0297e583c3.png)
 
 ## Running an Evaluation[​](#running-an-evaluation "Direct link to Running an Evaluation")
 
@@ -168,24 +168,24 @@ mlflow server --port 5000
 
 You should see a new evaluation run is created under the "Runs" tab. Click on the run name to view the evaluation results.
 
-![Evaluation Results](/docs/3.11.1/images/mlflow-3/eval-monitor/quickstart-eval-hero.png)
+![Evaluation Results](/docs/latest/images/mlflow-3/eval-monitor/quickstart-eval-hero.png)
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [Quickstart](/docs/3.11.1/genai/eval-monitor/quickstart.md)
+### [Quickstart](/docs/latest/genai/eval-monitor/quickstart.md)
 
-[Learn MLflow's evaluation workflow in action.](/docs/3.11.1/genai/eval-monitor/quickstart.md)
+[Learn MLflow's evaluation workflow in action.](/docs/latest/genai/eval-monitor/quickstart.md)
 
-[Start evaluating →](/docs/3.11.1/genai/eval-monitor/quickstart.md)
+[Start evaluating →](/docs/latest/genai/eval-monitor/quickstart.md)
 
-### [Evaluate Agents](/docs/3.11.1/genai/eval-monitor/running-evaluation/agents.md)
+### [Evaluate Agents](/docs/latest/genai/eval-monitor/running-evaluation/agents.md)
 
-[Evaluate AI agents with specialized techniques and custom scorers.](/docs/3.11.1/genai/eval-monitor/running-evaluation/agents.md)
+[Evaluate AI agents with specialized techniques and custom scorers.](/docs/latest/genai/eval-monitor/running-evaluation/agents.md)
 
-[Evaluate agents →](/docs/3.11.1/genai/eval-monitor/running-evaluation/agents.md)
+[Evaluate agents →](/docs/latest/genai/eval-monitor/running-evaluation/agents.md)
 
-### [Building Scorers](/docs/3.11.1/genai/eval-monitor/scorers.md)
+### [Building Scorers](/docs/latest/genai/eval-monitor/scorers.md)
 
-[Get started with MLflow's powerful scorers for evaluating qualities.](/docs/3.11.1/genai/eval-monitor/scorers.md)
+[Get started with MLflow's powerful scorers for evaluating qualities.](/docs/latest/genai/eval-monitor/scorers.md)
 
-[Learn about scorers →](/docs/3.11.1/genai/eval-monitor/scorers.md)
+[Learn about scorers →](/docs/latest/genai/eval-monitor/scorers.md)

@@ -10,7 +10,7 @@ When working with MLflow in production environments, you'll often have hundreds 
 
 tip
 
-Looking for guidance on searching over Runs? See the [Search Runs](/docs/3.11.1/ml/search/search-runs.md) documentation.
+Looking for guidance on searching over Runs? See the [Search Runs](/docs/latest/ml/search/search-runs.md) documentation.
 
 ## Create Example Logged Models[​](#create-example-logged-models "Direct link to Create Example Logged Models")
 
@@ -153,7 +153,7 @@ The `search_logged_models` API uses a SQL-like Domain Specific Language (DSL) fo
 
 ### Visual Representation of Search Components:[​](#visual-representation-of-search-components "Direct link to Visual Representation of Search Components:")
 
-![search components](/docs/3.11.1/assets/images/search_syntax-8db1091a58dda699e58cd3846c12cace.png)
+![search components](/docs/latest/assets/images/search_syntax-8db1091a58dda699e58cd3846c12cace.png)
 
 ### Key Differences from search\_runs:[​](#key-differences-from-search_runs "Direct link to Key Differences from search_runs:")
 
@@ -307,7 +307,7 @@ The Python API provides powerful capabilities for searching logged models progra
 
 ### Using the Fluent API[​](#using-the-fluent-api "Direct link to Using the Fluent API")
 
-[`mlflow.search_logged_models()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.search_logged_models) provides a convenient interface for model search:
+[`mlflow.search_logged_models()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.search_logged_models) provides a convenient interface for model search:
 
 python
 
@@ -335,7 +335,7 @@ for model in models_list:
 
 ### Using the Client API[​](#using-the-client-api "Direct link to Using the Client API")
 
-[`mlflow.client.MlflowClient.search_logged_models()`](/docs/3.11.1/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.search_logged_models) offers more control with pagination support:
+[`mlflow.client.MlflowClient.search_logged_models()`](/docs/latest/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.search_logged_models) offers more control with pagination support:
 
 python
 

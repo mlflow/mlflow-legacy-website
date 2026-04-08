@@ -1,6 +1,6 @@
 # Auto-rewrite Prompts for New Models (Experimental)
 
-When migrating to a new language model, you often discover that your carefully crafted prompts don't work as well with the new model. MLflow's [`mlflow.genai.optimize_prompts()`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.optimize_prompts) API helps you **automatically rewrite prompts** to maintain output quality when switching models, using your existing application's outputs as training data.
+When migrating to a new language model, you often discover that your carefully crafted prompts don't work as well with the new model. MLflow's [`mlflow.genai.optimize_prompts()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.optimize_prompts) API helps you **automatically rewrite prompts** to maintain output quality when switching models, using your existing application's outputs as training data.
 
 Key Benefits
 
@@ -151,7 +151,7 @@ You can view the created dataset in the MLflow UI by navigating to:
 
 The dataset view shows all the inputs and outputs collected from your traces, making it easy to verify the training data before optimization.
 
-![](/docs/3.11.1/assets/images/evaluation_dataset_ui-b4a751f7446218d0f2e7d640f395517d.png)
+![](/docs/latest/assets/images/evaluation_dataset_ui-b4a751f7446218d0f2e7d640f395517d.png)
 
 ### Step 3: Switch Model[​](#step-3-switch-model "Direct link to Step 3: Switch Model")
 
@@ -288,7 +288,7 @@ inputs = [
 
 ### 3. Verify Results[​](#3-verify-results "Direct link to 3. Verify Results")
 
-Always test optimized prompts using [`mlflow.genai.evaluate()`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.evaluate) before production deployment.
+Always test optimized prompts using [`mlflow.genai.evaluate()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.evaluate) before production deployment.
 
 python
 
@@ -306,7 +306,7 @@ print(f"Format compliance: {results.metrics['format_scorer']}")
 
 ## See Also[​](#see-also "Direct link to See Also")
 
-* [Optimize Prompts](/docs/3.11.1/genai/prompt-registry/optimize-prompts.md): General prompt optimization guide
-* [Create and Edit Prompts](/docs/3.11.1/genai/prompt-registry/create-and-edit-prompts.md): Prompt Registry basics
-* [Evaluate Prompts](/docs/3.11.1/genai/eval-monitor/running-evaluation/prompts.md): Evaluate prompt performance
-* [MLflow Tracing](/docs/3.11.1/genai/tracing.md): Understanding MLflow tracing
+* [Optimize Prompts](/docs/latest/genai/prompt-registry/optimize-prompts.md): General prompt optimization guide
+* [Create and Edit Prompts](/docs/latest/genai/prompt-registry/create-and-edit-prompts.md): Prompt Registry basics
+* [Evaluate Prompts](/docs/latest/genai/eval-monitor/running-evaluation/prompts.md): Evaluate prompt performance
+* [MLflow Tracing](/docs/latest/genai/tracing.md): Understanding MLflow tracing

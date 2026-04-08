@@ -80,4 +80,4 @@ You've now learned how to connect MLflow Tracking with a remote storage and a da
 
 There are a couple of more advanced topics you can explore:
 
-* **Remote environment setup for team development**: While storing runs and experiments data in local machine is perfectly fine for solo development, you should consider using [MLflow Tracking Server](/docs/3.11.1/ml/tracking.md#tracking_server) when you set up a team collaboration environment with MLflow Tracking. Read the [Remote Experiment Tracking with MLflow Tracking Server](/docs/3.11.1/ml/tracking/tutorials/remote-server.md) tutorial to learn more.
+* **Remote environment setup for team development**: While storing runs and experiments data in local machine is perfectly fine for solo development, you should consider using [MLflow Tracking Server](/docs/latest/ml/tracking.md#tracking_server) when you set up a team collaboration environment with MLflow Tracking. Read the [Remote Experiment Tracking with MLflow Tracking Server](/docs/latest/ml/tracking/tutorials/remote-server.md) tutorial to learn more.

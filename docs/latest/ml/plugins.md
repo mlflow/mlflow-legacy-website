@@ -29,7 +29,7 @@ mlflow server --backend-store-uri ./mlruns
 
 Open <http://localhost:5000> to see your tracked experiment:
 
-![Quickstart UI](/docs/3.11.1/assets/images/quickstart_ui_screenshot-3ea56ba2b1c9970e1ff466b8dc57b37d.png)
+![Quickstart UI](/docs/latest/assets/images/quickstart_ui_screenshot-3ea56ba2b1c9970e1ff466b8dc57b37d.png)
 
 Plugin Benefits
 
@@ -254,7 +254,7 @@ class MyWorkspaceProvider(AbstractStore):
         return default_artifact_root, True
 ```
 
-For full details on workspace provider architecture, discovery, and configuration, see the [Workspace Providers](/docs/3.11.1/self-hosting/workspaces/workspace-providers.md) documentation.
+For full details on workspace provider architecture, discovery, and configuration, see the [Workspace Providers](/docs/latest/self-hosting/workspaces/workspace-providers.md) documentation.
 
 ### Authentication Plugins[​](#authentication-plugins "Direct link to Authentication Plugins")
 

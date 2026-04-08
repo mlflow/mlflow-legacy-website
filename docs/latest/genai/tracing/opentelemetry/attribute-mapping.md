@@ -4,7 +4,7 @@ When MLflow ingests traces from third-party OpenTelemetry instrumentation, it au
 
 ## How Translation Works[​](#how-translation-works "Direct link to How Translation Works")
 
-When a trace is received via the [OTLP endpoint](/docs/3.11.1/genai/tracing/opentelemetry/ingest.md), MLflow runs each span through a series of translators. Each translator understands a specific set of OTel semantic conventions and maps them to MLflow span attributes.
+When a trace is received via the [OTLP endpoint](/docs/latest/genai/tracing/opentelemetry/ingest.md), MLflow runs each span through a series of translators. Each translator understands a specific set of OTel semantic conventions and maps them to MLflow span attributes.
 
 ## Supported Translations[​](#supported-translations "Direct link to Supported Translations")
 
@@ -370,4 +370,4 @@ In addition to span-level attributes, MLflow also maps the following OTel span a
 
 These attributes follow the [OTel semantic conventions for sessions](https://opentelemetry.io/docs/specs/semconv/registry/attributes/session/) and [users](https://opentelemetry.io/docs/specs/semconv/registry/attributes/user/).
 
-For more details, see [Track Users and Sessions](/docs/3.11.1/genai/tracing/track-users-sessions.md).
+For more details, see [Track Users and Sessions](/docs/latest/genai/tracing/track-users-sessions.md).

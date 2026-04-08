@@ -354,13 +354,13 @@ Feedback integrates seamlessly with MLflow's ecosystem:
 
 To begin using feedback in your evaluation workflow:
 
-**[LLM Evaluation Guide](/docs/3.11.1/genai/eval-monitor.md)**: Learn how to evaluate your LLM applications and AI agents
+**[LLM Evaluation Guide](/docs/latest/genai/eval-monitor.md)**: Learn how to evaluate your LLM applications and AI agents
 
-**[Custom Metrics](/docs/3.11.1/genai/eval-monitor.md)**: Create domain-specific evaluation functions
+**[Custom Metrics](/docs/latest/genai/eval-monitor.md)**: Create domain-specific evaluation functions
 
-**[Trace Analysis](/docs/3.11.1/genai/tracing/search-traces.md)**: Explore how to query and analyze trace data with feedback
+**[Trace Analysis](/docs/latest/genai/tracing/search-traces.md)**: Explore how to query and analyze trace data with feedback
 
-**[Quality Monitoring](/docs/3.11.1/genai/tracing/prod-tracing.md)**: Set up ongoing quality assessment
+**[Quality Monitoring](/docs/latest/genai/tracing/prod-tracing.md)**: Set up ongoing quality assessment
 
 ***
 

@@ -212,14 +212,14 @@ This gives you a clear, data-driven view of how your application versions compar
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [Version Tracking](/docs/3.11.1/genai/version-tracking.md)
+### [Version Tracking](/docs/latest/genai/version-tracking.md)
 
-[Learn more about tracking application versions with MLflow](/docs/3.11.1/genai/version-tracking.md)
+[Learn more about tracking application versions with MLflow](/docs/latest/genai/version-tracking.md)
 
-[Learn more →](/docs/3.11.1/genai/version-tracking.md)
+[Learn more →](/docs/latest/genai/version-tracking.md)
 
-### [MLflow Tracing](/docs/3.11.1/genai/tracing.md)
+### [MLflow Tracing](/docs/latest/genai/tracing.md)
 
-[Explore MLflow's comprehensive tracing capabilities for LLM applications and AI agents](/docs/3.11.1/genai/tracing.md)
+[Explore MLflow's comprehensive tracing capabilities for LLM applications and AI agents](/docs/latest/genai/tracing.md)
 
-[Learn more →](/docs/3.11.1/genai/tracing.md)
+[Learn more →](/docs/latest/genai/tracing.md)

@@ -1,10 +1,10 @@
 # Tracing Strands Agents SDK
 
-![Agno Tracing via autolog](/docs/3.11.1/images/llms/strands/strands-tracing.png)
+![Agno Tracing via autolog](/docs/latest/images/llms/strands/strands-tracing.png)
 
 [Strands Agents SDK](https://github.com/strands-agents/sdk-python) is an open‑source, model‑driven SDK developed by AWS that enables developers to create autonomous AI agents simply by defining a model, a set of tools, and a prompt in just a few lines of code.
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing/integrations.md) provides automatic tracing capability for Strands Agents SDK. By enabling auto tracing for Strands Agents SDK by calling the [`mlflow.strands.autolog()`](/docs/3.11.1/api_reference/python_api/mlflow.strands.html#mlflow.strands.autolog) function, MLflow will capture traces for Agent invocation and log them to the active MLflow Experiment.
+[MLflow Tracing](/docs/latest/genai/tracing/integrations.md) provides automatic tracing capability for Strands Agents SDK. By enabling auto tracing for Strands Agents SDK by calling the [`mlflow.strands.autolog()`](/docs/latest/api_reference/python_api/mlflow.strands.html#mlflow.strands.autolog) function, MLflow will capture traces for Agent invocation and log them to the active MLflow Experiment.
 
 python
 
@@ -52,17 +52,17 @@ response = agent("What is 2+2")
 print(response)
 ```
 
-![Strands Agent SDK Tracing via autolog](/docs/3.11.1/assets/images/strands-tracing-d93b7aa1a7acb19402282286c1b02843.png)
+![Strands Agent SDK Tracing via autolog](/docs/latest/assets/images/strands-tracing-d93b7aa1a7acb19402282286c1b02843.png)
 
 ## Tracking Token Usage and Cost[​](#tracking-token-usage-and-cost "Direct link to Tracking Token Usage and Cost")
 
-MLflow automatically tracks token usage and cost for Strands Agent SDK. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/3.11.1/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
+MLflow automatically tracks token usage and cost for Strands Agent SDK. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/latest/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
 
 ## Combine with the MLflow Tracing SDK[​](#combine-with-the-mlflow-tracing-sdk "Direct link to Combine with the MLflow Tracing SDK")
 
-Since this integration is built on OpenTelemetry, you can combine the automatically generated traces with the [MLflow Tracing SDK](/docs/3.11.1/genai/tracing.md) to add custom spans, set tags, and log assessments within the same trace. This is useful when you want to enrich the auto-generated traces with additional application-specific context.
+Since this integration is built on OpenTelemetry, you can combine the automatically generated traces with the [MLflow Tracing SDK](/docs/latest/genai/tracing.md) to add custom spans, set tags, and log assessments within the same trace. This is useful when you want to enrich the auto-generated traces with additional application-specific context.
 
-To enable this, set the `MLFLOW_USE_DEFAULT_TRACER_PROVIDER` environment variable to `false` and call [`mlflow.tracing.set_destination()`](/docs/3.11.1/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.set_destination) to merge spans from both SDKs into a single trace.
+To enable this, set the `MLFLOW_USE_DEFAULT_TRACER_PROVIDER` environment variable to `false` and call [`mlflow.tracing.set_destination()`](/docs/latest/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.set_destination) to merge spans from both SDKs into a single trace.
 
 python
 
@@ -87,7 +87,7 @@ with mlflow.start_span("custom_step") as span:
     span.set_outputs({"result": "success"})
 ```
 
-For detailed instructions and examples, see [Combining the OpenTelemetry SDK and the MLflow Tracing SDK](/docs/3.11.1/genai/tracing/app-instrumentation/opentelemetry.md#combining-the-opentelemetry-sdk-and-the-mlflow-tracing-sdk).
+For detailed instructions and examples, see [Combining the OpenTelemetry SDK and the MLflow Tracing SDK](/docs/latest/genai/tracing/app-instrumentation/opentelemetry.md#combining-the-opentelemetry-sdk-and-the-mlflow-tracing-sdk).
 
 ### Disable auto-tracing[​](#disable-auto-tracing "Direct link to Disable auto-tracing")
 

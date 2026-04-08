@@ -10,7 +10,7 @@ This guide walks you through deploying the MLflow server to Amazon ECS (Elastic 
 
 The overall deployment architecture is as follows:
 
-![overall architecture](/docs/3.11.1/assets/images/aws-self-hosting-arch-ae48e4ee1d91fc229bc76e22bd2632bb.png)
+![overall architecture](/docs/latest/assets/images/aws-self-hosting-arch-ae48e4ee1d91fc229bc76e22bd2632bb.png)
 
 The deployment architecture has a couple of advantages:
 
@@ -38,7 +38,7 @@ Note that you can also use [managed MLflow on AWS SageMaker](https://aws.amazon.
 
 Create a S3 bucket with name like "mlflow-artifacts-123", and block all public access as follows:
 
-![create s3 bucket](/docs/3.11.1/assets/images/create-aws-s3-bucket-d8dc3f2267b36761819c0e4ac00f515b.png)
+![create s3 bucket](/docs/latest/assets/images/create-aws-s3-bucket-d8dc3f2267b36761819c0e4ac00f515b.png)
 
 MLflow will store large artifacts such as model weight, figures, videos, within the specified S3 bucket.
 
@@ -46,7 +46,7 @@ MLflow will store large artifacts such as model weight, figures, videos, within 
 
 Create an RDS instance of PostgreSQL type, set credentials management to "Self managed", and set master username / password. Once creation completes, you can view the RDS instance endpoint information as follows:
 
-![create RDS](/docs/3.11.1/assets/images/create-aws-rds-b98bbdc55adba0cb520aad8b773cb441.png)
+![create RDS](/docs/latest/assets/images/create-aws-rds-b98bbdc55adba0cb520aad8b773cb441.png)
 
 If you need to set up a standby database instance for high availability, go to "Availability & durability -> Multi-AZ deployment" panel and select "Create a standby instance".
 
@@ -95,7 +95,7 @@ Create ECS (Elastic Container Service) to host the MLflow web server and the UI.
 * Set the compute resources used by the MLflow server (CPU / memory etc) properly.
 * Set both of "Minimum number of tasks" and "Maximum number of tasks" to 1 so that the desired steady-state is a single MLflow server task. ECS will attempt to keep one task running and will automatically start a replacement if the running task crashes.
 
-After creation, you can view the ECS express service overview page as follows: ![create ECS](/docs/3.11.1/assets/images/create-aws-ecs-452c14e556c70ebd578667fc39f1c711.png)
+After creation, you can view the ECS express service overview page as follows: ![create ECS](/docs/latest/assets/images/create-aws-ecs-452c14e556c70ebd578667fc39f1c711.png)
 
 The "Application URL" on the overview page is the MLflow service URL that you can access from public network.
 

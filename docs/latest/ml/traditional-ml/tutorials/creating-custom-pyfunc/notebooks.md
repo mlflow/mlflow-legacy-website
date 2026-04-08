@@ -25,7 +25,7 @@ In this initial tutorial, we'll introduce you to the foundational concepts of ML
 
 By the conclusion of this tutorial, you'll appreciate the ease and consistency that MLflow's custom *pyfunc* offers, even for the simplest of models. It sets the stage for more advanced functionalities and use-cases you might explore in subsequent tutorials.
 
-[View the Notebook](/docs/3.11.1/ml/traditional-ml/tutorials/creating-custom-pyfunc/notebooks/introduction.md)
+[View the Notebook](/docs/latest/ml/traditional-ml/tutorials/creating-custom-pyfunc/notebooks/introduction.md)
 
 ## Building a Basic Custom Python Model[​](#building-a-basic-custom-python-model "Direct link to Building a Basic Custom Python Model")
 
@@ -66,7 +66,7 @@ As our vehicle for understanding, we'll employ the Lissajous curves – sinusoid
 
 With a practical example under our belt, the power and flexibility of MLflow's Custom Pyfunc are evident. Whether you're working with traditional machine learning models or unique use cases like the Lissajous curve generator, Pyfunc ensures a standardized, reproducible, and efficient workflow.
 
-[View the Notebook](/docs/3.11.1/ml/traditional-ml/tutorials/creating-custom-pyfunc/notebooks/basic-pyfunc.md)
+[View the Notebook](/docs/latest/ml/traditional-ml/tutorials/creating-custom-pyfunc/notebooks/basic-pyfunc.md)
 
 ## Overriding a model's prediction method[​](#overriding-a-models-prediction-method "Direct link to Overriding a model's prediction method")
 
@@ -101,7 +101,7 @@ Venturing into the solution, we craft a custom PyFunc by extending MLflow's *Pyt
 
 Overcoming the challenges of default deployments, this tutorial showcases the prowess of custom PyFuncs in MLflow. The ability to override and customize prediction methods ensures that our deployed models remain as versatile and capable as their original incarnations. As ML workflows grow in complexity, such customization becomes invaluable, ensuring our deployments are robust and adaptable.
 
-[View the Notebook](/docs/3.11.1/ml/traditional-ml/tutorials/creating-custom-pyfunc/notebooks/override-predict.md)
+[View the Notebook](/docs/latest/ml/traditional-ml/tutorials/creating-custom-pyfunc/notebooks/override-predict.md)
 
 If you would like to run the notebooks in this tutorial series, each notebook page has a link to download the notebooks locally to your computer.
 

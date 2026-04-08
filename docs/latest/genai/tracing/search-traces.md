@@ -23,19 +23,19 @@ The UI search supports all the same filter syntax as the API, allowing you to se
 
 Use the filters dropdown in the MLflow Trace UI to filter traces by various criteria:
 
-![search components](/docs/3.11.1/assets/images/tracing_search_traces-b3a85a28e78491294f0a3c747768a039.png)
+![search components](/docs/latest/assets/images/tracing_search_traces-b3a85a28e78491294f0a3c747768a039.png)
 
 For example, searching for traces that with ERROR state:
 
-![Search Traces UI](/docs/3.11.1/assets/images/search-traces-on-ui-b8c6e343054a11ab58c527547ee43974.png)
+![Search Traces UI](/docs/latest/assets/images/search-traces-on-ui-b8c6e343054a11ab58c527547ee43974.png)
 
 Search for trace inputs:
 
-![Search Traces Inputs UI](/docs/3.11.1/assets/images/search-traces-inputs-on-ui-4f7e2a743c22391ec9bb20939949557e.png)
+![Search Traces Inputs UI](/docs/latest/assets/images/search-traces-inputs-on-ui-4f7e2a743c22391ec9bb20939949557e.png)
 
 Search for trace assessments by key and value:
 
-![Search Traces By Assessments UI](/docs/3.11.1/assets/images/search-traces-assessments-on-ui-e09348c7f5985a54d8efd1ba117488b3.png)
+![Search Traces By Assessments UI](/docs/latest/assets/images/search-traces-assessments-on-ui-e09348c7f5985a54d8efd1ba117488b3.png)
 
 ## Search Query Syntax[​](#search-query-syntax "Direct link to Search Query Syntax")
 
@@ -43,7 +43,7 @@ The `search_traces` API uses a SQL-like Domain Specific Language (DSL) for query
 
 ### Visual Representation of Search Components:[​](#visual-representation-of-search-components "Direct link to Visual Representation of Search Components:")
 
-![search components](/docs/3.11.1/assets/images/search_syntax-8db1091a58dda699e58cd3846c12cace.png)
+![search components](/docs/latest/assets/images/search_syntax-8db1091a58dda699e58cd3846c12cace.png)
 
 ### Supported Filters and Comparators[​](#supported-filters-and-comparators "Direct link to Supported Filters and Comparators")
 
@@ -321,7 +321,7 @@ mlflow.search_traces(
 
 ## Programmatic Search with Python[​](#programmatic-search-with-python "Direct link to Programmatic Search with Python")
 
-[`mlflow.search_traces()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.search_traces) provides convenient trace search functionality:
+[`mlflow.search_traces()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.search_traces) provides convenient trace search functionality:
 
 python
 
@@ -337,7 +337,7 @@ traces_list = mlflow.search_traces(filter_string="trace.status = 'OK'", return_t
 
 note
 
-The `return_type` parameter is available in MLflow 2.21.1+. For older versions, use [`mlflow.client.MlflowClient.search_traces()`](/docs/3.11.1/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.search_traces) for list output.
+The `return_type` parameter is available in MLflow 2.21.1+. For older versions, use [`mlflow.client.MlflowClient.search_traces()`](/docs/latest/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.search_traces) for list output.
 
 ### Return Format[​](#return-format "Direct link to Return Format")
 
@@ -374,7 +374,7 @@ The `search_traces` API returns a pandas DataFrame by default with the following
 
 #### 2. List of Trace Objects[​](#2-list-of-trace-objects "Direct link to 2. List of Trace Objects")
 
-Alternatively, you can specify `return_type="list"` to get a list of [`mlflow.entities.Trace()`](/docs/3.11.1/api_reference/python_api/mlflow.entities.html#mlflow.entities.Trace) objects instead of a DataFrame.
+Alternatively, you can specify `return_type="list"` to get a list of [`mlflow.entities.Trace()`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.Trace) objects instead of a DataFrame.
 
 python
 
@@ -404,7 +404,7 @@ traces = mlflow.search_traces(order_by=["timestamp_ms DESC", "status ASC"])
 
 ### Pagination[​](#pagination "Direct link to Pagination")
 
-[`mlflow.client.MlflowClient.search_traces()`](/docs/3.11.1/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.search_traces) supports pagination:
+[`mlflow.client.MlflowClient.search_traces()`](/docs/latest/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.search_traces) supports pagination:
 
 python
 

@@ -2,11 +2,11 @@
 
 info
 
-Looking for using MLflow for LLMs/Agent development? Checkout the [MLflow for GenAI](/docs/3.11.1/genai.md) documentation instead. This guide is intended for data scientists who train traditional machine learning models, such as decision trees.
+Looking for using MLflow for LLMs/Agent development? Checkout the [MLflow for GenAI](/docs/latest/genai.md) documentation instead. This guide is intended for data scientists who train traditional machine learning models, such as decision trees.
 
 MLflow Assistant
 
-Need help setting up tracking? Try [MLflow Assistant](/docs/3.11.1/genai/getting-started/try-assistant.md) - a powerful AI assistant that can help you set up MLflow tracking for your project.
+Need help setting up tracking? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that can help you set up MLflow tracking for your project.
 
 Welcome to MLflow! The purpose of this quickstart is to provide a quick guide to the most essential core APIs of MLflow Tracking. In just a few minutes of following along with this quickstart, you will learn:
 
@@ -26,9 +26,9 @@ pip install mlflow
 
 info
 
-See [Secure Installs](/docs/3.11.1/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
+See [Secure Installs](/docs/latest/self-hosting/security/secure-installs.md) to learn how to pin dependencies to known good versions using hash checking and upload-time filtering.
 
-Then, follow the instructions in the [Set Up MLflow](/docs/3.11.1/ml/getting-started/running-notebooks.md) guide to set up MLflow.
+Then, follow the instructions in the [Set Up MLflow](/docs/latest/ml/getting-started/running-notebooks.md) guide to set up MLflow.
 
 If you just want to start super quick, run the following code in a notebook cell:
 
@@ -91,7 +91,7 @@ With just one line of additional code `mlflow.sklearn.autolog()`, now you get th
 * Logging hyperparameter values used to train the model.
 * Track metadata such as input data format, user, timestamp, etc.
 
-To learn more about autologging and supported libraries, see the [Autologging](/docs/3.11.1/ml/tracking/autolog.md) documentation.
+To learn more about autologging and supported libraries, see the [Autologging](/docs/latest/ml/tracking/autolog.md) documentation.
 
 ## Step 4 - View the Run in the MLflow UI[​](#step-4---view-the-run-in-the-mlflow-ui "Direct link to Step 4 - View the Run in the MLflow UI")
 
@@ -105,25 +105,25 @@ mlflow server --port 5000
 
 When opening the site, you will see a screen similar to the following:
 
-![MLflow UI Home page](/docs/3.11.1/images/tutorials/introductory/quickstart-tracking/quickstart-ui-home.png)
+![MLflow UI Home page](/docs/latest/images/tutorials/introductory/quickstart-tracking/quickstart-ui-home.png)
 
 The "Experiments" section shows a list of (recently created) experiments. Click on the "MLflow Quickstart" experiment.
 
-![MLflow UI Run list page](/docs/3.11.1/images/tutorials/introductory/quickstart-tracking/quickstart-ui-run-list.png)
+![MLflow UI Run list page](/docs/latest/images/tutorials/introductory/quickstart-tracking/quickstart-ui-run-list.png)
 
 The training **Run** created by MLflow is listed in the table. Click the run to view the details.
 
-![MLflow UI Run detail page](/docs/3.11.1/images/tutorials/introductory/quickstart-tracking/quickstart-our-run.png)
+![MLflow UI Run detail page](/docs/latest/images/tutorials/introductory/quickstart-tracking/quickstart-our-run.png)
 
 The Run detail page shows an overview of the run, its recorded metrics, hyper-parameters, tags, and more. Play around with the UI to see the different views and features.
 
 Scroll down to the "Model" section and you should see the model that was logged during training. Click on the model to view the details.
 
-![MLflow UI Model detail page](/docs/3.11.1/images/tutorials/introductory/quickstart-tracking/quickstart-ui-logged-models.png)
+![MLflow UI Model detail page](/docs/latest/images/tutorials/introductory/quickstart-tracking/quickstart-ui-logged-models.png)
 
 The model page displays similar metadata such as performance metrics and hyper-parameters. It also includes an "Artifacts" section that lists the files that were logged during training. You can also see environment information such as the Python version and dependencies, which are stored for reproducibility.
 
-![MLflow UI Model detail page](/docs/3.11.1/images/tutorials/introductory/quickstart-tracking/quickstart-our-model.png)
+![MLflow UI Model detail page](/docs/latest/images/tutorials/introductory/quickstart-tracking/quickstart-our-model.png)
 
 ## Step 5 - Log a model and metadata manually[​](#step-5---log-a-model-and-metadata-manually "Direct link to Step 5 - Log a model and metadata manually")
 
@@ -201,7 +201,7 @@ The output of this code will look something like this:
 
 Congratulations on working through the MLflow Tracking Quickstart! You should now have a basic understanding of how to use the MLflow Tracking APIs to log models.
 
-* [MLflow for GenAI](/docs/3.11.1/genai.md): Learn how to use MLflow for GenAI/LLM development.
-* [MLflow for Deep Learning](/docs/3.11.1/ml/deep-learning.md): Learn how to use MLflow for deep learning frameworks such as PyTorch, TensorFlow, etc.
-* [MLflow Tracking](/docs/3.11.1/ml/tracking.md): Learn more about the MLflow Tracking APIs.
-* [Self-hosting Guide](/docs/3.11.1/self-hosting.md): Learn how to self-host the MLflow Tracking Server and set it up for team collaboration.
+* [MLflow for GenAI](/docs/latest/genai.md): Learn how to use MLflow for GenAI/LLM development.
+* [MLflow for Deep Learning](/docs/latest/ml/deep-learning.md): Learn how to use MLflow for deep learning frameworks such as PyTorch, TensorFlow, etc.
+* [MLflow Tracking](/docs/latest/ml/tracking.md): Learn more about the MLflow Tracking APIs.
+* [Self-hosting Guide](/docs/latest/self-hosting.md): Learn how to self-host the MLflow Tracking Server and set it up for team collaboration.

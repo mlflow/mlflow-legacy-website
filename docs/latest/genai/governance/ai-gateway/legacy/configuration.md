@@ -340,20 +340,20 @@ endpoints:
 
 Now that your providers are configured, learn how to use your gateway:
 
-### [Usage Guide](/docs/3.11.1/genai/governance/ai-gateway/legacy/usage.md)
+### [Usage Guide](/docs/latest/genai/governance/ai-gateway/legacy/usage.md)
 
-[Query endpoints with Python client and REST APIs](/docs/3.11.1/genai/governance/ai-gateway/legacy/usage.md)
+[Query endpoints with Python client and REST APIs](/docs/latest/genai/governance/ai-gateway/legacy/usage.md)
 
-[Start using →](/docs/3.11.1/genai/governance/ai-gateway/legacy/usage.md)
+[Start using →](/docs/latest/genai/governance/ai-gateway/legacy/usage.md)
 
-### [Setup Guide](/docs/3.11.1/genai/governance/ai-gateway/legacy/setup.md)
+### [Setup Guide](/docs/latest/genai/governance/ai-gateway/legacy/setup.md)
 
-[Get started with installation and environment setup](/docs/3.11.1/genai/governance/ai-gateway/legacy/setup.md)
+[Get started with installation and environment setup](/docs/latest/genai/governance/ai-gateway/legacy/setup.md)
 
-[View setup →](/docs/3.11.1/genai/governance/ai-gateway/legacy/setup.md)
+[View setup →](/docs/latest/genai/governance/ai-gateway/legacy/setup.md)
 
-### [Gateway Overview](/docs/3.11.1/genai/governance/ai-gateway.md)
+### [Gateway Overview](/docs/latest/genai/governance/ai-gateway.md)
 
-[Return to the AI Gateway overview page](/docs/3.11.1/genai/governance/ai-gateway.md)
+[Return to the AI Gateway overview page](/docs/latest/genai/governance/ai-gateway.md)
 
-[View overview →](/docs/3.11.1/genai/governance/ai-gateway.md)
+[View overview →](/docs/latest/genai/governance/ai-gateway.md)

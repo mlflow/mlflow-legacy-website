@@ -36,9 +36,9 @@ The `langchain` flavor is currently under active development and is marked as Ex
 * **Versatile Model Interaction**: The integration allows developers to leverage LangChain's unique features in conjunction with MLflow's robust model tracking and management capabilities.
 * **Autologging**: MLflow's `langchain` flavor provides autologging of LangChain models, which automatically logs artifacts, metrics and models for inference.
 
-The `langchain` model flavor enables logging of [LangChain models](https://github.com/hwchase17/langchain) in MLflow format via the [`mlflow.langchain.save_model()`](/docs/3.11.1/api_reference/python_api/mlflow.langchain.html#mlflow.langchain.save_model) and [`mlflow.langchain.log_model()`](/docs/3.11.1/api_reference/python_api/mlflow.langchain.html#mlflow.langchain.log_model) functions. Use of these functions also adds the `python_function` flavor to the MLflow Models that they produce, allowing the model to be interpreted as a generic Python function for inference via [`mlflow.pyfunc.load_model()`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.load_model).
+The `langchain` model flavor enables logging of [LangChain models](https://github.com/hwchase17/langchain) in MLflow format via the [`mlflow.langchain.save_model()`](/docs/latest/api_reference/python_api/mlflow.langchain.html#mlflow.langchain.save_model) and [`mlflow.langchain.log_model()`](/docs/latest/api_reference/python_api/mlflow.langchain.html#mlflow.langchain.log_model) functions. Use of these functions also adds the `python_function` flavor to the MLflow Models that they produce, allowing the model to be interpreted as a generic Python function for inference via [`mlflow.pyfunc.load_model()`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.load_model).
 
-You can also use the [`mlflow.langchain.load_model()`](/docs/3.11.1/api_reference/python_api/mlflow.langchain.html#mlflow.langchain.load_model) function to load a saved or logged MLflow Model with the `langchain` flavor as a dictionary of the model's attributes.
+You can also use the [`mlflow.langchain.load_model()`](/docs/latest/api_reference/python_api/mlflow.langchain.html#mlflow.langchain.load_model) function to load a saved or logged MLflow Model with the `langchain` flavor as a dictionary of the model's attributes.
 
 ### Basic Example: Logging a LangChain `LLMChain` in MLflow[​](#basic-example-logging-a-langchain-llmchain-in-mlflow "Direct link to basic-example-logging-a-langchain-llmchain-in-mlflow")
 
@@ -450,4 +450,4 @@ python
 
 ### MLflow Langchain Autologging[​](#mlflow-langchain-autologging "Direct link to MLflow Langchain Autologging")
 
-Please refer to the [MLflow Langchain Autologging ](/docs/3.11.1/genai/flavors/langchain/autologging.md)documentation for more details on how to enable autologging for Langchain models.
+Please refer to the [MLflow Langchain Autologging ](/docs/latest/genai/flavors/langchain/autologging.md)documentation for more details on how to enable autologging for Langchain models.

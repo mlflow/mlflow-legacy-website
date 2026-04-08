@@ -1,8 +1,8 @@
 # Tracing Anthropic
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing.md) provides automatic tracing capability for Anthropic LLMs. By enabling auto tracing for Anthropic by calling the [`mlflow.anthropic.autolog()`](/docs/3.11.1/api_reference/python_api/mlflow.anthropic.html#mlflow.anthropic.autolog) function, MLflow will capture nested traces and log them to the active MLflow Experiment upon invocation of Anthropic Python SDK.
+[MLflow Tracing](/docs/latest/genai/tracing.md) provides automatic tracing capability for Anthropic LLMs. By enabling auto tracing for Anthropic by calling the [`mlflow.anthropic.autolog()`](/docs/latest/api_reference/python_api/mlflow.anthropic.html#mlflow.anthropic.autolog) function, MLflow will capture nested traces and log them to the active MLflow Experiment upon invocation of Anthropic Python SDK.
 
-![Anthropic Tracing via autolog](/docs/3.11.1/images/llms/anthropic/anthropic-tracing.png)
+![Anthropic Tracing via autolog](/docs/latest/images/llms/anthropic/anthropic-tracing.png)
 
 MLflow trace automatically captures the following information about Anthropic calls:
 
@@ -128,7 +128,7 @@ const message = await client.messages.create({
 
 Browse to the MLflow UI at <http://localhost:5000> (or your MLflow server URL) and you should see the traces for the Anthropic API calls.
 
-![Anthropic Tracing](/docs/3.11.1/images/llms/anthropic/anthropic-basic-tracing.png)
+![Anthropic Tracing](/docs/latest/images/llms/anthropic/anthropic-basic-tracing.png)
 
 ## Supported APIs[​](#supported-apis "Direct link to Supported APIs")
 
@@ -144,7 +144,7 @@ To request support for additional APIs, please open a [feature request](https://
 
 Image Support in Anthropic Traces
 
-MLflow automatically captures images sent to Anthropic models and normalizes them to the standard trace format. See [Image and Audio (Multimodal) Content in Traces](/docs/3.11.1/genai/tracing/observe-with-traces/multimodal.md) for examples.
+MLflow automatically captures images sent to Anthropic models and normalizes them to the standard trace format. See [Image and Audio (Multimodal) Content in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md) for examples.
 
 ## Async[​](#async "Direct link to Async")
 
@@ -272,7 +272,7 @@ for city, answer in zip(cities, answers):
 
 ## Tracking Token Usage and Cost[​](#tracking-token-usage-and-cost "Direct link to Tracking Token Usage and Cost")
 
-MLflow automatically tracks token usage and cost for Anthropic API calls. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/3.11.1/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
+MLflow automatically tracks token usage and cost for Anthropic API calls. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/latest/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
 
 #### Supported APIs:[​](#supported-apis-1 "Direct link to Supported APIs:")
 
@@ -290,20 +290,20 @@ Auto tracing for Anthropic can be disabled globally by calling `mlflow.anthropic
 
 ## Next steps[​](#next-steps "Direct link to Next steps")
 
-### [Track User Feedback](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+### [Track User Feedback](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-[Record user feedback on traces for tracking user satisfaction.](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+[Record user feedback on traces for tracking user satisfaction.](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-[Learn about feedback →](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+[Learn about feedback →](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-### [Manage Prompts](/docs/3.11.1/genai/prompt-registry.md)
+### [Manage Prompts](/docs/latest/genai/prompt-registry.md)
 
-[Learn how to manage prompts with MLflow's prompt registry.](/docs/3.11.1/genai/prompt-registry.md)
+[Learn how to manage prompts with MLflow's prompt registry.](/docs/latest/genai/prompt-registry.md)
 
-[Manage prompts →](/docs/3.11.1/genai/prompt-registry.md)
+[Manage prompts →](/docs/latest/genai/prompt-registry.md)
 
-### [Evaluate Traces](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+### [Evaluate Traces](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Evaluate traces with LLM judges to understand and improve your AI application's behavior.](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Evaluate traces with LLM judges to understand and improve your AI application's behavior.](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Evaluate traces →](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Evaluate traces →](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)

@@ -301,6 +301,6 @@ json
 
 ## Related Documentation[​](#related-documentation "Direct link to Related Documentation")
 
-* [MLflow Tracing Overview](/docs/3.11.1/genai/tracing/quickstart.md)
-* [Collecting User Feedback](/docs/3.11.1/genai/assessments/feedback.md)
+* [MLflow Tracing Overview](/docs/latest/genai/tracing/quickstart.md)
+* [Collecting User Feedback](/docs/latest/genai/assessments/feedback.md)
 * [Model Context Protocol Specification](https://modelcontextprotocol.io/)

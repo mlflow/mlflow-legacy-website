@@ -14,7 +14,7 @@ MLflow's trace schema uses the [OpenAI chat message format](https://platform.ope
 
 ### Images[​](#images "Direct link to Images")
 
-Images are represented as [`mlflow.types.chat.ImageContentPart()`](/docs/3.11.1/api_reference/python_api/mlflow.types.html#mlflow.types.chat.ImageContentPart) objects with type `image_url`. The `image_url.url` field accepts:
+Images are represented as [`mlflow.types.chat.ImageContentPart()`](/docs/latest/api_reference/python_api/mlflow.types.html#mlflow.types.chat.ImageContentPart) objects with type `image_url`. The `image_url.url` field accepts:
 
 * **HTTP(S) URLs** — a direct link to a hosted image (e.g., `https://example.com/photo.png`)
 * **Base64 data URIs** — inline image data (e.g., `data:image/png;base64,iVBOR...`)
@@ -29,13 +29,13 @@ Large base64 payloads increase trace storage size. Consider using URLs for large
 
 ### Audio[​](#audio "Direct link to Audio")
 
-Audio is represented as [`mlflow.types.chat.AudioContentPart()`](/docs/3.11.1/api_reference/python_api/mlflow.types.html#mlflow.types.chat.AudioContentPart) objects with type `input_audio`. The `input_audio.data` field contains base64-encoded audio data, and `input_audio.format` specifies the codec (`wav` or `mp3`).
+Audio is represented as [`mlflow.types.chat.AudioContentPart()`](/docs/latest/api_reference/python_api/mlflow.types.html#mlflow.types.chat.AudioContentPart) objects with type `input_audio`. The `input_audio.data` field contains base64-encoded audio data, and `input_audio.format` specifies the codec (`wav` or `mp3`).
 
 Audio content is rendered with an inline audio player in the **Chat** tab of the trace viewer.
 
 ## Automatic Tracing[​](#automatic-tracing "Direct link to Automatic Tracing")
 
-When using [auto-instrumentation](/docs/3.11.1/genai/tracing/app-instrumentation/automatic.md), multimodal content is captured automatically — no extra code is needed. MLflow normalizes provider-specific formats into the standard schema described above.
+When using [auto-instrumentation](/docs/latest/genai/tracing/app-instrumentation/automatic.md), multimodal content is captured automatically — no extra code is needed. MLflow normalizes provider-specific formats into the standard schema described above.
 
 | Framework | Images | Audio | Notes                                         |
 | --------- | ------ | ----- | --------------------------------------------- |
@@ -201,7 +201,7 @@ response = client.messages.create(
 
 ## Manual Tracing[​](#manual-tracing "Direct link to Manual Tracing")
 
-You can attach multimodal content to traces manually using [`mlflow.start_span()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.start_span) and `set_inputs()` / `set_outputs()`. Structure the messages with content parts lists, following the same format used by the OpenAI API:
+You can attach multimodal content to traces manually using [`mlflow.start_span()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.start_span) and `set_inputs()` / `set_outputs()`. Structure the messages with content parts lists, following the same format used by the OpenAI API:
 
 python
 
@@ -238,9 +238,9 @@ The MLflow trace viewer renders multimodal content in the **Chat** tab:
 * **Images** — displayed inline, whether provided as URLs or base64 data URIs
 * **Audio** — rendered with a built-in audio player for playback directly in the UI
 
-![Image content rendered inline in the trace viewer](/docs/3.11.1/images/llms/tracing/trace-image-content.png)
+![Image content rendered inline in the trace viewer](/docs/latest/images/llms/tracing/trace-image-content.png)
 
-![Audio content rendered with an inline player in the trace viewer](/docs/3.11.1/images/llms/tracing/trace-audio-player.png)
+![Audio content rendered with an inline player in the trace viewer](/docs/latest/images/llms/tracing/trace-audio-player.png)
 
 The **Content** tab shows the raw JSON representation of the trace data, including the full base64-encoded payloads.
 

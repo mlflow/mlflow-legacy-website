@@ -75,7 +75,7 @@ experiments/
 
 warning
 
-This change impacts the behavior of [`mlflow.client.MlflowClient.list_artifacts()`](/docs/3.11.1/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.list_artifacts). Model artifacts are no longer stored as run artifacts.
+This change impacts the behavior of [`mlflow.client.MlflowClient.list_artifacts()`](/docs/latest/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.list_artifacts). Model artifacts are no longer stored as run artifacts.
 
 ### UI Changes[​](#ui-changes "Direct link to UI Changes")
 
@@ -239,7 +239,7 @@ with mlflow.start_run() as run:
 
 ### How do I modify model requirements?[​](#how-do-i-modify-model-requirements "Direct link to How do I modify model requirements?")
 
-Use [`mlflow.models.update_model_requirements()`](/docs/3.11.1/api_reference/python_api/mlflow.models.html#mlflow.models.update_model_requirements):
+Use [`mlflow.models.update_model_requirements()`](/docs/latest/api_reference/python_api/mlflow.models.html#mlflow.models.update_model_requirements):
 
 python
 

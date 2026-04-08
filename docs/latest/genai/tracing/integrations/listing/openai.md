@@ -1,8 +1,8 @@
 # Tracing OpenAI
 
-[](/docs/3.11.1/images/llms/tracing/openai-tracing.mp4)
+[](/docs/latest/images/llms/tracing/openai-tracing.mp4)
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing.md) provides automatic tracing capability for OpenAI. By enabling auto tracing for OpenAI by calling the [`mlflow.openai.autolog()`](/docs/3.11.1/api_reference/python_api/mlflow.openai.html#mlflow.openai.autolog) function, MLflow will capture traces for LLM invocation and log them to the active MLflow Experiment. In Typescript, you can instead use the `tracedOpenAI` function to wrap the OpenAI client.
+[MLflow Tracing](/docs/latest/genai/tracing.md) provides automatic tracing capability for OpenAI. By enabling auto tracing for OpenAI by calling the [`mlflow.openai.autolog()`](/docs/latest/api_reference/python_api/mlflow.openai.html#mlflow.openai.autolog) function, MLflow will capture traces for LLM invocation and log them to the active MLflow Experiment. In Typescript, you can instead use the `tracedOpenAI` function to wrap the OpenAI client.
 
 MLflow trace automatically captures the following information about OpenAI calls:
 
@@ -149,7 +149,7 @@ const response = await client.chat.completions.create({
 
 Browse to the MLflow UI at <http://localhost:5000> (or your MLflow server URL) and you should see the traces for the OpenAI API calls.
 
-![OpenAI Tracing](/docs/3.11.1/images/llms/tracing/basic-openai-trace.png)
+![OpenAI Tracing](/docs/latest/images/llms/tracing/basic-openai-trace.png)
 
 → View [Next Steps](#next-steps) for learning about more MLflow features like user feedback tracking, prompt management, and evaluation.
 
@@ -173,7 +173,7 @@ Responses API is supported since MLflow 2.22.0.
 
 #### Agents SDK[​](#agents-sdk "Direct link to Agents SDK")
 
-See [OpenAI Agents SDK Tracing](/docs/3.11.1/genai/tracing/integrations/listing/openai-agent.md) for more details.
+See [OpenAI Agents SDK Tracing](/docs/latest/genai/tracing/integrations/listing/openai-agent.md) for more details.
 
 #### Embedding API[​](#embedding-api "Direct link to Embedding API")
 
@@ -183,7 +183,7 @@ See [OpenAI Agents SDK Tracing](/docs/3.11.1/genai/tracing/integrations/listing/
 
 Image and Audio Support for OpenAI Traces
 
-MLflow automatically captures images and audio sent to OpenAI models. See [Image and Audio (Multimodal) Content in Traces](/docs/3.11.1/genai/tracing/observe-with-traces/multimodal.md) for examples and supported formats.
+MLflow automatically captures images and audio sent to OpenAI models. See [Image and Audio (Multimodal) Content in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md) for examples and supported formats.
 
 ## Streaming[​](#streaming "Direct link to Streaming")
 
@@ -296,11 +296,11 @@ OpenAI Typescript / Javascript SDK is natively async. See the basic example abov
 
 ## Combine with Manual Tracing[​](#combine-with-manual-tracing "Direct link to Combine with Manual Tracing")
 
-To control the tracing behavior more precisely, MLflow provides [Manual Tracing SDK](/docs/3.11.1/genai/tracing/app-instrumentation/manual-tracing.md) to create spans for your custom code. Manual tracing can be used in conjunction with auto-tracing to create a custom trace while keeping the auto-tracing convenience.
+To control the tracing behavior more precisely, MLflow provides [Manual Tracing SDK](/docs/latest/genai/tracing/app-instrumentation/manual-tracing.md) to create spans for your custom code. Manual tracing can be used in conjunction with auto-tracing to create a custom trace while keeping the auto-tracing convenience.
 
 The following example shows how to combine auto-tracing and manual tracing to create a function calling agent. MLflow Tracing automatically captures function calling response from OpenAI models. The function instruction in the response will be highlighted in the trace UI. The `@mlflow.trace` decorator from manual tracing SDK is applied to the tool function (`get_weather`) and the parent agent function (`run_tool_agent`) to create a complete trace for the agent execution.
 
-![OpenAI Function Calling Trace](/docs/3.11.1/images/llms/tracing/openai-function-calling.png)
+![OpenAI Function Calling Trace](/docs/latest/images/llms/tracing/openai-function-calling.png)
 
 * Chat Completion API
 * Responses API
@@ -464,13 +464,13 @@ question = "What's the weather like in Paris today?"
 answer = run_tool_agent(question)
 ```
 
-Refer to the [Typescript OpenAI Quickstart](/docs/3.11.1/genai/tracing/quickstart.md) for the example of function calling agent in Typescript SDK.
+Refer to the [Typescript OpenAI Quickstart](/docs/latest/genai/tracing/quickstart.md) for the example of function calling agent in Typescript SDK.
 
 ## Tracking Token Usage and Cost[​](#tracking-token-usage-and-cost "Direct link to Tracking Token Usage and Cost")
 
-MLflow automatically tracks token usage and cost for OpenAI API calls. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/3.11.1/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
+MLflow automatically tracks token usage and cost for OpenAI API calls. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/latest/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
 
-![OpenAI Token Usage](/docs/3.11.1/images/llms/tracing/openai-token-usage.png)
+![OpenAI Token Usage](/docs/latest/images/llms/tracing/openai-token-usage.png)
 
 #### Supported APIs:[​](#supported-apis-1 "Direct link to Supported APIs:")
 
@@ -490,20 +490,20 @@ Auto tracing for OpenAI can be disabled globally by calling `mlflow.openai.autol
 
 ## Next steps[​](#next-steps "Direct link to Next steps")
 
-### [Track User Feedback](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+### [Track User Feedback](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-[Record user feedback on traces for tracking user satisfaction.](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+[Record user feedback on traces for tracking user satisfaction.](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-[Learn about feedback →](/docs/3.11.1/genai/tracing/collect-user-feedback.md)
+[Learn about feedback →](/docs/latest/genai/tracing/collect-user-feedback.md)
 
-### [Manage Prompts](/docs/3.11.1/genai/prompt-registry.md)
+### [Manage Prompts](/docs/latest/genai/prompt-registry.md)
 
-[Learn how to manage prompts with MLflow's prompt registry.](/docs/3.11.1/genai/prompt-registry.md)
+[Learn how to manage prompts with MLflow's prompt registry.](/docs/latest/genai/prompt-registry.md)
 
-[Manage prompts →](/docs/3.11.1/genai/prompt-registry.md)
+[Manage prompts →](/docs/latest/genai/prompt-registry.md)
 
-### [Evaluate Traces](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+### [Evaluate Traces](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Evaluate traces with LLM judges to understand and improve your AI application's behavior.](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Evaluate traces with LLM judges to understand and improve your AI application's behavior.](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)
 
-[Evaluate traces →](/docs/3.11.1/genai/eval-monitor/running-evaluation/traces.md)
+[Evaluate traces →](/docs/latest/genai/eval-monitor/running-evaluation/traces.md)

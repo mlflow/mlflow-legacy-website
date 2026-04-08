@@ -1,8 +1,8 @@
 # Tracing Vercel AI SDK
 
-[](/docs/3.11.1/images/llms/tracing/vercel-ai-tracing.mp4)
+[](/docs/latest/images/llms/tracing/vercel-ai-tracing.mp4)
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing.md) provides automatic tracing for applications built with the [Vercel AI SDK](https://ai-sdk.dev/) (the `ai` package) via OpenTelemetry, unlocking powerful observability capabilities for TypeScript and Javascript application developers.
+[MLflow Tracing](/docs/latest/genai/tracing.md) provides automatic tracing for applications built with the [Vercel AI SDK](https://ai-sdk.dev/) (the `ai` package) via OpenTelemetry, unlocking powerful observability capabilities for TypeScript and Javascript application developers.
 
 When the integration is enabled, MLflow allows you to record the following information for Vercel AI SDK calls:
 
@@ -30,7 +30,7 @@ bash
 mlflow server --backend-store-uri sqlite:///mlruns.db --port 5000
 ```
 
-Alternatively, you can use [Docker Compose](/docs/3.11.1/self-hosting.md#docker-compose) to start the server without setting up Python environment. See [Self-Hosting Guide](/docs/3.11.1/self-hosting/architecture/backend-store.md) for more details.
+Alternatively, you can use [Docker Compose](/docs/latest/self-hosting.md#docker-compose) to start the server without setting up Python environment. See [Self-Hosting Guide](/docs/latest/self-hosting/architecture/backend-store.md) for more details.
 
 ### 2. Configure Environment Variables[​](#2-configure-environment-variables "Direct link to 2. Configure Environment Variables")
 
@@ -175,11 +175,11 @@ for await (const part of stream.textStream) {
 
 ## Tracking Token Usage and Cost[​](#tracking-token-usage-and-cost "Direct link to Tracking Token Usage and Cost")
 
-MLflow automatically tracks token usage for Vercel AI SDK. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. Cost information may be unavailable depending on the provider; see the [Token Usage and Cost Tracking](/docs/3.11.1/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
+MLflow automatically tracks token usage for Vercel AI SDK. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. Cost information may be unavailable depending on the provider; see the [Token Usage and Cost Tracking](/docs/latest/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
 
 ## Combine with the MLflow Tracing SDK[​](#combine-with-the-mlflow-tracing-sdk "Direct link to Combine with the MLflow Tracing SDK")
 
-Since this integration is built on OpenTelemetry, you can combine the automatically generated traces with the [MLflow Tracing SDK](/docs/3.11.1/genai/tracing.md) (`@mlflow/core`) to add custom spans, set tags, and update trace metadata within the same trace.
+Since this integration is built on OpenTelemetry, you can combine the automatically generated traces with the [MLflow Tracing SDK](/docs/latest/genai/tracing.md) (`@mlflow/core`) to add custom spans, set tags, and update trace metadata within the same trace.
 
 typescript
 
@@ -208,7 +208,7 @@ const result = await withSpan(
 );
 ```
 
-For detailed instructions and examples, see [Combining the OpenTelemetry SDK and the MLflow Tracing SDK](/docs/3.11.1/genai/tracing/app-instrumentation/opentelemetry.md#combining-the-opentelemetry-sdk-and-the-mlflow-tracing-sdk).
+For detailed instructions and examples, see [Combining the OpenTelemetry SDK and the MLflow Tracing SDK](/docs/latest/genai/tracing/app-instrumentation/opentelemetry.md#combining-the-opentelemetry-sdk-and-the-mlflow-tracing-sdk).
 
 ## Disable auto-tracing[​](#disable-auto-tracing "Direct link to Disable auto-tracing")
 

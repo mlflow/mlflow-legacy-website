@@ -6,17 +6,17 @@ Scorers can be registered to MLflow experiments for version control and team col
 
 | Scorer Type                                                                             | Supported                                                                        |
 | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| [Custom LLM Judges](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges.md) | ✅                                                                               |
-| [Code-based Scorers](/docs/3.11.1/genai/eval-monitor/scorers/custom.md)                 | ❌                                                                               |
-| [Guidelines Judges](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/guidelines.md)    | ❌ (Use [MLflow Prompt Registry](/docs/3.11.1/genai/prompt-registry.md) instead) |
-| [Built-in Judges](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/predefined.md)      | ✅                                                                               |
+| [Custom LLM Judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md) | ✅                                                                               |
+| [Code-based Scorers](/docs/latest/genai/eval-monitor/scorers/custom.md)                 | ❌                                                                               |
+| [Guidelines Judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/guidelines.md)    | ❌ (Use [MLflow Prompt Registry](/docs/latest/genai/prompt-registry.md) instead) |
+| [Built-in Judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md)      | ✅                                                                               |
 
 * UI
 * SDK
 
 ### Registering a Scorer[​](#registering-a-scorer "Direct link to Registering a Scorer")
 
-When you create a judge using the [Judge Builder UI](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges.md), it is automatically registered to the current experiment as version 1.
+When you create a judge using the [Judge Builder UI](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md), it is automatically registered to the current experiment as version 1.
 
 ### Updating a Scorer[​](#updating-a-scorer "Direct link to Updating a Scorer")
 

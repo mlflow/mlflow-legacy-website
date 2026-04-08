@@ -2,7 +2,7 @@
 
 MLflow automatically tracks token usage and cost for LLM calls within your traces. This enables you to monitor resource consumption and optimize costs across your LLM applications and AI agents.
 
-[](/docs/3.11.1/images/llms/tracing/token-usage-and-cost-charts.mp4)
+[](/docs/latest/images/llms/tracing/token-usage-and-cost-charts.mp4)
 
 ## Overview[​](#overview "Direct link to Overview")
 
@@ -41,7 +41,7 @@ uv run mlflow server
 
 What is the GenAI extra?
 
-The `[genai]` extra enables other powerful features such as [AI Gateway](/docs/3.11.1/genai/governance/ai-gateway.md), [Automatic Evaluation](/docs/3.11.1/genai/eval-monitor/automatic-evaluations.md), and [Prompt Optimization](/docs/3.11.1/genai/prompt-registry/optimize-prompts.md). It is recommended to start your MLflow server with the extra installed, even if you don't need cost tracking.
+The `[genai]` extra enables other powerful features such as [AI Gateway](/docs/latest/genai/governance/ai-gateway.md), [Automatic Evaluation](/docs/latest/genai/eval-monitor/automatic-evaluations.md), and [Prompt Optimization](/docs/latest/genai/prompt-registry/optimize-prompts.md). It is recommended to start your MLflow server with the extra installed, even if you don't need cost tracking.
 
 info
 
@@ -51,13 +51,13 @@ When using Databricks managed MLflow, the cost computation requires the client a
 
 Token usage and cost information is displayed in the MLflow Trace UI.
 
-[](/docs/3.11.1/images/llms/tracing/token-and-cost-ui.mp4)
+[](/docs/latest/images/llms/tracing/token-and-cost-ui.mp4)
 
 <br />
 
 The aggregated cost and trend charts are available in the **Overview** tab of the experiment page.
 
-![Token Usage and Cost charts in Overview tab](/docs/3.11.1/images/llms/tracing/overview-token-cost-charts.png)
+![Token Usage and Cost charts in Overview tab](/docs/latest/images/llms/tracing/overview-token-cost-charts.png)
 
 ## Accessing Programmatically[​](#accessing-programmatically "Direct link to Accessing Programmatically")
 
@@ -201,7 +201,7 @@ The `cost` field returns a dictionary with the following keys:
 
 ## Supported Integrations[​](#supported-integrations "Direct link to Supported Integrations")
 
-Token usage and cost tracking is supported for most MLflow tracing integrations. See the individual [integration pages](/docs/3.11.1/genai/tracing/integrations.md) for specific support details.
+Token usage and cost tracking is supported for most MLflow tracing integrations. See the individual [integration pages](/docs/latest/genai/tracing/integrations.md) for specific support details.
 
 tip
 
@@ -249,20 +249,20 @@ def my_llm_call():
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-### [View Traces in UI](/docs/3.11.1/genai/tracing/observe-with-traces/ui.md)
+### [View Traces in UI](/docs/latest/genai/tracing/observe-with-traces/ui.md)
 
-[Learn how to navigate and analyze traces in the MLflow UI.](/docs/3.11.1/genai/tracing/observe-with-traces/ui.md)
+[Learn how to navigate and analyze traces in the MLflow UI.](/docs/latest/genai/tracing/observe-with-traces/ui.md)
 
-[View traces →](/docs/3.11.1/genai/tracing/observe-with-traces/ui.md)
+[View traces →](/docs/latest/genai/tracing/observe-with-traces/ui.md)
 
-### [Search Traces](/docs/3.11.1/genai/tracing/search-traces.md)
+### [Search Traces](/docs/latest/genai/tracing/search-traces.md)
 
-[Search and filter traces based on various criteria.](/docs/3.11.1/genai/tracing/search-traces.md)
+[Search and filter traces based on various criteria.](/docs/latest/genai/tracing/search-traces.md)
 
-[Search traces →](/docs/3.11.1/genai/tracing/search-traces.md)
+[Search traces →](/docs/latest/genai/tracing/search-traces.md)
 
-### [Tracing Integrations](/docs/3.11.1/genai/tracing/integrations.md)
+### [Tracing Integrations](/docs/latest/genai/tracing/integrations.md)
 
-[See which integrations support token usage and cost tracking.](/docs/3.11.1/genai/tracing/integrations.md)
+[See which integrations support token usage and cost tracking.](/docs/latest/genai/tracing/integrations.md)
 
-[View integrations →](/docs/3.11.1/genai/tracing/integrations.md)
+[View integrations →](/docs/latest/genai/tracing/integrations.md)

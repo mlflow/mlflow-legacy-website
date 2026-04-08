@@ -35,7 +35,7 @@ def my_function(input_data):
 
 ### Q: Which libraries does MLflow Tracing support automatically?[​](#q-which-libraries-does-mlflow-tracing-support-automatically "Direct link to Q: Which libraries does MLflow Tracing support automatically?")
 
-MLflow provides automatic tracing (autolog) for 40+ popular libraries. See the complete list at [Automatic Tracing Integrations](/docs/3.11.1/genai/tracing/integrations.md).
+MLflow provides automatic tracing (autolog) for 40+ popular libraries. See the complete list at [Automatic Tracing Integrations](/docs/latest/genai/tracing/integrations.md).
 
 ## User Interface and Jupyter Integration[​](#user-interface-and-jupyter-integration "Direct link to User Interface and Jupyter Integration")
 
@@ -44,7 +44,7 @@ MLflow provides automatic tracing (autolog) for 40+ popular libraries. See the c
 Yes! Jupyter integration is available in MLflow 2.20 and above. The trace UI automatically displays within notebooks when:
 
 1. Cell code generates a trace
-2. You call [`mlflow.search_traces()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.search_traces)
+2. You call [`mlflow.search_traces()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.search_traces)
 3. You display a trace object
 
 python
@@ -79,7 +79,7 @@ mlflow.tracing.enable_notebook_display()
 
 ### Q: How can I customize the request and response previews in the UI?[​](#q-how-can-i-customize-the-request-and-response-previews-in-the-ui "Direct link to Q: How can I customize the request and response previews in the UI?")
 
-You can customize what appears in the Request and Response columns of the trace list using [`mlflow.update_current_trace()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.update_current_trace):
+You can customize what appears in the Request and Response columns of the trace list using [`mlflow.update_current_trace()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.update_current_trace):
 
 python
 
@@ -104,7 +104,7 @@ def predict(messages: list[dict]) -> str:
 
 Yes, MLflow Tracing is stable and designed to be used in production environments.
 
-When using MLflow Tracing in production environments, we recommend using the [Production Tracing SDK](/docs/3.11.1/genai/tracing/lightweight-sdk.md) (`mlflow-tracing`) to instrument your code/models/agents with a minimal set of dependencies and a smaller installation footprint. Please refer to the [Production Monitoring](/docs/3.11.1/genai/tracing/prod-tracing.md) section for more details.
+When using MLflow Tracing in production environments, we recommend using the [Production Tracing SDK](/docs/latest/genai/tracing/lightweight-sdk.md) (`mlflow-tracing`) to instrument your code/models/agents with a minimal set of dependencies and a smaller installation footprint. Please refer to the [Production Monitoring](/docs/latest/genai/tracing/prod-tracing.md) section for more details.
 
 ### Q: How do I enable asynchronous trace logging?[​](#q-how-do-i-enable-asynchronous-trace-logging "Direct link to Q: How do I enable asynchronous trace logging?")
 
@@ -143,7 +143,7 @@ MLflow's Automatic Tracing integration captures rich information that are helpfu
 
 MLflow supports plugging-in custom post-processing hooks applied to trace data before exporting to the backend. This allows you to reduce the trace size by removing unnecessary data, or applying security guardrails such as masking sensitive data.
 
-To register a custom hooks, use the [`mlflow.tracing.configure`](/docs/3.11.1/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.configure) API. For example, the following code filters out the document contents from the retriever span output to reduce the trace size:
+To register a custom hooks, use the [`mlflow.tracing.configure`](/docs/latest/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.configure) API. For example, the following code filters out the document contents from the retriever span output to reduce the trace size:
 
 python
 
@@ -168,7 +168,7 @@ mlflow.tracing.configure(span_processors=[filter_retrieval_output])
 ...
 ```
 
-Refer to the [Redacting Sensitive Data Safe](/docs/3.11.1/genai/tracing/observe-with-traces/masking.md) guide for more details about the hook API and examples.
+Refer to the [Redacting Sensitive Data Safe](/docs/latest/genai/tracing/observe-with-traces/masking.md) guide for more details about the hook API and examples.
 
 ### Q. Can I log traces to different experiments from a single application?[​](#q-can-i-log-traces-to-different-experiments-from-a-single-application "Direct link to Q. Can I log traces to different experiments from a single application?")
 
@@ -180,7 +180,7 @@ Therefore, MLflow provides two different ways to switch target experiments to lo
 
 #### Optional 1. Set the `trace_destination` parameter when starting a manual trace[​](#optional-1-set-the-trace_destination-parameter-when-starting-a-manual-trace "Direct link to optional-1-set-the-trace_destination-parameter-when-starting-a-manual-trace")
 
-The `trace_destination` parameter was introduced to the [@mlflow.trace](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.trace) decorator and the [mlflow.start\_span](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.start_span) API in MLflow 3.3 to allow you to specify the target experiment for each trace explicitly.
+The `trace_destination` parameter was introduced to the [@mlflow.trace](/docs/latest/api_reference/python_api/mlflow.html#mlflow.trace) decorator and the [mlflow.start\_span](/docs/latest/api_reference/python_api/mlflow.html#mlflow.start_span) API in MLflow 3.3 to allow you to specify the target experiment for each trace explicitly.
 
 python
 
@@ -199,7 +199,7 @@ Note that the `trace_destination` parameter is only effective when it is set to 
 
 #### Option 2. Use `mlflow.tracing.set_destination` with `context_local=True`[​](#option-2-use-mlflowtracingset_destination-with-context_localtrue "Direct link to option-2-use-mlflowtracingset_destination-with-context_localtrue")
 
-The [`mlflow.tracing.set_destination()`](/docs/3.11.1/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.set_destination) API is a purpose-built API for setting the destination of traces, while bypassing the overhead of `mlflow.set_experiment`. The `context_local` parameter allows you to set the destination per async task or thread, providing isolation in concurrent applications. This option is useful when you use automatic tracing and not using the manual tracing APIs.
+The [`mlflow.tracing.set_destination()`](/docs/latest/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.set_destination) API is a purpose-built API for setting the destination of traces, while bypassing the overhead of `mlflow.set_experiment`. The `context_local` parameter allows you to set the destination per async task or thread, providing isolation in concurrent applications. This option is useful when you use automatic tracing and not using the manual tracing APIs.
 
 python
 
@@ -380,9 +380,9 @@ asyncio.run(async_function("test query"))
 
 ### Q: How do I temporarily disable tracing?[​](#q-how-do-i-temporarily-disable-tracing "Direct link to Q: How do I temporarily disable tracing?")
 
-To **disable** tracing, [`mlflow.tracing.disable()`](/docs/3.11.1/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.disable) API will cease the collection of trace data from within MLflow and will not log any data to the MLflow Tracking service regarding traces.
+To **disable** tracing, [`mlflow.tracing.disable()`](/docs/latest/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.disable) API will cease the collection of trace data from within MLflow and will not log any data to the MLflow Tracking service regarding traces.
 
-To **enable** tracing (if it had been temporarily disabled), [`mlflow.tracing.enable()`](/docs/3.11.1/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.enable) API will re-enable tracing functionality for instrumented models that are invoked.
+To **enable** tracing (if it had been temporarily disabled), [`mlflow.tracing.enable()`](/docs/latest/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.enable) API will re-enable tracing functionality for instrumented models that are invoked.
 
 python
 
@@ -470,7 +470,7 @@ print(traces)
 
 ### Q: How do I delete traces?[​](#q-how-do-i-delete-traces "Direct link to Q: How do I delete traces?")
 
-You can delete traces using the [`mlflow.client.MlflowClient.delete_traces()`](/docs/3.11.1/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.delete_traces) method:
+You can delete traces using the [`mlflow.client.MlflowClient.delete_traces()`](/docs/latest/api_reference/python_api/mlflow.client.html#mlflow.client.MlflowClient.delete_traces) method:
 
 python
 
@@ -493,7 +493,7 @@ tip
 
 Deleting a trace is an irreversible process. Ensure that the settings provided within the `delete_traces` API meet the intended range for deletion.
 
-Read more about [trace deletion](/docs/3.11.1/genai/tracing/observe-with-traces/delete-traces.md).
+Read more about [trace deletion](/docs/latest/genai/tracing/observe-with-traces/delete-traces.md).
 
 ### Q: Where are my traces stored?[​](#q-where-are-my-traces-stored "Direct link to Q: Where are my traces stored?")
 
@@ -517,7 +517,7 @@ Yes, MLflow Tracing is built on OpenTelemetry standards and can integrate with o
 
 **Standard formats**: Use industry-standard trace formats for interoperability
 
-For production monitoring, see [Production Tracing](/docs/3.11.1/genai/tracing/prod-tracing.md) for integration patterns.
+For production monitoring, see [Production Tracing](/docs/latest/genai/tracing/prod-tracing.md) for integration patterns.
 
 ### Q: Does the MLflow TypeScript SDK work in frontend (browser) environments?[​](#q-does-the-mlflow-typescript-sdk-work-in-frontend-browser-environments "Direct link to Q: Does the MLflow TypeScript SDK work in frontend (browser) environments?")
 
@@ -525,13 +525,13 @@ No, the MLflow TypeScript SDK (`@mlflow/core`, `@mlflow/openai`, etc.) works in 
 
 ### Q: Can I create custom manual traces and spans?[​](#q-can-i-create-custom-manual-traces-and-spans "Direct link to Q: Can I create custom manual traces and spans?")
 
-Yes, MLflow provides comprehensive manual tracing capabilities. Please refer to the [Manual Tracing](/docs/3.11.1/genai/tracing/app-instrumentation/manual-tracing.md) guide for detailed information on creating traces and spans manually using decorators, context managers, and low-level APIs.
+Yes, MLflow provides comprehensive manual tracing capabilities. Please refer to the [Manual Tracing](/docs/latest/genai/tracing/app-instrumentation/manual-tracing.md) guide for detailed information on creating traces and spans manually using decorators, context managers, and low-level APIs.
 
 ## Getting Help[​](#getting-help "Direct link to Getting Help")
 
 ### Q: Where can I find more help or report issues?[​](#q-where-can-i-find-more-help-or-report-issues "Direct link to Q: Where can I find more help or report issues?")
 
-**Documentation**: Start with the [MLflow Tracing documentation](/docs/3.11.1/genai/tracing.md)
+**Documentation**: Start with the [MLflow Tracing documentation](/docs/latest/genai/tracing.md)
 
 **GitHub Issues**: Report bugs or request features at [MLflow GitHub](https://github.com/mlflow/mlflow/issues)
 
@@ -543,4 +543,4 @@ Yes, MLflow provides comprehensive manual tracing capabilities. Please refer to 
 
 ***
 
-*For additional questions or issues not covered here, please check the [MLflow documentation](/docs/3.11.1/genai/tracing.md) or reach out to the community.*
+*For additional questions or issues not covered here, please check the [MLflow documentation](/docs/latest/genai/tracing.md) or reach out to the community.*

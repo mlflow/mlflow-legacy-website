@@ -31,7 +31,7 @@ Workspaces require a SQL database backend store. File-based backends are not sup
 
 note
 
-If you are enabling workspaces on an existing instance with basic-auth, set `grant_default_workspace_access = true` in your [auth config](/docs/3.11.1/self-hosting/workspaces/configuration.md#grant_default_workspace_access) for backwards compatibility. Otherwise, existing resources in the `default` workspace will become inaccessible to non-admin users.
+If you are enabling workspaces on an existing instance with basic-auth, set `grant_default_workspace_access = true` in your [auth config](/docs/latest/self-hosting/workspaces/configuration.md#grant_default_workspace_access) for backwards compatibility. Otherwise, existing resources in the `default` workspace will become inaccessible to non-admin users.
 
 ## Workspace-Scoped Resources[​](#workspace-scoped-resources "Direct link to Workspace-Scoped Resources")
 
@@ -137,7 +137,7 @@ If neither `mlflow.set_workspace()` nor `MLFLOW_WORKSPACE` is set, MLflow falls 
 
 ## Authentication and Permissions[​](#authentication-and-permissions "Direct link to Authentication and Permissions")
 
-When [MLflow authentication](/docs/3.11.1/self-hosting/security/basic-http-auth.md) is enabled, workspaces support workspace-scoped permissions that complement resource-level access control:
+When [MLflow authentication](/docs/latest/self-hosting/security/basic-http-auth.md) is enabled, workspaces support workspace-scoped permissions that complement resource-level access control:
 
 * Workspace-level permissions provide convenient grants for all resources within a workspace
 * Users can have workspace-level permissions, resource-level permissions, or both
@@ -146,7 +146,7 @@ When [MLflow authentication](/docs/3.11.1/self-hosting/security/basic-http-auth.
 * Individual resource permissions take precedence and can further restrict access
 * Users with `MANAGE` permission can delegate access to others within their workspace
 
-See [Workspace Permissions](/docs/3.11.1/self-hosting/workspaces/permissions.md) for details.
+See [Workspace Permissions](/docs/latest/self-hosting/workspaces/permissions.md) for details.
 
 ## Migration and Compatibility[​](#migration-and-compatibility "Direct link to Migration and Compatibility")
 
@@ -161,13 +161,13 @@ The `default` workspace is reserved and cannot be deleted or renamed. It provide
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 
-* [Getting Started](/docs/3.11.1/self-hosting/workspaces/getting-started.md) - Step-by-step guide to setting up workspaces
-* [Configuration](/docs/3.11.1/self-hosting/workspaces/configuration.md) - Server configuration and startup options
-* [Workspace Providers](/docs/3.11.1/self-hosting/workspaces/workspace-providers.md) - Pluggable provider architecture
-* [Permissions](/docs/3.11.1/self-hosting/workspaces/permissions.md) - Workspace-scoped access control
+* [Getting Started](/docs/latest/self-hosting/workspaces/getting-started.md) - Step-by-step guide to setting up workspaces
+* [Configuration](/docs/latest/self-hosting/workspaces/configuration.md) - Server configuration and startup options
+* [Workspace Providers](/docs/latest/self-hosting/workspaces/workspace-providers.md) - Pluggable provider architecture
+* [Permissions](/docs/latest/self-hosting/workspaces/permissions.md) - Workspace-scoped access control
 
 ## API Reference[​](#api-reference "Direct link to API Reference")
 
-* [mlflow.set\_workspace()](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.set_workspace)
-* [mlflow.get\_workspace()](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.get_workspace)
-* [mlflow.list\_workspaces()](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.list_workspaces)
+* [mlflow.set\_workspace()](/docs/latest/api_reference/python_api/mlflow.html#mlflow.set_workspace)
+* [mlflow.get\_workspace()](/docs/latest/api_reference/python_api/mlflow.html#mlflow.get_workspace)
+* [mlflow.list\_workspaces()](/docs/latest/api_reference/python_api/mlflow.html#mlflow.list_workspaces)

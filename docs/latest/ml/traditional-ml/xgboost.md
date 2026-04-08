@@ -67,7 +67,7 @@ Autologging captures parameters, metrics per iteration, feature importance with 
 
 Tracking Server Setup
 
-Running locally? MLflow stores experiments in the current directory by default. For team collaboration or remote tracking, **[set up a tracking server](/docs/3.11.1/ml/tracking/tutorials/remote-server.md)**.
+Running locally? MLflow stores experiments in the current directory by default. For team collaboration or remote tracking, **[set up a tracking server](/docs/latest/ml/tracking/tutorials/remote-server.md)**.
 
 ## Autologging[​](#autologging "Direct link to Autologging")
 
@@ -386,20 +386,20 @@ mlflow deployments create \
 
 ## Learn More[​](#learn-more "Direct link to Learn More")
 
-### [Tracking Server Setup](/docs/3.11.1/ml/tracking/tutorials/remote-server.md)
+### [Tracking Server Setup](/docs/latest/ml/tracking/tutorials/remote-server.md)
 
-[Set up a self-hosted MLflow tracking server for team collaboration and remote experiment tracking.](/docs/3.11.1/ml/tracking/tutorials/remote-server.md)
+[Set up a self-hosted MLflow tracking server for team collaboration and remote experiment tracking.](/docs/latest/ml/tracking/tutorials/remote-server.md)
 
-[Learn more →](/docs/3.11.1/ml/tracking/tutorials/remote-server.md)
+[Learn more →](/docs/latest/ml/tracking/tutorials/remote-server.md)
 
-### [Model Evaluation](/docs/3.11.1/ml/evaluation.md)
+### [Model Evaluation](/docs/latest/ml/evaluation.md)
 
-[Evaluate XGBoost models using MLflow's comprehensive evaluation framework with built-in metrics and custom evaluators.](/docs/3.11.1/ml/evaluation.md)
+[Evaluate XGBoost models using MLflow's comprehensive evaluation framework with built-in metrics and custom evaluators.](/docs/latest/ml/evaluation.md)
 
-[Learn more →](/docs/3.11.1/ml/evaluation.md)
+[Learn more →](/docs/latest/ml/evaluation.md)
 
-### [Model Deployment](/docs/3.11.1/ml/deployment.md)
+### [Model Deployment](/docs/latest/ml/deployment.md)
 
-[Deploy XGBoost models locally, to Kubernetes, AWS SageMaker, or other cloud platforms using MLflow's deployment tools.](/docs/3.11.1/ml/deployment.md)
+[Deploy XGBoost models locally, to Kubernetes, AWS SageMaker, or other cloud platforms using MLflow's deployment tools.](/docs/latest/ml/deployment.md)
 
-[Learn more →](/docs/3.11.1/ml/deployment.md)
+[Learn more →](/docs/latest/ml/deployment.md)

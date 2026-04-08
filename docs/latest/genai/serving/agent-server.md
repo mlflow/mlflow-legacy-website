@@ -115,7 +115,7 @@ curl -X POST http://localhost:8000/invocations \
 
 ## Evaluating Your Agent[​](#evaluating-your-agent "Direct link to Evaluating Your Agent")
 
-You can use [`mlflow.genai.evaluate()`](/docs/3.11.1/api_reference/python_api/mlflow.genai.html#mlflow.genai.evaluate) to evaluate your agent. See the [Evaluating Agents](/docs/3.11.1/genai/eval-monitor.md) guide and [Scorer](/docs/3.11.1/genai/eval-monitor/scorers.md) documentation for more information.
+You can use [`mlflow.genai.evaluate()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.evaluate) to evaluate your agent. See the [Evaluating Agents](/docs/latest/genai/eval-monitor.md) guide and [Scorer](/docs/latest/genai/eval-monitor/scorers.md) documentation for more information.
 
 1. Define a file like `eval_agent.py` to evaluate your agent:
 

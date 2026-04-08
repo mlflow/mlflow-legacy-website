@@ -6,7 +6,7 @@ API keys serve as reusable credentials that can be shared across multiple endpoi
 
 Navigate to the AI Gateway section at `http://localhost:5000/#/gateway` and click on the **API Keys** tab.
 
-![API Keys Page](/docs/3.11.1/assets/images/api-keys-page-120794235927669caacd55978043270f.png)
+![API Keys Page](/docs/latest/assets/images/api-keys-page-120794235927669caacd55978043270f.png)
 
 ## Creating an API Key[​](#creating-an-api-key "Direct link to Creating an API Key")
 
@@ -31,7 +31,7 @@ Navigate to the AI Gateway section at `http://localhost:5000/#/gateway` and clic
 
 7. Click **Create**
 
-![Create API Key](/docs/3.11.1/assets/images/create-api-key-680a70020d74cde71f658c2bf2962d9a.png)
+![Create API Key](/docs/latest/assets/images/create-api-key-680a70020d74cde71f658c2bf2962d9a.png)
 
 ## Working with Existing Keys[​](#working-with-existing-keys "Direct link to Working with Existing Keys")
 
@@ -71,4 +71,4 @@ Creating reusable API keys simplifies credential rotation. When you need to upda
 1. **Use descriptive names**: Name keys by provider and purpose (e.g., `openai-production`, `anthropic-dev`)
 2. **Separate development and production**: Use different keys for different environments
 3. **Minimize key sharing**: Create separate keys when different teams or applications need isolated access
-4. **Regular rotation**: Periodically rotate credentials for security (see [Encryption & Rotation](/docs/3.11.1/genai/governance/ai-gateway/api-keys/key-rotation.md))
+4. **Regular rotation**: Periodically rotate credentials for security (see [Encryption & Rotation](/docs/latest/genai/governance/ai-gateway/api-keys/key-rotation.md))

@@ -1,8 +1,8 @@
 # Tracing OpenCode
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing.md) provides automatic tracing for [OpenCode](https://opencode.ai), a terminal-based agentic coding tool that supports multiple LLM providers including Claude, OpenAI, Google, and local models.
+[MLflow Tracing](/docs/latest/genai/tracing.md) provides automatic tracing for [OpenCode](https://opencode.ai), a terminal-based agentic coding tool that supports multiple LLM providers including Claude, OpenAI, Google, and local models.
 
-![OpenCode Tracing](/docs/3.11.1/images/llms/opencode/opencode-tracing.png)
+![OpenCode Tracing](/docs/latest/images/llms/opencode/opencode-tracing.png)
 
 After setting up the MLflow plugin, MLflow will automatically capture traces of your OpenCode conversations and log them to the specified MLflow experiment. The trace automatically captures information such as:
 
@@ -66,7 +66,7 @@ export MLFLOW_EXPERIMENT_ID=123456
 
 ### Step 4: Start MLflow Server (if not already running)[​](#step-4-start-mlflow-server-if-not-already-running "Direct link to Step 4: Start MLflow Server (if not already running)")
 
-You can start an MLflow server using [Docker Compose](/docs/3.11.1/self-hosting.md#docker-compose), which doesn't require a Python environment:
+You can start an MLflow server using [Docker Compose](/docs/latest/self-hosting.md#docker-compose), which doesn't require a Python environment:
 
 bash
 
@@ -125,7 +125,7 @@ export MLFLOW_EXPERIMENT_ID=123456789
 
 MLflow automatically tracks the token usage for each LLM call within OpenCode conversations. The token usage for each LLM call is logged in the `mlflow.chat.tokenUsage` attribute. The token usage and cost will be displayed in the Overview dashboard and the trace detail page.
 
-![OpenCode Trace Overview](/docs/3.11.1/images/llms/opencode/opencode-overview.png)
+![OpenCode Trace Overview](/docs/latest/images/llms/opencode/opencode-overview.png)
 
 ## Session and User Tracking[​](#session-and-user-tracking "Direct link to Session and User Tracking")
 
@@ -134,9 +134,9 @@ The plugin automatically tracks session and user metadata for each trace:
 * **Session ID**: Each OpenCode session is tagged with `mlflow.trace.session`, allowing you to group and filter traces by session.
 * **User**: The current system user is tagged with `mlflow.trace.user`, making it easy to identify who initiated each conversation.
 
-![OpenCode Session Tracking](/docs/3.11.1/images/llms/opencode/opencode-session.png)
+![OpenCode Session Tracking](/docs/latest/images/llms/opencode/opencode-session.png)
 
-You can use these metadata fields to filter traces in the MLflow UI or via the search API. For more details on session and user tracking, see [Track Users and Sessions](/docs/3.11.1/genai/tracing/track-users-sessions.md).
+You can use these metadata fields to filter traces in the MLflow UI or via the search API. For more details on session and user tracking, see [Track Users and Sessions](/docs/latest/genai/tracing/track-users-sessions.md).
 
 ## Troubleshooting[​](#troubleshooting "Direct link to Troubleshooting")
 

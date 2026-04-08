@@ -4,11 +4,11 @@ Tags are mutable key-value pairs that you can attach to traces to add valuable l
 
 ## Setting Tags via the MLflow UI[​](#setting-tags-via-the-mlflow-ui "Direct link to Setting Tags via the MLflow UI")
 
-[](/docs/3.11.1/images/llms/tracing/trace-set-tag.mp4)
+[](/docs/latest/images/llms/tracing/trace-set-tag.mp4)
 
 ## Setting Tags on Ongoing Traces[​](#setting-tags-on-ongoing-traces "Direct link to Setting Tags on Ongoing Traces")
 
-Use [`mlflow.update_current_trace()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.update_current_trace) to add tags during trace execution.
+Use [`mlflow.update_current_trace()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.update_current_trace) to add tags during trace execution.
 
 python
 
@@ -27,7 +27,7 @@ result = my_func(5)
 
 note
 
-If the key is already present, the [`mlflow.update_current_trace()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.update_current_trace) function will update the key with the new value.
+If the key is already present, the [`mlflow.update_current_trace()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.update_current_trace) function will update the key with the new value.
 
 ## Setting Tags on Completed Traces[​](#setting-tags-on-completed-traces "Direct link to Setting Tags on Completed Traces")
 
@@ -75,4 +75,4 @@ python
 traces = mlflow.search_traces(filter_string="tags.topic LIKE '%mlflow%'")
 ```
 
-View the full list of supported filter syntax in the [Search Traces](/docs/3.11.1/genai/tracing/search-traces.md) guide.
+View the full list of supported filter syntax in the [Search Traces](/docs/latest/genai/tracing/search-traces.md) guide.

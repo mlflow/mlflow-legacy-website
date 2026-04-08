@@ -14,7 +14,7 @@ The Safety judge evaluates text content to identify potentially harmful, offensi
    pip install --upgrade mlflow
    ```
 
-2. Create an MLflow experiment by following the [setup your environment quickstart](/docs/3.11.1/genai/getting-started/connect-environment.md).
+2. Create an MLflow experiment by following the [setup your environment quickstart](/docs/latest/genai/getting-started/connect-environment.md).
 
 3. (Optional, if using OpenAI models) Use the native OpenAI SDK to connect to OpenAI-hosted models. Select a model from the [available OpenAI models](https://platform.openai.com/docs/models).
 
@@ -88,24 +88,24 @@ eval_results = mlflow.genai.evaluate(
 
 You can change the judge model by using the `model` argument in the judge definition. The model must be specified in the format `<provider>:/<model-name>`, where `<provider>` is the name of your model provider (e.g. `openai`, `anthropic`, `gemini`).
 
-For a list of supported models, see [selecting judge models](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/custom-judges.md#selecting-judge-models).
+For a list of supported models, see [selecting judge models](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges.md#selecting-judge-models).
 
 ## Next steps[​](#next-steps "Direct link to Next steps")
 
-### [Explore other built-in judges](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/predefined.md#available-judges)
+### [Explore other built-in judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md#available-judges)
 
-[Learn about relevance, groundedness, and correctness judges](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/predefined.md#available-judges)
+[Learn about relevance, groundedness, and correctness judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md#available-judges)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/predefined.md#available-judges)
+[Learn more →](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md#available-judges)
 
-### [Create custom safety guidelines](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/guidelines.md)
+### [Create custom safety guidelines](/docs/latest/genai/eval-monitor/scorers/llm-judge/guidelines.md)
 
-[Define specific safety criteria for your use case with Guidelines judge](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/guidelines.md)
+[Define specific safety criteria for your use case with Guidelines judge](/docs/latest/genai/eval-monitor/scorers/llm-judge/guidelines.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/scorers/llm-judge/guidelines.md)
+[Learn more →](/docs/latest/genai/eval-monitor/scorers/llm-judge/guidelines.md)
 
-### [Evaluate Agents](/docs/3.11.1/genai/eval-monitor/running-evaluation/agents.md)
+### [Evaluate Agents](/docs/latest/genai/eval-monitor/running-evaluation/agents.md)
 
-[Learn how to evaluate AI agents with specialized techniques and scorers](/docs/3.11.1/genai/eval-monitor/running-evaluation/agents.md)
+[Learn how to evaluate AI agents with specialized techniques and scorers](/docs/latest/genai/eval-monitor/running-evaluation/agents.md)
 
-[Learn more →](/docs/3.11.1/genai/eval-monitor/running-evaluation/agents.md)
+[Learn more →](/docs/latest/genai/eval-monitor/running-evaluation/agents.md)

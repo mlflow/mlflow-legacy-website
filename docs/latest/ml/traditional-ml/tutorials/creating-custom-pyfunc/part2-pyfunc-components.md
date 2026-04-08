@@ -1,8 +1,8 @@
 # Understanding PyFunc in MLflow
 
-In the realm of MLflow, while named flavors offer specific functionalities tailored to popular frameworks, there are situations and requirements that fall outside these predefined paths. Enter the custom [`pyfunc`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc) (Python function), a universal interface, empowering you to encapsulate models from any framework into an MLflow Model by defining a custom Python function.
+In the realm of MLflow, while named flavors offer specific functionalities tailored to popular frameworks, there are situations and requirements that fall outside these predefined paths. Enter the custom [`pyfunc`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc) (Python function), a universal interface, empowering you to encapsulate models from any framework into an MLflow Model by defining a custom Python function.
 
-PyFunc versions of models are interacted with in the same way as any other MLflow model type, providing both [`save_model()`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.save_model) and [`log_model()`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.log_model) interfaces in order to create (save) and access (load) the models respectively.
+PyFunc versions of models are interacted with in the same way as any other MLflow model type, providing both [`save_model()`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.save_model) and [`log_model()`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.log_model) interfaces in order to create (save) and access (load) the models respectively.
 
 Because these custom models contain the `python_function` flavor, they can be deployed to any of MLflow's supported production environments, such as SageMaker, AzureML, Databricks, Kubernetes, or local REST endpoints.
 
@@ -58,7 +58,7 @@ There are numerous scenarios where a custom Pyfunc becomes invaluable:
 
 Understanding the sequence of events during the *mlflow\.pyfunc.load\_model()* call is crucial to harnessing the full power of custom Pyfuncs. Here's a step-by-step breakdown of the sequence of events that happens when loading a custom pyfunc and how declaring overrides during saving the model are accessed and referenced to control the behavior of the loaded model object.
 
-![Tags, experiments, and runs relationships](/docs/3.11.1/assets/images/pyfunc_loading-fb01dd90de7edbcddfa558edd64e2f5d.svg)
+![Tags, experiments, and runs relationships](/docs/latest/assets/images/pyfunc_loading-fb01dd90de7edbcddfa558edd64e2f5d.svg)
 
 Pyfunc loading process
 
@@ -92,4 +92,4 @@ It's worth noting that this sequence ensures that the custom Pyfunc model, once 
 
 Now that you understand the importance and components of *pyfunc*, the next step is to dive into seeing how they can be built.
 
-[Explore the tutorial notebooks](/docs/3.11.1/ml/traditional-ml/tutorials/creating-custom-pyfunc/notebooks.md)
+[Explore the tutorial notebooks](/docs/latest/ml/traditional-ml/tutorials/creating-custom-pyfunc/notebooks.md)

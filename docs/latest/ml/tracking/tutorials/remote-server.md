@@ -1,24 +1,24 @@
 # Remote Experiment Tracking with MLflow Tracking Server
 
-In this tutorial, you will learn how to set up MLflow Tracking environment for team development using the [MLflow Tracking Server](/docs/3.11.1/ml/tracking.md#tracking_server).
+In this tutorial, you will learn how to set up MLflow Tracking environment for team development using the [MLflow Tracking Server](/docs/latest/ml/tracking.md#tracking_server).
 
 There are many benefits to utilize MLflow Tracking Server for remote experiment tracking:
 
 * **Collaboration**: Multiple users can log runs to the same endpoint, and query runs and models logged by other users.
-* **Sharing Results**: The tracking server also serves a [Tracking UI](/docs/3.11.1/ml/tracking.md#tracking_ui) endpoint, where team members can easily explore each other's results.
+* **Sharing Results**: The tracking server also serves a [Tracking UI](/docs/latest/ml/tracking.md#tracking_ui) endpoint, where team members can easily explore each other's results.
 * **Centralized Access**: The tracking server can be run as a proxy for the remote access for metadata and artifacts, making it easier to secure and audit access to data.
 
 ## How does it work?[​](#how-does-it-work "Direct link to How does it work?")
 
 The following picture depicts the architecture of using a remote MLflow Tracking Server with PostgreSQL and S3
 
-![](/docs/3.11.1/assets/images/scenario_5-26381271ff593f8d5c9e5c4c11aeaeb4.png)
+![](/docs/latest/assets/images/scenario_5-26381271ff593f8d5c9e5c4c11aeaeb4.png)
 
 Artifacture diagram of MLflow Tracking Server with PostgreSQL and S3
 
 note
 
-You can find the list of supported data stores in the [artifact stores](/docs/3.11.1/self-hosting/architecture/artifact-store.md) and [backend stores](/docs/3.11.1/self-hosting/architecture/backend-store.md) documentation guides.
+You can find the list of supported data stores in the [artifact stores](/docs/latest/self-hosting/architecture/artifact-store.md) and [backend stores](/docs/latest/self-hosting/architecture/backend-store.md) documentation guides.
 
 When you start logging runs to the MLflow Tracking Server, the following happens:
 
@@ -158,7 +158,7 @@ export AWS_ACCESS_KEY_ID=minio_user
 export AWS_SECRET_ACCESS_KEY=minio_password
 ```
 
-You can find the instructions for how to configure credentials for other storages in [Supported Storage](/docs/3.11.1/self-hosting/architecture/artifact-store.md#artifacts-store-supported-storages).
+You can find the instructions for how to configure credentials for other storages in [Supported Storage](/docs/latest/self-hosting/architecture/artifact-store.md#artifacts-store-supported-storages).
 
 #### Launch the tracking server[​](#launch-the-tracking-server "Direct link to Launch the tracking server")
 
@@ -178,7 +178,7 @@ Replace `localhost` with the remote host name or IP address for your database se
 
 ### Step 4: Logging to the Tracking Server[​](#step-4-logging-to-the-tracking-server "Direct link to Step 4: Logging to the Tracking Server")
 
-Once the tracking server is running, you can log runs to it by setting the MLflow Tracking URI to the tracking server's URI. Alternatively, you can use the [`mlflow.set_tracking_uri()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.set_tracking_uri) API to set the tracking URI.
+Once the tracking server is running, you can log runs to it by setting the MLflow Tracking URI to the tracking server's URI. Alternatively, you can use the [`mlflow.set_tracking_uri()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.set_tracking_uri) API to set the tracking URI.
 
 bash
 
@@ -237,5 +237,5 @@ model = mlflow.sklearn.load_model(local_path)
 
 Now you have learned how to set up MLflow Tracking Server for remote experiment tracking! There are a couple of more advanced topics you can explore:
 
-* **Other configurations for the Tracking Server**: By default, MLflow Tracking Server serves both backend store and artifact store. You can also configure the Tracking Server to serve only backend store or artifact store, to handle different use cases such as large traffic or security concerns. See [other use cases](/docs/3.11.1/ml/tracking.md#other-tracking-setup) for how to customize the Tracking Server for these use cases.
-* **Secure the Tracking Server**: The `--host` option exposes the service on all interfaces. If running a server in production, we would recommend not exposing the built-in server broadly (as it is unauthenticated and unencrypted). Read [Secure Tracking Server](/docs/3.11.1/self-hosting/security/network.md) for the best practices to secure the Tracking Server in production.
+* **Other configurations for the Tracking Server**: By default, MLflow Tracking Server serves both backend store and artifact store. You can also configure the Tracking Server to serve only backend store or artifact store, to handle different use cases such as large traffic or security concerns. See [other use cases](/docs/latest/ml/tracking.md#other-tracking-setup) for how to customize the Tracking Server for these use cases.
+* **Secure the Tracking Server**: The `--host` option exposes the service on all interfaces. If running a server in production, we would recommend not exposing the built-in server broadly (as it is unauthenticated and unencrypted). Read [Secure Tracking Server](/docs/latest/self-hosting/security/network.md) for the best practices to secure the Tracking Server in production.

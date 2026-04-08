@@ -1,6 +1,6 @@
 # Prompt Engineering UI (Experimental)
 
-Starting in MLflow 2.7, the MLflow Tracking UI provides a best-in-class experience for prompt engineering. With no code required, you can try out multiple LLMs from the [MLflow AI Gateway](/docs/3.11.1/genai/governance/ai-gateway.md), parameter configurations, and prompts to build a variety of models for question answering, document summarization, and beyond. Using the embedded Evaluation UI, you can also evaluate multiple models on a set of inputs and compare the responses to select the best one. Every model created with the prompt engineering UI is stored in the [MLflow Model](/docs/3.11.1/ml/model.md) format and can be deployed for batch or real time inference. All configurations (prompt templates, choice of LLM, parameters, etc.) are tracked as [MLflow Runs](/docs/3.11.1/ml/tracking.md).
+Starting in MLflow 2.7, the MLflow Tracking UI provides a best-in-class experience for prompt engineering. With no code required, you can try out multiple LLMs from the [MLflow AI Gateway](/docs/latest/genai/governance/ai-gateway.md), parameter configurations, and prompts to build a variety of models for question answering, document summarization, and beyond. Using the embedded Evaluation UI, you can also evaluate multiple models on a set of inputs and compare the responses to select the best one. Every model created with the prompt engineering UI is stored in the [MLflow Model](/docs/latest/ml/model.md) format and can be deployed for batch or real time inference. All configurations (prompt templates, choice of LLM, parameters, etc.) are tracked as [MLflow Runs](/docs/latest/ml/tracking.md).
 
 ## Quickstart[​](#prompt-engineering-quickstart "Direct link to Quickstart")
 
@@ -8,7 +8,7 @@ The following guide will get you started with MLflow's UI for prompt engineering
 
 ### Step 1: Create an MLflow AI Gateway Completions or Chat Endpoint[​](#step-1-create-an-mlflow-ai-gateway-completions-or-chat-endpoint "Direct link to Step 1: Create an MLflow AI Gateway Completions or Chat Endpoint")
 
-To use the prompt engineering UI, you need to create one or more [MLflow AI Gateway](/docs/3.11.1/genai/governance/ai-gateway.md) completions or chat endpoints. Follow the [MLflow AI Gateway Quickstart guide](/docs/3.11.1/genai/governance/ai-gateway/legacy/setup.md) to easily create an endpoint in less than five minutes. If you already have access to an MLflow AI Gateway endpoint of type `llm/v1/completions` or `llm/v1/chat`, you can skip this step.
+To use the prompt engineering UI, you need to create one or more [MLflow AI Gateway](/docs/latest/genai/governance/ai-gateway.md) completions or chat endpoints. Follow the [MLflow AI Gateway Quickstart guide](/docs/latest/genai/governance/ai-gateway/legacy/setup.md) to easily create an endpoint in less than five minutes. If you already have access to an MLflow AI Gateway endpoint of type `llm/v1/completions` or `llm/v1/chat`, you can skip this step.
 
 bash
 
@@ -18,7 +18,7 @@ mlflow gateway start --config-path config.yaml --port 7000
 
 ### Step 2: Connect the MLflow AI Gateway to your MLflow Tracking Server[​](#step-2-connect-the-mlflow-ai-gateway-to-your-mlflow-tracking-server "Direct link to Step 2: Connect the MLflow AI Gateway to your MLflow Tracking Server")
 
-The prompt engineering UI also requires a connection between the MLflow AI Gateway and the MLflow Tracking Server. To connect the MLflow AI Gateway with the MLflow Tracking Server, simply set the `MLFLOW_DEPLOYMENTS_TARGET` environment variable in the environment where the server is running and restart the server. For example, if the MLflow AI Gateway is running at `http://localhost:7000`, you can start an MLflow Tracking Server in a shell on your local machine and connect it to the MLflow AI Gateway using the [mlflow server](/docs/3.11.1/api_reference/cli.html#mlflow-server) command as follows:
+The prompt engineering UI also requires a connection between the MLflow AI Gateway and the MLflow Tracking Server. To connect the MLflow AI Gateway with the MLflow Tracking Server, simply set the `MLFLOW_DEPLOYMENTS_TARGET` environment variable in the environment where the server is running and restart the server. For example, if the MLflow AI Gateway is running at `http://localhost:7000`, you can start an MLflow Tracking Server in a shell on your local machine and connect it to the MLflow AI Gateway using the [mlflow server](/docs/latest/api_reference/cli.html#mlflow-server) command as follows:
 
 bash
 
@@ -31,15 +31,15 @@ mlflow server --port 5000
 
 Next, open an existing MLflow Experiment in the MLflow UI, or create a new experiment.
 
-![](/docs/3.11.1/assets/images/experiment_page-2a7cf0b96047619eac6845f09e01807d.png)
+![](/docs/latest/assets/images/experiment_page-2a7cf0b96047619eac6845f09e01807d.png)
 
 ### Step 4: Create a run with prompt engineering[​](#step-4-create-a-run-with-prompt-engineering "Direct link to Step 4: Create a run with prompt engineering")
 
 Once you have opened the Experiment, click the **New Run** button and select *using Prompt Engineering*. This will open the prompt engineering playground where you can try out different LLMs, parameters, and prompts.
 
-![](/docs/3.11.1/assets/images/new_run-2879a8f2ac95f77cfe3173cb320967c9.png)
+![](/docs/latest/assets/images/new_run-2879a8f2ac95f77cfe3173cb320967c9.png)
 
-![](/docs/3.11.1/assets/images/prompt_modal_1-51ecbda29dcb90d4b7ed59a996470b87.png)
+![](/docs/latest/assets/images/prompt_modal_1-51ecbda29dcb90d4b7ed59a996470b87.png)
 
 ### Step 5: Select your endpoint and evaluate the example prompt[​](#step-5-select-your-endpoint-and-evaluate-the-example-prompt "Direct link to Step 5: Select your endpoint and evaluate the example prompt")
 
@@ -47,7 +47,7 @@ Next, click the *Select endpoint* dropdown and select the MLflow AI Gateway comp
 
 MLflow will embed the specified *stock\_type* input variable value - `"books"` - into the specified *prompt template* and send it to the LLM associated with the MLflow AI Gateway endpoint with the configured *temperature* (currently `0.01`) and *max\_tokens* (currently 1000). The LLM response will appear in the *Output* section.
 
-![](/docs/3.11.1/assets/images/prompt_modal_2-449c061f1e6104c039029c4820d7142a.png)
+![](/docs/latest/assets/images/prompt_modal_2-449c061f1e6104c039029c4820d7142a.png)
 
 ### Step 6: Try a prompt of your choosing[​](#step-6-try-a-prompt-of-your-choosing "Direct link to Step 6: Try a prompt of your choosing")
 
@@ -71,7 +71,7 @@ Then, fill in the input variables. For example, in the MLflow documentation use 
 
 Finally, click the **Evaluate** button to see the new output. You can also try choosing a larger value of *temperature* to observe how the LLM's output changes.
 
-![](/docs/3.11.1/assets/images/prompt_modal_3-78c14b824dfceb50dfac7ef02ed4ccd0.png)
+![](/docs/latest/assets/images/prompt_modal_3-78c14b824dfceb50dfac7ef02ed4ccd0.png)
 
 ### Step 7: Capture your choice of LLM, prompt template, and parameters as an MLflow Run[​](#step-7-capture-your-choice-of-llm-prompt-template-and-parameters-as-an-mlflow-run "Direct link to Step 7: Capture your choice of LLM, prompt template, and parameters as an MLflow Run")
 
@@ -79,15 +79,15 @@ Once you're satisfied with your chosen prompt template and parameters, click the
 
 1. To view this information, click the Run name to open the **Run** page:
 
-   ![](/docs/3.11.1/assets/images/prompt_eng_run_page-14d417e3ec68786b5d118ce95b8979e1.png)
+   ![](/docs/latest/assets/images/prompt_eng_run_page-14d417e3ec68786b5d118ce95b8979e1.png)
 
 2. You can also see the parameters and compare them with other configurations by opening the **Table** view tab:
 
-   ![](/docs/3.11.1/assets/images/prompt_eng_table_view-71af8b8369dddf64ff8a00327489d80f.png)
+   ![](/docs/latest/assets/images/prompt_eng_table_view-71af8b8369dddf64ff8a00327489d80f.png)
 
 3. After your Run is created, MLflow will open the **Evaluation** tab where you can see your latest playground input & output and try out additional inputs:
 
-   ![](/docs/3.11.1/assets/images/eval_view_1-2fd57ddf3134c1c646a91d382010ff72.png)
+   ![](/docs/latest/assets/images/eval_view_1-2fd57ddf3134c1c646a91d382010ff72.png)
 
 ### Step 8: Try new inputs[​](#step-8-try-new-inputs "Direct link to Step 8: Try new inputs")
 
@@ -95,21 +95,21 @@ To test the behavior of your chosen LLM, prompt template, and parameters on a ne
 
 1. Click the *Add Row* button and fill in a value(s) your prompt template's input variable(s). For example, in the MLflow documentation use case, you can try asking a question unrelated to MLflow to see how the LLM responds. This is important to ensure that the application is robust to irrelevant inputs.
 
-![](/docs/3.11.1/assets/images/add_row-c9216bca634ec1383758a84c35d17101.png)
+![](/docs/latest/assets/images/add_row-c9216bca634ec1383758a84c35d17101.png)
 
-![](/docs/3.11.1/assets/images/add_row_modal-bf5df9f1c08b8e62c70909dbb4263ea2.png)
+![](/docs/latest/assets/images/add_row_modal-bf5df9f1c08b8e62c70909dbb4263ea2.png)
 
 2. Then, click the **Evaluate** button to see the output.
 
-   ![](/docs/3.11.1/assets/images/evaluate_new_input-0ef075da2f4cfc8a430d76119686c836.png)
+   ![](/docs/latest/assets/images/evaluate_new_input-0ef075da2f4cfc8a430d76119686c836.png)
 
 3. Finally, click the **Save** button to store the new inputs and output.
 
-   ![](/docs/3.11.1/assets/images/save_new_input-3735297c289381cea11cb1ee60a3dd4f.png)
+   ![](/docs/latest/assets/images/save_new_input-3735297c289381cea11cb1ee60a3dd4f.png)
 
 ### Step 9: Adjust your prompt template and create a new Run[​](#step-9-adjust-your-prompt-template-and-create-a-new-run "Direct link to Step 9: Adjust your prompt template and create a new Run")
 
-As you try additional inputs, you might discover scenarios where your choice of LLM, prompt template, and parameters doesn't perform as well as you would like. For example, in the MLflow documentation use case, the LLM still attempts to answer irrelevant questions about [MLflow Projects](/docs/3.11.1/ml/projects.md) even if the answer does not appear in the specified article.
+As you try additional inputs, you might discover scenarios where your choice of LLM, prompt template, and parameters doesn't perform as well as you would like. For example, in the MLflow documentation use case, the LLM still attempts to answer irrelevant questions about [MLflow Projects](/docs/latest/ml/projects.md) even if the answer does not appear in the specified article.
 
 1. To improve performance, create a new Run by selecting the *Duplicate run* option from the context menu. For example, in the MLflow documentation use case, adding the following text to the prompt template helps improve robustness to irrelevant questions:
 
@@ -121,11 +121,11 @@ As you try additional inputs, you might discover scenarios where your choice of 
    response.
    ```
 
-   ![](/docs/3.11.1/assets/images/duplicate_run-71f18e13acc59fb8bc860b27f2c24529.png)
+   ![](/docs/latest/assets/images/duplicate_run-71f18e13acc59fb8bc860b27f2c24529.png)
 
 2. Then, from the prompt engineering playground, adjust the prompt template (and / or choice of LLM and parameters), evaluate an input, and click the **Create Run** button to create a new Run.
 
-   ![](/docs/3.11.1/assets/images/prompt_modal_4-9bcc677fe20c9bb937a25ac48e43e89e.png)
+   ![](/docs/latest/assets/images/prompt_modal_4-9bcc677fe20c9bb937a25ac48e43e89e.png)
 
 ### Step 10: Evaluate the new prompt template on previous inputs[​](#step-10-evaluate-the-new-prompt-template-on-previous-inputs "Direct link to Step 10: Evaluate the new prompt template on previous inputs")
 
@@ -133,15 +133,15 @@ Now that you've made an adjustment to your prompt template, it's important to ma
 
 1. From the **Evaluation** tab, click the **Evaluate all** button next to the new Run to evaluate all of the previous inputs.
 
-   ![](/docs/3.11.1/assets/images/evaluate_all-6b9191a0abf9c0fe077631376c5142e1.png)
+   ![](/docs/latest/assets/images/evaluate_all-6b9191a0abf9c0fe077631376c5142e1.png)
 
 2. Click the **Save** button to store the results.
 
-   ![](/docs/3.11.1/assets/images/evaluate_all_results-7232f268e5e9453ae3fb20cae9009bcf.png)
+   ![](/docs/latest/assets/images/evaluate_all_results-7232f268e5e9453ae3fb20cae9009bcf.png)
 
 ### Step 11: Load evaluation data programmatically[​](#step-11-load-evaluation-data-programmatically "Direct link to Step 11: Load evaluation data programmatically")
 
-All of the inputs and outputs produced by the MLflow prompt engineering UI and Evaluation UI are stored as artifacts in MLflow Runs. They can be accessed programmatically using the [`mlflow.load_table()`](/docs/3.11.1/api_reference/python_api/mlflow.html#mlflow.load_table) API as follows:
+All of the inputs and outputs produced by the MLflow prompt engineering UI and Evaluation UI are stored as artifacts in MLflow Runs. They can be accessed programmatically using the [`mlflow.load_table()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.load_table) API as follows:
 
 python
 
@@ -170,7 +170,7 @@ Once you have found a configuration of LLM, prompt template, and parameters that
 
 1. To load the MLflow Model in a notebook for batch inference, click on the Run's name to open the **Run Page** and select the *model* directory in the **Artifact Viewer**. Then, copy the first few lines of code from the *Predict on a Pandas DataFrame* section and run them in a Python environment of your choosing, for example:
 
-   ![](/docs/3.11.1/assets/images/load_model-ab1fe012845f6f7cd5843d91ce3af1b7.png)
+   ![](/docs/latest/assets/images/load_model-ab1fe012845f6f7cd5843d91ce3af1b7.png)
 
    python
 
@@ -183,7 +183,7 @@ Once you have found a configuration of LLM, prompt template, and parameters that
    loaded_model = mlflow.pyfunc.load_model(logged_model)
    ```
 
-2. Then, to generate predictions, call the [`predict()`](/docs/3.11.1/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PyFuncModel.predict) method and pass in a dictionary of input variables. For example:
+2. Then, to generate predictions, call the [`predict()`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.PyFuncModel.predict) method and pass in a dictionary of input variables. For example:
 
    python
 
@@ -223,7 +223,7 @@ Once you have found a configuration of LLM, prompt template, and parameters that
 
    * `MLFLOW_DEPLOYMENTS_TARGET`: The URL of the MLflow AI Gateway
 
-3. Use the [mlflow models serve](/docs/3.11.1/api_reference/cli.html#mlflow-models-serve) command to start the MLflow Model Server. For example, running the following command from a shell on your local machine will serve the model on port 8000:
+3. Use the [mlflow models serve](/docs/latest/api_reference/cli.html#mlflow-models-serve) command to start the MLflow Model Server. For example, running the following command from a shell on your local machine will serve the model on port 8000:
 
    bash
 

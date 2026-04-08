@@ -1,10 +1,10 @@
 # Tracing Haystack
 
-![Haystack Tracing via autolog](/docs/3.11.1/images/llms/haystack/haystack-tracing.png)
+![Haystack Tracing via autolog](/docs/latest/images/llms/haystack/haystack-tracing.png)
 
 [Haystack](https://github.com/deepset-ai/haystack) is an open-source AI orchestration framework developed by deepset, designed to help Python developers build production-ready LLM-powered applications. It features a modular architecture - built around components and pipelines for building everything from retrieval-augmented generation (RAG) workflows to autonomous agentic systems and scalable search engines.
 
-[MLflow Tracing](/docs/3.11.1/genai/tracing/integrations.md) provides automatic tracing capability when using Haystack pipelines and components. When Haystack auto-tracing is enabled by calling the [`mlflow.haystack.autolog()`](/docs/3.11.1/api_reference/python_api/mlflow.haystack.html#mlflow.haystack.autolog) function, usage of Haystack pipelines and components will automatically record generated traces during interactive development.
+[MLflow Tracing](/docs/latest/genai/tracing/integrations.md) provides automatic tracing capability when using Haystack pipelines and components. When Haystack auto-tracing is enabled by calling the [`mlflow.haystack.autolog()`](/docs/latest/api_reference/python_api/mlflow.haystack.html#mlflow.haystack.autolog) function, usage of Haystack pipelines and components will automatically record generated traces during interactive development.
 
 python
 
@@ -85,17 +85,17 @@ results = rag_pipeline.run({
 print(results["llm"]["replies"])
 ```
 
-![Haystack Tracing via autolog](/docs/3.11.1/assets/images/haystack-basic-tracing-cc6d8017b6b96aefb71c5df7cdce81b1.png)
+![Haystack Tracing via autolog](/docs/latest/assets/images/haystack-basic-tracing-cc6d8017b6b96aefb71c5df7cdce81b1.png)
 
 ## Tracking Token Usage and Cost[​](#tracking-token-usage-and-cost "Direct link to Tracking Token Usage and Cost")
 
-MLflow automatically tracks token usage and cost for Haystack. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/3.11.1/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
+MLflow automatically tracks token usage and cost for Haystack. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. See the [Token Usage and Cost Tracking](/docs/latest/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
 
 ## Combine with the MLflow Tracing SDK[​](#combine-with-the-mlflow-tracing-sdk "Direct link to Combine with the MLflow Tracing SDK")
 
-Since this integration is built on OpenTelemetry, you can combine the automatically generated traces with the [MLflow Tracing SDK](/docs/3.11.1/genai/tracing.md) to add custom spans, set tags, and log assessments within the same trace. This is useful when you want to enrich the auto-generated traces with additional application-specific context.
+Since this integration is built on OpenTelemetry, you can combine the automatically generated traces with the [MLflow Tracing SDK](/docs/latest/genai/tracing.md) to add custom spans, set tags, and log assessments within the same trace. This is useful when you want to enrich the auto-generated traces with additional application-specific context.
 
-To enable this, set the `MLFLOW_USE_DEFAULT_TRACER_PROVIDER` environment variable to `false` and call [`mlflow.tracing.set_destination()`](/docs/3.11.1/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.set_destination) to merge spans from both SDKs into a single trace.
+To enable this, set the `MLFLOW_USE_DEFAULT_TRACER_PROVIDER` environment variable to `false` and call [`mlflow.tracing.set_destination()`](/docs/latest/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.set_destination) to merge spans from both SDKs into a single trace.
 
 python
 
@@ -120,7 +120,7 @@ with mlflow.start_span("custom_step") as span:
     span.set_outputs({"result": "success"})
 ```
 
-For detailed instructions and examples, see [Combining the OpenTelemetry SDK and the MLflow Tracing SDK](/docs/3.11.1/genai/tracing/app-instrumentation/opentelemetry.md#combining-the-opentelemetry-sdk-and-the-mlflow-tracing-sdk).
+For detailed instructions and examples, see [Combining the OpenTelemetry SDK and the MLflow Tracing SDK](/docs/latest/genai/tracing/app-instrumentation/opentelemetry.md#combining-the-opentelemetry-sdk-and-the-mlflow-tracing-sdk).
 
 ### Disable auto-tracing[​](#disable-auto-tracing "Direct link to Disable auto-tracing")
 
