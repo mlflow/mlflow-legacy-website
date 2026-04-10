@@ -366,7 +366,7 @@ with mlflow.start_span(name="multimodal-call") as span:
     span.set_outputs({"content": result})
 ```
 
-See [Image and Audio (Multimodal) Content in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md#manual-tracing) for more examples.
+See [Multimodal Content and Attachments in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md#manual-tracing) for more examples.
 
 ## Code Block[​](#code-block "Direct link to Code Block")
 
