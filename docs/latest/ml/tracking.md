@@ -272,7 +272,7 @@ Additionally, if you are interfacing with a managed service (such as Databricks 
 
 #### [Artifact Store](/docs/latest/self-hosting/architecture/artifact-store.md)[​](#artifact-stores "Direct link to artifact-stores")
 
-Artifact store persists (typically large) artifacts for each run, such as model weights (e.g. a pickled scikit-learn model), images (e.g. PNGs), model and data files (e.g. [Parquet](https://parquet.apache.org) file). MLflow stores artifacts ina a local file (`mlruns`) by default, but also supports different storage options such as Amazon S3 and Azure Blob Storage.
+Artifact store persists (typically large) artifacts for each run, such as model weights (e.g. a pickled scikit-learn model), images (e.g. PNGs), model and data files (e.g. [Parquet](https://parquet.apache.org) file). MLflow stores artifacts in a local file (`mlruns`) by default, but also supports different storage options such as Amazon S3 and Azure Blob Storage.
 
 For models which are logged as MLflow artifacts, you can refer the model through a model URI of format: `models:/<model_id>`, where 'model\_id' is the unique identifier assigned to the logged model. This replaces the older `runs:/<run_id>/<artifact_path>` format and provides more direct model referencing.
 
@@ -280,7 +280,7 @@ If the model is registered in the [MLflow Model Registry](/docs/latest/ml/model-
 
 #### [MLflow Tracking Server](/docs/latest/self-hosting/architecture/tracking-server.md) (Optional)[​](#tracking_server "Direct link to tracking_server")
 
-MLflow Tracking Server is a stand-alone HTTP server that provides REST APIs for accessing backend and/or artifact store. Tracking server also offers flexibility to configure what data to server, govern access control, versioning, and etc. Read [MLflow Tracking Server documentation](/docs/latest/self-hosting.md) for more details.
+MLflow Tracking Server is a stand-alone HTTP server that provides REST APIs for accessing backend and/or artifact store. Tracking server also offers flexibility to configure what data to serve, govern access control, versioning, and etc. Read [MLflow Tracking Server documentation](/docs/latest/self-hosting.md) for more details.
 
 ### Common Setups[​](#tracking_setup "Direct link to Common Setups")
 
