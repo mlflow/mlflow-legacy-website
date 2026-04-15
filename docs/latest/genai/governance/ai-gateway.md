@@ -91,3 +91,9 @@ uvx mlflow demo
 [Configure HTTP Basic Authentication for AI Gateway resources](/docs/latest/self-hosting/security/basic-http-auth.md#ai-gateway-permissions)
 
 [Learn more →](/docs/latest/self-hosting/security/basic-http-auth.md#ai-gateway-permissions)
+
+### [Performance & Benchmarks](/docs/latest/genai/governance/ai-gateway/benchmarks.md)
+
+[Benchmark results and how to measure gateway overhead in your own environment](/docs/latest/genai/governance/ai-gateway/benchmarks.md)
+
+[View benchmarks →](/docs/latest/genai/governance/ai-gateway/benchmarks.md)
