@@ -245,7 +245,7 @@ pip install openai==1.30.5 langchain==0.2.1 langchain-openai==0.1.8 langchain-co
 
 Image Support for LangChain Traces
 
-MLflow captures image content parts passed through LangChain models. See [Image and Audio (Multimodal) Content in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md) for details.
+MLflow captures image content parts passed through LangChain models. See [Multimodal Content and Attachments in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md) for details.
 
 ## Supported APIs[​](#supported-apis "Direct link to Supported APIs")
 

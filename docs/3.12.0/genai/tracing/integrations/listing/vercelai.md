@@ -1,0 +1,215 @@
+# Tracing Vercel AI SDK
+
+[](/docs/3.12.0/images/llms/tracing/vercel-ai-tracing.mp4)
+
+[MLflow Tracing](/docs/3.12.0/genai/tracing.md) provides automatic tracing for applications built with the [Vercel AI SDK](https://ai-sdk.dev/) (the `ai` package) via OpenTelemetry, unlocking powerful observability capabilities for TypeScript and Javascript application developers.
+
+When the integration is enabled, MLflow allows you to record the following information for Vercel AI SDK calls:
+
+* Prompts or messages and generated responses
+* Latencies
+* Call hierarchy
+* Token usage when the provider returns it
+* Any exception if raised
+
+## Quickstart (NextJS)[​](#quickstart-nextjs "Direct link to Quickstart (NextJS)")
+
+It is fairy straightforward to enable MLflow tracing for Vercel AI SDK if you are using NextJS.
+
+tip
+
+If you don't have a handy app to test, you can use the [demo chatbot app](https://vercel.com/templates/next.js/ai-chatbot-telemetry) provided by Vercel.
+
+### 1. Start MLflow Tracking Server[​](#1-start-mlflow-tracking-server "Direct link to 1. Start MLflow Tracking Server")
+
+Start MLflow Tracking Server if you don't have one already:
+
+bash
+
+```
+mlflow server --backend-store-uri sqlite:///mlruns.db --port 5000
+```
+
+Alternatively, you can use [Docker Compose](/docs/3.12.0/self-hosting.md#docker-compose) to start the server without setting up Python environment. See [Self-Hosting Guide](/docs/3.12.0/self-hosting/architecture/backend-store.md) for more details.
+
+### 2. Configure Environment Variables[​](#2-configure-environment-variables "Direct link to 2. Configure Environment Variables")
+
+Set the following environment variable in your `.env.local` file:
+
+.env.local
+
+bash
+
+```
+OTEL_EXPORTER_OTLP_ENDPOINT=<your-mlflow-tracking-server-endpoint>
+OTEL_EXPORTER_OTLP_TRACES_HEADERS=x-mlflow-experiment-id=<your-experiment-id>
+OTEL_EXPORTER_OTLP_TRACES_PROTOCOL=http/protobuf
+```
+
+For example, `OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:5000`.
+
+### 3. Enable OpenTelemetry[​](#3-enable-opentelemetry "Direct link to 3. Enable OpenTelemetry")
+
+Install the following packages to use Vercel OpenTelemetry integration.
+
+bash
+
+```
+pnpm i @opentelemetry/api @vercel/otel
+```
+
+Create a `instrumentation.ts` file in your NextJS project root and add the following code:
+
+instrumentation.ts
+
+typescript
+
+```
+import { registerOTel } from '@vercel/otel';
+
+export async function register() {
+  registerOTel({ serviceName: 'next-app' })
+}
+```
+
+Then specify `experimental_telemetry: {isEnabled: true}` wherever you are using the Vercel AI SDK in the app.
+
+route.ts
+
+typescript
+
+```
+import { openai } from '@ai-sdk/openai';
+import { generateText } from 'ai';
+
+export async function POST(req: Request) {
+  const { prompt } = await req.json();
+
+const { text } = await generateText({
+  model: openai('gpt-4o-mini'),
+  maxOutputTokens: 100,
+  prompt,
+  experimental_telemetry: {isEnabled: true},
+});
+
+  return new Response(JSON.stringify({ text }), {
+    headers: { 'Content-Type': 'application/json' },
+  });
+}
+```
+
+See [Vercel OpenTelemetry documentation](https://vercel.com/docs/tracing/instrumentation) for advanced usage such as context propagation.
+
+### 5. Run the Application and View Traces[​](#5-run-the-application-and-view-traces "Direct link to 5. Run the Application and View Traces")
+
+Run the application and view traces in MLflow UI. The UI is available at the tracking server endpoint you specified in the environment variables, e.g., `http://localhost:5000`.
+
+## Other Node.js Applications[​](#other-nodejs-applications "Direct link to Other Node.js Applications")
+
+If you are using other Node.js frameworks, set the OpenTelemetry Node SDK and OTLP exporter manually to export traces to MLflow.
+
+main.ts
+
+typescript
+
+```
+import { init } from "@mlflow/core";
+import { generateText } from "ai";
+import { openai } from "@ai-sdk/openai";
+import { NodeSDK } from '@opentelemetry/sdk-node';
+import { SimpleSpanProcessor } from '@opentelemetry/sdk-trace-node';
+import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-proto';
+
+
+const sdk = new NodeSDK({
+  spanProcessors: [
+    new SimpleSpanProcessor(
+      new OTLPTraceExporter({
+        url: '<your-mlflow-tracking-server-endpoint>/v1/traces',
+        headers: { 'x-mlflow-experiment-id': '<your-experiment-id>' },
+      }),
+    ),
+  ],
+});
+
+sdk.start();
+
+// Make an AI SDK call with telemetry enabled
+const result = await generateText({
+  model: openai('gpt-4o-mini'),
+  prompt: 'What is MLflow?',
+  // IMPORTANT: enable telemetry is required for tracing
+  experimental_telemetry: { isEnabled: true }
+});
+
+console.log(result.text);
+sdk.shutdown();
+```
+
+bash
+
+```
+npx tsx main.ts
+```
+
+## Streaming[​](#streaming "Direct link to Streaming")
+
+Streaming is supported as well. Similarly to the `generateText` function, specify the `experimental_telemetry.isEnabled` option to `true` to enable tracing.
+
+typescript
+
+```
+import { streamText } from 'ai';
+import { openai } from '@ai-sdk/openai';
+
+const stream = await streamText({
+  model: openai('gpt-4o-mini'),
+  prompt: 'Explain vector databases in one paragraph.',
+  experimental_telemetry: { isEnabled: true }
+});
+
+for await (const part of stream.textStream) {
+  process.stdout.write(part);
+}
+```
+
+## Tracking Token Usage and Cost[​](#tracking-token-usage-and-cost "Direct link to Tracking Token Usage and Cost")
+
+MLflow automatically tracks token usage for Vercel AI SDK. The token usage for each LLM call will be logged in each Trace/Span and the aggregated cost and time trend are displayed in the built-in dashboard. Cost information may be unavailable depending on the provider; see the [Token Usage and Cost Tracking](/docs/3.12.0/genai/tracing/token-usage-cost.md) documentation for details on accessing this information programmatically.
+
+## Combine with the MLflow Tracing SDK[​](#combine-with-the-mlflow-tracing-sdk "Direct link to Combine with the MLflow Tracing SDK")
+
+Since this integration is built on OpenTelemetry, you can combine the automatically generated traces with the [MLflow Tracing SDK](/docs/3.12.0/genai/tracing.md) (`@mlflow/core`) to add custom spans, set tags, and update trace metadata within the same trace.
+
+typescript
+
+```
+import { init, withSpan } from "@mlflow/core";
+import { generateText } from "ai";
+import { openai } from "@ai-sdk/openai";
+
+// Initialize MLflow SDK - sets up the OTel provider to capture all spans
+init({
+  trackingUri: "http://localhost:5000",
+  experimentId: "<your-experiment-id>",
+});
+
+// Add custom MLflow spans alongside the auto-generated Vercel AI SDK traces
+const result = await withSpan(
+  { name: "custom_step", inputs: { query: "test" } },
+  async (span) => {
+    const { text } = await generateText({
+      model: openai("gpt-4o-mini"),
+      prompt: "What is MLflow?",
+      experimental_telemetry: { isEnabled: true },
+    });
+    return { result: text };
+  }
+);
+```
+
+For detailed instructions and examples, see [Combining the OpenTelemetry SDK and the MLflow Tracing SDK](/docs/3.12.0/genai/tracing/app-instrumentation/opentelemetry.md#combining-the-opentelemetry-sdk-and-the-mlflow-tracing-sdk).
+
+## Disable auto-tracing[​](#disable-auto-tracing "Direct link to Disable auto-tracing")
+
+Disable tracing for Vercel AI SDK, set `experimental_telemetry: { isEnabled: false }` on the AI SDK call
