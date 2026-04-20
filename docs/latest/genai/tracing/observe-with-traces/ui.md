@@ -49,9 +49,9 @@ By clicking on a trace ID `tr-...` or the request link in the trace table, you c
 
 ![Browsing single trace](/docs/latest/images/llms/tracing/trace-ui-detail-view.png)
 
-Image and Audio Content
+Multimodal Content and Attachments
 
-MLflow renders images and audio inline in the trace viewer. For supported formats, framework examples, and how to attach multimodal content to traces, see [Image and Audio (Multimodal) Content in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md).
+MLflow renders images, audio, and supported attachment types inline in the trace viewer. For supported formats, framework examples, and how to use the `Attachment` class for binary content, see [Multimodal Content and Attachments in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md).
 
 ## Performing Actions[​](#performing-actions "Direct link to Performing Actions")
 
