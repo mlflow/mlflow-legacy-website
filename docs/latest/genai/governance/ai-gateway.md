@@ -86,8 +86,20 @@ uvx mlflow demo
 
 [Manage budgets →](/docs/latest/genai/governance/ai-gateway/budget-alerts-limits.md)
 
+### [Guardrails](/docs/latest/genai/governance/ai-gateway/guardrails.md)
+
+[Enforce content policies with LLM-powered judges that block or sanitize requests and responses](/docs/latest/genai/governance/ai-gateway/guardrails.md)
+
+[Configure guardrails →](/docs/latest/genai/governance/ai-gateway/guardrails.md)
+
 ### [Authentication](/docs/latest/self-hosting/security/basic-http-auth.md#ai-gateway-permissions)
 
 [Configure HTTP Basic Authentication for AI Gateway resources](/docs/latest/self-hosting/security/basic-http-auth.md#ai-gateway-permissions)
 
 [Learn more →](/docs/latest/self-hosting/security/basic-http-auth.md#ai-gateway-permissions)
+
+### [Performance & Benchmarks](/docs/latest/genai/governance/ai-gateway/benchmarks.md)
+
+[Benchmark results and how to measure gateway overhead in your own environment](/docs/latest/genai/governance/ai-gateway/benchmarks.md)
+
+[View benchmarks →](/docs/latest/genai/governance/ai-gateway/benchmarks.md)
