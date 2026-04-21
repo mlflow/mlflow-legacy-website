@@ -97,7 +97,7 @@ import math
 import mlflow
 
 
-def invocation(x, y, exp=2):
+def invocation(x, exp=2):
     # Wrap an external function from the math library
     traced_pow = mlflow.trace(math.pow)
     raised = traced_pow(x, exp)
@@ -366,7 +366,7 @@ with mlflow.start_span(name="multimodal-call") as span:
     span.set_outputs({"content": result})
 ```
 
-See [Image and Audio (Multimodal) Content in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md#manual-tracing) for more examples.
+See [Multimodal Content and Attachments in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md#manual-tracing) for more examples.
 
 ## Code Block[​](#code-block "Direct link to Code Block")
 
