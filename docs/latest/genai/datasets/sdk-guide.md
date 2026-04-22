@@ -44,7 +44,7 @@ dataset = client.create_dataset(
 
 ## Adding Records to a Dataset[​](#adding-records-to-a-dataset "Direct link to Adding Records to a Dataset")
 
-Use the [`mlflow.entities.EvaluationDataset.merge_records()`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.EvaluationDataset.merge_records) method to add new records to your dataset. Records can be added from dictionaries, DataFrames, or traces:
+Use the [`mlflow.genai.datasets.EvaluationDataset.merge_records()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset.merge_records) method to add new records to your dataset. Records can be added from dictionaries, DataFrames, or traces:
 
 * From Dictionaries
 * From Traces
@@ -75,7 +75,7 @@ new_records = [
 ]
 
 dataset.merge_records(new_records)
-print(f"Dataset now has {len(dataset.records)} records")
+print(f"Dataset now has {len(dataset.to_df())} records")
 ```
 
 Add records from MLflow traces:
@@ -218,7 +218,7 @@ python
 
 ## Updating Existing Records[​](#updating-existing-records "Direct link to Updating Existing Records")
 
-The [`mlflow.entities.EvaluationDataset.merge_records()`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.EvaluationDataset.merge_records) method intelligently handles updates. **Records are matched based on a hash of their inputs** - if a record with identical inputs already exists, its expectations and tags are merged rather than creating a duplicate:
+The [`mlflow.genai.datasets.EvaluationDataset.merge_records()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset.merge_records) method intelligently handles updates. **Records are matched based on a hash of their inputs** - if a record with identical inputs already exists, its expectations and tags are merged rather than creating a duplicate:
 
 python
 
@@ -269,7 +269,7 @@ dataset = get_dataset(dataset_id="d-7f2e3a9b8c1d4e5f")
 
 # Access dataset properties
 print(f"Name: {dataset.name}")
-print(f"Records: {len(dataset.records)}")
+print(f"Records: {len(dataset.to_df())}")
 print(f"Schema: {dataset.schema}")
 print(f"Tags: {dataset.tags}")
 ```
@@ -288,7 +288,7 @@ datasets = search_datasets(
 )
 
 for ds in datasets:
-    print(f"{ds.name} ({ds.dataset_id}): {len(ds.records)} records")
+    print(f"{ds.name} ({ds.dataset_id}): {len(ds.to_df())} records")
 ```
 
 See [Search Filter Reference](#search-filter-reference) for filter syntax details.
@@ -358,15 +358,12 @@ Deleting records updates the dataset's profile (record count) automatically.
 
 ## Working with Dataset Records[​](#working-with-dataset-records "Direct link to Working with Dataset Records")
 
-The [`mlflow.entities.EvaluationDataset()`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.EvaluationDataset) object provides several ways to access and analyze records:
+The [`mlflow.genai.datasets.EvaluationDataset()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset) object provides several ways to access and analyze records:
 
 python
 
 ```
-# Access all records
-all_records = dataset.records
-
-# Convert to DataFrame for analysis
+# Convert to DataFrame for analysis (records are loaded lazily on first call)
 df = dataset.to_df()
 print(df.head())
 
@@ -380,7 +377,7 @@ print(dataset.schema)
 print(dataset.profile)
 
 # Get record count
-print(f"Total number of records: {len(dataset.records)}")
+print(f"Total number of records: {len(df)}")
 ```
 
 To recreate a dataset from a serialized dictionary:
