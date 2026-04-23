@@ -61,6 +61,8 @@ Click on the following icons to learn more about how to set up OpenTelemetry exp
 
 [![ServiceNow Logo](/docs/latest/assets/images/servicenow-logo-9dddf91d4524445cc278a5b475a243e0.avif)](https://docs.lightstep.com/docs/collector-home-page)
 
+[![Middleware Logo](/docs/latest/assets/images/middleware-logo-267a55a71b8ffb284ae2600b5b4874fa.svg)](https://docs.middleware.io/open-telemetry/otel-getting-started)
+
 ## Dual Export[​](#dual-export "Direct link to Dual Export")
 
 By default, when OTLP export is configured, MLflow sends traces only to the OpenTelemetry Collector. To send traces to both MLflow Tracking Server and OpenTelemetry Collector simultaneously, set `MLFLOW_TRACE_ENABLE_OTLP_DUAL_EXPORT=true`:

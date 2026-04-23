@@ -6,21 +6,44 @@ Many real-world AI applications use sessions to maintain multi-turn user interac
 
 ## Store User and Session IDs in Metadata[​](#store-user-and-session-ids-in-metadata "Direct link to Store User and Session IDs in Metadata")
 
-MLflow provides two standard metadata fields for session and user tracking:
-
-* `mlflow.trace.user` - Associates traces with specific users
-* `mlflow.trace.session` - Groups traces belonging to multi-turn conversations
-
-When you use these standard metadata fields, MLflow automatically enables filtering and grouping in the UI. Unlike tags, metadata cannot be updated once the trace is logged, making it ideal for immutable identifiers like user and session IDs.
+MLflow provides dedicated `session_id` and `user` parameters in both [`mlflow.update_current_trace()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.update_current_trace) and [`mlflow.tracing.context()`](/docs/latest/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.context) for session and user tracking. Once they are set, you can filter and group traces by session and user.
 
 ## Basic Usage[​](#basic-usage "Direct link to Basic Usage")
 
-To record user and session information in your application, use the [`mlflow.update_current_trace()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.update_current_trace) API and pass the user and session IDs in the metadata.
+### Context manager (Suitable for auto-instrumented applications)[​](#context-manager-suitable-for-auto-instrumented-applications "Direct link to Context manager (Suitable for auto-instrumented applications)")
+
+When using auto-instrumented libraries (e.g. `mlflow.langchain.autolog()`), you don't control the traced function directly. Use [`mlflow.tracing.context()`](/docs/latest/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.context) to inject user and session information into any trace created within its scope.
+
+python
+
+```
+import mlflow
+
+mlflow.langchain.autolog()
+
+with mlflow.tracing.context(session_id="session-123", user="user-456"):
+    # Any trace created inside this block will carry the session and user metadata.
+    agent.invoke("What is the capital of France?")
+```
+
+This is especially useful in web applications where you can wrap request handlers with the context manager to automatically associate all traces with the current user and session.
+
+note
+
+The `session_id` and `user` parameters are supported since MLflow 3.11.0. For earlier versions, set `mlflow.trace.session` or `mlflow.trace.user` key to the trace metadata directly.
+
+text
+
+```
+mlflow.update_current_trace(metadata={"mlflow.trace.session": session_id})
+```
+
+### Inline update (Suitable for a manually traced function)[​](#inline-update-suitable-for-a-manually-traced-function "Direct link to Inline update (Suitable for a manually traced function)")
+
+To record user and session information within a function you control, use the [`mlflow.update_current_trace()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.update_current_trace) API and pass the user and session IDs directly.
 
 * Python
 * TypeScript
-
-Here's how to add user and session tracking to your application:
 
 python
 
@@ -30,15 +53,8 @@ import mlflow
 
 @mlflow.trace
 def chat_completion(message: list[dict], user_id: str, session_id: str):
-    """Process a chat message with user and session tracking."""
-
     # Add user and session context to the current trace
-    mlflow.update_current_trace(
-        metadata={
-            "mlflow.trace.user": user_id,  # Links trace to specific user
-            "mlflow.trace.session": session_id,  # Groups trace with conversation
-        }
-    )
+    mlflow.update_current_trace(session_id=session_id, user=user_id)
 
     # Your chat logic here
     return generate_response(message)
@@ -53,10 +69,8 @@ const chatCompletion = mlflow.trace(
     (message: Array<Record<string, any>>, userId: string, sessionId: string) => {
         // Add user and session context to the current trace
         mlflow.updateCurrentTrace({
-            metadata: {
-                "mlflow.trace.user": userId,
-                "mlflow.trace.session": sessionId,
-            },
+            sessionId: sessionId,
+            user: userId,
         });
 
         // Your chat logic here
@@ -95,12 +109,7 @@ class ChatRequest(BaseModel):
 @mlflow.trace
 def process_chat(message: str, user_id: str, session_id: str):
     # Update trace with user and session context
-    mlflow.update_current_trace(
-        metadata={
-            "mlflow.trace.session": session_id,
-            "mlflow.trace.user": user_id,
-        }
-    )
+    mlflow.update_current_trace(session_id=session_id, user=user_id)
 
     # Process chat message using OpenAI API
     response = client.chat.completions.create(
@@ -158,10 +167,8 @@ class Chat {
   static async process(message: string, userId: string, sessionId: string) {
     // Update MLflow trace metadata for this user and session
     await mlflow.updateCurrentTrace({
-      metadata: {
-        'mlflow.trace.session': sessionId,
-        'mlflow.trace.user': userId,
-      },
+      sessionId: sessionId,
+      user: userId,
     });
 
     const response = await openai.responses.create({

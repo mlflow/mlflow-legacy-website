@@ -133,7 +133,7 @@ for trace in traces:
 
 ## Step 4: Create an Evaluation Dataset[​](#step-4-create-an-evaluation-dataset "Direct link to Step 4: Create an Evaluation Dataset")
 
-Transform your annotated traces into a reusable evaluation dataset. Use [create\_dataset()](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.datasets.create_dataset) to initialize your dataset and [merge\_records()](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.EvaluationDataset.merge_records) to add test cases from multiple sources.
+Transform your annotated traces into a reusable evaluation dataset. Use [create\_dataset()](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.datasets.create_dataset) to initialize your dataset and [merge\_records()](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset.merge_records) to add test cases from multiple sources.
 
 python
 

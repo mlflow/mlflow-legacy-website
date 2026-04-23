@@ -19,17 +19,17 @@ note
 
 The AI Gateway requires a SQL-based backend store (SQLite, PostgreSQL, MySQL, or MSSQL) and the FastAPI tracking server. By default, `mlflow server` uses SQLite and FastAPI, so no additional configuration is needed for this quickstart.
 
-## Step 2: Create Your First API Key[​](#step-2-create-your-first-api-key "Direct link to Step 2: Create Your First API Key")
+## Step 2: Create Your First LLM Connection[​](#step-2-create-your-first-llm-connection "Direct link to Step 2: Create Your First LLM Connection")
 
-Navigate to `http://localhost:5000/#/gateway` and click on the **API Keys** tab.
+Navigate to `http://localhost:5000/#/settings` and click on the **LLM Connections** tab.
 
-1. Click **Create API Key**
+1. Click **Create** button
 2. Enter a name (e.g., `my-openai-key`)
 3. Select your provider (e.g., OpenAI)
 4. Enter your API key from the provider
 5. Click **Create**
 
-![Create API Key](/docs/latest/assets/images/create-api-key-680a70020d74cde71f658c2bf2962d9a.png)
+![Create LLM Connection](/docs/latest/assets/images/create-api-key-367dec6af39b6e7a30dcb6666fb9afa1.png)
 
 Your API key is now securely stored and encrypted.
 
@@ -40,7 +40,7 @@ Switch to the **Endpoints** tab and click **Create Endpoint**.
 1. Enter an endpoint name (e.g., `my-chat-endpoint`)
 2. Select your provider (e.g., OpenAI)
 3. Choose a model (e.g., `gpt-4o`)
-4. Select your API key from the dropdown (the one you just created)
+4. Select your LLM connection from the dropdown (the one you just created)
 5. Click **Create Endpoint**
 
 ## Step 4: Query Your Endpoint[​](#step-4-query-your-endpoint "Direct link to Step 4: Query Your Endpoint")
@@ -96,11 +96,11 @@ You should receive a response from your configured model.
 
 Now that you have a working gateway, explore these features:
 
-### [API Keys](/docs/latest/genai/governance/ai-gateway/api-keys/create-and-manage.md)
+### [LLM Connections](/docs/latest/genai/governance/ai-gateway/api-keys/create-and-manage.md)
 
-[Learn about credential management and best practices for API keys](/docs/latest/genai/governance/ai-gateway/api-keys/create-and-manage.md)
+[Learn about LLM connections and best practices for managing API keys](/docs/latest/genai/governance/ai-gateway/api-keys/create-and-manage.md)
 
-[Manage API keys →](/docs/latest/genai/governance/ai-gateway/api-keys/create-and-manage.md)
+[Manage LLM connections →](/docs/latest/genai/governance/ai-gateway/api-keys/create-and-manage.md)
 
 ### [Endpoints](/docs/latest/genai/governance/ai-gateway/endpoints/create-and-manage.md)
 

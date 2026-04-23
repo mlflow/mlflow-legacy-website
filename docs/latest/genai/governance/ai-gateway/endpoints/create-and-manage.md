@@ -33,12 +33,12 @@ Navigate to the AI Gateway section at `http://localhost:5000/#/gateway`. The End
    * Context window size and token costs are shown
    * Use the search function for quick filtering
 
-5. Configure API key:
+5. Configure credentials:
 
    <!-- -->
 
-   * **Create new API key**: Configure credentials inline (convenient for first-time setup)
-   * **Use existing API key**: Select from previously created keys (recommended for consistency)
+   * **Create new LLM connection**: Configure credentials inline (convenient for first-time setup)
+   * **Use existing LLM connection**: Select from previously created connections (recommended for consistency)
 
 6. Review your configuration in the summary panel
 
@@ -57,7 +57,7 @@ For endpoints that need traffic splitting or fallbacks, see [Traffic Routing & F
 Click on any endpoint name to view its configuration:
 
 * **Provider and model**: The currently configured model
-* **API key**: Which credentials are being used
+* **LLM connection**: Which credentials are being used
 * **Traffic split**: Percentage distribution across models (if configured)
 * **Fallbacks**: Ordered list of fallback models (if configured)
 
@@ -72,7 +72,7 @@ To modify an endpoint:
    <!-- -->
 
    * Change the model
-   * Switch API keys
+   * Switch LLM connections
    * Add or modify traffic splitting
    * Configure fallbacks
 
@@ -94,7 +94,7 @@ The AI Gateway supports dynamic configuration updates. You can:
 
 * Add new endpoints without restarting the server
 * Modify existing endpoint configurations
-* Change API keys and credentials
+* Change LLM connections and credentials
 * Adjust traffic splitting percentages
 * Reorder fallback chains
 
