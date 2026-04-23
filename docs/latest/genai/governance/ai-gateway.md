@@ -12,7 +12,7 @@ Access multiple LLM providers through a single endpoint, eliminating the need to
 
 #### Centralized Security
 
-Store API keys in one secure location with request/response logging for audit trails and compliance.
+Store LLM provider API keys in one secure location with request/response logging for audit trails and compliance.
 
 #### Advanced Routing
 
@@ -56,11 +56,11 @@ uvx mlflow demo
 
 [Get started →](/docs/latest/genai/governance/ai-gateway/quickstart.md)
 
-### [API Keys](/docs/latest/genai/governance/ai-gateway/api-keys/create-and-manage.md)
+### [LLM Connections](/docs/latest/genai/governance/ai-gateway/api-keys/create-and-manage.md)
 
-[Create and manage API keys for secure credential management](/docs/latest/genai/governance/ai-gateway/api-keys/create-and-manage.md)
+[Create and manage LLM connections to securely store provider API keys](/docs/latest/genai/governance/ai-gateway/api-keys/create-and-manage.md)
 
-[Manage keys →](/docs/latest/genai/governance/ai-gateway/api-keys/create-and-manage.md)
+[Manage connections →](/docs/latest/genai/governance/ai-gateway/api-keys/create-and-manage.md)
 
 ### [Endpoints](/docs/latest/genai/governance/ai-gateway/endpoints/create-and-manage.md)
 
@@ -86,8 +86,20 @@ uvx mlflow demo
 
 [Manage budgets →](/docs/latest/genai/governance/ai-gateway/budget-alerts-limits.md)
 
+### [Guardrails](/docs/latest/genai/governance/ai-gateway/guardrails.md)
+
+[Enforce content policies with LLM-powered judges that block or sanitize requests and responses](/docs/latest/genai/governance/ai-gateway/guardrails.md)
+
+[Configure guardrails →](/docs/latest/genai/governance/ai-gateway/guardrails.md)
+
 ### [Authentication](/docs/latest/self-hosting/security/basic-http-auth.md#ai-gateway-permissions)
 
 [Configure HTTP Basic Authentication for AI Gateway resources](/docs/latest/self-hosting/security/basic-http-auth.md#ai-gateway-permissions)
 
 [Learn more →](/docs/latest/self-hosting/security/basic-http-auth.md#ai-gateway-permissions)
+
+### [Performance & Benchmarks](/docs/latest/genai/governance/ai-gateway/benchmarks.md)
+
+[Benchmark results and how to measure gateway overhead in your own environment](/docs/latest/genai/governance/ai-gateway/benchmarks.md)
+
+[View benchmarks →](/docs/latest/genai/governance/ai-gateway/benchmarks.md)

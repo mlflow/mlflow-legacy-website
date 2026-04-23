@@ -1,0 +1,115 @@
+# AI Gateway Quickstart
+
+Get your AI Gateway running in minutes with this simple walkthrough.
+
+## Step 1: Install and Start MLflow[​](#step-1-install-and-start-mlflow "Direct link to Step 1: Install and Start MLflow")
+
+Install MLflow with the required dependencies and start the server:
+
+bash
+
+```
+pip install 'mlflow[genai]'
+mlflow server --port 5000
+```
+
+The AI Gateway is built into the MLflow Tracking Server and will be ready at `http://localhost:5000`.
+
+note
+
+The AI Gateway requires a SQL-based backend store (SQLite, PostgreSQL, MySQL, or MSSQL) and the FastAPI tracking server. By default, `mlflow server` uses SQLite and FastAPI, so no additional configuration is needed for this quickstart.
+
+## Step 2: Create Your First LLM Connection[​](#step-2-create-your-first-llm-connection "Direct link to Step 2: Create Your First LLM Connection")
+
+Navigate to `http://localhost:5000/#/settings` and click on the **LLM Connections** tab.
+
+1. Click **Create** button
+2. Enter a name (e.g., `my-openai-key`)
+3. Select your provider (e.g., OpenAI)
+4. Enter your API key from the provider
+5. Click **Create**
+
+![Create LLM Connection](/docs/3.12.1.dev0/assets/images/create-api-key-367dec6af39b6e7a30dcb6666fb9afa1.png)
+
+Your API key is now securely stored and encrypted.
+
+## Step 3: Create Your First Endpoint[​](#step-3-create-your-first-endpoint "Direct link to Step 3: Create Your First Endpoint")
+
+Switch to the **Endpoints** tab and click **Create Endpoint**.
+
+1. Enter an endpoint name (e.g., `my-chat-endpoint`)
+2. Select your provider (e.g., OpenAI)
+3. Choose a model (e.g., `gpt-4o`)
+4. Select your LLM connection from the dropdown (the one you just created)
+5. Click **Create Endpoint**
+
+## Step 4: Query Your Endpoint[​](#step-4-query-your-endpoint "Direct link to Step 4: Query Your Endpoint")
+
+Test your endpoint with a simple request:
+
+* cURL
+* Python
+* OpenAI SDK
+
+bash
+
+```
+curl -X POST http://localhost:5000/gateway/my-chat-endpoint/mlflow/invocations \
+  -H "Content-Type: application/json" \
+  -d '{
+    "messages": [{"role": "user", "content": "Hello!"}]
+  }'
+```
+
+python
+
+```
+import requests
+
+response = requests.post(
+    "http://localhost:5000/gateway/my-chat-endpoint/mlflow/invocations",
+    json={"messages": [{"role": "user", "content": "Hello!"}]},
+)
+print(response.json())
+```
+
+python
+
+```
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="http://localhost:5000/gateway/mlflow/v1",
+    api_key="",  # Not needed - API key is configured server-side
+)
+
+response = client.chat.completions.create(
+    model="my-chat-endpoint",
+    messages=[{"role": "user", "content": "Hello!"}],
+)
+print(response.choices[0].message.content)
+```
+
+You should receive a response from your configured model.
+
+## Next Steps[​](#next-steps "Direct link to Next Steps")
+
+Now that you have a working gateway, explore these features:
+
+### [LLM Connections](/docs/3.12.1.dev0/genai/governance/ai-gateway/api-keys/create-and-manage.md)
+
+[Learn about LLM connections and best practices for managing API keys](/docs/3.12.1.dev0/genai/governance/ai-gateway/api-keys/create-and-manage.md)
+
+[Manage LLM connections →](/docs/3.12.1.dev0/genai/governance/ai-gateway/api-keys/create-and-manage.md)
+
+### [Endpoints](/docs/3.12.1.dev0/genai/governance/ai-gateway/endpoints/create-and-manage.md)
+
+[Configure endpoints with multiple models and query options](/docs/3.12.1.dev0/genai/governance/ai-gateway/endpoints/create-and-manage.md)
+
+[Configure endpoints →](/docs/3.12.1.dev0/genai/governance/ai-gateway/endpoints/create-and-manage.md)
+
+### [Traffic Routing](/docs/3.12.1.dev0/genai/governance/ai-gateway/traffic-routing-fallbacks.md)
+
+[Set up A/B testing, fallbacks, and high availability](/docs/3.12.1.dev0/genai/governance/ai-gateway/traffic-routing-fallbacks.md)
+
+[Set up routing →](/docs/3.12.1.dev0/genai/governance/ai-gateway/traffic-routing-fallbacks.md)
