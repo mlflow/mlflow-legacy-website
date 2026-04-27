@@ -1,0 +1,1026 @@
+
+
+<!DOCTYPE html>
+<!-- source: docs/source/python_api/mlflow.webhooks.rst -->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mlflow.webhooks</title>
+  
+   
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="canonical" href="https://mlflow.org/docs/latest/python_api/mlflow.webhooks.html">
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+
+  
+
+  
+    
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer',"GTM-N6WMTTJ");</script>
+        <!-- End Google Tag Manager -->
+    
+  
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16857946923"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-16857946923');
+  </script>
+  <!-- Eng gtag -->
+
+  
+
+  
+  <meta name="docsearch:docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_version" content="current" data-rh="true">
+  <meta name="docsearch:version" content="current" data-rh="true">
+  <meta name="docusaurus_locale" content="en" data-rh="true">
+  <meta name="docsearch:language" content="en" data-rh="true">
+
+  
+  
+    
+
+  
+
+  
+  
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600" rel="stylesheet">
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/cards.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/grids.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/mobile.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/simple-cards.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/tabs.css" type="text/css" />
+    
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="MLflow 3.12.0rc0 documentation" href="../index.html"/>
+        <link rel="up" title="Python API" href="index.html"/>
+        <link rel="next" title="mlflow.xgboost" href="/mlflow.xgboost.html"/>
+        <link rel="prev" title="mlflow.utils" href="/mlflow.utils.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+<script type="text/javascript" src="../_static/documentation_options.js"></script>
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/underscore.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+<script type="text/javascript" src="../_static/languagesections.js"></script>
+<script type="text/javascript" src="../_static/runllm.js"></script>
+
+<body class="wy-body-for-nav" role="document">
+  
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6WMTTJ"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  
+  <nav class="wy-nav-top header" role="navigation" aria-label="top navigation">
+    <div class="header-container">
+  <style scoped>
+    .header-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
+    }
+
+    .logo-container {
+      display: flex;
+      gap: 12px;
+      flex-direction: row;
+      white-space: nowrap;
+      align-items: center;
+      justify-content: center;
+    }
+
+    a:hover {
+      text-decoration: none;
+      color: #0194e2;
+    }
+  </style>
+  <div class="logo-container">
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
+    <a href="../index.html" class="wy-nav-top-logo">
+      <img
+        src="../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
+    </a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
+  </div>
+  <span class="header-link version">3.12.0rc0</span>
+</div>
+  </nav>
+  <page>
+    
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side relative">
+      <div class="wy-side-scroll">
+  <div class="wy-side-nav-search">
+    
+
+    
+
+    
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+    
+  </div>
+
+  <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+    
+      <a href="../index.html">Home</a>
+    
+
+    
+      
+
+      
+        <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Python API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="mlflow.html">mlflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.html#mlflow-tracing-apis">MLflow Tracing APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.html#mlflow-logged-model-apis">MLflow Logged Model APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.ag2.html">mlflow.ag2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.agno.html">mlflow.agno</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.anthropic.html">mlflow.anthropic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.artifacts.html">mlflow.artifacts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.autogen.html">mlflow.autogen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.bedrock.html">mlflow.bedrock</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.catboost.html">mlflow.catboost</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.client.html">mlflow.client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.config.html">mlflow.config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.crewai.html">mlflow.crewai</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.data.html">mlflow.data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.deployments.html">mlflow.deployments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.dspy.html">mlflow.dspy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.entities.html">mlflow.entities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.environment_variables.html">mlflow.environment_variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.gateway.html">mlflow.gateway</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.gemini.html">mlflow.gemini</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.genai.html">mlflow.genai</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.groq.html">mlflow.groq</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.h2o.html">mlflow.h2o</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.haystack.html">mlflow.haystack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.johnsnowlabs.html">mlflow.johnsnowlabs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.keras.html">mlflow.keras</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.langchain.html">mlflow.langchain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.lightgbm.html">mlflow.lightgbm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.litellm.html">mlflow.litellm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.llama_index.html">mlflow.llama_index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.metrics.html">mlflow.metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.mistral.html">mlflow.mistral</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.models.html">mlflow.models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.onnx.html">mlflow.onnx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.openai.html">mlflow.openai</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.paddle.html">mlflow.paddle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.pmdarima.html">mlflow.pmdarima</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.projects.html">mlflow.projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.prophet.html">mlflow.prophet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.pydantic_ai.html">mlflow.pydantic_ai</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.pyfunc.html">mlflow.pyfunc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.pyspark.ml.html">mlflow.pyspark.ml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.pytorch.html">mlflow.pytorch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.sagemaker.html">mlflow.sagemaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.sentence_transformers.html">mlflow.sentence_transformers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.server.html">mlflow.server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.shap.html">mlflow.shap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.sklearn.html">mlflow.sklearn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.smolagents.html">mlflow.smolagents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.spacy.html">mlflow.spacy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.spark.html">mlflow.spark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.statsmodels.html">mlflow.statsmodels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.strands.html">mlflow.strands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.system_metrics.html">mlflow.system_metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.tensorflow.html">mlflow.tensorflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.tracing.html">mlflow.tracing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.transformers.html">mlflow.transformers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.types.html">mlflow.types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.utils.html">mlflow.utils</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">mlflow.webhooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlflow.xgboost.html">mlflow.xgboost</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#log-levels">Log Levels</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../typescript_api/index.html">TypeScript API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">Command-Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auth/python-api.html">MLflow Authentication Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auth/rest-api.html">MLflow Authentication REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../R-api.html">R API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../java_api/index.html">Java API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rest-api.html">REST API</a></li>
+</ul>
+
+      
+    
+  </div>
+
+  <div role="contentinfo">
+    
+
+    <p>
+      <a id='feedbacklink' href="https://github.com/mlflow/mlflow/blob/master/CONTRIBUTING.md" target="_blank">Contribute</a>
+    </p>
+  </div>
+</div>
+    </nav>
+
+    <main class="wy-grid-for-nav">
+      <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+        <div class="wy-nav-content">
+          <div class="rst-content">
+            
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Documentation</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+        <li><a href="index.html">Python API</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+    
+      <li>mlflow.webhooks</li>
+    
+    
+    <!-- <li class="wy-breadcrumbs-aside">
+      <a href="https://github.com/mlflow/mlflow/blob/master/docs/source/python_api/mlflow.webhooks.rst" class="fa fa-github"> Edit on GitHub</a>
+    </li> -->
+    
+  </ul>
+</div>
+            <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+              <div itemprop="articleBody">
+                
+  <div class="section" id="module-mlflow.webhooks">
+<span id="mlflow-webhooks"></span><h1>mlflow.webhooks<a class="headerlink" href="#module-mlflow.webhooks" title="Permalink to this headline"> </a></h1>
+<p>MLflow webhooks module.</p>
+<p>This module provides webhook functionality for MLflow model registry and prompt registry events.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mlflow.webhooks.ModelVersionAliasCreatedPayload">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.webhooks.</span></span><span class="sig-name descname"><span class="pre">ModelVersionAliasCreatedPayload</span></span><a class="reference internal" href="../_modules/mlflow/webhooks/types.html#ModelVersionAliasCreatedPayload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.webhooks.ModelVersionAliasCreatedPayload" title="Permalink to this definition"> </a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></p>
+<p>Payload sent when an alias is created for a model version.</p>
+<p>Example payload:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;example_model&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;alias&quot;</span><span class="p">:</span> <span class="s2">&quot;example_alias&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.ModelVersionAliasCreatedPayload.alias">
+<span class="sig-name descname"><span class="pre">alias</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.ModelVersionAliasCreatedPayload.alias" title="Permalink to this definition"> </a></dt>
+<dd><p>The alias being created.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.webhooks.ModelVersionAliasCreatedPayload.example">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">example</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mlflow.webhooks.ModelVersionAliasCreatedPayload" title="mlflow.webhooks.types.ModelVersionAliasCreatedPayload"><span class="pre">mlflow.webhooks.types.ModelVersionAliasCreatedPayload</span></a></span></span><a class="reference internal" href="../_modules/mlflow/webhooks/types.html#ModelVersionAliasCreatedPayload.example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.webhooks.ModelVersionAliasCreatedPayload.example" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.ModelVersionAliasCreatedPayload.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.ModelVersionAliasCreatedPayload.name" title="Permalink to this definition"> </a></dt>
+<dd><p>The name of the registered model.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.ModelVersionAliasCreatedPayload.version">
+<span class="sig-name descname"><span class="pre">version</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.ModelVersionAliasCreatedPayload.version" title="Permalink to this definition"> </a></dt>
+<dd><p>The version of the model the alias is being assigned to.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mlflow.webhooks.ModelVersionAliasDeletedPayload">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.webhooks.</span></span><span class="sig-name descname"><span class="pre">ModelVersionAliasDeletedPayload</span></span><a class="reference internal" href="../_modules/mlflow/webhooks/types.html#ModelVersionAliasDeletedPayload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.webhooks.ModelVersionAliasDeletedPayload" title="Permalink to this definition"> </a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></p>
+<p>Payload sent when an alias is deleted from a model version.</p>
+<p>Example payload:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;example_model&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;alias&quot;</span><span class="p">:</span> <span class="s2">&quot;example_alias&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.ModelVersionAliasDeletedPayload.alias">
+<span class="sig-name descname"><span class="pre">alias</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.ModelVersionAliasDeletedPayload.alias" title="Permalink to this definition"> </a></dt>
+<dd><p>The alias being deleted.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.webhooks.ModelVersionAliasDeletedPayload.example">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">example</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mlflow.webhooks.ModelVersionAliasDeletedPayload" title="mlflow.webhooks.types.ModelVersionAliasDeletedPayload"><span class="pre">mlflow.webhooks.types.ModelVersionAliasDeletedPayload</span></a></span></span><a class="reference internal" href="../_modules/mlflow/webhooks/types.html#ModelVersionAliasDeletedPayload.example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.webhooks.ModelVersionAliasDeletedPayload.example" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.ModelVersionAliasDeletedPayload.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.ModelVersionAliasDeletedPayload.name" title="Permalink to this definition"> </a></dt>
+<dd><p>The name of the registered model.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mlflow.webhooks.ModelVersionCreatedPayload">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.webhooks.</span></span><span class="sig-name descname"><span class="pre">ModelVersionCreatedPayload</span></span><a class="reference internal" href="../_modules/mlflow/webhooks/types.html#ModelVersionCreatedPayload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.webhooks.ModelVersionCreatedPayload" title="Permalink to this definition"> </a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></p>
+<p>Payload sent when a new model version is created.</p>
+<p>Example payload:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;example_model&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="s2">&quot;models:/123&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;run_id&quot;</span><span class="p">:</span> <span class="s2">&quot;abcd1234abcd5678&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tags&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;example_key&quot;</span><span class="p">:</span> <span class="s2">&quot;example_value&quot;</span><span class="p">},</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;An example model version&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.ModelVersionCreatedPayload.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span> <span class="p"><span class="pre">|</span></span> <span class="pre">None</span></em><a class="headerlink" href="#mlflow.webhooks.ModelVersionCreatedPayload.description" title="Permalink to this definition"> </a></dt>
+<dd><p>Description of the model version.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.webhooks.ModelVersionCreatedPayload.example">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">example</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mlflow.webhooks.ModelVersionCreatedPayload" title="mlflow.webhooks.types.ModelVersionCreatedPayload"><span class="pre">mlflow.webhooks.types.ModelVersionCreatedPayload</span></a></span></span><a class="reference internal" href="../_modules/mlflow/webhooks/types.html#ModelVersionCreatedPayload.example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.webhooks.ModelVersionCreatedPayload.example" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.ModelVersionCreatedPayload.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.ModelVersionCreatedPayload.name" title="Permalink to this definition"> </a></dt>
+<dd><p>The name of the registered model.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.ModelVersionCreatedPayload.run_id">
+<span class="sig-name descname"><span class="pre">run_id</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span> <span class="p"><span class="pre">|</span></span> <span class="pre">None</span></em><a class="headerlink" href="#mlflow.webhooks.ModelVersionCreatedPayload.run_id" title="Permalink to this definition"> </a></dt>
+<dd><p>The run ID associated with the model version, if applicable.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.ModelVersionCreatedPayload.source">
+<span class="sig-name descname"><span class="pre">source</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.ModelVersionCreatedPayload.source" title="Permalink to this definition"> </a></dt>
+<dd><p>The source URI of the model version.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.ModelVersionCreatedPayload.tags">
+<span class="sig-name descname"><span class="pre">tags</span></span><em class="property"><span class="pre">:</span> <span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mlflow.webhooks.ModelVersionCreatedPayload.tags" title="Permalink to this definition"> </a></dt>
+<dd><p>Tags associated with the model version.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.ModelVersionCreatedPayload.version">
+<span class="sig-name descname"><span class="pre">version</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.ModelVersionCreatedPayload.version" title="Permalink to this definition"> </a></dt>
+<dd><p>The version of the model.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mlflow.webhooks.ModelVersionTagDeletedPayload">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.webhooks.</span></span><span class="sig-name descname"><span class="pre">ModelVersionTagDeletedPayload</span></span><a class="reference internal" href="../_modules/mlflow/webhooks/types.html#ModelVersionTagDeletedPayload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.webhooks.ModelVersionTagDeletedPayload" title="Permalink to this definition"> </a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></p>
+<p>Payload sent when a tag is deleted from a model version.</p>
+<p>Example payload:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;example_model&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;example_key&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.webhooks.ModelVersionTagDeletedPayload.example">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">example</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mlflow.webhooks.ModelVersionTagDeletedPayload" title="mlflow.webhooks.types.ModelVersionTagDeletedPayload"><span class="pre">mlflow.webhooks.types.ModelVersionTagDeletedPayload</span></a></span></span><a class="reference internal" href="../_modules/mlflow/webhooks/types.html#ModelVersionTagDeletedPayload.example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.webhooks.ModelVersionTagDeletedPayload.example" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.ModelVersionTagDeletedPayload.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.ModelVersionTagDeletedPayload.key" title="Permalink to this definition"> </a></dt>
+<dd><p>The tag key being deleted.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.ModelVersionTagDeletedPayload.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.ModelVersionTagDeletedPayload.name" title="Permalink to this definition"> </a></dt>
+<dd><p>The name of the registered model.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.ModelVersionTagDeletedPayload.version">
+<span class="sig-name descname"><span class="pre">version</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.ModelVersionTagDeletedPayload.version" title="Permalink to this definition"> </a></dt>
+<dd><p>The version of the model.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mlflow.webhooks.ModelVersionTagSetPayload">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.webhooks.</span></span><span class="sig-name descname"><span class="pre">ModelVersionTagSetPayload</span></span><a class="reference internal" href="../_modules/mlflow/webhooks/types.html#ModelVersionTagSetPayload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.webhooks.ModelVersionTagSetPayload" title="Permalink to this definition"> </a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></p>
+<p>Payload sent when a tag is set on a model version.</p>
+<p>Example payload:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;example_model&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;example_key&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;example_value&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.webhooks.ModelVersionTagSetPayload.example">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">example</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mlflow.webhooks.ModelVersionTagSetPayload" title="mlflow.webhooks.types.ModelVersionTagSetPayload"><span class="pre">mlflow.webhooks.types.ModelVersionTagSetPayload</span></a></span></span><a class="reference internal" href="../_modules/mlflow/webhooks/types.html#ModelVersionTagSetPayload.example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.webhooks.ModelVersionTagSetPayload.example" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.ModelVersionTagSetPayload.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.ModelVersionTagSetPayload.key" title="Permalink to this definition"> </a></dt>
+<dd><p>The tag key being set.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.ModelVersionTagSetPayload.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.ModelVersionTagSetPayload.name" title="Permalink to this definition"> </a></dt>
+<dd><p>The name of the registered model.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.ModelVersionTagSetPayload.value">
+<span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.ModelVersionTagSetPayload.value" title="Permalink to this definition"> </a></dt>
+<dd><p>The tag value being set.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.ModelVersionTagSetPayload.version">
+<span class="sig-name descname"><span class="pre">version</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.ModelVersionTagSetPayload.version" title="Permalink to this definition"> </a></dt>
+<dd><p>The version of the model.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptAliasCreatedPayload">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.webhooks.</span></span><span class="sig-name descname"><span class="pre">PromptAliasCreatedPayload</span></span><a class="reference internal" href="../_modules/mlflow/webhooks/types.html#PromptAliasCreatedPayload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.webhooks.PromptAliasCreatedPayload" title="Permalink to this definition"> </a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></p>
+<p>Payload sent when an alias is created for a prompt version.</p>
+<p>Example payload:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;example_prompt&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;alias&quot;</span><span class="p">:</span> <span class="s2">&quot;example_alias&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptAliasCreatedPayload.alias">
+<span class="sig-name descname"><span class="pre">alias</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.PromptAliasCreatedPayload.alias" title="Permalink to this definition"> </a></dt>
+<dd><p>The alias being created.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptAliasCreatedPayload.example">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">example</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mlflow.webhooks.PromptAliasCreatedPayload" title="mlflow.webhooks.types.PromptAliasCreatedPayload"><span class="pre">mlflow.webhooks.types.PromptAliasCreatedPayload</span></a></span></span><a class="reference internal" href="../_modules/mlflow/webhooks/types.html#PromptAliasCreatedPayload.example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.webhooks.PromptAliasCreatedPayload.example" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptAliasCreatedPayload.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.PromptAliasCreatedPayload.name" title="Permalink to this definition"> </a></dt>
+<dd><p>The name of the prompt.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptAliasCreatedPayload.version">
+<span class="sig-name descname"><span class="pre">version</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.PromptAliasCreatedPayload.version" title="Permalink to this definition"> </a></dt>
+<dd><p>The version of the prompt the alias is being assigned to.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptAliasDeletedPayload">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.webhooks.</span></span><span class="sig-name descname"><span class="pre">PromptAliasDeletedPayload</span></span><a class="reference internal" href="../_modules/mlflow/webhooks/types.html#PromptAliasDeletedPayload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.webhooks.PromptAliasDeletedPayload" title="Permalink to this definition"> </a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></p>
+<p>Payload sent when an alias is deleted from a prompt.</p>
+<p>Example payload:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;example_prompt&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;alias&quot;</span><span class="p">:</span> <span class="s2">&quot;example_alias&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptAliasDeletedPayload.alias">
+<span class="sig-name descname"><span class="pre">alias</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.PromptAliasDeletedPayload.alias" title="Permalink to this definition"> </a></dt>
+<dd><p>The alias being deleted.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptAliasDeletedPayload.example">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">example</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mlflow.webhooks.PromptAliasDeletedPayload" title="mlflow.webhooks.types.PromptAliasDeletedPayload"><span class="pre">mlflow.webhooks.types.PromptAliasDeletedPayload</span></a></span></span><a class="reference internal" href="../_modules/mlflow/webhooks/types.html#PromptAliasDeletedPayload.example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.webhooks.PromptAliasDeletedPayload.example" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptAliasDeletedPayload.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.PromptAliasDeletedPayload.name" title="Permalink to this definition"> </a></dt>
+<dd><p>The name of the prompt.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptCreatedPayload">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.webhooks.</span></span><span class="sig-name descname"><span class="pre">PromptCreatedPayload</span></span><a class="reference internal" href="../_modules/mlflow/webhooks/types.html#PromptCreatedPayload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.webhooks.PromptCreatedPayload" title="Permalink to this definition"> </a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></p>
+<p>Payload sent when a new prompt is created.</p>
+<p>Example payload:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;example_prompt&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tags&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;example_key&quot;</span><span class="p">:</span> <span class="s2">&quot;example_value&quot;</span><span class="p">},</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;An example prompt&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptCreatedPayload.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span> <span class="p"><span class="pre">|</span></span> <span class="pre">None</span></em><a class="headerlink" href="#mlflow.webhooks.PromptCreatedPayload.description" title="Permalink to this definition"> </a></dt>
+<dd><p>Description of the prompt.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptCreatedPayload.example">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">example</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mlflow.webhooks.PromptCreatedPayload" title="mlflow.webhooks.types.PromptCreatedPayload"><span class="pre">mlflow.webhooks.types.PromptCreatedPayload</span></a></span></span><a class="reference internal" href="../_modules/mlflow/webhooks/types.html#PromptCreatedPayload.example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.webhooks.PromptCreatedPayload.example" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptCreatedPayload.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.PromptCreatedPayload.name" title="Permalink to this definition"> </a></dt>
+<dd><p>The name of the prompt.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptCreatedPayload.tags">
+<span class="sig-name descname"><span class="pre">tags</span></span><em class="property"><span class="pre">:</span> <span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mlflow.webhooks.PromptCreatedPayload.tags" title="Permalink to this definition"> </a></dt>
+<dd><p>Tags associated with the prompt.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptTagDeletedPayload">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.webhooks.</span></span><span class="sig-name descname"><span class="pre">PromptTagDeletedPayload</span></span><a class="reference internal" href="../_modules/mlflow/webhooks/types.html#PromptTagDeletedPayload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.webhooks.PromptTagDeletedPayload" title="Permalink to this definition"> </a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></p>
+<p>Payload sent when a tag is deleted from a prompt.</p>
+<p>Example payload:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;example_prompt&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;example_key&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptTagDeletedPayload.example">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">example</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mlflow.webhooks.PromptTagDeletedPayload" title="mlflow.webhooks.types.PromptTagDeletedPayload"><span class="pre">mlflow.webhooks.types.PromptTagDeletedPayload</span></a></span></span><a class="reference internal" href="../_modules/mlflow/webhooks/types.html#PromptTagDeletedPayload.example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.webhooks.PromptTagDeletedPayload.example" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptTagDeletedPayload.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.PromptTagDeletedPayload.key" title="Permalink to this definition"> </a></dt>
+<dd><p>The tag key being deleted.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptTagDeletedPayload.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.PromptTagDeletedPayload.name" title="Permalink to this definition"> </a></dt>
+<dd><p>The name of the prompt.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptTagSetPayload">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.webhooks.</span></span><span class="sig-name descname"><span class="pre">PromptTagSetPayload</span></span><a class="reference internal" href="../_modules/mlflow/webhooks/types.html#PromptTagSetPayload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.webhooks.PromptTagSetPayload" title="Permalink to this definition"> </a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></p>
+<p>Payload sent when a tag is set on a prompt.</p>
+<p>Example payload:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;example_prompt&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;example_key&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;example_value&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptTagSetPayload.example">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">example</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mlflow.webhooks.PromptTagSetPayload" title="mlflow.webhooks.types.PromptTagSetPayload"><span class="pre">mlflow.webhooks.types.PromptTagSetPayload</span></a></span></span><a class="reference internal" href="../_modules/mlflow/webhooks/types.html#PromptTagSetPayload.example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.webhooks.PromptTagSetPayload.example" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptTagSetPayload.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.PromptTagSetPayload.key" title="Permalink to this definition"> </a></dt>
+<dd><p>The tag key being set.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptTagSetPayload.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.PromptTagSetPayload.name" title="Permalink to this definition"> </a></dt>
+<dd><p>The name of the prompt.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptTagSetPayload.value">
+<span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.PromptTagSetPayload.value" title="Permalink to this definition"> </a></dt>
+<dd><p>The tag value being set.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptVersionCreatedPayload">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.webhooks.</span></span><span class="sig-name descname"><span class="pre">PromptVersionCreatedPayload</span></span><a class="reference internal" href="../_modules/mlflow/webhooks/types.html#PromptVersionCreatedPayload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.webhooks.PromptVersionCreatedPayload" title="Permalink to this definition"> </a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></p>
+<p>Payload sent when a new prompt version is created.</p>
+<p>Example payload:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;example_prompt&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;template&quot;</span><span class="p">:</span> <span class="s2">&quot;Hello {{name}}!&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tags&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;example_key&quot;</span><span class="p">:</span> <span class="s2">&quot;example_value&quot;</span><span class="p">},</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;An example prompt version&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptVersionCreatedPayload.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span> <span class="p"><span class="pre">|</span></span> <span class="pre">None</span></em><a class="headerlink" href="#mlflow.webhooks.PromptVersionCreatedPayload.description" title="Permalink to this definition"> </a></dt>
+<dd><p>Description of the prompt version.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptVersionCreatedPayload.example">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">example</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mlflow.webhooks.PromptVersionCreatedPayload" title="mlflow.webhooks.types.PromptVersionCreatedPayload"><span class="pre">mlflow.webhooks.types.PromptVersionCreatedPayload</span></a></span></span><a class="reference internal" href="../_modules/mlflow/webhooks/types.html#PromptVersionCreatedPayload.example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.webhooks.PromptVersionCreatedPayload.example" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptVersionCreatedPayload.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.PromptVersionCreatedPayload.name" title="Permalink to this definition"> </a></dt>
+<dd><p>The name of the prompt.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptVersionCreatedPayload.tags">
+<span class="sig-name descname"><span class="pre">tags</span></span><em class="property"><span class="pre">:</span> <span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mlflow.webhooks.PromptVersionCreatedPayload.tags" title="Permalink to this definition"> </a></dt>
+<dd><p>Tags associated with the prompt version.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptVersionCreatedPayload.template">
+<span class="sig-name descname"><span class="pre">template</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.PromptVersionCreatedPayload.template" title="Permalink to this definition"> </a></dt>
+<dd><p>The template content of the prompt version.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptVersionCreatedPayload.version">
+<span class="sig-name descname"><span class="pre">version</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.PromptVersionCreatedPayload.version" title="Permalink to this definition"> </a></dt>
+<dd><p>The version of the prompt.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptVersionTagDeletedPayload">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.webhooks.</span></span><span class="sig-name descname"><span class="pre">PromptVersionTagDeletedPayload</span></span><a class="reference internal" href="../_modules/mlflow/webhooks/types.html#PromptVersionTagDeletedPayload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.webhooks.PromptVersionTagDeletedPayload" title="Permalink to this definition"> </a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></p>
+<p>Payload sent when a tag is deleted from a prompt version.</p>
+<p>Example payload:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;example_prompt&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;example_key&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptVersionTagDeletedPayload.example">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">example</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mlflow.webhooks.PromptVersionTagDeletedPayload" title="mlflow.webhooks.types.PromptVersionTagDeletedPayload"><span class="pre">mlflow.webhooks.types.PromptVersionTagDeletedPayload</span></a></span></span><a class="reference internal" href="../_modules/mlflow/webhooks/types.html#PromptVersionTagDeletedPayload.example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.webhooks.PromptVersionTagDeletedPayload.example" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptVersionTagDeletedPayload.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.PromptVersionTagDeletedPayload.key" title="Permalink to this definition"> </a></dt>
+<dd><p>The tag key being deleted.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptVersionTagDeletedPayload.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.PromptVersionTagDeletedPayload.name" title="Permalink to this definition"> </a></dt>
+<dd><p>The name of the prompt.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptVersionTagDeletedPayload.version">
+<span class="sig-name descname"><span class="pre">version</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.PromptVersionTagDeletedPayload.version" title="Permalink to this definition"> </a></dt>
+<dd><p>The version of the prompt.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptVersionTagSetPayload">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.webhooks.</span></span><span class="sig-name descname"><span class="pre">PromptVersionTagSetPayload</span></span><a class="reference internal" href="../_modules/mlflow/webhooks/types.html#PromptVersionTagSetPayload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.webhooks.PromptVersionTagSetPayload" title="Permalink to this definition"> </a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></p>
+<p>Payload sent when a tag is set on a prompt version.</p>
+<p>Example payload:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;example_prompt&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;example_key&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;example_value&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptVersionTagSetPayload.example">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">example</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mlflow.webhooks.PromptVersionTagSetPayload" title="mlflow.webhooks.types.PromptVersionTagSetPayload"><span class="pre">mlflow.webhooks.types.PromptVersionTagSetPayload</span></a></span></span><a class="reference internal" href="../_modules/mlflow/webhooks/types.html#PromptVersionTagSetPayload.example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.webhooks.PromptVersionTagSetPayload.example" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptVersionTagSetPayload.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.PromptVersionTagSetPayload.key" title="Permalink to this definition"> </a></dt>
+<dd><p>The tag key being set.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptVersionTagSetPayload.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.PromptVersionTagSetPayload.name" title="Permalink to this definition"> </a></dt>
+<dd><p>The name of the prompt.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptVersionTagSetPayload.value">
+<span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.PromptVersionTagSetPayload.value" title="Permalink to this definition"> </a></dt>
+<dd><p>The tag value being set.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.PromptVersionTagSetPayload.version">
+<span class="sig-name descname"><span class="pre">version</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.PromptVersionTagSetPayload.version" title="Permalink to this definition"> </a></dt>
+<dd><p>The version of the prompt.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mlflow.webhooks.RegisteredModelCreatedPayload">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.webhooks.</span></span><span class="sig-name descname"><span class="pre">RegisteredModelCreatedPayload</span></span><a class="reference internal" href="../_modules/mlflow/webhooks/types.html#RegisteredModelCreatedPayload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.webhooks.RegisteredModelCreatedPayload" title="Permalink to this definition"> </a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></p>
+<p>Payload sent when a new registered model is created.</p>
+<p>Example payload:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;example_model&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tags&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;example_key&quot;</span><span class="p">:</span> <span class="s2">&quot;example_value&quot;</span><span class="p">},</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;An example registered model&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.RegisteredModelCreatedPayload.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span> <span class="p"><span class="pre">|</span></span> <span class="pre">None</span></em><a class="headerlink" href="#mlflow.webhooks.RegisteredModelCreatedPayload.description" title="Permalink to this definition"> </a></dt>
+<dd><p>Description of the registered model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.webhooks.RegisteredModelCreatedPayload.example">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">example</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mlflow.webhooks.RegisteredModelCreatedPayload" title="mlflow.webhooks.types.RegisteredModelCreatedPayload"><span class="pre">mlflow.webhooks.types.RegisteredModelCreatedPayload</span></a></span></span><a class="reference internal" href="../_modules/mlflow/webhooks/types.html#RegisteredModelCreatedPayload.example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.webhooks.RegisteredModelCreatedPayload.example" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.RegisteredModelCreatedPayload.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.webhooks.RegisteredModelCreatedPayload.name" title="Permalink to this definition"> </a></dt>
+<dd><p>The name of the registered model.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.webhooks.RegisteredModelCreatedPayload.tags">
+<span class="sig-name descname"><span class="pre">tags</span></span><em class="property"><span class="pre">:</span> <span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mlflow.webhooks.RegisteredModelCreatedPayload.tags" title="Permalink to this definition"> </a></dt>
+<dd><p>Tags associated with the registered model.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+              </div>
+            </div>
+            <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="mlflow.utils.html" class="btn btn-neutral" title="mlflow.utils" accesskey="p"><span class="db-icon db-icon-chevron-left"></span> Previous</a>
+      
+      
+        <a href="mlflow.xgboost.html" class="btn btn-neutral" title="mlflow.xgboost" accesskey="n">Next <span class="db-icon db-icon-chevron-right"></span></a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+      <p class="copyright">
+          &copy; MLflow Project, a Series of LF Projects, LLC. All rights reserved.
+      </p>
+
+  </div> 
+
+</footer>
+          </div>
+        </div>
+      </section>
+    </main>
+  </page>
+
+  
+
+
+  
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:'../',
+      VERSION:'3.12.0rc0',
+      COLLAPSE_INDEX:false,
+      FILE_SUFFIX:'.html',
+      LINK_SUFFIX: '.html',
+      HAS_SOURCE:  true
+    };
+  </script>
+
+  
+
+  <script type="text/javascript" src="../_static/js/clipboard.min.js"></script>
+  <script type="text/javascript" src="../_static/js/jquery.waypoints.min.js"></script>
+
+  
+  
+  
+  <script type="text/javascript">var CLIPPY_SVG_PATH = "../_static/clippy.svg";</script>
+  <script type="text/javascript" src="../_static/js/custom.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+    jQuery(function () {
+      SphinxRtdTheme.StickyNav.enable();
+    });
+
+  </script>
+  
+
+  
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
+        // Get the code block designator class entries
+        const allHighlights = document.querySelectorAll('.highlight');
+        // Disable copyable links for notebook cell numbering and for cell outputs
+        const highlights = Array.from(allHighlights).filter(highlight => !highlight.closest('.highlight-none') && 
+            !highlight.closest('.nboutput'));
+    
+        highlights.forEach(function(highlight) {
+            const copyIcon = document.createElement('span');
+            copyIcon.classList.add('copy-icon');
+            copyIcon.innerHTML = '&#xf0ea;';
+
+            copyIcon.addEventListener('click', function() {
+                const code = highlight.querySelector('pre').textContent;
+                copyToClipboard(code);
+
+                // Flash effect on click
+                this.style.color = '#0194E2';
+                setTimeout(() => {
+                    this.style.color = ''; 
+                }, 100);
+
+                // Display "Code copied to clipboard" near the clicked icon
+                const message = document.createElement('span');
+                message.textContent = "Copied!";
+                message.classList.add('copy-message'); 
+
+                // Append the message to the icon
+                this.appendChild(message);
+
+                setTimeout(() => {
+                    this.removeChild(message);
+                }, 500);
+            });
+
+            highlight.appendChild(copyIcon);
+        });
+    });
+  </script>
+
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        // Force download for notebook-download-btn
+        const downloadButtons = document.querySelectorAll('.notebook-download-btn');
+        downloadButtons.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default behavior
+
+                // Fetch the raw content of the notebook from GitHub
+                fetch(button.href)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const url = window.URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.style.display = 'none';
+                        link.href = url;
+                        const filename = button.href.split('/').pop();
+                        link.download = filename; 
+
+                        document.body.appendChild(link);
+                        link.click();
+
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(link);
+                    })
+                    .catch(err => console.error('Error fetching the notebook:', err));
+            });
+        });
+    });
+</script> 
+</body>
+</html>

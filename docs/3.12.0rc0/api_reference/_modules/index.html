@@ -1,0 +1,618 @@
+
+
+<!DOCTYPE html>
+<!-- source: docs/source/_modules/index -->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Overview: module code</title>
+  
+   
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="canonical" href="https://mlflow.org/docs/latest/_modules/index.html">
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+
+  
+
+  
+    
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer',"GTM-N6WMTTJ");</script>
+        <!-- End Google Tag Manager -->
+    
+  
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16857946923"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-16857946923');
+  </script>
+  <!-- Eng gtag -->
+
+  
+
+  
+  <meta name="docsearch:docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_version" content="current" data-rh="true">
+  <meta name="docsearch:version" content="current" data-rh="true">
+  <meta name="docusaurus_locale" content="en" data-rh="true">
+  <meta name="docsearch:language" content="en" data-rh="true">
+
+  
+  
+    
+
+  
+
+  
+  
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600" rel="stylesheet">
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/cards.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/grids.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/mobile.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/simple-cards.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/tabs.css" type="text/css" />
+    
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="MLflow 3.12.0rc0 documentation" href="../index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+<script type="text/javascript" src="../_static/documentation_options.js"></script>
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/underscore.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+<script type="text/javascript" src="../_static/tabs.js"></script>
+<script type="text/javascript" src="../_static/languagesections.js"></script>
+<script type="text/javascript" src="../_static/runllm.js"></script>
+
+<body class="wy-body-for-nav" role="document">
+  
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6WMTTJ"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  
+  <nav class="wy-nav-top header" role="navigation" aria-label="top navigation">
+    <div class="header-container">
+  <style scoped>
+    .header-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
+    }
+
+    .logo-container {
+      display: flex;
+      gap: 12px;
+      flex-direction: row;
+      white-space: nowrap;
+      align-items: center;
+      justify-content: center;
+    }
+
+    a:hover {
+      text-decoration: none;
+      color: #0194e2;
+    }
+  </style>
+  <div class="logo-container">
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
+    <a href="../index.html" class="wy-nav-top-logo">
+      <img
+        src="../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
+    </a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
+  </div>
+  <span class="header-link version">3.12.0rc0</span>
+</div>
+  </nav>
+  <page>
+    
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side relative">
+      <div class="wy-side-scroll">
+  <div class="wy-side-nav-search">
+    
+
+    
+
+    
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+    
+  </div>
+
+  <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+    
+      <a href="../index.html">Home</a>
+    
+
+    
+      
+
+      
+        <ul>
+<li class="toctree-l1"><a class="reference internal" href="../python_api/index.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typescript_api/index.html">TypeScript API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">Command-Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auth/python-api.html">MLflow Authentication Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auth/rest-api.html">MLflow Authentication REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../R-api.html">R API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../java_api/index.html">Java API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rest-api.html">REST API</a></li>
+</ul>
+
+      
+    
+  </div>
+
+  <div role="contentinfo">
+    
+
+    <p>
+      <a id='feedbacklink' href="https://github.com/mlflow/mlflow/blob/master/CONTRIBUTING.md" target="_blank">Contribute</a>
+    </p>
+  </div>
+</div>
+    </nav>
+
+    <main class="wy-grid-for-nav">
+      <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+        <div class="wy-nav-content">
+          <div class="rst-content">
+            
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Documentation</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+    
+      <li>Overview: module code</li>
+    
+    
+    <!-- <li class="wy-breadcrumbs-aside">
+      <a href="https://github.com/mlflow/mlflow/blob/master/docs/source/_modules/index" class="fa fa-github"> Edit on GitHub</a>
+    </li> -->
+    
+  </ul>
+</div>
+            <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+              <div itemprop="articleBody">
+                
+  <h1>All modules for which code is available</h1>
+<ul><li><a href="mlflow/ag2.html">mlflow.ag2</a></li>
+<li><a href="mlflow/agno.html">mlflow.agno</a></li>
+<li><a href="mlflow/anthropic.html">mlflow.anthropic</a></li>
+<li><a href="mlflow/artifacts.html">mlflow.artifacts</a></li>
+<li><a href="mlflow/autogen.html">mlflow.autogen</a></li>
+<li><a href="mlflow/bedrock.html">mlflow.bedrock</a></li>
+<li><a href="mlflow/catboost.html">mlflow.catboost</a></li>
+<li><a href="mlflow/config.html">mlflow.config</a></li>
+<li><a href="mlflow/crewai.html">mlflow.crewai</a></li>
+<li><a href="mlflow/data.html">mlflow.data</a></li>
+<ul><li><a href="mlflow/data/dataset.html">mlflow.data.dataset</a></li>
+<li><a href="mlflow/data/dataset_source.html">mlflow.data.dataset_source</a></li>
+<li><a href="mlflow/data/delta_dataset_source.html">mlflow.data.delta_dataset_source</a></li>
+<li><a href="mlflow/data/evaluation_dataset.html">mlflow.data.evaluation_dataset</a></li>
+<li><a href="mlflow/data/filesystem_dataset_source.html">mlflow.data.filesystem_dataset_source</a></li>
+<li><a href="mlflow/data/http_dataset_source.html">mlflow.data.http_dataset_source</a></li>
+<li><a href="mlflow/data/huggingface_dataset.html">mlflow.data.huggingface_dataset</a></li>
+<li><a href="mlflow/data/huggingface_dataset_source.html">mlflow.data.huggingface_dataset_source</a></li>
+<li><a href="mlflow/data/numpy_dataset.html">mlflow.data.numpy_dataset</a></li>
+<li><a href="mlflow/data/pandas_dataset.html">mlflow.data.pandas_dataset</a></li>
+<li><a href="mlflow/data/polars_dataset.html">mlflow.data.polars_dataset</a></li>
+<li><a href="mlflow/data/spark_dataset.html">mlflow.data.spark_dataset</a></li>
+<li><a href="mlflow/data/spark_dataset_source.html">mlflow.data.spark_dataset_source</a></li>
+<li><a href="mlflow/data/tensorflow_dataset.html">mlflow.data.tensorflow_dataset</a></li>
+</ul><li><a href="mlflow/deployments.html">mlflow.deployments</a></li>
+<ul><li><a href="mlflow/deployments/base.html">mlflow.deployments.base</a></li>
+<li><a href="mlflow/deployments/databricks.html">mlflow.deployments.databricks</a></li>
+<li><a href="mlflow/deployments/interface.html">mlflow.deployments.interface</a></li>
+<li><a href="mlflow/deployments/mlflow.html">mlflow.deployments.mlflow</a></li>
+<li><a href="mlflow/deployments/openai.html">mlflow.deployments.openai</a></li>
+<li><a href="mlflow/deployments/utils.html">mlflow.deployments.utils</a></li>
+</ul><li><a href="mlflow/dspy/autolog.html">mlflow.dspy.autolog</a></li>
+<li><a href="mlflow/dspy/load.html">mlflow.dspy.load</a></li>
+<li><a href="mlflow/dspy/save.html">mlflow.dspy.save</a></li>
+<li><a href="mlflow/entities/assessment.html">mlflow.entities.assessment</a></li>
+<li><a href="mlflow/entities/assessment_error.html">mlflow.entities.assessment_error</a></li>
+<li><a href="mlflow/entities/assessment_source.html">mlflow.entities.assessment_source</a></li>
+<li><a href="mlflow/entities/dataset.html">mlflow.entities.dataset</a></li>
+<li><a href="mlflow/entities/dataset_input.html">mlflow.entities.dataset_input</a></li>
+<li><a href="mlflow/entities/dataset_record.html">mlflow.entities.dataset_record</a></li>
+<li><a href="mlflow/entities/dataset_record_source.html">mlflow.entities.dataset_record_source</a></li>
+<li><a href="mlflow/entities/document.html">mlflow.entities.document</a></li>
+<li><a href="mlflow/entities/entity_type.html">mlflow.entities.entity_type</a></li>
+<li><a href="mlflow/entities/experiment.html">mlflow.entities.experiment</a></li>
+<li><a href="mlflow/entities/experiment_tag.html">mlflow.entities.experiment_tag</a></li>
+<li><a href="mlflow/entities/file_info.html">mlflow.entities.file_info</a></li>
+<li><a href="mlflow/entities/gateway_budget_policy.html">mlflow.entities.gateway_budget_policy</a></li>
+<li><a href="mlflow/entities/gateway_endpoint.html">mlflow.entities.gateway_endpoint</a></li>
+<li><a href="mlflow/entities/gateway_guardrail.html">mlflow.entities.gateway_guardrail</a></li>
+<li><a href="mlflow/entities/gateway_secrets.html">mlflow.entities.gateway_secrets</a></li>
+<li><a href="mlflow/entities/input_tag.html">mlflow.entities.input_tag</a></li>
+<li><a href="mlflow/entities/issue.html">mlflow.entities.issue</a></li>
+<li><a href="mlflow/entities/lifecycle_stage.html">mlflow.entities.lifecycle_stage</a></li>
+<li><a href="mlflow/entities/logged_model.html">mlflow.entities.logged_model</a></li>
+<li><a href="mlflow/entities/logged_model_input.html">mlflow.entities.logged_model_input</a></li>
+<li><a href="mlflow/entities/logged_model_output.html">mlflow.entities.logged_model_output</a></li>
+<li><a href="mlflow/entities/logged_model_parameter.html">mlflow.entities.logged_model_parameter</a></li>
+<li><a href="mlflow/entities/logged_model_status.html">mlflow.entities.logged_model_status</a></li>
+<li><a href="mlflow/entities/logged_model_tag.html">mlflow.entities.logged_model_tag</a></li>
+<li><a href="mlflow/entities/metric.html">mlflow.entities.metric</a></li>
+<li><a href="mlflow/entities/model_registry/model_version.html">mlflow.entities.model_registry.model_version</a></li>
+<li><a href="mlflow/entities/model_registry/model_version_deployment_job_state.html">mlflow.entities.model_registry.model_version_deployment_job_state</a></li>
+<li><a href="mlflow/entities/model_registry/model_version_search.html">mlflow.entities.model_registry.model_version_search</a></li>
+<li><a href="mlflow/entities/model_registry/model_version_tag.html">mlflow.entities.model_registry.model_version_tag</a></li>
+<li><a href="mlflow/entities/model_registry/prompt.html">mlflow.entities.model_registry.prompt</a></li>
+<li><a href="mlflow/entities/model_registry/prompt_version.html">mlflow.entities.model_registry.prompt_version</a></li>
+<li><a href="mlflow/entities/model_registry/registered_model.html">mlflow.entities.model_registry.registered_model</a></li>
+<li><a href="mlflow/entities/model_registry/registered_model_alias.html">mlflow.entities.model_registry.registered_model_alias</a></li>
+<li><a href="mlflow/entities/model_registry/registered_model_deployment_job_state.html">mlflow.entities.model_registry.registered_model_deployment_job_state</a></li>
+<li><a href="mlflow/entities/model_registry/registered_model_search.html">mlflow.entities.model_registry.registered_model_search</a></li>
+<li><a href="mlflow/entities/model_registry/registered_model_tag.html">mlflow.entities.model_registry.registered_model_tag</a></li>
+<li><a href="mlflow/entities/param.html">mlflow.entities.param</a></li>
+<li><a href="mlflow/entities/run.html">mlflow.entities.run</a></li>
+<li><a href="mlflow/entities/run_data.html">mlflow.entities.run_data</a></li>
+<li><a href="mlflow/entities/run_info.html">mlflow.entities.run_info</a></li>
+<li><a href="mlflow/entities/run_inputs.html">mlflow.entities.run_inputs</a></li>
+<li><a href="mlflow/entities/run_outputs.html">mlflow.entities.run_outputs</a></li>
+<li><a href="mlflow/entities/run_status.html">mlflow.entities.run_status</a></li>
+<li><a href="mlflow/entities/run_tag.html">mlflow.entities.run_tag</a></li>
+<li><a href="mlflow/entities/scorer.html">mlflow.entities.scorer</a></li>
+<li><a href="mlflow/entities/session.html">mlflow.entities.session</a></li>
+<li><a href="mlflow/entities/source_type.html">mlflow.entities.source_type</a></li>
+<li><a href="mlflow/entities/span.html">mlflow.entities.span</a></li>
+<li><a href="mlflow/entities/span_event.html">mlflow.entities.span_event</a></li>
+<li><a href="mlflow/entities/span_status.html">mlflow.entities.span_status</a></li>
+<li><a href="mlflow/entities/trace.html">mlflow.entities.trace</a></li>
+<li><a href="mlflow/entities/trace_data.html">mlflow.entities.trace_data</a></li>
+<li><a href="mlflow/entities/trace_info.html">mlflow.entities.trace_info</a></li>
+<li><a href="mlflow/entities/trace_location.html">mlflow.entities.trace_location</a></li>
+<li><a href="mlflow/entities/trace_state.html">mlflow.entities.trace_state</a></li>
+<li><a href="mlflow/entities/view_type.html">mlflow.entities.view_type</a></li>
+<li><a href="mlflow/entities/webhook.html">mlflow.entities.webhook</a></li>
+<li><a href="mlflow/entities/workspace.html">mlflow.entities.workspace</a></li>
+<li><a href="mlflow/exceptions.html">mlflow.exceptions</a></li>
+<li><a href="mlflow/gateway/base_models.html">mlflow.gateway.base_models</a></li>
+<li><a href="mlflow/gateway/config.html">mlflow.gateway.config</a></li>
+<li><a href="mlflow/gateway/utils.html">mlflow.gateway.utils</a></li>
+<li><a href="mlflow/gemini.html">mlflow.gemini</a></li>
+<li><a href="mlflow/genai/agent_server/server.html">mlflow.genai.agent_server.server</a></li>
+<li><a href="mlflow/genai/agent_server/utils.html">mlflow.genai.agent_server.utils</a></li>
+<li><a href="mlflow/genai/datasets.html">mlflow.genai.datasets</a></li>
+<ul><li><a href="mlflow/genai/datasets/evaluation_dataset.html">mlflow.genai.datasets.evaluation_dataset</a></li>
+</ul><li><a href="mlflow/genai/evaluation/base.html">mlflow.genai.evaluation.base</a></li>
+<li><a href="mlflow/genai/git_versioning.html">mlflow.genai.git_versioning</a></li>
+<li><a href="mlflow/genai/judges/base.html">mlflow.genai.judges.base</a></li>
+<li><a href="mlflow/genai/judges/builtin.html">mlflow.genai.judges.builtin</a></li>
+<li><a href="mlflow/genai/judges/custom_prompt_judge.html">mlflow.genai.judges.custom_prompt_judge</a></li>
+<li><a href="mlflow/genai/judges/make_judge.html">mlflow.genai.judges.make_judge</a></li>
+<li><a href="mlflow/genai/judges/utils.html">mlflow.genai.judges.utils</a></li>
+<li><a href="mlflow/genai/label_schemas.html">mlflow.genai.label_schemas</a></li>
+<ul><li><a href="mlflow/genai/label_schemas/label_schemas.html">mlflow.genai.label_schemas.label_schemas</a></li>
+</ul><li><a href="mlflow/genai/labeling.html">mlflow.genai.labeling</a></li>
+<ul><li><a href="mlflow/genai/labeling/labeling.html">mlflow.genai.labeling.labeling</a></li>
+</ul><li><a href="mlflow/genai/optimize.html">mlflow.genai.optimize</a></li>
+<ul><li><a href="mlflow/genai/optimize/optimize.html">mlflow.genai.optimize.optimize</a></li>
+<li><a href="mlflow/genai/optimize/optimizers/base.html">mlflow.genai.optimize.optimizers.base</a></li>
+<li><a href="mlflow/genai/optimize/optimizers/gepa_optimizer.html">mlflow.genai.optimize.optimizers.gepa_optimizer</a></li>
+<li><a href="mlflow/genai/optimize/optimizers/metaprompt_optimizer.html">mlflow.genai.optimize.optimizers.metaprompt_optimizer</a></li>
+<li><a href="mlflow/genai/optimize/types.html">mlflow.genai.optimize.types</a></li>
+</ul><li><a href="mlflow/genai/prompts.html">mlflow.genai.prompts</a></li>
+<li><a href="mlflow/genai/scheduled_scorers.html">mlflow.genai.scheduled_scorers</a></li>
+<li><a href="mlflow/genai/scorers/base.html">mlflow.genai.scorers.base</a></li>
+<li><a href="mlflow/genai/scorers/builtin_scorers.html">mlflow.genai.scorers.builtin_scorers</a></li>
+<li><a href="mlflow/genai/scorers/deepeval.html">mlflow.genai.scorers.deepeval</a></li>
+<ul><li><a href="mlflow/genai/scorers/deepeval/scorers.html">mlflow.genai.scorers.deepeval.scorers</a></li>
+<ul><li><a href="mlflow/genai/scorers/deepeval/scorers/agentic_metrics.html">mlflow.genai.scorers.deepeval.scorers.agentic_metrics</a></li>
+<li><a href="mlflow/genai/scorers/deepeval/scorers/conversational_metrics.html">mlflow.genai.scorers.deepeval.scorers.conversational_metrics</a></li>
+<li><a href="mlflow/genai/scorers/deepeval/scorers/rag_metrics.html">mlflow.genai.scorers.deepeval.scorers.rag_metrics</a></li>
+<li><a href="mlflow/genai/scorers/deepeval/scorers/safety_metrics.html">mlflow.genai.scorers.deepeval.scorers.safety_metrics</a></li>
+</ul></ul><li><a href="mlflow/genai/scorers/guardrails.html">mlflow.genai.scorers.guardrails</a></li>
+<li><a href="mlflow/genai/scorers/phoenix.html">mlflow.genai.scorers.phoenix</a></li>
+<li><a href="mlflow/genai/scorers/ragas.html">mlflow.genai.scorers.ragas</a></li>
+<ul><li><a href="mlflow/genai/scorers/ragas/scorers.html">mlflow.genai.scorers.ragas.scorers</a></li>
+<ul><li><a href="mlflow/genai/scorers/ragas/scorers/agentic_metrics.html">mlflow.genai.scorers.ragas.scorers.agentic_metrics</a></li>
+<li><a href="mlflow/genai/scorers/ragas/scorers/comparison_metrics.html">mlflow.genai.scorers.ragas.scorers.comparison_metrics</a></li>
+<li><a href="mlflow/genai/scorers/ragas/scorers/rag_metrics.html">mlflow.genai.scorers.ragas.scorers.rag_metrics</a></li>
+</ul></ul><li><a href="mlflow/genai/scorers/registry.html">mlflow.genai.scorers.registry</a></li>
+<li><a href="mlflow/genai/scorers/trulens.html">mlflow.genai.scorers.trulens</a></li>
+<ul><li><a href="mlflow/genai/scorers/trulens/scorers/agent_trace.html">mlflow.genai.scorers.trulens.scorers.agent_trace</a></li>
+</ul><li><a href="mlflow/genai/simulators/simulator.html">mlflow.genai.simulators.simulator</a></li>
+<li><a href="mlflow/groq.html">mlflow.groq</a></li>
+<li><a href="mlflow/h2o.html">mlflow.h2o</a></li>
+<li><a href="mlflow/haystack.html">mlflow.haystack</a></li>
+<li><a href="mlflow/johnsnowlabs.html">mlflow.johnsnowlabs</a></li>
+<li><a href="mlflow/keras/callback.html">mlflow.keras.callback</a></li>
+<li><a href="mlflow/keras/load.html">mlflow.keras.load</a></li>
+<li><a href="mlflow/keras/save.html">mlflow.keras.save</a></li>
+<li><a href="mlflow/langchain/autolog.html">mlflow.langchain.autolog</a></li>
+<li><a href="mlflow/langchain/chat_agent_langgraph.html">mlflow.langchain.chat_agent_langgraph</a></li>
+<li><a href="mlflow/langchain/model.html">mlflow.langchain.model</a></li>
+<li><a href="mlflow/langchain/output_parsers.html">mlflow.langchain.output_parsers</a></li>
+<li><a href="mlflow/lightgbm.html">mlflow.lightgbm</a></li>
+<li><a href="mlflow/litellm.html">mlflow.litellm</a></li>
+<li><a href="mlflow/llama_index/autolog.html">mlflow.llama_index.autolog</a></li>
+<li><a href="mlflow/llama_index/model.html">mlflow.llama_index.model</a></li>
+<li><a href="mlflow/metrics.html">mlflow.metrics</a></li>
+<ul><li><a href="mlflow/metrics/base.html">mlflow.metrics.base</a></li>
+<li><a href="mlflow/metrics/genai/base.html">mlflow.metrics.genai.base</a></li>
+<li><a href="mlflow/metrics/genai/genai_metric.html">mlflow.metrics.genai.genai_metric</a></li>
+<li><a href="mlflow/metrics/genai/metric_definitions.html">mlflow.metrics.genai.metric_definitions</a></li>
+</ul><li><a href="mlflow/mistral.html">mlflow.mistral</a></li>
+<li><a href="mlflow/models/dependencies_schemas.html">mlflow.models.dependencies_schemas</a></li>
+<li><a href="mlflow/models/evaluation/base.html">mlflow.models.evaluation.base</a></li>
+<li><a href="mlflow/models/evaluation/validation.html">mlflow.models.evaluation.validation</a></li>
+<li><a href="mlflow/models/flavor_backend.html">mlflow.models.flavor_backend</a></li>
+<li><a href="mlflow/models/model.html">mlflow.models.model</a></li>
+<li><a href="mlflow/models/model_config.html">mlflow.models.model_config</a></li>
+<li><a href="mlflow/models/python_api.html">mlflow.models.python_api</a></li>
+<li><a href="mlflow/models/resources.html">mlflow.models.resources</a></li>
+<li><a href="mlflow/models/signature.html">mlflow.models.signature</a></li>
+<li><a href="mlflow/models/utils.html">mlflow.models.utils</a></li>
+<li><a href="mlflow/onnx.html">mlflow.onnx</a></li>
+<li><a href="mlflow/openai/autolog.html">mlflow.openai.autolog</a></li>
+<li><a href="mlflow/openai/model.html">mlflow.openai.model</a></li>
+<li><a href="mlflow/paddle.html">mlflow.paddle</a></li>
+<li><a href="mlflow/pmdarima.html">mlflow.pmdarima</a></li>
+<li><a href="mlflow/projects.html">mlflow.projects</a></li>
+<ul><li><a href="mlflow/projects/submitted_run.html">mlflow.projects.submitted_run</a></li>
+</ul><li><a href="mlflow/prophet.html">mlflow.prophet</a></li>
+<li><a href="mlflow/pydantic_ai.html">mlflow.pydantic_ai</a></li>
+<li><a href="mlflow/pyfunc.html">mlflow.pyfunc</a></li>
+<ul><li><a href="mlflow/pyfunc/model.html">mlflow.pyfunc.model</a></li>
+</ul><li><a href="mlflow/pyspark/ml.html">mlflow.pyspark.ml</a></li>
+<li><a href="mlflow/pytorch.html">mlflow.pytorch</a></li>
+<ul><li><a href="mlflow/pytorch/_lightning_autolog.html">mlflow.pytorch._lightning_autolog</a></li>
+</ul><li><a href="mlflow/sagemaker.html">mlflow.sagemaker</a></li>
+<li><a href="mlflow/sentence_transformers.html">mlflow.sentence_transformers</a></li>
+<li><a href="mlflow/server.html">mlflow.server</a></li>
+<ul><li><a href="mlflow/server/auth/client.html">mlflow.server.auth.client</a></li>
+<li><a href="mlflow/server/auth/entities.html">mlflow.server.auth.entities</a></li>
+</ul><li><a href="mlflow/shap.html">mlflow.shap</a></li>
+<li><a href="mlflow/sklearn.html">mlflow.sklearn</a></li>
+<li><a href="mlflow/smolagents.html">mlflow.smolagents</a></li>
+<li><a href="mlflow/spacy.html">mlflow.spacy</a></li>
+<li><a href="mlflow/spark.html">mlflow.spark</a></li>
+<li><a href="mlflow/statsmodels.html">mlflow.statsmodels</a></li>
+<li><a href="mlflow/store/entities/paged_list.html">mlflow.store.entities.paged_list</a></li>
+<li><a href="mlflow/strands.html">mlflow.strands</a></li>
+<li><a href="mlflow/system_metrics.html">mlflow.system_metrics</a></li>
+<li><a href="mlflow/tensorflow.html">mlflow.tensorflow</a></li>
+<ul><li><a href="mlflow/tensorflow/callback.html">mlflow.tensorflow.callback</a></li>
+</ul><li><a href="mlflow/tracing/assessment.html">mlflow.tracing.assessment</a></li>
+<li><a href="mlflow/tracing/attachments.html">mlflow.tracing.attachments</a></li>
+<li><a href="mlflow/tracing/config.html">mlflow.tracing.config</a></li>
+<li><a href="mlflow/tracing/context.html">mlflow.tracing.context</a></li>
+<li><a href="mlflow/tracing/databricks.html">mlflow.tracing.databricks</a></li>
+<li><a href="mlflow/tracing/display.html">mlflow.tracing.display</a></li>
+<li><a href="mlflow/tracing/distributed.html">mlflow.tracing.distributed</a></li>
+<li><a href="mlflow/tracing/enablement.html">mlflow.tracing.enablement</a></li>
+<li><a href="mlflow/tracing/fluent.html">mlflow.tracing.fluent</a></li>
+<li><a href="mlflow/tracing/provider.html">mlflow.tracing.provider</a></li>
+<li><a href="mlflow/tracing/utils.html">mlflow.tracing.utils</a></li>
+<li><a href="mlflow/tracking/_model_registry/fluent.html">mlflow.tracking._model_registry.fluent</a></li>
+<li><a href="mlflow/tracking/_model_registry/utils.html">mlflow.tracking._model_registry.utils</a></li>
+<li><a href="mlflow/tracking/_tracking_service/utils.html">mlflow.tracking._tracking_service.utils</a></li>
+<li><a href="mlflow/tracking/_workspace/fluent.html">mlflow.tracking._workspace.fluent</a></li>
+<li><a href="mlflow/tracking/client.html">mlflow.tracking.client</a></li>
+<li><a href="mlflow/tracking/fluent.html">mlflow.tracking.fluent</a></li>
+<li><a href="mlflow/tracking/multimedia.html">mlflow.tracking.multimedia</a></li>
+<li><a href="mlflow/transformers.html">mlflow.transformers</a></li>
+<li><a href="mlflow/types/agent.html">mlflow.types.agent</a></li>
+<li><a href="mlflow/types/chat.html">mlflow.types.chat</a></li>
+<li><a href="mlflow/types/llm.html">mlflow.types.llm</a></li>
+<li><a href="mlflow/types/responses.html">mlflow.types.responses</a></li>
+<li><a href="mlflow/types/responses_helpers.html">mlflow.types.responses_helpers</a></li>
+<li><a href="mlflow/types/schema.html">mlflow.types.schema</a></li>
+<li><a href="mlflow/utils/annotations.html">mlflow.utils.annotations</a></li>
+<li><a href="mlflow/utils/async_logging/run_operations.html">mlflow.utils.async_logging.run_operations</a></li>
+<li><a href="mlflow/utils/credentials.html">mlflow.utils.credentials</a></li>
+<li><a href="mlflow/utils/doctor.html">mlflow.utils.doctor</a></li>
+<li><a href="mlflow/utils/environment.html">mlflow.utils.environment</a></li>
+<li><a href="mlflow/webhooks/types.html">mlflow.webhooks.types</a></li>
+<li><a href="mlflow/xgboost.html">mlflow.xgboost</a></li>
+</ul>
+
+              </div>
+            </div>
+            <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+      <p class="copyright">
+          &copy; MLflow Project, a Series of LF Projects, LLC. All rights reserved.
+      </p>
+
+  </div> 
+
+</footer>
+          </div>
+        </div>
+      </section>
+    </main>
+  </page>
+
+  
+
+
+  
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:'../',
+      VERSION:'3.12.0rc0',
+      COLLAPSE_INDEX:false,
+      FILE_SUFFIX:'.html',
+      LINK_SUFFIX: '.html',
+      HAS_SOURCE:  true
+    };
+  </script>
+
+  
+
+  <script type="text/javascript" src="../_static/js/clipboard.min.js"></script>
+  <script type="text/javascript" src="../_static/js/jquery.waypoints.min.js"></script>
+
+  
+  
+  
+  <script type="text/javascript">var CLIPPY_SVG_PATH = "../_static/clippy.svg";</script>
+  <script type="text/javascript" src="../_static/js/custom.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+    jQuery(function () {
+      SphinxRtdTheme.StickyNav.enable();
+    });
+
+  </script>
+  
+
+  
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
+        // Get the code block designator class entries
+        const allHighlights = document.querySelectorAll('.highlight');
+        // Disable copyable links for notebook cell numbering and for cell outputs
+        const highlights = Array.from(allHighlights).filter(highlight => !highlight.closest('.highlight-none') && 
+            !highlight.closest('.nboutput'));
+    
+        highlights.forEach(function(highlight) {
+            const copyIcon = document.createElement('span');
+            copyIcon.classList.add('copy-icon');
+            copyIcon.innerHTML = '&#xf0ea;';
+
+            copyIcon.addEventListener('click', function() {
+                const code = highlight.querySelector('pre').textContent;
+                copyToClipboard(code);
+
+                // Flash effect on click
+                this.style.color = '#0194E2';
+                setTimeout(() => {
+                    this.style.color = ''; 
+                }, 100);
+
+                // Display "Code copied to clipboard" near the clicked icon
+                const message = document.createElement('span');
+                message.textContent = "Copied!";
+                message.classList.add('copy-message'); 
+
+                // Append the message to the icon
+                this.appendChild(message);
+
+                setTimeout(() => {
+                    this.removeChild(message);
+                }, 500);
+            });
+
+            highlight.appendChild(copyIcon);
+        });
+    });
+  </script>
+
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        // Force download for notebook-download-btn
+        const downloadButtons = document.querySelectorAll('.notebook-download-btn');
+        downloadButtons.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default behavior
+
+                // Fetch the raw content of the notebook from GitHub
+                fetch(button.href)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const url = window.URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.style.display = 'none';
+                        link.href = url;
+                        const filename = button.href.split('/').pop();
+                        link.download = filename; 
+
+                        document.body.appendChild(link);
+                        link.click();
+
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(link);
+                    })
+                    .catch(err => console.error('Error fetching the notebook:', err));
+            });
+        });
+    });
+</script> 
+</body>
+</html>

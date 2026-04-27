@@ -1,0 +1,743 @@
+
+
+<!DOCTYPE html>
+<!-- source: docs/source/_modules/mlflow/genai/optimize/optimize -->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mlflow.genai.optimize.optimize</title>
+  
+   
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="canonical" href="https://mlflow.org/docs/latest/_modules/mlflow/genai/optimize/optimize.html">
+  
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+  
+
+  
+
+  
+    
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer',"GTM-N6WMTTJ");</script>
+        <!-- End Google Tag Manager -->
+    
+  
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16857946923"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-16857946923');
+  </script>
+  <!-- Eng gtag -->
+
+  
+
+  
+  <meta name="docsearch:docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_version" content="current" data-rh="true">
+  <meta name="docsearch:version" content="current" data-rh="true">
+  <meta name="docusaurus_locale" content="en" data-rh="true">
+  <meta name="docsearch:language" content="en" data-rh="true">
+
+  
+  
+    
+
+  
+
+  
+  
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600" rel="stylesheet">
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/css/custom.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/css/cards.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/css/grids.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/css/mobile.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/css/simple-cards.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/css/tabs.css" type="text/css" />
+    
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="MLflow 3.12.0rc0 documentation" href="../../../../index.html"/>
+        <link rel="up" title="mlflow.genai.optimize" href="../optimize.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+<script type="text/javascript" src="../../../../_static/documentation_options.js"></script>
+<script type="text/javascript" src="../../../../_static/jquery.js"></script>
+<script type="text/javascript" src="../../../../_static/underscore.js"></script>
+<script type="text/javascript" src="../../../../_static/doctools.js"></script>
+<script type="text/javascript" src="../../../../_static/tabs.js"></script>
+<script type="text/javascript" src="../../../../_static/languagesections.js"></script>
+<script type="text/javascript" src="../../../../_static/runllm.js"></script>
+
+<body class="wy-body-for-nav" role="document">
+  
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6WMTTJ"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  
+  <nav class="wy-nav-top header" role="navigation" aria-label="top navigation">
+    <div class="header-container">
+  <style scoped>
+    .header-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
+    }
+
+    .logo-container {
+      display: flex;
+      gap: 12px;
+      flex-direction: row;
+      white-space: nowrap;
+      align-items: center;
+      justify-content: center;
+    }
+
+    a:hover {
+      text-decoration: none;
+      color: #0194e2;
+    }
+  </style>
+  <div class="logo-container">
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
+    <a href="../../../../index.html" class="wy-nav-top-logo">
+      <img
+        src="../../../../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
+    </a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
+  </div>
+  <span class="header-link version">3.12.0rc0</span>
+</div>
+  </nav>
+  <page>
+    
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side relative">
+      <div class="wy-side-scroll">
+  <div class="wy-side-nav-search">
+    
+
+    
+
+    
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+    
+  </div>
+
+  <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+    
+      <a href="../../../../index.html">Home</a>
+    
+
+    
+      
+
+      
+        <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../python_api/index.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../typescript_api/index.html">TypeScript API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cli.html">Command-Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../auth/python-api.html">MLflow Authentication Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../auth/rest-api.html">MLflow Authentication REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../R-api.html">R API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../java_api/index.html">Java API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rest-api.html">REST API</a></li>
+</ul>
+
+      
+    
+  </div>
+
+  <div role="contentinfo">
+    
+
+    <p>
+      <a id='feedbacklink' href="https://github.com/mlflow/mlflow/blob/master/CONTRIBUTING.md" target="_blank">Contribute</a>
+    </p>
+  </div>
+</div>
+    </nav>
+
+    <main class="wy-grid-for-nav">
+      <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+        <div class="wy-nav-content">
+          <div class="rst-content">
+            
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Documentation</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+        <li><a href="../../../index.html">Module code</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+        <li><a href="../optimize.html">mlflow.genai.optimize</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+    
+      <li>mlflow.genai.optimize.optimize</li>
+    
+    
+    <!-- <li class="wy-breadcrumbs-aside">
+      <a href="https://github.com/mlflow/mlflow/blob/master/docs/source/_modules/mlflow/genai/optimize/optimize" class="fa fa-github"> Edit on GitHub</a>
+    </li> -->
+    
+  </ul>
+</div>
+            <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+              <div itemprop="articleBody">
+                
+  <h1>Source code for mlflow.genai.optimize.optimize</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">concurrent.futures</span><span class="w"> </span><span class="kn">import</span> <span class="n">ThreadPoolExecutor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">nullcontext</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">mlflow</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities</span><span class="w"> </span><span class="kn">import</span> <span class="n">Trace</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.evaluation_dataset</span><span class="w"> </span><span class="kn">import</span> <span class="n">EvaluationDataset</span> <span class="k">as</span> <span class="n">EntityEvaluationDataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.model_registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptVersion</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.environment_variables</span><span class="w"> </span><span class="kn">import</span> <span class="n">MLFLOW_GENAI_EVAL_MAX_WORKERS</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">EvaluationDataset</span> <span class="k">as</span> <span class="n">ManagedEvaluationDataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.evaluation.utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">_convert_eval_set_to_df</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.optimize.optimizers</span><span class="w"> </span><span class="kn">import</span> <span class="n">BasePromptOptimizer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.optimize.types</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AggregationFn</span><span class="p">,</span>
+    <span class="n">EvaluationResultRecord</span><span class="p">,</span>
+    <span class="n">PromptOptimizationResult</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.optimize.util</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">create_metric_from_scorers</span><span class="p">,</span>
+    <span class="n">prompt_optimization_autolog</span><span class="p">,</span>
+    <span class="n">validate_train_data</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.prompts</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_prompt</span><span class="p">,</span> <span class="n">register_prompt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.scorers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Scorer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.utils.trace_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert_predict_fn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.models.evaluation.utils.trace</span><span class="w"> </span><span class="kn">import</span> <span class="n">configure_autologging_for_evaluation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.prompt.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">PROMPT_TEXT_TAG_KEY</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.telemetry.events</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptOptimizationEvent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.telemetry.track</span><span class="w"> </span><span class="kn">import</span> <span class="n">record_usage_event</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">gorilla</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">experimental</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.autologging_utils.safety</span><span class="w"> </span><span class="kn">import</span> <span class="n">_wrap_patch</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.evaluation.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">EvaluationDatasetTypes</span>
+
+<span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="optimize_prompts"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.optimize_prompts">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.5.0&quot;</span><span class="p">)</span>
+<span class="nd">@record_usage_event</span><span class="p">(</span><span class="n">PromptOptimizationEvent</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">optimize_prompts</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">predict_fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+    <span class="n">train_data</span><span class="p">:</span> <span class="s2">&quot;EvaluationDatasetTypes&quot;</span><span class="p">,</span>
+    <span class="n">prompt_uris</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">optimizer</span><span class="p">:</span> <span class="n">BasePromptOptimizer</span><span class="p">,</span>
+    <span class="n">scorers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Scorer</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">aggregation</span><span class="p">:</span> <span class="n">AggregationFn</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">enable_tracking</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PromptOptimizationResult</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Automatically optimize prompts using evaluation metrics and training data.</span>
+<span class="sd">    This function uses the provided optimization algorithm to improve prompt</span>
+<span class="sd">    quality based on your evaluation criteria and dataset.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        predict_fn: a target function that uses the prompts to be optimized.</span>
+<span class="sd">            The callable should receive inputs as keyword arguments and</span>
+<span class="sd">            return the response. The function should use MLflow prompt registry</span>
+<span class="sd">            and call `PromptVersion.format` during execution in order for this</span>
+<span class="sd">            API to optimize the prompt. This function should return the</span>
+<span class="sd">            same type as the outputs in the dataset.</span>
+<span class="sd">        train_data: an evaluation dataset used for the optimization.</span>
+<span class="sd">            It should include the inputs and outputs fields with dict values.</span>
+<span class="sd">            The data must be one of the following formats:</span>
+
+<span class="sd">            * An EvaluationDataset entity</span>
+<span class="sd">            * Pandas DataFrame</span>
+<span class="sd">            * Spark DataFrame</span>
+<span class="sd">            * List of dictionaries</span>
+
+<span class="sd">            The dataset must include the following columns:</span>
+
+<span class="sd">            - inputs: A column containing single inputs in dict format.</span>
+<span class="sd">              Each input should contain keys matching the variables in the prompt template.</span>
+<span class="sd">            - outputs: A column containing an output for each input</span>
+<span class="sd">              that the predict_fn should produce.</span>
+
+<span class="sd">            If None, the optimization will be performed in zero-shot mode.</span>
+<span class="sd">        prompt_uris: a list of prompt uris to be optimized.</span>
+<span class="sd">            The prompt templates should be used by the predict_fn.</span>
+<span class="sd">        optimizer: a prompt optimizer object that optimizes a set of prompts with</span>
+<span class="sd">            the training dataset and scorers. For example,</span>
+<span class="sd">            GepaPromptOptimizer(reflection_model=&quot;openai:/gpt-4o&quot;).</span>
+<span class="sd">        scorers: List of scorers that evaluate the inputs, outputs and expectations.</span>
+<span class="sd">            Use builtin scorers like Equivalence or Correctness,</span>
+<span class="sd">            or define custom scorers with the @scorer decorator.</span>
+<span class="sd">            If None, the optimization will be performed in zero-shot mode.</span>
+<span class="sd">            `train_data` must be provided if `scorers` is provided.</span>
+<span class="sd">        aggregation: A callable that computes the overall performance metric from individual</span>
+<span class="sd">            scorer outputs. Takes a dict mapping scorer names to scores and returns a float</span>
+<span class="sd">            value (greater is better). If None and all scorers return numerical values,</span>
+<span class="sd">            uses sum of scores by default.</span>
+<span class="sd">        enable_tracking: If True (default), automatically creates an MLflow run if no active</span>
+<span class="sd">            run exists and logs the following information:</span>
+<span class="sd">            - The optimization scores (initial, final, improvement)</span>
+<span class="sd">            - Links to the optimized prompt versions</span>
+<span class="sd">            - The optimizer name and parameters</span>
+<span class="sd">            - Optimization progress</span>
+<span class="sd">            If False, no MLflow run is created and no tracking occurs.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The optimization result object that includes the optimized prompts</span>
+<span class="sd">        as a list of prompt versions, evaluation scores, and the optimizer name.</span>
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            import mlflow</span>
+<span class="sd">            import openai</span>
+<span class="sd">            from mlflow.genai.optimize.optimizers import GepaPromptOptimizer</span>
+<span class="sd">            from mlflow.genai.scorers import Correctness</span>
+
+<span class="sd">            prompt = mlflow.genai.register_prompt(</span>
+<span class="sd">                name=&quot;qa&quot;,</span>
+<span class="sd">                template=&quot;Answer the following question: {{question}}&quot;,</span>
+<span class="sd">            )</span>
+
+
+<span class="sd">            def predict_fn(question: str) -&gt; str:</span>
+<span class="sd">                completion = openai.OpenAI().chat.completions.create(</span>
+<span class="sd">                    model=&quot;gpt-4o-mini&quot;,</span>
+<span class="sd">                    messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: prompt.format(question=question)}],</span>
+<span class="sd">                )</span>
+<span class="sd">                return completion.choices[0].message.content</span>
+
+
+<span class="sd">            dataset = [</span>
+<span class="sd">                {&quot;inputs&quot;: {&quot;question&quot;: &quot;What is the capital of France?&quot;}, &quot;outputs&quot;: &quot;Paris&quot;},</span>
+<span class="sd">                {&quot;inputs&quot;: {&quot;question&quot;: &quot;What is the capital of Germany?&quot;}, &quot;outputs&quot;: &quot;Berlin&quot;},</span>
+<span class="sd">            ]</span>
+
+<span class="sd">            result = mlflow.genai.optimize_prompts(</span>
+<span class="sd">                predict_fn=predict_fn,</span>
+<span class="sd">                train_data=dataset,</span>
+<span class="sd">                prompt_uris=[prompt.uri],</span>
+<span class="sd">                optimizer=GepaPromptOptimizer(reflection_model=&quot;openai:/gpt-4o&quot;),</span>
+<span class="sd">                scorers=[Correctness(model=&quot;openai:/gpt-4o&quot;)],</span>
+<span class="sd">            )</span>
+
+<span class="sd">            print(result.optimized_prompts[0].template)</span>
+
+<span class="sd">        **Example: Using custom scorers with an objective function**</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            import mlflow</span>
+<span class="sd">            from mlflow.genai.optimize.optimizers import GepaPromptOptimizer</span>
+<span class="sd">            from mlflow.genai.scorers import scorer</span>
+
+
+<span class="sd">            # Define custom scorers</span>
+<span class="sd">            @scorer(name=&quot;accuracy&quot;)</span>
+<span class="sd">            def accuracy_scorer(outputs, expectations):</span>
+<span class="sd">                return 1.0 if outputs.lower() == expectations.lower() else 0.0</span>
+
+
+<span class="sd">            @scorer(name=&quot;brevity&quot;)</span>
+<span class="sd">            def brevity_scorer(outputs):</span>
+<span class="sd">                # Prefer shorter outputs (max 50 chars gets score of 1.0)</span>
+<span class="sd">                return min(1.0, 50 / max(len(outputs), 1))</span>
+
+
+<span class="sd">            # Define objective to combine scores</span>
+<span class="sd">            def weighted_objective(scores):</span>
+<span class="sd">                return 0.7 * scores[&quot;accuracy&quot;] + 0.3 * scores[&quot;brevity&quot;]</span>
+
+
+<span class="sd">            result = mlflow.genai.optimize_prompts(</span>
+<span class="sd">                predict_fn=predict_fn,</span>
+<span class="sd">                train_data=dataset,</span>
+<span class="sd">                prompt_uris=[prompt.uri],</span>
+<span class="sd">                optimizer=GepaPromptOptimizer(reflection_model=&quot;openai:/gpt-4o&quot;),</span>
+<span class="sd">                scorers=[accuracy_scorer, brevity_scorer],</span>
+<span class="sd">                aggregation=weighted_objective,</span>
+<span class="sd">            )</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># For EvaluationDataset types, convert to DataFrame first since they don&#39;t support len()</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span> <span class="p">(</span><span class="n">EntityEvaluationDataset</span><span class="p">,</span> <span class="n">ManagedEvaluationDataset</span><span class="p">)):</span>
+        <span class="n">train_data</span> <span class="o">=</span> <span class="n">train_data</span><span class="o">.</span><span class="n">to_df</span><span class="p">()</span>
+
+    <span class="n">has_train_data</span> <span class="o">=</span> <span class="n">train_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="n">has_scorers</span> <span class="o">=</span> <span class="n">scorers</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">scorers</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+
+    <span class="k">if</span> <span class="n">has_scorers</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">has_train_data</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+            <span class="s2">&quot;`scorers` is provided but `train_data` is None or empty or None. &quot;</span>
+            <span class="s2">&quot;`train_data` must be provided if `scorers` is provided.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">has_train_data</span><span class="p">:</span>
+        <span class="c1"># Zero-shot mode: no training data provided</span>
+        <span class="n">train_data_df</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">converted_train_data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Few-shot mode: convert and validate training data</span>
+        <span class="n">train_data_df</span> <span class="o">=</span> <span class="n">_convert_eval_set_to_df</span><span class="p">(</span><span class="n">train_data</span><span class="p">)</span>
+        <span class="n">converted_train_data</span> <span class="o">=</span> <span class="n">train_data_df</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s2">&quot;records&quot;</span><span class="p">)</span>
+        <span class="n">validate_train_data</span><span class="p">(</span><span class="n">train_data_df</span><span class="p">,</span> <span class="n">scorers</span><span class="p">,</span> <span class="n">predict_fn</span><span class="p">)</span>
+
+    <span class="n">sample_input</span> <span class="o">=</span> <span class="n">converted_train_data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;inputs&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">converted_train_data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="n">predict_fn</span> <span class="o">=</span> <span class="n">convert_predict_fn</span><span class="p">(</span><span class="n">predict_fn</span><span class="o">=</span><span class="n">predict_fn</span><span class="p">,</span> <span class="n">sample_input</span><span class="o">=</span><span class="n">sample_input</span><span class="p">)</span>
+
+    <span class="n">metric_fn</span> <span class="o">=</span> <span class="n">create_metric_from_scorers</span><span class="p">(</span><span class="n">scorers</span><span class="p">,</span> <span class="n">aggregation</span><span class="p">)</span> <span class="k">if</span> <span class="n">has_scorers</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="n">eval_fn</span> <span class="o">=</span> <span class="n">_build_eval_fn</span><span class="p">(</span><span class="n">predict_fn</span><span class="p">,</span> <span class="n">metric_fn</span><span class="p">)</span> <span class="k">if</span> <span class="n">has_train_data</span> <span class="k">else</span> <span class="kc">None</span>
+
+    <span class="n">target_prompts</span> <span class="o">=</span> <span class="p">[</span><span class="n">load_prompt</span><span class="p">(</span><span class="n">prompt_uri</span><span class="p">)</span> <span class="k">for</span> <span class="n">prompt_uri</span> <span class="ow">in</span> <span class="n">prompt_uris</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">prompt</span><span class="o">.</span><span class="n">is_text_prompt</span> <span class="k">for</span> <span class="n">prompt</span> <span class="ow">in</span> <span class="n">target_prompts</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span><span class="s2">&quot;Only text prompts can be optimized&quot;</span><span class="p">)</span>
+
+    <span class="n">target_prompts_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">prompt</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">prompt</span><span class="o">.</span><span class="n">template</span> <span class="k">for</span> <span class="n">prompt</span> <span class="ow">in</span> <span class="n">target_prompts</span><span class="p">}</span>
+    <span class="n">target_prompts_model_config</span> <span class="o">=</span> <span class="p">{</span><span class="n">prompt</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">prompt</span><span class="o">.</span><span class="n">model_config</span> <span class="k">for</span> <span class="n">prompt</span> <span class="ow">in</span> <span class="n">target_prompts</span><span class="p">}</span>
+
+    <span class="k">with</span> <span class="p">(</span>
+        <span class="n">prompt_optimization_autolog</span><span class="p">(</span>
+            <span class="n">optimizer_name</span><span class="o">=</span><span class="n">optimizer</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+            <span class="n">num_prompts</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">target_prompts</span><span class="p">),</span>
+            <span class="n">num_training_samples</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">converted_train_data</span><span class="p">),</span>
+            <span class="n">train_data_df</span><span class="o">=</span><span class="n">train_data_df</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">enable_tracking</span>
+        <span class="k">else</span> <span class="n">nullcontext</span><span class="p">({})</span>
+    <span class="p">)</span> <span class="k">as</span> <span class="n">log_results</span><span class="p">:</span>
+        <span class="n">optimizer_output</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span>
+            <span class="n">eval_fn</span><span class="p">,</span> <span class="n">converted_train_data</span><span class="p">,</span> <span class="n">target_prompts_dict</span><span class="p">,</span> <span class="n">enable_tracking</span>
+        <span class="p">)</span>
+
+        <span class="n">optimized_prompts</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">register_prompt</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">prompt_name</span><span class="p">,</span>
+                <span class="n">template</span><span class="o">=</span><span class="n">prompt</span><span class="p">,</span>
+                <span class="n">model_config</span><span class="o">=</span><span class="n">target_prompts_model_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">prompt_name</span><span class="p">),</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">prompt_name</span><span class="p">,</span> <span class="n">prompt</span> <span class="ow">in</span> <span class="n">optimizer_output</span><span class="o">.</span><span class="n">optimized_prompts</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="p">]</span>
+
+        <span class="n">log_results</span><span class="p">[</span><span class="s2">&quot;optimizer_output&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">optimizer_output</span>
+        <span class="n">log_results</span><span class="p">[</span><span class="s2">&quot;optimized_prompts&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">optimized_prompts</span>
+
+    <span class="k">return</span> <span class="n">PromptOptimizationResult</span><span class="p">(</span>
+        <span class="n">optimized_prompts</span><span class="o">=</span><span class="n">optimized_prompts</span><span class="p">,</span>
+        <span class="n">optimizer_name</span><span class="o">=</span><span class="n">optimizer</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+        <span class="n">initial_eval_score</span><span class="o">=</span><span class="n">optimizer_output</span><span class="o">.</span><span class="n">initial_eval_score</span><span class="p">,</span>
+        <span class="n">final_eval_score</span><span class="o">=</span><span class="n">optimizer_output</span><span class="o">.</span><span class="n">final_eval_score</span><span class="p">,</span>
+        <span class="n">initial_eval_score_per_scorer</span><span class="o">=</span><span class="n">optimizer_output</span><span class="o">.</span><span class="n">initial_eval_score_per_scorer</span><span class="p">,</span>
+        <span class="n">final_eval_score_per_scorer</span><span class="o">=</span><span class="n">optimizer_output</span><span class="o">.</span><span class="n">final_eval_score_per_scorer</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_build_eval_fn</span><span class="p">(</span>
+    <span class="n">predict_fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+    <span class="n">metric_fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span>
+        <span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">Trace</span> <span class="o">|</span> <span class="kc">None</span><span class="p">],</span>
+        <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
+    <span class="p">]</span>
+    <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]],</span> <span class="nb">list</span><span class="p">[</span><span class="n">EvaluationResultRecord</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Build an evaluation function that uses the candidate prompts to evaluate the predict_fn.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        predict_fn: The function to evaluate</span>
+<span class="sd">        metric_fn: Metric function created from scorers that takes (inputs, outputs, expectations).</span>
+<span class="sd">            If None, the evaluation function will still run predict_fn and capture traces,</span>
+<span class="sd">            but score will be None (useful for metaprompting without scorers).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        An evaluation function</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.pyfunc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Context</span><span class="p">,</span> <span class="n">set_prediction_context</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">eval_fn</span><span class="p">(</span>
+        <span class="n">candidate_prompts</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">dataset</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">EvaluationResultRecord</span><span class="p">]:</span>
+        <span class="n">used_prompts</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+        <span class="nd">@property</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">_template_patch</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+            <span class="n">template_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+            <span class="k">if</span> <span class="n">template_name</span> <span class="ow">in</span> <span class="n">candidate_prompts</span><span class="p">:</span>
+                <span class="n">used_prompts</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">template_name</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">candidate_prompts</span><span class="p">[</span><span class="n">template_name</span><span class="p">]</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tags</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">PROMPT_TEXT_TAG_KEY</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+        <span class="n">patch</span> <span class="o">=</span> <span class="n">_wrap_patch</span><span class="p">(</span><span class="n">PromptVersion</span><span class="p">,</span> <span class="s2">&quot;template&quot;</span><span class="p">,</span> <span class="n">_template_patch</span><span class="p">)</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">_run_single</span><span class="p">(</span><span class="n">record</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+            <span class="n">inputs</span> <span class="o">=</span> <span class="n">record</span><span class="p">[</span><span class="s2">&quot;inputs&quot;</span><span class="p">]</span>
+            <span class="c1"># use expectations if provided, otherwise use outputs</span>
+            <span class="n">expectations</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;expectations&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{</span>
+                <span class="s2">&quot;expected_response&quot;</span><span class="p">:</span> <span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;outputs&quot;</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="n">eval_request_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+            <span class="c1"># set prediction context to retrieve the trace by the request id,</span>
+            <span class="c1"># and set is_evaluate to True to disable async trace logging</span>
+            <span class="k">with</span> <span class="n">set_prediction_context</span><span class="p">(</span><span class="n">Context</span><span class="p">(</span><span class="n">request_id</span><span class="o">=</span><span class="n">eval_request_id</span><span class="p">,</span> <span class="n">is_evaluate</span><span class="o">=</span><span class="kc">True</span><span class="p">)):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">program_outputs</span> <span class="o">=</span> <span class="n">predict_fn</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="n">program_outputs</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Failed to invoke the predict_fn with </span><span class="si">{</span><span class="n">inputs</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span>
+
+            <span class="n">trace</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">get_trace</span><span class="p">(</span><span class="n">eval_request_id</span><span class="p">,</span> <span class="n">silent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">metric_fn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">score</span><span class="p">,</span> <span class="n">rationales</span><span class="p">,</span> <span class="n">individual_scores</span> <span class="o">=</span> <span class="n">metric_fn</span><span class="p">(</span>
+                    <span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">program_outputs</span><span class="p">,</span> <span class="n">expectations</span><span class="o">=</span><span class="n">expectations</span><span class="p">,</span> <span class="n">trace</span><span class="o">=</span><span class="n">trace</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">score</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="n">rationales</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">individual_scores</span> <span class="o">=</span> <span class="p">{}</span>
+
+            <span class="k">return</span> <span class="n">EvaluationResultRecord</span><span class="p">(</span>
+                <span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span>
+                <span class="n">outputs</span><span class="o">=</span><span class="n">program_outputs</span><span class="p">,</span>
+                <span class="n">expectations</span><span class="o">=</span><span class="n">expectations</span><span class="p">,</span>
+                <span class="n">score</span><span class="o">=</span><span class="n">score</span><span class="p">,</span>
+                <span class="n">trace</span><span class="o">=</span><span class="n">trace</span><span class="p">,</span>
+                <span class="n">rationales</span><span class="o">=</span><span class="n">rationales</span><span class="p">,</span>
+                <span class="n">individual_scores</span><span class="o">=</span><span class="n">individual_scores</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="p">(</span>
+                <span class="n">ThreadPoolExecutor</span><span class="p">(</span>
+                    <span class="n">max_workers</span><span class="o">=</span><span class="n">MLFLOW_GENAI_EVAL_MAX_WORKERS</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+                    <span class="n">thread_name_prefix</span><span class="o">=</span><span class="s2">&quot;MLflowPromptOptimization&quot;</span><span class="p">,</span>
+                <span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">,</span>
+                <span class="n">configure_autologging_for_evaluation</span><span class="p">(</span><span class="n">enable_tracing</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+            <span class="p">):</span>
+                <span class="n">futures</span> <span class="o">=</span> <span class="p">[</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">_run_single</span><span class="p">,</span> <span class="n">record</span><span class="p">)</span> <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">]</span>
+                <span class="n">results</span> <span class="o">=</span> <span class="p">[</span><span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span> <span class="k">for</span> <span class="n">future</span> <span class="ow">in</span> <span class="n">futures</span><span class="p">]</span>
+
+            <span class="c1"># Check for unused prompts and warn</span>
+            <span class="k">if</span> <span class="n">unused_prompts</span> <span class="o">:=</span> <span class="nb">set</span><span class="p">(</span><span class="n">candidate_prompts</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">-</span> <span class="n">used_prompts</span><span class="p">:</span>
+                <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="s2">&quot;The following prompts were not used during evaluation: &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="n">unused_prompts</span><span class="p">)</span><span class="si">}</span><span class="s2">. This may indicate that predict_fn is &quot;</span>
+                    <span class="s2">&quot;not calling format() for these prompts, or the prompt names don&#39;t match. &quot;</span>
+                    <span class="s2">&quot;Please verify that your predict_fn uses all prompts specified in prompt_uris.&quot;</span>
+                <span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">results</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">gorilla</span><span class="o">.</span><span class="n">revert</span><span class="p">(</span><span class="n">patch</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">eval_fn</span>
+</pre></div>
+
+              </div>
+            </div>
+            <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+      <p class="copyright">
+          &copy; MLflow Project, a Series of LF Projects, LLC. All rights reserved.
+      </p>
+
+  </div> 
+
+</footer>
+          </div>
+        </div>
+      </section>
+    </main>
+  </page>
+
+  
+
+
+  
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:'../../../../',
+      VERSION:'3.12.0rc0',
+      COLLAPSE_INDEX:false,
+      FILE_SUFFIX:'.html',
+      LINK_SUFFIX: '.html',
+      HAS_SOURCE:  true
+    };
+  </script>
+
+  
+
+  <script type="text/javascript" src="../../../../_static/js/clipboard.min.js"></script>
+  <script type="text/javascript" src="../../../../_static/js/jquery.waypoints.min.js"></script>
+
+  
+  
+  
+  <script type="text/javascript">var CLIPPY_SVG_PATH = "../../../../_static/clippy.svg";</script>
+  <script type="text/javascript" src="../../../../_static/js/custom.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+    jQuery(function () {
+      SphinxRtdTheme.StickyNav.enable();
+    });
+
+  </script>
+  
+
+  
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
+        // Get the code block designator class entries
+        const allHighlights = document.querySelectorAll('.highlight');
+        // Disable copyable links for notebook cell numbering and for cell outputs
+        const highlights = Array.from(allHighlights).filter(highlight => !highlight.closest('.highlight-none') && 
+            !highlight.closest('.nboutput'));
+    
+        highlights.forEach(function(highlight) {
+            const copyIcon = document.createElement('span');
+            copyIcon.classList.add('copy-icon');
+            copyIcon.innerHTML = '&#xf0ea;';
+
+            copyIcon.addEventListener('click', function() {
+                const code = highlight.querySelector('pre').textContent;
+                copyToClipboard(code);
+
+                // Flash effect on click
+                this.style.color = '#0194E2';
+                setTimeout(() => {
+                    this.style.color = ''; 
+                }, 100);
+
+                // Display "Code copied to clipboard" near the clicked icon
+                const message = document.createElement('span');
+                message.textContent = "Copied!";
+                message.classList.add('copy-message'); 
+
+                // Append the message to the icon
+                this.appendChild(message);
+
+                setTimeout(() => {
+                    this.removeChild(message);
+                }, 500);
+            });
+
+            highlight.appendChild(copyIcon);
+        });
+    });
+  </script>
+
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        // Force download for notebook-download-btn
+        const downloadButtons = document.querySelectorAll('.notebook-download-btn');
+        downloadButtons.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default behavior
+
+                // Fetch the raw content of the notebook from GitHub
+                fetch(button.href)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const url = window.URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.style.display = 'none';
+                        link.href = url;
+                        const filename = button.href.split('/').pop();
+                        link.download = filename; 
+
+                        document.body.appendChild(link);
+                        link.click();
+
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(link);
+                    })
+                    .catch(err => console.error('Error fetching the notebook:', err));
+            });
+        });
+    });
+</script> 
+</body>
+</html>
