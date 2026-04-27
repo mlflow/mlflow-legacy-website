@@ -1,0 +1,316 @@
+# MLflow Scikit-learn Integration
+
+## Introduction[​](#introduction "Direct link to Introduction")
+
+Scikit-learn is a comprehensive machine learning library for Python, providing tools for classification, regression, clustering, and preprocessing. Built on NumPy, SciPy, and matplotlib, scikit-learn offers a consistent API across all estimators with unified `fit()`, `predict()`, and `transform()` methods.
+
+MLflow's integration with scikit-learn provides automatic experiment tracking, model management, and deployment capabilities for traditional machine learning workflows.
+
+## Why MLflow + Scikit-learn?[​](#why-mlflow--scikit-learn "Direct link to Why MLflow + Scikit-learn?")
+
+#### Automatic Logging
+
+Single line of code (mlflow\.sklearn.autolog()) captures all parameters, metrics, cross-validation results, and models without manual instrumentation.
+
+#### Complete Model Recording
+
+Logs trained models with serialization format, input/output signatures, model dependencies, and Python environment for reproducible deployments.
+
+#### Hyperparameter Tuning
+
+Built-in support for GridSearchCV and RandomizedSearchCV with automatic child run creation for each parameter combination.
+
+#### Post-Training Metrics
+
+Automatically captures evaluation metrics computed after training, including sklearn.metrics function calls and model.score() evaluations.
+
+## Getting Started[​](#getting-started "Direct link to Getting Started")
+
+Get started with scikit-learn and MLflow in just a few lines of code:
+
+python
+
+```
+import mlflow
+
+from sklearn.ensemble import RandomForestClassifier
+
+from sklearn.datasets import load_wine
+
+from sklearn.model_selection import train_test_split
+
+
+
+# Enable autologging
+
+mlflow.sklearn.autolog()
+
+
+
+# Load and prepare data
+
+wine = load_wine()
+
+X_train, X_test, y_train, y_test = train_test_split(
+
+    wine.data, wine.target, test_size=0.2, random_state=42
+
+)
+
+
+
+# Train model - MLflow automatically logs everything!
+
+with mlflow.start_run():
+
+    model = RandomForestClassifier(n_estimators=100, max_depth=3, random_state=42)
+
+    model.fit(X_train, y_train)
+
+
+
+    # Evaluation metrics are automatically captured
+
+    train_score = model.score(X_train, y_train)
+
+    test_score = model.score(X_test, y_test)
+
+
+
+    print(f"Train accuracy: {train_score:.3f}, Test accuracy: {test_score:.3f}")
+```
+
+Autologging captures all model parameters, training metrics, the trained model, and model signatures.
+
+:::tip Tracking Server Setup Running locally? MLflow stores experiments in the current directory by default. For team collaboration or remote tracking, **[set up a tracking server](/docs/3.12.0rc0/ml/tracking/tutorials/remote-server.md)**. :::
+
+## Autologging[​](#autologging "Direct link to Autologging")
+
+Enable autologging to automatically track scikit-learn experiments:
+
+python
+
+```
+import mlflow
+
+from sklearn.ensemble import GradientBoostingClassifier
+
+from sklearn.datasets import load_breast_cancer
+
+from sklearn.model_selection import train_test_split
+
+
+
+# Load data
+
+cancer = load_breast_cancer()
+
+X_train, X_test, y_train, y_test = train_test_split(
+
+    cancer.data, cancer.target, test_size=0.2, random_state=42
+
+)
+
+
+
+# Enable autologging
+
+mlflow.sklearn.autolog()
+
+
+
+with mlflow.start_run():
+
+    model = GradientBoostingClassifier(n_estimators=100, random_state=42)
+
+    model.fit(X_train, y_train)
+
+
+
+    # Model scoring is automatically captured
+
+    train_score = model.score(X_train, y_train)
+
+    test_score = model.score(X_test, y_test)
+```
+
+### What Gets Logged[​](#what-gets-logged "Direct link to What Gets Logged")
+
+When autologging is enabled, MLflow automatically captures:
+
+* **Parameters**: All model parameters from `estimator.get_params(deep=True)`
+* **Metrics**: Training scores, classification/regression metrics, cross-validation results
+* **Models**: Serialized models with signatures and input examples
+* **Artifacts**: Cross-validation results, metric information, model metadata
+
+For GridSearchCV and RandomizedSearchCV, MLflow creates child runs for parameter combinations and logs the best estimator separately.
+
+## Hyperparameter Tuning[​](#hyperparameter-tuning "Direct link to Hyperparameter Tuning")
+
+### Grid Search[​](#grid-search "Direct link to Grid Search")
+
+MLflow automatically creates child runs for hyperparameter tuning:
+
+python
+
+```
+import mlflow
+
+from sklearn.datasets import load_digits
+
+from sklearn.ensemble import RandomForestClassifier
+
+from sklearn.model_selection import GridSearchCV, train_test_split
+
+
+
+# Load data
+
+digits = load_digits()
+
+X_train, X_test, y_train, y_test = train_test_split(
+
+    digits.data, digits.target, test_size=0.2, random_state=42
+
+)
+
+
+
+# Enable autologging
+
+mlflow.sklearn.autolog(max_tuning_runs=10)
+
+
+
+# Define parameter grid
+
+param_grid = {
+
+    "n_estimators": [50, 100, 200],
+
+    "max_depth": [5, 10, 15, None],
+
+    "min_samples_split": [2, 5, 10],
+
+}
+
+
+
+with mlflow.start_run(run_name="RF Hyperparameter Tuning"):
+
+    rf = RandomForestClassifier(random_state=42)
+
+    grid_search = GridSearchCV(rf, param_grid, cv=5, scoring="accuracy", n_jobs=-1)
+
+    grid_search.fit(X_train, y_train)
+
+
+
+    best_score = grid_search.score(X_test, y_test)
+
+    print(f"Best params: {grid_search.best_params_}")
+
+    print(f"Best CV score: {grid_search.best_score_:.3f}")
+
+    print(f"Test score: {best_score:.3f}")
+```
+
+### Optuna Integration[​](#optuna-integration "Direct link to Optuna Integration")
+
+For advanced hyperparameter optimization:
+
+python
+
+```
+import mlflow
+
+import optuna
+
+from sklearn.datasets import load_breast_cancer
+
+from sklearn.ensemble import GradientBoostingClassifier
+
+from sklearn.model_selection import train_test_split
+
+
+
+# Load data
+
+cancer = load_breast_cancer()
+
+X_train, X_test, y_train, y_test = train_test_split(
+
+    cancer.data, cancer.target, test_size=0.2, random_state=42
+
+)
+
+
+
+mlflow.sklearn.autolog()
+
+
+
+
+
+def objective(trial):
+
+    params = {
+
+        "n_estimators": trial.suggest_int("n_estimators", 50, 200),
+
+        "max_depth": trial.suggest_int("max_depth", 3, 10),
+
+        "learning_rate": trial.suggest_float("learning_rate", 0.01, 0.3),
+
+    }
+
+
+
+    with mlflow.start_run(nested=True):
+
+        model = GradientBoostingClassifier(**params, random_state=42)
+
+        model.fit(X_train, y_train)
+
+        accuracy = model.score(X_test, y_test)
+
+        return accuracy
+
+
+
+
+
+with mlflow.start_run():
+
+    study = optuna.create_study(direction="maximize")
+
+    study.optimize(objective, n_trials=20)
+
+
+
+    mlflow.log_params({f"best_{k}": v for k, v in study.best_params.items()})
+
+    mlflow.log_metric("best_accuracy", study.best_value)
+```
+
+:::note Nested Runs The `nested=True` parameter creates child runs for each trial under the parent run, enabling hierarchical organization of hyperparameter tuning experiments. Learn more about **[hierarchical runs](/docs/3.12.0rc0/ml/tracking/tracking-api.md#hierarchical-runs-with-parent-child-relationships)**. :::
+
+## Learn More[​](#learn-more "Direct link to Learn More")
+
+### [Model Registry](/docs/3.12.0rc0/ml/model-registry.md)
+
+[Register and manage scikit-learn model versions with aliases for deployment workflows.](/docs/3.12.0rc0/ml/model-registry.md)
+
+[Learn more →](/docs/3.12.0rc0/ml/model-registry.md)
+
+### [Model Deployment](/docs/3.12.0rc0/ml/deployment.md)
+
+[Deploy scikit-learn models to production using MLflow's serving capabilities and cloud integrations.](/docs/3.12.0rc0/ml/deployment.md)
+
+[Learn more →](/docs/3.12.0rc0/ml/deployment.md)
+
+### [Model Evaluation](/docs/3.12.0rc0/ml/evaluation.md)
+
+[Evaluate scikit-learn models using MLflow's comprehensive evaluation framework with built-in metrics.](/docs/3.12.0rc0/ml/evaluation.md)
+
+[Learn more →](/docs/3.12.0rc0/ml/evaluation.md)
