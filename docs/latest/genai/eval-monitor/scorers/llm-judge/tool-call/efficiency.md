@@ -22,19 +22,33 @@ This built-in LLM judge is designed for evaluating AI agents and tool-calling ap
 
    ```
    import mlflow
+
    import os
+
    import openai
 
+
+
    # Ensure your OPENAI_API_KEY is set in your environment
+
    # os.environ["OPENAI_API_KEY"] = "<YOUR_API_KEY>" # Uncomment and set if not globally configured
 
+
+
    # Enable auto-tracing for OpenAI
+
    mlflow.openai.autolog()
 
+
+
    # Create an OpenAI client
+
    client = openai.OpenAI()
 
+
+
    # Select an LLM
+
    model_name = "gpt-4o-mini"
    ```
 
@@ -53,13 +67,21 @@ python
 
 ```
 from mlflow.genai.scorers import ToolCallEfficiency
+
 import mlflow
 
+
+
 # Get a trace from a previous run
+
 trace = mlflow.get_trace("<your-trace-id>")
 
+
+
 # Assess if tool calls are efficient
+
 feedback = ToolCallEfficiency(name="my_tool_call_efficiency")(trace=trace)
+
 print(feedback)
 ```
 
@@ -67,12 +89,19 @@ python
 
 ```
 import mlflow
+
 from mlflow.genai.scorers import ToolCallEfficiency
 
+
+
 # Evaluate traces from previous runs
+
 results = mlflow.genai.evaluate(
+
     data=traces,  # DataFrame or list containing trace data
+
     scorers=[ToolCallEfficiency()],
+
 )
 ```
 

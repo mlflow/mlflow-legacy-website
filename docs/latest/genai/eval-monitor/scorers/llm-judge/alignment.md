@@ -56,47 +56,89 @@ python
 
 ```
 from mlflow.genai.judges import make_judge
+
 from mlflow.genai.judges.optimizers import SIMBAAlignmentOptimizer
+
 from mlflow.entities import AssessmentSource, AssessmentSourceType
+
 from typing import Literal
+
 import mlflow
 
+
+
 # Create experiment and initial judge
+
 experiment_id = mlflow.create_experiment("product-quality-alignment")
+
 mlflow.set_experiment(experiment_id=experiment_id)
 
+
+
 initial_judge = make_judge(
+
     name="product_quality",
+
     instructions=(
+
         "Evaluate if the product description in {{ outputs }} "
+
         "is accurate and helpful for the query in {{ inputs }}. "
+
         "Rate as: excellent, good, fair, or poor"
+
     ),
+
     feedback_value_type=Literal["excellent", "good", "fair", "poor"],
+
     model="anthropic:/claude-opus-4-1-20250805",
+
 )
 
+
+
 # Generate traces from your application (minimum 10 required)
+
 traces = []
+
 for i in range(15):  # Generate 15 traces (more than minimum of 10)
+
     with mlflow.start_span(f"product_description_{i}") as span:
+
         # Your application logic
+
         query = f"Product query {i}"
+
         description = f"Product description for query {i}"
+
         span.set_inputs({"query": query})
+
         span.set_outputs({"description": description})
+
         traces.append(span.trace_id)
 
+
+
 # Run the judge on these traces to get initial assessments
+
 for trace_id in traces:
+
     trace = mlflow.get_trace(trace_id)
 
+
+
     # Extract inputs and outputs from the trace for field-based evaluation
+
     inputs = trace.data.spans[0].inputs  # Get inputs from trace
+
     outputs = trace.data.spans[0].outputs  # Get outputs from trace
 
+
+
     # Judge evaluates using field-based approach (inputs/outputs)
+
     judge_result = initial_judge(inputs=inputs, outputs=outputs)
+
     # Judge's assessment is automatically logged when called
 ```
 
@@ -118,21 +160,38 @@ python
 ```
 from mlflow.genai.judges.optimizers import SIMBAAlignmentOptimizer
 
+
+
 # Retrieve traces with both judge and human assessments
+
 traces_for_alignment = mlflow.search_traces(
+
     experiment_ids=[experiment_id], max_results=15, return_type="list"
+
 )
 
+
+
 # Align the judge using human corrections (minimum 10 traces recommended)
+
 if len(traces_for_alignment) >= 10:
+
     # Use SIMBAAlignmentOptimizer explicitly (this is also the default if no optimizer is specified)
+
     optimizer = SIMBAAlignmentOptimizer(model="anthropic:/claude-opus-4-1-20250805")
+
     aligned_judge = initial_judge.align(traces_for_alignment, optimizer)
 
+
+
     # Register the aligned judge
+
     aligned_judge.register(experiment_id=experiment_id)
+
     print("Judge aligned successfully with human feedback")
+
 else:
+
     print(f"Need at least 10 traces for alignment, have {len(traces_for_alignment)}")
 ```
 
@@ -184,25 +243,46 @@ python
 
 ```
 import mlflow
+
 from mlflow.entities import AssessmentSource, AssessmentSourceType
 
+
+
 # Your existing ground truth dataset
+
 ground_truth_data = [
+
     {"trace_id": "trace1", "label": "excellent", "query": "What is MLflow?"},
+
     {"trace_id": "trace2", "label": "poor", "query": "How to use tracking?"},
+
     {"trace_id": "trace3", "label": "good", "query": "How to log models?"},
+
 ]
 
+
+
 # Log ground truth as feedback for alignment
+
 for item in ground_truth_data:
+
     mlflow.log_feedback(
+
         trace_id=item["trace_id"],
+
         name="product_quality",  # Must match your judge name
+
         value=item["label"],
+
         source=AssessmentSource(
+
             source_type=AssessmentSourceType.HUMAN, source_id="ground_truth_dataset"
+
         ),
+
     )
+
+
 
 print(f"Logged {len(ground_truth_data)} ground truth labels for alignment")
 ```
@@ -235,34 +315,63 @@ python
 
 ```
 def test_alignment_improvement(original_judge, aligned_judge, test_traces: list) -> dict:
+
     """Compare judge performance before and after alignment."""
 
+
+
     original_correct = 0
+
     aligned_correct = 0
 
+
+
     for trace in test_traces:
+
         # Get human ground truth from trace assessments
+
         feedbacks = trace.search_assessments(type="feedback")
+
         human_feedback = next((f for f in feedbacks if f.source.source_type == "HUMAN"), None)
 
+
+
         if not human_feedback:
+
             continue
 
+
+
         # Get judge evaluations
+
         original_eval = original_judge(trace=trace)
+
         aligned_eval = aligned_judge(trace=trace)
 
+
+
         # Check agreement with human
+
         if original_eval.value == human_feedback.value:
+
             original_correct += 1
+
         if aligned_eval.value == human_feedback.value:
+
             aligned_correct += 1
 
+
+
     total = len(test_traces)
+
     return {
+
         "original_accuracy": original_correct / total,
+
         "aligned_accuracy": aligned_correct / total,
+
         "improvement": (aligned_correct - original_correct) / total,
+
     }
 ```
 

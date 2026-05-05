@@ -159,6 +159,8 @@ python
 ```
 from mlflow.telemetry import get_telemetry_client
 
+
+
 assert get_telemetry_client() is None, "Telemetry is enabled"
 ```
 

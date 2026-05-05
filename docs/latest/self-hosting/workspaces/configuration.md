@@ -10,8 +10,11 @@ bash
 
 ```
 mlflow server \
+
   --backend-store-uri postgresql://user:pass@localhost/mlflow \
+
   --default-artifact-root s3://mlflow-artifacts \
+
   --enable-workspaces
 ```
 
@@ -21,8 +24,11 @@ bash
 
 ```
 export MLFLOW_ENABLE_WORKSPACES=true
+
 mlflow server \
+
   --backend-store-uri ... \
+
   --default-artifact-root ...
 ```
 
@@ -49,6 +55,52 @@ mlflow db migrate-to-default-workspace <database_uri> --dry-run
 ```
 
 Use `--verbose` to list all conflicts instead of a truncated sample.
+
+### Admin Utility: move resources between workspaces[​](#admin-utility-move-resources-between-workspaces "Direct link to Admin Utility: move resources between workspaces")
+
+To selectively move resources from one workspace to another, use:
+
+bash
+
+```
+mlflow db move-resources <database_uri> \
+
+  --from <source_workspace> --to <target_workspace> \
+
+  --resource-type <table_name>
+```
+
+The `--resource-type` value is the database table name (`experiments`, `registered_models`, `evaluation_datasets`, `webhooks`, `jobs`).
+
+:::note Gateway resources not supported Gateway resources (`secrets`, `endpoints`, `model_definitions`, `budget_policies`) are not supported by this command because they have inter-table foreign-key dependencies that make moving them independently unsafe. :::
+
+Filter which resources to move by name or tag:
+
+bash
+
+```
+# Move specific experiments by name
+
+mlflow db move-resources <database_uri> \
+
+  --from default --to team-a --resource-type experiments \
+
+  --name training-v1 --name training-v2
+
+
+
+# Move experiments matching tags (AND logic when multiple tags are given)
+
+mlflow db move-resources <database_uri> \
+
+  --from default --to team-a --resource-type experiments \
+
+  --tag team=team-a --tag env=prod
+```
+
+When neither `--name` nor `--tag` is specified, all resources of the given type in the source workspace are moved. Tag filtering is supported for `experiments` and `registered_models` only.
+
+Use `--dry-run` to preview what would be moved without making changes, and `-y` to skip the confirmation prompt. The command aborts if any resource name would conflict with an existing resource in the target workspace.
 
 ## Client Workspace Selection (summary)[​](#client-workspace-selection-summary "Direct link to Client Workspace Selection (summary)")
 
@@ -101,9 +153,7 @@ This setting controls how the reserved `default` workspace interacts with `defau
 * **`false` (default)**: The `default` workspace does not inherit `default_permission`. Users must be granted explicit workspace permissions to access resources, even in the `default` workspace. This is the most secure option for new deployments.
 * **`true`**: The `default` workspace inherits `default_permission` for all authenticated users. The `default` workspace also appears in `mlflow.list_workspaces()` results for every user.
 
-Recommendation for existing instances
-
-If you are enabling workspaces on an existing MLflow instance that already uses basic-auth, set `grant_default_workspace_access = true` for backwards compatibility. Without this, all existing resources (which live in the `default` workspace) will become inaccessible to non-admin users who lack explicit workspace permissions.
+:::warning Recommendation for existing instances If you are enabling workspaces on an existing MLflow instance that already uses basic-auth, set `grant_default_workspace_access = true` for backwards compatibility. Without this, all existing resources (which live in the `default` workspace) will become inaccessible to non-admin users who lack explicit workspace permissions. :::
 
 Example configuration:
 
@@ -113,15 +163,25 @@ ini
 
 ```
 [mlflow]
+
 default_permission = READ
+
 database_uri = sqlite:///basic_auth.db
+
 admin_username = admin
+
 admin_password = password1234
+
 authorization_function = mlflow.server.auth:authenticate_request_basic_auth
+
 # Default secure setting for new deployments; for existing instances upgrading to workspaces,
+
 # set this to true for backwards compatibility (see note above).
+
 grant_default_workspace_access = false
+
 workspace_cache_max_size = 10000
+
 workspace_cache_ttl_seconds = 3600
 ```
 

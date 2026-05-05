@@ -67,18 +67,32 @@ python
 
 ```
 import os
+
 import shutil
+
 import tempfile
 
+
+
 import requests
+
 from bs4 import BeautifulSoup
+
 from langchain.chains import RetrievalQA
+
 from langchain.document_loaders import TextLoader
+
 from langchain.text_splitter import CharacterTextSplitter
+
 from langchain.vectorstores import FAISS
+
 from langchain_openai import OpenAI, OpenAIEmbeddings
 
+
+
 import mlflow
+
+
 
 assert "OPENAI_API_KEY" in os.environ, "Please set the OPENAI_API_KEY environment variable."
 ```
@@ -90,23 +104,42 @@ python
 ```
 from langchain_openai import AzureOpenAI, AzureOpenAIEmbeddings
 
+
+
 # Set this to `azure`
+
 os.environ["OPENAI_API_TYPE"] = "azure"
+
 # The API version you want to use: set this to `2023-05-15` for the released version.
+
 os.environ["OPENAI_API_VERSION"] = "2023-05-15"
+
 assert "AZURE_OPENAI_ENDPOINT" in os.environ, (
+
   "Please set the AZURE_OPENAI_ENDPOINT environment variable. It is the base URL for your Azure OpenAI resource. You can find this in the Azure portal under your Azure OpenAI resource."
-)
-assert "OPENAI_API_KEY" in os.environ, (
-  "Please set the OPENAI_API_KEY environment variable. It is the API key for your Azure OpenAI resource. You can find this in the Azure portal under your Azure OpenAI resource."
+
 )
 
-azure_openai_llm = AzureOpenAI(
-  deployment_name="<your-deployment-name>",
-  model_name="gpt-4o-mini",
+assert "OPENAI_API_KEY" in os.environ, (
+
+  "Please set the OPENAI_API_KEY environment variable. It is the API key for your Azure OpenAI resource. You can find this in the Azure portal under your Azure OpenAI resource."
+
 )
+
+
+
+azure_openai_llm = AzureOpenAI(
+
+  deployment_name="<your-deployment-name>",
+
+  model_name="gpt-4o-mini",
+
+)
+
 azure_openai_embeddings = AzureOpenAIEmbeddings(
+
   azure_deployment="<your-deployment-name>",
+
 )
 ```
 
@@ -128,29 +161,53 @@ python
 
 ```
 def fetch_federal_document(url, div_class):
+
   """
+
   Scrapes the transcript of the Act Establishing Yellowstone National Park from the given URL.
 
+
+
   Args:
+
   url (str): URL of the webpage to scrape.
 
+
+
   Returns:
+
   str: The transcript text of the Act.
+
   """
+
   # Sending a request to the URL
+
   response = requests.get(url)
+
   if response.status_code == 200:
+
       # Parsing the HTML content of the page
+
       soup = BeautifulSoup(response.text, "html.parser")
 
+
+
       # Finding the transcript section by its HTML structure
+
       if transcript_section := soup.find("div", class_=div_class):
+
           transcript_text = transcript_section.get_text(separator="
+
 ", strip=True)
+
           return transcript_text
+
       else:
+
           return "Transcript section not found."
+
   else:
+
       return f"Failed to retrieve the webpage. Status code: {response.status_code}"
 ```
 
@@ -176,46 +233,88 @@ python
 
 ```
 def fetch_and_save_documents(url_list, doc_path):
+
   """
+
   Fetches documents from given URLs and saves them to a specified file path.
 
+
+
   Args:
+
       url_list (list): List of URLs to fetch documents from.
+
       doc_path (str): Path to the file where documents will be saved.
+
   """
+
   for url in url_list:
+
       document = fetch_federal_document(url, "col-sm-9")
+
       with open(doc_path, "a") as file:
+
           file.write(document)
 
 
+
+
+
 def create_faiss_database(document_path, database_save_directory, chunk_size=500, chunk_overlap=10):
+
   """
+
   Creates and saves a FAISS database using documents from the specified file.
 
+
+
   Args:
+
       document_path (str): Path to the file containing documents.
+
       database_save_directory (str): Directory where the FAISS database will be saved.
+
       chunk_size (int, optional): Size of each document chunk. Default is 500.
+
       chunk_overlap (int, optional): Overlap between consecutive chunks. Default is 10.
 
+
+
   Returns:
+
       FAISS database instance.
+
   """
+
   # Load documents from the specified file
+
   document_loader = TextLoader(document_path)
+
   raw_documents = document_loader.load()
 
+
+
   # Split documents into smaller chunks with specified size and overlap
+
   document_splitter = CharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
+
   document_chunks = document_splitter.split_documents(raw_documents)
 
+
+
   # Generate embeddings for each document chunk
+
   embedding_generator = OpenAIEmbeddings()
+
   faiss_database = FAISS.from_documents(document_chunks, embedding_generator)
 
+
+
   # Save the FAISS database to the specified directory
+
   faiss_database.save_local(database_save_directory)
+
+
 
   return faiss_database
 ```
@@ -249,15 +348,27 @@ python
 ```
 temporary_directory = tempfile.mkdtemp()
 
+
+
 doc_path = os.path.join(temporary_directory, "docs.txt")
+
 persist_dir = os.path.join(temporary_directory, "faiss_index")
 
+
+
 url_listings = [
+
   "https://www.archives.gov/milestone-documents/act-establishing-yellowstone-national-park#transcript",
+
   "https://www.archives.gov/milestone-documents/sherman-anti-trust-act#transcript",
+
 ]
 
+
+
 fetch_and_save_documents(url_listings, doc_path)
+
+
 
 vector_db = create_faiss_database(doc_path, persist_dir)
 ```
@@ -289,26 +400,48 @@ python
 ```
 mlflow.set_experiment("Legal RAG")
 
+
+
 retrievalQA = RetrievalQA.from_llm(llm=OpenAI(), retriever=vector_db.as_retriever())
 
 
+
+
+
 # Log the retrievalQA chain
+
 def load_retriever(persist_directory):
+
   embeddings = OpenAIEmbeddings()
+
   vectorstore = FAISS.load_local(
+
       persist_directory,
+
       embeddings,
+
       allow_dangerous_deserialization=True,  # This is required to load the index from MLflow
+
   )
+
   return vectorstore.as_retriever()
 
 
+
+
+
 with mlflow.start_run() as run:
+
   model_info = mlflow.langchain.log_model(
+
       retrievalQA,
+
       name="retrieval_qa",
+
       loader_fn=load_retriever,
+
       persist_dir=persist_dir,
+
   )
 ```
 
@@ -332,22 +465,39 @@ python
 
 ```
 def print_formatted_response(response_list, max_line_length=80):
+
   """
+
   Formats and prints responses with a maximum line length for better readability.
 
+
+
   Args:
+
   response_list (list): A list of strings representing responses.
+
   max_line_length (int): Maximum number of characters in a line. Defaults to 80.
+
   """
+
   for response in response_list:
+
       words = response.split()
+
       line = ""
+
       for word in words:
+
           if len(line) + len(word) + 1 <= max_line_length:
+
               line += word + " "
+
           else:
+
               print(line)
+
               line = word + " "
+
       print(line)
 ```
 
@@ -359,6 +509,8 @@ python
 
 ```
 answer1 = loaded_model.predict([{"query": "What does the document say about trespassers?"}])
+
+
 
 print_formatted_response(answer1)
 ```
@@ -426,8 +578,12 @@ python
 
 ```
 answer2 = loaded_model.predict([
+
   {"query": "What is a bridle-path and can I use one at Yellowstone?"}
+
 ])
+
+
 
 print_formatted_response(answer2)
 ```
@@ -475,10 +631,16 @@ python
 
 ```
 answer3 = loaded_model.predict([
+
   {
+
       "query": "Can I buy Yellowstone from the Federal Government to set up a buffalo-themed day spa?"
+
   }
+
 ])
+
+
 
 print_formatted_response(answer3)
 ```
@@ -528,11 +690,18 @@ python
 
 ```
 answer4 = loaded_model.predict([
+
   {
+
       "query": "Can I lease a small parcel of land from the Federal Government for a small "
+
       "buffalo-themed day spa for visitors to the park?"
+
   }
+
 ])
+
+
 
 print_formatted_response(answer4)
 ```
@@ -558,11 +727,17 @@ python
 
 ```
 answer5 = loaded_model.predict([
+
   {
+
       "query": "Can I lease a small parcel of land from the Federal Government for a small "
+
       "buffalo-themed day spa and hotel for visitors to stay in and relax at while visiting the park?"
+
   }
+
 ])
+
 print_formatted_response(answer5)
 ```
 
@@ -586,8 +761,12 @@ python
 
 ```
 answer6 = loaded_model.predict([
+
   {"query": "Can I just go to the park and peacefully enjoy the natural splendor?"}
+
 ])
+
+
 
 print_formatted_response(answer6)
 ```
@@ -618,10 +797,16 @@ python
 
 ```
 answer7 = loaded_model.predict([
+
   {
+
       "query": "Can I start a buffalo themed day spa outside of Yellowstone National Park and stifle any competition?"
+
   }
+
 ])
+
+
 
 print_formatted_response(answer7)
 ```
@@ -645,6 +830,7 @@ python
 
 ```
 # Clean up our temporary directory that we created with our FAISS instance
+
 shutil.rmtree(temporary_directory)
 ```
 

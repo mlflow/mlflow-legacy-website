@@ -22,19 +22,33 @@ This built-in LLM judge is designed for evaluating RAG systems where you need to
 
    ```
    import mlflow
+
    import os
+
    import openai
 
+
+
    # Ensure your OPENAI_API_KEY is set in your environment
+
    # os.environ["OPENAI_API_KEY"] = "<YOUR_API_KEY>" # Uncomment and set if not globally configured
 
+
+
    # Enable auto-tracing for OpenAI
+
    mlflow.openai.autolog()
 
+
+
    # Create an OpenAI client
+
    client = openai.OpenAI()
 
+
+
    # Select an LLM
+
    model_name = "gpt-4o-mini"
    ```
 
@@ -58,24 +72,43 @@ python
 
 ```
 from mlflow.genai.scorers import RetrievalSufficiency
+
 import mlflow
 
+
+
 # Get a trace from a previous run
+
 trace = mlflow.get_trace("<your-trace-id>")
 
+
+
 # Assess if the retrieved context is sufficient for the expected facts
+
 feedback = RetrievalSufficiency()(
+
     trace=trace,
+
     expectations={
+
         "expected_facts": [
+
             "MLflow is an open source AI engineering platform",
+
             "Features include observability",
+
             "Features include evaluation",
+
             "Features include prompt management",
+
             "Features include AI Gateway",
+
         ]
+
     },
+
 )
+
 print(feedback)
 ```
 
@@ -83,12 +116,19 @@ python
 
 ```
 import mlflow
+
 from mlflow.genai.scorers import RetrievalSufficiency
 
+
+
 # Evaluate traces from previous runs with ground truth expectations
+
 results = mlflow.genai.evaluate(
+
     data=eval_dataset,  # Dataset with trace data and expected_facts
+
     scorers=[RetrievalSufficiency()],
+
 )
 ```
 

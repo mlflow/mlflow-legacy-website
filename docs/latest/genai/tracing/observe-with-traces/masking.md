@@ -30,31 +30,57 @@ python
 
 ```
 import re
+
 import mlflow
+
 from mlflow.entities.span import Span
 
 
+
+
+
 # Your application code (simplified)
+
 @mlflow.trace
+
 def predict(text: str):
+
     return "Answer"
 
 
+
+
+
 # Regex pattern to match e-mail addresses
+
 EMAIL_PATTERN = r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}"
 
 
+
+
+
 # Define a filtering function that takes a span as input and mutates it in-place.
+
 def redact_email(span: Span) -> None:
+
     raw_input = span.inputs.get("text")
+
     redacted_input = re.sub(EMAIL_PATTERN, "[REDACTED]", raw_input)
+
     span.set_inputs({"text": redacted_input})
 
 
+
+
+
 # Register the filter function
+
 mlflow.tracing.configure(span_processors=[redact_email])
 
+
+
 # Run the application
+
 predict("My e-mail address is test@example.com")
 ```
 
@@ -74,22 +100,39 @@ python
 
 ```
 import mlflow
+
 from langchain_core.tools import tool
+
 from langchain_openai import ChatOpenAI
+
 from langgraph.prebuilt import create_react_agent
 
+
+
 # Enabling tracing for LangGraph
+
 mlflow.langchain.autolog()
 
 
+
+
+
 @tool
+
 def get_bank_account_number(user_name: str):
+
     """Return the bank account number for the given user name."""
+
     return "1234567890"
 
 
+
+
+
 llm = ChatOpenAI(model="o4-mini")
+
 tools = [get_bank_account_number]
+
 graph = create_react_agent(llm, tools)
 ```
 
@@ -99,32 +142,59 @@ python
 
 ```
 import re
+
 from typing import Union
+
 from mlflow.entities.span import Span, SpanType
+
+
 
 ACCOUNT_NUMBER_PATTERN = re.compile(r"\d{10}")
 
 
+
+
+
 def filter_bank_account_number(span: Span) -> None:
+
     # Redact the output of the tool call span.
+
     if span.span_type == SpanType.TOOL:
+
         span.set_outputs("[REDACTED]")
+
         return
 
+
+
     # Redact the back account number from other spans.
+
     if isinstance(span.inputs, dict) and (messages := span.inputs.get("messages")):
+
         span.set_inputs({"messages": redact_messages(messages)})
+
     if isinstance(span.outputs, dict) and (messages := span.outputs.get("messages")):
+
         span.set_outputs({"messages": redact_messages(messages)})
 
 
+
+
+
 def redact_messages(messages: list[dict]):
+
     if isinstance(messages, dict):
+
         messages = messages.get("messages")
 
+
+
     return [
+
         {**msg, "content": ACCOUNT_NUMBER_PATTERN.sub("[REDACTED]", msg["content"])}
+
         for msg in messages
+
     ]
 ```
 
@@ -134,11 +204,17 @@ python
 
 ```
 # Register the filter function
+
 mlflow.tracing.configure(span_processors=[filter_bank_account_number])
 
+
+
 # Run the application
+
 result = graph.invoke({
+
     "messages": [{"role": "user", "content": "What is the bank account number for John Doe?"}]
+
 })
 ```
 
@@ -156,12 +232,19 @@ python
 
 ```
 import mlflow
+
 from mlflow.entities.span import Span, SpanType
 
 
+
+
+
 # Dummy application code for custom support agent.
+
 @mlflow.trace(span_type=SpanType.AGENT)
+
 def customer_support_agent(request: str):
+
     return "Yes"
 ```
 
@@ -173,6 +256,7 @@ bash
 
 ```
 pip install presidio_analyzer presidio_anonymizer
+
 python -m spacy download en_core_web_lg
 ```
 
@@ -182,24 +266,44 @@ python
 
 ```
 from presidio_anonymizer import AnonymizerEngine
+
 from presidio_anonymizer.entities import RecognizerResult, OperatorConfig
 
+
+
 # Initialize the anonymizer and analyzer.
+
 anonymizer = AnonymizerEngine()
+
 analyzer = AnalyzerEngine()
 
 
+
+
+
 # Define a filter function.
+
 def filter_pii(span: Span) -> None:
+
     """Filter PII from the span input using Microsoft Presidio."""
+
     text = span.inputs.get("request")
 
+
+
     results = analyzer.analyze(
+
         text=text,
+
         entities=["PERSON", "CREDIT_CARD", "EMAIL_ADDRESS", "LOCATION", "DATE_TIME"],
+
         language="en",
+
     )
+
     anonymized_text = anonymizer.anonymize(text=text, analyzer_results=results)
+
+
 
     span.set_inputs({"request": anonymized_text.text})
 ```
@@ -210,12 +314,19 @@ python
 
 ```
 # Register the filter function
+
 mlflow.tracing.configure(span_processors=[filter_pii])
 
+
+
 # Run the application
+
 customer_support_agent(
+
     "Please cancel my credit card effective September 19th. My name is John Doe and my credit "
+
     "card number is 4095-2609-9393-4932. My email is john.doe@example.com and I live in Amsterdam."
+
 )
 ```
 

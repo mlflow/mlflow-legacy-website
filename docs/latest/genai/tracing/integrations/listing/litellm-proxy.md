@@ -4,9 +4,7 @@
 
 ![LiteLLM Proxy Tracing](/docs/latest/images/llms/litellm-proxy/litellm-proxy-tracing.png)
 
-Looking for LiteLLM SDK?
-
-This guide covers the **LiteLLM Proxy Server**. If you're using the LiteLLM Python SDK directly in your application, see the [LiteLLM SDK Integration](/docs/latest/genai/tracing/integrations/listing/litellm.md) guide instead.
+:::tip Looking for LiteLLM SDK? This guide covers the **LiteLLM Proxy Server**. If you're using the LiteLLM Python SDK directly in your application, see the [LiteLLM SDK Integration](/docs/latest/genai/tracing/integrations/listing/litellm.md) guide instead. :::
 
 ## Integration Options[​](#integration-options "Direct link to Integration Options")
 
@@ -56,10 +54,15 @@ bash
 
 ```
 git clone --depth 1 --filter=blob:none --sparse https://github.com/mlflow/mlflow.git
+
 cd mlflow
+
 git sparse-checkout set docker-compose
+
 cd docker-compose
+
 cp .env.dev.example .env
+
 docker compose up -d
 ```
 
@@ -77,13 +80,21 @@ yaml
 
 ```
 model_list:
+
   - model_name: gpt-4o-mini
+
     litellm_params:
+
       model: openai/gpt-4o-mini
+
       api_key: os.environ/OPENAI_API_KEY
 
+
+
 litellm_settings:
+
   success_callback: ["mlflow"]
+
   failure_callback: ["mlflow"]
 ```
 
@@ -97,9 +108,13 @@ bash
 
 ```
 # Required: Point to your MLflow server
+
 export MLFLOW_TRACKING_URI="http://localhost:5000"
 
+
+
 # Optional: Set the experiment name
+
 export MLFLOW_EXPERIMENT_NAME="LiteLLM Proxy"
 ```
 
@@ -123,13 +138,21 @@ bash
 
 ```
 curl -X POST "http://localhost:4000/v1/chat/completions" \
+
   -H "Content-Type: application/json" \
+
   -H "Authorization: Bearer sk-1234" \
+
   -d '{
+
     "model": "gpt-4o-mini",
+
     "messages": [
+
       {"role": "user", "content": "Hello, how are you?"}
+
     ]
+
   }'
 ```
 
@@ -140,15 +163,26 @@ python
 ```
 from openai import OpenAI
 
+
+
 # Point to your LiteLLM Proxy
+
 client = OpenAI(
+
     base_url="http://localhost:4000/v1",
+
     api_key="sk-1234",  # Your LiteLLM Proxy API key
+
 )
 
+
+
 response = client.chat.completions.create(
+
     model="gpt-4o-mini", messages=[{"role": "user", "content": "Hello, how are you?"}]
+
 )
+
 print(response.choices[0].message.content)
 ```
 
@@ -202,10 +236,15 @@ bash
 
 ```
 git clone --depth 1 --filter=blob:none --sparse https://github.com/mlflow/mlflow.git
+
 cd mlflow
+
 git sparse-checkout set docker-compose
+
 cd docker-compose
+
 cp .env.dev.example .env
+
 docker compose up -d
 ```
 
@@ -224,29 +263,53 @@ python
 
 ```
 import mlflow
+
 from openai import OpenAI
 
+
+
 # Enable auto-tracing for OpenAI
+
 mlflow.openai.autolog()
 
+
+
 # Set tracking URI and experiment
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("LiteLLM Proxy")
 
+
+
 # Point OpenAI client to LiteLLM Proxy
+
 client = OpenAI(
+
     base_url="http://localhost:4000/v1",  # LiteLLM Proxy URL
+
     api_key="sk-1234",  # Your LiteLLM Proxy API key
+
 )
 
+
+
 # Make API calls as usual - traces will be captured automatically
+
 response = client.chat.completions.create(
+
     model="gpt-4o-mini",
+
     messages=[
+
         {"role": "system", "content": "You are a helpful assistant."},
+
         {"role": "user", "content": "What is the capital of France?"},
+
     ],
+
 )
+
 print(response.choices[0].message.content)
 ```
 
@@ -256,31 +319,57 @@ typescript
 
 ```
 import { init } from "@mlflow/core";
+
 import { tracedOpenAI } from "@mlflow/openai";
+
 import { OpenAI } from "openai";
 
+
+
 // Initialize MLflow tracing
+
 init({
+
   trackingUri: "http://localhost:5000",
+
   experimentId: "<experiment-id>",
+
 });
+
+
 
 // Wrap the OpenAI client pointing to LiteLLM Proxy
+
 const client = tracedOpenAI(
+
   new OpenAI({
+
     baseURL: "http://localhost:4000/v1", // LiteLLM Proxy URL
+
     apiKey: "sk-1234", // Your LiteLLM Proxy API key
+
   })
+
 );
 
+
+
 // Make API calls - traces will be captured automatically
+
 const response = await client.chat.completions.create({
+
   model: "gpt-4o-mini",
+
   messages: [
+
     { role: "system", content: "You are a helpful assistant." },
+
     { role: "user", content: "What is the capital of France?" },
+
   ],
+
 });
+
 console.log(response.choices[0].message.content);
 ```
 
@@ -305,25 +394,45 @@ python
 
 ```
 import mlflow
+
 from mlflow.entities import SpanType
+
 from openai import OpenAI
 
+
+
 mlflow.openai.autolog()
+
+
 
 client = OpenAI(base_url="http://localhost:4000/v1", api_key="sk-1234")
 
 
+
+
+
 @mlflow.trace(span_type=SpanType.CHAIN)
+
 def ask_question(question: str) -> str:
+
     """A traced function that calls the LLM through LiteLLM Proxy."""
+
     response = client.chat.completions.create(
+
         model="gpt-5", messages=[{"role": "user", "content": question}]
+
     )
+
     return response.choices[0].message.content
 
 
+
+
+
 # The entire function call and nested LLM call will be traced
+
 answer = ask_question("What is machine learning?")
+
 print(answer)
 ```
 
@@ -331,35 +440,65 @@ typescript
 
 ```
 import { init, trace, SpanType } from "@mlflow/core";
+
 import { tracedOpenAI } from "@mlflow/openai";
+
 import { OpenAI } from "openai";
 
+
+
 init({
+
   trackingUri: "http://localhost:5000",
+
   experimentId: "<experiment-id>",
+
 });
 
+
+
 const client = tracedOpenAI(
+
   new OpenAI({
+
     baseURL: "http://localhost:4000/v1",
+
     apiKey: "sk-1234",
+
   })
+
 );
+
+
 
 // Wrap your function with trace() to create a span
+
 const askQuestion = trace(
+
   { name: "askQuestion", spanType: SpanType.CHAIN },
+
   async (question: string): Promise<string> => {
+
     const response = await client.chat.completions.create({
+
       model: "gpt-5",
+
       messages: [{ role: "user", content: question }],
+
     });
+
     return response.choices[0].message.content ?? "";
+
   }
+
 );
 
+
+
 // The entire function call and nested LLM call will be traced
+
 const answer = await askQuestion("What is machine learning?");
+
 console.log(answer);
 ```
 

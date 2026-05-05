@@ -71,11 +71,18 @@ python
 ```
 import os
 
+
+
 # Point OpenTelemetry traces to your MLflow server
+
 os.environ["OTEL_EXPORTER_OTLP_ENDPOINT"] = "http://localhost:5000"
+
 os.environ["OTEL_EXPORTER_OTLP_HEADERS"] = (
+
     "x-mlflow-experiment-id=123"  # Replace "123" with your MLflow experiment ID
+
 )
+
 os.environ["OTEL_EXPORTER_OTLP_TRACES_PROTOCOL"] = "http/protobuf"
 ```
 
@@ -85,7 +92,9 @@ bash
 
 ```
 export OTEL_EXPORTER_OTLP_ENDPOINT="http://localhost:5000"
+
 export OTEL_EXPORTER_OTLP_HEADERS="x-mlflow-experiment-id=123"  # Replace "123" with your MLflow experiment ID
+
 export OTEL_EXPORTER_OTLP_TRACES_PROTOCOL="http/protobuf"
 ```
 
@@ -102,26 +111,47 @@ python
 
 ```
 from openhands.sdk import LLM, Agent, Conversation, Tool
+
 from openhands.tools.file_editor import FileEditorTool
+
 from openhands.tools.task_tracker import TaskTrackerTool
+
 from openhands.tools.terminal import TerminalTool
+
+
 
 llm = LLM("openai/gpt-5")
 
+
+
 agent = Agent(
+
     llm=llm,
+
     tools=[
+
         Tool(name=TerminalTool.name),
+
         Tool(name=FileEditorTool.name),
+
         Tool(name=TaskTrackerTool.name),
+
     ],
+
 )
 
+
+
 cwd = os.getcwd()
+
 conversation = Conversation(agent=agent, workspace=cwd)
 
+
+
 conversation.send_message("Write 3 facts about the current project into FACTS.txt.")
+
 conversation.run()
+
 print("All done!")
 ```
 
@@ -141,7 +171,7 @@ MLflow automatically tracks token usage for each LLM call within OpenHands agent
 
 ![OpenHands Token Usage](/docs/latest/images/llms/openhands/openhands-token-usage.png)
 
-Governing OpenHands Agents with AI Gateway
+:::tip Governing OpenHands Agents with AI Gateway
 
 [AI Gateway](/docs/latest/genai/governance/ai-gateway.md) provides centralized governance for all LLM traffic from OpenHands, including budget control, usage tracking, and secret management.
 
@@ -151,8 +181,11 @@ python
 
 ```
 llm = LLM(
+
     base_url="http://localhost:5000/gateway/mlflow/v1",  # MLflow AI Gateway endpoint URL
+
     model="my-openai-endpoint",  # Name of the endpoint configured in AI Gateway
+
 )
 ```
 
@@ -162,6 +195,8 @@ This gives you:
 * **Usage tracking** - every LLM call is logged with token-level cost visibility
 * **Secret management** - store API keys securely in the gateway instead of your scripts
 * **Fallback routing** - define fallback chains for provider availability
+
+:::
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 

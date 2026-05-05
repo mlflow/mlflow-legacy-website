@@ -12,47 +12,91 @@ python
 import mlflow.pyfunc
 
 
+
+
+
 class AddN(mlflow.pyfunc.PythonModel):
+
   """
+
   A custom model that adds a specified value `n` to all columns of the input DataFrame.
 
+
+
   Attributes:
+
   -----------
+
   n : int
+
       The value to add to input columns.
+
   """
 
+
+
   def __init__(self, n):
+
       """
+
       Constructor method. Initializes the model with the specified value `n`.
 
+
+
       Parameters:
+
       -----------
+
       n : int
+
           The value to add to input columns.
+
       """
+
       self.n = n
 
+
+
   def predict(self, context, model_input, params=None):
+
       """
+
       Prediction method for the custom model.
 
+
+
       Parameters:
+
       -----------
+
       context : Any
+
           Ignored in this example. It's a placeholder for additional data or utility methods.
 
+
+
       model_input : pd.DataFrame
+
           The input DataFrame to which `n` should be added.
 
+
+
       params : dict, optional
+
           Additional prediction parameters. Ignored in this example.
 
+
+
       Returns:
+
       --------
+
       pd.DataFrame
+
           The input DataFrame with `n` added to all columns.
+
       """
+
       return model_input.apply(lambda column: column + self.n)
 ```
 
@@ -64,12 +108,19 @@ python
 
 ```
 # Define the path to save the model
+
 model_path = "/tmp/add_n_model"
 
+
+
 # Create an instance of the model with `n=5`
+
 add5_model = AddN(n=5)
 
+
+
 # Save the model using MLflow
+
 mlflow.pyfunc.save_model(path=model_path, python_model=add5_model)
 ```
 
@@ -86,6 +137,7 @@ python
 
 ```
 # Load the saved model
+
 loaded_model = mlflow.pyfunc.load_model(model_path)
 ```
 
@@ -98,10 +150,16 @@ python
 ```
 import pandas as pd
 
+
+
 # Define a sample input DataFrame
+
 model_input = pd.DataFrame([range(10)])
 
+
+
 # Use the loaded model to make predictions
+
 model_output = loaded_model.predict(model_input)
 ```
 

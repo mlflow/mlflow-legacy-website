@@ -16,28 +16,52 @@ python
 
 ```
 import instructor
+
 from pydantic import BaseModel
+
 from openai import OpenAI
 
+
+
 # Use other autologging function e.g., mlflow.anthropic.autolog() if you are using Instructor with different LLM providers
+
 mlflow.openai.autolog()
 
+
+
 # Optional, create an experiment to store traces
+
 mlflow.set_experiment("Instructor")
 
 
+
+
+
 # Use Instructor as usual
+
 class ExtractUser(BaseModel):
+
     name: str
+
     age: int
+
+
+
 
 
 client = instructor.from_openai(OpenAI())
 
+
+
 res = client.chat.completions.create(
+
     model="gpt-4o-mini",
+
     response_model=ExtractUser,
+
     messages=[{"role": "user", "content": "John Doe is 30 years old."}],
+
 )
+
 print(f"Name: {res.name}, Age:{res.age}")
 ```

@@ -27,35 +27,65 @@ python
 
 ```
 import mlflow
+
 from mlflow.genai.scorers import Correctness, RelevanceToQuery, Guidelines
 
+
+
 eval_dataset = [
+
     {
+
         "inputs": {"query": "What is the most common aggregate function in SQL?"},
+
         "outputs": "The most common aggregate function in SQL is SUM().",
+
         # Correctness judge requires an "expected_facts" field.
+
         "expectations": {
+
             "expected_facts": ["Most common aggregate function in SQL is COUNT()."],
+
         },
+
     },
+
     {
+
         "inputs": {"query": "How do I use MLflow?"},
+
         # verbose answer
+
         "outputs": "Hi, I'm a chatbot that answers questions about MLflow. Thank you for asking a great question! I know MLflow well and I'm glad to help you with that. You will love it! MLflow is a Python-based platform that provides a comprehensive set of tools for logging, tracking, and visualizing machine learning models and experiments throughout their entire lifecycle. Its comprehensive feature set for agents and LLM applications includes production-grade observability, evaluation, prompt management, and an AI Gateway for managing costs and model access. For ML model development, it provides experiment tracking, model evaluation, a production model registry, and model deployment tools. To get started, simply install it with 'pip install mlflow' and then use mlflow.start_run() to begin tracking your experiments with automatic logging of parameters, metrics, and artifacts. The platform creates a beautiful web UI where you can compare different runs, visualize metrics over time, and manage your entire ML workflow efficiently. MLflow integrates seamlessly with popular ML libraries like scikit-learn, TensorFlow, PyTorch, and many others, making it incredibly easy to incorporate into your existing projects!",
+
         "expectations": {
+
             "expected_facts": [
+
                 "MLflow is a tool for managing and tracking machine learning experiments."
+
             ],
+
         },
+
     },
+
 ]
 
+
+
 results = mlflow.genai.evaluate(
+
     data=eval_dataset,
+
     scorers=[
+
         Correctness(),
+
         RelevanceToQuery(),
+
     ],
+
 )
 ```
 
@@ -100,12 +130,10 @@ results = mlflow.genai.evaluate(
 
 Multi-turn judges evaluate entire conversation sessions rather than individual turns. They require traces with session IDs and are experimental in MLflow 3.7.0. See [Track Users and Sessions](/docs/latest/genai/tracing/track-users-sessions.md)
 
-Multi-Turn Evaluation Requirements
-
-Multi-turn judges require:
+:::info Multi-Turn Evaluation Requirements Multi-turn judges require:
 
 1. **Session IDs**: Traces must have `mlflow.trace.session` metadata
-2. **List or DataFrame input**: Currently only supports pre-collected traces (no `predict_fn` support yet)
+2. **List or DataFrame input**: Currently only supports pre-collected traces (no `predict_fn` support yet) :::
 
 | Judge                                                                                                                                                 | What does it evaluate?                                                     | Requires Session? |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ----------------- |
@@ -117,9 +145,7 @@ Multi-turn judges require:
 | [KnowledgeRetention](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.KnowledgeRetention)\*\*                             | Does the assistant correctly retain information from earlier user inputs?  | Yes               |
 | [UserFrustration](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.UserFrustration)\*\*                                   | Is the user frustrated? Was the frustration resolved?                      | Yes               |
 
-Availability
-
-Safety and RetrievalRelevance judges are currently only available in [Databricks managed MLflow](https://docs.databricks.com/mlflow3/genai/eval-monitor/) and will be open-sourced soon.
+:::note Availability Safety and RetrievalRelevance judges are currently only available in [Databricks managed MLflow](https://docs.databricks.com/mlflow3/genai/eval-monitor/) and will be open-sourced soon. :::
 
 tip
 

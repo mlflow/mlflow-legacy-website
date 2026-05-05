@@ -47,33 +47,62 @@ python
 ```
 import os
 
+
+
 from langchain.chains import LLMChain
+
 from langchain.llms import OpenAI
+
 from langchain.prompts import PromptTemplate
+
+
 
 import mlflow
 
+
+
 # Ensure the OpenAI API key is set in the environment
+
 assert "OPENAI_API_KEY" in os.environ, "Please set the OPENAI_API_KEY environment variable."
 
+
+
 # Initialize the OpenAI model and the prompt template
+
 llm = OpenAI(temperature=0.9)
+
 prompt = PromptTemplate(
+
     input_variables=["product"],
+
     template="What is a good name for a company that makes {product}?",
+
 )
 
+
+
 # Create the LLMChain with the specified model and prompt
+
 chain = LLMChain(llm=llm, prompt=prompt)
 
+
+
 # Log the LangChain LLMChain in an MLflow run
+
 with mlflow.start_run():
+
     logged_model = mlflow.langchain.log_model(chain, name="langchain_model")
 
+
+
 # Load the logged model using MLflow's Python function flavor
+
 loaded_model = mlflow.pyfunc.load_model(logged_model.model_uri)
 
+
+
 # Predict using the loaded model
+
 print(loaded_model.predict([{"product": "colorful socks"}]))
 ```
 
@@ -136,38 +165,73 @@ python
 ```
 import os
 
+
+
 from langchain.agents import AgentType, initialize_agent, load_tools
+
 from langchain.llms import OpenAI
+
+
 
 import mlflow
 
+
+
 # Note: Ensure that the package 'google-search-results' is installed via pypi to run this example
+
 # and that you have a accounts with SerpAPI and OpenAI to use their APIs.
 
+
+
 # Ensuring necessary API keys are set
+
 assert "OPENAI_API_KEY" in os.environ, "Please set the OPENAI_API_KEY environment variable."
+
 assert "SERPAPI_API_KEY" in os.environ, "Please set the SERPAPI_API_KEY environment variable."
 
+
+
 # Load the language model for agent control
+
 llm = OpenAI(temperature=0)
 
+
+
 # Next, let's load some tools to use. Note that the `llm-math` tool uses an LLM, so we need to pass that in.
+
 tools = load_tools(["serpapi", "llm-math"], llm=llm)
 
+
+
 # Finally, let's initialize an agent with the tools, the language model, and the type of agent we want to use.
+
 agent = initialize_agent(tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True)
 
+
+
 # Log the agent in an MLflow run
+
 with mlflow.start_run():
+
     logged_model = mlflow.langchain.log_model(agent, name="langchain_model")
 
+
+
 # Load the logged agent model for prediction
+
 loaded_model = mlflow.pyfunc.load_model(logged_model.model_uri)
 
+
+
 # Generate an inference result using the loaded model
+
 question = "What was the high temperature in SF yesterday in Fahrenheit? What is that number raised to the .023 power?"
 
+
+
 answer = loaded_model.predict([{"input": question}])
+
+
 
 print(answer)
 ```
@@ -213,31 +277,57 @@ python
 
 ```
 from langchain.chains import LLMChain
+
 from langchain.prompts import PromptTemplate
+
 from langchain_openai import OpenAI
+
 import mlflow
 
 
+
+
+
 template_instructions = "Provide brief answers to technical questions about {topic} and do not answer non-technical questions."
+
 prompt = PromptTemplate(
+
     input_variables=["topic"],
+
     template=template_instructions,
+
 )
+
 chain = LLMChain(llm=OpenAI(temperature=0.05), prompt=prompt)
 
+
+
 with mlflow.start_run():
+
     model_info = mlflow.langchain.log_model(chain, name="tech_chain")
 
+
+
 # Assuming the model is already logged in MLflow and loaded
+
 loaded_model = mlflow.pyfunc.load_model(model_uri=model_info.model_uri)
 
+
+
 # Simulate a single synchronous input
+
 input_data = "Hello, can you explain streaming outputs?"
 
+
+
 # Generate responses in a streaming fashion
+
 response_stream = loaded_model.predict_stream(input_data)
+
 for response_part in response_stream:
+
     print("Streaming Response Part:", response_part)
+
     # Each part of the response is handled as soon as it is generated
 ```
 
@@ -254,11 +344,18 @@ python
 ```
 from langchain_core.callbacks import StdOutCallbackHandler
 
+
+
 handler = StdOutCallbackHandler()
 
+
+
 # Attach callback to enhance the streaming process
+
 response_stream = loaded_model.predict_stream(input_data, callback_handlers=[handler])
+
 for enhanced_response in response_stream:
+
     print("Enhanced Streaming Response:", enhanced_response)
 ```
 
@@ -310,50 +407,95 @@ python
 
 ```
 import os
+
 import tempfile
 
+
+
 from langchain.chains import RetrievalQA
+
 from langchain.document_loaders import TextLoader
+
 from langchain.embeddings.openai import OpenAIEmbeddings
+
 from langchain.llms import OpenAI
+
 from langchain.text_splitter import CharacterTextSplitter
+
 from langchain.vectorstores import FAISS
+
+
 
 import mlflow
 
+
+
 assert "OPENAI_API_KEY" in os.environ, "Please set the OPENAI_API_KEY environment variable."
 
+
+
 with tempfile.TemporaryDirectory() as temp_dir:
+
     persist_dir = os.path.join(temp_dir, "faiss_index")
 
+
+
     # Create the vector db, persist the db to a local fs folder
+
     loader = TextLoader("tests/langchain/state_of_the_union.txt")
+
     documents = loader.load()
+
     text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+
     docs = text_splitter.split_documents(documents)
+
     embeddings = OpenAIEmbeddings()
+
     db = FAISS.from_documents(docs, embeddings)
+
     db.save_local(persist_dir)
 
+
+
     # Create the RetrievalQA chain
+
     retrievalQA = RetrievalQA.from_llm(llm=OpenAI(), retriever=db.as_retriever())
 
+
+
     # Log the retrievalQA chain
+
     def load_retriever(persist_directory):
+
         embeddings = OpenAIEmbeddings()
+
         vectorstore = FAISS.load_local(persist_directory, embeddings)
+
         return vectorstore.as_retriever()
 
+
+
     with mlflow.start_run() as run:
+
         logged_model = mlflow.langchain.log_model(
+
             retrievalQA,
+
             name="retrieval_qa",
+
             loader_fn=load_retriever,
+
             persist_dir=persist_dir,
+
         )
 
+
+
 # Load the retrievalQA chain
+
 loaded_model = mlflow.pyfunc.load_model(logged_model.model_uri)
+
 print(loaded_model.predict([{"query": "What did the president say about Ketanji Brown Jackson"}]))
 ```
 
@@ -386,46 +528,87 @@ python
 
 ```
 import os
+
 import tempfile
 
+
+
 from langchain.document_loaders import TextLoader
+
 from langchain.embeddings.openai import OpenAIEmbeddings
+
 from langchain.text_splitter import CharacterTextSplitter
+
 from langchain.vectorstores import FAISS
+
+
 
 import mlflow
 
+
+
 assert "OPENAI_API_KEY" in os.environ, "Please set the OPENAI_API_KEY environment variable."
 
+
+
 with tempfile.TemporaryDirectory() as temp_dir:
+
     persist_dir = os.path.join(temp_dir, "faiss_index")
 
+
+
     # Create the vector database and persist it to a local filesystem folder
+
     loader = TextLoader("tests/langchain/state_of_the_union.txt")
+
     documents = loader.load()
+
     text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+
     docs = text_splitter.split_documents(documents)
+
     embeddings = OpenAIEmbeddings()
+
     db = FAISS.from_documents(docs, embeddings)
+
     db.save_local(persist_dir)
 
+
+
     # Define a loader function to recall the retriever from the persisted vectorstore
+
     def load_retriever(persist_directory):
+
         embeddings = OpenAIEmbeddings()
+
         vectorstore = FAISS.load_local(persist_directory, embeddings)
+
         return vectorstore.as_retriever()
 
+
+
     # Log the retriever with the loader function
+
     with mlflow.start_run() as run:
+
         logged_model = mlflow.langchain.log_model(
+
             db.as_retriever(),
+
             name="retriever",
+
             loader_fn=load_retriever,
+
             persist_dir=persist_dir,
+
         )
 
+
+
 # Load the retriever chain
+
 loaded_model = mlflow.pyfunc.load_model(logged_model.model_uri)
+
 print(loaded_model.predict([{"query": "What did the president say about Ketanji Brown Jackson"}]))
 ```
 
@@ -435,16 +618,27 @@ python
 
 ```
 [
+
     [
+
         {
+
             "page_content": "Tonight. I call...",
+
             "metadata": {"source": "/state.txt"},
+
         },
+
         {
+
             "page_content": "A former top...",
+
             "metadata": {"source": "/state.txt"},
+
         },
+
     ]
+
 ]
 ```
 

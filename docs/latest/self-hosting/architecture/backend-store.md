@@ -49,19 +49,15 @@ MLflow supports the following types of tracking URI for backend stores:
 * HTTP server (specified as `https://my-server:5000`), which is a server hosting an [MLflow tracking server](/docs/latest/self-hosting/architecture/tracking-server.md).
 * Databricks workspace (specified as `databricks` or as `databricks://<profileName>`, a [Databricks CLI profile](https://github.com/databricks/databricks-cli#installation)). Refer to Access the MLflow tracking server from outside Databricks [\[AWS\]](http://docs.databricks.com/applications/mlflow/access-hosted-tracking-server.html) [\[Azure\]](http://docs.microsoft.com/azure/databricks/applications/mlflow/access-hosted-tracking-server).
 
-database-requirements
-
-**Database-Backed Store Requirements**
+:::warning database-requirements **Database-Backed Store Requirements**
 
 When using database-backed stores, please note:
 
 * **Model Registry Integration**: [Model Registry](/docs/latest/ml/model-registry.md) functionality requires a database-backed store. See [this FAQ](/docs/latest/ml/tracking.md#tracking-with-model-registry) for more information.
 
-* **Schema Migrations**: `mlflow server` will fail against a database with an out-of-date schema. Always run `mlflow db upgrade [db_uri]` to upgrade your database schema before starting the server. Schema migrations can result in database downtime and may take longer on larger databases. **Always backup your database before running migrations.**
+* **Schema Migrations**: `mlflow server` will fail against a database with an out-of-date schema. Always run `mlflow db upgrade [db_uri]` to upgrade your database schema before starting the server. Schema migrations can result in database downtime and may take longer on larger databases. **Always backup your database before running migrations.** :::
 
-parameter-limits
-
-In Sep 2023, we increased the max length for params recorded in a Run from 500 to 8k (but we limit param value max length to 6000 internally). [mlflow/2d6e25af4d3e\_increase\_max\_param\_val\_length](https://github.com/mlflow/mlflow/blob/master/mlflow/store/db_migrations/versions/2d6e25af4d3e_increase_max_param_val_length.py) is a non-invertible migration script that increases the cap in existing database to 8k. Please be careful if you want to upgrade and backup your database before upgrading.
+:::note parameter-limits In Sep 2023, we increased the max length for params recorded in a Run from 500 to 8k (but we limit param value max length to 6000 internally). [mlflow/2d6e25af4d3e\_increase\_max\_param\_val\_length](https://github.com/mlflow/mlflow/blob/master/mlflow/store/db_migrations/versions/2d6e25af4d3e_increase_max_param_val_length.py) is a non-invertible migration script that increases the cap in existing database to 8k. Please be careful if you want to upgrade and backup your database before upgrading. :::
 
 ## Deletion Behavior[​](#deletion-behavior "Direct link to Deletion Behavior")
 
@@ -85,12 +81,19 @@ bash
 
 ```
 # Path to SSL CA certificate file
+
 export MLFLOW_MYSQL_SSL_CA=/path/to/ca.pem
 
+
+
 # Path to SSL client certificate file (if needed)
+
 export MLFLOW_MYSQL_SSL_CERT=/path/to/client-cert.pem
 
+
+
 # Path to SSL client key file (if needed)
+
 export MLFLOW_MYSQL_SSL_KEY=/path/to/client-key.pem
 ```
 
@@ -112,9 +115,13 @@ bash
 
 ```
 # On Ubuntu/Debian
+
 apt-get install libyaml-cpp-dev libyaml-dev
 
+
+
 # On macOS using Homebrew
+
 brew install yaml-cpp libyaml
 ```
 
@@ -124,6 +131,7 @@ bash
 
 ```
 # Reinstall PyYAML
+
 pip --no-cache-dir install --force-reinstall -I pyyaml
 ```
 

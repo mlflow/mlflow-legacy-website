@@ -32,36 +32,57 @@ python
 
 ```
 import mlflow
+
 from sklearn.ensemble import RandomForestClassifier
+
 from sklearn.datasets import load_wine
+
 from sklearn.model_selection import train_test_split
 
+
+
 # Enable autologging
+
 mlflow.sklearn.autolog()
 
+
+
 # Load and prepare data
+
 wine = load_wine()
+
 X_train, X_test, y_train, y_test = train_test_split(
+
     wine.data, wine.target, test_size=0.2, random_state=42
+
 )
 
+
+
 # Train model - MLflow automatically logs everything!
+
 with mlflow.start_run():
+
     model = RandomForestClassifier(n_estimators=100, max_depth=3, random_state=42)
+
     model.fit(X_train, y_train)
 
+
+
     # Evaluation metrics are automatically captured
+
     train_score = model.score(X_train, y_train)
+
     test_score = model.score(X_test, y_test)
+
+
 
     print(f"Train accuracy: {train_score:.3f}, Test accuracy: {test_score:.3f}")
 ```
 
 Autologging captures all model parameters, training metrics, the trained model, and model signatures.
 
-Tracking Server Setup
-
-Running locally? MLflow stores experiments in the current directory by default. For team collaboration or remote tracking, **[set up a tracking server](/docs/latest/ml/tracking/tutorials/remote-server.md)**.
+:::tip Tracking Server Setup Running locally? MLflow stores experiments in the current directory by default. For team collaboration or remote tracking, **[set up a tracking server](/docs/latest/ml/tracking/tutorials/remote-server.md)**. :::
 
 ## Autologging[​](#autologging "Direct link to Autologging")
 
@@ -71,25 +92,45 @@ python
 
 ```
 import mlflow
+
 from sklearn.ensemble import GradientBoostingClassifier
+
 from sklearn.datasets import load_breast_cancer
+
 from sklearn.model_selection import train_test_split
 
+
+
 # Load data
+
 cancer = load_breast_cancer()
+
 X_train, X_test, y_train, y_test = train_test_split(
+
     cancer.data, cancer.target, test_size=0.2, random_state=42
+
 )
 
+
+
 # Enable autologging
+
 mlflow.sklearn.autolog()
 
+
+
 with mlflow.start_run():
+
     model = GradientBoostingClassifier(n_estimators=100, random_state=42)
+
     model.fit(X_train, y_train)
 
+
+
     # Model scoring is automatically captured
+
     train_score = model.score(X_train, y_train)
+
     test_score = model.score(X_test, y_test)
 ```
 
@@ -114,34 +155,63 @@ python
 
 ```
 import mlflow
+
 from sklearn.datasets import load_digits
+
 from sklearn.ensemble import RandomForestClassifier
+
 from sklearn.model_selection import GridSearchCV, train_test_split
 
+
+
 # Load data
+
 digits = load_digits()
+
 X_train, X_test, y_train, y_test = train_test_split(
+
     digits.data, digits.target, test_size=0.2, random_state=42
+
 )
 
+
+
 # Enable autologging
+
 mlflow.sklearn.autolog(max_tuning_runs=10)
 
+
+
 # Define parameter grid
+
 param_grid = {
+
     "n_estimators": [50, 100, 200],
+
     "max_depth": [5, 10, 15, None],
+
     "min_samples_split": [2, 5, 10],
+
 }
 
+
+
 with mlflow.start_run(run_name="RF Hyperparameter Tuning"):
+
     rf = RandomForestClassifier(random_state=42)
+
     grid_search = GridSearchCV(rf, param_grid, cv=5, scoring="accuracy", n_jobs=-1)
+
     grid_search.fit(X_train, y_train)
 
+
+
     best_score = grid_search.score(X_test, y_test)
+
     print(f"Best params: {grid_search.best_params_}")
+
     print(f"Best CV score: {grid_search.best_score_:.3f}")
+
     print(f"Test score: {best_score:.3f}")
 ```
 
@@ -153,45 +223,77 @@ python
 
 ```
 import mlflow
+
 import optuna
+
 from sklearn.datasets import load_breast_cancer
+
 from sklearn.ensemble import GradientBoostingClassifier
+
 from sklearn.model_selection import train_test_split
 
+
+
 # Load data
+
 cancer = load_breast_cancer()
+
 X_train, X_test, y_train, y_test = train_test_split(
+
     cancer.data, cancer.target, test_size=0.2, random_state=42
+
 )
+
+
 
 mlflow.sklearn.autolog()
 
 
+
+
+
 def objective(trial):
+
     params = {
+
         "n_estimators": trial.suggest_int("n_estimators", 50, 200),
+
         "max_depth": trial.suggest_int("max_depth", 3, 10),
+
         "learning_rate": trial.suggest_float("learning_rate", 0.01, 0.3),
+
     }
 
+
+
     with mlflow.start_run(nested=True):
+
         model = GradientBoostingClassifier(**params, random_state=42)
+
         model.fit(X_train, y_train)
+
         accuracy = model.score(X_test, y_test)
+
         return accuracy
 
 
+
+
+
 with mlflow.start_run():
+
     study = optuna.create_study(direction="maximize")
+
     study.optimize(objective, n_trials=20)
 
+
+
     mlflow.log_params({f"best_{k}": v for k, v in study.best_params.items()})
+
     mlflow.log_metric("best_accuracy", study.best_value)
 ```
 
-Nested Runs
-
-The `nested=True` parameter creates child runs for each trial under the parent run, enabling hierarchical organization of hyperparameter tuning experiments. Learn more about **[hierarchical runs](/docs/latest/ml/tracking/tracking-api.md#hierarchical-runs-with-parent-child-relationships)**.
+:::note Nested Runs The `nested=True` parameter creates child runs for each trial under the parent run, enabling hierarchical organization of hyperparameter tuning experiments. Learn more about **[hierarchical runs](/docs/latest/ml/tracking/tracking-api.md#hierarchical-runs-with-parent-child-relationships)**. :::
 
 ## Learn More[​](#learn-more "Direct link to Learn More")
 

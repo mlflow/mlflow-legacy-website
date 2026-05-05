@@ -53,6 +53,8 @@ python
 ```
 import os
 
+
+
 os.environ["MLFLOW_ENABLE_SYSTEM_METRICS_LOGGING"] = "true"
 ```
 
@@ -62,10 +64,16 @@ python
 
 ```
 import mlflow
+
 import time
 
+
+
 with mlflow.start_run() as run:
+
     time.sleep(15)
+
+
 
 print(mlflow.MlflowClient().get_run(run.info.run_id).data)
 ```
@@ -76,15 +84,25 @@ text
 
 ```
 <RunData: metrics={'system/cpu_utilization_percentage': 12.4,
+
 'system/disk_available_megabytes': 213744.0,
+
 'system/disk_usage_megabytes': 28725.3,
+
 'system/disk_usage_percentage': 11.8,
+
 'system/network_receive_megabytes': 0.0,
+
 'system/network_transmit_megabytes': 0.0,
+
 'system/system_memory_usage_megabytes': 771.1,
+
 'system/system_memory_usage_percentage': 5.7}, params={}, tags={'mlflow.runName': 'nimble-auk-61',
+
 'mlflow.source.name': '/usr/local/lib/python3.10/dist-packages/colab_kernel_launcher.py',
+
 'mlflow.source.type': 'LOCAL',
+
 'mlflow.user': 'root'}>
 ```
 
@@ -101,6 +119,8 @@ python
 ```
 import os
 
+
+
 del os.environ["MLFLOW_ENABLE_SYSTEM_METRICS_LOGGING"]
 ```
 
@@ -115,10 +135,17 @@ python
 ```
 import mlflow
 
+
+
 mlflow.enable_system_metrics_logging()
 
+
+
 with mlflow.start_run() as run:
+
     time.sleep(15)
+
+
 
 print(mlflow.MlflowClient().get_run(run.info.run_id).data)
 ```
@@ -131,7 +158,10 @@ python
 
 ```
 with mlflow.start_run(log_system_metrics=True) as run:
+
     time.sleep(15)
+
+
 
 print(mlflow.MlflowClient().get_run(run.info.run_id).data)
 ```
@@ -173,10 +203,15 @@ python
 
 ```
 import mlflow
+
 import time
 
+
+
 mlflow.set_tracking_uri("http://127.0.0.1:5000")
+
 with mlflow.start_run() as run:
+
     time.sleep(15)
 ```
 
@@ -195,16 +230,28 @@ python
 ```
 import mlflow
 
+
+
 mlflow.set_system_metrics_sampling_interval(1)
+
 mlflow.set_system_metrics_samples_before_logging(3)
 
+
+
 with mlflow.start_run(log_system_metrics=True) as run:
+
     time.sleep(15)
 
+
+
 metric_history = mlflow.MlflowClient().get_metric_history(
+
     run.info.run_id,
+
     "system/cpu_utilization_percentage",
+
 )
+
 print(metric_history)
 ```
 

@@ -27,21 +27,37 @@ python
 
 ```
 import os
+
 import mlflow
+
 from mlflow.genai.scorers import ConversationCompleteness, UserFrustration
+
+
 
 os.environ["OPENAI_API_KEY"] = "your-api-key-here"  # Replace with your API key
 
+
+
 # Get existing traces grouped by session
+
 traces = mlflow.search_traces(
+
     experiment_ids=["<your-experiment-id>"],
+
     return_type="list",
+
 )
 
+
+
 # Evaluate the conversations
+
 results = mlflow.genai.evaluate(
+
     data=traces,
+
     scorers=[ConversationCompleteness(), UserFrustration()],
+
 )
 ```
 
@@ -57,26 +73,47 @@ python
 
 ```
 import os
+
 import mlflow
+
 from mlflow.genai.simulators import ConversationSimulator
+
 from mlflow.genai.scorers import ConversationCompleteness, UserFrustration
+
+
 
 os.environ["OPENAI_API_KEY"] = "your-api-key-here"  # Replace with your API key
 
+
+
 # Define test scenarios
+
 simulator = ConversationSimulator(
+
     test_cases=[
+
         {"goal": "Learn about MLflow tracking"},
+
         {"goal": "Debug deployment issue", "persona": "Frustrated engineer"},
+
     ],
+
     max_turns=5,
+
 )
 
+
+
 # Simulate and evaluate conversations
+
 results = mlflow.genai.evaluate(
+
     data=simulator,
+
     predict_fn=your_agent_fn,
+
     scorers=[ConversationCompleteness(), UserFrustration()],
+
 )
 ```
 
@@ -131,6 +168,7 @@ shell
 
 ```
 pip install --upgrade mlflow
+
 mlflow server
 ```
 
@@ -144,10 +182,15 @@ shell
 
 ```
 git clone --depth 1 --filter=blob:none --sparse https://github.com/mlflow/mlflow.git
+
 cd mlflow
+
 git sparse-checkout set docker-compose
+
 cd docker-compose
+
 cp .env.dev.example .env
+
 docker compose up -d
 ```
 
@@ -159,6 +202,8 @@ python
 
 ```
 import os
+
+
 
 os.environ["OPENAI_API_KEY"] = "your-api-key-here"  # Replace with your API key
 ```
@@ -177,9 +222,15 @@ python
 import mlflow
 
 
+
+
+
 @mlflow.trace
+
 def my_chatbot(question, session_id):
+
     mlflow.update_current_trace(metadata={"mlflow.trace.session": session_id})
+
     return generate_response(question)
 ```
 
@@ -194,19 +245,34 @@ python
 ```
 from mlflow.genai.scorers import ConversationCompleteness, UserFrustration
 
+
+
 # Get all traces
+
 traces = mlflow.search_traces(
+
     experiment_ids=["<your-experiment-id>"],
+
     return_type="list",
+
 )
 
+
+
 # Evaluate all sessions - MLflow automatically groups by session ID
+
 results = mlflow.genai.evaluate(
+
     data=traces,
+
     scorers=[
+
         ConversationCompleteness(),
+
         UserFrustration(),
+
     ],
+
 )
 ```
 
@@ -217,18 +283,32 @@ python
 ```
 import mlflow
 
+
+
 # Get complete sessions (each session is a list of traces)
+
 sessions = mlflow.search_sessions(
+
     locations=["<your-experiment-id>"],
+
     max_results=50,
+
 )
 
+
+
 # Flatten for evaluation
+
 all_traces = [trace for session in sessions for trace in session]
 
+
+
 results = mlflow.genai.evaluate(
+
     data=all_traces,
+
     scorers=[ConversationCompleteness(), UserFrustration()],
+
 )
 ```
 
@@ -240,38 +320,71 @@ python
 
 ```
 import mlflow
+
 from mlflow.genai.simulators import ConversationSimulator
+
 from mlflow.genai.scorers import ConversationCompleteness, Safety
 
+
+
 # Define test scenarios
+
 simulator = ConversationSimulator(
+
     test_cases=[
+
         {"goal": "Get help setting up experiment tracking"},
+
         {"goal": "Troubleshoot a model deployment error"},
+
         {
+
             "goal": "Learn about model versioning",
+
             "persona": "You are a beginner who needs detailed explanations",
+
         },
+
     ],
+
     max_turns=5,
+
 )
 
 
+
+
+
 # Your agent's predict function
+
 def predict_fn(input: list[dict], **kwargs) -> str:
+
     # input is the conversation history
+
     response = your_agent.chat(input)
+
     return response
 
 
+
+
+
 # Simulate conversations and evaluate
+
 results = mlflow.genai.evaluate(
+
     data=simulator,
+
     predict_fn=predict_fn,
+
     scorers=[
+
         ConversationCompleteness(),
+
         Safety(),
+
     ],
+
 )
 ```
 
@@ -291,24 +404,43 @@ python
 
 ```
 from mlflow.genai.judges import make_judge
+
 from typing import Literal
 
+
+
 # Create a custom multi-turn judge
+
 politeness_judge = make_judge(
+
     name="conversation_politeness",
+
     instructions=(
+
         "Analyze the {{ conversation }} and determine if the agent maintains "
+
         "a polite and professional tone throughout all interactions. "
+
         "Rate as 'consistently_polite', 'mostly_polite', or 'impolite'."
+
     ),
+
     feedback_value_type=Literal["consistently_polite", "mostly_polite", "impolite"],
+
     model="openai:/gpt-5-mini",
+
 )
 
+
+
 # Use in evaluation
+
 results = mlflow.genai.evaluate(
+
     data=traces,
+
     scorers=[politeness_judge],
+
 )
 ```
 
@@ -338,19 +470,33 @@ python
 
 ```
 import mlflow
+
 from mlflow.genai.scorers import ConversationCompleteness, UserFrustration
 
+
+
 # Get traces for a specific session using filter
+
 traces = mlflow.search_traces(
+
     experiment_ids=["<your-experiment-id>"],
+
     filter_string="metadata.`mlflow.trace.session` = '<your-session-id>'",
+
     return_type="list",
+
 )
 
+
+
 # Evaluate the session
+
 results = mlflow.genai.evaluate(
+
     data=traces,
+
     scorers=[ConversationCompleteness(), UserFrustration()],
+
 )
 ```
 

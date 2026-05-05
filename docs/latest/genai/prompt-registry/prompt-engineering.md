@@ -8,7 +8,7 @@ The following guide will get you started with MLflow's UI for prompt engineering
 
 ### Step 1: Create an MLflow AI Gateway Completions or Chat Endpoint[​](#step-1-create-an-mlflow-ai-gateway-completions-or-chat-endpoint "Direct link to Step 1: Create an MLflow AI Gateway Completions or Chat Endpoint")
 
-To use the prompt engineering UI, you need to create one or more [MLflow AI Gateway](/docs/latest/genai/governance/ai-gateway.md) completions or chat endpoints. Follow the [MLflow AI Gateway Quickstart guide](/docs/latest/genai/governance/ai-gateway/legacy/setup.md) to easily create an endpoint in less than five minutes. If you already have access to an MLflow AI Gateway endpoint of type `llm/v1/completions` or `llm/v1/chat`, you can skip this step.
+To use the prompt engineering UI, you need to create one or more [MLflow AI Gateway](/docs/latest/genai/governance/ai-gateway.md) completions or chat endpoints. Follow the [MLflow AI Gateway Quickstart guide](/docs/latest/genai/governance/ai-gateway.md) to easily create an endpoint in less than five minutes. If you already have access to an MLflow AI Gateway endpoint of type `llm/v1/completions` or `llm/v1/chat`, you can skip this step.
 
 bash
 
@@ -24,6 +24,7 @@ bash
 
 ```
 export MLFLOW_DEPLOYMENTS_TARGET="http://127.0.0.1:7000"
+
 mlflow server --port 5000
 ```
 
@@ -57,13 +58,21 @@ text
 
 ````
 Read the following article from the MLflow documentation that appears between triple
+
 backticks. Then, answer the question about the documentation that appears between triple quotes.
+
 Include relevant links and code examples in your answer.
+
+
 
 ```{{article}}```
 
+
+
 """
+
 {{question}}
+
 """
 ````
 
@@ -117,7 +126,9 @@ As you try additional inputs, you might discover scenarios where your choice of 
 
    ```
    If the question does not relate to the article, respond exactly with the phrase
+
    "I do not know how to answer that question." Do not include any additional text in your
+
    response.
    ```
 
@@ -148,19 +159,34 @@ python
 ```
 import mlflow
 
+
+
 mlflow.set_experiment("/Path/to/your/prompt/engineering/experiment")
 
+
+
 # Load input and output data across all Runs (configurations) as a Pandas DataFrame
+
 inputs_outputs_pdf = mlflow.load_table(
+
     # All inputs and outputs created from the MLflow UI are stored in an artifact called
+
     # "eval_results_table.json"
+
     artifact_file="eval_results_table.json",
+
     # Include the run ID as a column in the table to distinguish inputs and outputs
+
     # produced by different runs
+
     extra_columns=["run_id"],
+
 )
+
 # Optionally convert the Pandas DataFrame to Spark where it can be stored as a Delta
+
 # table or joined with existing Delta tables
+
 inputs_outputs_sdf = spark.createDataFrame(inputs_outputs_pdf)
 ```
 
@@ -177,9 +203,14 @@ Once you have found a configuration of LLM, prompt template, and parameters that
    ```
    import mlflow
 
+
+
    logged_model = "runs:/8451075c46964f82b85fe16c3d2b7ea0/model"
 
+
+
    # Load model as a PyFuncModel.
+
    loaded_model = mlflow.pyfunc.load_model(logged_model)
    ```
 
@@ -189,15 +220,26 @@ Once you have found a configuration of LLM, prompt template, and parameters that
 
    ```
    article_text = """
+
    An MLflow Project is a format for packaging data science code in a reusable and reproducible way.
+
    The MLflow Projects component includes an API and command-line tools for running projects, which
+
    also integrate with the Tracking component to automatically record the parameters and git commit
+
    of your source code for reproducibility.
 
+
+
    This article describes the format of an MLflow Project and how to run an MLflow project remotely
+
    using the MLflow CLI, which makes it easy to vertically scale your data science code.
+
    """
+
    question = "What is an MLflow project?"
+
+
 
    loaded_model.predict({"article": article_text, "question": question})
    ```
@@ -214,8 +256,11 @@ Once you have found a configuration of LLM, prompt template, and parameters that
 
    ```
    mlflow.register_model(
+
        model_uri="runs:/8451075c46964f82b85fe16c3d2b7ea0/model",
+
        name="mlflow_docs_qa_model",
+
    )
    ```
 
@@ -237,20 +282,35 @@ Once you have found a configuration of LLM, prompt template, and parameters that
 
    ```
    input='
+
    {
+
        "dataframe_records": [
+
            {
+
                "article": "An MLflow Project is a format for packaging data science code...",
+
                "question": "What is an MLflow Project?"
+
            }
+
        ]
+
    }'
 
+
+
    echo $input | curl \
+
      -s \
+
      -X POST \
+
      https://localhost:8000/invocations
+
      -H 'Content-Type: application/json' \
+
      -d @-
    ```
 

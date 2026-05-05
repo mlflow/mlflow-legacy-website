@@ -11,6 +11,8 @@ python
 ```
 import mlflow
 
+
+
 mlflow.dspy.autolog()
 ```
 
@@ -24,44 +26,83 @@ python
 
 ```
 import dspy
+
 import mlflow
 
+
+
 # Enabling tracing for DSPy
+
 mlflow.dspy.autolog()
 
+
+
 # Optional: Set a tracking URI and an experiment
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("DSPy")
 
+
+
 # Define a simple ChainOfThought model and run it
+
 lm = dspy.LM("openai/gpt-4o-mini")
+
 dspy.configure(lm=lm)
 
 
+
+
+
 # Define a simple summarizer model and run it
+
 class SummarizeSignature(dspy.Signature):
+
     """Given a passage, generate a summary."""
 
+
+
     passage: str = dspy.InputField(desc="a passage to summarize")
+
     summary: str = dspy.OutputField(desc="a one-line summary of the passage")
 
 
+
+
+
 class Summarize(dspy.Module):
+
     def __init__(self):
+
         self.summarize = dspy.ChainOfThought(SummarizeSignature)
 
+
+
     def forward(self, passage: str):
+
         return self.summarize(passage=passage)
 
 
+
+
+
 summarizer = Summarize()
+
 summarizer(
+
     passage=(
+
         "MLflow Tracing is a feature that enhances LLM observability in your LLM applications and AI agents "
+
         "by capturing detailed information about the execution of your application's services. Tracing provides "
+
         "a way to record the inputs, outputs, and metadata associated with each intermediate step of a request, "
+
         "enabling you to easily pinpoint the source of bugs and unexpected behaviors."
+
     )
+
 )
 ```
 
@@ -75,56 +116,107 @@ python
 
 ```
 import dspy
+
 from dspy.evaluate.metrics import answer_exact_match
+
+
 
 import mlflow
 
+
+
 # Enabling tracing for DSPy evaluation
+
 mlflow.dspy.autolog(log_traces_from_eval=True)
 
+
+
 # Define a simple evaluation set
+
 eval_set = [
+
     dspy.Example(question="How many 'r's are in the word 'strawberry'?", answer="3").with_inputs(
+
         "question"
+
     ),
+
     dspy.Example(question="How many 'a's are in the word 'banana'?", answer="3").with_inputs(
+
         "question"
+
     ),
+
     dspy.Example(question="How many 'e's are in the word 'elephant'?", answer="2").with_inputs(
+
         "question"
+
     ),
+
 ]
 
 
+
+
+
 # Define a program
+
 class Counter(dspy.Signature):
+
     question: str = dspy.InputField()
+
     answer: str = dspy.OutputField(desc="Should only contain a single number as an answer")
+
+
+
 
 
 cot = dspy.ChainOfThought(Counter)
 
+
+
 # Evaluate the programs
+
 with mlflow.start_run(run_name="CoT Evaluation"):
+
     evaluator = dspy.evaluate.Evaluate(
+
         devset=eval_set,
+
         return_all_scores=True,
+
         return_outputs=True,
+
         show_progress=True,
+
     )
+
     aggregated_score, outputs, all_scores = evaluator(cot, metric=answer_exact_match)
 
+
+
     # Log the aggregated score
+
     mlflow.log_metric("exact_match", aggregated_score)
+
     # Log the detailed evaluation results as a table
+
     mlflow.log_table(
+
         {
+
             "question": [example.question for example in eval_set],
+
             "answer": [example.answer for example in eval_set],
+
             "output": outputs,
+
             "exact_match": all_scores,
+
         },
+
         artifact_file="eval_results.json",
+
     )
 ```
 
@@ -144,13 +236,21 @@ python
 
 ```
 import dspy
+
 import mlflow
 
+
+
 # Enable auto-tracing for compilation
+
 mlflow.dspy.autolog(log_traces_from_compile=True)
 
+
+
 # Optimize the DSPy program as usual
+
 tp = dspy.MIPROv2(metric=metric, auto="medium", num_threads=24)
+
 optimized = tp.compile(cot, trainset=trainset)
 ```
 

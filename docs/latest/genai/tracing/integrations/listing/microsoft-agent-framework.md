@@ -35,18 +35,31 @@ python
 
 ```
 from agent_framework.observability import setup_observability
+
 from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
 
+
+
 # Create the OTLP span exporter with endpoint and headers
+
 MLFLOW_TRACKING_URI = "http://localhost:5000"
+
 MLFLOW_EXPERIMENT_ID = "1234567890"
+
 OTEL_EXPORTER_OTLP_ENDPOINT = f"{MLFLOW_TRACKING_URI}/v1/traces"
+
 OTEL_EXPORTER_OTLP_HEADERS = {"x-mlflow-experiment-id": MLFLOW_EXPERIMENT_ID}
 
+
+
 exporter = OTLPSpanExporter(
+
     endpoint=OTEL_EXPORTER_OTLP_ENDPOINT, headers=OTEL_EXPORTER_OTLP_HEADERS
+
 )
+
 # enable_sensitive_data=True is required for recording LLM inputs and outputs.
+
 setup_observability(enable_sensitive_data=True, exporters=[exporter])
 ```
 
@@ -58,34 +71,63 @@ python
 
 ```
 import asyncio
+
 from pydantic import Field
+
 from random import randint
+
 from typing import Annotated
+
+
 
 from agent_framework.openai import OpenAIAssistantsClient
 
 
+
+
+
 def get_weather(
+
     location: Annotated[str, Field(description="The location to get the weather for.")],
+
 ) -> str:
+
     """Get the weather for a given location."""
+
     conditions = ["sunny", "cloudy", "rainy", "stormy"]
+
     return f"The weather in {location} is {conditions[randint(0, 3)]} with a high of {randint(10, 30)}°C."
 
 
+
+
+
 async def main():
+
     async with OpenAIAssistantsClient(model_id="gpt-4o-mini").create_agent(
+
         instructions="You are a helpful weather agent.",
+
         tools=get_weather,
+
     ) as agent:
+
         query = "What's the weather like in Seattle?"
+
         print(f"User: {query}")
+
         result = await agent.run(query)
+
         print(f"Agent: {result}\n")
 
 
+
+
+
 # Comment this out if you are using notebook.
+
 if __name__ == "__main__":
+
     asyncio.run(main())
 ```
 
@@ -110,19 +152,34 @@ python
 ```
 import os
 
+
+
 os.environ["MLFLOW_USE_DEFAULT_TRACER_PROVIDER"] = "false"
 
+
+
 import mlflow
+
 from mlflow.entities.trace_location import MlflowExperimentLocation
 
+
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 exp_id = mlflow.set_experiment("Microsoft Agent Framework").experiment_id
+
 mlflow.tracing.set_destination(MlflowExperimentLocation(exp_id))
 
+
+
 # Add custom MLflow spans alongside the auto-generated traces
+
 with mlflow.start_span("custom_step") as span:
+
     span.set_inputs({"query": "test"})
+
     # your application logic here
+
     span.set_outputs({"result": "success"})
 ```
 

@@ -1,8 +1,6 @@
 # Tutorial: Getting Started with ChatModel
 
-attention
-
-Starting in MLflow 3.0.0, we recommend [`ResponsesAgent`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent) instead of [`ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel). See more details in the [ResponsesAgent Introduction](/docs/latest/genai/flavors/responses-agent-intro.md).
+:::warning attention Starting in MLflow 3.0.0, we recommend [`ResponsesAgent`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent) instead of [`ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel). See more details in the [ResponsesAgent Introduction](/docs/latest/genai/flavors/responses-agent-intro.md). :::
 
 MLflow's [`ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) class provides a standardized way to create production-ready conversational AI models. The resulting models are fully integrated with MLflow's tracking, evaluation, and lifecycle management capabilities. They can be shared with others in the MLflow Model Registry, deployed as a REST API, or loaded in a notebook for interactive use. Furthermore, they are compatible with the widely-adopted OpenAI chat API spec, making them easy to integrate with other AI systems and tools.
 
@@ -45,8 +43,11 @@ python
 
 ```
 input = {
+
     "messages": [{"role": "user", "content": "What is MLflow?"}],
+
     "max_tokens": 25,
+
 }
 ```
 
@@ -58,19 +59,33 @@ python
 
 ```
 {
+
     "choices": [
+
         {
+
             "index": 0,
+
             "message": {
+
                 "role": "assistant",
+
                 "content": "MLflow is the largest open source AI engineering platform for agents, LLM applications, and ML models. It's designed to manage,",
+
             },
+
             "finish_reason": "stop",
+
         }
+
     ],
+
     "model": "llama3.2:1b",
+
     "object": "chat.completion",
+
     "created": 1729190863,
+
 }
 ```
 
@@ -96,8 +111,12 @@ text
 ```
 > ollama run llama3.2:1b
 
+
+
 >>> Hello world!
+
 Hello! It's great to see you're starting the day with a cheerful greeting. How can I assist you today?
+
 >>> Send a message (/? for help)
 ```
 
@@ -111,19 +130,34 @@ python
 
 ```
 import ollama
+
 from ollama import Options
+
 from rich import print
 
+
+
 response = ollama.chat(
+
     model="llama3.2:1b",
+
     messages=[
+
         {
+
             "role": "user",
+
             "content": "What is MLflow Tracking?",
+
         }
+
     ],
+
     options=Options({"num_predict": 25}),
+
 )
+
+
 
 print(response)
 ```
@@ -134,20 +168,35 @@ text
 
 ```
 {
+
     'model': 'llama3.2:1b',
+
     'created_at': '2024-11-04T12:47:53.075714Z',
+
     'message': {
+
         'role': 'assistant',
+
         'content': 'MLflow is the largest open source AI engineering platform for agents, LLM applications, and ML models. It provides a'
+
     },
+
     'done_reason': 'length',
+
     'done': True,
+
     'total_duration': 1201354125,
+
     'load_duration': 819609167,
+
     'prompt_eval_count': 31,
+
     'prompt_eval_duration': 41812000,
+
     'eval_count': 25,
+
     'eval_duration': 337872000
+
 }
 ```
 
@@ -178,33 +227,63 @@ python
 
 ```
 # if you are using a jupyter notebook
+
 # %%writefile ollama_model.py
+
 from mlflow.pyfunc import ChatModel
+
 from mlflow.types.llm import ChatMessage, ChatCompletionResponse, ChatChoice
+
 from mlflow.models import set_model
+
 import ollama
 
 
+
+
+
 class SimpleOllamaModel(ChatModel):
+
     def __init__(self):
+
         self.model_name = "llama3.2:1b"
+
         self.client = None
 
+
+
     def load_context(self, context):
+
         self.client = ollama.Client()
 
+
+
     def predict(self, context, messages, params=None):
+
         # Prepare the messages for Ollama
+
         ollama_messages = [msg.to_dict() for msg in messages]
 
+
+
         # Call Ollama
+
         response = self.client.chat(model=self.model_name, messages=ollama_messages)
 
+
+
         # Prepare and return the ChatCompletionResponse
+
         return ChatCompletionResponse(
+
             choices=[{"index": 0, "message": response["message"]}],
+
             model=self.model_name,
+
         )
+
+
+
 
 
 set_model(SimpleOllamaModel())
@@ -224,14 +303,24 @@ python
 ```
 import mlflow
 
+
+
 mlflow.set_experiment("chatmodel-quickstart")
+
 code_path = "ollama_model.py"
 
+
+
 with mlflow.start_run():
+
     model_info = mlflow.pyfunc.log_model(
+
         name="ollama_model",
+
         python_model=code_path,
+
         input_example={"messages": [{"role": "user", "content": "Hello, how are you?"}]},
+
     )
 ```
 
@@ -242,12 +331,20 @@ python
 ```
 loaded_model = mlflow.pyfunc.load_model(model_info.model_uri)
 
+
+
 result = loaded_model.predict(
+
     data={
+
         "messages": [{"role": "user", "content": "What is MLflow?"}],
+
         "max_tokens": 25,
+
     }
+
 )
+
 print(result)
 ```
 
@@ -255,19 +352,33 @@ python
 
 ```
 {
+
     "choices": [
+
         {
+
             "index": 0,
+
             "message": {
+
                 "role": "assistant",
+
                 "content": "MLflow is the largest open source AI engineering platform for agents, LLM applications, and ML models. It was created by Databricks, a leading data and AI company.\n\nMLflow enables teams to build, evaluate, and deploy production-quality AI agents and ML models across various frameworks, such as LangChain, OpenAI, PyTorch, and scikit-learn. It provides a unified platform for AI development, deployment, and monitoring across different environments, including local machines, cloud platforms (e.g., AWS), and edge devices.\n\nSome key features of MLflow include:\n\n1. **Tracing and observability**: End-to-end visibility into agent and LLM application behavior for debugging and optimization.\n2. **Evaluation**: Comprehensive tools for evaluating agent quality, including LLM judges and custom scorers.\n3. **Prompt management**: Version, track, and optimize prompts used in AI applications.\n4. **Model versioning**: Track model versions with automatic lineage and stage management.\n5. **Model deployment**: Deploy models to local servers, cloud platforms, or containerized environments.\n6. **Integration with popular frameworks**: MLflow integrates with 20+ AI and ML frameworks.\n\nMLflow has several benefits, including:\n\n1. **Improved AI development**: The platform provides end-to-end observability and evaluation for agents and LLM applications.\n2. **Increased collaboration**: MLflow enables team members to work together on AI projects more effectively.\n3. **Better quality monitoring**: The platform offers real-time insights into agent and model performance.\n4. **Simplified deployment**: MLflow makes it easy to deploy models in various environments.\n\nOverall, MLflow is a powerful AI engineering platform, providing comprehensive tools for building, evaluating, and deploying production-quality agents and ML models.",
+
             },
+
             "finish_reason": "stop",
+
         }
+
     ],
+
     "model": "llama3.2:1b",
+
     "object": "chat.completion",
+
     "created": 1730739510,
+
 }
 ```
 
@@ -287,9 +398,13 @@ python
 
 ```
 result = model.predict({
+
     "messages": [{"role": "user", "content": "Write a story"}],
+
     "max_tokens": 100,
+
     "temperature": 0.7,
+
 })
 ```
 
@@ -317,57 +432,111 @@ python
 
 ```
 # if you are using a jupyter notebook
+
 # %%writefile ollama_model.py
 
+
+
 import mlflow
+
 from mlflow.pyfunc import ChatModel
+
 from mlflow.types.llm import ChatMessage, ChatCompletionResponse, ChatChoice
+
 from mlflow.models import set_model
+
 import ollama
+
 from ollama import Options
 
 
+
+
+
 class OllamaModelWithMetadata(ChatModel):
+
     def __init__(self):
+
         self.model_name = None
+
         self.client = None
 
+
+
     def load_context(self, context):
+
         self.model_name = "llama3.2:1b"
+
         self.client = ollama.Client()
 
+
+
     def _prepare_options(self, params):
+
         # Prepare options from params
+
         options = {}
+
         if params:
+
             if params.max_tokens is not None:
+
                 options["num_predict"] = params.max_tokens
+
             if params.temperature is not None:
+
                 options["temperature"] = params.temperature
+
             if params.top_p is not None:
+
                 options["top_p"] = params.top_p
+
             if params.stop is not None:
+
                 options["stop"] = params.stop
 
+
+
             if params.custom_inputs is not None:
+
                 options["seed"] = int(params.custom_inputs.get("seed", None))
+
+
 
         return Options(options)
 
+
+
     def predict(self, context, messages, params=None):
+
         ollama_messages = [{"role": msg.role, "content": msg.content} for msg in messages]
+
         options = self._prepare_options(params)
 
+
+
         # Call Ollama
+
         response = self.client.chat(
+
             model=self.model_name, messages=ollama_messages, options=options
+
         )
 
+
+
         # Prepare the ChatCompletionResponse
+
         return ChatCompletionResponse(
+
             choices=[{"index": 0, "message": response["message"]}],
+
             model=self.model_name,
+
         )
+
+
+
 
 
 set_model(OllamaModelWithMetadata())
@@ -386,21 +555,38 @@ python
 ```
 code_path = "ollama_model.py"
 
+
+
 with mlflow.start_run():
+
     model_info = mlflow.pyfunc.log_model(
+
         name="ollama_model",
+
         python_model=code_path,
+
         input_example={"messages": [{"role": "user", "content": "Hello, how are you?"}]},
+
     )
+
+
 
 loaded_model = mlflow.pyfunc.load_model(model_info.model_uri)
 
+
+
 result = loaded_model.predict(
+
     data={
+
         "messages": [{"role": "user", "content": "What is MLflow?"}],
+
         "max_tokens": 25,
+
     }
+
 )
+
 print(result)
 ```
 
@@ -410,19 +596,33 @@ python
 
 ```
 {
+
     "choices": [
+
         {
+
             "index": 0,
+
             "message": {
+
                 "role": "assistant",
+
                 "content": "MLflow is the largest open source AI engineering platform for agents, LLM applications, and ML models. It provides tools for tracing, evaluation, and deployment,",
+
             },
+
             "finish_reason": "stop",
+
         }
+
     ],
+
     "model": "llama3.2:1b",
+
     "object": "chat.completion",
+
     "created": 1730724514,
+
 }
 ```
 
@@ -436,6 +636,7 @@ python
 
 ```
 if params.custom_inputs is not None:
+
     options["seed"] = int(params.custom_inputs.get("seed", None))
 ```
 
@@ -445,12 +646,20 @@ python
 
 ```
 result = loaded_model.predict(
+
     data={
+
         "messages": [{"role": "user", "content": "What is MLflow?"}],
+
         "max_tokens": 25,
+
         "custom_inputs": {"seed": "321"},
+
     }
+
 )
+
+
 
 print(result)
 ```
@@ -461,19 +670,33 @@ python
 
 ```
 {
+
     "choices": [
+
         {
+
             "index": 0,
+
             "message": {
+
                 "role": "assistant",
+
                 "content": "MLflow is an open-source software framework used for machine learning model management, monitoring, and deployment. It's designed to provide",
+
             },
+
             "finish_reason": "stop",
+
         }
+
     ],
+
     "model": "llama3.2:1b",
+
     "object": "chat.completion",
+
     "created": 1730724533,
+
 }
 ```
 
@@ -503,72 +726,141 @@ python
 
 ```
 # if you are using a jupyter notebook
+
 # %%writefile ollama_pyfunc_model.py
 
+
+
 import mlflow
+
 from mlflow.pyfunc import PythonModel
+
 from mlflow.types.llm import (
+
     ChatCompletionRequest,
+
     ChatCompletionResponse,
+
     ChatMessage,
+
     ChatChoice,
+
 )
+
 from mlflow.models import set_model
+
 import ollama
+
 from ollama import Options
+
 import pandas as pd
+
 from typing import List, Dict
 
 
+
+
+
 class OllamaPyfunc(PythonModel):
+
     def __init__(self):
+
         self.model_name = None
+
         self.client = None
 
+
+
     def load_context(self, context):
+
         self.model_name = "llama3.2:1b"
+
         self.client = ollama.Client()
 
+
+
     def _prepare_options(self, params):
+
         options = {}
+
         if params:
+
             if "max_tokens" in params:
+
                 options["num_predict"] = params["max_tokens"]
+
             if "temperature" in params:
+
                 options["temperature"] = params["temperature"]
+
             if "top_p" in params:
+
                 options["top_p"] = params["top_p"]
+
             if "stop" in params:
+
                 options["stop"] = params["stop"]
+
             if "seed" in params:
+
                 options["seed"] = params["seed"]
+
+
 
         return Options(options)
 
+
+
     def predict(self, context, model_input, params=None):
+
         if isinstance(model_input, (pd.DataFrame, pd.Series)):
+
             messages = model_input.to_dict(orient="records")[0]["messages"]
+
         else:
+
             messages = model_input.get("messages", [])
 
+
+
         options = self._prepare_options(params)
+
         ollama_messages = [{"role": msg["role"], "content": msg["content"]} for msg in messages]
 
+
+
         response = self.client.chat(
+
             model=self.model_name, messages=ollama_messages, options=options
+
         )
+
+
 
         chat_response = ChatCompletionResponse(
+
             choices=[
+
                 ChatChoice(
+
                     index=0,
+
                     message=ChatMessage(role="assistant", content=response["message"]["content"]),
+
                 )
+
             ],
+
             model=self.model_name,
+
         )
 
+
+
         return chat_response.to_dict()
+
+
+
 
 
 set_model(OllamaPyfunc())
@@ -587,20 +879,36 @@ python
 ```
 code_path = "ollama_pyfunc_model.py"
 
+
+
 params = {
+
     "max_tokens": 25,
+
     "temperature": 0.5,
+
     "top_p": 0.5,
+
     "stop": ["\n"],
+
     "seed": 123,
+
 }
+
 request = {"messages": [{"role": "user", "content": "What is MLflow?"}]}
 
+
+
 with mlflow.start_run():
+
     model_info = mlflow.pyfunc.log_model(
+
         name="ollama_pyfunc_model",
+
         python_model=code_path,
+
         input_example=(request, params),
+
     )
 ```
 
@@ -613,10 +921,16 @@ python
 ```
 loaded_model = mlflow.pyfunc.load_model(model_info.model_uri)
 
+
+
 result = loaded_model.predict(
+
     data={"messages": [{"role": "user", "content": "What is MLflow?"}]},
+
     params={"max_tokens": 25, "seed": 42},
+
 )
+
 print(result)
 ```
 
@@ -626,19 +940,33 @@ python
 
 ```
 {
+
     "choices": [
+
         {
+
             "index": 0,
+
             "message": {
+
                 "role": "assistant",
+
                 "content": "MLflow is the largest open source AI engineering platform for agents, LLM applications, and ML models. It provides tools for monitoring and",
+
             },
+
             "finish_reason": "stop",
+
         }
+
     ],
+
     "model": "llama3.2:1b",
+
     "object": "chat.completion",
+
     "created": 1731000733,
+
 }
 ```
 

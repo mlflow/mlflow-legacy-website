@@ -17,12 +17,21 @@ python
 ```
 from mlflow.genai.datasets import create_dataset
 
+
+
 # Create a new dataset
+
 dataset = create_dataset(
+
     name="customer_support_qa",
+
     experiment_id=["0"],  # Link to experiments
+
     tags={"version": "1.0", "team": "ml-platform", "status": "active"},
+
 )
+
+
 
 print(f"Created dataset: {dataset.dataset_id}")
 ```
@@ -34,17 +43,24 @@ python
 ```
 from mlflow import MlflowClient
 
+
+
 client = MlflowClient()
+
 dataset = client.create_dataset(
+
     name="customer_support_qa",
+
     experiment_id=["0"],
+
     tags={"version": "1.0"},
+
 )
 ```
 
 ## Adding Records to a Dataset[​](#adding-records-to-a-dataset "Direct link to Adding Records to a Dataset")
 
-Use the [`mlflow.entities.EvaluationDataset.merge_records()`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.EvaluationDataset.merge_records) method to add new records to your dataset. Records can be added from dictionaries, DataFrames, or traces:
+Use the [`mlflow.genai.datasets.EvaluationDataset.merge_records()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset.merge_records) method to add new records to your dataset. Records can be added from dictionaries, DataFrames, or traces:
 
 * From Dictionaries
 * From Traces
@@ -56,26 +72,46 @@ python
 
 ```
 # Add records with inputs and expectations (ground truth)
+
 new_records = [
+
     {
+
         "inputs": {"question": "What are your business hours?"},
+
         "expectations": {
+
             "expected_answer": "We're open Monday-Friday 9am-5pm EST",
+
             "must_mention_hours": True,
+
             "must_include_timezone": True,
+
         },
+
     },
+
     {
+
         "inputs": {"question": "How do I reset my password?"},
+
         "expectations": {
+
             "expected_answer": ("Click 'Forgot Password' and follow the email instructions"),
+
             "must_include_steps": True,
+
         },
+
     },
+
 ]
 
+
+
 dataset.merge_records(new_records)
-print(f"Dataset now has {len(dataset.records)} records")
+
+print(f"Dataset now has {len(dataset.to_df())} records")
 ```
 
 Add records from MLflow traces:
@@ -85,15 +121,26 @@ python
 ```
 import mlflow
 
+
+
 # Search for traces to add to the dataset
+
 traces = mlflow.search_traces(
+
     locations=["0"],
+
     filter_string="attributes.name = 'chat_completion'",
+
     max_results=50,
+
     return_type="list",
+
 )
 
+
+
 # Add traces directly to the dataset
+
 dataset.merge_records(traces)
 ```
 
@@ -104,31 +151,59 @@ python
 ```
 import pandas as pd
 
+
+
 # Create DataFrame with structured data (ground truth expectations)
+
 df = pd.DataFrame([
+
     {
+
         "inputs": {
+
             "question": "What is MLflow?",
+
             "context": "general",
+
         },
+
         "expectations": {
+
             "expected_answer": "MLflow is an open-source AI engineering platform for agents and LLMs",
+
             "must_mention": ["tracking", "experiments"],
+
         },
+
         "tags": {"priority": "high"},
+
     },
+
     {
+
         "inputs": {
+
             "question": "How to track experiments?",
+
             "context": "technical",
+
         },
+
         "expectations": {
+
             "expected_answer": "Use mlflow.start_run() and mlflow.log_params()",
+
             "must_mention": ["log_params", "start_run"],
+
         },
+
         "tags": {"priority": "medium"},
+
     },
+
 ])
+
+
 
 dataset.merge_records(df)
 ```
@@ -181,9 +256,13 @@ python
 
 ```
 {
+
     "source": {
+
         "human": {"user_name": "jane.doe@company.com"}  # user who created the record
+
     }
+
 }
 ```
 
@@ -193,12 +272,19 @@ python
 
 ```
 {
+
     "source": {
+
         "document": {
+
             "doc_uri": "s3://bucket/docs/product-manual.pdf",  # URI or path to the source document
+
             "content": "The first 500 chars of the document...",  # Optional, excerpt or full content from the document
+
         }
+
     }
+
 }
 ```
 
@@ -208,46 +294,78 @@ python
 
 ```
 {
+
     "source": {
+
         "trace": {
+
             "trace_id": "tr-abc123def456",  # unique identifier of the source trace
+
         }
+
     }
+
 }
 ```
 
 ## Updating Existing Records[​](#updating-existing-records "Direct link to Updating Existing Records")
 
-The [`mlflow.entities.EvaluationDataset.merge_records()`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.EvaluationDataset.merge_records) method intelligently handles updates. **Records are matched based on a hash of their inputs** - if a record with identical inputs already exists, its expectations and tags are merged rather than creating a duplicate:
+The [`mlflow.genai.datasets.EvaluationDataset.merge_records()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset.merge_records) method intelligently handles updates. **Records are matched based on a hash of their inputs** - if a record with identical inputs already exists, its expectations and tags are merged rather than creating a duplicate:
 
 python
 
 ```
 # Initial record
+
 dataset.merge_records([
+
     {
+
         "inputs": {"question": "What is MLflow?"},
+
         "expectations": {
+
             "expected_answer": "MLflow is a platform for ML",
+
             "must_mention_tracking": True,
+
         },
+
     }
+
 ])
 
+
+
 # Update with same inputs but enhanced expectations
+
 dataset.merge_records([
+
     {
+
         "inputs": {"question": "What is MLflow?"},  # Same inputs = update
+
         "expectations": {
+
             # Updates existing value
+
             "expected_answer": (
+
                 "MLflow is an open-source AI engineering platform for agents and LLMs"
+
             ),
+
             "must_mention_models": True,  # Adds new expectation
+
             # Note: "must_mention_tracking": True is preserved
+
         },
+
     }
+
 ])
+
+
 
 # Result: One record with merged expectations
 ```
@@ -264,13 +382,22 @@ python
 ```
 from mlflow.genai.datasets import get_dataset
 
+
+
 # Get a specific dataset by ID
+
 dataset = get_dataset(dataset_id="d-7f2e3a9b8c1d4e5f")
 
+
+
 # Access dataset properties
+
 print(f"Name: {dataset.name}")
-print(f"Records: {len(dataset.records)}")
+
+print(f"Records: {len(dataset.to_df())}")
+
 print(f"Schema: {dataset.schema}")
+
 print(f"Tags: {dataset.tags}")
 ```
 
@@ -279,16 +406,27 @@ python
 ```
 from mlflow.genai.datasets import search_datasets
 
+
+
 # Search for datasets with filters
+
 datasets = search_datasets(
+
     experiment_ids=["0"],
+
     filter_string="tags.status = 'active' AND name LIKE '%support%'",
+
     order_by=["last_update_time DESC"],
+
     max_results=10,
+
 )
 
+
+
 for ds in datasets:
-    print(f"{ds.name} ({ds.dataset_id}): {len(ds.records)} records")
+
+    print(f"{ds.name} ({ds.dataset_id}): {len(ds.to_df())} records")
 ```
 
 See [Search Filter Reference](#search-filter-reference) for filter syntax details.
@@ -302,13 +440,22 @@ python
 ```
 from mlflow.genai.datasets import set_dataset_tags, delete_dataset_tag
 
+
+
 # Set or update tags
+
 set_dataset_tags(
+
     dataset_id=dataset.dataset_id,
+
     tags={"status": "production", "validated": "true", "version": "2.0"},
+
 )
 
+
+
 # Delete a specific tag
+
 delete_dataset_tag(dataset_id=dataset.dataset_id, key="deprecated")
 ```
 
@@ -321,7 +468,10 @@ python
 ```
 from mlflow.genai.datasets import delete_dataset
 
+
+
 # Delete the entire dataset
+
 delete_dataset(dataset_id="d-1a2b3c4d5e6f7890")
 ```
 
@@ -338,17 +488,30 @@ python
 ```
 from mlflow import MlflowClient
 
+
+
 client = MlflowClient()
 
+
+
 # Get the dataset and its records
+
 dataset = client.get_dataset(dataset_id="d-1a2b3c4d5e6f7890")
+
 df = dataset.to_df()
 
+
+
 # Get record IDs to delete
+
 record_ids_to_delete = df["dataset_record_id"].tolist()[:2]  # Delete first 2 records
 
+
+
 # Delete specific records
+
 deleted_count = dataset.delete_records(record_ids_to_delete)
+
 print(f"Deleted {deleted_count} records")
 ```
 
@@ -358,29 +521,40 @@ Deleting records updates the dataset's profile (record count) automatically.
 
 ## Working with Dataset Records[​](#working-with-dataset-records "Direct link to Working with Dataset Records")
 
-The [`mlflow.entities.EvaluationDataset()`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.EvaluationDataset) object provides several ways to access and analyze records:
+The [`mlflow.genai.datasets.EvaluationDataset()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset) object provides several ways to access and analyze records:
 
 python
 
 ```
-# Access all records
-all_records = dataset.records
+# Convert to DataFrame for analysis (records are loaded lazily on first call)
 
-# Convert to DataFrame for analysis
 df = dataset.to_df()
+
 print(df.head())
 
+
+
 # Serialize to a dictionary (e.g., for JSON export)
+
 dataset_dict = dataset.to_dict()
 
+
+
 # View dataset schema (inferred from the records)
+
 print(dataset.schema)
 
+
+
 # View dataset profile (statistics)
+
 print(dataset.profile)
 
+
+
 # Get record count
-print(f"Total number of records: {len(dataset.records)}")
+
+print(f"Total number of records: {len(df)}")
 ```
 
 To recreate a dataset from a serialized dictionary:
@@ -389,6 +563,8 @@ python
 
 ```
 from mlflow.genai.datasets import EvaluationDataset
+
+
 
 dataset = EvaluationDataset.from_dict(dataset_dict)
 ```
@@ -405,20 +581,35 @@ python
 
 ```
 # These are treated as different records due to different inputs
+
 record_a = {
+
     "inputs": {"question": "What is MLflow?", "temperature": 0.7},
+
     "expectations": {"expected_answer": "MLflow is an ML platform"},
+
 }
+
+
 
 record_b = {
+
     "inputs": {
+
         "question": "What is MLflow?",
+
         "temperature": 0.8,
+
     },  # Different temperature
+
     "expectations": {"expected_answer": "MLflow is an ML platform"},
+
 }
 
+
+
 dataset.merge_records([record_a, record_b])
+
 # Results in 2 separate records due to different temperature values
 ```
 
@@ -450,12 +641,19 @@ python
 
 ```
 # When adding traces directly (automatic TRACE source)
+
 traces = mlflow.search_traces(locations=["0"], return_type="list")
+
 dataset.merge_records(traces)
 
+
+
 # Or when using DataFrame from search_traces
+
 traces_df = mlflow.search_traces(locations=["0"])  # Returns DataFrame
+
 # Automatically detects traces and assigns TRACE source
+
 dataset.merge_records(traces_df)
 ```
 
@@ -465,16 +663,27 @@ python
 
 ```
 # Records with expectations indicate human review/annotation
+
 human_curated = [
+
     {
+
         "inputs": {"question": "What is MLflow?"},
+
         "expectations": {
+
             "expected_answer": "MLflow is an open-source ML platform",
+
             "must_mention": ["tracking", "models", "deployment"],
+
         },
+
         # Automatically inferred as HUMAN source
+
     }
+
 ]
+
 dataset.merge_records(human_curated)
 ```
 
@@ -484,7 +693,9 @@ python
 
 ```
 # Records without expectations are inferred as CODE source
+
 generated_tests = [{"inputs": {"question": f"Test question {i}"}} for i in range(100)]
+
 dataset.merge_records(generated_tests)
 ```
 
@@ -496,30 +707,56 @@ python
 
 ```
 # Specify HUMAN source with metadata
+
 human_curated = {
+
     "inputs": {"question": "What are your business hours?"},
+
     "expectations": {
+
         "expected_answer": "We're open Monday-Friday 9am-5pm EST",
+
         "must_include_timezone": True,
+
     },
+
     "source": {
+
         "source_type": "HUMAN",
+
         "source_data": {"curator": "support_team", "date": "2024-11-01"},
+
     },
+
 }
 
+
+
 # Specify DOCUMENT source
+
 from_docs = {
+
     "inputs": {"question": "How to install MLflow?"},
+
     "expectations": {
+
         "expected_answer": "pip install mlflow",
+
         "must_mention_pip": True,
+
     },
+
     "source": {
+
         "source_type": "DOCUMENT",
+
         "source_data": {"document_id": "install_guide", "page": 1},
+
     },
+
 }
+
+
 
 dataset.merge_records([human_curated, from_docs])
 ```
@@ -581,13 +818,21 @@ python
 
 ```
 # Complex filter example
+
 datasets = search_datasets(
+
     filter_string="""
+
         tags.status = 'production'
+
         AND name LIKE '%customer%'
+
         AND created_time > 1698800000000
+
     """,
+
     order_by=["last_update_time DESC"],
+
 )
 ```
 

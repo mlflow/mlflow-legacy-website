@@ -6,9 +6,11 @@
 
 MLflow's Prophet integration provides experiment tracking, model versioning, and deployment capabilities for time series forecasting workflows.
 
-No Autologging for Prophet
+:::note No Autologging for Prophet
 
 Prophet does not support autologging to prevent overwhelming the tracking server. Time series forecasting often involves training hundreds or thousands of models (e.g., one per product or location), which would create excessive load on the tracking server if autologging were enabled. Use manual logging with bulk APIs for large-scale forecasting workflows.
+
+:::
 
 ## Why MLflow + Prophet?[​](#why-mlflow--prophet "Direct link to Why MLflow + Prophet?")
 
@@ -36,46 +38,87 @@ python
 
 ```
 import mlflow
+
 import mlflow.prophet
+
 import pandas as pd
+
 from prophet import Prophet
+
 from prophet.diagnostics import cross_validation, performance_metrics
 
+
+
 # Load time series data (Prophet requires 'ds' and 'y' columns)
+
 url = "https://raw.githubusercontent.com/facebook/prophet/main/examples/example_wp_log_peyton_manning.csv"
+
 df = pd.read_csv(url)
 
+
+
 with mlflow.start_run():
+
     # Create and fit Prophet model
+
     model = Prophet(
+
         changepoint_prior_scale=0.05,
+
         seasonality_prior_scale=10,
+
         yearly_seasonality=True,
+
         weekly_seasonality=True,
+
     )
+
     model.fit(df)
 
+
+
     # Log model parameters
+
     mlflow.log_params({
+
         "changepoint_prior_scale": 0.05,
+
         "seasonality_prior_scale": 10,
+
         "yearly_seasonality": True,
+
         "weekly_seasonality": True,
+
     })
 
+
+
     # Cross-validation
+
     cv_results = cross_validation(
+
         model,
+
         initial="730 days",
+
         period="180 days",
+
         horizon="365 days",
+
     )
 
+
+
     # Log performance metrics
+
     metrics = performance_metrics(cv_results)
+
     mlflow.log_metrics(metrics[["mse", "rmse", "mae", "mape"]].mean().to_dict())
 
+
+
     # Log model
+
     mlflow.prophet.log_model(pr_model=model, name="prophet_model", input_example=df[["ds"]].head())
 ```
 
@@ -87,44 +130,83 @@ python
 
 ```
 def validate_prophet_model(model, df):
+
     """Track cross-validation across multiple forecast horizons."""
 
+
+
     with mlflow.start_run():
+
         # Multiple validation configurations
+
         cv_configs = [
+
             {
+
                 "name": "short",
+
                 "initial": "365 days",
+
                 "period": "90 days",
+
                 "horizon": "90 days",
+
             },
+
             {
+
                 "name": "medium",
+
                 "initial": "730 days",
+
                 "period": "180 days",
+
                 "horizon": "180 days",
+
             },
+
             {
+
                 "name": "long",
+
                 "initial": "1095 days",
+
                 "period": "180 days",
+
                 "horizon": "365 days",
+
             },
+
         ]
 
+
+
         for config in cv_configs:
+
             cv_results = cross_validation(
+
                 model,
+
                 initial=config["initial"],
+
                 period=config["period"],
+
                 horizon=config["horizon"],
+
             )
 
+
+
             metrics = performance_metrics(cv_results)
+
             avg_metrics = metrics[["mse", "rmse", "mae", "mape"]].mean()
 
+
+
             # Log with horizon prefix
+
             for metric, value in avg_metrics.items():
+
                 mlflow.log_metric(f"{config['name']}_{metric}", value)
 ```
 
@@ -138,45 +220,87 @@ python
 import optuna
 
 
+
+
+
 def objective(trial, df):
+
     """Optuna objective for Prophet hyperparameter tuning."""
 
+
+
     with mlflow.start_run(nested=True):
+
         # Define hyperparameter search space
+
         params = {
+
             "changepoint_prior_scale": trial.suggest_float("changepoint_prior_scale", 0.001, 0.5),
+
             "seasonality_prior_scale": trial.suggest_float("seasonality_prior_scale", 0.01, 10),
+
             "holidays_prior_scale": trial.suggest_float("holidays_prior_scale", 0.01, 10),
+
             "seasonality_mode": trial.suggest_categorical(
+
                 "seasonality_mode", ["additive", "multiplicative"]
+
             ),
+
         }
 
+
+
         # Train model
+
         model = Prophet(**params)
+
         model.fit(df)
 
+
+
         # Cross-validation
+
         cv_results = cross_validation(
+
             model, initial="730 days", period="180 days", horizon="365 days"
+
         )
+
         metrics = performance_metrics(cv_results)
+
         mape = metrics["mape"].mean()
 
+
+
         # Log parameters and metrics
+
         mlflow.log_params(params)
+
         mlflow.log_metric("mape", mape)
+
+
 
         return mape
 
 
+
+
+
 # Run optimization
+
 with mlflow.start_run(run_name="Prophet HPO"):
+
     study = optuna.create_study(direction="minimize")
+
     study.optimize(lambda trial: objective(trial, df), n_trials=50)
 
+
+
     # Log best parameters
+
     mlflow.log_params({f"best_{k}": v for k, v in study.best_params.items()})
+
     mlflow.log_metric("best_mape", study.best_value)
 ```
 
@@ -189,31 +313,58 @@ python
 ```
 from mlflow import MlflowClient
 
+
+
 client = MlflowClient()
 
+
+
 with mlflow.start_run():
+
     # Train and log model
+
     model = Prophet()
+
     model.fit(df)
 
+
+
     model_info = mlflow.prophet.log_model(
+
         pr_model=model,
+
         name="prophet_model",
+
         registered_model_name="sales_forecast_model",
+
     )
 
+
+
     # Tag for deployment tracking
+
     mlflow.set_tags({
+
         "model_type": "prophet",
+
         "forecast_horizon": "365_days",
+
         "data_frequency": "daily",
+
     })
 
+
+
 # Transition to production
+
 client.transition_model_version_stage(
+
     name="sales_forecast_model",
+
     version=model_info.registered_model_version,
+
     stage="Production",
+
 )
 ```
 
@@ -225,15 +376,25 @@ python
 
 ```
 # Load as native Prophet model
+
 model_uri = "runs:/<run_id>/prophet_model"
+
 loaded_model = mlflow.prophet.load_model(model_uri)
 
+
+
 # Generate forecast
+
 future = loaded_model.make_future_dataframe(periods=365)
+
 forecast = loaded_model.predict(future)
 
+
+
 # Load as PyFunc for generic inference
+
 pyfunc_model = mlflow.pyfunc.load_model(model_uri)
+
 predictions = pyfunc_model.predict(pd.DataFrame({"ds": future_dates}))
 ```
 
@@ -245,30 +406,51 @@ python
 
 ```
 def train_hierarchical_forecasts(data_dict):
+
     """Train separate Prophet models for multiple series."""
 
+
+
     with mlflow.start_run(run_name="Hierarchical Forecasting"):
+
         for series_name, series_data in data_dict.items():
+
             with mlflow.start_run(run_name=f"Series_{series_name}", nested=True):
+
                 model = Prophet()
+
                 model.fit(series_data)
 
+
+
                 # Log series-specific info
+
                 mlflow.log_param("series_name", series_name)
+
                 mlflow.log_param("data_points", len(series_data))
 
+
+
                 # Cross-validation
+
                 cv_results = cross_validation(
+
                     model, initial="365 days", period="90 days", horizon="180 days"
+
                 )
+
                 metrics = performance_metrics(cv_results)
+
                 mlflow.log_metrics(metrics[["mape", "rmse"]].mean().to_dict())
 
+
+
                 # Log model
+
                 mlflow.prophet.log_model(pr_model=model, name=f"model_{series_name}")
 ```
 
-High-Volume Model Training
+:::tip High-Volume Model Training
 
 When training many Prophet models (e.g., for thousands of products), use bulk logging to reduce tracking server load:
 
@@ -276,25 +458,45 @@ python
 
 ```
 # Collect metrics in batch
+
 metrics_batch = {}
+
 params_batch = {}
 
+
+
 for series_name, series_data in data_dict.items():
+
     model = Prophet()
+
     model.fit(series_data)
 
+
+
     # Collect metrics
+
     cv_results = cross_validation(model, initial="365 days", period="45 days", horizon="90 days")
+
     perf_metrics = performance_metrics(cv_results)
 
+
+
     metrics_batch[f"{series_name}_mape"] = perf_metrics["mape"].mean()
+
     params_batch[f"{series_name}_n_points"] = len(series_data)
 
+
+
 # Bulk log after collection
+
 with mlflow.start_run():
+
     mlflow.log_metrics(metrics_batch)
+
     mlflow.log_params(params_batch)
 ```
+
+:::
 
 ## Forecast Component Logging[​](#forecast-component-logging "Direct link to Forecast Component Logging")
 
@@ -304,22 +506,39 @@ python
 
 ```
 with mlflow.start_run():
+
     model = Prophet()
+
     model.fit(df)
 
+
+
     # Generate forecast
+
     future = model.make_future_dataframe(periods=365)
+
     forecast = model.predict(future)
 
+
+
     # Log component plots
+
     fig_components = model.plot_components(forecast)
+
     mlflow.log_figure(fig_components, "forecast_components.png")
 
+
+
     # Log forecast plot
+
     fig_forecast = model.plot(forecast)
+
     mlflow.log_figure(fig_forecast, "forecast_plot.png")
 
+
+
     # Log model
+
     mlflow.prophet.log_model(pr_model=model, name="prophet_model")
 ```
 

@@ -25,11 +25,17 @@ python
 
 ```
 # Disable tokenizers warnings when constructing pipelines
+
 %env TOKENIZERS_PARALLELISM=false
+
+
 
 import warnings
 
+
+
 # Disable a few less-than-useful UserWarnings from setuptools and pydantic
+
 warnings.filterwarnings("ignore", category=UserWarning)
 ```
 
@@ -69,47 +75,90 @@ python
 
 ```
 import numpy as np
+
 import pandas as pd
+
 from sentence_transformers import SentenceTransformer, util
 
+
+
 import mlflow
+
 from mlflow.models.signature import infer_signature
+
 from mlflow.pyfunc import PythonModel
 
 
+
+
+
 class SimilarityModel(PythonModel):
+
   def load_context(self, context):
+
       """Load the model context for inference."""
+
       from sentence_transformers import SentenceTransformer
 
+
+
       try:
+
           self.model = SentenceTransformer.load(context.artifacts["model_path"])
+
       except Exception as e:
+
           raise ValueError(f"Error loading model: {e}")
 
+
+
   def predict(self, context, model_input, params):
+
       """Predict method for comparing similarity between two sentences."""
+
       from sentence_transformers import util
 
+
+
       if isinstance(model_input, pd.DataFrame):
+
           if model_input.shape[1] != 2:
+
               raise ValueError("DataFrame input must have exactly two columns.")
+
           sentence_1 = model_input.iloc[0, 0]
+
           sentence_2 = model_input.iloc[0, 1]
+
       elif isinstance(model_input, dict):
+
           sentence_1 = model_input.get("sentence_1")
+
           sentence_2 = model_input.get("sentence_2")
+
           if sentence_1 is None or sentence_2 is None:
+
               raise ValueError(
+
                   "Both 'sentence_1' and 'sentence_2' must be provided in the input dictionary."
+
               )
+
       else:
+
           raise TypeError(
+
               f"Unexpected type for model_input: {type(model_input)}. Must be either a Dict or a DataFrame."
+
           )
 
+
+
       embedding_1 = self.model.encode(sentence_1)
+
       embedding_2 = self.model.encode(sentence_2)
+
+
 
       return np.array(util.cos_sim(embedding_1, embedding_2).tolist())
 ```
@@ -144,29 +193,53 @@ python
 
 ```
 # Load a pre-trained sentence transformer model
+
 model = SentenceTransformer("all-MiniLM-L6-v2")
 
+
+
 # Create an input example DataFrame
+
 input_example = pd.DataFrame([{"sentence_1": "I like apples", "sentence_2": "I like oranges"}])
 
+
+
 # Save the model in the /tmp directory
+
 model_directory = "/tmp/sbert_model"
+
 model.save(model_directory)
 
+
+
 # Define artifacts with the absolute path
+
 artifacts = {"model_path": model_directory}
 
+
+
 # Generate test output for signature
+
 test_output = np.array(
+
   util.cos_sim(
+
       model.encode(input_example["sentence_1"][0]), model.encode(input_example["sentence_2"][0])
+
   ).tolist()
+
 )
 
+
+
 # Define the signature associated with the model
+
 signature = infer_signature(input_example, test_output)
 
+
+
 # Visualize the signature
+
 signature
 ```
 
@@ -187,9 +260,14 @@ python
 
 ```
 # If you are running this tutorial in local mode, leave the next line commented out.
+
 # Otherwise, uncomment the following line and set your tracking uri to your local or remote tracking server.
 
+
+
 # mlflow.set_tracking_uri("http://127.0.0.1:8080")
+
+
 
 mlflow.set_experiment("Semantic Similarity")
 ```
@@ -223,14 +301,24 @@ python
 ```
 pyfunc_path = "/tmp/sbert_pyfunc"
 
+
+
 with mlflow.start_run() as run:
+
   model_info = mlflow.pyfunc.log_model(
+
       name="similarity",
+
       python_model=SimilarityModel(),
+
       input_example=input_example,
+
       signature=signature,
+
       artifacts=artifacts,
+
       pip_requirements=["sentence_transformers", "numpy"],
+
   )
 ```
 
@@ -269,13 +357,22 @@ python
 
 ```
 # Load our custom semantic similarity model implementation by providing the uri that the model was logged to
+
 loaded_dynamic = mlflow.pyfunc.load_model(model_info.model_uri)
 
+
+
 # Create an evaluation test DataFrame
+
 similarity_data = pd.DataFrame([{"sentence_1": "I like apples", "sentence_2": "I like oranges"}])
 
+
+
 # Verify that the model generates a reasonable prediction
+
 similarity_score = loaded_dynamic.predict(similarity_data)
+
+
 
 print(f"The similarity between these sentences is: {similarity_score}")
 ```
@@ -312,40 +409,76 @@ python
 
 ```
 low_similarity = {
+
   "sentence_1": "The explorer stood at the edge of the dense rainforest, "
+
   "contemplating the journey ahead. The untamed wilderness was "
+
   "a labyrinth of exotic plants and unknown dangers, a challenge "
+
   "for even the most seasoned adventurer, brimming with the "
+
   "prospect of new discoveries and uncharted territories.",
+
   "sentence_2": "To install the software, begin by downloading the latest "
+
   "version from the official website. Once downloaded, run the "
+
   "installer and follow the on-screen instructions. Ensure that "
+
   "your system meets the minimum requirements and agree to the "
+
   "license terms to complete the installation process successfully.",
+
 }
+
+
 
 high_similarity = {
+
   "sentence_1": "Standing in the shadow of the Great Pyramids of Giza, I felt a "
+
   "profound sense of awe. The towering structures, a testament to "
+
   "ancient ingenuity, rose majestically against the clear blue sky. "
+
   "As I walked around the base of the pyramids, the intricate "
+
   "stonework and sheer scale of these wonders of the ancient world "
+
   "left me speechless, enveloped in a deep sense of history.",
+
   "sentence_2": "My visit to the Great Pyramids of Giza was an unforgettable "
+
   "experience. Gazing upon these monumental structures, I was "
+
   "captivated by their grandeur and historical significance. Each "
+
   "step around these ancient marvels filled me with a deep "
+
   "appreciation for the architectural prowess of a civilization long "
+
   "gone, yet still speaking through these timeless monuments.",
+
 }
 
+
+
 # Validate that semantically unrelated texts return a low similarity score
+
 low_similarity_score = loaded_dynamic.predict(low_similarity)
+
+
 
 print(f"The similarity score for the 'low_similarity' pair is: {low_similarity_score}")
 
+
+
 # Validate that semantically similar texts return a high similarity score
+
 high_similarity_score = loaded_dynamic.predict(high_similarity)
+
+
 
 print(f"The similarity score for the 'high_similarity' pair is: {high_similarity_score}")
 ```

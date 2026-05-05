@@ -57,10 +57,15 @@ bash
 
 ```
 git clone --depth 1 --filter=blob:none --sparse https://github.com/mlflow/mlflow.git
+
 cd mlflow
+
 git sparse-checkout set docker-compose
+
 cd docker-compose
+
 cp .env.dev.example .env
+
 docker compose up -d
 ```
 
@@ -77,27 +82,49 @@ python
 
 ```
 import openai
+
 import mlflow
 
+
+
 # Enable auto-tracing for OpenAI (works with Cohere)
+
 mlflow.openai.autolog()
 
+
+
 # Optional: Set a tracking URI and an experiment
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("Cohere")
 
+
+
 # Initialize the OpenAI client with Cohere API endpoint
+
 client = openai.OpenAI(
+
     base_url="https://api.cohere.ai/compatibility/v1",
+
     api_key="<your_cohere_api_key>",
+
 )
 
+
+
 response = client.chat.completions.create(
+
     model="command-a-03-2025",
+
     messages=[
+
         {"role": "system", "content": "You are a helpful assistant."},
+
         {"role": "user", "content": "What is the capital of France?"},
+
     ],
+
 )
 ```
 
@@ -105,24 +132,43 @@ typescript
 
 ```
 import { OpenAI } from "openai";
+
 import { tracedOpenAI } from "@mlflow/openai";
 
+
+
 // Wrap the OpenAI client and point to Cohere endpoint
+
 const client = tracedOpenAI(
+
   new OpenAI({
+
     baseURL: "https://api.cohere.com/v1",
+
     apiKey: "<your_cohere_api_key>",
+
   })
+
 );
 
+
+
 const response = await client.chat.completions.create({
+
   model: "<your_cohere_model>",
+
   messages: [
+
     { role: "system", content: "You are a helpful assistant." },
+
     { role: "user", content: "What is the capital of France?" },
+
   ],
+
   temperature: 0.1,
+
   max_tokens: 100,
+
 });
 ```
 
@@ -151,34 +197,65 @@ python
 
 ```
 import json
+
 from openai import OpenAI
+
 import mlflow
+
 from mlflow.entities import SpanType
 
+
+
 # Initialize the OpenAI client with Cohere API endpoint
+
 client = OpenAI(
+
     base_url="https://api.cohere.ai/compatibility/v1",
+
     api_key="<your_cohere_api_key>",
+
 )
 
 
+
+
+
 # Create a parent span for the Cohere call
+
 @mlflow.trace(span_type=SpanType.CHAIN)
+
 def answer_question(question: str):
+
     messages = [{"role": "user", "content": question}]
+
     response = client.chat.completions.create(
+
         model="command-a-03-2025",
+
         messages=messages,
+
     )
 
+
+
     # Attach session/user metadata to the trace
+
     mlflow.update_current_trace(
+
         metadata={
+
             "mlflow.trace.session": "session-12345",
+
             "mlflow.trace.user": "user-a",
+
         }
+
     )
+
     return response.choices[0].message.content
+
+
+
 
 
 answer = answer_question("What is the capital of France?")
@@ -188,33 +265,62 @@ typescript
 
 ```
 import * as mlflow from "@mlflow/core";
+
 import { OpenAI } from "openai";
+
 import { tracedOpenAI } from "@mlflow/openai";
 
+
+
 mlflow.init({
+
   trackingUri: "http://localhost:5000",
+
   experimentId: "<your_experiment_id>",
+
 });
 
+
+
 // Wrap the OpenAI client and point to Cohere endpoint
+
 const client = tracedOpenAI(
+
   new OpenAI({
+
     baseURL: "https://api.cohere.com/v1",
+
     apiKey: "<your_cohere_api_key>",
+
   })
+
 );
 
+
+
 // Create a traced function that wraps the Cohere call
+
 const answerQuestion = mlflow.trace(
+
   async (question: string) => {
+
     const resp = await client.chat.completions.create({
+
       model: "<your_cohere_model>",
+
       messages: [{ role: "user", content: question }],
+
     });
+
     return resp.choices[0].message?.content;
+
   },
+
   { name: "answer-question" }
+
 );
+
+
 
 await answerQuestion("What is the capital of France?");
 ```

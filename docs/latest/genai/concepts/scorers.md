@@ -70,71 +70,137 @@ python
 
 ```
 from mlflow.genai.judges import make_judge
+
 import mlflow
 
+
+
 # Create an Agent-as-a-Judge that analyzes execution patterns
+
 from typing import Literal
 
+
+
 efficiency_judge = make_judge(
+
     name="efficiency_analyzer",
+
     instructions=(
+
         "Analyze the {{ trace }} for inefficiencies.\n\n"
+
         "Check for:\n"
+
         "- Redundant API calls or database queries\n"
+
         "- Sequential operations that could be parallelized\n"
+
         "- Unnecessary data processing\n\n"
+
         "Rate as: 'efficient', 'acceptable', or 'inefficient'"
+
     ),
+
     feedback_value_type=Literal["efficient", "acceptable", "inefficient"],
+
     model="anthropic:/claude-opus-4-1-20250805",
+
 )
 
+
+
 # Example: RAG application with retrieval and generation
+
 from mlflow.entities import SpanType
+
 import time
 
 
+
+
+
 @mlflow.trace(span_type=SpanType.RETRIEVER)
+
 def retrieve_context(query: str):
+
     # Simulate vector database retrieval
+
     time.sleep(0.5)  # Retrieval latency
+
     return [
+
         {"doc": "MLflow is an open-source platform", "score": 0.95},
+
         {"doc": "It helps build production-quality AI agents", "score": 0.89},
+
         {"doc": "Includes tracking and deployment", "score": 0.87},
+
     ]
 
 
+
+
+
 @mlflow.trace(span_type=SpanType.RETRIEVER)
+
 def retrieve_user_history(user_id: str):
+
     # Another retrieval that could be parallelized
+
     time.sleep(0.5)  # Could run parallel with above
+
     return {"previous_queries": ["What is MLflow?", "How to log models?"]}
 
 
+
+
+
 @mlflow.trace(span_type=SpanType.LLM)
+
 def generate_response(query: str, context: list, history: dict):
+
     # Simulate LLM generation
+
     return f"Based on context about '{query}': MLflow is an open-source AI engineering platform for agents and LLMs."
 
 
+
+
+
 @mlflow.trace(span_type=SpanType.AGENT)
+
 def rag_agent(query: str, user_id: str):
+
     # Sequential operations that could be optimized
+
     context = retrieve_context(query)
+
     history = retrieve_user_history(user_id)  # Could be parallel with above
+
     response = generate_response(query, context, history)
+
     return response
 
 
+
+
+
 # Run the RAG agent
+
 result = rag_agent("What is MLflow?", "user123")
+
 trace_id = mlflow.get_last_active_trace_id()
+
 trace = mlflow.get_trace(trace_id)
 
+
+
 # Judge analyzes the trace to identify inefficiencies
+
 feedback = efficiency_judge(trace=trace)
+
 print(f"Efficiency: {feedback.value}")
+
 print(f"Analysis: {feedback.rationale}")
 ```
 
@@ -143,20 +209,36 @@ python
 ```
 from mlflow.genai.judges import make_judge
 
+
+
 correctness_judge = make_judge(
+
     name="correctness",
+
     instructions=(
+
         "Evaluate if the response in {{ outputs }} correctly answers the question in {{ inputs }}."
+
     ),
+
     feedback_value_type=bool,
+
     model="anthropic:/claude-opus-4-1-20250805",
+
 )
 
+
+
 # Example usage
+
 feedback = correctness_judge(
+
     inputs={"question": "What is MLflow?"},
+
     outputs={"response": "MLflow is an open-source AI engineering platform for agents and LLMs."},
+
 )
+
 print(f"Correctness: {feedback.value}")
 ```
 
@@ -164,24 +246,44 @@ python
 
 ```
 import textstat
+
 from mlflow.genai.scorers import scorer
+
 from mlflow.entities import Feedback
 
 
+
+
+
 @scorer
+
 def reading_level(outputs: str) -> Feedback:
+
     """Evaluate text complexity using Flesch Reading Ease."""
+
     score = textstat.flesch_reading_ease(outputs)
 
+
+
     if score >= 60:
+
         level = "easy"
+
         rationale = f"Reading ease score of {score:.1f} - accessible to most readers"
+
     elif score >= 30:
+
         level = "moderate"
+
         rationale = f"Reading ease score of {score:.1f} - college level complexity"
+
     else:
+
         level = "difficult"
+
         rationale = f"Reading ease score of {score:.1f} - expert level required"
+
+
 
     return Feedback(value=level, rationale=rationale, metadata={"score": score})
 ```
@@ -190,21 +292,37 @@ python
 
 ```
 from transformers import AutoModelForCausalLM, AutoTokenizer
+
 import torch
+
 from mlflow.genai.scorers import scorer
 
 
+
+
+
 @scorer
+
 def perplexity_score(outputs: str) -> float:
+
     """Calculate perplexity to measure text quality and coherence."""
+
     model = AutoModelForCausalLM.from_pretrained("gpt2")
+
     tokenizer = AutoTokenizer.from_pretrained("gpt2")
 
+
+
     inputs = tokenizer(outputs, return_tensors="pt")
+
     with torch.no_grad():
+
         outputs = model(**inputs, labels=inputs["input_ids"])
 
+
+
     perplexity = torch.exp(outputs.loss).item()
+
     return perplexity  # Lower is better - indicates more natural text
 ```
 
@@ -212,26 +330,47 @@ python
 
 ```
 from mlflow.genai.scorers import scorer
+
 from mlflow.entities import Feedback, Trace
 
 
+
+
+
 @scorer
+
 def response_time(trace: Trace) -> Feedback:
+
     """Evaluate response time from trace spans."""
+
     root_span = trace.data.spans[0]
+
     latency_ms = (root_span.end_time - root_span.start_time) / 1e6
 
+
+
     if latency_ms < 100:
+
         value = "fast"
+
     elif latency_ms < 500:
+
         value = "acceptable"
+
     else:
+
         value = "slow"
 
+
+
     return Feedback(
+
         value=value,
+
         rationale=f"Response took {latency_ms:.0f}ms",
+
         metadata={"latency_ms": latency_ms},
+
     )
 ```
 
@@ -247,26 +386,47 @@ python
 
 ```
 from mlflow.genai.judges import make_judge
+
 import mlflow
 
+
+
 # Create an initial judge
+
 quality_judge = make_judge(
+
     name="quality",
+
     instructions="Evaluate if {{ outputs }} meets quality standards for {{ inputs }}.",
+
     feedback_value_type=bool,
+
     model="anthropic:/claude-opus-4-1-20250805",
+
 )
+
+
 
 # Collect traces with both judge assessments and human feedback
+
 traces_with_feedback = mlflow.search_traces(
+
     experiment_ids=[experiment_id],
+
     max_results=20,  # Minimum 10 required for alignment
+
 )
 
+
+
 # Align the judge with human preferences (uses default DSPy-SIMBA optimizer)
+
 aligned_judge = quality_judge.align(traces_with_feedback)
 
+
+
 # The aligned judge now better matches your team's quality standards
+
 feedback = aligned_judge(inputs={"query": "..."}, outputs={"response": "..."})
 ```
 
@@ -287,13 +447,23 @@ python
 from mlflow.genai.judges.base import AlignmentOptimizer
 
 
+
+
+
 class CustomOptimizer(AlignmentOptimizer):
+
     def align(self, judge, traces):
+
         # Your custom alignment logic
+
         return improved_judge
 
 
+
+
+
 # Use your custom optimizer
+
 aligned_judge = quality_judge.align(traces, CustomOptimizer())
 ```
 
@@ -305,45 +475,85 @@ python
 
 ```
 import mlflow
+
 import pandas as pd
 
+
+
 # Your test data
+
 test_data = pd.DataFrame([
+
     {
+
         "inputs": {"question": "What is MLflow?"},
+
         "outputs": {
+
             "response": "MLflow is an open-source AI engineering platform for agents and LLMs."
+
         },
+
         "expectations": {
+
             "ground_truth": "MLflow is an open-source AI engineering platform for agents and LLMs"
+
         },
+
     },
+
     {
+
         "inputs": {"question": "How do I track experiments?"},
+
         "outputs": {"response": "Use mlflow.start_run() to track experiments in MLflow."},
+
         "expectations": {"ground_truth": "Use mlflow.start_run() to track experiments"},
+
     },
+
 ])
 
 
+
+
+
 # Your application (optional if data already has outputs)
+
 def my_app(inputs):
+
     # Your model logic here
+
     return {"response": f"Answer to: {inputs['question']}"}
 
 
+
+
+
 # Evaluate with multiple scorers
+
 results = mlflow.genai.evaluate(
+
     data=test_data,
+
     # predict_fn is optional if data already has outputs
+
     scorers=[
+
         correctness_judge,  # LLM judge from above
+
         reading_level,  # Custom scorer from above
+
     ],
+
 )
 
+
+
 # Access evaluation metrics
+
 print(f"Correctness: {results.metrics.get('correctness/mean', 'N/A')}")
+
 print(f"Reading Level: {results.metrics.get('reading_level/mode', 'N/A')}")
 ```
 

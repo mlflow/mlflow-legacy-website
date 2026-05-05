@@ -1,8 +1,6 @@
 # Evaluation Quickstart
 
-MLflow Assistant
-
-Need help setting up evaluation? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that can help you set up evaluation for your project.
+:::tip MLflow Assistant Need help setting up evaluation? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that can help you set up evaluation for your project. :::
 
 This quickstart guide will walk you through evaluating your LLM applications and AI agents with MLflow's comprehensive evaluation framework. In less than 5 minutes, you'll learn how to evaluate LLM outputs, use built-in and custom evaluation criteria, and analyze results in the MLflow UI.
 
@@ -54,6 +52,7 @@ shell
 
 ```
 pip install --upgrade mlflow
+
 mlflow server
 ```
 
@@ -67,10 +66,15 @@ shell
 
 ```
 git clone --depth 1 --filter=blob:none --sparse https://github.com/mlflow/mlflow.git
+
 cd mlflow
+
 git sparse-checkout set docker-compose
+
 cd docker-compose
+
 cp .env.dev.example .env
+
 docker compose up -d
 ```
 
@@ -86,11 +90,17 @@ python
 
 ```
 # quickstart_eval.py
+
 import os
+
 import mlflow
 
+
+
 # Configure environment
+
 os.environ["OPENAI_API_KEY"] = "your-api-key-here"  # Replace with your API key
+
 mlflow.set_experiment("Evaluation Quickstart")
 ```
 
@@ -105,25 +115,46 @@ python
 ```
 from openai import OpenAI
 
+
+
 client = OpenAI()
 
 
+
+
+
 def my_agent(question: str) -> str:
+
     response = client.chat.completions.create(
+
         model="gpt-4o-mini",
+
         messages=[
+
             {
+
                 "role": "system",
+
                 "content": "You are a helpful assistant. Answer questions concisely.",
+
             },
+
             {"role": "user", "content": question},
+
         ],
+
     )
+
     return response.choices[0].message.content
 
 
+
+
+
 def qa_predict_fn(question: str) -> str:
+
     """Wrapper function for evaluation using ``my_agent``."""
+
     return my_agent(question)
 ```
 
@@ -140,19 +171,33 @@ python
 
 ```
 # Define a simple Q&A dataset with questions and expected answers
+
 eval_dataset = [
+
     {
+
         "inputs": {"question": "What is the capital of France?"},
+
         "expectations": {"expected_response": "Paris"},
+
     },
+
     {
+
         "inputs": {"question": "Who was the first person to build an airplane?"},
+
         "expectations": {"expected_response": "Wright Brothers"},
+
     },
+
     {
+
         "inputs": {"question": "Who wrote Romeo and Juliet?"},
+
         "expectations": {"expected_response": "William Shakespeare"},
+
     },
+
 ]
 ```
 
@@ -164,19 +209,33 @@ python
 
 ```
 from mlflow.genai import scorer
+
 from mlflow.genai.scorers import Correctness, Guidelines
 
 
+
+
+
 @scorer
+
 def is_concise(outputs: str) -> bool:
+
     """Evaluate if the answer is concise (less than 5 words)"""
+
     return len(outputs.split()) <= 5
 
 
+
+
+
 scorers = [
+
     Correctness(),
+
     Guidelines(name="is_english", guidelines="The answer must be in English"),
+
     is_concise,
+
 ]
 ```
 
@@ -200,20 +259,35 @@ python
 
 ```
 # Anthropic
+
 Correctness(model="anthropic:/claude-sonnet-4-20250514")
 
+
+
 # Bedrock (Anthropic on Bedrock)
+
 Correctness(model="bedrock:/anthropic.claude-sonnet-4-20250514")
 
+
+
 # Bedrock (Amazon Nova)
+
 Correctness(model="bedrock:/amazon.nova-pro-v1:0")
+
 Correctness(model="bedrock:/amazon.nova-lite-v1:0")
+
 Correctness(model="bedrock:/amazon.nova-micro-v1:0")
 
+
+
 # Google
+
 Correctness(model="gemini:/gemini-2.5-flash")
 
+
+
 # xAI
+
 Correctness(model="xai:/grok-2-latest")
 ```
 
@@ -225,11 +299,17 @@ python
 
 ```
 # Run evaluation
+
 if __name__ == "__main__":
+
     results = mlflow.genai.evaluate(
+
         data=eval_dataset,
+
         predict_fn=qa_predict_fn,
+
         scorers=scorers,
+
     )
 ```
 
@@ -260,74 +340,143 @@ python
 
 ```
 # quickstart_eval.py
+
 import os
+
 import mlflow
+
 from openai import OpenAI
+
 from mlflow.genai import scorer
+
 from mlflow.genai.scorers import Correctness, Guidelines
 
+
+
 # Use different env variable when using a different LLM provider
+
 os.environ["OPENAI_API_KEY"] = "your-api-key-here"
+
 mlflow.set_experiment("Evaluation Quickstart")
 
+
+
 # Your agent implementation
+
 client = OpenAI()
 
 
+
+
+
 def my_agent(question: str) -> str:
+
     response = client.chat.completions.create(
+
         model="gpt-4o-mini",
+
         messages=[
+
             {
+
                 "role": "system",
+
                 "content": "You are a helpful assistant. Answer questions concisely.",
+
             },
+
             {"role": "user", "content": question},
+
         ],
+
     )
+
     return response.choices[0].message.content
 
 
+
+
+
 # Wrapper function for evaluation
+
 def qa_predict_fn(question: str) -> str:
+
     return my_agent(question)
 
 
+
+
+
 # Evaluation dataset
+
 eval_dataset = [
+
     {
+
         "inputs": {"question": "What is the capital of France?"},
+
         "expectations": {"expected_response": "Paris"},
+
     },
+
     {
+
         "inputs": {"question": "Who was the first person to build an airplane?"},
+
         "expectations": {"expected_response": "Wright Brothers"},
+
     },
+
     {
+
         "inputs": {"question": "Who wrote Romeo and Juliet?"},
+
         "expectations": {"expected_response": "William Shakespeare"},
+
     },
+
 ]
+
+
+
 
 
 # Scorers
+
 @scorer
+
 def is_concise(outputs: str) -> bool:
+
     return len(outputs.split()) <= 5
 
 
+
+
+
 scorers = [
+
     Correctness(),
+
     Guidelines(name="is_english", guidelines="The answer must be in English"),
+
     is_concise,
+
 ]
 
+
+
 # Run evaluation
+
 if __name__ == "__main__":
+
     results = mlflow.genai.evaluate(
+
         data=eval_dataset,
+
         predict_fn=qa_predict_fn,
+
         scorers=scorers,
+
     )
 ```
 

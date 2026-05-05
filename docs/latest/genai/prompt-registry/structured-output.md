@@ -33,15 +33,25 @@ json
 
 ```
 {
+
   "type": "object",
+
   "properties": {
+
     "summary": {
+
       "type": "string",
+
       "description": "Summary of the content."
+
     }
+
   },
+
   "required": ["summary"],
+
   "additionalProperties": false
+
 }
 ```
 
@@ -61,23 +71,41 @@ python
 
 ```
 import mlflow
+
 from pydantic import BaseModel
+
 from typing import List
 
 
+
+
+
 class SummaryResponse(BaseModel):
+
     summary: str
+
     key_points: List[str]
+
     word_count: int
 
 
+
+
+
 # Register prompt with structured output
+
 prompt = mlflow.genai.register_prompt(
+
     name="summarization-prompt",
+
     template="Summarize the following text in {{ num_sentences }} sentences: {{ text }}",
+
     response_format=SummaryResponse,
+
     commit_message="Added structured output for summarization",
+
     tags={"task": "summarization", "structured": "true"},
+
 )
 ```
 
@@ -90,28 +118,52 @@ python
 ```
 import mlflow
 
+
+
 # Define response format as JSON schema
+
 response_schema = {
+
     "type": "object",
+
     "properties": {
+
         "answer": {"type": "string", "description": "The main answer"},
+
         "confidence": {"type": "number", "description": "Confidence score (0-1)"},
+
         "sources": {
+
             "type": "array",
+
             "items": {"type": "string"},
+
             "description": "List of source references",
+
         },
+
     },
+
     "required": ["answer", "confidence"],
+
 }
 
+
+
 # Register prompt with JSON schema
+
 prompt = mlflow.genai.register_prompt(
+
     name="qa-prompt",
+
     template="Answer the following question: {{ question }}",
+
     response_format=response_schema,
+
     commit_message="Added structured output for Q&A",
+
     tags={"task": "qa", "structured": "true"},
+
 )
 ```
 
@@ -125,32 +177,59 @@ python
 
 ```
 import mlflow
+
 from pydantic import BaseModel
+
 from typing import List, Optional
+
 from datetime import datetime
 
 
+
+
+
 class AnalysisResult(BaseModel):
+
     sentiment: str
+
     confidence: float
+
     entities: List[str]
+
     summary: str
 
 
+
+
+
 class DocumentAnalysis(BaseModel):
+
     document_id: str
+
     analysis: AnalysisResult
+
     processed_at: datetime
+
     metadata: Optional[dict] = None
 
 
+
+
+
 # Register prompt with complex structured output
+
 prompt = mlflow.genai.register_prompt(
+
     name="document-analyzer",
+
     template="Analyze the following document: {{ document_text }}",
+
     response_format=DocumentAnalysis,
+
     commit_message="Added comprehensive document analysis output",
+
     tags={"task": "analysis", "complex": "true"},
+
 )
 ```
 
@@ -162,27 +241,49 @@ python
 
 ```
 import mlflow
+
 from pydantic import BaseModel
 
 
+
+
+
 class ChatResponse(BaseModel):
+
     response: str
+
     tone: str
+
     suggestions: List[str]
 
 
+
+
+
 # Chat prompt with structured output
+
 chat_template = [
+
     {"role": "system", "content": "You are a helpful {{ style }} assistant."},
+
     {"role": "user", "content": "{{ question }}"},
+
 ]
 
+
+
 prompt = mlflow.genai.register_prompt(
+
     name="assistant-chat",
+
     template=chat_template,
+
     response_format=ChatResponse,
+
     commit_message="Added structured output for chat responses",
+
     tags={"type": "chat", "structured": "true"},
+
 )
 ```
 
@@ -194,16 +295,27 @@ python
 
 ```
 # Load the prompt
+
 prompt = mlflow.genai.load_prompt("prompts:/summarization-prompt/1")
 
+
+
 # Check if it has structured output (for tracking purposes)
+
 if prompt.response_format:
+
     print(f"Response format: {prompt.response_format}")
 
+
+
 # Format the prompt
+
 formatted_text = prompt.format(num_sentences=3, text="Your content here...")
 
+
+
 # Use with a language model that supports structured output
+
 # Note: You need to implement validation against your defined schema
 ```
 
@@ -216,20 +328,37 @@ python
 ```
 import openai
 
+
+
 client = openai.OpenAI()
 
+
+
 # Load prompt with structured output
+
 prompt = mlflow.genai.load_prompt("prompts:/summarization-prompt/1")
 
+
+
 # Use with OpenAI's response_format parameter
+
 response = client.chat.completions.create(
+
     model="gpt-4.1",
+
     messages=[{"role": "user", "content": prompt.format(num_sentences=3, text="Your text")}],
+
     response_format=prompt.response_format,  # OpenAI's structured output
+
 )
 
+
+
 # Get structured output
+
 import json
+
+
 
 result = json.loads(response.choices[0].message.content)
 ```
@@ -240,21 +369,37 @@ python
 
 ```
 from langchain.prompts import PromptTemplate
+
 from langchain_openai import ChatOpenAI
+
 from pydantic import BaseModel
 
+
+
 # Load prompt with structured output
+
 prompt = mlflow.genai.load_prompt("prompts:/qa-prompt/1")
 
+
+
 # Create LangChain prompt template
+
 langchain_prompt = PromptTemplate.from_template(prompt.template)
 
+
+
 # Use with LangChain's structured output
+
 llm = ChatOpenAI(model="gpt-4")
+
 chain = langchain_prompt | llm.with_structured_output(prompt.response_format)
 
+
+
 # Execute the chain
+
 result = chain.invoke({"question": "What is MLflow?"})
+
 # result will be a validated Pydantic model instance
 ```
 

@@ -92,11 +92,19 @@ python
 ```
 import os
 
+
+
 from langchain.chains import LLMChain
+
 from langchain.prompts import PromptTemplate
+
 from langchain_openai import OpenAI
 
+
+
 import mlflow
+
+
 
 assert "OPENAI_API_KEY" in os.environ, "Please set the OPENAI_API_KEY environment variable."
 ```
@@ -107,27 +115,49 @@ python
 
 ```
 # NOTE: Only run this cell if you are using Azure interfaces with OpenAI. If you have a direct account with
+
 # OpenAI, ignore this cell.
+
+
 
 from langchain_openai import AzureOpenAI, AzureOpenAIEmbeddings
 
+
+
 # Set this to `azure`
+
 os.environ["OPENAI_API_TYPE"] = "azure"
+
 # The API version you want to use: set this to `2023-05-15` for the released version.
+
 os.environ["OPENAI_API_VERSION"] = "2023-05-15"
+
 assert "AZURE_OPENAI_ENDPOINT" in os.environ, (
+
   "Please set the AZURE_OPENAI_ENDPOINT environment variable. It is the base URL for your Azure OpenAI resource. You can find this in the Azure portal under your Azure OpenAI resource."
-)
-assert "OPENAI_API_KEY" in os.environ, (
-  "Please set the OPENAI_API_KEY environment variable. It is the API key for your Azure OpenAI resource. You can find this in the Azure portal under your Azure OpenAI resource."
+
 )
 
-azure_openai_llm = AzureOpenAI(
-  deployment_name="<your-deployment-name>",
-  model_name="gpt-4o-mini",
+assert "OPENAI_API_KEY" in os.environ, (
+
+  "Please set the OPENAI_API_KEY environment variable. It is the API key for your Azure OpenAI resource. You can find this in the Azure portal under your Azure OpenAI resource."
+
 )
+
+
+
+azure_openai_llm = AzureOpenAI(
+
+  deployment_name="<your-deployment-name>",
+
+  model_name="gpt-4o-mini",
+
+)
+
 azure_openai_embeddings = AzureOpenAIEmbeddings(
+
   azure_deployment="<your-deployment-name>",
+
 )
 ```
 
@@ -176,19 +206,33 @@ python
 
 ```
 template_instruction = (
+
   "Imagine you are a fine dining sous chef. Your task is to meticulously prepare for a dish, focusing on the mise-en-place process."
+
   "Given a recipe, your responsibilities are: "
+
   "1. List the Ingredients: Carefully itemize all ingredients required for the dish, ensuring every element is accounted for. "
+
   "2. Preparation Techniques: Describe the techniques and operations needed for preparing each ingredient. This includes cutting, "
+
   "processing, or any other form of preparation. Focus on the art of mise-en-place, ensuring everything is perfectly set up before cooking begins."
+
   "3. Ingredient Staging: Provide detailed instructions on how to stage and arrange each ingredient. Explain where each item should be placed for "
+
   "efficient access during the cooking process. Consider the timing and sequence of use for each ingredient. "
+
   "4. Cooking Implements Preparation: Enumerate all the cooking tools and implements needed for each phase of the dish's preparation. "
+
   "Detail any specific preparation these tools might need before the actual cooking starts and describe what pots, pans, dishes, and "
+
   "other tools will be needed for the final preparation."
+
   "Remember, your guidance stops at the preparation stage. Do not delve into the actual cooking process of the dish. "
+
   "Your goal is to set the stage flawlessly for the chef to execute the cooking seamlessly."
+
   "The recipe you are given is for: {recipe} for {customer_count} people. "
+
 )
 ```
 
@@ -204,14 +248,23 @@ python
 
 ```
 prompt = PromptTemplate(
+
   input_variables=["recipe", "customer_count"],
+
   template=template_instruction,
+
 )
+
 chain = LLMChain(llm=llm, prompt=prompt)
+
+
 
 mlflow.set_experiment("Cooking Assistant")
 
+
+
 with mlflow.start_run():
+
   model_info = mlflow.langchain.log_model(chain, name="langchain_model")
 ```
 
@@ -245,7 +298,11 @@ python
 ```
 loaded_model = mlflow.pyfunc.load_model(model_info.model_uri)
 
+
+
 dish1 = loaded_model.predict({"recipe": "boeuf bourginon", "customer_count": "4"})
+
+
 
 print(dish1[0])
 ```
@@ -313,6 +370,8 @@ python
 
 ```
 dish2 = loaded_model.predict({"recipe": "Okonomiyaki", "customer_count": "12"})
+
+
 
 print(dish2[0])
 ```

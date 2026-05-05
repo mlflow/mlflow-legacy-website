@@ -30,11 +30,17 @@ python
 
 ```
 # Disable tokenizers warnings when constructing pipelines
+
 %env TOKENIZERS_PARALLELISM=false
+
+
 
 import warnings
 
+
+
 # Disable a few less-than-useful UserWarnings from setuptools and pydantic
+
 warnings.filterwarnings("ignore", category=UserWarning)
 ```
 
@@ -64,7 +70,11 @@ python
 ```
 from sentence_transformers import SentenceTransformer
 
+
+
 import mlflow
+
+
 
 model = SentenceTransformer("all-MiniLM-L6-v2")
 ```
@@ -91,15 +101,26 @@ python
 ```
 example_sentences = ["A sentence to encode.", "Another sentence to encode."]
 
+
+
 # Infer the signature of the custom model by providing an input example and the resultant prediction output.
+
 # We're not including any custom inference parameters in this example, but you can include them as a third argument
+
 # to infer_signature(), as you will see in the advanced tutorials for Sentence Transformers.
+
 signature = mlflow.models.infer_signature(
+
   model_input=example_sentences,
+
   model_output=model.encode(example_sentences),
+
 )
 
+
+
 # Visualize the signature
+
 signature
 ```
 
@@ -120,9 +141,14 @@ python
 
 ```
 # If you are running this tutorial in local mode, leave the next line commented out.
+
 # Otherwise, uncomment the following line and set your tracking uri to your local or remote tracking server.
 
+
+
 # mlflow.set_tracking_uri("http://127.0.0.1:8080")
+
+
 
 mlflow.set_experiment("Introduction to Sentence Transformers")
 ```
@@ -150,11 +176,17 @@ python
 
 ```
 with mlflow.start_run():
+
   logged_model = mlflow.sentence_transformers.log_model(
+
       model=model,
+
       name="sbert_model",
+
       signature=signature,
+
       input_example=example_sentences,
+
   )
 ```
 
@@ -183,16 +215,28 @@ python
 ```
 inference_test = ["I enjoy pies of both apple and cherry.", "I prefer cookies."]
 
+
+
 # Load our custom model by providing the uri for where the model was logged.
+
 loaded_model_pyfunc = mlflow.pyfunc.load_model(logged_model.model_uri)
 
+
+
 # Perform a quick test to ensure that our loaded model generates the correct output
+
 embeddings_test = loaded_model_pyfunc.predict(inference_test)
 
+
+
 # Verify that the output is a list of lists of floats (our expected output format)
+
 print(f"The return structure length is: {len(embeddings_test)}")
 
+
+
 for i, embedding in enumerate(embeddings_test):
+
   print(f"The size of embedding {i + 1} is: {len(embeddings_test[i])}")
 ```
 
@@ -220,6 +264,7 @@ python
 
 ```
 for i, embedding in enumerate(embeddings_test):
+
   print(f"The sample of the first 10 entries in embedding {i + 1} is: {embedding[:10]}")
 ```
 
@@ -248,14 +293,23 @@ python
 
 ```
 # Load the saved model as a native Sentence Transformers model (unlike above, where we loaded as a generic python function)
+
 loaded_model_native = mlflow.sentence_transformers.load_model(logged_model.model_uri)
 
+
+
 # Use the native model to generate embeddings by calling encode() (unlike for the generic python function which uses the single entrypoint of `predict`)
+
 native_embeddings = loaded_model_native.encode(inference_test)
 
+
+
 for i, embedding in enumerate(native_embeddings):
+
   print(
+
       f"The sample of the native library encoding call for embedding {i + 1} is: {embedding[:10]}"
+
   )
 ```
 

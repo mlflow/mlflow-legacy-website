@@ -19,32 +19,59 @@ python
 
 ```
 from mlflow.genai.judges import make_judge
+
 from mlflow.genai.judges.optimizers import SIMBAAlignmentOptimizer
+
 import mlflow
 
+
+
 # Create a judge
+
 judge = make_judge(
+
     name="politeness",
+
     instructions=(
+
         "Given a user question, evaluate if the chatbot's response is polite and respectful. "
+
         "Consider the tone, language, and context of the response.\n\n"
+
         "Question: {{ inputs }}\n"
+
         "Response: {{ outputs }}"
+
     ),
+
     feedback_value_type=bool,
+
     model="openai:/gpt-5-mini",
+
 )
+
+
 
 # Retrieve traces with human feedback
+
 traces_with_feedback = mlflow.search_traces(return_type="list")
 
+
+
 # Default: Uses SIMBA optimizer automatically
+
 aligned_judge = judge.align(traces_with_feedback)
 
+
+
 # Explicit: Same as above but with custom model specification
+
 optimizer = SIMBAAlignmentOptimizer(
+
     model="openai:/gpt-5-mini"  # Model used for optimization
+
 )
+
 aligned_judge = judge.align(traces_with_feedback, optimizer)
 ```
 
@@ -61,6 +88,9 @@ python
 ```
 import logging
 
+
+
 logging.getLogger("mlflow.genai.judges.optimizers.simba").setLevel(logging.DEBUG)
+
 aligned_judge = initial_judge.align(traces_with_feedback, optimizer)
 ```

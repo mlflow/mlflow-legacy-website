@@ -62,24 +62,43 @@ json
 
 ```
 {
+
     "Version": "2012-10-17",
+
     "Statement": [
+
         {
+
             "Sid": "MLflowArtifacts",
+
             "Effect": "Allow",
+
             "Action": [
+
                 "s3:PutObject",
+
                 "s3:GetObject",
+
                 "s3:DeleteObject",
+
                 "s3:ListBucket",
+
                 "s3:AbortMultipartUpload"
+
             ],
+
             "Resource": [
+
                 "arn:aws:s3:::<the name of s3 bucket for mlflow artifacts store>",
+
                 "arn:aws:s3:::<the name of s3 bucket for mlflow artifacts store>/*"
+
             ]
+
         }
+
     ]
+
 }
 ```
 

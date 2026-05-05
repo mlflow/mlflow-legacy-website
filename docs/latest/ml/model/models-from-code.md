@@ -1,12 +1,8 @@
 # Models From Code
 
-availability
+:::info availability Models from Code is available in MLflow 2.12.2 and above. For earlier versions, use the legacy serialization methods outlined in the [Custom Python Model](/docs/latest/ml/model.md#custom-python-models) documentation. :::
 
-Models from Code is available in MLflow 2.12.2 and above. For earlier versions, use the legacy serialization methods outlined in the [Custom Python Model](/docs/latest/ml/model.md#custom-python-models) documentation.
-
-target use cases
-
-Models from Code is designed for models without optimized weights (GenAI Agents, applications, custom logic). For traditional ML/DL models with trained weights, use the built-in `log_model()` APIs or custom `PythonModel` with `mlflow.pyfunc.log_model()`.
+:::note target use cases Models from Code is designed for models without optimized weights (GenAI Agents, applications, custom logic). For traditional ML/DL models with trained weights, use the built-in `log_model()` APIs or custom `PythonModel` with `mlflow.pyfunc.log_model()`. :::
 
 Models from Code transforms how you define, store, and load custom models and applications. Instead of relying on complex serialization, it saves your model as readable Python scripts, making development more transparent and debugging significantly easier.
 
@@ -46,13 +42,9 @@ Only include imports you actually use. MLflow infers requirements from all top-l
 
 Non-pip installable packages must be specified via `code_paths`. The system doesn't automatically capture external references beyond standard package imports.
 
-development workflow
+:::tip development workflow Use a linter to identify unused imports while developing. This keeps your model's requirements clean and deployment lightweight. :::
 
-Use a linter to identify unused imports while developing. This keeps your model's requirements clean and deployment lightweight.
-
-security consideration
-
-Model code is stored in plain text. Never include sensitive information like API keys or passwords in your scripts. Use environment variables or secure configuration management instead.
+:::warning security consideration Model code is stored in plain text. Never include sensitive information like API keys or passwords in your scripts. Use environment variables or secure configuration management instead. :::
 
 ## Development in Jupyter Notebooks[​](#development-in-jupyter-notebooks "Direct link to Development in Jupyter Notebooks")
 
@@ -66,6 +58,8 @@ python
 
 ```
 # %%writefile "./hello.py"  # Uncomment to create the file locally
+
+
 
 print("hello!")
 ```
@@ -100,25 +94,45 @@ python
 
 ```
 # If running in a Jupyter notebook, uncomment the next line:
+
 # %%writefile "./basic.py"
 
+
+
 import pandas as pd
+
 from typing import List, Dict
+
 from mlflow.pyfunc import PythonModel
+
 from mlflow.models import set_model
 
 
+
+
+
 class BasicModel(PythonModel):
+
     def exponential(self, numbers):
+
         return {f"{x}": 2**x for x in numbers}
 
+
+
     def predict(self, context, model_input) -> Dict[str, float]:
+
         if isinstance(model_input, pd.DataFrame):
+
             model_input = list(model_input.iloc[0].values())
+
         return self.exponential(model_input)
 
 
+
+
+
 # This tells MLflow which object to use for inference
+
 set_model(BasicModel())
 ```
 
@@ -129,12 +143,20 @@ python
 ```
 import mlflow
 
+
+
 mlflow.set_experiment("Basic Model From Code")
 
+
+
 model_info = mlflow.pyfunc.log_model(
+
     python_model="basic.py",  # Path to your script
+
     name="arithmetic_model",
+
     input_example=[42.0, 24.0],
+
 )
 ```
 
@@ -144,10 +166,15 @@ python
 
 ```
 # Load and use the model
+
 loaded_model = mlflow.pyfunc.load_model(model_info.model_uri)
 
+
+
 # Make predictions
+
 result = loaded_model.predict([2.2, 3.1, 4.7])
+
 print(result)  # {'2.2': 4.59, '3.1': 8.57, '4.7': 25.99}
 ```
 
@@ -163,18 +190,31 @@ python
 
 ```
 # If running in a Jupyter notebook, uncomment the next line:
+
 # %%writefile "./calculator.py"
 
 
+
+
+
 def add(x, y):
+
     return x + y
 
 
+
+
+
 def multiply(x, y):
+
     return x * y
 
 
+
+
+
 def calculate_compound_interest(principal, rate, time):
+
     return principal * (1 + rate) ** time
 ```
 
@@ -186,27 +226,51 @@ python
 
 ```
 # If running in a Jupyter notebook, uncomment the next line:
+
 # %%writefile "./math_model.py"
 
+
+
 from mlflow.pyfunc import PythonModel
+
 from mlflow.models import set_model
+
 from calculator import add, multiply, calculate_compound_interest
 
 
+
+
+
 class MathModel(PythonModel):
+
     def predict(self, context, model_input, params=None):
+
         operation = model_input.get("operation", "add")
 
+
+
         if operation == "add":
+
             return add(model_input["x"], model_input["y"])
+
         elif operation == "multiply":
+
             return multiply(model_input["x"], model_input["y"])
+
         elif operation == "compound_interest":
+
             return calculate_compound_interest(
+
                 model_input["principal"], model_input["rate"], model_input["time"]
+
             )
+
         else:
+
             raise ValueError(f"Unknown operation: {operation}")
+
+
+
 
 
 set_model(MathModel())
@@ -219,14 +283,24 @@ python
 ```
 import mlflow
 
+
+
 mlflow.set_experiment("Math Model From Code")
 
+
+
 with mlflow.start_run():
+
     model_info = mlflow.pyfunc.log_model(
+
         python_model="math_model.py",
+
         name="math_model",
+
         code_paths=["calculator.py"],  # Include dependency
+
         input_example={"operation": "add", "x": 5, "y": 3},
+
     )
 ```
 
@@ -237,16 +311,28 @@ python
 ```
 loaded_model = mlflow.pyfunc.load_model(model_info.model_uri)
 
+
+
 # Test different operations
+
 print(loaded_model.predict({"operation": "add", "x": 10, "y": 5}))  # 15
+
 print(loaded_model.predict({"operation": "multiply", "x": 4, "y": 7}))  # 28
+
 print(
+
     loaded_model.predict({
+
         "operation": "compound_interest",
+
         "principal": 1000,
+
         "rate": 0.05,
+
         "time": 10,
+
     })
+
 )  # 1628.89
 ```
 
@@ -260,64 +346,123 @@ python
 
 ```
 # If running in a Jupyter notebook, uncomment the next line:
+
 # %%writefile "./landscape_advisor.py"
 
+
+
 import os
+
 from operator import itemgetter
+
 from langchain_core.output_parsers import StrOutputParser
+
 from langchain_core.prompts import PromptTemplate
+
 from langchain_core.runnables import RunnableLambda
+
 from langchain_openai import ChatOpenAI
+
 import mlflow
 
 
+
+
+
 def get_region(input_data):
+
     """Extract region from input, with fallback default."""
+
     default = "Virginia, USA"
+
     if isinstance(input_data[0], dict):
+
         return input_data[0].get("content", {}).get("region", default)
+
     return default
+
+
+
 
 
 def get_area(input_data):
+
     """Extract area from input, with fallback default."""
+
     default = "5000 square feet"
+
     if isinstance(input_data[0], dict):
+
         return input_data[0].get("content", {}).get("area", default)
+
     return default
 
 
+
+
+
 # Define the prompt template
+
 prompt = PromptTemplate(
+
     template="""You are a highly accomplished landscape designer providing suggestions
+
     for landscape design decisions in a particular geographic region.
 
+
+
     Your goal is to suggest low-maintenance hardscape and landscape options using
+
     materials and plants native to the specified region. Include a general cost
+
     estimate based on the square footage provided.
 
+
+
     Region: {region}
+
     Square Footage: {area}
 
+
+
     Provide recommendations for a moderately sophisticated suburban housing community.""",
+
     input_variables=["region", "area"],
+
 )
+
+
 
 # Initialize the language model
+
 model = ChatOpenAI(model="gpt-4o", temperature=0.95, max_tokens=4096)
 
+
+
 # Create the chain using LangChain Expression Language (LCEL)
+
 chain = (
+
     {
+
         "region": itemgetter("messages") | RunnableLambda(get_region),
+
         "area": itemgetter("messages") | RunnableLambda(get_area),
+
     }
+
     | prompt
+
     | model
+
     | StrOutputParser()
+
 )
 
+
+
 # Set this chain as the model
+
 mlflow.models.set_model(chain)
 ```
 
@@ -328,25 +473,46 @@ python
 ```
 import mlflow
 
+
+
 mlflow.set_experiment("Landscape Design Advisor")
 
+
+
 input_example = {
+
     "messages": [
+
         {
+
             "role": "user",
+
             "content": {
+
                 "region": "Austin, TX, USA",
+
                 "area": "1750 square feet",
+
             },
+
         }
+
     ]
+
 }
 
+
+
 with mlflow.start_run():
+
     model_info = mlflow.langchain.log_model(
+
         lc_model="landscape_advisor.py",  # Path to your script
+
         name="landscape_chain",
+
         input_example=input_example,
+
     )
 ```
 
@@ -356,23 +522,41 @@ python
 
 ```
 # Load the model
+
 landscape_advisor = mlflow.langchain.load_model(model_info.model_uri)
 
+
+
 # Create a query
+
 query = {
+
     "messages": [
+
         {
+
             "role": "user",
+
             "content": {
+
                 "region": "Raleigh, North Carolina USA",
+
                 "area": "3850 square feet",
+
             },
+
         },
+
     ]
+
 }
 
+
+
 # Get landscape recommendations
+
 response = landscape_advisor.invoke(query)
+
 print(response)
 ```
 
@@ -394,15 +578,25 @@ python
 
 ```
 # ❌ Bad - imports missing in script
+
 def predict(self, context, model_input):
+
     return pd.DataFrame(model_input)  # NameError: pd not defined
 
 
+
+
+
 # ✅ Good - imports included
+
 import pandas as pd
 
 
+
+
+
 def predict(self, context, model_input):
+
     return pd.DataFrame(model_input)
 ```
 
@@ -416,10 +610,15 @@ python
 
 ```
 mlflow.pyfunc.log_model(
+
     python_model="my_model.py",
+
     name="model",
+
     code_paths=["utils.py", "helpers/"],  # Include external files
+
     extra_pip_requirements=["custom-package==1.0.0"],  # Manual requirements
+
 )
 ```
 
@@ -433,19 +632,33 @@ python
 
 ```
 # ❌ Bad - unused imports
+
 import pandas as pd
+
 import numpy as np
+
 import tensorflow as tf
+
 import torch
+
 from sklearn.ensemble import RandomForestClassifier
 
 
+
+
+
 def predict(self, context, model_input):
+
     return {"result": model_input * 2}  # Only uses basic operations
 
 
+
+
+
 # ✅ Good - minimal imports
+
 def predict(self, context, model_input):
+
     return {"result": model_input * 2}
 ```
 
@@ -466,11 +679,18 @@ python
 
 ```
 # ❌ Bad - hardcoded secrets
+
 api_key = "sk-abc123..."
+
 model = ChatOpenAI(api_key=api_key)
 
+
+
 # ✅ Good - environment variables
+
 import os
+
+
 
 model = ChatOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 ```
@@ -487,12 +707,19 @@ python
 
 ```
 # Handle authentication gracefully
+
 try:
+
     # External service calls during initialization
+
     client = ExternalService(api_key=os.getenv("API_KEY"))
+
     client.validate_connection()
+
 except Exception as e:
+
     print(f"Warning: Could not validate external service: {e}")
+
     # Continue with model definition
 ```
 
@@ -504,16 +731,27 @@ python
 
 ```
 class OptimizedModel(PythonModel):
+
     def __init__(self):
+
         self._expensive_resource = None
 
+
+
     @property
+
     def expensive_resource(self):
+
         if self._expensive_resource is None:
+
             self._expensive_resource = load_expensive_model()
+
         return self._expensive_resource
 
+
+
     def predict(self, context, model_input):
+
         return self.expensive_resource.predict(model_input)
 ```
 
@@ -525,13 +763,21 @@ python
 
 ```
 def predict(self, context, model_input):
+
     operation = model_input.get("type", "simple")
 
+
+
     if operation == "complex":
+
         import tensorflow as tf  # Only import when needed
 
+
+
         return self._tensorflow_predict(model_input)
+
     else:
+
         return self._simple_predict(model_input)
 ```
 
@@ -543,16 +789,27 @@ python
 
 ```
 class ResourceManagedModel(PythonModel):
+
     def __enter__(self):
+
         self.connection = create_connection()
+
         return self
 
+
+
     def __exit__(self, exc_type, exc_val, exc_tb):
+
         if hasattr(self, "connection"):
+
             self.connection.close()
 
+
+
     def predict(self, context, model_input):
+
         # Use self.connection for predictions
+
         pass
 ```
 
@@ -566,12 +823,19 @@ python
 
 ```
 class MyModel(mlflow.pyfunc.PythonModel):
+
     def predict(self, context, model_input):
+
         return model_input * 2
 
 
+
+
+
 # Log object instance
+
 model_instance = MyModel()
+
 mlflow.pyfunc.log_model(python_model=model_instance, name="model")
 ```
 
@@ -581,20 +845,35 @@ python
 
 ```
 # Save as script: my_model.py
+
 # %%writefile "./my_model.py"
+
 import mlflow
+
 from mlflow.pyfunc import PythonModel
+
 from mlflow.models import set_model
 
 
+
+
+
 class MyModel(PythonModel):
+
     def predict(self, context, model_input):
+
         return model_input * 2
+
+
+
 
 
 set_model(MyModel())
 
+
+
 # Log script path
+
 mlflow.pyfunc.log_model(python_model="my_model.py", name="model")
 ```
 

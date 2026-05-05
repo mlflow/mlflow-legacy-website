@@ -1,8 +1,6 @@
 # Tracking Hyperparameter Tuning with MLflow
 
-MLflow Assistant
-
-Need help setting up tracking? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that can help you set up MLflow tracking for your project.
+:::tip MLflow Assistant Need help setting up tracking? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that can help you set up MLflow tracking for your project. :::
 
 ![MLflow UI Chart page](/docs/latest/images/tutorials/introductory/hyperparameter-tuning/ui-compare-metrics.png)
 
@@ -27,9 +25,7 @@ pip install mlflow optuna
 
 Then, follow the instructions in the [Set Up MLflow](/docs/latest/ml/getting-started/running-notebooks.md) guide to set up MLflow.
 
-Team Collaboration and Managed Setup
-
-For production environments or team collaboration, consider hosting a shared [MLflow Tracking Server](/docs/latest/self-hosting.md). For a fully-managed solution, get started with Databricks Free Trial by visiting the [Databricks Trial Signup Page](https://signup.databricks.com/?destination_url=/ml/experiments-signup?source=OSS_DOCS\&dbx_source=TRY_MLFLOW\&signup_experience_step=EXPRESS\&provider=MLFLOW\&utm_source=OSS_DOCS) and follow the instructions outlined there.
+:::tip Team Collaboration and Managed Setup For production environments or team collaboration, consider hosting a shared [MLflow Tracking Server](/docs/latest/self-hosting.md). For a fully-managed solution, get started with Databricks Free Trial by visiting the [Databricks Trial Signup Page](https://signup.databricks.com/?destination_url=/ml/experiments-signup?source=OSS_DOCS\&dbx_source=TRY_MLFLOW\&signup_experience_step=EXPRESS\&provider=MLFLOW\&utm_source=OSS_DOCS) and follow the instructions outlined there. :::
 
 ## Step 1: Create a new experiment[​](#step-1-create-a-new-experiment "Direct link to Step 1: Create a new experiment")
 
@@ -38,7 +34,10 @@ python
 ```
 import mlflow
 
+
+
 # The set_experiment API creates a new experiment if it doesn't exist.
+
 mlflow.set_experiment("Hyperparameter Tuning Experiment")
 ```
 
@@ -50,9 +49,13 @@ python
 
 ```
 from sklearn.model_selection import train_test_split
+
 from sklearn.datasets import fetch_california_housing
 
+
+
 X, y = fetch_california_housing(return_X_y=True)
+
 X_train, X_val, y_train, y_val = train_test_split(X, y, random_state=0)
 ```
 
@@ -68,36 +71,67 @@ python
 
 ```
 import mlflow
+
 import optuna
+
 import sklearn
 
 
+
+
+
 def objective(trial):
+
     # Setting nested=True will create a child run under the parent run.
+
     with mlflow.start_run(nested=True, run_name=f"trial_{trial.number}") as child_run:
+
         rf_max_depth = trial.suggest_int("rf_max_depth", 2, 32)
+
         rf_n_estimators = trial.suggest_int("rf_n_estimators", 50, 300, step=10)
+
         rf_max_features = trial.suggest_float("rf_max_features", 0.2, 1.0)
+
         params = {
+
             "max_depth": rf_max_depth,
+
             "n_estimators": rf_n_estimators,
+
             "max_features": rf_max_features,
+
         }
+
         # Log current trial's parameters
+
         mlflow.log_params(params)
 
+
+
         regressor_obj = sklearn.ensemble.RandomForestRegressor(**params)
+
         regressor_obj.fit(X_train, y_train)
 
+
+
         y_pred = regressor_obj.predict(X_val)
+
         error = sklearn.metrics.mean_squared_error(y_val, y_pred)
+
         # Log current trial's error metric
+
         mlflow.log_metrics({"error": error})
 
+
+
         # Log the model file
+
         mlflow.sklearn.log_model(regressor_obj, name="model")
+
         # Make it easy to retrieve the best-performing child run later
+
         trial.set_user_attr("run_id", child_run.info.run_id)
+
         return error
 ```
 
@@ -109,18 +143,31 @@ python
 
 ```
 # Create a parent run that contains all child runs for different trials
+
 with mlflow.start_run(run_name="study") as run:
+
     # Log the experiment settings
+
     n_trials = 30
+
     mlflow.log_param("n_trials", n_trials)
 
+
+
     study = optuna.create_study(direction="minimize")
+
     study.optimize(objective, n_trials=n_trials)
 
+
+
     # Log the best trial and its run ID
+
     mlflow.log_params(study.best_trial.params)
+
     mlflow.log_metrics({"best_error": study.best_value})
+
     if best_run_id := study.best_trial.user_attrs.get("run_id"):
+
         mlflow.log_param("best_child_run_id", best_run_id)
 ```
 
@@ -154,12 +201,19 @@ python
 
 ```
 # Register the best model using the model URI
+
 mlflow.register_model(
+
     model_uri="runs:/d0210c58afff4737a306a2fbc5f1ff8d/model",
+
     name="housing-price-predictor",
+
 )
 
+
+
 # > Successfully registered model 'housing-price-predictor'.
+
 # > Created version '1' of model 'housing-price-predictor'.
 ```
 

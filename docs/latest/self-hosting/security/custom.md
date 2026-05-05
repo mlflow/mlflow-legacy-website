@@ -14,33 +14,63 @@ python
 
 ```
 from flask import Flask, Response, request
+
 from werkzeug.datastructures import Authorization
 
+
+
 from mlflow.server import app
+
 from mlflow.server.handlers import catch_mlflow_exception
 
 
+
+
+
 def authenticate_request_custom() -> Authorization | Response:
+
     """Custom auth logic for your organization."""
+
     ...
 
 
+
+
+
 @catch_mlflow_exception
+
 def _before_request():
+
     if request.path.startswith("/public"):
+
         return
 
+
+
     authorization = authenticate_request_custom()
+
     if isinstance(authorization, Response):
+
         return authorization
+
+
 
     # Perform additional authorization checks with the Authorization object as needed.
 
 
+
+
+
 def create_app(app: Flask = app):
+
     app.add_url_rule("/api/custom-auth/login", view_func=..., methods=["POST"])
+
     app.before_request(_before_request)
+
     return app
+
+
+
 
 
 class MyAuthClient: ...
@@ -60,16 +90,27 @@ python
 
 ```
 setup(
+
     ...,
+
     entry_points="""
+
         ...
 
+
+
         [mlflow.app]
+
         my-auth=my_auth:create_app
 
+
+
         [mlflow.app.client]
+
         my-auth=my_auth:MyAuthClient
+
     """,
+
 )
 ```
 
@@ -99,14 +140,23 @@ python
 
 ```
 # custom_auth.py
+
 from werkzeug.datastructures import Authorization
+
 from flask import Response
 
 
+
+
+
 def custom_authenticate() -> Union[Authorization, Response]:
+
     # Your custom authentication logic
+
     # Return Authorization object if authenticated
+
     # Return Response object (401) if not authenticated
+
     pass
 ```
 
@@ -116,7 +166,9 @@ ini
 
 ```
 # /path/to/auth_config.ini
+
 [mlflow]
+
 authorization_function = mlflow.server.auth:custom_authenticate
 ```
 

@@ -19,15 +19,16 @@ The AI Gateway supports providers across these categories:
 
 ### Additional Providers[​](#additional-providers "Direct link to Additional Providers")
 
-| Provider         | Chat | Embeddings | Notes                    |
-| ---------------- | ---- | ---------- | ------------------------ |
-| **Cohere**       | Yes  | Yes        | Command and Embed models |
-| **Mistral**      | Yes  | Yes        | Mistral AI models        |
-| **Groq**         | Yes  | No         | Open-source models       |
-| **Together AI**  | Yes  | Yes        | Open-source models       |
-| **Fireworks AI** | Yes  | Yes        | Open-source models       |
-| **Ollama**       | Yes  | Yes        | Local models             |
-| **Databricks**   | Yes  | Yes        | Foundation Model APIs    |
+| Provider         | Chat | Embeddings | Notes                                |
+| ---------------- | ---- | ---------- | ------------------------------------ |
+| **Cohere**       | Yes  | Yes        | Command and Embed models             |
+| **Mistral**      | Yes  | Yes        | Mistral AI models                    |
+| **Groq**         | Yes  | No         | Open-source models                   |
+| **Together AI**  | Yes  | Yes        | Open-source models                   |
+| **Fireworks AI** | Yes  | Yes        | Open-source models                   |
+| **Ollama**       | Yes  | Yes        | Local models                         |
+| **Databricks**   | Yes  | Yes        | Foundation Model APIs                |
+| **Portkey**      | Yes  | Yes        | Unified gateway for any LLM provider |
 
 For a complete list of supported providers, view the provider dropdown when creating an endpoint or see the [LiteLLM documentation](https://docs.litellm.ai/docs/providers).
 
@@ -53,27 +54,50 @@ python
 ```
 from openai import OpenAI
 
+
+
 client = OpenAI(
+
     base_url="http://localhost:5000/gateway/openai/v1",
+
     api_key="dummy",  # Not needed, configured server-side
+
 )
+
+
 
 # Chat completion
+
 response = client.chat.completions.create(
+
     model="my-endpoint",
+
     messages=[{"role": "user", "content": "Hello!"}],
+
 )
+
+
 
 # Embeddings
+
 embeddings = client.embeddings.create(
+
     model="my-embeddings-endpoint",
+
     input="Text to embed",
+
 )
 
+
+
 # Responses API
+
 response = client.responses.create(
+
     model="my-endpoint",
+
     input="Hello!",
+
 )
 ```
 
@@ -81,18 +105,31 @@ bash
 
 ```
 # Chat completion
+
 curl -X POST http://localhost:5000/gateway/openai/v1/chat/completions \
+
   -H "Content-Type: application/json" \
+
   -d '{"model": "my-endpoint", "messages": [{"role": "user", "content": "Hello!"}]}'
 
+
+
 # Embeddings
+
 curl -X POST http://localhost:5000/gateway/openai/v1/embeddings \
+
   -H "Content-Type: application/json" \
+
   -d '{"model": "my-embeddings-endpoint", "input": "Text to embed"}'
 
+
+
 # Responses API
+
 curl -X POST http://localhost:5000/gateway/openai/v1/responses \
+
   -H "Content-Type: application/json" \
+
   -d '{"model": "my-endpoint", "input": "Hello!"}'
 ```
 
@@ -116,16 +153,28 @@ python
 ```
 import anthropic
 
+
+
 client = anthropic.Anthropic(
+
     base_url="http://localhost:5000/gateway/anthropic",
+
     api_key="dummy",  # Not needed, configured server-side
+
 )
 
+
+
 response = client.messages.create(
+
     model="my-endpoint",
+
     max_tokens=1024,
+
     messages=[{"role": "user", "content": "Hello!"}],
+
 )
+
 print(response.content[0].text)
 ```
 
@@ -133,11 +182,17 @@ bash
 
 ```
 curl -X POST http://localhost:5000/gateway/anthropic/v1/messages \
+
   -H "Content-Type: application/json" \
+
   -d '{
+
     "model": "my-endpoint",
+
     "max_tokens": 1024,
+
     "messages": [{"role": "user", "content": "Hello!"}]
+
   }'
 ```
 
@@ -162,18 +217,32 @@ python
 ```
 from google import genai
 
+
+
 client = genai.Client(
+
     api_key="dummy",
+
     http_options={
+
         "base_url": "http://localhost:5000/gateway/gemini",
+
     },
+
 )
 
+
+
 response = client.models.generate_content(
+
     model="my-endpoint",
+
     contents={"text": "Hello!"},
+
 )
+
 client.close()
+
 print(response.candidates[0].content.parts[0].text)
 ```
 
@@ -181,7 +250,9 @@ bash
 
 ```
 curl -X POST http://localhost:5000/gateway/gemini/v1beta/models/my-endpoint:generateContent \
+
   -H "Content-Type: application/json" \
+
   -d '{"contents": [{"parts": [{"text": "Hello!"}]}]}'
 ```
 
@@ -205,14 +276,24 @@ python
 ```
 from openai import OpenAI
 
+
+
 client = OpenAI(
+
     base_url="http://localhost:5000/gateway/openai/v1",
+
     api_key="dummy",
+
 )
 
+
+
 response = client.chat.completions.create(
+
     model="my-azure-endpoint",
+
     messages=[{"role": "user", "content": "Hello!"}],
+
 )
 ```
 
@@ -234,16 +315,67 @@ python
 ```
 from openai import OpenAI
 
+
+
 client = OpenAI(
+
     base_url="http://localhost:5000/gateway/openai/v1",
+
     api_key="dummy",
+
 )
 
+
+
 response = client.chat.completions.create(
+
     model="my-databricks-endpoint",
+
     messages=[{"role": "user", "content": "Hello!"}],
+
 )
 ```
+
+### Portkey[​](#portkey "Direct link to Portkey")
+
+[Portkey](https://portkey.ai) provides a single OpenAI-compatible API.
+
+When creating a Portkey endpoint:
+
+1. Select **Portkey** as the provider
+2. Enter your Portkey API key
+3. Enter your Portkey base URL (e.g. `https://api.portkey.ai/v1`)
+4. Enter the model name as per your Portkey configuration (e.g. a virtual key name, `provider/model-name`, or a custom alias)
+
+python
+
+```
+from openai import OpenAI
+
+
+
+client = OpenAI(
+
+    base_url="http://localhost:5000/gateway/openai/v1",
+
+    api_key="dummy",  # Not needed, configured server-side
+
+)
+
+
+
+response = client.chat.completions.create(
+
+    model="my-portkey-endpoint",
+
+    messages=[{"role": "user", "content": "Hello!"}],
+
+)
+
+print(response.choices[0].message.content)
+```
+
+See [Portkey documentation](https://portkey.ai/docs) for the full list of supported models and configuration options.
 
 ## Model Capabilities[​](#model-capabilities "Direct link to Model Capabilities")
 

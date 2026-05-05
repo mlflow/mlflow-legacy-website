@@ -16,12 +16,19 @@ bash
 
 ```
 # Generate a secure passphrase
+
 python -c "import secrets; print(secrets.token_urlsafe(32))"
 
+
+
 # Set the passphrase as an environment variable before starting the server
+
 export MLFLOW_CRYPTO_KEK_PASSPHRASE="your-secure-passphrase-here"
 
+
+
 # Start the MLflow server
+
 mlflow server --port 5000
 ```
 
@@ -37,22 +44,22 @@ When you need to rotate credentials from your LLM provider for security purposes
 
 This approach updates credentials in place with no service interruption:
 
-1. Navigate to the **API Keys** tab in the Gateway UI
-2. Locate the key you want to rotate
+1. Navigate to `http://localhost:5000/#/settings` and click on the **LLM Connections** tab
+2. Locate the connection you want to rotate
 3. Click the **Edit** button
-4. Update the credential value with your new API key from the provider
+4. Update the API key value with your new key from the provider
 5. Click **Save**
 
-All endpoints using this API key will automatically use the new credentials without requiring any configuration changes or server restarts.
+All endpoints using this LLM connection will automatically use the new credentials without requiring any configuration changes or server restarts.
 
 ### Advanced Rotation (With Rollback Capability)[​](#advanced-rotation-with-rollback-capability "Direct link to Advanced Rotation (With Rollback Capability)")
 
 For mission-critical deployments where you want a rollback path:
 
-1. **Create a new API key** with the rotated credentials (e.g., `my-openai-key-v2`)
-2. **Update your endpoints** to use the new API key
+1. **Create a new LLM connection** with the rotated credentials (e.g., `my-openai-key-v2`)
+2. **Update your endpoints** to use the new LLM connection
 3. **Monitor your endpoints** to ensure they're working correctly
-4. **Delete the old API key** once you've verified the rotation was successful
+4. **Delete the old LLM connection** once you've verified the rotation was successful
 
 This approach allows you to quickly revert to the old key if issues arise.
 
@@ -82,7 +89,9 @@ The encryption passphrase is the master secret used to encrypt all stored API ke
 
    ```
    export MLFLOW_CRYPTO_KEK_PASSPHRASE="current-passphrase"
+
    export MLFLOW_CRYPTO_KEK_VERSION="1"  # Current version
+
    export MLFLOW_TRACKING_URI="database url"
    ```
 
@@ -102,6 +111,7 @@ The encryption passphrase is the master secret used to encrypt all stored API ke
 
    ```
    export MLFLOW_CRYPTO_KEK_PASSPHRASE="new-passphrase"
+
    export MLFLOW_CRYPTO_KEK_VERSION="2"  # Incremented version
    ```
 

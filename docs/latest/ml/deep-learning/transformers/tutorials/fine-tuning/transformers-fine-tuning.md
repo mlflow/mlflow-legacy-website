@@ -29,11 +29,17 @@ python
 
 ```
 # Disable tokenizers warnings when constructing pipelines
+
 %env TOKENIZERS_PARALLELISM=false
+
+
 
 import warnings
 
+
+
 # Disable a few less-than-useful UserWarnings from setuptools and pydantic
+
 warnings.filterwarnings("ignore", category=UserWarning)
 ```
 
@@ -57,24 +63,43 @@ python
 
 ```
 import evaluate
+
 import numpy as np
+
 from datasets import load_dataset
+
 from transformers import (
+
   AutoModelForSequenceClassification,
+
   AutoTokenizer,
+
   Trainer,
+
   TrainingArguments,
+
   pipeline,
+
 )
+
+
 
 import mlflow
 
+
+
 # Load the "sms_spam" dataset.
+
 sms_dataset = load_dataset("sms_spam")
 
+
+
 # Split train/test by an 8/2 ratio.
+
 sms_train_test = sms_dataset["train"].train_test_split(test_size=0.2)
+
 train_dataset = sms_train_test["train"]
+
 test_dataset = sms_train_test["test"]
 ```
 
@@ -104,27 +129,49 @@ python
 
 ```
 # Load the tokenizer for "distilbert-base-uncased" model.
+
 tokenizer = AutoTokenizer.from_pretrained("distilbert-base-uncased")
 
 
+
+
+
 def tokenize_function(examples):
+
   # Pad/truncate each text to 512 tokens. Enforcing the same shape
+
   # could make the training faster.
+
   return tokenizer(
+
       examples["sms"],
+
       padding="max_length",
+
       truncation=True,
+
       max_length=128,
+
   )
+
+
+
 
 
 seed = 22
 
+
+
 # Tokenize the train and test datasets
+
 train_tokenized = train_dataset.map(tokenize_function)
+
 train_tokenized = train_tokenized.remove_columns(["sms"]).shuffle(seed=seed)
 
+
+
 test_tokenized = test_dataset.map(tokenize_function)
+
 test_tokenized = test_tokenized.remove_columns(["sms"]).shuffle(seed=seed)
 ```
 
@@ -157,15 +204,25 @@ python
 
 ```
 # Set the mapping between int label and its meaning.
+
 id2label = {0: "ham", 1: "spam"}
+
 label2id = {"ham": 0, "spam": 1}
 
+
+
 # Acquire the model from the Hugging Face Hub, providing label and id mappings so that both we and the model can 'speak' the same language.
+
 model = AutoModelForSequenceClassification.from_pretrained(
+
   "distilbert-base-uncased",
+
   num_labels=2,
+
   label2id=label2id,
+
   id2label=id2label,
+
 )
 ```
 
@@ -196,13 +253,21 @@ python
 
 ```
 # Define the target optimization metric
+
 metric = evaluate.load("accuracy")
 
 
+
+
+
 # Define a function for calculating our defined target optimization metric during training
+
 def compute_metrics(eval_pred):
+
   logits, labels = eval_pred
+
   predictions = np.argmax(logits, axis=-1)
+
   return metric.compute(predictions=predictions, references=labels)
 ```
 
@@ -232,23 +297,41 @@ python
 
 ```
 # Checkpoints will be output to this `training_output_dir`.
+
 training_output_dir = "/tmp/sms_trainer"
+
 training_args = TrainingArguments(
+
   output_dir=training_output_dir,
+
   evaluation_strategy="epoch",
+
   per_device_train_batch_size=8,
+
   per_device_eval_batch_size=8,
+
   logging_steps=8,
+
   num_train_epochs=3,
+
 )
 
+
+
 # Instantiate a `Trainer` instance that will be used to initiate a training run.
+
 trainer = Trainer(
+
   model=model,
+
   args=training_args,
+
   train_dataset=train_tokenized,
+
   eval_dataset=test_tokenized,
+
   compute_metrics=compute_metrics,
+
 )
 ```
 
@@ -256,7 +339,10 @@ python
 
 ```
 # If you are running this tutorial in local mode, leave the next line commented out.
+
 # Otherwise, uncomment the following line and set your tracking uri to your local or remote tracking server.
+
+
 
 # mlflow.set_tracking_uri("http://127.0.0.1:8080")
 ```
@@ -288,6 +374,7 @@ python
 
 ```
 # Pick a name that you like and reflects the nature of the runs that you will be recording to the experiment.
+
 mlflow.set_experiment("Spam Classifier Training")
 ```
 
@@ -322,6 +409,7 @@ python
 
 ```
 with mlflow.start_run() as run:
+
   trainer.train()
 ```
 
@@ -594,12 +682,20 @@ python
 ```
 # If you're going to run this on something other than a Macbook Pro, change the device to the applicable type. "mps" is for Apple Silicon architecture in torch.
 
+
+
 tuned_pipeline = pipeline(
+
   task="text-classification",
+
   model=trainer.model,
+
   batch_size=8,
+
   tokenizer=tokenizer,
+
   device="mps",
+
 )
 ```
 
@@ -631,11 +727,18 @@ python
 
 ```
 # Perform a validation of our assembled pipeline that contains our fine-tuned model.
+
 quick_check = (
+
   "I have a question regarding the project development timeline and allocated resources; "
+
   "specifically, how certain are you that John and Ringo can work together on writing this next song? "
+
   "Do we need to get Paul involved here, or do you truly believe, as you said, 'nah, they got this'?"
+
 )
+
+
 
 tuned_pipeline(quick_check)
 ```
@@ -665,9 +768,13 @@ python
 
 ```
 # Define a set of parameters that we would like to be able to flexibly override at inference time, along with their default values
+
 model_config = {"batch_size": 8}
 
+
+
 # Define sample inputs for the model
+
 sample_inputs = ["This is a test!", "And this is also a test."]
 ```
 
@@ -707,12 +814,19 @@ python
 
 ```
 # Log the pipeline to the existing training run
+
 with mlflow.start_run(run_id=run.info.run_id):
+
   model_info = mlflow.transformers.log_model(
+
       transformers_model=tuned_pipeline,
+
       name="fine_tuned",
+
       input_example=(sample_inputs, model_config),
+
       model_config=model_config,
+
   )
 ```
 
@@ -742,15 +856,25 @@ python
 
 ```
 # Load our saved model in the native transformers format
+
 loaded = mlflow.transformers.load_model(model_uri=model_info.model_uri)
 
+
+
 # Define a test example that we expect to be classified as spam
+
 validation_text = (
+
   "Want to learn how to make MILLIONS with no effort? Click HERE now! See for yourself! Guaranteed to make you instantly rich! "
+
   "Don't miss out you could be a winner!"
+
 )
 
+
+
 # validate the performance of our fine-tuning
+
 loaded(validation_text)
 ```
 

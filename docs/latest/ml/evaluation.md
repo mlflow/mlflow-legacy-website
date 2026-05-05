@@ -1,6 +1,6 @@
 # Model Evaluation
 
-Classic ML Evaluation System
+:::warning Classic ML Evaluation System
 
 This documentation covers MLflow's **classic evaluation system** (`mlflow.models.evaluate`) which uses `EvaluationMetric` and `make_metric` for custom metrics.
 
@@ -10,7 +10,7 @@ This documentation covers MLflow's **classic evaluation system** (`mlflow.models
 * `Scorer` objects instead of `EvaluationMetric`
 * Built-in LLM judges and scorers
 
-**Important**: These two systems are **not interoperable**. `EvaluationMetric` objects cannot be used with `mlflow.genai.evaluate()`, and `Scorer` objects cannot be used with `mlflow.models.evaluate()`.
+**Important**: These two systems are **not interoperable**. `EvaluationMetric` objects cannot be used with `mlflow.genai.evaluate()`, and `Scorer` objects cannot be used with `mlflow.models.evaluate()`. :::
 
 ## Introduction[​](#introduction "Direct link to Introduction")
 
@@ -42,38 +42,71 @@ python
 
 ```
 import mlflow
+
 import pandas as pd
+
 import xgboost as xgb
+
 from sklearn.model_selection import train_test_split
+
 from sklearn.datasets import load_breast_cancer
+
 from mlflow.models import infer_signature
 
+
+
 # Load dataset
+
 X, y = load_breast_cancer(return_X_y=True, as_frame=True)
+
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
+
+
 # Train model
+
 model = xgb.XGBClassifier().fit(X_train, y_train)
 
+
+
 # Create evaluation dataset
+
 eval_data = X_test.copy()
+
 eval_data["label"] = y_test
 
+
+
 with mlflow.start_run():
+
     # Log model
+
     signature = infer_signature(X_test, model.predict(X_test))
+
     model_info = mlflow.sklearn.log_model(model, name="model", signature=signature)
 
+
+
     # Evaluate
+
     result = mlflow.models.evaluate(
+
         model_info.model_uri,
+
         eval_data,
+
         targets="label",
+
         model_type="classifier",
+
     )
 
+
+
     print(f"Accuracy: {result.metrics['accuracy_score']:.3f}")
+
     print(f"F1 Score: {result.metrics['f1_score']:.3f}")
+
     print(f"ROC AUC: {result.metrics['roc_auc']:.3f}")
 ```
 
@@ -90,16 +123,27 @@ python
 
 ```
 result = mlflow.models.evaluate(
+
     model_uri,
+
     eval_data,
+
     targets="label",
+
     model_type="classifier",
+
 )
 
+
+
 # Access metrics
+
 print(f"Precision: {result.metrics['precision_score']:.3f}")
+
 print(f"Recall: {result.metrics['recall_score']:.3f}")
+
 print(f"F1 Score: {result.metrics['f1_score']:.3f}")
+
 print(f"ROC AUC: {result.metrics['roc_auc']:.3f}")
 ```
 
@@ -111,34 +155,63 @@ python
 
 ```
 from sklearn.datasets import fetch_california_housing
+
 from sklearn.linear_model import LinearRegression
 
+
+
 # Load regression dataset
+
 housing = fetch_california_housing(as_frame=True)
+
 X_train, X_test, y_train, y_test = train_test_split(
+
     housing.data, housing.target, test_size=0.2, random_state=42
+
 )
 
+
+
 # Train model
+
 model = LinearRegression().fit(X_train, y_train)
 
+
+
 # Create evaluation dataset
+
 eval_data = X_test.copy()
+
 eval_data["target"] = y_test
 
+
+
 with mlflow.start_run():
+
     signature = infer_signature(X_train, model.predict(X_train))
+
     model_info = mlflow.sklearn.log_model(model, name="model", signature=signature)
 
+
+
     result = mlflow.models.evaluate(
+
         model_info.model_uri,
+
         eval_data,
+
         targets="target",
+
         model_type="regressor",
+
     )
 
+
+
     print(f"MAE: {result.metrics['mean_absolute_error']:.3f}")
+
     print(f"RMSE: {result.metrics['root_mean_squared_error']:.3f}")
+
     print(f"R² Score: {result.metrics['r2_score']:.3f}")
 ```
 
@@ -152,15 +225,25 @@ python
 
 ```
 # Include SHAP explainer for feature importance
+
 result = mlflow.models.evaluate(
+
     model_uri,
+
     eval_data,
+
     targets="label",
+
     model_type="classifier",
+
     evaluator_config={
+
         "log_explainer": True,
+
         "explainer_type": "exact",
+
     },
+
 )
 ```
 
@@ -174,17 +257,29 @@ python
 
 ```
 # Run evaluation
+
 result = mlflow.models.evaluate(model_uri, eval_data, targets="label", model_type="classifier")
 
+
+
 # Access metrics
+
 for metric_name, value in result.metrics.items():
+
     print(f"{metric_name}: {value}")
 
+
+
 # Access artifacts (plots, tables)
+
 for artifact_name, path in result.artifacts.items():
+
     print(f"{artifact_name}: {path}")
 
+
+
 # Access evaluation table
+
 eval_table = result.tables["eval_results_table"]
 ```
 
@@ -201,23 +296,42 @@ python
 ```
 from mlflow.models import MetricThreshold
 
+
+
 # Evaluate model
+
 result = mlflow.models.evaluate(model_uri, eval_data, targets="label", model_type="classifier")
 
+
+
 # Define thresholds
+
 thresholds = {
+
     "accuracy_score": MetricThreshold(threshold=0.85, greater_is_better=True),
+
     "precision_score": MetricThreshold(threshold=0.80, greater_is_better=True),
+
 }
 
+
+
 # Validate
+
 try:
+
     mlflow.validate_evaluation_results(
+
         candidate_result=result,
+
         validation_thresholds=thresholds,
+
     )
+
     print("Model meets all thresholds")
+
 except mlflow.exceptions.ModelValidationFailedException as e:
+
     print(f"Validation failed: {e}")
 ```
 
@@ -231,37 +345,69 @@ python
 
 ```
 import mlflow
+
 import pandas as pd
+
 from sklearn.datasets import make_classification
+
 from sklearn.ensemble import RandomForestClassifier
+
 from sklearn.model_selection import train_test_split
 
+
+
 # Generate sample data and train a model
+
 X, y = make_classification(n_samples=1000, n_features=20, n_classes=2, random_state=42)
+
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
+
+
 model = RandomForestClassifier(n_estimators=100, random_state=42)
+
 model.fit(X_train, y_train)
 
+
+
 # Generate predictions
+
 predictions = model.predict(X_test)
+
 prediction_probabilities = model.predict_proba(X_test)[:, 1]
 
+
+
 # Create evaluation dataset with predictions
+
 eval_dataset = pd.DataFrame({
+
     "prediction": predictions,
+
     "target": y_test,
+
 })
 
+
+
 with mlflow.start_run():
+
     result = mlflow.models.evaluate(
+
         data=eval_dataset,
+
         predictions="prediction",
+
         targets="target",
+
         model_type="classifier",
+
     )
 
+
+
     print(f"Accuracy: {result.metrics['accuracy_score']:.3f}")
+
     print(f"F1 Score: {result.metrics['f1_score']:.3f}")
 ```
 
@@ -278,9 +424,13 @@ python
 
 ```
 eval_dataset = pd.DataFrame({
+
     "prediction": predictions,
+
     "prediction_proba": prediction_probabilities,  # For ROC-AUC
+
     "target": y_test,
+
 })
 ```
 
@@ -294,38 +444,71 @@ python
 
 ```
 import mlflow
+
 import pandas as pd
+
 from sklearn.datasets import make_classification
+
 from sklearn.ensemble import RandomForestClassifier
+
 from sklearn.model_selection import train_test_split
 
+
+
 # Generate sample data
+
 X, y = make_classification(n_samples=1000, n_features=20, n_classes=2, random_state=42)
+
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
+
+
 # Train a model
+
 model = RandomForestClassifier(n_estimators=100, random_state=42)
+
 model.fit(X_train, y_train)
 
 
+
+
+
 # Define a prediction function
+
 def predict_function(input_data):
+
     return model.predict(input_data)
 
 
+
+
+
 # Create evaluation dataset
+
 eval_data = pd.DataFrame(X_test)
+
 eval_data["target"] = y_test
 
+
+
 with mlflow.start_run():
+
     result = mlflow.models.evaluate(
+
         predict_function,
+
         eval_data,
+
         targets="target",
+
         model_type="classifier",
+
     )
 
+
+
     print(f"Accuracy: {result.metrics['accuracy_score']:.3f}")
+
     print(f"F1 Score: {result.metrics['f1_score']:.3f}")
 ```
 
@@ -345,11 +528,11 @@ Define custom evaluation metrics and create specialized visualizations.
 
 ### Custom Metrics[​](#custom-metrics "Direct link to Custom Metrics")
 
-Classic System Only
+:::note Classic System Only
 
 The `make_metric` function is part of MLflow's classic evaluation system.
 
-For GenAI/LLM custom metrics, use the [@scorer decorator](/docs/latest/genai/eval-monitor/scorers/custom.md) instead.
+For GenAI/LLM custom metrics, use the [@scorer decorator](/docs/latest/genai/eval-monitor/scorers/custom.md) instead. :::
 
 Create custom metrics with `make_metric`:
 
@@ -357,39 +540,74 @@ python
 
 ```
 import mlflow
+
 import numpy as np
+
 from mlflow.models import make_metric
+
 from mlflow.metrics.base import MetricValue
 
 
+
+
+
 # Define custom metric
+
 def custom_metric_fn(predictions, targets, metrics):
+
     """Custom metric function."""
+
     tp = np.sum((predictions == 1) & (targets == 1))
+
     fp = np.sum((predictions == 1) & (targets == 0))
 
+
+
     # Calculate custom value
+
     custom_value = (tp * 100) - (fp * 20)
 
+
+
     return MetricValue(
+
         aggregate_results={
+
             "custom_value": custom_value,
+
             "value_per_prediction": custom_value / len(predictions),
+
         },
+
     )
+
+
+
 
 
 # Create metric
+
 custom_metric = make_metric(eval_fn=custom_metric_fn, greater_is_better=True, name="custom_metric")
 
+
+
 with mlflow.start_run():
+
     result = mlflow.models.evaluate(
+
         model_uri,
+
         eval_data,
+
         targets="target",
+
         model_type="classifier",
+
         extra_metrics=[custom_metric],
+
     )
+
+
 
     print(f"Custom Value: {result.metrics['custom_metric/custom_value']:.2f}")
 ```
@@ -410,33 +628,61 @@ python
 
 ```
 import matplotlib.pyplot as plt
+
 import os
 
 
+
+
+
 def create_custom_plot(eval_df, builtin_metrics, artifacts_dir):
+
     """Create custom visualization."""
+
     plt.figure(figsize=(10, 6))
+
     plt.scatter(eval_df["prediction"], eval_df["target"], alpha=0.5)
+
     plt.xlabel("Predictions")
+
     plt.ylabel("Targets")
+
     plt.title("Custom Prediction Analysis")
 
+
+
     # Save plot
+
     plot_path = os.path.join(artifacts_dir, "custom_plot.png")
+
     plt.savefig(plot_path)
+
     plt.close()
+
+
 
     return {"custom_plot": plot_path}
 
 
+
+
+
 # Use custom artifact
+
 with mlflow.start_run():
+
     result = mlflow.models.evaluate(
+
         model_uri,
+
         eval_data,
+
         targets="target",
+
         model_type="classifier",
+
         custom_artifacts=[create_custom_plot],
+
     )
 ```
 
@@ -460,38 +706,71 @@ python
 
 ```
 import mlflow
+
 import xgboost as xgb
+
 from sklearn.model_selection import train_test_split
+
 from sklearn.datasets import load_breast_cancer
+
 from mlflow.models import infer_signature
 
+
+
 # Load dataset
+
 X, y = load_breast_cancer(return_X_y=True, as_frame=True)
+
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
+
+
 # Train model
+
 model = xgb.XGBClassifier().fit(X_train, y_train)
 
+
+
 # Create evaluation dataset
+
 eval_data = X_test.copy()
+
 eval_data["label"] = y_test
 
+
+
 with mlflow.start_run():
+
     signature = infer_signature(X_test, model.predict(X_test))
+
     model_info = mlflow.sklearn.log_model(model, name="model", signature=signature)
 
+
+
     # Evaluate with SHAP enabled
+
     result = mlflow.models.evaluate(
+
         model_info.model_uri,
+
         eval_data,
+
         targets="label",
+
         model_type="classifier",
+
         evaluator_config={"log_explainer": True},
+
     )
 
+
+
     # Check generated SHAP artifacts
+
     for artifact_name in result.artifacts:
+
         if "shap" in artifact_name.lower():
+
             print(f"Generated: {artifact_name}")
 ```
 
@@ -505,16 +784,27 @@ python
 
 ```
 result = mlflow.models.evaluate(
+
     model_uri,
+
     eval_data,
+
     targets="label",
+
     model_type="classifier",
+
     evaluator_config={
+
         "log_explainer": True,
+
         "explainer_type": "exact",
+
         "max_error_examples": 100,
+
         "log_model_explanations": True,
+
     },
+
 )
 ```
 
@@ -533,14 +823,23 @@ python
 
 ```
 # Load the saved explainer
+
 explainer_uri = f"runs:/{run_id}/explainer"
+
 explainer = mlflow.pyfunc.load_model(explainer_uri)
 
+
+
 # Generate explanations for new data
+
 new_data = X_test[:10]
+
 explanations = explainer.predict(new_data)
 
+
+
 # explanations contains SHAP values for each feature and prediction
+
 print(f"Explanations shape: {explanations.shape}")
 ```
 

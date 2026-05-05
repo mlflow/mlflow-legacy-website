@@ -11,6 +11,8 @@ python
 ```
 import mlflow
 
+
+
 mlflow.pydantic_ai.autolog()
 ```
 
@@ -36,12 +38,20 @@ python
 ```
 import mlflow
 
+
+
 # Turn on auto tracing by calling mlflow.pydantic_ai.autolog()
+
 mlflow.pydantic_ai.autolog()
 
 
+
+
+
 # Optional: Set a tracking URI and an experiment
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("PydanticAI")
 ```
 
@@ -51,132 +61,259 @@ python
 
 ```
 import os
+
 from dataclasses import dataclass
+
 from typing import Any
 
+
+
 from httpx import AsyncClient
+
+
 
 from pydantic_ai import Agent, ModelRetry, RunContext
 
 
+
+
+
 @dataclass
+
 class Deps:
+
     client: AsyncClient
+
     weather_api_key: str | None
+
     geo_api_key: str | None
 
 
+
+
+
 weather_agent = Agent(
+
     # Switch to your favorite LLM
+
     "google-gla:gemini-2.0-flash",
+
     # 'Be concise, reply with one sentence.' is enough for some models (like openai) to use
+
     # the below tools appropriately, but others like anthropic and gemini require a bit more direction.
+
     system_prompt=(
+
         "Be concise, reply with one sentence."
+
         "Use the `get_lat_lng` tool to get the latitude and longitude of the locations, "
+
         "then use the `get_weather` tool to get the weather."
+
     ),
+
     deps_type=Deps,
+
     retries=2,
+
     instrument=True,
+
 )
 
 
+
+
+
 @weather_agent.tool
+
 async def get_lat_lng(ctx: RunContext[Deps], location_description: str) -> dict[str, float]:
+
     """Get the latitude and longitude of a location.
 
+
+
     Args:
+
         ctx: The context.
+
         location_description: A description of a location.
+
     """
+
     if ctx.deps.geo_api_key is None:
+
         return {"lat": 51.1, "lng": -0.1}
 
+
+
     params = {
+
         "q": location_description,
+
         "api_key": ctx.deps.geo_api_key,
+
     }
+
     r = await ctx.deps.client.get("https://geocode.maps.co/search", params=params)
+
     r.raise_for_status()
+
     data = r.json()
 
+
+
     if data:
+
         return {"lat": data[0]["lat"], "lng": data[0]["lon"]}
+
     else:
+
         raise ModelRetry("Could not find the location")
 
 
+
+
+
 @weather_agent.tool
+
 async def get_weather(ctx: RunContext[Deps], lat: float, lng: float) -> dict[str, Any]:
+
     """Get the weather at a location.
 
+
+
     Args:
+
         ctx: The context.
+
         lat: Latitude of the location.
+
         lng: Longitude of the location.
+
     """
 
+
+
     if ctx.deps.weather_api_key is None:
+
         return {"temperature": "21 °C", "description": "Sunny"}
 
+
+
     params = {
+
         "apikey": ctx.deps.weather_api_key,
+
         "location": f"{lat},{lng}",
+
         "units": "metric",
+
     }
+
     r = await ctx.deps.client.get("https://api.tomorrow.io/v4/weather/realtime", params=params)
+
     r.raise_for_status()
+
     data = r.json()
 
+
+
     values = data["data"]["values"]
+
     # https://docs.tomorrow.io/reference/data-layers-weather-codes
+
     code_lookup = {
+
         1000: "Clear, Sunny",
+
         1100: "Mostly Clear",
+
         1101: "Partly Cloudy",
+
         1102: "Mostly Cloudy",
+
         1001: "Cloudy",
+
         2000: "Fog",
+
         2100: "Light Fog",
+
         4000: "Drizzle",
+
         4001: "Rain",
+
         4200: "Light Rain",
+
         4201: "Heavy Rain",
+
         5000: "Snow",
+
         5001: "Flurries",
+
         5100: "Light Snow",
+
         5101: "Heavy Snow",
+
         6000: "Freezing Drizzle",
+
         6001: "Freezing Rain",
+
         6200: "Light Freezing Rain",
+
         6201: "Heavy Freezing Rain",
+
         7000: "Ice Pellets",
+
         7101: "Heavy Ice Pellets",
+
         7102: "Light Ice Pellets",
+
         8000: "Thunderstorm",
+
     }
+
     return {
+
         "temperature": f"{values['temperatureApparent']:0.0f}°C",
+
         "description": code_lookup.get(values["weatherCode"], "Unknown"),
+
     }
+
+
+
 
 
 async def main():
+
     async with AsyncClient() as client:
+
         weather_api_key = os.getenv("WEATHER_API_KEY")
+
         geo_api_key = os.getenv("GEO_API_KEY")
+
         deps = Deps(client=client, weather_api_key=weather_api_key, geo_api_key=geo_api_key)
+
         result = await weather_agent.run(
+
             "What is the weather like in London and in Wiltshire?", deps=deps
+
         )
+
         print("Response:", result.output)
 
 
+
+
+
 # If you are running this on a notebook
+
 await main()
 
+
+
 # Uncomment this is you are using an IDE or Python script.
+
 # asyncio.run(main())
 ```
 
@@ -192,42 +329,79 @@ python
 
 ```
 import mlflow
+
 import asyncio
 
+
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("MCP Server")
+
 mlflow.pydantic_ai.autolog()
 
+
+
 from pydantic_ai import Agent
+
 from pydantic_ai.mcp import MCPServerStdio
 
+
+
 server = MCPServerStdio(
+
     "deno",
+
     args=[
+
         "run",
+
         "-N",
+
         "-R=node_modules",
+
         "-W=node_modules",
+
         "--node-modules-dir=auto",
+
         "jsr:@pydantic/mcp-run-python",
+
         "stdio",
+
     ],
+
 )
+
+
 
 agent = Agent("openai:gpt-4o", mcp_servers=[server], instrument=True)
 
 
+
+
+
 async def main():
+
     async with agent.run_mcp_servers():
+
         result = await agent.run("How many days between 2000-01-01 and 2025-03-18?")
+
     print(result.output)
+
     # > There are 9,208 days between January 1, 2000, and March 18, 2025.
 
 
+
+
+
 # If you are running this on a notebook
+
 await main()
 
+
+
 # Uncomment this is you are using an IDE or Python script.
+
 # asyncio.run(main())
 ```
 
@@ -243,20 +417,37 @@ python
 
 ```
 import mlflow
+
 import asyncio
+
 from pydantic_ai import Agent
 
+
+
 mlflow.pydantic_ai.autolog()
+
+
 
 agent = Agent("openai:gpt-4o", instrument=True)
 
 
+
+
+
 async def main():
+
     async with agent.run_stream("Tell me a joke") as response:
+
         # Stream the text as it arrives
+
         async for chunk in response.stream_text(delta=True):
+
             print(chunk, end="", flush=True)
+
         print()
+
+
+
 
 
 asyncio.run(main())
@@ -272,17 +463,29 @@ python
 
 ```
 import mlflow
+
 from pydantic_ai import Agent
+
+
 
 mlflow.pydantic_ai.autolog()
 
+
+
 agent = Agent("openai:gpt-4o", instrument=True)
 
+
+
 # Synchronous streaming
+
 result = agent.run_stream_sync("Tell me a joke")
+
 for chunk in result.stream_text():
+
     print(chunk, end="", flush=True)
+
 print()
+
 print(f"Final output: {result.get_output()}")
 ```
 

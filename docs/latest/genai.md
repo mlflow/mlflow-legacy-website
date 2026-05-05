@@ -32,6 +32,10 @@ Use any agent framework or LLM provider. With 100+ integrations and extensible A
 
 **Try the MLflow LLMs and Agents Demo**<br />The quickest way to learn about MLflow for LLMs and AI Agents is to try the demo. **Click to launch the demo ↓**
 
+#### **Public Demo**[​](#public-demo "Direct link to public-demo")
+
+Visit **[demo.mlflow.org](https://demo.mlflow.org/#/experiments/1/overview)** to explore a publicly hosted MLflow instance pre-loaded with sample data.
+
 #### **Starting from UI**[​](#starting-from-ui "Direct link to starting-from-ui")
 
 To start the demo, click on the "Start Demo" button on the top page of the MLflow UI.

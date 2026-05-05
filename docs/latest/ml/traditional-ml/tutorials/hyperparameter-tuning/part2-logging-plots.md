@@ -74,29 +74,53 @@ python
 
 ```
 def plot_box_weekend(df, style="seaborn", plot_size=(10, 8)):
+
     with plt.style.context(style=style):
+
         fig, ax = plt.subplots(figsize=plot_size)
+
         sns.boxplot(data=df, x="weekend", y="demand", ax=ax, color="lightgray")
+
         sns.stripplot(
+
             data=df,
+
             x="weekend",
+
             y="demand",
+
             ax=ax,
+
             hue="weekend",
+
             palette={0: "blue", 1: "green"},
+
             alpha=0.15,
+
             jitter=0.3,
+
             size=5,
+
         )
 
+
+
         ax.set_title("Box Plot of Demand on Weekends vs. Weekdays", fontsize=14)
+
         ax.set_xlabel("Weekend (0: No, 1: Yes)", fontsize=12)
+
         ax.set_ylabel("Demand", fontsize=12)
+
         for i in ax.get_xticklabels() + ax.get_yticklabels():
+
             i.set_fontsize(10)
+
         ax.legend_.remove()
+
         plt.tight_layout()
+
     plt.close(fig)
+
     return fig
 ```
 
@@ -116,36 +140,67 @@ python
 
 ```
 def plot_correlation_matrix_and_save(
+
     df, style="seaborn", plot_size=(10, 8), path="/tmp/corr_plot.png"
+
 ):
+
     with plt.style.context(style=style):
+
         fig, ax = plt.subplots(figsize=plot_size)
 
+
+
         # Calculate the correlation matrix
+
         corr = df.corr()
 
+
+
         # Generate a mask for the upper triangle
+
         mask = np.triu(np.ones_like(corr, dtype=bool))
 
+
+
         # Draw the heatmap with the mask and correct aspect ratio
+
         sns.heatmap(
+
             corr,
+
             mask=mask,
+
             cmap="coolwarm",
+
             vmax=0.3,
+
             center=0,
+
             square=True,
+
             linewidths=0.5,
+
             annot=True,
+
             fmt=".2f",
+
         )
 
+
+
         ax.set_title("Feature Correlation Matrix", fontsize=14)
+
         plt.tight_layout()
 
+
+
     plt.close(fig)
+
     # convert to filesystem path spec for os compatibility
+
     save_path = pathlib.Path(path)
+
     fig.savefig(path)
 ```
 
@@ -170,72 +225,140 @@ python
 ```
 mlflow.set_tracking_uri("http://127.0.0.1:8080")
 
+
+
 mlflow.set_experiment("Visualizations Demo")
 
+
+
 X = my_data.drop(columns=["demand", "date"])
+
 y = my_data["demand"]
+
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 
+
+
 fig1 = plot_time_series_demand(my_data, window_size=28)
+
 fig2 = plot_box_weekend(my_data)
+
 fig3 = plot_scatter_demand_price(my_data)
+
 fig4 = plot_density_weekday_weekend(my_data)
 
+
+
 # Execute the correlation plot, saving the plot to a local temporary directory
+
 plot_correlation_matrix_and_save(my_data)
 
+
+
 # Define our Ridge model
+
 model = Ridge(alpha=1.0)
 
+
+
 # Train the model
+
 model.fit(X_train, y_train)
 
+
+
 # Make predictions
+
 y_pred = model.predict(X_test)
 
+
+
 # Calculate error metrics
+
 mse = mean_squared_error(y_test, y_pred)
+
 rmse = math.sqrt(mse)
+
 mae = mean_absolute_error(y_test, y_pred)
+
 r2 = r2_score(y_test, y_pred)
+
 msle = mean_squared_log_error(y_test, y_pred)
+
 medae = median_absolute_error(y_test, y_pred)
 
+
+
 # Generate prediction-dependent plots
+
 fig5 = plot_residuals(y_test, y_pred)
+
 fig6 = plot_coefficients(model, X_test.columns)
+
 fig7 = plot_prediction_error(y_test, y_pred)
+
 fig8 = plot_qq(y_test, y_pred)
 
+
+
 # Start an MLflow run for logging metrics, parameters, the model, and our figures
+
 with mlflow.start_run() as run:
+
     # Log the model
+
     mlflow.sklearn.log_model(sk_model=model, input_example=X_test, name="model")
 
+
+
     # Log the metrics
+
     mlflow.log_metrics({
+
         "mse": mse,
+
         "rmse": rmse,
+
         "mae": mae,
+
         "r2": r2,
+
         "msle": msle,
+
         "medae": medae,
+
     })
 
+
+
     # Log the hyperparameter
+
     mlflow.log_param("alpha", 1.0)
 
+
+
     # Log plots
+
     mlflow.log_figure(fig1, "time_series_demand.png")
+
     mlflow.log_figure(fig2, "box_weekend.png")
+
     mlflow.log_figure(fig3, "scatter_demand_price.png")
+
     mlflow.log_figure(fig4, "density_weekday_weekend.png")
+
     mlflow.log_figure(fig5, "residuals_plot.png")
+
     mlflow.log_figure(fig6, "coefficients_plot.png")
+
     mlflow.log_figure(fig7, "prediction_errors.png")
+
     mlflow.log_figure(fig8, "qq_plot.png")
 
+
+
     # Log the saved correlation matrix plot by referring to the local file system location
+
     mlflow.log_artifact("/tmp/corr_plot.png")
 ```
 
@@ -263,9 +386,7 @@ After downloading the notebook and opening it with Jupyter:
 4. Use the `mlflow.log_artifacts()` (not `mlflow.log_artifact()`) to log the directory contents to the run.
 5. Validate the rendering of the plots within the MLflow UI.
 
-hint
-
-The `log_artifacts()` API has an optional `artifact_path` argument that can be overridden from the default of `None` in to segregate these additional plots in their own directory within the MLflow artifact store (and the UI). This can be very beneficial if you're logging dozens of plots that have distinct categorical groupings among them, without the need for filling the UI display pane in the artifact viewer with a large amount of files in the main root directory.
+:::info hint The `log_artifacts()` API has an optional `artifact_path` argument that can be overridden from the default of `None` in to segregate these additional plots in their own directory within the MLflow artifact store (and the UI). This can be very beneficial if you're logging dozens of plots that have distinct categorical groupings among them, without the need for filling the UI display pane in the artifact viewer with a large amount of files in the main root directory. :::
 
 ## In Conclusion[​](#in-conclusion "Direct link to In Conclusion")
 

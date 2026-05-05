@@ -47,19 +47,19 @@ The `search_traces` API uses a SQL-like Domain Specific Language (DSL) for query
 
 ### Supported Filters and Comparators[​](#supported-filters-and-comparators "Direct link to Supported Filters and Comparators")
 
-| Field Type           | Fields                                                               | Operators                                                     | Examples                            |
-| -------------------- | -------------------------------------------------------------------- | ------------------------------------------------------------- | ----------------------------------- |
-| **Trace Status**     | `trace.status`                                                       | `=`, `!=`                                                     | trace.status = "OK"                 |
-| **Trace Timestamps** | `trace.timestamp_ms`, `trace.execution_time_ms`, `trace.end_time_ms` | `=`, `!=`, `>`, `<`, `>=`, `<=`                               | trace.end\_time\_ms > 1762408895531 |
-| **Trace IDs**        | `trace.run_id`                                                       | `=`                                                           | trace.run\_id = "run\_id"           |
-| **String Fields**    | `trace.client_request_id`, `trace.name`                              | `=`, `!=`, `LIKE`, `ILIKE`, `RLIKE`                           | trace.name LIKE "%Generate%"        |
-| **Linked Prompts**   | `prompt`                                                             | `=` (format: `"name/version"`)                                | prompt = "qa-system-prompt/4"       |
-| **Span Name/Type**   | `span.name`, `span.type`                                             | `=`, `!=`, `LIKE`, `ILIKE`, `RLIKE`                           | span.type RLIKE "^LLM"              |
-| **Tags**             | `tag.<key>`                                                          | `=`, `!=`, `LIKE`, `ILIKE`, `RLIKE`, `IS NULL`, `IS NOT NULL` | tag.key = "value"                   |
-| **Metadata**         | `metadata.<key>`                                                     | `=`, `!=`, `LIKE`, `ILIKE`, `RLIKE`, `IS NULL`, `IS NOT NULL` | metadata.user\_id LIKE "user%"      |
-| **Feedback**         | `feedback.<name>`                                                    | `=`, `!=`, `LIKE`, `ILIKE`, `RLIKE`                           | feedback.rating = "excellent"       |
-| **Expectations**     | `expectation.<name>`                                                 | `=`, `!=`, `LIKE`, `ILIKE`, `RLIKE`                           | expectation.result = "pass"         |
-| **Full Text**        | `trace.text`                                                         | `LIKE` (with `%` wildcards)                                   | trace.text LIKE "%tell me a story"  |
+| Field Type                                | Fields                                                               | Operators                                                     | Examples                                      |
+| ----------------------------------------- | -------------------------------------------------------------------- | ------------------------------------------------------------- | --------------------------------------------- |
+| **Trace Status**                          | `trace.status`                                                       | `=`, `!=`                                                     | trace.status = "OK"                           |
+| **Trace Timestamps**                      | `trace.timestamp_ms`, `trace.execution_time_ms`, `trace.end_time_ms` | `=`, `!=`, `>`, `<`, `>=`, `<=`                               | trace.end\_time\_ms > 1762408895531           |
+| **Trace IDs**                             | `trace.run_id`                                                       | `=`                                                           | trace.run\_id = "run\_id"                     |
+| **String Fields**                         | `trace.client_request_id`, `trace.name`                              | `=`, `!=`, `LIKE`, `ILIKE`, `RLIKE`                           | trace.name LIKE "%Generate%"                  |
+| **Linked Prompts**                        | `prompt`                                                             | `=` (format: `"name/version"`)                                | prompt = "qa-system-prompt/4"                 |
+| **Span Name/Type**                        | `span.name`, `span.type`                                             | `=`, `!=`, `LIKE`, `ILIKE`, `RLIKE`                           | span.type RLIKE "^LLM"                        |
+| **Tags**                                  | `tag.<key>`                                                          | `=`, `!=`, `LIKE`, `ILIKE`, `RLIKE`, `IS NULL`, `IS NOT NULL` | tag.key = "value"                             |
+| **Metadata**                              | `metadata.<key>`                                                     | `=`, `!=`, `LIKE`, `ILIKE`, `RLIKE`, `IS NULL`, `IS NOT NULL` | metadata.\`mlflow\.trace.user\` = "user\_123" |
+| **Feedback**                              | `feedback.<name>`                                                    | `=`, `!=`, `LIKE`, `ILIKE`, `RLIKE`                           | feedback.rating = "excellent"                 |
+| **Expectations**                          | `expectation.<name>`                                                 | `=`, `!=`, `LIKE`, `ILIKE`, `RLIKE`                           | expectation.result = "pass"                   |
+| **Full Text** (OSS SQLAlchemy store only) | `trace.text`                                                         | `LIKE` (with `%` wildcards)                                   | trace.text LIKE "%tell me a story"            |
 
 **Value Syntax:**
 
@@ -76,7 +76,7 @@ The `search_traces` API uses a SQL-like Domain Specific Language (DSL) for query
 
 ### Example Queries[​](#example-queries "Direct link to Example Queries")
 
-#### Full Text Search[​](#full-text-search "Direct link to Full Text Search")
+#### Full Text Search (OSS SQLAlchemy store only)[​](#full-text-search-oss-sqlalchemy-store-only "Direct link to Full Text Search (OSS SQLAlchemy store only)")
 
 Search for any contents existing in your trace.
 
@@ -84,9 +84,13 @@ python
 
 ```
 # Search for traces containing specific text
+
 mlflow.search_traces(filter_string="trace.text LIKE '%authentication error%'")
 
+
+
 # Search for multiple terms
+
 mlflow.search_traces(filter_string="trace.text LIKE '%timeout%'")
 ```
 
@@ -96,15 +100,25 @@ python
 
 ```
 # Exact match
+
 mlflow.search_traces(filter_string="trace.name = 'predict'")
 
+
+
 # Pattern matching with LIKE
+
 mlflow.search_traces(filter_string="trace.name LIKE '%inference%'")
 
+
+
 # Case-insensitive pattern matching with ILIKE
+
 mlflow.search_traces(filter_string="trace.name ILIKE '%PREDICT%'")
 
+
+
 # Regular expression matching with RLIKE
+
 mlflow.search_traces(filter_string="trace.name RLIKE '^(predict|inference)_[0-9]+'")
 ```
 
@@ -114,12 +128,19 @@ python
 
 ```
 # Get successful traces
+
 mlflow.search_traces(filter_string="trace.status = 'OK'")
 
+
+
 # Get failed traces
+
 mlflow.search_traces(filter_string="trace.status = 'ERROR'")
 
+
+
 # Get in-progress traces
+
 mlflow.search_traces(filter_string="trace.status != 'OK'")
 ```
 
@@ -129,14 +150,23 @@ python
 
 ```
 # Find slow traces (> 1 second)
+
 mlflow.search_traces(filter_string="trace.execution_time_ms > 1000")
 
+
+
 # Performance range
+
 mlflow.search_traces(
+
     filter_string="trace.execution_time_ms >= 200 AND trace.execution_time_ms <= 800"
+
 )
 
+
+
 # Equal to specific duration
+
 mlflow.search_traces(filter_string="trace.execution_time_ms = 500")
 ```
 
@@ -147,16 +177,28 @@ python
 ```
 import time
 
+
+
 # Get traces from last hour
+
 timestamp = int(time.time() * 1000)
+
 mlflow.search_traces(filter_string=f"trace.timestamp_ms > {timestamp - 3600000}")
 
+
+
 # Exact timestamp match
+
 mlflow.search_traces(filter_string=f"trace.timestamp_ms = {timestamp}")
 
+
+
 # Timestamp range
+
 mlflow.search_traces(
+
     filter_string=f"trace.timestamp_ms >= {timestamp - 7200000} AND trace.timestamp_ms <= {timestamp - 3600000}"
+
 )
 ```
 
@@ -166,24 +208,43 @@ python
 
 ```
 # Exact match
+
 mlflow.search_traces(filter_string="tag.model_name = 'gpt-4'")
 
+
+
 # Pattern matching with LIKE (case-sensitive)
+
 mlflow.search_traces(filter_string="tag.model_name LIKE 'gpt-%'")
 
+
+
 # Case-insensitive pattern matching with ILIKE
+
 mlflow.search_traces(filter_string="tag.environment ILIKE '%prod%'")
 
+
+
 # Regular expression matching with RLIKE
+
 mlflow.search_traces(filter_string="tag.version RLIKE '^v[0-9]+\\.[0-9]+'")
 
+
+
 # Find traces where a tag key exists
+
 mlflow.search_traces(filter_string="tag.model_name IS NOT NULL")
 
+
+
 # Find traces where a tag key is missing
+
 mlflow.search_traces(filter_string="tag.environment IS NULL")
 
+
+
 # Combine null checks with other filters
+
 mlflow.search_traces(filter_string="tag.environment IS NOT NULL AND tag.model_name = 'gpt-4'")
 ```
 
@@ -193,15 +254,25 @@ python
 
 ```
 # Exact match
-mlflow.search_traces(filter_string="metadata.user_id = 'user_123'")
+
+mlflow.search_traces(filter_string="metadata.`mlflow.trace.user` = 'user_123'")
+
+
 
 # Find traces where metadata key exists
-mlflow.search_traces(filter_string="metadata.session_id IS NOT NULL")
+
+mlflow.search_traces(filter_string="metadata.`mlflow.trace.session` IS NOT NULL")
+
+
 
 # Find traces where metadata key is missing
+
 mlflow.search_traces(filter_string="metadata.region IS NULL")
 
+
+
 # Combine null checks with other filters
+
 mlflow.search_traces(filter_string="metadata.region IS NOT NULL AND metadata.env = 'production'")
 ```
 
@@ -211,6 +282,7 @@ python
 
 ```
 # Find traces associated with a specific run
+
 mlflow.search_traces(filter_string="trace.run_id = 'run_id_123456'")
 ```
 
@@ -220,6 +292,7 @@ python
 
 ```
 # Find traces using a specific prompt version
+
 mlflow.search_traces(filter_string='prompt = "qa-agent-system-prompt/4"')
 ```
 
@@ -233,12 +306,19 @@ python
 
 ```
 # Filter by span name
+
 mlflow.search_traces(filter_string="span.name = 'llm_call'")
 
+
+
 # Pattern matching on span name
+
 mlflow.search_traces(filter_string="span.name LIKE '%embedding%'")
 
+
+
 # Filter by span type
+
 mlflow.search_traces(filter_string="span.type = 'LLM'")
 ```
 
@@ -248,9 +328,13 @@ python
 
 ```
 # Filter by feedback ratings
+
 mlflow.search_traces(filter_string="feedback.rating = 'positive'")
 
+
+
 # Pattern matching on feedback
+
 mlflow.search_traces(filter_string="feedback.user_comment LIKE '%helpful%'")
 ```
 
@@ -260,9 +344,13 @@ python
 
 ```
 # Filter by expectation values
+
 mlflow.search_traces(filter_string="expectation.accuracy = 'high'")
 
+
+
 # Pattern matching on expectations
+
 mlflow.search_traces(filter_string="expectation.label ILIKE '%success%'")
 ```
 
@@ -273,13 +361,22 @@ python
 ```
 import time
 
+
+
 # Get traces that completed in the last hour
+
 end_time = int(time.time() * 1000)
+
 mlflow.search_traces(filter_string=f"trace.end_time_ms > {end_time - 3600000}")
 
+
+
 # Find traces that ended within a specific time range
+
 mlflow.search_traces(
+
     filter_string=f"trace.end_time_ms >= {end_time - 7200000} AND trace.end_time_ms <= {end_time - 3600000}"
+
 )
 ```
 
@@ -289,33 +386,61 @@ python
 
 ```
 # Complex query with tags and status
+
 mlflow.search_traces(filter_string="trace.status = 'OK' AND tag.importance = 'high'")
 
+
+
 # Production error analysis with execution time
+
 mlflow.search_traces(
+
     filter_string="""
+
         tag.environment = 'production'
+
         AND trace.status = 'ERROR'
+
         AND trace.execution_time_ms > 500
+
     """
+
 )
+
+
 
 # Advanced query with span name and feedback
+
 mlflow.search_traces(
+
     filter_string="""
+
         span.name LIKE '%llm%'
+
         AND feedback.rating = 'positive'
+
         AND trace.execution_time_ms < 1000
+
     """
+
 )
 
+
+
 # Search with pattern matching and time range
+
 mlflow.search_traces(
+
     filter_string="""
+
         trace.name ILIKE '%inference%'
+
         AND trace.timestamp_ms > 1700000000000
+
         AND span.name LIKE '%llm%'
+
     """
+
 )
 ```
 
@@ -328,10 +453,16 @@ python
 ```
 import mlflow
 
+
+
 # Basic search with default DataFrame output
+
 traces_df = mlflow.search_traces(filter_string="trace.status = 'OK'")
 
+
+
 # Return as list of Trace objects
+
 traces_list = mlflow.search_traces(filter_string="trace.status = 'OK'", return_type="list")
 ```
 
@@ -380,6 +511,7 @@ python
 
 ```
 traces = mlflow.search_traces(filter_string="trace.status = 'OK'", return_type="list")
+
 # list[mlflow.entities.Trace]
 ```
 
@@ -396,9 +528,13 @@ python
 
 ```
 # Order by timestamp (most recent first)
+
 traces = mlflow.search_traces(order_by=["timestamp_ms DESC"])
 
+
+
 # Multiple ordering criteria
+
 traces = mlflow.search_traces(order_by=["timestamp_ms DESC", "status ASC"])
 ```
 
@@ -411,23 +547,43 @@ python
 ```
 from mlflow import MlflowClient
 
+
+
 client = MlflowClient()
+
 page_token = None
+
 all_traces = []
 
+
+
 while True:
+
     results = client.search_traces(
+
         experiment_ids=["1"],
+
         filter_string="status = 'OK'",
+
         max_results=100,
+
         page_token=page_token,
+
     )
+
+
 
     all_traces.extend(results)
 
+
+
     if not results.token:
+
         break
+
     page_token = results.token
+
+
 
 print(f"Found {len(all_traces)} total traces")
 ```
@@ -436,9 +592,7 @@ print(f"Found {len(all_traces)} total traces")
 
 ### MLflow Version Compatibility[​](#mlflow-version-compatibility "Direct link to MLflow Version Compatibility")
 
-Schema Changes in MLflow 3
-
-**DataFrame Schema**: The format depends on the MLflow version used to **call** the `search_traces` API, not the version used to log the traces. MLflow 3.x uses different column names than 2.x.
+:::note Schema Changes in MLflow 3 **DataFrame Schema**: The format depends on the MLflow version used to **call** the `search_traces` API, not the version used to log the traces. MLflow 3.x uses different column names than 2.x. :::
 
 ### Performance Tips[​](#performance-tips "Direct link to Performance Tips")
 

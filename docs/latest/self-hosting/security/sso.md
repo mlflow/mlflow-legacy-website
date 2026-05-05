@@ -50,16 +50,27 @@ javascript
 
 ```
 exports.onExecutePostLogin = async (event, api) => {
+
   const email = event.user.email;
+
   if (email == "somebody@gmail.com") {
+
     var group = "mlflow-admin"
+
   } else {
+
     var group = "mlflow"
+
   }
+
   api.idToken.setCustomClaim(
+
     'urn:mlflow:groups',
+
     [group]
+
   );
+
 };
 ```
 
@@ -91,20 +102,37 @@ python
 import requests
 
 
+
+
+
 def get_user_groups(access_token):
+
     resp = requests.get(
+
         "https://www.googleapis.com/oauth2/v3/userinfo",
+
         headers={"Authorization": f"Bearer {access_token}"},
+
         timeout=10,
+
     )
+
     resp.raise_for_status()
+
     userinfo = resp.json()
 
+
+
     # userinfo contains: email, name, picture, sub, etc.
+
     email = userinfo.get("email")
 
+
+
     if email == "somebody@gmail.com":
+
         return ["mlflow-admin"]
+
     return ["mlflow"]
 ```
 
@@ -146,19 +174,33 @@ bash
 
 ```
 # You can view the OIDC client ID and client secret value in the application information page in
+
 # the Okta Auth0 / Google Identity platform / AWS Cognito / Azure Entra ID portal.
+
 export OIDC_CLIENT_ID=...
+
 export OIDC_CLIENT_SECRET=...
 
+
+
 # this is the callback URL (redirect URI) that is configured for the OIDC application.
+
 export OIDC_REDIRECT_URI="http://localhost:8080/callback"
 
+
+
 # NOTE: OAuth 2.0 and OIDC define the scope parameter as a space-separated list of scope values
+
 export OIDC_SCOPE="openid profile email"
 
+
+
 # Set a stable, secret value (e.g. 32+ random characters) and keep it the same across restarts and replicas.
+
 # If you don't set it, the app will use an auto-generated key that changes on server restart / UI page reloading
+
 # and breaks sessions.
+
 export SECRET_KEY="your-stable-secret-at-least-32-chars-long"
 ```
 
@@ -170,9 +212,13 @@ bash
 
 ```
 # The ${domain} is the domain value that you can view on the Okta application's basic information page.
+
 export OIDC_DISCOVERY_URL="https://${domain}/.well-known/openid-configuration"
 
+
+
 # this value must match the key used in the Okta post-login trigger action "api.idToken.setCustomClaim"
+
 export OIDC_GROUPS_ATTRIBUTE="urn:mlflow:groups"
 ```
 
@@ -183,10 +229,16 @@ bash
 ```
 export OIDC_DISCOVERY_URL="https://accounts.google.com/.well-known/openid-configuration"
 
+
+
 # `OIDC_GROUP_DETECTION_PLUGIN` is only required for Google Identity Platform configuration.
+
 # assuming you put the plugin Python file under current directory and the file name is
+
 # 'google_oidc_auth_plugin.py'. For plugin code, please refer to the section
+
 # "Google Identity Platform configuration".
+
 export OIDC_GROUP_DETECTION_PLUGIN=google_oidc_auth_plugin
 ```
 
@@ -196,8 +248,12 @@ bash
 
 ```
 # The ${region} is your AWS account region, e.g. "ap-southeast-2"
+
 # The ${user_pool_id} is the user pool ID, e.g. ap-southeast-2_XXXXXXXXX
+
 export OIDC_DISCOVERY_URL="https://cognito-idp.${region}.amazonaws.com/${user_pool_id}/.well-known/openid-configuration"
+
+
 
 export OIDC_GROUPS_ATTRIBUTE=cognito:groups
 ```
@@ -208,14 +264,23 @@ bash
 
 ```
 
+
 # You can view the ${tenant-id} in the "overview" page of the Azure Entra ID portal.
+
 export OIDC_DISCOVERY_URL="https://login.microsoftonline.com/${tenant-id}/v2.0/.well-known/openid-configuration"
 
+
+
 # The OIDC_GROUP_NAME must be set to the ID of "mlflow" group that is created in Azure Entra.
+
 # You can view the group ID in the Azure Entra "all groups" portal.
+
 export OIDC_GROUP_NAME=<the corresponding Azure Entra group ID>
+
 # The OIDC_GROUP_NAME must be set to the ID of "mlflow-admin" group that is created in Azure Entra.
+
 # You can view the group ID in the Azure Entra "all groups" portal.
+
 export OIDC_ADMIN_GROUP_NAME=<the corresponding Azure Entra group ID>
 ```
 
@@ -251,8 +316,11 @@ bash
 
 ```
 # set the `MLFLOW_TRACKING_USERNAME` to the username of the Okta account / Google account
+
 export MLFLOW_TRACKING_USERNAME=...
+
 # set the `MLFLOW_TRACKING_PASSWORD` to the access token that is generated on the OIDC user permission page.
+
 export MLFLOW_TRACKING_PASSWORD=...
 ```
 
@@ -262,12 +330,19 @@ python
 
 ```
 import os
+
 import mlflow
+
+
 
 mlflow.set_tracking_uri("http://localhost:8080")
 
+
+
 # Use MLflow
+
 with mlflow.start_run():
+
     mlflow.log_param("key", "value")
 ```
 

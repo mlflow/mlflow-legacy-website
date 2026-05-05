@@ -12,33 +12,61 @@ python
 
 ```
 from abc import ABC, abstractmethod
+
 from typing import Iterable
+
+
 
 from mlflow.entities import Workspace
 
 
+
+
+
 class AbstractStore(ABC):
+
     @abstractmethod
+
     def list_workspaces(self) -> Iterable[Workspace]: ...
 
+
+
     @abstractmethod
+
     def get_workspace(self, workspace_name: str) -> Workspace: ...
 
+
+
     def create_workspace(self, workspace: Workspace) -> Workspace:
+
         raise NotImplementedError
+
+
 
     def update_workspace(self, workspace: Workspace) -> Workspace:
+
         raise NotImplementedError
+
+
 
     def delete_workspace(self, workspace_name: str) -> None:
+
         raise NotImplementedError
+
+
 
     def get_default_workspace(self) -> Workspace:
+
         raise NotImplementedError
 
+
+
     def resolve_artifact_root(
+
         self, default_artifact_root: str | None, workspace_name: str
+
     ) -> tuple[str | None, bool]:
+
         return default_artifact_root, True
 ```
 
@@ -69,8 +97,11 @@ bash
 
 ```
 mlflow server \
+
   --backend-store-uri postgresql://localhost/mlflow \
+
   --enable-workspaces
+
 # Uses default SQL provider (SqlAlchemyStore)
 ```
 
@@ -84,22 +115,39 @@ python
 
 ```
 from mlflow.store.artifact.artifact_repo import ArtifactRepository
+
 from mlflow.store.artifact.s3_artifact_repo import S3ArtifactRepository
 
 
+
+
+
 class WorkspaceAwareS3ArtifactRepository(ArtifactRepository):
+
     def for_workspace(self, workspace_name: str | None) -> "ArtifactRepository":
+
         """
+
         Return a workspace-scoped repository instance.
+
         """
+
         if workspace_name == "team-sensitive":
+
             # Use dedicated bucket with specific credentials
+
             return S3ArtifactRepository(
+
                 artifact_uri="s3://team-sensitive-bucket",
+
                 access_key_id=get_team_credentials(workspace_name),
+
             )
 
+
+
         # Default behavior
+
         return self
 ```
 

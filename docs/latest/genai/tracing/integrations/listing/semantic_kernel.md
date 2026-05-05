@@ -40,6 +40,8 @@ python
 ```
 import mlflow
 
+
+
 mlflow.semantic_kernel.autolog()
 ```
 
@@ -49,9 +51,13 @@ python
 
 ```
 import os
+
 from getpass import getpass
 
+
+
 # Set the OpenAI API key as an environment variable
+
 os.environ["OPENAI_API_KEY"] = getpass("openai_api_key: ")
 ```
 
@@ -67,24 +73,43 @@ python
 
 ```
 import openai
+
 from semantic_kernel import Kernel
+
 from semantic_kernel.connectors.ai.open_ai import OpenAIChatCompletion
+
 from semantic_kernel.functions.function_result import FunctionResult
 
+
+
 # Create a basic OpenAI client
+
 openai_client = openai.AsyncOpenAI()
 
+
+
 # Create a Semantic Kernel instance and register the OpenAI chat completion service
+
 kernel = Kernel()
+
 kernel.add_service(
+
     OpenAIChatCompletion(
+
         service_id="chat-gpt",
+
         ai_model_id="gpt-4o-mini",
+
         async_client=openai_client,
+
     )
+
 )
 
+
+
 answer = await kernel.invoke_prompt("Is sushi the best food ever?")
+
 print("AI says:", answer)
 ```
 
@@ -103,21 +128,38 @@ python
 ```
 import os
 
+
+
 os.environ["MLFLOW_USE_DEFAULT_TRACER_PROVIDER"] = "false"
 
+
+
 import mlflow
+
 from mlflow.entities.trace_location import MlflowExperimentLocation
 
+
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 exp_id = mlflow.set_experiment("Semantic Kernel").experiment_id
+
 mlflow.tracing.set_destination(MlflowExperimentLocation(exp_id))
+
+
 
 mlflow.semantic_kernel.autolog()
 
+
+
 # Add custom MLflow spans alongside the auto-generated Semantic Kernel traces
+
 with mlflow.start_span("custom_step") as span:
+
     span.set_inputs({"query": "test"})
+
     # your application logic here
+
     span.set_outputs({"result": "success"})
 ```
 

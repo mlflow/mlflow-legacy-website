@@ -17,7 +17,7 @@ Search
 
 Type your search here
 
-[](https://www.algolia.com/)
+Powered by[](https://www.algolia.com/)
 
 © 2025 MLflow Project, a Series of LF Projects, LLC.
 

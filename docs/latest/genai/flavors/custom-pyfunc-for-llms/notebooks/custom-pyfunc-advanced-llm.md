@@ -56,10 +56,17 @@ python
 ```
 # Load necessary libraries
 
+
+
 import accelerate
+
 import torch
+
 import transformers
+
 from huggingface_hub import snapshot_download
+
+
 
 import mlflow
 ```
@@ -82,6 +89,7 @@ python
 
 ```
 # Download the MPT-7B instruct model and tokenizer to a local directory cache
+
 snapshot_location = snapshot_download(repo_id="mosaicml/mpt-7b-instruct", local_dir="mpt-7b")
 ```
 
@@ -193,87 +201,170 @@ python
 
 ```
 class MPT(mlflow.pyfunc.PythonModel):
+
   def load_context(self, context):
+
       """
+
       This method initializes the tokenizer and language model
+
       using the specified model snapshot directory.
+
       """
+
       # Initialize tokenizer and language model
+
       self.tokenizer = transformers.AutoTokenizer.from_pretrained(
+
           context.artifacts["snapshot"], padding_side="left"
+
       )
 
+
+
       config = transformers.AutoConfig.from_pretrained(
+
           context.artifacts["snapshot"], trust_remote_code=True
+
       )
+
       # If you are running this in a system that has a sufficiently powerful GPU with available VRAM,
+
       # uncomment the configuration setting below to leverage triton.
+
       # Note that triton dramatically improves the inference speed performance
+
+
 
       # config.attn_config["attn_impl"] = "triton"
 
+
+
       self.model = transformers.AutoModelForCausalLM.from_pretrained(
+
           context.artifacts["snapshot"],
+
           config=config,
+
           torch_dtype=torch.bfloat16,
+
           trust_remote_code=True,
+
       )
 
+
+
       # NB: If you do not have a CUDA-capable device or have torch installed with CUDA support
+
       # this setting will not function correctly. Setting device to 'cpu' is valid, but
+
       # the performance will be very slow.
+
       self.model.to(device="cpu")
+
       # If running on a GPU-compatible environment, uncomment the following line:
+
       # self.model.to(device="cuda")
+
+
 
       self.model.eval()
 
+
+
   def _build_prompt(self, instruction):
+
       """
+
       This method generates the prompt for the model.
+
       """
+
       INSTRUCTION_KEY = "### Instruction:"
+
       RESPONSE_KEY = "### Response:"
+
       INTRO_BLURB = (
+
           "Below is an instruction that describes a task. "
+
           "Write a response that appropriately completes the request."
+
       )
+
+
 
       return f"""{INTRO_BLURB}
+
       {INSTRUCTION_KEY}
+
       {instruction}
+
       {RESPONSE_KEY}
+
       """
+
+
 
   def predict(self, context, model_input, params=None):
+
       """
+
       This method generates prediction for the given input.
+
       """
+
       prompt = model_input["prompt"][0]
 
+
+
       # Retrieve or use default values for temperature and max_tokens
+
       temperature = params.get("temperature", 0.1) if params else 0.1
+
       max_tokens = params.get("max_tokens", 1000) if params else 1000
 
+
+
       # Build the prompt
+
       prompt = self._build_prompt(prompt)
 
+
+
       # Encode the input and generate prediction
+
       # NB: Sending the tokenized inputs to the GPU here explicitly will not work if your system does not have CUDA support.
+
       # If attempting to run this with GPU support, change 'cpu' to 'cuda' for maximum performance
+
       encoded_input = self.tokenizer.encode(prompt, return_tensors="pt").to("cpu")
+
       output = self.model.generate(
+
           encoded_input,
+
           do_sample=True,
+
           temperature=temperature,
+
           max_new_tokens=max_tokens,
+
       )
 
+
+
       # Removing the prompt from the generated text
+
       prompt_length = len(self.tokenizer.encode(prompt, return_tensors="pt")[0])
+
       generated_response = self.tokenizer.decode(
+
           output[0][prompt_length:], skip_special_tokens=True
+
       )
+
+
 
       return {"candidates": [generated_response]}
 ```
@@ -288,27 +379,49 @@ python
 
 ```
 import numpy as np
+
 import pandas as pd
 
+
+
 import mlflow
+
 from mlflow.models.signature import ModelSignature
+
 from mlflow.types import ColSpec, DataType, ParamSchema, ParamSpec, Schema
 
+
+
 # Define input and output schema
+
 input_schema = Schema([
+
   ColSpec(DataType.string, "prompt"),
+
 ])
+
 output_schema = Schema([ColSpec(DataType.string, "candidates")])
 
+
+
 parameters = ParamSchema([
+
   ParamSpec("temperature", DataType.float, np.float32(0.1), None),
+
   ParamSpec("max_tokens", DataType.integer, np.int32(1000), None),
+
 ])
+
+
 
 signature = ModelSignature(inputs=input_schema, outputs=output_schema, params=parameters)
 
 
+
+
+
 # Define input example
+
 input_example = pd.DataFrame({"prompt": ["What is machine learning?"]})
 ```
 
@@ -320,9 +433,14 @@ python
 
 ```
 # If you are running this tutorial in local mode, leave the next line commented out.
+
 # Otherwise, uncomment the following line and set your tracking uri to your local or remote tracking server.
 
+
+
 # mlflow.set_tracking_uri("http://127.0.0.1:8080")
+
+
 
 mlflow.set_experiment(experiment_name="mpt-7b-instruct-evaluation")
 ```
@@ -339,25 +457,45 @@ python
 
 ```
 # Get the current base version of torch that is installed, without specific version modifiers
+
 torch_version = torch.__version__.split("+")[0]
 
+
+
 # Start an MLflow run context and log the MPT-7B model wrapper along with the param-included signature to
+
 # allow for overriding parameters at inference time
+
 with mlflow.start_run():
+
   model_info = mlflow.pyfunc.log_model(
+
       name="mpt-7b-instruct",
+
       python_model=MPT(),
+
       # NOTE: the artifacts dictionary mapping is critical! This dict is used by the load_context() method in our MPT() class.
+
       artifacts={"snapshot": snapshot_location},
+
       pip_requirements=[
+
           f"torch=={torch_version}",
+
           f"transformers=={transformers.__version__}",
+
           f"accelerate=={accelerate.__version__}",
+
           "einops",
+
           "sentencepiece",
+
       ],
+
       input_example=input_example,
+
       signature=signature,
+
   )
 ```
 
@@ -390,10 +528,15 @@ python
 
 ```
 # The execution of this is commented out for the purposes of runtime on CPU.
+
 # If you are running this on a system with a sufficiently powerful GPU, you may uncomment and interface with the model!
 
+
+
 # loaded_model.predict(pd.DataFrame(
+
 #     {"prompt": ["What is machine learning?"]}), params={"temperature": 0.6}
+
 # )
 ```
 

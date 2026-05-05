@@ -39,7 +39,10 @@ python
 ```
 import mlflow
 
+
+
 mlflow.set_tracking_uri("your-tracking-uri")
+
 mlflow.create_experiment("evaluation-judges")
 ```
 
@@ -50,11 +53,18 @@ python
 ```
 from mlflow.genai.judges import make_judge
 
+
+
 quality_judge = make_judge(
+
     name="response_quality",
+
     instructions=("Evaluate if {{ outputs }} is high quality for {{ inputs }}."),
+
     model="anthropic:/claude-opus-4-1-20250805",
+
     feedback_value_type=str,
+
 )
 ```
 
@@ -66,8 +76,11 @@ python
 
 ```
 # Register the judge
+
 registered = quality_judge.register()
+
 # You can pass experiment_id to register the judge to a specific experiment
+
 # registered = quality_judge.register(experiment_id=experiment_id)
 ```
 
@@ -79,17 +92,29 @@ python
 
 ```
 # Update and register a new version of the judge
+
 quality_judge_v2 = make_judge(
+
     name="response_quality",  # Same name
+
     instructions=(
+
         "Evaluate if {{ outputs }} is high quality, accurate, and complete "
+
         "for the question in {{ inputs }}."
+
     ),
+
     model="anthropic:/claude-3.5-sonnet-20241022",  # Updated model
+
     feedback_value_type=str,
+
 )
 
+
+
 # Register the updated judge
+
 registered_v2 = quality_judge_v2.register(experiment_id=experiment_id)
 ```
 
@@ -102,9 +127,14 @@ python
 ```
 from mlflow.genai import get_scorer
 
+
+
 # Get the latest version
+
 latest_judge = get_scorer(name="response_quality")
+
 # or specify experiment_id to get a scorer from a specific experiment
+
 # latest_judge = get_scorer(name="response_quality", experiment_id=experiment_id)
 ```
 
@@ -117,7 +147,11 @@ python
 ```
 from mlflow.genai import list_scorers
 
+
+
 all_scorers = list_scorers(experiment_id=experiment_id)
+
 for scorer in all_scorers:
+
     print(f"Scorer: {scorer.name}, Model: {scorer.model}")
 ```

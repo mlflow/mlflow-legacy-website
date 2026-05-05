@@ -1,5 +1,9 @@
 # Deploy MLflow Model to Kubernetes
 
+MLServer integration is deprecated
+
+The MLflow MLServer integration (`--enable-mlserver` / `enable_mlserver=True`) is deprecated and will be removed in **MLflow 3.13**. Seldon, the company that maintained MLServer, is in [liquidation](https://github.com/SeldonIO/MLServer/issues/2404#issuecomment-4210286631), and the [MLServer project is no longer actively maintained](https://github.com/SeldonIO/MLServer/commits/master/). The guidance below is preserved for users on existing MLServer-based deployments. For new Kubernetes deployments, build the Docker image without `--enable-mlserver` (which uses the default FastAPI scoring server) or use a managed serving platform.
+
 ## Using MLServer as the Inference Server[​](#using-mlserver-as-the-inference-server "Direct link to Using MLServer as the Inference Server")
 
 By default, MLflow deployment uses [FastAPI](https://fastapi.tiangolo.com/), a widely used ASGI web application framework for Python, to serve the inference endpoint. However, FastAPI does not support horizontal scaling natively and might not be suitable for production use cases at scale. To address this gap, MLflow integrates with [MLServer](https://mlserver.readthedocs.io/en/latest) as an alternative deployment option, which is used as a core Python inference server in Kubernetes-native frameworks like [Seldon Core](https://docs.seldon.ai/seldon-core-2) and [KServe](https://kserve.github.io/website) (formerly known as KFServing). Using MLServer, you can take advantage of the scalability and reliability of Kubernetes to serve your model at scale. See [Serving Framework](/docs/latest/ml/deployment/deploy-model-locally.md#serving-frameworks) for the detailed comparison between FastAPI and MLServer, and why MLServer is a better choice for ML production use cases.
@@ -24,18 +28,22 @@ python
 ```
 import mlflow
 
+
+
 mlflow.models.build_docker(
+
     model_uri=f"models:/{model_id}",
+
     name="<image_name>",
+
     enable_mlserver=True,
+
 )
 ```
 
 If you want to use the bare-bones FastAPI server instead of MLServer, remove `enable_mlserver=True`. For other options, see the [mlflow.models.build\_docker](/docs/latest/api_reference/python_api/mlflow.models.html#mlflow.models.build_docker) function documentation.
 
-important
-
-Since MLflow 2.10.1, the Docker image spec has been changed to reduce the image size and improve the performance. Most notably, Java is no longer installed in the image except for the Java model flavor such as `spark`. If you need to install Java for other flavors, e.g. custom Python model that uses SparkML, please specify the `--install-java` flag to enforce Java installation.
+:::warning important Since MLflow 2.10.1, the Docker image spec has been changed to reduce the image size and improve the performance. Most notably, Java is no longer installed in the image except for the Java model flavor such as `spark`. If you need to install Java for other flavors, e.g. custom Python model that uses SparkML, please specify the `--install-java` flag to enforce Java installation. :::
 
 ## Deployment Steps[​](#deployment-steps "Direct link to Deployment Steps")
 

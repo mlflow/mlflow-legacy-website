@@ -11,12 +11,20 @@ text
 ```
 import mlflow
 
+
+
 with mlflow.start_run():
+
     mlflow.<flavor>.log_model(
+
         model,
+
         ...
+
         # Specify a list of prompt URLs or prompt objects.
+
         prompts=["prompts:/summarization-prompt/2"]
+
     )
 ```
 
@@ -36,27 +44,49 @@ python
 
 ```
 from langchain_core.prompts import ChatPromptTemplate
+
 from langchain_openai import ChatOpenAI
 
+
+
 # Load registered prompt
+
 prompt = mlflow.genai.load_prompt("prompts:/summarization-prompt/2")
 
+
+
 # Create LangChain prompt object
+
 langchain_prompt = ChatPromptTemplate.from_messages([
+
     (
+
         # IMPORTANT: Convert prompt template from double to single curly braces format
+
         "system",
+
         prompt.to_single_brace_format(),
+
     ),
+
     ("placeholder", "{messages}"),
+
 ])
 
+
+
 # Define the LangChain chain
+
 llm = ChatOpenAI()
+
 chain = langchain_prompt | llm
 
+
+
 # Invoke the chain
+
 response = chain.invoke({"num_sentences": 1, "sentences": "This is a test sentence."})
+
 print(response)
 ```
 
@@ -68,6 +98,7 @@ python
 
 ```
 with mlflow.start_run(run_name="summarizer-model"):
+
     mlflow.langchain.log_model(chain, name="model", prompts=["prompts:/summarization-prompt/2"])
 ```
 
@@ -94,10 +125,16 @@ text
 ```
 import mlflow
 
+
+
 # Register a new prompt
+
 prompt = mlflow.genai.register_prompt(
+
     name="chat-prompt",
+
     template="You are an expert in programming. Please answer the user's question about programming.",
+
 )
 ```
 
@@ -114,47 +151,91 @@ python
 ```
 # %%writefile chatbot.py
 
+
+
 import mlflow
+
 from typing import Annotated
+
 from typing_extensions import TypedDict
 
+
+
 from langchain_openai import ChatOpenAI
+
 from langgraph.graph import StateGraph, START, END
+
 from langgraph.graph.message import add_messages
 
 
+
+
+
 class State(TypedDict):
+
     messages: list
 
 
+
+
+
 llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.1)
+
 system_prompt = mlflow.genai.load_prompt("prompts:/chat-prompt/1")
 
 
+
+
+
 def add_system_message(state: State):
+
     return {
+
         "messages": [
+
             {
+
                 "role": "system",
+
                 "content": system_prompt.to_single_brace_format(),
+
             },
+
             *state["messages"],
+
         ]
+
     }
 
 
+
+
+
 def chatbot(state: State):
+
     return {"messages": [llm.invoke(state["messages"])]}
 
 
+
+
+
 graph_builder = StateGraph(State)
+
 graph_builder.add_node("add_system_message", add_system_message)
+
 graph_builder.add_node("chatbot", chatbot)
+
 graph_builder.add_edge(START, "add_system_message")
+
 graph_builder.add_edge("add_system_message", "chatbot")
+
 graph_builder.add_edge("chatbot", END)
 
+
+
 graph = graph_builder.compile()
+
+
 
 mlflow.models.set_model(graph)
 ```
@@ -167,9 +248,13 @@ python
 
 ```
 with mlflow.start_run():
+
     model_info = mlflow.langchain.log_model(
+
         lc_model="./chatbot.py",
+
         name="graph",
+
     )
 ```
 
@@ -185,18 +270,31 @@ python
 
 ```
 # Enable MLflow tracing for LangChain to view the prompt passed to LLM.
+
 mlflow.langchain.autolog()
 
+
+
 # Load the graph
+
 graph = mlflow.langchain.load_model(model_info.model_uri)
 
+
+
 graph.invoke({
+
     "messages": [
+
         {
+
             "role": "user",
+
             "content": "What is the difference between multi-threading and multi-processing?",
+
         }
+
     ]
+
 })
 ```
 

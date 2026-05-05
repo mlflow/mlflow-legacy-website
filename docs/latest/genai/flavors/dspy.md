@@ -1,8 +1,6 @@
 # MLflow DSPy Flavor
 
-attention
-
-The `dspy` flavor is under active development and is marked as Experimental. Public APIs are subject to change and new features may be added as the flavor evolves.
+:::warning attention The `dspy` flavor is under active development and is marked as Experimental. Public APIs are subject to change and new features may be added as the flavor evolves. :::
 
 ## Introduction[​](#introduction "Direct link to Introduction")
 
@@ -56,6 +54,8 @@ python
 ```
 import mlflow
 
+
+
 mlflow.dspy.autolog()
 ```
 
@@ -80,19 +80,36 @@ python
 ```
 import dspy
 
+
+
 # Define our language model
+
 lm = dspy.LM(model="openai/gpt-4o-mini", max_tokens=250)
+
 dspy.settings.configure(lm=lm)
 
 
+
+
+
 # Define a Chain of Thought module
+
 class CoT(dspy.Module):
+
     def __init__(self):
+
         super().__init__()
+
         self.prog = dspy.ChainOfThought("question -> answer")
 
+
+
     def forward(self, question):
+
         return self.prog(question=question)
+
+
+
 
 
 dspy_model = CoT()
@@ -113,13 +130,22 @@ python
 ```
 import mlflow
 
+
+
 # Start an MLflow run
+
 with mlflow.start_run():
+
     # Log the model
+
     model_info = mlflow.dspy.log_model(
+
         dspy_model,
+
         name="model",
+
         input_example="what is 2 + 2?",
+
     )
 ```
 
@@ -134,11 +160,18 @@ python
 ```
 import mlflow
 
+
+
 # Load the model as an MLflow PythonModel
+
 model = mlflow.pyfunc.load_model(model_info.model_uri)
 
+
+
 # Predict with the object
+
 response = model.predict("What kind of bear is best?")
+
 print(response)
 ```
 
@@ -148,18 +181,31 @@ python
 
 ```
 {
+
     "reasoning": """The question "What kind of bear is best?" is often associated with a
+
     humorous reference from the television show "The Office," where the character Jim
+
     Halpert jokingly states, "Bears, beets, Battlestar Galactica." However, if we consider
+
     the question seriously, it depends on the context. Different species of bears have
+
     different characteristics and adaptations that make them "best" in various ways.
+
     For example, the American black bear is known for its adaptability, while the polar bear is
+
     the largest land carnivore and is well adapted to its Arctic environment. Ultimately, the
+
     answer can vary based on personal preference or specific criteria such as strength,
+
     intelligence, or adaptability.""",
+
     "answer": """There isn\'t a definitive answer, as it depends on the context. However, many
+
     people humorously refer to the American black bear or the polar bear when discussing
+
     "the best" kind of bear.""",
+
 }
 ```
 
@@ -173,7 +219,9 @@ python
 
 ```
 stream_response = model.predict_stream("What kind of bear is best?")
+
 for output in stream_response:
+
     print(output)
 ```
 
@@ -183,19 +231,33 @@ python
 
 ```
 {"predict_name": "prog.predict", "signature_field_name": "reasoning", "chunk": "The"}
+
 {
+
     "predict_name": "prog.predict",
+
     "signature_field_name": "reasoning",
+
     "chunk": " question",
+
 }
+
 {"predict_name": "prog.predict", "signature_field_name": "reasoning", "chunk": " of"}
+
 {"predict_name": "prog.predict", "signature_field_name": "reasoning", "chunk": " what"}
+
 {"predict_name": "prog.predict", "signature_field_name": "reasoning", "chunk": " kind"}
+
 {"predict_name": "prog.predict", "signature_field_name": "reasoning", "chunk": " of"}
+
 {"predict_name": "prog.predict", "signature_field_name": "reasoning", "chunk": " bear"}
+
 {"predict_name": "prog.predict", "signature_field_name": "reasoning", "chunk": " is"}
+
 {"predict_name": "prog.predict", "signature_field_name": "reasoning", "chunk": " best"}
+
 {"predict_name": "prog.predict", "signature_field_name": "reasoning", "chunk": " is"}
+
 ...
 ```
 

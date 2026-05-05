@@ -30,18 +30,31 @@ python
 
 ```
 import mlflow
+
 import transformers
+
+
 
 pipeline = transformers.pipeline("text-generation", model="gpt2")
 
+
+
 with mlflow.start_run():
+
     model_info = mlflow.transformers.save_model(
+
         transformers_model=pipeline,
+
         artifact_path="model",
+
         save_pretrained=False,
+
     )
 
+
+
 print(f"Inferred task: {model_info.flavors['transformers']['task']}")
+
 # >> Inferred task: text-generation
 ```
 
@@ -64,13 +77,22 @@ python
 ```
 import mlflow
 
+
+
 with mlflow.start_run():
+
     mlflow.transformers.log_model(
+
         transformers_model=pipeline,
+
         name="model",
+
         task="llm/v1/chat",  # <= Specify the llm/v1 task type
+
         # Optional, recommended for large models to avoid creating a local copy of the model weights
+
         save_pretrained=False,
+
     )
 ```
 
@@ -98,59 +120,113 @@ python
 
 ```
 import mlflow
+
 import transformers
+
+
 
 pipeline = transformers.pipeline("text-generation", "gpt2")
 
+
+
 with mlflow.start_run():
+
     model_info = mlflow.transformers.log_model(
+
         transformers_model=pipeline,
+
         name="model",
+
         task="llm/v1/chat",
+
         input_example={
+
             "messages": [
+
                 {"role": "system", "content": "You are a bot."},
+
                 {"role": "user", "content": "Hello, how are you?"},
+
             ]
+
         },
+
         save_pretrained=False,
+
     )
 
+
+
 # Model metadata logs additional field "inference_task"
+
 print(model_info.flavors["transformers"]["inference_task"])
+
 # >> llm/v1/chat
 
+
+
 # The original native task type is also saved
+
 print(model_info.flavors["transformers"]["task"])
+
 # >> text-generation
 
+
+
 # Model signature is set to the chat API spec
+
 print(model_info.signature)
+
 # >> inputs:
+
 # >>   ['messages': Array({content: string (required), name: string (optional), role: string (required)}) (required), 'temperature': double (optional), 'max_tokens': long (optional), 'stop': Array(string) (optional), 'n': long (optional), 'stream': boolean (optional)]
+
 # >> outputs:
+
 # >>   ['id': string (required), 'object': string (required), 'created': long (required), 'model': string (required), 'choices': Array({finish_reason: string (required), index: long (required), message: {content: string (required), name: string (optional), role: string (required)} (required)}) (required), 'usage': {completion_tokens: long (required), prompt_tokens: long (required), total_tokens: long (required)} (required)]
+
 # >> params:
+
 # >>     None
 
+
+
 # The model can be served with the OpenAI-compatible inference API
+
 pyfunc_model = mlflow.pyfunc.load_model(model_info.model_uri)
+
 prediction = pyfunc_model.predict({
+
     "messages": [
+
         {"role": "system", "content": "You are a bot."},
+
         {"role": "user", "content": "Hello, how are you?"},
+
     ],
+
     "temperature": 0.5,
+
     "max_tokens": 200,
+
 })
+
 print(prediction)
+
 # >> [{'choices': [{'finish_reason': 'stop',
+
 # >>               'index': 0,
+
 # >>               'message': {'content': 'I'm doing well, thank you for asking.', 'role': 'assistant'}}],
+
 # >>   'created': 1719875820,
+
 # >>   'id': '355c4e9e-040b-46b0-bf22-00e93486100c',
+
 # >>   'model': 'gpt2',
+
 # >>   'object': 'chat.completion',
+
 # >>   'usage': {'completion_tokens': 7, 'prompt_tokens': 13, 'total_tokens': 20}}]
 ```
 
@@ -177,18 +253,26 @@ python
 
 ```
 with mlflow.start_run():
+
     model_info = mlflow.transformers.log_model(
+
         transformers_model=pipeline,
+
         name="model",
+
         task="llm/v1/chat",
+
         model_config={
+
             "temperature": 0.5,  # <= Set the default temperature
+
             "stop": ["foo", "bar"],  # <= Set the default stop sequence
+
         },
+
         save_pretrained=False,
+
     )
 ```
 
-attention
-
-The `stop` parameter can be used to specify the stop sequence for the `llm/v1/chat` and `llm/v1/completions` tasks. We emulate the behavior of the `stop` parameter in the OpenAI APIs by passing the [stopping\_criteria](https://huggingface.co/docs/transformers/main_classes/text_generation#transformers.GenerationMixin.generate.stopping_criteria) to the Transformers pipeline, with the token IDs of the given stop sequence. However, the behavior may not be stable because the tokenizer does not always generate the same token IDs for the same sequence in different sentences, especially for `sentence-piece` based tokenizers.
+:::warning attention The `stop` parameter can be used to specify the stop sequence for the `llm/v1/chat` and `llm/v1/completions` tasks. We emulate the behavior of the `stop` parameter in the OpenAI APIs by passing the [stopping\_criteria](https://huggingface.co/docs/transformers/main_classes/text_generation#transformers.GenerationMixin.generate.stopping_criteria) to the Transformers pipeline, with the token IDs of the given stop sequence. However, the behavior may not be stable because the tokenizer does not always generate the same token IDs for the same sequence in different sentences, especially for `sentence-piece` based tokenizers. :::

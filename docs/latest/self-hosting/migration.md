@@ -27,9 +27,11 @@ mlflow db upgrade <backend-store-url>
 
 The command will update the database schema to the latest version using [Alembic](https://alembic.sqlalchemy.org/).
 
-important
+:::warning important
 
 Schema migrations can be slow and are not guaranteed to be transactional. Always take a backup of the database before running the migration.
+
+:::
 
 ## Semantic versioning[​](#semantic-versioning "Direct link to Semantic versioning")
 

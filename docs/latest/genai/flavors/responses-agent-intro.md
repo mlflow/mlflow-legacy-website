@@ -40,30 +40,55 @@ python
 
 ```
 from mlflow.pyfunc import ResponsesAgent
+
 from mlflow.types.responses import ResponsesAgentRequest, ResponsesAgentResponse
 
 
+
+
+
 class SimpleResponsesAgent(ResponsesAgent):
+
     @mlflow.trace(span_type=SpanType.AGENT)
+
     def predict(self, request: ResponsesAgentRequest) -> ResponsesAgentResponse:
+
         return ResponsesAgentResponse(
+
             output=[
+
                 self.create_function_call_item(
+
                     id="fc_1",
+
                     call_id="call_1",
+
                     name="python_exec",
+
                     arguments='{"code":"result = 4 * 3\\nprint(result)"}',
+
                 ),
+
                 self.create_function_call_output_item(
+
                     call_id="call_1",
+
                     output="12\n",
+
                 ),
+
                 self.create_text_output_item(
+
                     text="The result of 4 * 3 in Python is 12.",
+
                     id="msg_1",
+
                 ),
+
             ],
+
             custom_outputs={"key1": "custom-value1"},
+
         )
 ```
 
@@ -86,31 +111,59 @@ python
 from mlflow.types.responses import ResponsesAgentStreamEvent
 
 
+
+
+
 class SimpleResponsesAgent(ResponsesAgent):
+
     # ... continuing from above
+
     @mlflow.trace(span_type=SpanType.AGENT)
+
     def predict_stream(
+
         self, request: ResponsesAgentRequest
+
     ) -> Generator[ResponsesAgentStreamEvent, None, None]:
+
         # stream text, all with the same item_id
+
         yield ResponsesAgentStreamEvent(
+
             **self.create_text_delta(delta="Hello", item_id="msg_1"),
-        )
-        yield ResponsesAgentStreamEvent(
-            **self.create_text_delta(delta="world", item_id="msg_1"),
-        )
-        yield ResponsesAgentStreamEvent(
-            **self.create_text_delta(delta="!", item_id="msg_1"),
+
         )
 
-        # the text output item id should be the same
-        # item_id as the streamed text deltas
         yield ResponsesAgentStreamEvent(
+
+            **self.create_text_delta(delta="world", item_id="msg_1"),
+
+        )
+
+        yield ResponsesAgentStreamEvent(
+
+            **self.create_text_delta(delta="!", item_id="msg_1"),
+
+        )
+
+
+
+        # the text output item id should be the same
+
+        # item_id as the streamed text deltas
+
+        yield ResponsesAgentStreamEvent(
+
             type="response.output_item.done",
+
             item=self.create_text_output_item(
+
                 text="Hello world!",
+
                 id="msg_1",
+
             ),
+
         )
 ```
 
@@ -124,34 +177,65 @@ python
 from mlflow.types.responses import ResponsesAgentStreamEvent
 
 
+
+
+
 class SimpleResponsesAgent(ResponsesAgent):
+
     # ... continuing from above
+
     @mlflow.trace(span_type=SpanType.AGENT)
+
     def predict_stream(
+
         self, request: ResponsesAgentRequest
+
     ) -> Generator[ResponsesAgentStreamEvent, None, None]:
+
         yield ResponsesAgentStreamEvent(
+
             type="response.output_item.done",
+
             item=self.create_function_call_item(
+
                 id="fc_1",
+
                 call_id="call_1",
+
                 name="python_exec",
+
                 arguments='{"code":"result = 4 * 3\\nprint(result)"}',
+
             ),
+
         )
+
         yield ResponsesAgentStreamEvent(
+
             type="response.output_item.done",
+
             item=self.create_function_call_output_item(
+
                 call_id="call_1",
+
                 output="12\n",
+
             ),
+
         )
+
         yield ResponsesAgentStreamEvent(
+
             type="response.output_item.done",
+
             item=self.create_text_output_item(
+
                 text="The result of 4 * 3 in Python is 12.",
+
                 id="msg_1",
+
             ),
+
         )
 ```
 
@@ -163,9 +247,13 @@ python
 
 ```
 with mlflow.start_run():
+
     logged_agent_info = mlflow.pyfunc.log_model(
+
         python_model="agent.py",  # replace with your relative path to agent code
+
         name="agent",
+
     )
 ```
 
@@ -196,20 +284,37 @@ python
 from mlflow.pyfunc import ResponsesAgent
 
 
+
+
+
 class MyResponsesAgent(ResponsesAgent): ...
 
 
+
+
+
 responses_agent = MyResponsesAgent()
+
 responses_agent.predict({
+
     "input": [{"role": "user", "content": "what is 4*3 in python"}],
+
     "context": {"conversation_id": "123", "user_id": "456"},
+
 })
+
 # ... log responses_agent using code from above
+
 # load it back from mlflow
+
 loaded_model = mlflow.pyfunc.load_model(path)
+
 loaded_model.predict({
+
     "input": [{"role": "user", "content": "what is 4*3 in python"}],
+
     "context": {"conversation_id": "123", "user_id": "456"},
+
 })
 ```
 
@@ -230,17 +335,29 @@ json
 
 ```
 {
+
   "type": "message",
+
   "id": "",
+
   "content": [
+
     {
+
       "annotations": [],
+
       "text": "",
+
       "type": "output_text"
+
     }
+
   ],
+
   "role": "assistant",
+
   "status": "completed"
+
 }
 ```
 
@@ -250,8 +367,11 @@ json
 
 ```
 {
+
   "role": "assistant",
+
   "content": ""
+
 }
 ```
 
@@ -265,12 +385,19 @@ json
 
 ```
 {
+
   "type": "function_call",
+
   "id": "fc_1",
+
   "arguments": "",
+
   "call_id": "call_1",
+
   "name": "",
+
   "status": "completed"
+
 }
 ```
 
@@ -280,18 +407,31 @@ json
 
 ```
 {
+
   "role": "assistant",
+
   "content": "",
+
   "tool_calls": [
+
     {
+
       "id": "call_1",
+
       "type": "function",
+
       "function": {
+
         "name": "",
+
         "arguments": ""
+
       }
+
     }
+
   ]
+
 }
 ```
 
@@ -305,9 +445,13 @@ json
 
 ```
 {
+
   "type": "function_call_output",
+
   "call_id": "call_1",
+
   "output": ""
+
 }
 ```
 
@@ -317,9 +461,13 @@ json
 
 ```
 {
+
   "role": "tool",
+
   "content": "12",
+
   "tool_call_id": "call_1"
+
 }
 ```
 
@@ -333,11 +481,17 @@ json
 
 ```
 {
+
   "name": "",
+
   "parameters": {},
+
   "strict": true,
+
   "type": "function",
+
   "description": ""
+
 }
 ```
 
@@ -347,13 +501,21 @@ json
 
 ```
 {
+
   "type": "function",
+
   "function": {
+
     "name": "",
+
     "description": "",
+
     "parameters": {},
+
     "strict": true
+
   }
+
 }
 ```
 
@@ -367,44 +529,83 @@ python
 
 ```
 import mlflow
+
 from mlflow.models import set_model
+
 from mlflow.pyfunc import ResponsesAgent
+
 from mlflow.types.responses import (
+
     ResponsesAgentRequest,
+
     ResponsesAgentResponse,
+
     output_to_responses_items_stream,
+
     to_chat_completions_input,
+
 )
+
 from openai import OpenAI
+
+
 
 client = OpenAI()
 
 
+
+
+
 class SimpleResponsesAgent(ResponsesAgent):
+
     def call_llm(self, messages):
+
         for chunk in client.chat.completions.create(
+
             model="gpt-5",
+
             messages=messages,
+
             stream=True,
+
         ):
+
             yield chunk.to_dict()
 
+
+
     def predict(self, request: ResponsesAgentRequest):
+
         outputs = [
+
             event.item
+
             for event in self.predict_stream(request)
+
             if event.type == "response.output_item.done"
+
         ]
+
         return ResponsesAgentResponse(output=outputs, custom_outputs=request.custom_inputs)
 
+
+
     def predict_stream(self, request: ResponsesAgentRequest):
+
         messages = to_chat_completions_input([i.model_dump() for i in request.input])
+
+
 
         yield from output_to_responses_items_stream(self.call_llm(messages))
 
 
+
+
+
 mlflow.openai.autolog()
+
 agent = SimpleResponsesAgent()
+
 set_model(agent)
 ```
 
@@ -416,44 +617,83 @@ python
 
 ```
 # uncomment below if running inside a jupyter notebook
+
 # %%writefile agent.py
+
 import os
+
 from typing import Generator
 
+
+
 import mlflow
+
 from mlflow.entities.span import SpanType
+
 from mlflow.models import set_model
+
 from mlflow.pyfunc.model import ResponsesAgent
+
 from mlflow.types.responses import (
+
     ResponsesAgentRequest,
+
     ResponsesAgentResponse,
+
     ResponsesAgentStreamEvent,
+
 )
+
 from openai import OpenAI
 
 
+
+
+
 class SimpleResponsesAgent(ResponsesAgent):
+
     def __init__(self, model: str):
+
         self.client = OpenAI()
+
         self.model = model
 
-    @mlflow.trace(span_type=SpanType.AGENT)
-    def predict(self, request: ResponsesAgentRequest) -> ResponsesAgentResponse:
-        response = self.client.responses.create(input=request.input, model=self.model)
-        return ResponsesAgentResponse(**response.to_dict())
+
 
     @mlflow.trace(span_type=SpanType.AGENT)
+
+    def predict(self, request: ResponsesAgentRequest) -> ResponsesAgentResponse:
+
+        response = self.client.responses.create(input=request.input, model=self.model)
+
+        return ResponsesAgentResponse(**response.to_dict())
+
+
+
+    @mlflow.trace(span_type=SpanType.AGENT)
+
     def predict_stream(
+
         self, request: ResponsesAgentRequest
+
     ) -> Generator[ResponsesAgentStreamEvent, None, None]:
+
         for event in self.client.responses.create(
+
             input=request.input, stream=True, model=self.model
+
         ):
+
             yield ResponsesAgentStreamEvent(**event.to_dict())
 
 
+
+
+
 mlflow.openai.autolog()
+
 agent = SimpleResponsesAgent(model="gpt-4o")
+
 set_model(agent)
 ```
 
@@ -466,45 +706,86 @@ python
 ```
 from typing import Generator
 
+
+
 import mlflow
+
 from langgraph.graph.state import CompiledStateGraph
+
 from mlflow.models import set_model
+
 from mlflow.pyfunc import ResponsesAgent
+
 from mlflow.types.responses import (
+
     ResponsesAgentRequest,
+
     ResponsesAgentResponse,
+
     ResponsesAgentStreamEvent,
+
     output_to_responses_items_stream,
+
     to_chat_completions_input,
+
 )
 
 
+
+
+
 class LangGraphResponsesAgent(ResponsesAgent):
+
     def __init__(self, agent: CompiledStateGraph):
+
         self.agent = agent
 
+
+
     def predict(self, request: ResponsesAgentRequest) -> ResponsesAgentResponse:
+
         outputs = [
+
             event.item
+
             for event in self.predict_stream(request)
+
             if event.type == "response.output_item.done"
+
         ]
+
         return ResponsesAgentResponse(output=outputs, custom_outputs=request.custom_inputs)
 
+
+
     def predict_stream(
+
         self,
+
         request: ResponsesAgentRequest,
+
     ) -> Generator[ResponsesAgentStreamEvent, None, None]:
+
         cc_msgs = to_chat_completions_input([i.model_dump() for i in request.input])
 
+
+
         for _, events in self.agent.stream({"messages": cc_msgs}, stream_mode=["updates"]):
+
             for node_data in events.values():
+
                 yield from output_to_responses_items_stream(node_data["messages"])
 
 
+
+
+
 mlflow.langchain.autolog()
+
 graph = None  # TODO: replace with your compiled LangGraph agent
+
 agent = LangGraphResponsesAgent(graph)
+
 set_model(agent)
 ```
 
@@ -516,171 +797,338 @@ python
 
 ```
 # uncomment below if running inside a jupyter notebook
+
 # %%writefile agent.py
+
 import json
+
 from typing import Any, Callable, Generator
+
 import os
+
 from uuid import uuid4
 
+
+
 import backoff
+
 import mlflow
+
 import openai
+
 from mlflow.entities import SpanType
+
 from mlflow.pyfunc import ResponsesAgent
+
 from mlflow.types.responses import (
+
     ResponsesAgentRequest,
+
     ResponsesAgentResponse,
+
     ResponsesAgentStreamEvent,
+
 )
+
 from openai import OpenAI
+
 from pydantic import BaseModel
 
 
+
+
+
 class ToolInfo(BaseModel):
-    """
-    Class representing a tool for the agent.
-    - "name" (str): The name of the tool.
-    - "spec" (dict): JSON description of the tool (matches OpenAI Responses format)
-    - "exec_fn" (Callable): Function that implements the tool logic
+
     """
 
+    Class representing a tool for the agent.
+
+    - "name" (str): The name of the tool.
+
+    - "spec" (dict): JSON description of the tool (matches OpenAI Responses format)
+
+    - "exec_fn" (Callable): Function that implements the tool logic
+
+    """
+
+
+
     name: str
+
     spec: dict
+
     exec_fn: Callable
 
 
+
+
+
 class ToolCallingAgent(ResponsesAgent):
+
     """
+
     Class representing a tool-calling Agent
+
     """
+
+
 
     def __init__(self, model: str, tools: list[ToolInfo]):
+
         """Initializes the ToolCallingAgent with tools."""
+
         self.model = model
+
         self.client: OpenAI = OpenAI()
+
         self._tools_dict = {tool.name: tool for tool in tools}
 
+
+
     def get_tool_specs(self) -> list[dict]:
+
         """Returns tool specifications in the format OpenAI expects."""
+
         return [tool_info.spec for tool_info in self._tools_dict.values()]
 
+
+
     @mlflow.trace(span_type=SpanType.TOOL)
+
     def execute_tool(self, tool_name: str, args: dict) -> Any:
+
         """Executes the specified tool with the given arguments."""
+
         return self._tools_dict[tool_name].exec_fn(**args)
 
+
+
     @backoff.on_exception(backoff.expo, openai.RateLimitError)
+
     @mlflow.trace(span_type=SpanType.LLM)
+
     def call_llm(self, input_messages) -> ResponsesAgentStreamEvent:
+
         return (
+
             self.client.responses
+
             .create(
+
                 model=self.model,
+
                 input=input_messages,
+
                 tools=self.get_tool_specs(),
+
             )
+
             .output[0]
+
             .model_dump(exclude_none=True)
+
         )
+
+
 
     def handle_tool_call(self, tool_call: dict[str, Any]) -> ResponsesAgentStreamEvent:
+
         """
+
         Execute tool calls and return a ResponsesAgentStreamEvent w/ tool output
+
         """
+
         args = json.loads(tool_call["arguments"])
+
         result = str(self.execute_tool(tool_name=tool_call["name"], args=args))
 
+
+
         tool_call_output = {
+
             "type": "function_call_output",
+
             "call_id": tool_call["call_id"],
+
             "output": result,
+
         }
+
         return ResponsesAgentStreamEvent(type="response.output_item.done", item=tool_call_output)
 
+
+
     def call_and_run_tools(
+
         self,
+
         input_messages,
+
         max_iter: int = 10,
+
     ) -> Generator[ResponsesAgentStreamEvent, None, None]:
+
         for _ in range(max_iter):
+
             last_msg = input_messages[-1]
+
             if (
+
                 last_msg.get("type", None) == "message"
+
                 and last_msg.get("role", None) == "assistant"
+
             ):
+
                 return
+
             if last_msg.get("type", None) == "function_call":
+
                 tool_call_res = self.handle_tool_call(last_msg)
+
                 input_messages.append(tool_call_res.item)
+
                 yield tool_call_res
+
             else:
+
                 llm_output = self.call_llm(input_messages=input_messages)
+
                 input_messages.append(llm_output)
+
                 yield ResponsesAgentStreamEvent(
+
                     type="response.output_item.done",
+
                     item=llm_output,
+
                 )
 
+
+
         yield ResponsesAgentStreamEvent(
+
             type="response.output_item.done",
+
             item={
+
                 "id": str(uuid4()),
+
                 "content": [
+
                     {
+
                         "type": "output_text",
+
                         "text": "Max iterations reached. Stopping.",
+
                     }
+
                 ],
+
                 "role": "assistant",
+
                 "type": "message",
+
             },
+
         )
 
-    @mlflow.trace(span_type=SpanType.AGENT)
-    def predict(self, request: ResponsesAgentRequest) -> ResponsesAgentResponse:
-        outputs = [
-            event.item
-            for event in self.predict_stream(request)
-            if event.type == "response.output_item.done"
-        ]
-        return ResponsesAgentResponse(output=outputs, custom_outputs=request.custom_inputs)
+
 
     @mlflow.trace(span_type=SpanType.AGENT)
-    def predict_stream(
-        self, request: ResponsesAgentRequest
-    ) -> Generator[ResponsesAgentStreamEvent, None, None]:
-        input_messages = [{"role": "system", "content": SYSTEM_PROMPT}] + [
-            i.model_dump() for i in request.input
+
+    def predict(self, request: ResponsesAgentRequest) -> ResponsesAgentResponse:
+
+        outputs = [
+
+            event.item
+
+            for event in self.predict_stream(request)
+
+            if event.type == "response.output_item.done"
+
         ]
+
+        return ResponsesAgentResponse(output=outputs, custom_outputs=request.custom_inputs)
+
+
+
+    @mlflow.trace(span_type=SpanType.AGENT)
+
+    def predict_stream(
+
+        self, request: ResponsesAgentRequest
+
+    ) -> Generator[ResponsesAgentStreamEvent, None, None]:
+
+        input_messages = [{"role": "system", "content": SYSTEM_PROMPT}] + [
+
+            i.model_dump() for i in request.input
+
+        ]
+
         yield from self.call_and_run_tools(input_messages=input_messages)
 
 
+
+
+
 tools = [
+
     ToolInfo(
+
         name="get_weather",
+
         spec={
+
             "type": "function",
+
             "name": "get_weather",
+
             "description": "Get current temperature for provided coordinates in celsius.",
+
             "parameters": {
+
                 "type": "object",
+
                 "properties": {
+
                     "latitude": {"type": "number"},
+
                     "longitude": {"type": "number"},
+
                 },
+
                 "required": ["latitude", "longitude"],
+
                 "additionalProperties": False,
+
             },
+
             "strict": True,
+
         },
+
         exec_fn=lambda latitude, longitude: 70,  # dummy tool implementation
+
     )
+
 ]
+
+
 
 os.environ["OPENAI_API_KEY"] = "your OpenAI API key"
 
+
+
 SYSTEM_PROMPT = "You are a helpful assistant that can call tools to get information."
+
 mlflow.openai.autolog()
+
 AGENT = ToolCallingAgent(model="gpt-4o", tools=tools)
+
 mlflow.models.set_model(AGENT)
 ```

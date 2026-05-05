@@ -39,8 +39,12 @@ python
 
 ```
 # Set OpenAI API Key to the environment variable. You can also pass the token to dspy.LM()
+
 import getpass
+
 import os
+
+
 
 os.environ["OPENAI_API_KEY"] = getpass.getpass("Enter your OpenAI Key:")
 ```
@@ -50,15 +54,26 @@ python
 ```
 import dspy
 
+
+
 # Define your model. We will use OpenAI for simplicity
+
 model_name = "gpt-4o-mini"
 
+
+
 # Note that an OPENAI_API_KEY environment must be present. You can also pass the token to dspy.LM()
+
 lm = dspy.LM(
+
   model=f"openai/{model_name}",
+
   max_tokens=500,
+
   temperature=0.1,
+
 )
+
 dspy.settings.configure(lm=lm)
 ```
 
@@ -70,6 +85,8 @@ python
 
 ```
 import mlflow
+
+
 
 mlflow.set_experiment("DSPy Quickstart")
 ```
@@ -92,79 +109,153 @@ python
 
 ```
 import numpy as np
+
 import pandas as pd
+
 from datasets import load_dataset
+
 from dspy.datasets.dataset import Dataset
 
 
+
+
+
 def read_data_and_subset_to_categories() -> tuple[pd.DataFrame]:
+
   """
+
   Read the reuters-21578 dataset. Docs can be found in the url below:
+
   https://huggingface.co/datasets/yangwang825/reuters-21578
+
   """
+
+
 
   # Read train/test split
+
   dataset = load_dataset("yangwang825/reuters-21578")
+
   train = pd.DataFrame(dataset["train"])
+
   test = pd.DataFrame(dataset["test"])
 
+
+
   # Clean the labels
+
   label_map = {
+
       0: "acq",
+
       1: "crude",
+
       2: "earn",
+
       3: "grain",
+
       4: "interest",
+
       5: "money-fx",
+
       6: "ship",
+
       7: "trade",
+
   }
 
+
+
   train["label"] = train["label"].map(label_map)
+
   test["label"] = test["label"].map(label_map)
+
+
 
   return train, test
 
 
+
+
+
 class CSVDataset(Dataset):
+
   def __init__(
+
       self, n_train_per_label: int = 20, n_test_per_label: int = 10, *args, **kwargs
+
   ) -> None:
+
       super().__init__(*args, **kwargs)
+
       self.n_train_per_label = n_train_per_label
+
       self.n_test_per_label = n_test_per_label
+
+
 
       self._create_train_test_split_and_ensure_labels()
 
+
+
   def _create_train_test_split_and_ensure_labels(self) -> None:
+
       """Perform a train/test split that ensure labels in `dev` are also in `train`."""
+
       # Read the data
+
       train_df, test_df = read_data_and_subset_to_categories()
 
+
+
       # Sample for each label
+
       train_samples_df = pd.concat([
+
           group.sample(n=self.n_train_per_label) for _, group in train_df.groupby("label")
-      ])
-      test_samples_df = pd.concat([
-          group.sample(n=self.n_test_per_label) for _, group in test_df.groupby("label")
+
       ])
 
+      test_samples_df = pd.concat([
+
+          group.sample(n=self.n_test_per_label) for _, group in test_df.groupby("label")
+
+      ])
+
+
+
       # Set DSPy class variables
+
       self._train = train_samples_df.to_dict(orient="records")
+
       self._dev = test_samples_df.to_dict(orient="records")
 
 
+
+
+
 # Limit to a small dataset to showcase the value of bootstrapping
+
 dataset = CSVDataset(n_train_per_label=3, n_test_per_label=1)
 
+
+
 # Create train and test sets containing DSPy
+
 # Note that we must specify the expected input value name
+
 train_dataset = [example.with_inputs("text") for example in dataset.train]
+
 test_dataset = [example.with_inputs("text") for example in dataset.dev]
+
 unique_train_labels = {example.label for example in dataset.train}
 
+
+
 print(len(train_dataset), len(test_dataset))
+
 print(f"Train labels: {unique_train_labels}")
+
 print(train_dataset[0])
 ```
 
@@ -192,18 +283,31 @@ python
 
 ```
 class TextClassificationSignature(dspy.Signature):
+
   text = dspy.InputField()
+
   label = dspy.OutputField(
+
       desc=f"Label of predicted class. Possible labels are {unique_train_labels}"
+
   )
 
 
+
+
+
 class TextClassifier(dspy.Module):
+
   def __init__(self):
+
       super().__init__()
+
       self.generate_classification = dspy.Predict(TextClassificationSignature)
 
+
+
   def forward(self, text: str):
+
       return self.generate_classification(text=text)
 ```
 
@@ -217,12 +321,19 @@ python
 
 ```
 # Initilize our impact_improvement class
+
 text_classifier = TextClassifier()
 
+
+
 message = "I am interested in space"
+
 print(text_classifier(text=message))
 
+
+
 message = "I enjoy ice skating"
+
 print(text_classifier(text=message))
 ```
 
@@ -258,16 +369,30 @@ python
 from dspy import SIMBA
 
 
+
+
+
 def validate_classification(example, prediction, trace=None) -> bool:
+
   return example.label == prediction.label
 
 
+
+
+
 optimizer = SIMBA(
+
   metric=validate_classification,
+
   max_demos=2,
+
   bsize=12,
+
   num_threads=1,
+
 )
+
+
 
 compiled_pe = optimizer.compile(TextClassifier(), trainset=train_dataset)
 ```
@@ -280,19 +405,33 @@ python
 
 ```
 def check_accuracy(classifier, test_data: pd.DataFrame = test_dataset) -> float:
+
   residuals = []
+
   predictions = []
+
   for example in test_data:
+
       prediction = classifier(text=example["text"])
+
       residuals.append(int(validate_classification(example, prediction)))
+
       predictions.append(prediction)
+
   return residuals, predictions
 
 
+
+
+
 uncompiled_residuals, uncompiled_predictions = check_accuracy(TextClassifier())
+
 print(f"Uncompiled accuracy: {np.mean(uncompiled_residuals)}")
 
+
+
 compiled_residuals, compiled_predictions = check_accuracy(compiled_pe)
+
 print(f"Compiled accuracy: {np.mean(compiled_residuals)}")
 ```
 
@@ -309,8 +448,11 @@ python
 
 ```
 for uncompiled_residual, uncompiled_prediction in zip(uncompiled_residuals, uncompiled_predictions):
+
   is_correct = "Correct" if bool(uncompiled_residual) else "Incorrect"
+
   prediction = uncompiled_prediction.label
+
   print(f"{is_correct} prediction: {' ' * (12 - len(is_correct))}{prediction}")
 ```
 
@@ -329,8 +471,11 @@ python
 
 ```
 for compiled_residual, compiled_prediction in zip(compiled_residuals, compiled_predictions):
+
   is_correct = "Correct" if bool(compiled_residual) else "Incorrect"
+
   prediction = compiled_prediction.label
+
   print(f"{is_correct} prediction: {' ' * (12 - len(is_correct))}{prediction}")
 ```
 
@@ -354,11 +499,18 @@ python
 ```
 import mlflow
 
+
+
 with mlflow.start_run():
+
   model_info = mlflow.dspy.log_model(
+
       compiled_pe,
+
       name="model",
+
       input_example="what is 2 + 2?",
+
   )
 ```
 
@@ -374,26 +526,47 @@ python
 
 ```
 # Define input text
+
 print("
+
 ==============Input Text============")
+
 text = test_dataset[0]["text"]
+
 print(f"Text: {text}")
 
+
+
 # Inference with original DSPy object
+
 print("
+
 --------------Original DSPy Prediction------------")
+
 print(compiled_pe(text=text).label)
 
+
+
 # Inference with loaded DSPy object
+
 print("
+
 --------------Loaded DSPy Prediction------------")
+
 loaded_model_dspy = mlflow.dspy.load_model(model_info.model_uri)
+
 print(loaded_model_dspy(text=text).label)
 
+
+
 # Inference with MLflow PyFunc API
+
 loaded_model_pyfunc = mlflow.pyfunc.load_model(model_info.model_uri)
+
 print("
+
 --------------PyFunc Prediction------------")
+
 print(loaded_model_pyfunc.predict(text)["label"])
 ```
 

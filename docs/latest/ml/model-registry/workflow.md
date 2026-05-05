@@ -66,35 +66,65 @@ python
 
 ```
 from sklearn.datasets import make_regression
+
 from sklearn.ensemble import RandomForestRegressor
+
 from sklearn.metrics import mean_squared_error
+
 from sklearn.model_selection import train_test_split
 
+
+
 import mlflow
+
 import mlflow.sklearn
+
 from mlflow.models import infer_signature
 
+
+
 with mlflow.start_run() as run:
+
     X, y = make_regression(n_features=4, n_informative=2, random_state=0, shuffle=False)
+
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
     params = {"max_depth": 2, "random_state": 42}
+
     model = RandomForestRegressor(**params)
+
     model.fit(X_train, y_train)
 
+
+
     # Infer the model signature
+
     y_pred = model.predict(X_test)
+
     signature = infer_signature(X_test, y_pred)
 
+
+
     # Log parameters and metrics using the MLflow APIs
+
     mlflow.log_params(params)
+
     mlflow.log_metrics({"mse": mean_squared_error(y_test, y_pred)})
 
+
+
     # Log the sklearn model and register as version 1
+
     mlflow.sklearn.log_model(
+
         sk_model=model,
+
         name="sklearn-model",
+
         signature=signature,
+
         registered_model_name="sk-learn-random-forest-reg-model",
+
     )
 ```
 
@@ -106,7 +136,9 @@ python
 
 ```
 result = mlflow.register_model(
+
     "runs:/d16076a3ec534311817565e6527539c0/sklearn-model", "sk-learn-random-forest-reg"
+
 )
 ```
 
@@ -119,7 +151,10 @@ python
 ```
 from mlflow import MlflowClient
 
+
+
 client = MlflowClient()
+
 client.create_registered_model("sk-learn-random-forest-reg-model")
 ```
 
@@ -129,10 +164,15 @@ python
 
 ```
 client = MlflowClient()
+
 result = client.create_model_version(
+
     name="sk-learn-random-forest-reg-model",
+
     source="mlruns/0/d16076a3ec534311817565e6527539c0/artifacts/sklearn-model",
+
     run_id="d16076a3ec534311817565e6527539c0",
+
 )
 ```
 
@@ -146,10 +186,15 @@ python
 
 ```
 import mlflow
+
 import os
 
+
+
 mlflow.set_registry_uri("databricks-uc")
+
 os.environ["DATABRICKS_HOST"] = "<your Databricks shard URI>"
+
 os.environ["DATABRICKS_TOKEN"] = "<your Databricks shard access token>"
 ```
 
@@ -159,11 +204,17 @@ python
 
 ```
 import mlflow
+
 import os
 
+
+
 mlflow.set_registry_uri("databricks-uc")
+
 os.environ["DATABRICKS_HOST"] = "<your Databricks shard URI>"
+
 os.environ["DATABRICKS_CLIENT_ID"] = "<your Databricks oauth client ID>"
+
 os.environ["DATABRICKS_CLIENT_SECRET"] = "<your Databricks oauth client secret>"
 ```
 
@@ -177,7 +228,10 @@ python
 
 ```
 import mlflow
+
 import os
+
+
 
 mlflow.set_registry_uri("databricks-uc://my-databricks-shard1")
 ```
@@ -191,9 +245,14 @@ python
 ```
 from mlflow import MlflowClient
 
+
+
 # Registry URI must be set to workspace registry
+
 client = MlflowClient(registry_uri="databricks")
+
 src_model_uri = f"models:/my_wmr_model/1"
+
 uc_migrated_copy = client.copy_model_version(src_model_uri, "mycatalog.myschema.my_uc_model")
 ```
 
@@ -210,6 +269,8 @@ python
 ```
 import os
 
+
+
 os.environ["MLFLOW_SKIP_SIGNATURE_CHECK_FOR_UC_REGISTRY_MIGRATION"] = "true"
 ```
 
@@ -219,60 +280,117 @@ python
 
 ```
 import mlflow
+
 from mlflow import MlflowClient
+
 from mlflow.exceptions import MlflowException
+
 from mlflow.models import ModelSignature
+
 from mlflow.types.schema import Schema, ColSpec, AnyType
 
+
+
 workspace_client = MlflowClient(registry_uri="databricks")
+
 uc_client = MlflowClient(registry_uri="databricks-uc")
 
 
+
+
+
 # Make a placeholder model that can be used to increment the version number
+
 def make_placeholder_model() -> str:
+
     class _Placeholder(mlflow.pyfunc.PythonModel):
+
         def predict(self, ctx, x):
+
             return None
 
+
+
     with mlflow.start_run() as run:
+
         schema = Schema([ColSpec(AnyType())])
+
         model = mlflow.pyfunc.log_model(
+
             name="m",
+
             python_model=_Placeholder(),
+
             signature=ModelSignature(inputs=schema, outputs=schema),
+
         )
+
         return f"models:/{model.model_id}"
 
 
+
+
+
 # Check if the source model has a particular version number
+
 def workspace_model_exists(name: str, version: int) -> bool:
+
     try:
+
         workspace_client.get_model_version(name, str(version))
+
         return True
+
     except MlflowException as e:
+
         if e.error_code == "RESOURCE_DOES_NOT_EXIST":
+
             # Convert the RESOURCE_DOES_NOT_EXIST error into False
+
             return False
+
         # Raise all other exceptions
+
         raise e
 
 
+
+
+
 # Copy model versions from a source Databricks workspace-registered model to
+
 # a destination Databricks Unity Catalog registered model
+
 def copy_model_versions_to_uc(src: str, dst: str) -> None:
+
     latest_versions = workspace_client.get_latest_versions(src)
+
     max_version_number = max(int(v.version) for v in latest_versions)
+
     placeholder_model = make_placeholder_model()
 
+
+
     for v in range(1, max_version_number + 1):
+
         if workspace_model_exists(src, v):
+
             workspace_client.copy_model_version(f"models:/{src}/{str(v)}", dst)
+
         else:
+
             # Create and immediately delete a placeholder model version to increment
+
             # the version counter on the UC model, so the version numbers on the UC
+
             # model match those on the workspace registered model.
+
             mv = uc_client.create_model_version(dst, placeholder_model)
+
             uc_client.delete_model_version(dst, mv.version)
+
+
+
 
 
 copy_model_versions_to_uc("my_workspace_model", "mycatalog.myschema.my_uc_model")
@@ -288,10 +406,15 @@ python
 
 ```
 import mlflow
+
 import os
 
+
+
 mlflow.set_registry_uri("uc:http://localhost:8080")
+
 # Set this environment variable for MLflow to use your UC OSS token
+
 os.environ["MLFLOW_UC_OSS_TOKEN"] = "<your OSS UC access token>"
 ```
 
@@ -308,18 +431,32 @@ python
 ```
 from mlflow import MlflowClient
 
+
+
 client = MlflowClient()
 
+
+
 # create "champion" alias for version 1 of model "example-model"
+
 client.set_registered_model_alias("example-model", "champion", 1)
 
+
+
 # reassign the "Champion" alias to version 2
+
 client.set_registered_model_alias("example-model", "Champion", 2)
 
+
+
 # get a model version by alias
+
 client.get_model_version_by_alias("example-model", "Champion")
 
+
+
 # delete the alias
+
 client.delete_registered_model_alias("example-model", "Champion")
 ```
 
@@ -332,18 +469,32 @@ python
 ```
 from mlflow import MlflowClient
 
+
+
 client = MlflowClient()
 
+
+
 # Set registered model tag
+
 client.set_registered_model_tag("example-model", "task", "classification")
 
+
+
 # Delete registered model tag
+
 client.delete_registered_model_tag("example-model", "task")
 
+
+
 # Set model version tag
+
 client.set_model_version_tag("example-model", "1", "validation_status", "approved")
 
+
+
 # Delete model version tag
+
 client.delete_model_version_tag("example-model", "1", "validation_status")
 ```
 
@@ -362,10 +513,17 @@ python
 ```
 import mlflow.pyfunc
 
+
+
 model_name = "sk-learn-random-forest-reg-model"
+
 model_version = 1
 
+
+
 model = mlflow.pyfunc.load_model(model_uri=f"models:/{model_name}/{model_version}")
+
+
 
 model.predict(data)
 ```
@@ -379,10 +537,17 @@ python
 ```
 import mlflow.pyfunc
 
+
+
 model_name = "sk-learn-random-forest-reg-model"
+
 alias = "champion"
 
+
+
 champion_version = mlflow.pyfunc.load_model(f"models:/{model_name}@{alias}")
+
+
 
 champion_version.predict(data)
 ```
@@ -398,10 +563,16 @@ bash
 ```
 #!/usr/bin/env sh
 
+
+
 # Set environment variable for the tracking URL where the Model Registry resides
+
 export MLFLOW_TRACKING_URI=http://localhost:5000
 
+
+
 # Serve the production model from the model registry
+
 mlflow models serve -m "models:/sk-learn-random-forest-reg-model@champion"
 ```
 
@@ -418,10 +589,16 @@ python
 ```
 from mlflow import MlflowClient
 
+
+
 client = MlflowClient()
+
 client.copy_model_version(
+
     src_model_uri="models:/regression-model-staging@candidate",
+
     dst_name="regression-model-production",
+
 )
 ```
 
@@ -439,10 +616,15 @@ python
 
 ```
 client = MlflowClient()
+
 client.update_model_version(
+
     name="sk-learn-random-forest-reg-model",
+
     version=1,
+
     description="This model version is a scikit-learn random forest containing 100 decision trees",
+
 )
 ```
 
@@ -454,17 +636,23 @@ python
 
 ```
 client = MlflowClient()
+
 client.rename_registered_model(
+
     name="sk-learn-random-forest-reg-model",
+
     new_name="sk-learn-random-forest-reg-model-100",
+
 )
 ```
 
 ### Listing and Searching MLflow Models[​](#listing-and-searching-mlflow-models "Direct link to Listing and Searching MLflow Models")
 
-important
+:::warning important
 
 When using MLflow ≥ 2.21.0 clients with older Model Registry servers (< 2.21.0), search API behavior may differ from expected results. This version mismatch can cause inconsistent search outcomes or missing results. To ensure consistent behavior, please align MLflow versions by either upgrading your server to MLflow 2.21.0 or newer (recommended) or downgrading your client to match your server version.
+
+:::
 
 You can fetch a list of registered models in the registry with a simple method.
 
@@ -473,8 +661,12 @@ python
 ```
 from pprint import pprint
 
+
+
 client = MlflowClient()
+
 for rm in client.search_registered_models():
+
     pprint(dict(rm), indent=4)
 ```
 
@@ -484,10 +676,15 @@ text
 
 ```
 {   'creation_timestamp': 1582671933216,
+
     'description': None,
+
     'last_updated_timestamp': 1582671960712,
+
     'latest_versions': [<ModelVersion: creation_timestamp=1582671933246, current_stage='Production', description='A random forest model containing 100 decision trees trained in scikit-learn', last_updated_timestamp=1582671960712, name='sk-learn-random-forest-reg-model', run_id='ae2cc01346de45f79a44a320aab1797b', source='./mlruns/0/ae2cc01346de45f79a44a320aab1797b/artifacts/sklearn-model', status='READY', status_message=None, user_id=None, version=1>,
+
                         <ModelVersion: creation_timestamp=1582671960628, current_stage='None', description=None, last_updated_timestamp=1582671960628, name='sk-learn-random-forest-reg-model', run_id='d994f18d09c64c148e62a785052e6723', source='./mlruns/0/d994f18d09c64c148e62a785052e6723/artifacts/sklearn-model', status='READY', status_message=None, user_id=None, version=2>],
+
     'name': 'sk-learn-random-forest-reg-model'}
 ```
 
@@ -497,7 +694,9 @@ python
 
 ```
 client = MlflowClient()
+
 for mv in client.search_model_versions("name='sk-learn-random-forest-reg-model'"):
+
     pprint(dict(mv), indent=4)
 ```
 
@@ -507,31 +706,57 @@ python
 
 ```
 {
+
     "creation_timestamp": 1582671933246,
+
     "current_stage": "Production",
+
     "description": "A random forest model containing 100 decision trees trained in scikit-learn",
+
     "last_updated_timestamp": 1582671960712,
+
     "name": "sk-learn-random-forest-reg-model",
+
     "run_id": "ae2cc01346de45f79a44a320aab1797b",
+
     "source": "./mlruns/0/ae2cc01346de45f79a44a320aab1797b/artifacts/sklearn-model",
+
     "status": "READY",
+
     "status_message": None,
+
     "user_id": None,
+
     "version": 1,
+
 }
 
+
+
 {
+
     "creation_timestamp": 1582671960628,
+
     "current_stage": "None",
+
     "description": None,
+
     "last_updated_timestamp": 1582671960628,
+
     "name": "sk-learn-random-forest-reg-model",
+
     "run_id": "d994f18d09c64c148e62a785052e6723",
+
     "source": "./mlruns/0/d994f18d09c64c148e62a785052e6723/artifacts/sklearn-model",
+
     "status": "READY",
+
     "status_message": None,
+
     "user_id": None,
+
     "version": 2,
+
 }
 ```
 
@@ -547,12 +772,19 @@ python
 
 ```
 # Delete versions 1,2, and 3 of the model
+
 client = MlflowClient()
+
 versions = [1, 2, 3]
+
 for version in versions:
+
     client.delete_model_version(name="sk-learn-random-forest-reg-model", version=version)
 
+
+
 # Delete a registered model along with all its versions
+
 client.delete_registered_model(name="sk-learn-random-forest-reg-model")
 ```
 
@@ -572,49 +804,93 @@ python
 
 ```
 import numpy as np
+
 import pickle
 
+
+
 from sklearn import datasets, linear_model
+
 from sklearn.metrics import mean_squared_error, r2_score
+
+
 
 # source: https://scikit-learn.org/stable/auto_examples/linear_model/plot_ols.html
 
+
+
 # Load the diabetes dataset
+
 diabetes_X, diabetes_y = datasets.load_diabetes(return_X_y=True)
 
+
+
 # Use only one feature
+
 diabetes_X = diabetes_X[:, np.newaxis, 2]
 
+
+
 # Split the data into training/testing sets
+
 diabetes_X_train = diabetes_X[:-20]
+
 diabetes_X_test = diabetes_X[-20:]
 
+
+
 # Split the targets into training/testing sets
+
 diabetes_y_train = diabetes_y[:-20]
+
 diabetes_y_test = diabetes_y[-20:]
 
 
+
+
+
 def print_predictions(m, y_pred):
+
     # The coefficients
+
     print("Coefficients: \n", m.coef_)
+
     # The mean squared error
+
     print("Mean squared error: %.2f" % mean_squared_error(diabetes_y_test, y_pred))
+
     # The coefficient of determination: 1 is perfect prediction
+
     print("Coefficient of determination: %.2f" % r2_score(diabetes_y_test, y_pred))
 
 
+
+
+
 # Create linear regression object
+
 lr_model = linear_model.LinearRegression()
 
+
+
 # Train the model using the training sets
+
 lr_model.fit(diabetes_X_train, diabetes_y_train)
 
+
+
 # Make predictions using the testing set
+
 diabetes_y_pred = lr_model.predict(diabetes_X_test)
+
 print_predictions(lr_model, diabetes_y_pred)
 
+
+
 # save the model in the native sklearn format
+
 filename = "lr_model.pkl"
+
 pickle.dump(lr_model, open(filename, "wb"))
 ```
 
@@ -622,8 +898,11 @@ text
 
 ```
 Coefficients:
+
 [938.23786125]
+
 Mean squared error: 2548.07
+
 Coefficient of determination: 0.47
 ```
 
@@ -633,28 +912,51 @@ python
 
 ```
 import mlflow
+
 from mlflow.models import infer_signature
+
 import numpy as np
+
 from sklearn import datasets
 
+
+
 # load the model into memory
+
 loaded_model = pickle.load(open(filename, "rb"))
 
+
+
 # create a signature for the model based on the input and output data
+
 diabetes_X, diabetes_y = datasets.load_diabetes(return_X_y=True)
+
 diabetes_X = diabetes_X[:, np.newaxis, 2]
+
 signature = infer_signature(diabetes_X, diabetes_y)
 
+
+
 # log and register the model using MLflow scikit-learn API
+
 mlflow.set_tracking_uri("sqlite:///mlruns.db")
+
 reg_model_name = "SklearnLinearRegression"
+
 print("--")
+
 mlflow.sklearn.log_model(
+
     loaded_model,
+
     name="sk_learn",
+
     serialization_format="cloudpickle",
+
     signature=signature,
+
     registered_model_name=reg_model_name,
+
 )
 ```
 
@@ -662,9 +964,13 @@ text
 
 ```
 --
+
 Successfully registered model 'SklearnLinearRegression'.
+
 2021/04/02 16:30:57 INFO mlflow.tracking._model_registry.client: Waiting up to 300 seconds for model version to finish creation.
+
 Model name: SklearnLinearRegression, version 1
+
 Created version '1' of model 'SklearnLinearRegression'.
 ```
 
@@ -674,12 +980,19 @@ python
 
 ```
 # load the model from the Model Registry and score
+
 model_uri = f"models:/{reg_model_name}/1"
+
 loaded_model = mlflow.sklearn.load_model(model_uri)
+
 print("--")
 
+
+
 # Make predictions using the testing set
+
 diabetes_y_pred = loaded_model.predict(diabetes_X_test)
+
 print_predictions(loaded_model, diabetes_y_pred)
 ```
 
@@ -687,9 +1000,13 @@ text
 
 ```
 --
+
 Coefficients:
+
 [938.23786125]
+
 Mean squared error: 2548.07
+
 Coefficient of determination: 0.47
 ```
 
@@ -709,94 +1026,183 @@ python
 
 ```
 from sys import version_info
+
 import cloudpickle
+
 import pandas as pd
 
+
+
 import mlflow.pyfunc
+
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
-#
-# Good and readable paper from the authors of this package
-# http://comp.social.gatech.edu/papers/icwsm14.vader.hutto.pdf
+
+
 #
 
+# Good and readable paper from the authors of this package
+
+# http://comp.social.gatech.edu/papers/icwsm14.vader.hutto.pdf
+
+#
+
+
+
 INPUT_TEXTS = [
+
     {"text": "This is a bad movie. You don't want to see it! :-)"},
+
     {"text": "Ricky Gervais is smart, witty, and creative!!!!!! :D"},
+
     {"text": "LOL, this guy fell off a chair while sleeping and snoring in a meeting"},
+
     {"text": "Men shoots himself while trying to steal a dog, OMG"},
+
     {"text": "Yay!! Another good phone interview. I nailed it!!"},
+
     {"text": "This is INSANE! I can't believe it. How could you do such a horrible thing?"},
+
 ]
+
+
 
 PYTHON_VERSION = f"{version_info.major}.{version_info.minor}.{version_info.micro}"
 
 
+
+
+
 def score_model(loaded_model):
+
     # Use inference to predict output from the customized PyFunc model
+
     for i, text in enumerate(INPUT_TEXTS):
+
         text = INPUT_TEXTS[i]["text"]
+
         m_input = pd.DataFrame([text])
+
         scores = loaded_model.predict(m_input)
+
         print(f"<{text}> -- {str(scores[0])}")
 
 
+
+
+
 # Define a class and extend from PythonModel
+
 class SocialMediaAnalyserModel(mlflow.pyfunc.PythonModel):
+
     def __init__(self):
+
         super().__init__()
+
         # embed your vader model instance
+
         self._analyser = SentimentIntensityAnalyzer()
 
+
+
     # preprocess the input with prediction from the vader sentiment model
+
     def _score(self, txt):
+
         prediction_scores = self._analyser.polarity_scores(txt)
+
         return prediction_scores
 
+
+
     def predict(self, context, model_input, params=None):
+
         # Apply the preprocess function from the vader model to score
+
         model_output = model_input.apply(lambda col: self._score(col))
+
         return model_output
 
 
+
+
+
 model_path = "vader"
+
 reg_model_name = "PyFuncVaderSentiments"
+
 vader_model = SocialMediaAnalyserModel()
 
+
+
 # Set the tracking URI to use local SQLAlchemy db file and start the run
+
 # Log MLflow entities and save the model
+
 mlflow.set_tracking_uri("sqlite:///mlruns.db")
 
+
+
 # Save the conda environment for this model.
+
 conda_env = {
+
     "channels": ["defaults", "conda-forge"],
+
     "dependencies": [f"python={PYTHON_VERSION}", "pip"],
+
     "pip": [
+
         "mlflow",
+
         f"cloudpickle=={cloudpickle.__version__}",
+
         "vaderSentiment==3.3.2",
+
     ],
+
     "name": "mlflow-env",
+
 }
 
+
+
 # Save the model
+
 with mlflow.start_run(run_name="Vader Sentiment Analysis") as run:
+
     model_path = f"{model_path}-{run.info.run_id}"
+
     mlflow.log_param("algorithm", "VADER")
+
     mlflow.log_param("total_sentiments", len(INPUT_TEXTS))
+
     mlflow.pyfunc.save_model(path=model_path, python_model=vader_model, conda_env=conda_env)
 
+
+
 # Use the saved model path to log and register into the model registry
+
 mlflow.pyfunc.log_model(
+
     name=model_path,
+
     python_model=vader_model,
+
     registered_model_name=reg_model_name,
+
     conda_env=conda_env,
+
 )
 
+
+
 # Load the model from the model registry and score
+
 model_uri = f"models:/{reg_model_name}/1"
+
 loaded_model = mlflow.pyfunc.load_model(model_uri)
+
 score_model(loaded_model)
 ```
 
@@ -804,14 +1210,23 @@ text
 
 ```
 Successfully registered model 'PyFuncVaderSentiments'.
+
 2021/04/05 10:34:15 INFO mlflow.tracking._model_registry.client: Waiting up to 300 seconds for model version to finish creation.
+
 Created version '1' of model 'PyFuncVaderSentiments'.
 
+
+
 <This is a bad movie. You don't want to see it! :-)> -- {'neg': 0.307, 'neu': 0.552, 'pos': 0.141, 'compound': -0.4047}
+
 <Ricky Gervais is smart, witty, and creative!!!!!! :D> -- {'neg': 0.0, 'neu': 0.316, 'pos': 0.684, 'compound': 0.8957}
+
 <LOL, this guy fell off a chair while sleeping and snoring in a meeting> -- {'neg': 0.0, 'neu': 0.786, 'pos': 0.214, 'compound': 0.5473}
+
 <Men shoots himself while trying to steal a dog, OMG> -- {'neg': 0.262, 'neu': 0.738, 'pos': 0.0, 'compound': -0.4939}
+
 <Yay!! Another good phone interview. I nailed it!!> -- {'neg': 0.0, 'neu': 0.446, 'pos': 0.554, 'compound': 0.816}
+
 <This is INSANE! I can't believe it. How could you do such a horrible thing?> -- {'neg': 0.357, 'neu': 0.643, 'pos': 0.0, 'compound': -0.8034}
 ```
 
@@ -831,8 +1246,11 @@ python
 
 ```
 client = MlflowClient()
+
 client.transition_model_version_stage(
+
     name="sk-learn-random-forest-reg-model", version=3, stage="Production"
+
 )
 ```
 
@@ -847,10 +1265,17 @@ python
 ```
 import mlflow.pyfunc
 
+
+
 model_name = "sk-learn-random-forest-reg-model"
+
 stage = "Staging"
 
+
+
 model = mlflow.pyfunc.load_model(model_uri=f"models:/{model_name}/{stage}")
+
+
 
 model.predict(data)
 ```
@@ -863,9 +1288,13 @@ python
 
 ```
 # Archive models version 3 from Production into Archived
+
 client = MlflowClient()
+
 client.transition_model_version_stage(
+
     name="sk-learn-random-forest-reg-model", version=3, stage="Archived"
+
 )
 ```
 
@@ -923,21 +1352,38 @@ python
 ```
 from mlflow import MlflowClient
 
+
+
 # Initialize an MLflow Client
+
 client = MlflowClient()
 
 
+
+
+
 def assign_alias_to_stage(model_name, stage, alias):
+
     """
+
     Assign an alias to the latest version of a registered model within a specified stage.
 
+
+
     :param model_name: The name of the registered model.
+
     :param stage: The stage of the model version for which the alias is to be assigned. Can be
+
                 "Production", "Staging", "Archived", or "None".
+
     :param alias: The alias to assign to the model version.
+
     :return: None
+
     """
+
     latest_mv = client.get_latest_versions(model_name, stages=[stage])[0]
+
     client.set_registered_model_alias(model_name, alias, latest_mv.version)
 ```
 

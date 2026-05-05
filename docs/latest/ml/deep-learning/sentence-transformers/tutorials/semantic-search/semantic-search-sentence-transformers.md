@@ -30,7 +30,10 @@ python
 ```
 import warnings
 
+
+
 # Disable a few less-than-useful UserWarnings from setuptools and pydantic
+
 warnings.filterwarnings("ignore", category=UserWarning)
 ```
 
@@ -65,82 +68,160 @@ python
 ```
 import warnings
 
+
+
 import numpy as np
+
 import pandas as pd
+
 from sentence_transformers import SentenceTransformer, util
 
+
+
 import mlflow
+
 from mlflow.models.signature import infer_signature
+
 from mlflow.pyfunc import PythonModel
 
 
+
+
+
 class SemanticSearchModel(PythonModel):
+
   def load_context(self, context):
+
       """Load the model context for inference, including the corpus from a file."""
+
       try:
+
           # Load the pre-trained sentence transformer model
+
           self.model = SentenceTransformer.load(context.artifacts["model_path"])
 
+
+
           # Load the corpus from the specified file
+
           corpus_file = context.artifacts["corpus_file"]
+
           with open(corpus_file) as file:
+
               self.corpus = file.read().splitlines()
 
+
+
           # Encode the corpus and convert it to a tensor
+
           self.corpus_embeddings = self.model.encode(self.corpus, convert_to_tensor=True)
 
+
+
       except Exception as e:
+
           raise ValueError(f"Error loading model and corpus: {e}")
 
+
+
   def predict(self, context, model_input, params=None):
+
       """Predict method to perform semantic search over the corpus."""
 
+
+
       if isinstance(model_input, pd.DataFrame):
+
           if model_input.shape[1] != 1:
+
               raise ValueError("DataFrame input must have exactly one column.")
+
           model_input = model_input.iloc[0, 0]
+
       elif isinstance(model_input, dict):
+
           model_input = model_input.get("sentence")
+
           if model_input is None:
+
               raise ValueError("The input dictionary must have a key named 'sentence'.")
+
       else:
+
           raise TypeError(
+
               f"Unexpected type for model_input: {type(model_input)}. Must be either a Dict or a DataFrame."
+
           )
+
+
 
       # Encode the query
+
       query_embedding = self.model.encode(model_input, convert_to_tensor=True)
 
+
+
       # Compute cosine similarity scores
+
       cos_scores = util.cos_sim(query_embedding, self.corpus_embeddings)[0]
 
+
+
       # Determine the number of top results to return
+
       top_k = params.get("top_k", 3) if params else 3  # Default to 3 if not specified
 
+
+
       minimum_relevancy = (
+
           params.get("minimum_relevancy", 0.2) if params else 0.2
+
       )  # Default to 0.2 if not specified
 
+
+
       # Get the top_k most similar sentences from the corpus
+
       top_results = np.argsort(cos_scores, axis=0)[-top_k:]
 
+
+
       # Prepare the initial results list
+
       initial_results = [
+
           (self.corpus[idx], cos_scores[idx].item()) for idx in reversed(top_results)
+
       ]
 
+
+
       # Filter the results based on the minimum relevancy threshold
+
       filtered_results = [result for result in initial_results if result[1] >= minimum_relevancy]
 
+
+
       # If all results are below the threshold, issue a warning and return the top result
+
       if not filtered_results:
+
           warnings.warn(
+
               "All top results are below the minimum relevancy threshold. "
+
               "Returning the highest match instead.",
+
               RuntimeWarning,
+
           )
+
           return [initial_results[0]]
+
       else:
+
           return filtered_results
 ```
 
@@ -175,107 +256,209 @@ python
 
 ```
 corpus = [
+
   "Perfecting a Sourdough Bread Recipe: The Joy of Baking. Baking sourdough bread "
+
   "requires patience, skill, and a good understanding of yeast fermentation. Each "
+
   "loaf is unique, telling its own story of the baker's journey.",
+
   "The Mars Rover's Discoveries: Unveiling the Red Planet. NASA's Mars rover has "
+
   "sent back stunning images and data, revealing the planet's secrets. These "
+
   "discoveries may hold the key to understanding Mars' history.",
+
   "The Art of Growing Herbs: Enhancing Your Culinary Skills. Growing your own "
+
   "herbs can transform your cooking, adding fresh and vibrant flavors. Whether it's "
+
   "basil, thyme, or rosemary, each herb has its own unique characteristics.",
+
   "AI in Software Development: Transforming the Tech Landscape. The rapid "
+
   "advancements in artificial intelligence are reshaping how we approach software "
+
   "development. From automation to machine learning, the possibilities are endless.",
+
   "Backpacking Through Europe: A Journey of Discovery. Traveling across Europe by "
+
   "backpack allows one to immerse in diverse cultures and landscapes. It's an "
+
   "adventure that combines the thrill of exploration with personal growth.",
+
   "Shakespeare's Timeless Influence: Reshaping Modern Storytelling. The works of "
+
   "William Shakespeare continue to inspire and influence contemporary literature. "
+
   "His mastery of language and deep understanding of human nature are unparalleled.",
+
   "The Rise of Renewable Energy: A Sustainable Future. Embracing renewable energy "
+
   "is crucial for achieving a sustainable and environmentally friendly lifestyle. "
+
   "Solar, wind, and hydro power are leading the way in this green revolution.",
+
   "The Magic of Jazz: An Exploration of Sound and Harmony. Jazz music, known for "
+
   "its improvisation and complex harmonies, has a rich and diverse history. It "
+
   "evokes a range of emotions, often reflecting the soul of the musician.",
+
   "Yoga for Mind and Body: The Benefits of Regular Practice. Engaging in regular "
+
   "yoga practice can significantly improve flexibility, strength, and mental "
+
   "well-being. It's a holistic approach to health, combining physical and spiritual "
+
   "aspects.",
+
   "The Egyptian Pyramids: Monuments of Ancient Majesty. The ancient Egyptian "
+
   "pyramids, monumental tombs for pharaohs, are marvels of architectural "
+
   "ingenuity. They stand as a testament to the advanced skills of ancient builders.",
+
   "Vegan Cuisine: A World of Flavor. Exploring vegan cuisine reveals a world of "
+
   "nutritious and delicious possibilities. From hearty soups to delectable desserts, "
+
   "plant-based dishes are diverse and satisfying.",
+
   "Extraterrestrial Life: The Endless Search. The quest to find life beyond Earth "
+
   "continues to captivate scientists and the public alike. Advances in space "
+
   "technology are bringing us closer to answering this age-old question.",
+
   "The Art of Plant Pruning: Promoting Healthy Growth. Regular pruning is essential "
+
   "for maintaining healthy and vibrant plants. It's not just about cutting back, but "
+
   "understanding each plant's growth patterns and needs.",
+
   "Cybersecurity in the Digital Age: Protecting Our Data. With the rise of digital "
+
   "technology, cybersecurity has become a critical concern. Protecting sensitive "
+
   "information from cyber threats is an ongoing challenge for individuals and "
+
   "businesses alike.",
+
   "The Great Wall of China: A Historical Journey. Visiting the Great Wall offers "
+
   "more than just breathtaking views; it's a journey through history. This ancient "
+
   "structure tells stories of empires, invasions, and human resilience.",
+
   "Mystery Novels: Crafting Suspense and Intrigue. A great mystery novel captivates "
+
   "the reader with intricate plots and unexpected twists. It's a genre that combines "
+
   "intellectual challenge with entertainment.",
+
   "Conserving Endangered Species: A Global Effort. Protecting endangered species "
+
   "is a critical task that requires international collaboration. From rainforests to "
+
   "oceans, every effort counts in preserving our planet's biodiversity.",
+
   "Emotions in Classical Music: A Symphony of Feelings. Classical music is not just "
+
   "an auditory experience; it's an emotional journey. Each composition tells a story, "
+
   "conveying feelings from joy to sorrow, tranquility to excitement.",
+
   "CrossFit: A Test of Strength and Endurance. CrossFit is more than just a fitness "
+
   "regimen; it's a lifestyle that challenges your physical and mental limits. It "
+
   "combines various disciplines to create a comprehensive workout.",
+
   "The Renaissance: An Era of Artistic Genius. The Renaissance marked a period of "
+
   "extraordinary artistic and scientific achievements. It was a time when creativity "
+
   "and innovation flourished, reshaping the course of history.",
+
   "Exploring International Cuisines: A Culinary Adventure. Discovering international "
+
   "cuisines is an adventure for the palate. Each dish offers a glimpse into the "
+
   "culture and traditions of its origin.",
+
   "Astronaut Training: Preparing for the Unknown. Becoming an astronaut involves "
+
   "rigorous training to prepare for the extreme conditions of space. It's a journey "
+
   "that tests both physical endurance and mental resilience.",
+
   "Sustainable Gardening: Nurturing the Environment. Sustainable gardening is not "
+
   "just about growing plants; it's about cultivating an ecosystem. By embracing "
+
   "environmentally friendly practices, gardeners can have a positive impact on the "
+
   "planet.",
+
   "The Smartphone Revolution: Changing Communication. Smartphones have transformed "
+
   "how we communicate, offering unprecedented connectivity and convenience. This "
+
   "technology continues to evolve, shaping our daily interactions.",
+
   "Experiencing African Safaris: Wildlife and Wilderness. An African safari is an "
+
   "unforgettable experience that brings you face-to-face with the wonders of "
+
   "wildlife. It's a journey that connects you with the raw beauty of nature.",
+
   "Graphic Novels: A Blend of Art and Story. Graphic novels offer a unique medium "
+
   "where art and narrative intertwine to tell compelling stories. They challenge "
+
   "traditional forms of storytelling, offering visual and textual richness.",
+
   "Addressing Ocean Pollution: A Call to Action. The increasing levels of pollution "
+
   "in our oceans are a pressing environmental concern. Protecting marine life and "
+
   "ecosystems requires concerted global efforts.",
+
   "The Origins of Hip Hop: A Cultural Movement. Hip hop music, originating from the "
+
   "streets of New York, has grown into a powerful cultural movement. Its beats and "
+
   "lyrics reflect the experiences and voices of a community.",
+
   "Swimming: A Comprehensive Workout. Swimming offers a full-body workout that is "
+
   "both challenging and refreshing. It's an exercise that enhances cardiovascular "
+
   "health, builds muscle, and improves endurance.",
+
   "The Fall of the Berlin Wall: A Historical Turning Point. The fall of the Berlin "
+
   "Wall was not just a physical demolition; it was a symbol of political and social "
+
   "change. This historic event marked the end of an era and the beginning of a new "
+
   "chapter in world history.",
+
 ]
 
+
+
 # Write the corpus to a file
+
 corpus_file = "/tmp/search_corpus.txt"
+
 with open(corpus_file, "w") as file:
+
   for sentence in corpus:
+
       file.write(sentence + "
+
 ")
 ```
 
@@ -306,26 +489,47 @@ python
 
 ```
 # Load a pre-trained sentence transformer model
+
 model = SentenceTransformer("all-MiniLM-L6-v2")
 
+
+
 # Create an input example DataFrame
+
 input_example = ["Something I want to find matches for."]
 
+
+
 # Save the model in the /tmp directory
+
 model_directory = "/tmp/search_model"
+
 model.save(model_directory)
+
+
 
 artifacts = {"model_path": model_directory, "corpus_file": corpus_file}
 
+
+
 # Generate test output for signature
+
 test_output = ["match 1", "match 2", "match 3"]
 
+
+
 # Define the signature associated with the model
+
 signature = infer_signature(
+
   input_example, test_output, params={"top_k": 3, "minimum_relevancy": 0.2}
+
 )
 
+
+
 # Visualize the signature
+
 signature
 ```
 
@@ -346,9 +550,14 @@ python
 
 ```
 # If you are running this tutorial in local mode, leave the next line commented out.
+
 # Otherwise, uncomment the following line and set your tracking uri to your local or remote tracking server.
 
+
+
 # mlflow.set_tracking_uri("http://127.0.0.1:8080")
+
+
 
 mlflow.set_experiment("Semantic Similarity")
 ```
@@ -382,13 +591,21 @@ python
 
 ```
 with mlflow.start_run() as run:
+
   model_info = mlflow.pyfunc.log_model(
+
       name="semantic_search",
+
       python_model=SemanticSearchModel(),
+
       input_example=input_example,
+
       signature=signature,
+
       artifacts=artifacts,
+
       pip_requirements=["sentence_transformers", "numpy"],
+
   )
 ```
 
@@ -429,11 +646,17 @@ python
 
 ```
 # Load our model as a PyFuncModel.
+
 # Note that unlike the example shown in the Introductory Tutorial, there is no 'native' flavor for PyFunc models.
+
 # This model cannot be loaded with `mlflow.sentence_transformers.load_model()` because it is not in the native model format.
+
 loaded_dynamic = mlflow.pyfunc.load_model(model_info.model_uri)
 
+
+
 # Make sure that it generates a reasonable output
+
 loaded_dynamic.predict(["I'd like some ideas for a meal to cook."])
 ```
 
@@ -472,9 +695,13 @@ python
 
 ```
 # Verify that the fallback logic works correctly by returning the 'best, closest' result, even though the parameters submitted should return no results.
+
 # We are also validating that the warning is issued, alerting us to the fact that this behavior is occurring.
+
 loaded_dynamic.predict(
+
   ["Latest stories on computing"], params={"top_k": 10, "minimum_relevancy": 0.4}
+
 )
 ```
 

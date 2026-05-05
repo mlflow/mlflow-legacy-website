@@ -28,7 +28,10 @@ python
 
 ```
 import os
+
 from getpass import getpass
+
+
 
 os.environ["OPENAI_API_KEY"] = getpass("Enter your OpenAI API key: ")
 ```
@@ -43,34 +46,63 @@ python
 
 ```
 import mlflow
+
 from mlflow.types.llm import (
+
   FunctionToolDefinition,
+
   ParamProperty,
+
   ToolParamsSchema,
+
 )
 
 
+
+
+
 class WeatherModel(mlflow.pyfunc.ChatModel):
+
   def __init__(self):
+
       # a sample tool definition. we use the `FunctionToolDefinition`
+
       # class to describe the name and expected params for the tool.
+
       # for this example, we're defining a simple tool that returns
+
       # the weather for a given city.
+
       weather_tool = FunctionToolDefinition(
+
           name="get_weather",
+
           description="Get weather information",
+
           parameters=ToolParamsSchema({
+
               "city": ParamProperty(
+
                   type="string",
+
                   description="City name to get weather information for",
+
               ),
+
           }),
+
           # make sure to call `to_tool_definition()` to convert the `FunctionToolDefinition`
+
           # to a `ToolDefinition` object. this step is necessary to normalize the data format,
+
           # as multiple types of tools (besides just functions) might be available in the future.
+
       ).to_tool_definition()
 
+
+
       # OpenAI expects tools to be provided as a list of dictionaries
+
       self.tools = [weather_tool.to_dict()]
 ```
 
@@ -82,22 +114,39 @@ python
 
 ```
 class WeatherModel(mlflow.pyfunc.ChatModel):
+
   def __init__(self):
+
       weather_tool = FunctionToolDefinition(
+
           name="get_weather",
+
           description="Get weather information",
+
           parameters=ToolParamsSchema({
+
               "city": ParamProperty(
+
                   type="string",
+
                   description="City name to get weather information for",
+
               ),
+
           }),
+
       ).to_tool_definition()
+
+
 
       self.tools = [weather_tool.to_dict()]
 
+
+
       def get_weather(self, city: str) -> str:
+
           # in a real-world scenario, the implementation might be more complex
+
           return f"It's sunny in {city}, with a temperature of 20C"
 ```
 
@@ -118,80 +167,156 @@ python
 ```
 import json
 
+
+
 from openai import OpenAI
 
+
+
 import mlflow
+
 from mlflow.types.llm import (
+
   ChatMessage,
+
   ChatParams,
+
   ChatResponse,
+
 )
 
 
+
+
+
 class WeatherModel(mlflow.pyfunc.ChatModel):
+
   def __init__(self):
+
       weather_tool = FunctionToolDefinition(
+
           name="get_weather",
+
           description="Get weather information",
+
           parameters=ToolParamsSchema({
+
               "city": ParamProperty(
+
                   type="string",
+
                   description="City name to get weather information for",
+
               ),
+
           }),
+
       ).to_tool_definition()
+
+
 
       self.tools = [weather_tool.to_dict()]
 
+
+
   def get_weather(self, city: str) -> str:
+
       return "It's sunny in {}, with a temperature of 20C".format(city)
 
+
+
   # the core method that needs to be implemented. this function
+
   # will be called every time a user sends messages to our model
+
   def predict(self, context, messages: list[ChatMessage], params: ChatParams):
+
       # instantiate the OpenAI client
+
       client = OpenAI()
 
+
+
       # convert the messages to a format that the OpenAI API expects
+
       messages = [m.to_dict() for m in messages]
 
+
+
       # call the OpenAI API
+
       response = client.chat.completions.create(
+
           model="gpt-4o-mini",
+
           messages=messages,
+
           # pass the tools in the request
+
           tools=self.tools,
+
       )
 
+
+
       # if OpenAI returns a tool_calling response, then we call
+
       # our tool. otherwise, we just return the response as is
+
       if tool_calls := response.choices[0].message.tool_calls:
+
           print("Received a tool call, calling the weather tool...")
 
+
+
           # for this example, we only provide the model with one tool,
+
           # so we can assume the tool call is for the weather tool. if
+
           # we had more, we'd need to check the name of the tool that
+
           # was called
+
           city = json.loads(tool_calls[0].function.arguments)["city"]
+
           tool_call_id = tool_calls[0].id
 
+
+
           # call the tool and construct a new chat message
+
           tool_response = ChatMessage(
+
               role="tool", content=self.get_weather(city), tool_call_id=tool_call_id
+
           ).to_dict()
 
+
+
           # send another request to the API, making sure to append
+
           # the assistant's tool call along with the tool response.
+
           messages.append(response.choices[0].message)
+
           messages.append(tool_response)
+
           response = client.chat.completions.create(
+
               model="gpt-4o-mini",
+
               messages=messages,
+
               tools=self.tools,
+
           )
 
+
+
       # return the result as a ChatResponse, as this
+
       # is the expected output of the predict method
+
       return ChatResponse.from_dict(response.to_dict())
 ```
 
@@ -207,61 +332,118 @@ python
 
 ```
 from mlflow.entities.span import (
+
   SpanType,
+
 )
 
+
+
 # automatically trace OpenAI SDK calls
+
 mlflow.openai.autolog()
 
 
+
+
+
 class WeatherModel(mlflow.pyfunc.ChatModel):
+
   def __init__(self):
+
       weather_tool = FunctionToolDefinition(
+
           name="get_weather",
+
           description="Get weather information",
+
           parameters=ToolParamsSchema({
+
               "city": ParamProperty(
+
                   type="string",
+
                   description="City name to get weather information for",
+
               ),
+
           }),
+
       ).to_tool_definition()
+
+
 
       self.tools = [weather_tool.to_dict()]
 
+
+
   @mlflow.trace(span_type=SpanType.TOOL)
+
   def get_weather(self, city: str) -> str:
+
       return "It's sunny in {}, with a temperature of 20C".format(city)
 
+
+
   @mlflow.trace(span_type=SpanType.AGENT)
+
   def predict(self, context, messages: list[ChatMessage], params: ChatParams):
+
       client = OpenAI()
+
+
 
       messages = [m.to_dict() for m in messages]
 
+
+
       response = client.chat.completions.create(
+
           model="gpt-4o-mini",
+
           messages=messages,
+
           tools=self.tools,
+
       )
 
+
+
       if tool_calls := response.choices[0].message.tool_calls:
+
           print("Received a tool call, calling the weather tool...")
 
+
+
           city = json.loads(tool_calls[0].function.arguments)["city"]
+
           tool_call_id = tool_calls[0].id
 
+
+
           tool_response = ChatMessage(
+
               role="tool", content=self.get_weather(city), tool_call_id=tool_call_id
+
           ).to_dict()
 
+
+
           messages.append(response.choices[0].message)
+
           messages.append(tool_response)
+
           response = client.chat.completions.create(
+
               model="gpt-4o-mini",
+
               messages=messages,
+
               tools=self.tools,
+
           )
+
+
 
       return ChatResponse.from_dict(response.to_dict())
 ```
@@ -284,25 +466,46 @@ python
 
 ```
 # messages to use as input examples
+
 messages = [
+
   {"role": "system", "content": "Please use the provided tools to answer user queries."},
+
   {"role": "user", "content": "What's the weather in Singapore?"},
+
 ]
 
+
+
 input_example = {
+
   "messages": messages,
+
 }
 
+
+
 # instantiate the model
+
 model = WeatherModel()
 
+
+
 # log the model
+
 with mlflow.start_run():
+
   model_info = mlflow.pyfunc.log_model(
+
       name="weather-model",
+
       python_model=model,
+
       input_example=input_example,
+
   )
+
+
 
   print("Successfully logged the model at the following URI: ", model_info.model_uri)
 ```
@@ -333,30 +536,56 @@ python
 ```
 import mlflow
 
+
+
 # Load the previously logged ChatModel
+
 tool_model = mlflow.pyfunc.load_model(model_info.model_uri)
 
+
+
 system_prompt = {
+
   "role": "system",
+
   "content": "Please use the provided tools to answer user queries.",
+
 }
 
+
+
 messages = [
+
   system_prompt,
+
   {"role": "user", "content": "What's the weather in Singapore?"},
+
 ]
+
+
 
 # Call the model's predict method
+
 response = tool_model.predict({"messages": messages})
+
 print(response["choices"][0]["message"]["content"])
 
+
+
 messages = [
+
   system_prompt,
+
   {"role": "user", "content": "What's the weather in San Francisco?"},
+
 ]
 
+
+
 # Generating another response
+
 response = tool_model.predict({"messages": messages})
+
 print(response["choices"][0]["message"]["content"])
 ```
 
@@ -379,6 +608,7 @@ sh
 
 ```
 $ export OPENAI_API_KEY=<YOUR OPENAI API KEY>
+
 $ mlflow models serve -m <MODEL_URI>
 ```
 
@@ -389,13 +619,22 @@ python
 ```
 import requests
 
+
+
 messages = [
+
   system_prompt,
+
   {"role": "user", "content": "What's the weather in Tokyo?"},
+
 ]
 
+
+
 response = requests.post("http://127.0.0.1:5000/invocations", json={"messages": messages})
+
 response.raise_for_status()
+
 response.json()
 ```
 

@@ -21,13 +21,22 @@ python
 ```
 from mlflow.genai.scorers.deepeval import AnswerRelevancy
 
+
+
 scorer = AnswerRelevancy(threshold=0.7, model="openai:/gpt-4")
+
 feedback = scorer(
+
     inputs="What is MLflow?",
+
     outputs="MLflow is an open-source AI engineering platform for agents and LLMs.",
+
 )
 
+
+
 print(feedback.value)  # "yes" or "no"
+
 print(feedback.metadata["score"])  # 0.85
 ```
 
@@ -37,25 +46,45 @@ python
 
 ```
 import mlflow
+
 from mlflow.genai.scorers.deepeval import AnswerRelevancy, Faithfulness
 
+
+
 eval_dataset = [
+
     {
+
         "inputs": {"query": "What is MLflow?"},
+
         "outputs": "MLflow is an open-source AI engineering platform for agents and LLMs.",
+
     },
+
     {
+
         "inputs": {"query": "How do I track experiments?"},
+
         "outputs": "You can use mlflow.start_run() to begin tracking experiments.",
+
     },
+
 ]
 
+
+
 results = mlflow.genai.evaluate(
+
     data=eval_dataset,
+
     scorers=[
+
         AnswerRelevancy(threshold=0.7, model="openai:/gpt-4"),
+
         Faithfulness(threshold=0.8, model="openai:/gpt-4"),
+
     ],
+
 )
 ```
 
@@ -144,16 +173,28 @@ python
 ```
 from mlflow.genai.scorers.deepeval import get_scorer
 
+
+
 # Create scorer by name
+
 scorer = get_scorer(
+
     metric_name="AnswerRelevancy",
+
     threshold=0.7,
+
     model="openai:/gpt-4",
+
 )
 
+
+
 feedback = scorer(
+
     inputs="What is MLflow?",
+
     outputs="MLflow is a platform for ML workflows.",
+
 )
 ```
 
@@ -166,19 +207,34 @@ python
 ```
 from mlflow.genai.scorers.deepeval import AnswerRelevancy, TurnRelevancy
 
+
+
 # Common parameters
+
 scorer = AnswerRelevancy(
+
     model="openai:/gpt-4",  # Model URI (also supports "databricks", "databricks:/endpoint", etc.)
+
     threshold=0.7,  # Pass/fail threshold (0.0-1.0, scorer passes if score >= threshold)
+
     include_reason=True,  # Include detailed rationale in feedback
+
 )
 
+
+
 # Metric-specific parameters are passed through to DeepEval
+
 conversational_scorer = TurnRelevancy(
+
     model="openai:/gpt-4o",
+
     threshold=0.8,
+
     window_size=3,  # DeepEval-specific: number of conversation turns to consider
+
     strict_mode=True,  # DeepEval-specific: enforce stricter evaluation criteria
+
 )
 ```
 

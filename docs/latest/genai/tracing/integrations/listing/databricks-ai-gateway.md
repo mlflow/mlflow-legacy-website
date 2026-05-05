@@ -2,9 +2,7 @@
 
 [Databricks AI Gateway](https://docs.databricks.com/en/ai-gateway/index.html) (formerly Mosaic AI Gateway) is the Databricks solution for governing and monitoring access to generative AI models and their associated model serving endpoints. It is a centralized service that brings governance, monitoring, and production readiness to model serving endpoints.
 
-Looking for Databricks Foundation Model APIs?
-
-This guide covers tracing LLM calls through **Databricks AI Gateway**. If you're using Databricks Foundation Model APIs directly, see the [Databricks Integration](/docs/latest/genai/tracing/integrations/listing/databricks.md) guide instead.
+:::tip Looking for Databricks Foundation Model APIs? This guide covers tracing LLM calls through **Databricks AI Gateway**. If you're using Databricks Foundation Model APIs directly, see the [Databricks Integration](/docs/latest/genai/tracing/integrations/listing/databricks.md) guide instead. :::
 
 ## What is Databricks AI Gateway?[​](#what-is-databricks-ai-gateway "Direct link to What is Databricks AI Gateway?")
 
@@ -73,7 +71,10 @@ python
 ```
 import mlflow
 
+
+
 mlflow.set_tracking_uri("databricks")
+
 mlflow.set_experiment("<your-databricks-workspace>")
 ```
 
@@ -82,9 +83,14 @@ typescript
 ```
 import * as mlflow from "@mlflow/core";
 
+
+
 mlflow.init({
+
   trackingUri: "databricks",
+
   experimentId: "<your-databricks-workspace>",
+
 });
 ```
 
@@ -103,25 +109,45 @@ python
 
 ```
 import mlflow
+
 from openai import OpenAI
 
+
+
 # Enable auto-tracing for OpenAI
+
 mlflow.openai.autolog()
 
+
+
 # Point OpenAI client to Databricks AI Gateway
+
 client = OpenAI(
+
     base_url="https://<databricks-workspace>/serving-endpoints",
+
     api_key="<DATABRICKS_TOKEN>",
+
 )
 
+
+
 # Make API calls - traces will be captured automatically
+
 response = client.chat.completions.create(
+
     model="<your-endpoint-name>",  # Your Databricks serving endpoint name
+
     messages=[
+
         {"role": "system", "content": "You are a helpful assistant."},
+
         {"role": "user", "content": "What is the capital of France?"},
+
     ],
+
 )
+
 print(response.choices[0].message.content)
 ```
 
@@ -131,24 +157,43 @@ typescript
 
 ```
 import { tracedOpenAI } from "@mlflow/openai";
+
 import { OpenAI } from "openai";
 
+
+
 // Wrap the OpenAI client pointing to Databricks AI Gateway
+
 const client = tracedOpenAI(
+
   new OpenAI({
+
     baseURL: "https://<databricks-workspace>/serving-endpoints",
+
     apiKey: "<DATABRICKS_TOKEN>",
+
   })
+
 );
 
+
+
 // Make API calls - traces will be captured automatically
+
 const response = await client.chat.completions.create({
+
   model: "<your-endpoint-name>",
+
   messages: [
+
     { role: "system", content: "You are a helpful assistant." },
+
     { role: "user", content: "What is the capital of France?" },
+
   ],
+
 });
+
 console.log(response.choices[0].message.content);
 ```
 

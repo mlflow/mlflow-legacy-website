@@ -31,47 +31,90 @@ python
 ```
 import mlflow
 
+
+
 # Use double curly braces for variables in the template
+
 initial_template = """\
+
 Summarize content you are provided with in {{ num_sentences }} sentences.
 
+
+
 Sentences: {{ sentences }}
+
 """
 
+
+
 # Chat Style template
+
 initial_template = [
+
     {
+
         "role": "system",
+
         "content": "Summarize content you are provided with in {{ num_sentences }} sentences.",
+
     },
+
     {"role": "user", "content": "Sentences: {{ sentences }}"},
+
 ]
 
+
+
 # Optional Response Format
+
 from pydantic import BaseModel, Field
 
 
+
+
+
 class ResponseFormat(BaseModel):
+
     summary: str = Field(..., description="Summary of the content")
 
 
+
+
+
 # Register a new prompt
+
 prompt = mlflow.genai.register_prompt(
+
     name="summarization-prompt",
+
     template=initial_template,
+
     # Optional: Provide Response Format to get structured output
+
     response_format=ResponseFormat,
+
     # Optional: Provide a commit message to describe the changes
+
     commit_message="Initial commit",
+
     # Optional: Specify tags for this prompt
+
     tags={
+
         "author": "author@example.com",
+
         "task": "summarization",
+
         "language": "en",
+
     },
+
 )
 
+
+
 # The prompt object contains information about the registered prompt
+
 print(f"Created prompt '{prompt.name}' (version {prompt.version})")
 ```
 
@@ -97,26 +140,48 @@ python
 ```
 import mlflow
 
+
+
 new_template = """\
+
 You are an expert summarizer. Condense the following content into exactly {{ num_sentences }} clear and informative sentences that capture the key points.
+
+
 
 Sentences: {{ sentences }}
 
+
+
 Your summary should:
+
 - Contain exactly {{ num_sentences }} sentences
+
 - Include only the most important information
+
 - Be written in a neutral, objective tone
+
 - Maintain the same level of formality as the original text
+
 """
 
+
+
 # Register a new version of an existing prompt
+
 updated_prompt = mlflow.genai.register_prompt(
+
     name="summarization-prompt",  # Specify the existing prompt name
+
     template=new_template,
+
     commit_message="Improvement",
+
     tags={
+
         "author": "author@example.com",
+
     },
+
 )
 ```
 

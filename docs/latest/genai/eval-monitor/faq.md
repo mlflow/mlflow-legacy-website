@@ -20,6 +20,7 @@ bash
 
 ```
 # Limit concurrent data items being evaluated (default: 10)
+
 export MLFLOW_GENAI_EVAL_MAX_WORKERS=5
 ```
 
@@ -29,9 +30,13 @@ bash
 
 ```
 # Limit concurrent scorer execution (default: 10)
+
 export MLFLOW_GENAI_EVAL_MAX_SCORER_WORKERS=2
 
+
+
 # For strict rate limiting, run scorers sequentially
+
 export MLFLOW_GENAI_EVAL_MAX_SCORER_WORKERS=1
 ```
 
@@ -63,24 +68,43 @@ python
 
 ```
 import asyncio
+
 from openai import AsyncOpenAI
+
+
 
 client = AsyncOpenAI()
 
 
+
+
+
 async def async_predict_fn(question: str) -> str:
+
     """Async prediction function using OpenAI"""
+
     response = await client.chat.completions.create(
+
         model="gpt-4o-mini",
+
         messages=[{"role": "user", "content": question}],
+
     )
+
     return response.choices[0].message.content
 
 
+
+
+
 mlflow.genai.evaluate(
+
     data=eval_dataset,
+
     predict_fn=async_predict_fn,  # Async function automatically supported
+
     scorers=[Correctness()],
+
 )
 ```
 
@@ -104,6 +128,7 @@ python
 
 ```
 with mlflow.start_run(run_name="My Evaluation Run") as run:
+
     mlflow.genai.evaluate(...)
 ```
 
@@ -121,14 +146,23 @@ python
 
 ```
 import mlflow
+
 from mlflow.genai.scorers import Correctness
 
+
+
 mlflow.genai.evaluate(
+
     # The {"messages": ...} part must be compatible with the request schema of the endpoint
+
     data=[{"inputs": {"messages": [{"role": "user", "content": "What is MLflow?"}]}}],
+
     # Your Databricks Model Serving endpoint URI
+
     predict_fn=mlflow.genai.to_predict_fn("endpoints:/chat"),
+
     scorers=[Correctness()],
+
 )
 ```
 
@@ -153,26 +187,48 @@ python
 ```
 from mlflow.genai.scorers import Correctness, Guidelines
 
+
+
 # Pass inference parameters to control judge behavior
+
 correctness_scorer = Correctness(
+
     inference_params={
+
         "temperature": 0.0,  # More deterministic responses
+
         "max_tokens": 500,
+
     }
+
 )
+
+
 
 guidelines_scorer = Guidelines(
+
     name="tone_check",
+
     guidelines="The response should be professional and helpful.",
+
     inference_params={
+
         "temperature": 0.0,
+
     },
+
 )
 
+
+
 mlflow.genai.evaluate(
+
     data=eval_dataset,
+
     predict_fn=my_predict_fn,
+
     scorers=[correctness_scorer, guidelines_scorer],
+
 )
 ```
 
@@ -208,16 +264,27 @@ python
 
 ```
 result = mlflow.genai.evaluate(
+
     data=eval_dataset,
+
     predict_fn=my_predict_fn,
+
     scorers=[Correctness(), Safety()],
+
 )
 
+
+
 # Access aggregated metrics
+
 print(result.metrics)
+
 # Output: {'correctness/mean': 0.85, 'safety/mean': 0.95}
 
+
+
 # Access a specific metric
+
 correctness_score = result.metrics.get("correctness/mean")
 ```
 
@@ -227,7 +294,9 @@ python
 
 ```
 run = mlflow.get_run(run_id="<run_id>")
+
 print(run.data.metrics)
+
 # Output: {'correctness/mean': 0.85, 'safety/mean': 0.95}
 ```
 
@@ -239,6 +308,7 @@ python
 
 ```
 # Export to CSV for further analysis
+
 result.result_df.to_csv("evaluation_results.csv", index=False)
 ```
 

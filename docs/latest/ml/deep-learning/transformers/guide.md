@@ -25,19 +25,15 @@ Certain *TextGenerationPipeline* types, particularly instructional-based ones, m
 
 In the current version, audio and text-based large language models are supported for use with `pyfunc`, while computer vision, multi-modal, timeseries, reinforcement learning, and graph models are only supported for native type loading via [`mlflow.transformers.load_model()`](/docs/latest/api_reference/python_api/mlflow.transformers.html#mlflow.transformers.load_model)
 
-attention
+:::warning attention Not all `transformers` pipeline types are supported. See the table below for the list of currently supported Pipeline types that can be loaded as `pyfunc`.
 
-Not all `transformers` pipeline types are supported. See the table below for the list of currently supported Pipeline types that can be loaded as `pyfunc`.
-
-Future releases of MLflow will introduce `pyfunc` support for these additional types.
+Future releases of MLflow will introduce `pyfunc` support for these additional types. :::
 
 The table below shows the mapping of `transformers` pipeline types to the [python\_function (pyfunc) model flavor](/docs/latest/ml/model.md#pyfunc-model-flavor) data type inputs and outputs.
 
-important
+:::warning important The inputs and outputs of the `pyfunc` implementation of these pipelines *are not guaranteed to match* the input types and output types that would return from a native use of a given pipeline type. If your use case requires access to scores, top\_k results, or other additional references within the output from a pipeline inference call, please use the native implementation by loading via [`mlflow.transformers.load_model()`](/docs/latest/api_reference/python_api/mlflow.transformers.html#mlflow.transformers.load_model) to receive the full output.
 
-The inputs and outputs of the `pyfunc` implementation of these pipelines *are not guaranteed to match* the input types and output types that would return from a native use of a given pipeline type. If your use case requires access to scores, top\_k results, or other additional references within the output from a pipeline inference call, please use the native implementation by loading via [`mlflow.transformers.load_model()`](/docs/latest/api_reference/python_api/mlflow.transformers.html#mlflow.transformers.load_model) to receive the full output.
-
-Similarly, if your use case requires the use of raw tensor outputs or processing of outputs through an external `processor` module, load the model components directly as a `dict` by calling [`mlflow.transformers.load_model()`](/docs/latest/api_reference/python_api/mlflow.transformers.html#mlflow.transformers.load_model) and specify the `return_type` argument as 'components'.
+Similarly, if your use case requires the use of raw tensor outputs or processing of outputs through an external `processor` module, load the model components directly as a `dict` by calling [`mlflow.transformers.load_model()`](/docs/latest/api_reference/python_api/mlflow.transformers.html#mlflow.transformers.load_model) and specify the `return_type` argument as 'components'. :::
 
 | Pipeline Type                 | Input Type                          | Output Type                                                               |
 | ----------------------------- | ----------------------------------- | ------------------------------------------------------------------------- |
@@ -75,27 +71,50 @@ python
 
 ```
 import mlflow
+
 import transformers
 
+
+
 # Read a pre-trained conversation pipeline from HuggingFace hub
+
 conversational_pipeline = transformers.pipeline(model="microsoft/DialoGPT-medium")
 
+
+
 # Log the pipeline
+
 with mlflow.start_run():
+
     model_info = mlflow.transformers.log_model(
+
         transformers_model=conversational_pipeline,
+
         name="chatbot",
+
         task="conversational",
+
         input_example="A clever and witty question",
+
     )
 
+
+
 # Load the saved pipeline as pyfunc
+
 chatbot = mlflow.pyfunc.load_model(model_uri=model_info.model_uri)
 
+
+
 # Ask the chatbot a question
+
 response = chatbot.predict("What is machine learning?")
 
+
+
 print(response)
+
+
 
 # >> [It's a new thing that's been around for a while.]
 ```
@@ -121,37 +140,69 @@ python
 
 ```
 import mlflow
+
 import transformers
 
+
+
 architecture = "mrm8488/t5-base-finetuned-common_gen"
+
 model = transformers.pipeline(
+
     task="text2text-generation",
+
     tokenizer=transformers.T5TokenizerFast.from_pretrained(architecture),
+
     model=transformers.T5ForConditionalGeneration.from_pretrained(architecture),
+
 )
+
 data = "pencil draw paper"
 
+
+
 # Define an model_config
+
 model_config = {
+
     "num_beams": 5,
+
     "max_length": 30,
+
     "do_sample": True,
+
     "remove_invalid_values": True,
+
 }
 
+
+
 # Saving model_config with the model, signature is inferred from input_example
+
 mlflow.transformers.save_model(
+
     model,
+
     path="text2text",
+
     model_config=model_config,
+
     input_example=data,
+
 )
 
+
+
 pyfunc_loaded = mlflow.pyfunc.load_model("text2text")
+
 # model_config will be applied
+
 result = pyfunc_loaded.predict(data)
 
+
+
 # overriding some inference configuration with different values
+
 pyfunc_loaded = mlflow.pyfunc.load_model("text2text", model_config=dict(do_sample=False))
 ```
 
@@ -165,54 +216,103 @@ python
 
 ```
 import mlflow
+
 import transformers
 
+
+
 architecture = "mrm8488/t5-base-finetuned-common_gen"
+
 model = transformers.pipeline(
+
     task="text2text-generation",
+
     tokenizer=transformers.T5TokenizerFast.from_pretrained(architecture),
+
     model=transformers.T5ForConditionalGeneration.from_pretrained(architecture),
+
 )
+
 data = "pencil draw paper"
 
+
+
 # Define an model_config
+
 model_config = {
+
     "num_beams": 5,
+
     "remove_invalid_values": True,
+
 }
+
+
 
 # Define the inference parameters params
+
 inference_params = {
+
     "max_length": 30,
+
     "do_sample": True,
+
 }
 
+
+
 # Saving model with model config, signature is inferred from input_example
+
 mlflow.transformers.save_model(
+
     model,
+
     path="text2text",
+
     model_config=model_config,
+
     input_example=(data, inference_params),
+
 )
+
+
 
 pyfunc_loaded = mlflow.pyfunc.load_model("text2text")
 
+
+
 # Pass params at inference time
+
 params = {
+
     "max_length": 20,
+
     "do_sample": False,
+
 }
 
+
+
 # In this case we only override max_length and do_sample,
+
 # other params will use the default one saved on ModelSignature
+
 # or in the model configuration.
+
 # The final params used for prediction is as follows:
+
 # {
+
 #    "num_beams": 5,
+
 #    "max_length": 20,
+
 #    "do_sample": False,
+
 #    "remove_invalid_values": True,
+
 # }
+
 result = pyfunc_loaded.predict(data, params=params)
 ```
 
@@ -256,41 +356,67 @@ note
 
 The components that are logged can be retrieved in their original structure (a dictionary) by setting the attribute `return_type` to "components" in the `load_model()` API.
 
-attention
-
-Not all model types are compatible with the pipeline API constructor via component elements. Incompatible models will raise an `MLflowException` error stating that the model is missing the *name\_or\_path* attribute. In the event that this occurs, please construct the model directly via the `transformers.pipeline(<repo name>)` API and save the pipeline object directly.
+:::warning attention Not all model types are compatible with the pipeline API constructor via component elements. Incompatible models will raise an `MLflowException` error stating that the model is missing the *name\_or\_path* attribute. In the event that this occurs, please construct the model directly via the `transformers.pipeline(<repo name>)` API and save the pipeline object directly. :::
 
 python
 
 ```
 import mlflow
+
 import transformers
 
+
+
 task = "text-classification"
+
 architecture = "distilbert-base-uncased-finetuned-sst-2-english"
+
 model = transformers.AutoModelForSequenceClassification.from_pretrained(architecture)
+
 tokenizer = transformers.AutoTokenizer.from_pretrained(architecture)
 
+
+
 # Define the components of the model in a dictionary
+
 transformers_model = {"model": model, "tokenizer": tokenizer}
 
+
+
 # Log the model components
+
 with mlflow.start_run():
+
     model_info = mlflow.transformers.log_model(
+
         transformers_model=transformers_model,
+
         name="text_classifier",
+
         task=task,
+
     )
 
+
+
 # Load the components as a pipeline
+
 loaded_pipeline = mlflow.transformers.load_model(model_info.model_uri, return_type="pipeline")
 
+
+
 print(type(loaded_pipeline).__name__)
+
 # >> TextClassificationPipeline
+
+
 
 loaded_pipeline(["MLflow is awesome!", "Transformers is a great library!"])
 
+
+
 # >> [{'label': 'POSITIVE', 'score': 0.9998478889465332},
+
 # >>  {'label': 'POSITIVE', 'score': 0.9998030066490173}]
 ```
 
@@ -302,44 +428,84 @@ python
 
 ```
 import transformers
+
 import mlflow
 
+
+
 translation_pipeline = transformers.pipeline(
+
     task="translation_en_to_fr",
+
     model=transformers.T5ForConditionalGeneration.from_pretrained("t5-small"),
+
     tokenizer=transformers.T5TokenizerFast.from_pretrained("t5-small", model_max_length=100),
+
 )
+
+
 
 with mlflow.start_run():
+
     model_info = mlflow.transformers.log_model(
+
         transformers_model=translation_pipeline,
+
         name="french_translator",
+
     )
 
+
+
 translation_components = mlflow.transformers.load_model(
+
     model_info.model_uri, return_type="components"
+
 )
 
+
+
 for key, value in translation_components.items():
+
     print(f"{key} -> {type(value).__name__}")
 
+
+
 # >> task -> str
+
 # >> model -> T5ForConditionalGeneration
+
 # >> tokenizer -> T5TokenizerFast
+
+
 
 response = translation_pipeline("MLflow is great!")
 
+
+
 print(response)
+
+
 
 # >> [{'translation_text': 'MLflow est formidable!'}]
 
+
+
 reconstructed_pipeline = transformers.pipeline(**translation_components)
 
+
+
 reconstructed_response = reconstructed_pipeline(
+
     "transformers makes using Deep Learning models easy and fun!"
+
 )
 
+
+
 print(reconstructed_response)
+
+
 
 # >> [{'translation_text': "Les transformateurs rendent l'utilisation de modèles Deep Learning facile et amusante!"}]
 ```
@@ -380,26 +546,47 @@ python
 
 ```
 import transformers
+
 import torch
+
 import mlflow
+
+
 
 task = "translation_en_to_fr"
 
+
+
 my_pipeline = transformers.pipeline(
+
     task=task,
+
     model=transformers.T5ForConditionalGeneration.from_pretrained("t5-small"),
+
     tokenizer=transformers.T5TokenizerFast.from_pretrained("t5-small", model_max_length=100),
+
     framework="pt",
+
 )
 
+
+
 with mlflow.start_run():
+
     model_info = mlflow.transformers.log_model(
+
         transformers_model=my_pipeline,
+
         name="my_pipeline",
+
         torch_dtype=torch.bfloat16,
+
     )
 
+
+
 # Illustrate that the torch data type is recorded in the flavor configuration
+
 print(model_info.flavors["transformers"])
 ```
 
@@ -409,15 +596,25 @@ bash
 
 ```
 {'transformers_version': '4.28.1',
+
   'code': None,
+
   'task': 'translation_en_to_fr',
+
   'instance_type': 'TranslationPipeline',
+
   'source_model_name': 't5-small',
+
   'pipeline_model_type': 'T5ForConditionalGeneration',
+
   'framework': 'pt',
+
   'torch_dtype': 'torch.bfloat16',
+
   'tokenizer_type': 'T5TokenizerFast',
+
   'components': ['tokenizer'],
+
   'pipeline': 'pipeline'}
 ```
 
@@ -429,28 +626,52 @@ python
 
 ```
 import transformers
+
 import torch
+
 import mlflow
+
+
 
 task = "translation_en_to_fr"
 
+
+
 my_pipeline = transformers.pipeline(
+
     task=task,
+
     model=transformers.T5ForConditionalGeneration.from_pretrained("t5-small"),
+
     tokenizer=transformers.T5TokenizerFast.from_pretrained("t5-small", model_max_length=100),
+
     framework="pt",
+
 )
+
+
 
 with mlflow.start_run():
+
     model_info = mlflow.transformers.log_model(
+
         transformers_model=my_pipeline,
+
         name="my_pipeline",
+
         torch_dtype=torch.bfloat16,
+
     )
 
+
+
 loaded_pipeline = mlflow.transformers.load_model(
+
     model_info.model_uri, return_type="pipeline", torch_dtype=torch.float64
+
 )
+
+
 
 print(loaded_pipeline.torch_dtype)
 ```
@@ -492,12 +713,20 @@ python
 ```
 import mlflow
 
+
+
 url = "https://www.mywebsite.com/sound/files/for/transcription/file111.mp3"
+
 with mlflow.start_run():
+
     mlflow.transformers.log_model(
+
         transformers_model=my_audio_pipeline,
+
         name="my_transcriber",
+
         input_example=url,
+
     )
 ```
 
@@ -524,8 +753,12 @@ python
 ```
 from peft import LoraConfig, get_peft_model
 
+
+
 base_model = AutoModelForCausalLM.from_pretrained(...)
+
 lora_config = LoraConfig(...)
+
 peft_model = get_peft_model(base_model, lora_config)
 ```
 
@@ -535,30 +768,55 @@ python
 
 ```
 import mlflow
+
 from peft import LoraConfig, get_peft_model
+
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
+
+
 model_id = "databricks/dolly-v2-7b"
+
 base_model = AutoModelForCausalLM.from_pretrained(model_id)
+
 tokenizer = AutoTokenizer.from_pretrained(model_id)
 
+
+
 peft_config = LoraConfig(...)
+
 peft_model = get_peft_model(base_model, peft_config)
 
+
+
 with mlflow.start_run():
+
     # Your training code here
+
     ...
 
+
+
     # Log the PEFT model
+
     model_info = mlflow.transformers.log_model(
+
         transformers_model={
+
             "model": peft_model,
+
             "tokenizer": tokenizer,
+
         },
+
         name="peft_model",
+
     )
 
+
+
 # Load the PEFT model
+
 loaded_model = mlflow.transformers.load_model(model_info.model_uri)
 ```
 

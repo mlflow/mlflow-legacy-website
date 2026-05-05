@@ -14,46 +14,81 @@ The following table summarizes the different methods for logging models with the
 | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------- | ------------ | ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Normal pipeline-based logging                                            | Log a model using a pipeline instance or a dictionary of pipeline components.                     | High         | High       | python```
 import mlflow
+
 import transformers
 
+
+
 pipeline = transformers.pipeline(
+
     task="text-generation",
+
     model="meta-llama/Meta-Llama-3.1-70B",
+
 )
 
+
+
 with mlflow.start_run():
+
     mlflow.transformers.log_model(
+
         transformers_model=pipeline,
+
         name="model",
+
     )
 ```                                                                                           |
 | [Memory-Efficient Model Logging](#transformers-memory-efficient-logging) | Log a model by specifying a path to a local checkpoint, avoiding loading the model into memory.   | ****Low****  | High       | python```
 import mlflow
 
+
+
 with mlflow.start_run():
+
     mlflow.transformers.log_model(
+
         # Pass a path to local checkpoint as a model
+
         transformers_model="/path/to/local/checkpoint",
+
         # Task argument is required for this saving mode.
+
         task="text-generation",
+
         name="model",
+
     )
 ```                                                      |
 | [Storage-Efficient Model Logging](#transformers-save-pretrained-guide)   | Log a model by saving a reference to the HuggingFace Hub repository instead of the model weights. | High         | **Low**    | python```
 import mlflow
+
 import transformers
 
+
+
 pipeline = transformers.pipeline(
+
     task="text-generation",
+
     model="meta-llama/Meta-Llama-3.1-70B",
+
 )
 
+
+
 with mlflow.start_run():
+
     mlflow.transformers.log_model(
+
         transformers_model=pipeline,
+
         name="model",
+
         # Set save_pretrained to False to save storage space
+
         save_pretrained=False,
+
     )
 ``` |
 
@@ -66,13 +101,22 @@ python
 ```
 import mlflow
 
+
+
 with mlflow.start_run():
+
     mlflow.transformers.log_model(
+
         # Pass a path to local checkpoint as a model to avoid loading the model instance
+
         transformers_model="path/to/local/checkpoint",
+
         # Task argument is required for this saving mode.
+
         task="text-generation",
+
         name="model",
+
     )
 ```
 
@@ -103,18 +147,32 @@ python
 ```
 import transformers
 
+
+
 pipeline = transformers.pipeline(
+
     task="text-generation",
+
     model="meta-llama/Meta-Llama-3.1-70B",
+
     torch_dtype="torch.float16",
+
 )
 
+
+
 with mlflow.start_run():
+
     mlflow.transformers.log_model(
+
         transformers_model=pipeline,
+
         name="model",
+
         # Set save_pretrained to False to save storage space
+
         save_pretrained=False,
+
     )
 ```
 
@@ -126,10 +184,15 @@ bash
 
 ```
 flavors:
+
     ...
+
     transformers:
+
         source_model_name: meta-llama/Meta-Llama-3.1-70B-Instruct
+
         source_model_revision: 33101ce6ccc08fa6249c10a543ebfcac65173393
+
         ...
 ```
 
@@ -150,17 +213,30 @@ python
 ```
 import mlflow
 
+
+
 mlflow.set_registry_uri("databricks-uc")
 
+
+
 # Log the repository ID as a model. The model weight will not be saved to the artifact store
+
 with mlflow.start_run():
+
     model_info = mlflow.transformers.log_model(
+
         transformers_model="meta-llama/Meta-Llama-3.1-70B-Instruct",
+
         name="model",
+
     )
 
+
+
 # When registering the model to Unity Catalog Model Registry, MLflow will automatically
+
 # persist the model weight files. This may take a several minutes for large models.
+
 mlflow.register_model(model_info.model_uri, "your.model.name")
 ```
 
@@ -173,18 +249,32 @@ python
 ```
 import mlflow
 
+
+
 # Log the repository ID as a model. The model weight will not be saved to the artifact store
+
 with mlflow.start_run():
+
     model_info = mlflow.transformers.log_model(
+
         transformers_model="meta-llama/Meta-Llama-3.1-70B-Instruct",
+
         name="model",
+
     )
 
+
+
 # Before registering the model to the non-UC model registry, persist the model weight
+
 # from the HuggingFace Hub to the artifact location.
+
 mlflow.transformers.persist_pretrained_model(model_info.model_uri)
 
+
+
 # Register the model
+
 mlflow.register_model(model_info.model_uri, "your.model.name")
 ```
 

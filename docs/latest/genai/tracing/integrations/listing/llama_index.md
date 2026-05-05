@@ -11,6 +11,8 @@ python
 ```
 import mlflow
 
+
+
 mlflow.llama_index.autolog()
 ```
 
@@ -26,6 +28,7 @@ text
 
 ```
 !mkdir -p data
+
 !curl -L https://raw.githubusercontent.com/run-llama/llama_index/main/docs/docs/examples/data/paul_graham/paul_graham_essay.txt -o ./data/paul_graham_essay.txt
 ```
 
@@ -36,7 +39,10 @@ text
 ```
 from llama_index.core import VectorStoreIndex, SimpleDirectoryReader
 
+
+
 documents = SimpleDirectoryReader("data").load_data()
+
 index = VectorStoreIndex.from_documents(documents)
 ```
 
@@ -47,15 +53,26 @@ python
 ```
 import mlflow
 
+
+
 # Enabling tracing for LlamaIndex
+
 mlflow.llama_index.autolog()
 
+
+
 # Optional: Set a tracking URI and an experiment
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("LlamaIndex")
 
+
+
 # Query the index
+
 query_engine = index.as_query_engine()
+
 response = query_engine.query("What was the first program the author wrote?")
 ```
 

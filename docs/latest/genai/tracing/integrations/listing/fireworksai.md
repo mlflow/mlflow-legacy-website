@@ -57,10 +57,15 @@ bash
 
 ```
 git clone --depth 1 --filter=blob:none --sparse https://github.com/mlflow/mlflow.git
+
 cd mlflow
+
 git sparse-checkout set docker-compose
+
 cd docker-compose
+
 cp .env.dev.example .env
+
 docker compose up -d
 ```
 
@@ -79,26 +84,47 @@ python
 
 ```
 import mlflow
+
 import openai
+
 import os
 
+
+
 # Enable auto-tracing for FireworksAI (uses OpenAI SDK compatibility)
+
 mlflow.openai.autolog()
 
+
+
 # Set a tracking URI and an experiment
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("FireworksAI")
 
+
+
 # Create an OpenAI client configured for FireworksAI
+
 client = openai.OpenAI(
+
     base_url="https://api.fireworks.ai/inference/v1",
+
     api_key=os.getenv("FIREWORKS_API_KEY"),
+
 )
 
+
+
 # Use the client as usual - traces will be automatically captured
+
 response = client.chat.completions.create(
+
     model="accounts/fireworks/models/deepseek-v3-0324",  # For other models see: https://fireworks.ai/models
+
     messages=[{"role": "user", "content": "Why is open source better than closed source?"}],
+
 )
 ```
 
@@ -108,22 +134,39 @@ typescript
 
 ```
 import { OpenAI } from "openai";
+
 import { tracedOpenAI } from "@mlflow/openai";
 
+
+
 // Wrap the OpenAI client and point to FireworksAI endpoint
+
 const client = tracedOpenAI(
+
   new OpenAI({
+
     baseURL: "https://api.fireworks.ai/inference/v1",
+
     apiKey: process.env.FIREWORKS_API_KEY,
+
   })
+
 );
 
+
+
 // Use the client as usual - traces will be automatically captured
+
 const response = await client.chat.completions.create({
+
   model: "accounts/fireworks/models/deepseek-v3-0324",  // For other models see: https://fireworks.ai/models
+
   messages: [
+
     { role: "user", content: "Why is open source better than closed source?" }
+
   ],
+
 });
 ```
 
@@ -157,35 +200,65 @@ python
 
 ```
 import openai
+
 import mlflow
+
 import os
 
+
+
 # Enable auto-tracing
+
 mlflow.openai.autolog()
 
+
+
 # Optional: Set a tracking URI and an experiment
+
 # If running locally you can start a server with:  `mlflow server --host 127.0.0.1 --port 5000`
+
 mlflow.set_tracking_uri("http://127.0.0.1:5000")
+
 mlflow.set_experiment("FireworksAI")
 
+
+
 # Configure OpenAI client for FireworksAI
+
 openai_client = openai.OpenAI(
+
     base_url="https://api.fireworks.ai/inference/v1",
+
     api_key=os.getenv("FIREWORKS_API_KEY"),
+
 )
 
+
+
 messages = [
+
     {
+
         "role": "user",
+
         "content": "What is the capital of France?",
+
     }
+
 ]
 
+
+
 # To use different models check out the model library at: https://fireworks.ai/models
+
 response = openai_client.chat.completions.create(
+
     model="accounts/fireworks/models/deepseek-v3-0324",
+
     messages=messages,
+
     max_completion_tokens=100,
+
 )
 ```
 
@@ -193,29 +266,54 @@ typescript
 
 ```
 import { OpenAI } from "openai";
+
 import { tracedOpenAI } from "@mlflow/openai";
 
+
+
 // Configure OpenAI client for FireworksAI
+
 const client = tracedOpenAI(
+
   new OpenAI({
+
     baseURL: "https://api.fireworks.ai/inference/v1",
+
     apiKey: process.env.FIREWORKS_API_KEY,
+
   })
+
 );
 
+
+
 const messages = [
+
   {
+
     role: "user",
+
     content: "What is the capital of France?",
+
   }
+
 ];
 
+
+
 // To use different models check out the model library at: https://fireworks.ai/models
+
 const response = await client.chat.completions.create({
+
   model: "accounts/fireworks/models/deepseek-v3-0324",
+
   messages: messages,
+
   max_tokens: 100,
+
 });
+
+
 
 console.log(response.choices[0].message.content);
 ```
@@ -226,23 +324,41 @@ python
 
 ```
 import openai
+
 import mlflow
+
 import os
 
+
+
 # Enable trace logging
+
 mlflow.openai.autolog()
 
+
+
 client = openai.OpenAI(
+
     base_url="https://api.fireworks.ai/inference/v1",
+
     api_key=os.getenv("FIREWORKS_API_KEY"),
+
 )
 
+
+
 stream = client.chat.completions.create(
+
     model="accounts/fireworks/models/deepseek-v3-0324",
+
     messages=[{"role": "user", "content": "How fast would a glass of water freeze on Titan?"}],
+
     stream=True,  # Enable streaming response
+
 )
+
 for chunk in stream:
+
     print(chunk.choices[0].delta.content or "", end="")
 ```
 
@@ -252,22 +368,39 @@ python
 
 ```
 import openai
+
 import mlflow
+
 import os
 
+
+
 # Enable trace logging
+
 mlflow.openai.autolog()
 
+
+
 client = openai.AsyncOpenAI(
+
     base_url="https://api.fireworks.ai/inference/v1",
+
     api_key=os.getenv("FIREWORKS_API_KEY"),
+
 )
 
+
+
 response = await client.chat.completions.create(
+
     model="accounts/fireworks/models/deepseek-v3-0324",
+
     messages=[{"role": "user", "content": "What is the best open source LLM?"}],
+
     # Async streaming is also supported
+
     # stream=True
+
 )
 ```
 
@@ -279,83 +412,161 @@ python
 
 ```
 import json
+
 from openai import OpenAI
+
 import mlflow
+
 from mlflow.entities import SpanType
+
 import os
 
+
+
 client = OpenAI(
+
     base_url="https://api.fireworks.ai/inference/v1",
+
     api_key=os.getenv("FIREWORKS_API_KEY"),
+
 )
 
 
+
+
+
 # Define the tool function. Decorate it with `@mlflow.trace` to create a span for its execution.
+
 @mlflow.trace(span_type=SpanType.TOOL)
+
 def get_weather(city: str) -> str:
+
     if city == "Tokyo":
+
         return "sunny"
+
     elif city == "Paris":
+
         return "rainy"
+
     return "unknown"
 
 
+
+
+
 tools = [
+
     {
+
         "type": "function",
+
         "function": {
+
             "name": "get_weather",
+
             "parameters": {
+
                 "type": "object",
+
                 "properties": {"city": {"type": "string"}},
+
             },
+
         },
+
     }
+
 ]
+
+
 
 _tool_functions = {"get_weather": get_weather}
 
 
+
+
+
 # Define a simple tool calling agent
+
 @mlflow.trace(span_type=SpanType.AGENT)
+
 def run_tool_agent(question: str):
+
     messages = [{"role": "user", "content": question}]
 
+
+
     # Invoke the model with the given question and available tools
+
     response = client.chat.completions.create(
+
         model="accounts/fireworks/models/gpt-oss-20b",
+
         messages=messages,
+
         tools=tools,
+
     )
+
     ai_msg = response.choices[0].message
+
     messages.append(ai_msg)
 
+
+
     # If the model requests tool call(s), invoke the function with the specified arguments
+
     if tool_calls := ai_msg.tool_calls:
+
         for tool_call in tool_calls:
+
             function_name = tool_call.function.name
+
             if tool_func := _tool_functions.get(function_name):
+
                 args = json.loads(tool_call.function.arguments)
+
                 tool_result = tool_func(**args)
+
             else:
+
                 raise RuntimeError("An invalid tool is returned from the assistant!")
 
+
+
             messages.append({
+
                 "role": "tool",
+
                 "tool_call_id": tool_call.id,
+
                 "content": tool_result,
+
             })
 
+
+
         # Send the tool results to the model and get a new response
+
         response = client.chat.completions.create(
+
             model="accounts/fireworks/models/llama-v3p1-8b-instruct", messages=messages
+
         )
+
+
 
     return response.choices[0].message.content
 
 
+
+
+
 # Run the tool calling agent
+
 question = "What's the weather like in Paris today?"
+
 answer = run_tool_agent(question)
 ```
 

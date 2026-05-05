@@ -30,6 +30,7 @@ bash
 
 ```
 export OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://localhost:5000/v1/traces
+
 export OTEL_EXPORTER_OTLP_TRACES_HEADERS=x-mlflow-experiment-id=123
 ```
 
@@ -43,6 +44,7 @@ bash
 
 ```
 export TRACELOOP_BASE_URL=http://localhost:5000
+
 export TRACELOOP_HEADERS=x-mlflow-experiment-id=123
 ```
 
@@ -57,19 +59,34 @@ python
 ```
 import os
 
+
+
 os.environ["MLFLOW_USE_DEFAULT_TRACER_PROVIDER"] = "false"
 
+
+
 import mlflow
+
 from mlflow.entities.trace_location import MlflowExperimentLocation
 
+
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 exp_id = mlflow.set_experiment("Langflow").experiment_id
+
 mlflow.tracing.set_destination(MlflowExperimentLocation(exp_id))
 
+
+
 # Add custom MLflow spans alongside the auto-generated traces
+
 with mlflow.start_span("custom_step") as span:
+
     span.set_inputs({"query": "test"})
+
     # your application logic here
+
     span.set_outputs({"result": "success"})
 ```
 

@@ -1,14 +1,10 @@
 # Pickle-Free Model format
 
-Experimental
-
-This feature is experimental and may change in future releases.
+:::note Experimental This feature is experimental and may change in future releases. :::
 
 Saving models with Python's `pickle` or `cloudpickle` relies on Python's object serialization mechanism, which can execute arbitrary code during deserialization. MLflow supports safer **pickle-free** saving formats for several model flavors. Prefer these formats when possible.
 
-Upcoming Default Behavior Change
-
-Pickle-free saving formats will become the **default** in an upcoming MLflow release. **Most users (scikit-learn, LightGBM, LangChain, custom Python) will see no breaking change.** PyTorch users should review the [requirements](#pickle-free-format-for-pytorch-model) — `input_example` will be required and `torch.jit.ScriptModule` is not supported. To avoid getting affected by the change, pin the MLflow version or specify `serialization_format="pickle"` in the model logging code.
+:::warning Upcoming Default Behavior Change Pickle-free saving formats will become the **default** in an upcoming MLflow release. **Most users (scikit-learn, LightGBM, LangChain, custom Python) will see no breaking change.** PyTorch users should review the [requirements](#pickle-free-format-for-pytorch-model) — `input_example` will be required and `torch.jit.ScriptModule` is not supported. To avoid getting affected by the change, pin the MLflow version or specify `serialization_format="pickle"` in the model logging code. :::
 
 ## Pickle-free format for Scikit-learn model[​](#pickle-free-format-for-scikit-learn-model "Direct link to Pickle-free format for Scikit-learn model")
 
@@ -18,17 +14,29 @@ python
 
 ```
 import mlflow
+
 from sklearn.datasets import load_iris
+
 from sklearn.tree import DecisionTreeClassifier
 
+
+
 X, y = load_iris(return_X_y=True)
+
 model = DecisionTreeClassifier().fit(X, y)
 
+
+
 with mlflow.start_run():
+
     mlflow.sklearn.log_model(
+
         model,
+
         name="model",
+
         serialization_format="skops",
+
     )
 ```
 
@@ -38,32 +46,59 @@ python
 
 ```
 from numpy.random import randint
+
 from sklearn.base import BaseEstimator, TransformerMixin
+
 import pandas as pd
+
 from sklearn.pipeline import Pipeline
 
 
+
+
+
 class CustomTransformer(BaseEstimator, TransformerMixin):
+
     def fit(self, X, y=None):
+
         return self
 
+
+
     def transform(self, X, y=None):
+
         # Perform arbitrary transformation
+
         X["random_int"] = randint(0, 10, X.shape[0])
+
         return X
+
+
+
 
 
 df = pd.DataFrame({"a": [1, 2, 3], "b": [4, 5, 6], "c": [7, 8, 9]})
 
+
+
 pipeline = Pipeline(steps=[("use_custom_transformer", CustomTransformer())])
 
+
+
 # Custom classes must be marked as trusted for skops
+
 with mlflow.start_run():
+
     mlflow.sklearn.log_model(
+
         pipeline,
+
         name="model",
+
         serialization_format="skops",
+
         skops_trusted_types=["__main__.CustomTransformer"],
+
     )
 ```
 
@@ -73,32 +108,47 @@ See [`mlflow.sklearn.log_model()`](/docs/latest/api_reference/python_api/mlflow.
 
 When saving a PyTorch model, saving with `serialization_format="pt2"` uses `torch.export.save` and stores the model as a traced graph instead of pickle serialization format.
 
-Requirements and Limitations
+:::danger Requirements and Limitations
 
 * `torch` >= 2.4
 * An **input\_example** is required (and only `Tensor` type inputs are supported for the exported model)
 * Not supported for `torch.jit.ScriptModule` models
 * Model weights **cannot be transferred between devices** after loading. If the model is saved with weights on GPU device 0, it must also be loaded onto GPU device 0 — not CPU or a different GPU.
-* To avoid these limitations, use the pickle-based serialization by setting `serialization_format="pickle"`.
+* To avoid these limitations, use the pickle-based serialization by setting `serialization_format="pickle"`. :::
 
 python
 
 ```
 import mlflow
+
 import torch
+
 from torch import nn
+
 from sklearn.datasets import load_diabetes
 
+
+
 # Load a real dataset and use a sample as the input example
+
 X, _ = load_diabetes(return_X_y=True)
+
 input_example = torch.tensor(X[:5], dtype=torch.float32).numpy()
+
 sequential_model = nn.Sequential(nn.Linear(10, 3), nn.ReLU(), nn.Linear(3, 1))
+
 with mlflow.start_run():
+
     mlflow.pytorch.log_model(
+
         sequential_model,
+
         name="model",
+
         serialization_format="pt2",
+
         input_example=input_example,
+
     )
 ```
 
@@ -112,22 +162,39 @@ python
 
 ```
 import mlflow
+
 from lightgbm import LGBMClassifier
+
 from sklearn.datasets import load_iris
 
+
+
 X, y = load_iris(return_X_y=True)
+
 model = LGBMClassifier(objective="multiclass", random_state=42).fit(X, y)
 
+
+
 with mlflow.start_run():
+
     mlflow.lightgbm.log_model(
+
         model,
+
         name="model",
+
         serialization_format="skops",
+
         skops_trusted_types=[
+
             "collections.OrderedDict",
+
             "lightgbm.basic.Booster",
+
             "lightgbm.sklearn.LGBMClassifier",
+
         ],
+
     )
 ```
 

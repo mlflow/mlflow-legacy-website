@@ -27,19 +27,33 @@ As you develop scorers, you will often need to iterate quickly. Use this develop
 
    ```
    import mlflow
+
    import os
+
    import openai
 
+
+
    # Ensure your OPENAI_API_KEY is set in your environment
+
    # os.environ["OPENAI_API_KEY"] = "<YOUR_API_KEY>" # Uncomment and set if not globally configured
 
+
+
    # Enable auto-tracing for OpenAI
+
    mlflow.openai.autolog()
 
+
+
    # Create an OpenAI client
+
    client = openai.OpenAI()
 
+
+
    # Select an LLM
+
    model_name = "gpt-4o-mini"
    ```
 
@@ -49,19 +63,35 @@ As you develop scorers, you will often need to iterate quickly. Use this develop
 
    ```
    @mlflow.trace
+
    def sample_app(messages: list[dict[str, str]]):
+
        # 1. Prepare messages for the LLM
+
        messages_for_llm = [
+
            {"role": "system", "content": "You are a helpful assistant."},
+
            *messages,
+
        ]
 
+
+
        # 2. Call LLM to generate a response
+
        response = client.chat.completions.create(
+
            model=model_name,
+
            messages=messages_for_llm,
+
        )
+
        return response.choices[0].message.content
+
+
+
 
 
    sample_app([{"role": "user", "content": "What is the capital of France?"}])
@@ -75,38 +105,71 @@ python
 
 ```
 eval_dataset = [
+
     {
+
         "inputs": {
+
             "messages": [
+
                 {"role": "user", "content": "How much does a microwave cost?"},
+
             ]
+
         },
+
     },
+
     {
+
         "inputs": {
+
             "messages": [
+
                 {
+
                     "role": "user",
+
                     "content": "Can I return the microwave I bought 2 months ago?",
+
                 },
+
             ]
+
         },
+
     },
+
     {
+
         "inputs": {
+
             "messages": [
+
                 {
+
                     "role": "user",
+
                     "content": "I'm having trouble with my account.  I can't log in.",
+
                 },
+
                 {
+
                     "role": "assistant",
+
                     "content": "I'm sorry to hear that you're having trouble with your account.  Are you using our website or mobile app?",
+
                 },
+
                 {"role": "user", "content": "Website"},
+
             ]
+
         },
+
     },
+
 ]
 ```
 
@@ -120,9 +183,15 @@ python
 from mlflow.genai.scorers import scorer
 
 
+
+
+
 @scorer
+
 def placeholder_metric() -> int:
+
     # placeholder return value
+
     return 1
 ```
 
@@ -132,7 +201,9 @@ python
 
 ```
 eval_results = mlflow.genai.evaluate(
+
     data=eval_dataset, predict_fn=sample_app, scorers=[placeholder_metric]
+
 )
 ```
 
@@ -148,6 +219,7 @@ python
 
 ```
 generated_traces = mlflow.search_traces(run_id=eval_results.run_id)
+
 generated_traces
 ```
 
@@ -161,17 +233,31 @@ python
 from mlflow.genai.scorers import scorer
 
 
+
+
+
 @scorer
+
 def response_length(outputs: str) -> int:
+
     # Example metric.
+
     # Implement your actual metric logic here.
+
     return len(outputs)
 
 
+
+
+
 # Note the lack of a predict_fn parameter.
+
 mlflow.genai.evaluate(
+
     data=generated_traces,
+
     scorers=[response_length],
+
 )
 ```
 

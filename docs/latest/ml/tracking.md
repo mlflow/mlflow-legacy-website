@@ -37,10 +37,16 @@ python
 ```
 import mlflow
 
+
+
 with mlflow.start_run():
+
     mlflow.log_param("lr", 0.001)
+
     # Your ml code
+
     ...
+
     mlflow.log_metric("val_loss", val_loss)
 ```
 
@@ -51,7 +57,11 @@ python
 ```
 import mlflow
 
+
+
 mlflow.autolog()
+
+
 
 # Your training code...
 ```
@@ -69,24 +79,44 @@ python
 ```
 import mlflow
 
+
+
 # Find high-performing models across experiments
+
 top_models = mlflow.search_logged_models(
+
     experiment_ids=["1", "2"],
+
     filter_string="metrics.accuracy > 0.95 AND params.model_type = 'RandomForest'",
+
     order_by=[{"field_name": "metrics.f1_score", "ascending": False}],
+
     max_results=5,
+
 )
 
+
+
 # Get the best model for deployment
+
 best_model = mlflow.search_logged_models(
+
     experiment_ids=["1"],
+
     filter_string="metrics.accuracy > 0.9",
+
     max_results=1,
+
     order_by=[{"field_name": "metrics.accuracy", "ascending": False}],
+
     output_format="list",
+
 )[0]
 
+
+
 # Load the best model directly
+
 loaded_model = mlflow.pyfunc.load_model(f"models:/{best_model.model_id}")
 ```
 
@@ -109,9 +139,13 @@ python
 
 ```
 client = mlflow.tracking.MlflowClient()
+
 experiment_id = "0"
+
 best_run = client.search_runs(experiment_id, order_by=["metrics.val_loss ASC"], max_results=1)[0]
+
 print(best_run.info)
+
 # {'run_id': '...', 'metrics': {'val_loss': 0.123}, ...}
 ```
 
@@ -127,30 +161,55 @@ python
 
 ```
 import mlflow
+
 import mlflow.pytorch
 
+
+
 with mlflow.start_run() as run:
+
     for epoch in range(100):
+
         # Train your model
+
         train_model(model, epoch)
 
+
+
         # Log model checkpoint every 10 epochs
+
         if epoch % 10 == 0:
+
             model_info = mlflow.pytorch.log_model(
+
                 pytorch_model=model,
+
                 name=f"checkpoint-epoch-{epoch}",
+
                 step=epoch,
+
                 input_example=sample_input,
+
             )
 
+
+
             # Log metrics linked to this specific model checkpoint
+
             accuracy = evaluate_model(model, validation_data)
+
             mlflow.log_metric(
+
                 key="accuracy",
+
                 value=accuracy,
+
                 step=epoch,
+
                 model_id=model_info.model_id,  # Link metric to specific model
+
                 dataset=validation_dataset,
+
             )
 ```
 
@@ -162,15 +221,25 @@ python
 
 ```
 # Create a dataset reference
+
 train_dataset = mlflow.data.from_pandas(train_df, name="training_data")
 
+
+
 # Log metric with model and dataset links
+
 mlflow.log_metric(
+
     key="f1_score",
+
     value=0.95,
+
     step=epoch,
+
     model_id=model_info.model_id,  # Links to specific model checkpoint
+
     dataset=train_dataset,  # Links to specific dataset
+
 )
 ```
 
@@ -182,18 +251,31 @@ python
 
 ```
 # Search for all models in a run, ordered by accuracy
+
 ranked_models = mlflow.search_logged_models(
+
     filter_string=f"source_run_id='{run.info.run_id}'",
+
     order_by=[{"field_name": "metrics.accuracy", "ascending": False}],
+
     output_format="list",
+
 )
 
+
+
 # Get the best performing model
+
 best_model = ranked_models[0]
+
 print(f"Best model: {best_model.name}")
+
 print(f"Accuracy: {best_model.metrics[0].value}")
 
+
+
 # Load the best model for inference
+
 loaded_model = mlflow.pyfunc.load_model(f"models:/{best_model.model_id}")
 ```
 
@@ -205,10 +287,15 @@ python
 
 ```
 # New MLflow 3 model URI format
+
 model_uri = f"models:/{model_info.model_id}"
+
 loaded_model = mlflow.pyfunc.load_model(model_uri)
 
+
+
 # This replaces the older run-based URI format:
+
 # model_uri = f"runs:/{run_id}/model_path"
 ```
 
@@ -272,7 +359,7 @@ Additionally, if you are interfacing with a managed service (such as Databricks 
 
 #### [Artifact Store](/docs/latest/self-hosting/architecture/artifact-store.md)[​](#artifact-stores "Direct link to artifact-stores")
 
-Artifact store persists (typically large) artifacts for each run, such as model weights (e.g. a pickled scikit-learn model), images (e.g. PNGs), model and data files (e.g. [Parquet](https://parquet.apache.org) file). MLflow stores artifacts ina a local file (`mlruns`) by default, but also supports different storage options such as Amazon S3 and Azure Blob Storage.
+Artifact store persists (typically large) artifacts for each run, such as model weights (e.g. a pickled scikit-learn model), images (e.g. PNGs), model and data files (e.g. [Parquet](https://parquet.apache.org) file). MLflow stores artifacts in a local file (`mlruns`) by default, but also supports different storage options such as Amazon S3 and Azure Blob Storage.
 
 For models which are logged as MLflow artifacts, you can refer the model through a model URI of format: `models:/<model_id>`, where 'model\_id' is the unique identifier assigned to the logged model. This replaces the older `runs:/<run_id>/<artifact_path>` format and provides more direct model referencing.
 
@@ -280,7 +367,7 @@ If the model is registered in the [MLflow Model Registry](/docs/latest/ml/model-
 
 #### [MLflow Tracking Server](/docs/latest/self-hosting/architecture/tracking-server.md) (Optional)[​](#tracking_server "Direct link to tracking_server")
 
-MLflow Tracking Server is a stand-alone HTTP server that provides REST APIs for accessing backend and/or artifact store. Tracking server also offers flexibility to configure what data to server, govern access control, versioning, and etc. Read [MLflow Tracking Server documentation](/docs/latest/self-hosting.md) for more details.
+MLflow Tracking Server is a stand-alone HTTP server that provides REST APIs for accessing backend and/or artifact store. Tracking server also offers flexibility to configure what data to serve, govern access control, versioning, and etc. Read [MLflow Tracking Server documentation](/docs/latest/self-hosting.md) for more details.
 
 ### Common Setups[​](#tracking_setup "Direct link to Common Setups")
 
@@ -345,7 +432,9 @@ python
 
 ```
 experiment_name = "your_experiment_name"
+
 mlflow.create_experiment(experiment_name, artifact_location="s3://your-bucket")
+
 mlflow.set_experiment(experiment_name)
 ```
 

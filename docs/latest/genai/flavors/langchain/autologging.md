@@ -21,12 +21,20 @@ python
 ```
 import mlflow
 
+
+
 mlflow.langchain.autolog()
 
+
+
 # Enable other optional logging
+
 # mlflow.langchain.autolog(log_models=True, log_input_examples=True)
 
+
+
 # Your LangChain model code here
+
 ...
 ```
 
@@ -52,6 +60,8 @@ python
 ```
 import mlflow
 
+
+
 mlflow.langchain.autolog(log_traces=False)
 ```
 
@@ -65,67 +75,129 @@ python
 
 ```
 import os
+
 from operator import itemgetter
 
+
+
 from langchain.llms import OpenAI
+
 from langchain.prompts import PromptTemplate
+
 from langchain.schema.output_parser import StrOutputParser
+
 from langchain.schema.runnable import RunnableLambda
+
+
 
 import mlflow
 
+
+
 # Uncomment the following to use the full abilities of langchain autologgin
+
 # %pip install `langchain_community>=0.0.16`
+
 # These two libraries enable autologging to log text analysis related artifacts
+
 # %pip install textstat spacy
+
+
 
 assert "OPENAI_API_KEY" in os.environ, "Please set the OPENAI_API_KEY environment variable."
 
+
+
 # Enable mlflow langchain autologging
+
 mlflow.langchain.autolog()
 
+
+
 prompt_with_history_str = """
+
 Here is a history between you and a human: {chat_history}
+
 Now, please answer this question: {question}
+
 """
+
 prompt_with_history = PromptTemplate(
+
     input_variables=["chat_history", "question"], template=prompt_with_history_str
+
 )
 
 
+
+
+
 def extract_question(input):
+
     return input[-1]["content"]
 
 
+
+
+
 def extract_history(input):
+
     return input[:-1]
+
+
+
 
 
 llm = OpenAI(temperature=0.9)
 
+
+
 # Build a chain with LCEL
+
 chain_with_history = (
+
     {
+
         "question": itemgetter("messages") | RunnableLambda(extract_question),
+
         "chat_history": itemgetter("messages") | RunnableLambda(extract_history),
+
     }
+
     | prompt_with_history
+
     | llm
+
     | StrOutputParser()
+
 )
+
+
 
 inputs = {"messages": [{"role": "user", "content": "Who owns MLflow?"}]}
 
+
+
 print(chain_with_history.invoke(inputs))
+
 # sample output:
+
 # "1. Databricks\n2. Microsoft\n3. Google\n4. Amazon\n\nEnter your answer: 1\n\n
+
 # Correct! MLflow is an open source project developed by Databricks. ...
 
+
+
 # We automatically log the model and trace related artifacts
+
 # A model with name `lc_model` is registered, we can load it back as a PyFunc model
+
 model_name = "lc_model"
+
 model_version = 1
+
 loaded_model = mlflow.pyfunc.load_model(f"models:/{model_name}/{model_version}")
+
 print(loaded_model.predict(inputs))
 ```
 
@@ -138,34 +210,64 @@ python
 ```
 from typing import Literal
 
+
+
 import mlflow
 
+
+
 from langchain_core.tools import tool
+
 from langchain_openai import ChatOpenAI
+
 from langgraph.prebuilt import create_react_agent
 
+
+
 # Enabling tracing for LangGraph (LangChain)
+
 mlflow.langchain.autolog()
 
+
+
 # Optional: Set a tracking URI and an experiment
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("LangGraph")
 
 
+
+
+
 @tool
+
 def get_weather(city: Literal["nyc", "sf"]):
+
     """Use this to get weather information."""
+
     if city == "nyc":
+
         return "It might be cloudy in nyc"
+
     elif city == "sf":
+
         return "It's always sunny in sf"
 
 
+
+
+
 llm = ChatOpenAI(model="gpt-4o-mini")
+
 tools = [get_weather]
+
 graph = create_react_agent(llm, tools)
 
+
+
 # Invoke the graph
+
 result = graph.invoke({"messages": [{"role": "user", "content": "what is the weather in sf?"}]})
 ```
 
@@ -191,36 +293,69 @@ python
 from mlflow.langchain.langchain_tracer import MlflowLangchainTracer
 
 
+
+
+
 class CustomLangchainTracer(MlflowLangchainTracer):
+
     # Override the handler functions to customize the behavior. The method signature is defined by LangChain Callbacks.
+
     def on_chat_model_start(
+
         self,
+
         serialized: Dict[str, Any],
+
         messages: List[List[BaseMessage]],
+
         *,
+
         run_id: UUID,
+
         tags: Optional[List[str]] = None,
+
         parent_run_id: Optional[UUID] = None,
+
         metadata: Optional[Dict[str, Any]] = None,
+
         name: Optional[str] = None,
+
         **kwargs: Any,
+
     ):
+
         """Run when a chat model starts running."""
+
         attributes = {
+
             **kwargs,
+
             **metadata,
+
             # Add additional attribute to the span
+
             "version": "1.0.0",
+
         }
 
+
+
         # Call the _start_span method at the end of the handler function to start a new span.
+
         self._start_span(
+
             span_name=name or self._assign_span_name(serialized, "chat model"),
+
             parent_run_id=parent_run_id,
+
             span_type=SpanType.CHAT_MODEL,
+
             run_id=run_id,
+
             inputs=messages,
+
             attributes=kwargs,
+
         )
 ```
 
@@ -254,7 +389,11 @@ python
 ```
 import mlflow
 
+
+
 mlflow.langchain.autolog(silent=True)
+
+
 
 # No warning messages will be emitted from autologging
 ```
@@ -282,16 +421,28 @@ python
 
 ```
 import mlflow
+
 from langchain_openai import ChatOpenAI
+
 from langchain_core.output_parsers import StrOutputParser
 
+
+
 # Enable auto-tracing for LangChain
+
 mlflow.langchain.autolog()
 
+
+
 # Method 1: Pass `name` parameter to the constructor
+
 model = ChatOpenAI(name="custom-llm", model="gpt-4o-mini")
+
 # Method 2: Use `with_config` method to set the name for the runnables
+
 runnable = (model | StrOutputParser()).with_config({"run_name": "custom-chain"})
+
+
 
 runnable.invoke("Hi")
 ```
@@ -308,15 +459,25 @@ python
 
 ```
 import mlflow
+
 from langchain_openai import ChatOpenAI
 
+
+
 # Enable auto-tracing for LangChain
+
 mlflow.langchain.autolog()
 
+
+
 # Pass metadata to the constructor using `with_config` method
+
 model = ChatOpenAI(model="gpt-4o-mini").with_config({"metadata": {"key1": "value1"}})
 
+
+
 # Pass metadata at runtime using the `config` parameter
+
 model.invoke("Hi", config={"metadata": {"key2": "value2"}})
 ```
 

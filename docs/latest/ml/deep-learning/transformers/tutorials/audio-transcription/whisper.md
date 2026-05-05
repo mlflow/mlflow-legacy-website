@@ -33,11 +33,17 @@ python
 
 ```
 # Disable tokenizers warnings when constructing pipelines
+
 %env TOKENIZERS_PARALLELISM=false
+
+
 
 import warnings
 
+
+
 # Disable a few less-than-useful UserWarnings from setuptools and pydantic
+
 warnings.filterwarnings("ignore", category=UserWarning)
 ```
 
@@ -69,32 +75,59 @@ python
 
 ```
 import requests
+
 import transformers
+
+
 
 import mlflow
 
+
+
 # Acquire an audio file that is in the public domain
+
 resp = requests.get(
+
   "https://www.nasa.gov/wp-content/uploads/2015/01/590325main_ringtone_kennedy_WeChoose.mp3"
+
 )
+
 resp.raise_for_status()
+
 audio = resp.content
 
+
+
 # Set the task that our pipeline implementation will be using
+
 task = "automatic-speech-recognition"
 
+
+
 # Define the model instance
+
 architecture = "openai/whisper-tiny"
 
+
+
 # Load the components and necessary configuration for Whisper ASR from the Hugging Face Hub
+
 model = transformers.WhisperForConditionalGeneration.from_pretrained(architecture)
+
 tokenizer = transformers.WhisperTokenizer.from_pretrained(architecture)
+
 feature_extractor = transformers.WhisperFeatureExtractor.from_pretrained(architecture)
+
 model.generation_config.alignment_heads = [[2, 2], [3, 0], [3, 2], [3, 3], [3, 4], [3, 5]]
 
+
+
 # Instantiate our pipeline for ASR using the Whisper model
+
 audio_transcription_pipeline = transformers.pipeline(
+
   task=task, model=model, tokenizer=tokenizer, feature_extractor=feature_extractor
+
 )
 ```
 
@@ -112,18 +145,31 @@ python
 
 ```
 def format_transcription(transcription):
+
   """
+
   Function for formatting a long string by splitting into sentences and adding newlines.
+
   """
+
   # Split the transcription into sentences, ensuring we don't split on abbreviations or initials
+
   sentences = [
+
       sentence.strip() + ("." if not sentence.endswith(".") else "")
+
       for sentence in transcription.split(". ")
+
       if sentence
+
   ]
 
+
+
   # Join the sentences with a newline character
+
   return "
+
 ".join(sentences)
 ```
 
@@ -147,7 +193,10 @@ python
 
 ```
 # Verify that our pipeline is capable of processing an audio file and transcribing it
+
 transcription = audio_transcription_pipeline(audio)
+
+
 
 print(format_transcription(transcription["text"]))
 ```
@@ -183,9 +232,13 @@ python
 
 ```
 # Specify parameters and their defaults that we would like to be exposed for manipulation during inference time
+
 model_config = {
+
   "chunk_length_s": 20,
+
   "stride_length_s": [5, 3],
+
 }
 ```
 
@@ -197,9 +250,14 @@ python
 
 ```
 # If you are running this tutorial in local mode, leave the next line commented out.
+
 # Otherwise, uncomment the following line and set your tracking uri to your local or remote tracking server.
 
+
+
 # mlflow.set_tracking_uri("http://127.0.0.1:8080")
+
+
 
 mlflow.set_experiment("Whisper Transcription ASR")
 ```
@@ -229,16 +287,27 @@ python
 
 ```
 # Log the pipeline. The signature is automatically inferred from input_example.
+
 with mlflow.start_run():
+
   model_info = mlflow.transformers.log_model(
+
       transformers_model=audio_transcription_pipeline,
+
       name="whisper_transcriber",
+
       input_example=(audio, model_config),
+
       model_config=model_config,
+
       # Since MLflow 2.11.0, you can save the model in 'reference-only' mode to reduce storage usage by not saving
+
       # the base model weights but only the reference to the HuggingFace model hub. To enable this, uncomment the
+
       # following line:
+
       # save_pretrained=False,
+
   )
 ```
 
@@ -262,13 +331,21 @@ python
 
 ```
 # Load the pipeline in its native format
+
 loaded_transcriber = mlflow.transformers.load_model(model_uri=model_info.model_uri)
 
+
+
 # Perform transcription with the native pipeline implementation
+
 transcription = loaded_transcriber(audio)
 
+
+
 print(f"
+
 Whisper native output transcription:
+
 {format_transcription(transcription['text'])}")
 ```
 
@@ -315,14 +392,23 @@ python
 
 ```
 # Load the saved transcription pipeline as a generic python function
+
 pyfunc_transcriber = mlflow.pyfunc.load_model(model_uri=model_info.model_uri)
 
+
+
 # Ensure that the pyfunc wrapper is capable of transcribing passed-in audio
+
 pyfunc_transcription = pyfunc_transcriber.predict([audio])
 
+
+
 # Note: the pyfunc return type if `return_timestamps` is set is a JSON encoded string.
+
 print(f"
+
 Pyfunc output transcription:
+
 {format_transcription(pyfunc_transcription[0])}")
 ```
 

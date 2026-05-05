@@ -29,41 +29,77 @@ python
 
 ```
 from mlflow.genai import scorer
+
 from mlflow.entities import Feedback
 
 
+
+
+
 @scorer
+
 def exact_match(outputs: dict, expectations: dict) -> bool:
+
     return outputs == expectations["expected_response"]
 
 
+
+
+
 @scorer
+
 def is_short(outputs: dict) -> Feedback:
+
     score = len(outputs.split()) <= 5
+
     rationale = (
+
         "The response is short enough."
+
         if score
+
         else f"The response is not short enough because it has ({len(outputs.split())} words)."
+
     )
+
     return Feedback(value=score, rationale=rationale)
 
 
+
+
+
 eval_dataset = [
+
     {
+
         "inputs": {"question": "How many countries are there in the world?"},
+
         "outputs": "195",
+
         "expectations": {"expected_response": "195"},
+
     },
+
     {
+
         "inputs": {"question": "What is the capital of France?"},
+
         "outputs": "The capital of France is Paris.",
+
         "expectations": {"expected_response": "Paris"},
+
     },
+
 ]
 
+
+
 mlflow.genai.evaluate(
+
     data=eval_dataset,
+
     scorers=[exact_match, is_short],
+
 )
 ```
 
@@ -85,21 +121,37 @@ python
 
 ```
 from mlflow.genai.scorers import scorer
+
 from typing import Optional, Any
+
 from mlflow.entities import Feedback
 
 
+
+
+
 @scorer
+
 def my_custom_scorer(
+
     *,  # All arguments are keyword-only
+
     inputs: Optional[
+
         dict[str, Any]
+
     ],  # App's raw input, a dictionary of input argument names and values
+
     outputs: Optional[Any],  # App's raw output
+
     expectations: Optional[dict[str, Any]],  # Ground truth, a dictionary of label names and values
+
     trace: Optional[mlflow.entities.Trace],  # Complete trace with all spans and metadata
+
 ) -> Union[int, float, bool, str, Feedback, List[Feedback]]:
+
     # Your evaluation logic here
+
     ...
 ```
 
@@ -136,14 +188,23 @@ python
 
 ```
 @scorer
+
 def response_length(outputs: str) -> int:
+
     # Return a numeric metric
+
     return len(outputs.split())
 
 
+
+
+
 @scorer
+
 def contains_citation(outputs: str) -> str:
+
     # Return pass/fail string
+
     return "yes" if "[source]" in outputs else "no"
 ```
 
@@ -157,18 +218,33 @@ python
 from mlflow.entities import Feedback, AssessmentSource
 
 
+
+
+
 @scorer
+
 def content_quality(outputs):
+
     return Feedback(
+
         value=0.85,  # Can be numeric, boolean, string, or other types
+
         rationale="Clear and accurate, minor grammar issues",
+
         # Optional: source of the assessment. Several source types are supported,
+
         # such as "HUMAN", "CODE", "LLM_JUDGE".
+
         source=AssessmentSource(source_type="HUMAN", source_id="grammar_checker_v1"),
+
         # Optional: additional metadata about the assessment.
+
         metadata={
+
             "annotator": "me@example.com",
+
         },
+
     )
 ```
 
@@ -178,11 +254,17 @@ python
 
 ```
 @scorer
+
 def comprehensive_check(inputs, outputs):
+
     return [
+
         Feedback(name="relevance", value=True, rationale="Directly addresses query"),
+
         Feedback(name="tone", value="professional", rationale="Appropriate for audience"),
+
         Feedback(name="length", value=150, rationale="Word count within limits"),
+
     ]
 ```
 
@@ -230,33 +312,61 @@ python
 
 ```
 from mlflow.entities import SpanType, Trace
+
 from mlflow.genai import scorer
 
 
+
+
+
 @scorer
+
 def retrieved_document_recall(trace: Trace, expectations: dict) -> Feedback:
+
     # Search for retriever spans in the trace
+
     retriever_spans = trace.search_spans(span_type=SpanType.RETRIEVER)
 
+
+
     # If there are no retriever spans
+
     if not retriever_spans:
+
         return Feedback(
+
             value=0,
+
             rationale="No retriever span found in the trace.",
+
         )
 
+
+
     # Gather all retrieved document URLs from the retriever spans
+
     all_document_urls = []
+
     for span in retriever_spans:
+
         all_document_urls.extend([document["doc_uri"] for document in span.outputs])
 
+
+
     # Compute the recall
+
     true_positives = len(set(all_document_urls) & set(expectations["relevant_document_urls"]))
+
     expected_positives = len(expectations["relevant_document_urls"])
+
     recall = true_positives / expected_positives
+
     return Feedback(
+
         value=recall,
+
         rationale=f"Retrieved {true_positives} relevant documents out of {expected_positives} expected.",
+
     )
 ```
 
@@ -266,28 +376,51 @@ python
 
 ```
 from mlflow.entities import SpanType, Trace
+
 from mlflow.genai import scorer
 
 
+
+
+
 @scorer
+
 def tool_call_trajectory(trace: Trace, expectations: dict) -> Feedback:
+
     # Search for tool call spans in the trace
+
     tool_call_spans = trace.search_spans(span_type=SpanType.TOOL)
 
+
+
     # Compare the tool trajectory with expectations
+
     actual_trajectory = [span.name for span in tool_call_spans]
+
     expected_trajectory = expectations["tool_call_trajectory"]
 
+
+
     if actual_trajectory == expected_trajectory:
+
         return Feedback(value=1, rationale="The tool call trajectory is correct.")
+
     else:
+
         return Feedback(
+
             value=0,
+
             rationale=(
+
                 "The tool call trajectory is incorrect.\n"
+
                 f"Expected: {expected_trajectory}.\n"
+
                 f"Actual: {actual_trajectory}."
+
             ),
+
         )
 ```
 
@@ -297,27 +430,49 @@ python
 
 ```
 from mlflow.entities import SpanType, Trace
+
 from mlflow.genai import scorer
 
 
+
+
+
 @scorer
+
 def is_routing_correct(trace: Trace, expectations: dict) -> Feedback:
+
     # Search for sub-agent spans in the trace
+
     sub_agent_spans = trace.search_spans(span_type=SpanType.AGENT)
 
+
+
     invoked_agents = [span.name for span in sub_agent_spans]
+
     expected_agents = expectations["expected_agents"]
 
+
+
     if invoked_agents == expected_agents:
+
         return Feedback(value=True, rationale="The sub-agents routing is correct.")
+
     else:
+
         return Feedback(
+
             value=False,
+
             rationale=(
+
                 "The sub-agents routing is incorrect.\n"
+
                 f"Expected: {expected_agents}.\n"
+
                 f"Actual: {invoked_agents}."
+
             ),
+
         )
 ```
 
@@ -345,27 +500,49 @@ python
 
 ```
 import json
+
 from mlflow.entities import AssessmentError, Feedback
 
 
+
+
+
 @scorer
+
 def is_valid_response(outputs):
+
     try:
+
         data = json.loads(outputs)
+
         required_fields = ["summary", "confidence", "sources"]
+
         missing = [f for f in required_fields if f not in data]
 
+
+
         if missing:
+
             return Feedback(
+
                 error=AssessmentError(
+
                     error_code="MISSING_REQUIRED_FIELDS",
+
                     error_message=f"Missing required fields: {missing}",
+
                 ),
+
             )
+
+
 
         return Feedback(value=True, rationale="Valid JSON with all required fields")
 
+
+
     except json.JSONDecodeError as e:
+
         return Feedback(error=e)  # Can pass exception object directly to the error parameter
 ```
 
@@ -384,21 +561,37 @@ python
 
 ```
 from mlflow.genai.scorers import Scorer
+
 from mlflow.entities import Feedback
+
 from typing import Optional
 
 
+
+
+
 # Scorer class is a Pydantic object
+
 class CustomScorer(Scorer):
+
     # The `name` field is mandatory
+
     name: str = "response_quality"
+
     # Define additional fields
+
     my_custom_field_1: int = 50
+
     my_custom_field_2: Optional[list[str]] = None
 
+
+
     # Override the __call__ method to implement the scorer logic
+
     def __call__(self, outputs: str) -> Feedback:
+
         # Your logic here
+
         return Feedback(value=True, rationale="Response meets all quality criteria")
 ```
 
@@ -410,31 +603,57 @@ python
 
 ```
 from mlflow.genai.scorers import Scorer
+
 from mlflow.entities import Feedback
 
 
+
+
+
 # WRONG: Don't use mutable class attributes
+
 class BadScorer(Scorer):
+
     results = []  # Shared across all instances!
+
+
 
     name: str = "bad_scorer"
 
+
+
     def __call__(self, outputs, **kwargs):
+
         self.results.append(outputs)  # Causes issues
+
         return Feedback(value=True)
 
 
+
+
+
 # CORRECT: Use instance attributes
+
 class GoodScorer(Scorer):
+
     results: list[str] = None
+
+
 
     name: str = "good_scorer"
 
+
+
     def __init__(self):
+
         self.results = []  # Per-instance state
 
+
+
     def __call__(self, outputs, **kwargs):
+
         self.results.append(outputs)  # Safe
+
         return Feedback(value=True)
 ```
 

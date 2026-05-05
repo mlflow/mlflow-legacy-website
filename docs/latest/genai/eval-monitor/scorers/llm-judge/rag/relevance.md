@@ -23,19 +23,33 @@ MLflow provides two built-in LLM judges to assess relevance in your LLM applicat
 
    ```
    import mlflow
+
    import os
+
    import openai
 
+
+
    # Ensure your OPENAI_API_KEY is set in your environment
+
    # os.environ["OPENAI_API_KEY"] = "<YOUR_API_KEY>" # Uncomment and set if not globally configured
 
+
+
    # Enable auto-tracing for OpenAI
+
    mlflow.openai.autolog()
 
+
+
    # Create an OpenAI client
+
    client = openai.OpenAI()
 
+
+
    # Select an LLM
+
    model_name = "gpt-4o-mini"
    ```
 
@@ -58,12 +72,19 @@ python
 
 ```
 import mlflow
+
 from mlflow.genai.scorers import RelevanceToQuery
 
+
+
 assessment = RelevanceToQuery(name="my_relevance_to_query")(
+
     inputs={"question": "What is the capital of France?"},
+
     outputs="The capital of France is Paris.",
+
 )
+
 print(assessment)
 ```
 
@@ -71,14 +92,23 @@ python
 
 ```
 import mlflow
+
 from mlflow.genai.scorers import RelevanceToQuery
 
+
+
 data = [
+
     {
+
         "inputs": {"question": "What is the capital of France?"},
+
         "outputs": "The capital of France is Paris.",
+
     }
+
 ]
+
 result = mlflow.genai.evaluate(data=data, scorers=[RelevanceToQuery()])
 ```
 
@@ -97,13 +127,21 @@ python
 
 ```
 from mlflow.genai.scorers import RetrievalRelevance
+
 import mlflow
 
+
+
 # Get a trace from a previous run
+
 trace = mlflow.get_trace("<your-trace-id>")
 
+
+
 # Assess if each retrieved document is relevant
+
 feedbacks = RetrievalRelevance()(trace=trace)
+
 print(feedbacks)
 ```
 
@@ -111,12 +149,19 @@ python
 
 ```
 import mlflow
+
 from mlflow.genai.scorers import RetrievalRelevance
 
+
+
 # Evaluate traces from previous runs
+
 results = mlflow.genai.evaluate(
+
     data=traces,  # DataFrame or list containing trace data
+
     scorers=[RetrievalRelevance()],
+
 )
 ```
 

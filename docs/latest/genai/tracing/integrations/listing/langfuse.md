@@ -9,6 +9,8 @@ python
 ```
 import mlflow
 
+
+
 mlflow.otel.autolog()
 ```
 
@@ -56,10 +58,15 @@ bash
 
 ```
 git clone --depth 1 --filter=blob:none --sparse https://github.com/mlflow/mlflow.git
+
 cd mlflow
+
 git sparse-checkout set docker-compose
+
 cd docker-compose
+
 cp .env.dev.example .env
+
 docker compose up -d
 ```
 
@@ -73,29 +80,53 @@ python
 
 ```
 import mlflow
+
 from langfuse import Langfuse, observe
 
+
+
 # Enable MLflow tracing for all Langfuse traces
+
 mlflow.otel.autolog()
 
+
+
 # Set a tracking URI and an experiment
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("Langfuse")
+
+
 
 langfuse = Langfuse()
 
 
+
+
+
 @observe(name="chat_completion", as_type="generation")
+
 def chat_completion(messages):
+
     # Your LLM call here
+
     return "Hello! How can I help you?"
 
 
+
+
+
 # Use the low-level Langfuse client API to create a trace
+
 trace = langfuse.trace(name="agent_turn")
+
 messages = [{"role": "user", "content": "What is MLflow?"}]
+
 result = chat_completion(messages)
+
 trace.update(output=result)
+
 print(result)
 ```
 

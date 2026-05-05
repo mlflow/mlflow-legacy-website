@@ -27,7 +27,10 @@ python
 ```
 import mlflow
 
+
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("LangChain Optimization")
 ```
 
@@ -39,96 +42,188 @@ python
 
 ```
 import mlflow
+
 from mlflow.genai.scorers import Correctness
+
 from mlflow.genai.optimize.optimizers import GepaPromptOptimizer
+
 from langchain.agents import create_agent
 
+
+
 # Step 1: Register your initial prompt
+
 user_prompt = mlflow.genai.register_prompt(
+
     name="translation-prompt",
+
     template="Translate the following text from {{input_language}} to {{output_language}}: {{text}}",
+
 )
+
 system_prompt = mlflow.genai.register_prompt(
+
     name="system-prompt",
+
     template="You are a helpful assistant",
+
 )
+
+
+
 
 
 # Step 2: Create a prediction function
+
 def predict_fn(input_language, output_language, text):
+
     # Load prompt from registry
+
     user_prompt = mlflow.genai.load_prompt("prompts:/translation-prompt@latest")
+
     system_prompt = mlflow.genai.load_prompt("prompts:/system-prompt@latest")
 
+
+
     agent = create_agent(
+
         model="gpt-4o-mini",
+
         system_prompt=system_prompt.template,
+
     )
 
+
+
     # Run the agent
+
     response = agent.invoke({
+
         "messages": [
+
             {
+
                 "role": "user",
+
                 "content": user_prompt.format(
+
                     input_language=input_language,
+
                     output_language=output_language,
+
                     text=text,
+
                 ),
+
             }
+
         ]
+
     })
+
+
 
     return response["messages"][-1].content
 
 
+
+
+
 # Step 3: Prepare training data
+
 dataset = [
+
     {
+
         "inputs": {
+
             "input_language": "English",
+
             "output_language": "French",
+
             "text": "Hello, how are you?",
+
         },
+
         "expectations": {"expected_response": "Bonjour, comment allez-vous?"},
+
     },
+
     {
+
         "inputs": {
+
             "input_language": "English",
+
             "output_language": "Spanish",
+
             "text": "Good morning",
+
         },
+
         "expectations": {"expected_response": "Buenos días"},
+
     },
+
     {
+
         "inputs": {
+
             "input_language": "English",
+
             "output_language": "German",
+
             "text": "Thank you very much",
+
         },
+
         "expectations": {"expected_response": "Vielen Dank"},
+
     },
+
     # more data...
+
 ]
 
+
+
 # Step 4: Optimize the prompt
+
 result = mlflow.genai.optimize_prompts(
+
     predict_fn=predict_fn,
+
     train_data=dataset,
+
     prompt_uris=[user_prompt.uri],
+
     optimizer=GepaPromptOptimizer(reflection_model="openai:/gpt-5"),
+
     scorers=[Correctness(model="openai:/gpt-5")],
+
 )
 
+
+
 # Step 5: Use the optimized prompt
+
 optimized_user_prompt = result.optimized_prompts[0]
+
 print(f"Optimized prompt URI: {optimized_user_prompt.uri}")
+
 print(f"Optimized template: {optimized_user_prompt.template}")
 
+
+
 # Since your chain already uses @latest, it will automatically use the optimized prompt
+
 predict_fn(
+
     input_language="English",
+
     output_language="Japanese",
+
     text="Welcome to MLflow",
+
 )
 ```

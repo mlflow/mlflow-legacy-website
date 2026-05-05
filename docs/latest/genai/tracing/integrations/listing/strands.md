@@ -11,6 +11,8 @@ python
 ```
 import mlflow
 
+
+
 mlflow.strands.autolog()
 ```
 
@@ -30,25 +32,46 @@ python
 ```
 import mlflow
 
+
+
 mlflow.strands.autolog()
+
 mlflow.set_experiment("Strand Agent")
 
+
+
 from strands import Agent
+
 from strands.models.openai import OpenAIModel
+
 from strands_tools import calculator
 
+
+
 model = OpenAIModel(
+
     client_args={"api_key": "<api-key>"},
+
     # **model_config
+
     model_id="gpt-4o",
+
     params={
+
         "max_tokens": 2000,
+
         "temperature": 0.7,
+
     },
+
 )
 
+
+
 agent = Agent(model=model, tools=[calculator])
+
 response = agent("What is 2+2")
+
 print(response)
 ```
 
@@ -69,21 +92,38 @@ python
 ```
 import os
 
+
+
 os.environ["MLFLOW_USE_DEFAULT_TRACER_PROVIDER"] = "false"
 
+
+
 import mlflow
+
 from mlflow.entities.trace_location import MlflowExperimentLocation
 
+
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 exp_id = mlflow.set_experiment("Strands Agents").experiment_id
+
 mlflow.tracing.set_destination(MlflowExperimentLocation(exp_id))
+
+
 
 mlflow.strands.autolog()
 
+
+
 # Add custom MLflow spans alongside the auto-generated Strands traces
+
 with mlflow.start_span("custom_step") as span:
+
     span.set_inputs({"query": "test"})
+
     # your application logic here
+
     span.set_outputs({"result": "success"})
 ```
 

@@ -73,14 +73,12 @@ With the design approved, start implementation:
 3. **Define `mlflow.xxx.autolog() function`**: This function will be the main entry point for the integration, which enables tracing when called (e.g., [`mlflow.llama_index.autolog()`](/docs/latest/api_reference/python_api/mlflow.llama_index.html#mlflow.llama_index.autolog)).
 4. **Write Tests**: Cover edge cases like asynchronous calls, custom data types, and streaming outputs if the library supports them.
 
-attention
-
-There are a few gotchas to watch out for when integrating with MLflow Tracing:
+:::warning attention There are a few gotchas to watch out for when integrating with MLflow Tracing:
 
 * **Error Handling**: Ensure exceptions are captured and logged to spans with type, message, and stack trace.
 * **Streaming Outputs**: For streaming (iterators), hook into the iterator to assemble and log the full output to the span. Directly logging the iterator object is not only unhelpful but also cause unexpected behavior e.g. exhaust the iterator during serialization.
 * **Serialization**: MLflow serializes traces to JSON via the custom `TraceJsonEncoder` implementation, which supports common objects and Pydantic models. If your library uses custom objects, consider extending the serializer, as unsupported types are stringified and may lose useful detail.
-* **Timestamp Handling**: When using timestamps provided by the library, validate the unit and timezone. MLflow requires timestamps in *nanoseconds since the UNIX epoch*; incorrect timestamps will disrupt span duration.
+* **Timestamp Handling**: When using timestamps provided by the library, validate the unit and timezone. MLflow requires timestamps in *nanoseconds since the UNIX epoch*; incorrect timestamps will disrupt span duration. :::
 
 The MLflow TypeScript tracing SDK lives under the [`libs/typescript`](https://github.com/mlflow/mlflow/tree/master/libs/typescript) npm workspace. When implementing a new integration:
 
@@ -95,16 +93,19 @@ bash
 
 ```
 cd libs/typescript
+
 npm install
+
 npm run build
+
 npm run test
 ```
 
-attention
+:::warning attention
 
 * **Trace Shape**: Align span names, attributes, and metadata with the Python integrations so downstream UI components interpret traces correctly.
 * **Streaming & Async Workloads**: Buffer streaming responses or async iterators before logging outputs so they remain consumable by the caller.
-* **Serializable Payloads**: Convert complex SDK objects to JSON-serializable structures before handing them to the MLflow client.
+* **Serializable Payloads**: Convert complex SDK objects to JSON-serializable structures before handing them to the MLflow client. :::
 
 ## Step 6. Test the Integration[​](#step-6-test-the-integration "Direct link to Step 6. Test the Integration")
 

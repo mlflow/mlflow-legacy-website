@@ -66,6 +66,7 @@ shell
 
 ```
 pip install --upgrade mlflow
+
 mlflow server
 ```
 
@@ -79,10 +80,15 @@ shell
 
 ```
 git clone --depth 1 --filter=blob:none --sparse https://github.com/mlflow/mlflow.git
+
 cd mlflow
+
 git sparse-checkout set docker-compose
+
 cd docker-compose
+
 cp .env.dev.example .env
+
 docker compose up -d
 ```
 
@@ -97,25 +103,46 @@ python
 ```
 import mlflow
 
+
+
 # Define prompt templates. MLflow supports both text and chat format prompt templates.
+
 PROMPT_V1 = [
+
     {
+
         "role": "system",
+
         "content": "You are a helpful assistant. Answer the following question.",
+
     },
+
     {
+
         "role": "user",
+
         # Use double curly braces to indicate variables.
+
         "content": "Question: {{question}}",
+
     },
+
 ]
 
+
+
 # Register the prompt template to the MLflow Prompt Registry for version control
+
 # and convenience of loading the prompt template. This is optional.
+
 mlflow.genai.register_prompt(
+
     name="qa_prompt",
+
     template=PROMPT_V1,
+
     commit_message="Initial prompt",
+
 )
 ```
 
@@ -127,21 +154,37 @@ python
 
 ```
 eval_dataset = [
+
     {
+
         "inputs": {"question": "What causes rain?"},
+
         "expectations": {"key_concepts": ["evaporation", "condensation", "precipitation"]},
+
         "tags": {"topic": "weather"},
+
     },
+
     {
+
         "inputs": {"question": "Explain the difference between AI and ML"},
+
         "expectations": {"key_concepts": ["artificial intelligence", "machine learning", "subset"]},
+
         "tags": {"topic": "technology"},
+
     },
+
     {
+
         "inputs": {"question": "How do vaccines work?"},
+
         "expectations": {"key_concepts": ["immune", "antibodies", "protection"]},
+
         "tags": {"topic": "medicine"},
+
     },
+
 ]
 ```
 
@@ -154,15 +197,26 @@ python
 ```
 from openai import OpenAI
 
+
+
 client = OpenAI()
 
 
+
+
+
 @mlflow.trace
+
 def predict_fn(question: str) -> str:
+
     prompt = mlflow.genai.load_prompt("prompts:/qa_prompt@latest")
+
     rendered_prompt = prompt.format(question=question)
 
+
+
     response = client.chat.completions.create(model="gpt-4.1-mini", messages=rendered_prompt)
+
     return response.choices[0].message.content
 ```
 
@@ -177,28 +231,51 @@ python
 
 ```
 from mlflow.entities import Feedback
+
 from mlflow.genai import scorer
+
 from mlflow.genai.scorers import Guidelines
 
+
+
 # Define LLM scorers
+
 is_concise = Guidelines(
+
     name="is_concise", guidelines="The response should be concise and to the point."
+
 )
+
 is_professional = Guidelines(
+
     name="is_professional", guidelines="The response should be in professional tone."
+
 )
+
+
+
 
 
 # Evaluate the coverage of the key concepts using custom scorer
+
 @scorer
+
 def concept_coverage(outputs: str, expectations: dict) -> Feedback:
+
     concepts = set(expectations.get("key_concepts", []))
+
     included = {c for c in concepts if c.lower() in outputs.lower()}
+
     return Feedback(
+
         value=len(included) / len(concepts),
+
         rationale=(
+
             f"Included {len(included)} out of {len(concepts)} concepts. Missing: {concepts - included}"
+
         ),
+
     )
 ```
 
@@ -214,9 +291,13 @@ python
 
 ```
 mlflow.genai.evaluate(
+
     data=eval_dataset,
+
     predict_fn=predict_fn,
+
     scorers=[is_concise, is_professional, concept_coverage],
+
 )
 ```
 
@@ -236,22 +317,39 @@ python
 
 ```
 # Define V2 prompt template
+
 PROMPT_V2 = [
+
     {
+
         "role": "system",
+
         "content": "You are a helpful assistant. Answer the following question in three sentences.",
+
     },
+
     {"role": "user", "content": "Question: {{question}}"},
+
 ]
+
+
 
 mlflow.genai.register_prompt(name="qa_prompt", template=PROMPT_V2)
 
+
+
 # Run the same evaluation again.
+
 # MLflow automatically loads the latest prompt template via the `@latest` alias.
+
 mlflow.genai.evaluate(
+
     data=eval_dataset,
+
     predict_fn=predict_fn,
+
     scorers=[is_concise, is_professional, concept_coverage],
+
 )
 ```
 

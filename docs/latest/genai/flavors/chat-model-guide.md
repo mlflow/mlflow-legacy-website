@@ -1,8 +1,6 @@
 # Tutorial: Custom LLM and AI Agent Models using ChatModel
 
-attention
-
-Starting in MLflow 3.0.0, we recommend [`ResponsesAgent`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent) instead of [`ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel). See more details in the [ResponsesAgent Introduction](/docs/latest/genai/flavors/responses-agent-intro.md).
+:::warning attention Starting in MLflow 3.0.0, we recommend [`ResponsesAgent`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent) instead of [`ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel). See more details in the [ResponsesAgent Introduction](/docs/latest/genai/flavors/responses-agent-intro.md). :::
 
 The rapidly evolving landscape of LLM applications and AI agents presents exciting opportunities and integration challenges. To leverage the latest advancements effectively, developers need a framework that balances flexibility with standardization. MLflow addresses this need with the [`mlflow.pyfunc.ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) class introduced in [version 2.11.0](https://mlflow.org/releases/2.11.0#chatmodel-interface-for-a-unified-chat-experience-with-pyfunc-models), providing a consistent interface for LLM applications and AI agents while simplifying deployment and testing.
 
@@ -55,11 +53,17 @@ python
 
 ```
 @mlflow.trace
+
 def _get_system_message(self, role: str) -> Dict:
+
     if role not in self.models:
+
         raise ValueError(f"Unknown role: {role}")
 
+
+
     instruction = self.models[role]["instruction"]
+
     return ChatMessage(role="system", content=instruction).to_dict()
 ```
 
@@ -69,11 +73,17 @@ python
 
 ```
 @mlflow.trace(name="custom_span_name", attributes={"key": "value"}, span_type="func")
+
 def _get_system_message(self, role: str) -> Dict:
+
     if role not in self.models:
+
         raise ValueError(f"Unknown role: {role}")
 
+
+
     instruction = self.models[role]["instruction"]
+
     return ChatMessage(role="system", content=instruction).to_dict()
 ```
 
@@ -91,9 +101,13 @@ python
 
 ```
 with mlflow.start_span("Audit Agent") as root_span:
+
     root_span.set_inputs(messages)
+
     attributes = {**params.to_dict(), **self.models_config, **self.models}
+
     root_span.set_attributes(attributes)
+
     # More span manipulation...
 ```
 
@@ -162,28 +176,51 @@ python
 
 ```
 [
+
     {
+
         "type": "array",
+
         "items": {
+
             "type": "object",
+
             "properties": {
+
                 "content": {"type": "string", "required": True},
+
                 "name": {"type": "string", "required": False},
+
                 "role": {"type": "string", "required": True},
+
             },
+
         },
+
         "name": "messages",
+
         "required": True,
+
     },
+
     {"type": "double", "name": "temperature", "required": False},
+
     {"type": "long", "name": "max_tokens", "required": False},
+
     {"type": "array", "items": {"type": "string"}, "name": "stop", "required": False},
+
     {"type": "long", "name": "n", "required": False},
+
     {"type": "boolean", "name": "stream", "required": False},
+
     {"type": "double", "name": "top_p", "required": False},
+
     {"type": "long", "name": "top_k", "required": False},
+
     {"type": "double", "name": "frequency_penalty", "required": False},
+
     {"type": "double", "name": "presence_penalty", "required": False},
+
 ]
 ```
 
@@ -220,12 +257,21 @@ python
 from mlflow.pyfunc import ChatModel
 
 
+
+
+
 class MyModel(ChatModel):
+
     def __init__(self):
+
         self.state = []
 
+
+
     def load_context(self, context):
+
         # This will fail on load as the instance attribute self.my_model_config is not defined
+
         self.my_model_config = context.get("my_model_config")
 ```
 
@@ -237,12 +283,21 @@ python
 from mlflow.pyfunc import ChatModel
 
 
+
+
+
 class MyModel(ChatModel):
+
     def __init__(self):
+
         self.state = []
+
         self.my_model_config = None  # Define the attribute here
 
+
+
     def load_context(self, context):
+
         self.my_model_config = context.get("my_model_config")
 ```
 
@@ -283,24 +338,44 @@ python
 ```
 from mlflow.models import validate_serving_input
 
+
+
 model_uri = "runs:/8935b7aff5a84f559b5fcc2af3e2ea31/model"
 
+
+
 # The model is logged with an input example. MLflow converts
+
 # it into the serving payload format for the deployed model endpoint,
+
 # and saves it to 'serving_input_payload.json'
+
 serving_payload = """{
+
 "messages": [
+
     {
+
     "role": "user",
+
     "content": "What is a good recipe for baking scones that doesn't require a lot of skill?"
+
     }
+
 ],
+
 "temperature": 1.0,
+
 "n": 1,
+
 "stream": false
+
 }"""
 
+
+
 # Validate the serving payload works on the model
+
 validate_serving_input(model_uri, serving_payload)
 ```
 
@@ -357,174 +432,343 @@ python
 
 ```
 import mlflow
+
 from mlflow.types.llm import ChatCompletionResponse, ChatMessage, ChatParams, ChatChoice
+
 from mlflow.pyfunc import ChatModel
+
 from mlflow import deployments
+
 from typing import List, Optional, Dict
 
 
+
+
+
 class BasicAgent(ChatModel):
+
     def __init__(self):
+
         """Initialize the BasicAgent with placeholder values."""
+
         self.deploy_client = None
+
         self.models = {}
+
         self.models_config = {}
+
         self.conversation_history = []
 
+
+
     def load_context(self, context):
+
         """Initialize the connectors and model configurations."""
+
         self.deploy_client = deployments.get_deploy_client("databricks")
+
         self.models = context.model_config.get("models", {})
+
         self.models_config = context.model_config.get("configuration", {})
 
+
+
     def _get_system_message(self, role: str) -> Dict:
+
         """
+
         Get the system message configuration for the specified role.
 
+
+
         Args:
+
             role (str): The role of the agent (e.g., "oracle" or "judge").
 
+
+
         Returns:
+
             dict: The system message for the given role.
+
         """
+
         if role not in self.models:
+
             raise ValueError(f"Unknown role: {role}")
 
+
+
         instruction = self.models[role]["instruction"]
+
         return ChatMessage(role="system", content=instruction).to_dict()
 
+
+
     @mlflow.trace(name="Raw Agent Response")
+
     def _get_agent_response(
+
         self, message_list: List[Dict], endpoint: str, params: Optional[dict] = None
+
     ) -> Dict:
+
         """
+
         Call the agent endpoint to get a response.
 
+
+
         Args:
+
             message_list (List[Dict]): List of messages for the agent.
+
             endpoint (str): The agent's endpoint.
+
             params (Optional[dict]): Additional parameters for the call.
 
+
+
         Returns:
+
             dict: The response from the agent.
+
         """
+
         response = self.deploy_client.predict(
+
             endpoint=endpoint, inputs={"messages": message_list, **(params or {})}
+
         )
+
         return response["choices"][0]["message"]
 
+
+
     @mlflow.trace(name="Agent Call")
+
     def _call_agent(self, message: ChatMessage, role: str, params: Optional[dict] = None) -> Dict:
+
         """
+
         Prepares and sends the request to a specific agent based on the role.
 
+
+
         Args:
+
             message (ChatMessage): The message to be processed.
+
             role (str): The role of the agent (e.g., "oracle" or "judge").
+
             params (Optional[dict]): Additional parameters for the call.
 
+
+
         Returns:
+
             dict: The response from the agent.
+
         """
+
         system_message = self._get_system_message(role)
+
         message_list = self._prepare_message_list(system_message, message)
 
+
+
         # Fetch agent response
+
         agent_config = self.models[role]
+
         response = self._get_agent_response(message_list, agent_config["endpoint"], params)
 
+
+
         # Update conversation history
+
         self.conversation_history.extend([message.to_dict(), response])
+
         return response
 
+
+
     @mlflow.trace(name="Assemble Conversation")
+
     def _prepare_message_list(self, system_message: Dict, user_message: ChatMessage) -> List[Dict]:
+
         """
+
         Prepare the list of messages to send to the agent.
 
+
+
         Args:
+
             system_message (dict): The system message dictionary.
+
             user_message (ChatMessage): The user message.
 
+
+
         Returns:
+
             List[dict]: The complete list of messages to send.
+
         """
+
         user_prompt = {
+
             "role": "user",
+
             "content": self.models_config.get(
+
                 "user_response_instruction", "Can you make the answer better?"
+
             ),
+
         }
+
         if self.conversation_history:
+
             return [system_message, *self.conversation_history, user_prompt]
+
         else:
+
             return [system_message, user_message.to_dict()]
 
+
+
     def predict(
+
         self, context, messages: List[ChatMessage], params: Optional[ChatParams] = None
+
     ) -> ChatCompletionResponse:
+
         """
+
         Predict method to handle agent conversation.
 
+
+
         Args:
+
             context: The MLflow context.
+
             messages (List[ChatMessage]): List of messages to process.
+
             params (Optional[ChatParams]): Additional parameters for the conversation.
 
+
+
         Returns:
+
             ChatCompletionResponse: The structured response object.
+
         """
+
         # Use the fluent API context handler to have added control over what is included in the span
+
         with mlflow.start_span(name="Audit Agent") as root_span:
+
             # Add the user input to the root span
+
             root_span.set_inputs(messages)
 
+
+
             # Add attributes to the root span
+
             attributes = {**params.to_dict(), **self.models_config, **self.models}
+
             root_span.set_attributes(attributes)
 
+
+
             # Initiate the conversation with the oracle
+
             oracle_params = self._get_model_params("oracle")
+
             oracle_response = self._call_agent(messages[0], "oracle", oracle_params)
 
+
+
             # Process the response with the judge
+
             judge_params = self._get_model_params("judge")
+
             judge_response = self._call_agent(ChatMessage(**oracle_response), "judge", judge_params)
 
+
+
             # Reset the conversation history and return the final response
+
             self.conversation_history = []
 
+
+
             output = ChatCompletionResponse(
+
                 choices=[ChatChoice(index=0, message=ChatMessage(**judge_response))],
+
                 usage={},
+
                 model=judge_params.get("endpoint", "unknown"),
+
             )
+
+
 
             root_span.set_outputs(output)
 
+
+
         return output
 
+
+
     def _get_model_params(self, role: str) -> dict:
+
         """
+
         Retrieves model parameters for a given role.
 
+
+
         Args:
+
             role (str): The role of the agent (e.g., "oracle" or "judge").
 
+
+
         Returns:
+
             dict: A dictionary of parameters for the agent.
+
         """
+
         role_config = self.models.get(role, {})
 
+
+
         return {
+
             "temperature": role_config.get("temperature", 0.5),
+
             "max_tokens": role_config.get("max_tokens", 500),
+
         }
 
 
+
+
+
 # IMPORTANT: specifies the Python ChatModel instance to use for inference requests when
+
 # the model is loaded back
+
 agent = BasicAgent()
+
 mlflow.models.set_model(agent)
 ```
 
@@ -572,29 +816,53 @@ python
 
 ```
 model_config = {
+
     "models": {
+
         "judge": {
+
             "endpoint": "databricks-meta-llama-3-1-405b-instruct",
+
             "instruction": (
+
                 "You are an evaluator of answers provided by others. Based on the context of both the question and the answer, "
+
                 "provide a corrected answer if it is incorrect; otherwise, enhance the answer with additional context and explanation."
+
             ),
+
             "temperature": 0.5,
+
             "max_tokens": 2000,
+
         },
+
         "oracle": {
+
             "endpoint": "databricks-mixtral-8x7b-instruct",
+
             "instruction": (
+
                 "You are a knowledgeable source of information that excels at providing detailed, but brief answers to questions. "
+
                 "Provide an answer to the question based on the information provided."
+
             ),
+
             "temperature": 0.9,
+
             "max_tokens": 5000,
+
         },
+
     },
+
     "configuration": {
+
         "user_response_instruction": "Can you evaluate and enhance this answer with the provided contextual history?"
+
     },
+
 }
 ```
 
@@ -625,12 +893,19 @@ python
 
 ```
 input_example = {
+
     "messages": [
+
         {
+
             "role": "user",
+
             "content": "What is a good recipe for baking scones that doesn't require a lot of skill?",
+
         }
+
     ]
+
 }
 ```
 
@@ -652,23 +927,41 @@ python
 
 ```
 with mlflow.start_run():
+
     model_info = mlflow.pyfunc.log_model(
+
         name="model",
+
         # If needed, update `python_model` to the Python file containing your agent code
+
         python_model="basic_agent.py",
+
         model_config=model_config,
+
         input_example=input_example,
+
     )
+
+
 
 loaded = mlflow.pyfunc.load_model(model_info.model_uri)
 
+
+
 response = loaded.predict({
+
     "messages": [
+
         {
+
             "role": "user",
+
             "content": "What is the best material to make a baseball bat out of?",
+
         }
+
     ]
+
 })
 ```
 

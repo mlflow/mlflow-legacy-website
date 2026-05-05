@@ -78,6 +78,7 @@ shell
 
 ```
 pip install --upgrade mlflow
+
 mlflow server
 ```
 
@@ -91,10 +92,15 @@ shell
 
 ```
 git clone --depth 1 --filter=blob:none --sparse https://github.com/mlflow/mlflow.git
+
 cd mlflow
+
 git sparse-checkout set docker-compose
+
 cd docker-compose
+
 cp .env.dev.example .env
+
 docker compose up -d
 ```
 
@@ -107,6 +113,8 @@ python
 ```
 import os
 
+
+
 os.environ["OPENAI_API_KEY"] = "your-api-key-here"  # Replace with your API key
 ```
 
@@ -118,59 +126,113 @@ python
 
 ```
 import os
+
 import mlflow
+
 from mlflow.genai.simulators import ConversationSimulator
+
 from mlflow.genai.scorers import ConversationCompleteness, Safety
+
 from openai import OpenAI
+
+
 
 os.environ["OPENAI_API_KEY"] = "your-api-key-here"  # Replace with your API key
 
+
+
 client = OpenAI()
 
+
+
 # 1. Define test cases with goals (required) and optional persona/context
+
 test_cases = [
+
     {
+
         "goal": "Learn how to track experiments in MLflow",
+
     },
+
     {
+
         "goal": "Debug a model deployment issue",
+
         "persona": "You are a frustrated data scientist who has been stuck on this issue for hours",
+
     },
+
     {
+
         "goal": "Set up model versioning for a production ML pipeline",
+
         "persona": "You are a beginner who needs step-by-step guidance",
+
         "simulation_guidelines": [
+
             "Start by asking about model versioning without mentioning any specific tools",
+
             "Do not ask about deployment until the assistant brings it up",
+
         ],
+
         "context": {"user_id": "beginner_123"},  # user_id is passed to predict_fn via kwargs
+
     },
+
 ]
 
+
+
 # 2. Create the simulator
+
 simulator = ConversationSimulator(
+
     test_cases=test_cases,
+
     max_turns=5,
+
 )
 
 
+
+
+
 # 3. Define your agent function
+
 def predict_fn(input: list[dict], **kwargs):
+
     response = client.chat.completions.create(
+
         model="gpt-5-mini",
+
         messages=input,
+
     )
+
     return response.choices[0].message.content
 
 
+
+
+
 # 4. Run evaluation with conversation and single-turn scorers
+
 results = mlflow.genai.evaluate(
+
     data=simulator,
+
     predict_fn=predict_fn,
+
     scorers=[
+
         ConversationCompleteness(),  # Multi-turn scorer
+
         Safety(),  # Single-turn scorer (applied to each turn)
+
     ],
+
 )
 ```
 
@@ -194,18 +256,31 @@ python
 
 ```
 # Good goals - specific, actionable, and describe expected outcomes
+
 {
+
     "goal": "Get help configuring MLflow tracking for a distributed training job. The response should include code examples and links to relevant documentation."
-}
-{
-    "goal": "Understand the difference between experiments and runs in MLflow. The explanation should include concrete examples of when to use each."
-}
-{
-    "goal": "Troubleshoot why model artifacts aren't being logged. The assistant should help identify the root cause and provide a working solution."
+
 }
 
+{
+
+    "goal": "Understand the difference between experiments and runs in MLflow. The explanation should include concrete examples of when to use each."
+
+}
+
+{
+
+    "goal": "Troubleshoot why model artifacts aren't being logged. The assistant should help identify the root cause and provide a working solution."
+
+}
+
+
+
 # Less effective goals - too vague, no expected outcome
+
 {"goal": "Learn about MLflow"}
+
 {"goal": "Get help"}
 ```
 
@@ -217,21 +292,37 @@ python
 
 ```
 # Technical expert who asks detailed questions
+
 {
+
     "goal": "Optimize model serving latency",
+
     "persona": "You are a senior ML engineer who asks precise technical questions and expects detailed answers",
+
 }
+
+
 
 # Beginner who needs more guidance
+
 {
+
     "goal": "Set up experiment tracking",
+
     "persona": "You are new to MLflow and need step-by-step explanations with examples",
+
 }
 
+
+
 # Frustrated user testing agent resilience
+
 {
+
     "goal": "Fix a broken deployment",
+
     "persona": "You are impatient and frustrated because this is blocking a production release",
+
 }
 ```
 
@@ -245,13 +336,21 @@ python
 
 ```
 {
+
     "goal": "Get a summary of last quarter's sales data broken down by region",
+
     "persona": "You are a sales manager who prefers concise answers",
+
     "simulation_guidelines": [
+
         "Do not provide the date range upfront; wait until the assistant asks for it",
+
         "Do not explicitly ask for percentage changes; the assistant should provide them without being asked",
+
         "Start with a broad request and only narrow down to specific regions after the assistant responds",
+
     ],
+
 }
 ```
 
@@ -277,12 +376,19 @@ python
 
 ```
 {
+
     "goal": "Get personalized model recommendations",
+
     "context": {
+
         "user_id": "enterprise_user_42",  # user_id is passed to predict_fn via kwargs
+
         "subscription_tier": "premium",
+
         "preferred_framework": "pytorch",
+
     },
+
 }
 ```
 
@@ -294,10 +400,16 @@ python
 
 ```
 test_cases = [
+
     {"goal": "Learn about experiment tracking"},
+
     {"goal": "Debug deployment issue", "persona": "Senior engineer"},
+
     {"goal": "Set up CI/CD pipeline", "context": {"team": "platform"}},
+
 ]
+
+
 
 simulator = ConversationSimulator(test_cases=test_cases)
 ```
@@ -309,11 +421,19 @@ python
 ```
 import pandas as pd
 
+
+
 df = pd.DataFrame([
+
     {"goal": "Learn about experiment tracking"},
+
     {"goal": "Debug deployment issue", "persona": "Senior engineer"},
+
     {"goal": "Set up CI/CD pipeline"},
+
 ])
+
+
 
 simulator = ConversationSimulator(test_cases=df)
 ```
@@ -330,24 +450,43 @@ python
 
 ```
 import mlflow
+
 from mlflow.genai.simulators import generate_test_cases, ConversationSimulator
 
+
+
 # Get existing sessions from your experiment
+
 sessions = mlflow.search_sessions(
+
     locations=["<experiment-id>"],
+
     max_results=50,
+
 )
 
+
+
 # Generate test cases by extracting goals and personas from sessions
+
 test_cases = generate_test_cases(sessions)
 
+
+
 # Optionally, save generated test cases as a dataset for reproducibility
+
 from mlflow.genai.datasets import create_dataset
 
+
+
 dataset = create_dataset(name="generated_scenarios")
+
 dataset.merge_records([{"inputs": tc} for tc in test_cases])
 
+
+
 # Use generated test cases with the simulator
+
 simulator = ConversationSimulator(test_cases=test_cases)
 ```
 
@@ -360,15 +499,26 @@ python
 ```
 from mlflow.genai.datasets import create_dataset, get_dataset
 
+
+
 # Create and populate a dataset
+
 dataset = create_dataset(name="conversation_test_cases")
+
 dataset.merge_records([
+
     {"inputs": {"goal": "Learn about experiment tracking"}},
+
     {"inputs": {"goal": "Debug deployment issue", "persona": "Senior engineer"}},
+
 ])
 
+
+
 # Use the dataset with the simulator
+
 dataset = get_dataset(name="conversation_test_cases")
+
 simulator = ConversationSimulator(test_cases=dataset)
 ```
 
@@ -385,17 +535,29 @@ python
 
 ```
 def predict_fn(input: list[dict], **kwargs) -> str:
+
     """
+
     Args:
+
         input: Conversation history as a list of message dicts.
+
                Each message has "role" ("user" or "assistant") and "content".
+
                Alternatively, use "messages" as the parameter name.
+
         **kwargs: Additional arguments including:
+
             - mlflow_session_id: Unique ID for this conversation session
+
             - Any fields from your test case's "context"
 
+
+
     Returns:
+
         The assistant's response as a string.
+
     """
 ```
 
@@ -408,14 +570,24 @@ python
 ```
 from openai import OpenAI
 
+
+
 client = OpenAI()
 
 
+
+
+
 def predict_fn(input: list[dict], **kwargs):
+
     response = client.chat.completions.create(
+
         model="gpt-5-mini",
+
         messages=input,
+
     )
+
     return response.choices[0].message.content
 ```
 
@@ -423,18 +595,31 @@ python
 
 ```
 def predict_fn(input: list[dict], **kwargs):
+
     # user_id is passed from test case's "context" field
+
     user_id = kwargs.get("user_id")
 
+
+
     # Customize system prompt based on context
+
     system_message = f"You are helping user {user_id}. Be helpful and concise."
+
+
 
     messages = [{"role": "system", "content": system_message}] + input
 
+
+
     response = client.chat.completions.create(
+
         model="gpt-5-mini",
+
         messages=messages,
+
     )
+
     return response.choices[0].message.content
 ```
 
@@ -444,32 +629,60 @@ python
 
 ```
 # Simple in-memory state management for stateful agents
+
 conversation_state = {}  # Maps session_id -> conversation context
 
 
+
+
+
 def predict_fn(input: list[dict], **kwargs):
+
     session_id = kwargs.get("mlflow_session_id")
 
+
+
     # Initialize or retrieve state for this session
+
     if session_id not in conversation_state:
+
         conversation_state[session_id] = {
+
             "turn_count": 0,
+
             "topics_discussed": [],
+
         }
 
+
+
     state = conversation_state[session_id]
+
     state["turn_count"] += 1
 
+
+
     # Your agent logic here - can use state for context
+
     system_message = (
+
         f"You are a helpful assistant. This is turn {state['turn_count']} of the conversation."
+
     )
+
     messages = [{"role": "system", "content": system_message}] + input
 
+
+
     response = client.chat.completions.create(
+
         model="gpt-5-mini",
+
         messages=messages,
+
     )
+
+
 
     return response.choices[0].message.content
 ```
@@ -495,9 +708,13 @@ python
 
 ```
 simulator = ConversationSimulator(
+
     test_cases=test_cases,
+
     user_model="anthropic:/claude-sonnet-4-20250514",
+
     temperature=0.7,  # Passed to the user simulation LLM
+
 )
 ```
 

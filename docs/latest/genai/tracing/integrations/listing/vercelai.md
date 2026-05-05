@@ -42,7 +42,9 @@ bash
 
 ```
 OTEL_EXPORTER_OTLP_ENDPOINT=<your-mlflow-tracking-server-endpoint>
+
 OTEL_EXPORTER_OTLP_TRACES_HEADERS=x-mlflow-experiment-id=<your-experiment-id>
+
 OTEL_EXPORTER_OTLP_TRACES_PROTOCOL=http/protobuf
 ```
 
@@ -67,8 +69,12 @@ typescript
 ```
 import { registerOTel } from '@vercel/otel';
 
+
+
 export async function register() {
+
   registerOTel({ serviceName: 'next-app' })
+
 }
 ```
 
@@ -80,21 +86,37 @@ typescript
 
 ```
 import { openai } from '@ai-sdk/openai';
+
 import { generateText } from 'ai';
 
+
+
 export async function POST(req: Request) {
+
   const { prompt } = await req.json();
 
+
+
 const { text } = await generateText({
+
   model: openai('gpt-4o-mini'),
+
   maxOutputTokens: 100,
+
   prompt,
+
   experimental_telemetry: {isEnabled: true},
+
 });
 
+
+
   return new Response(JSON.stringify({ text }), {
+
     headers: { 'Content-Type': 'application/json' },
+
   });
+
 }
 ```
 
@@ -114,35 +136,65 @@ typescript
 
 ```
 import { init } from "@mlflow/core";
+
 import { generateText } from "ai";
+
 import { openai } from "@ai-sdk/openai";
+
 import { NodeSDK } from '@opentelemetry/sdk-node';
+
 import { SimpleSpanProcessor } from '@opentelemetry/sdk-trace-node';
+
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-proto';
 
 
+
+
+
 const sdk = new NodeSDK({
+
   spanProcessors: [
+
     new SimpleSpanProcessor(
+
       new OTLPTraceExporter({
+
         url: '<your-mlflow-tracking-server-endpoint>/v1/traces',
+
         headers: { 'x-mlflow-experiment-id': '<your-experiment-id>' },
+
       }),
+
     ),
+
   ],
+
 });
+
+
 
 sdk.start();
 
+
+
 // Make an AI SDK call with telemetry enabled
+
 const result = await generateText({
+
   model: openai('gpt-4o-mini'),
+
   prompt: 'What is MLflow?',
+
   // IMPORTANT: enable telemetry is required for tracing
+
   experimental_telemetry: { isEnabled: true }
+
 });
 
+
+
 console.log(result.text);
+
 sdk.shutdown();
 ```
 
@@ -160,16 +212,27 @@ typescript
 
 ```
 import { streamText } from 'ai';
+
 import { openai } from '@ai-sdk/openai';
 
+
+
 const stream = await streamText({
+
   model: openai('gpt-4o-mini'),
+
   prompt: 'Explain vector databases in one paragraph.',
+
   experimental_telemetry: { isEnabled: true }
+
 });
 
+
+
 for await (const part of stream.textStream) {
+
   process.stdout.write(part);
+
 }
 ```
 
@@ -185,26 +248,47 @@ typescript
 
 ```
 import { init, withSpan } from "@mlflow/core";
+
 import { generateText } from "ai";
+
 import { openai } from "@ai-sdk/openai";
 
+
+
 // Initialize MLflow SDK - sets up the OTel provider to capture all spans
+
 init({
+
   trackingUri: "http://localhost:5000",
+
   experimentId: "<your-experiment-id>",
+
 });
 
+
+
 // Add custom MLflow spans alongside the auto-generated Vercel AI SDK traces
+
 const result = await withSpan(
+
   { name: "custom_step", inputs: { query: "test" } },
+
   async (span) => {
+
     const { text } = await generateText({
+
       model: openai("gpt-4o-mini"),
+
       prompt: "What is MLflow?",
+
       experimental_telemetry: { isEnabled: true },
+
     });
+
     return { result: text };
+
   }
+
 );
 ```
 

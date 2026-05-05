@@ -1,8 +1,6 @@
 # Set Up MLflow Server
 
-MLflow Assistant
-
-Need help with this setup? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that understands your codebase and can set up MLflow for you.
+:::tip MLflow Assistant Need help with this setup? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that understands your codebase and can set up MLflow for you. :::
 
 MLflow is open source, and you can set up the MLflow server using either `pip` or `docker`.
 
@@ -34,6 +32,7 @@ shell
 
 ```
 pip install --upgrade mlflow
+
 mlflow server
 ```
 
@@ -47,10 +46,15 @@ shell
 
 ```
 git clone --depth 1 --filter=blob:none --sparse https://github.com/mlflow/mlflow.git
+
 cd mlflow
+
 git sparse-checkout set docker-compose
+
 cd docker-compose
+
 cp .env.dev.example .env
+
 docker compose up -d
 ```
 

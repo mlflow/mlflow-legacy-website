@@ -51,16 +51,27 @@ json
 
 ```
 {
+
     "name": "expected_answer",
+
     "value": "The capital of France is Paris. It has been the capital since 987 AD and is home to over 2 million people.",
+
     "source": {
+
         "source_type": "HUMAN",
+
         "source_id": "geography_expert@company.com"
+
     },
+
     "metadata": {
+
         "confidence": "high",
+
         "reference": "Company knowledge base v2.1"
+
     }
+
 }
 ```
 
@@ -70,21 +81,37 @@ json
 
 ```
 {
+
     "name": "expected_classification",
+
     "value": {
+
         "category": "customer_complaint",
+
         "sentiment": "negative",
+
         "priority": "high",
+
         "department": "billing"
+
     },
+
     "source": {
+
         "source_type": "HUMAN",
+
         "source_id": "support_team_lead@company.com"
+
     },
+
     "metadata": {
+
         "classification_version": "v3.2",
+
         "based_on": "Historical ticket analysis"
+
     }
+
 }
 ```
 
@@ -94,16 +121,27 @@ json
 
 ```
 {
+
     "name": "expected_documents",
+
     "value": ["policy_doc_2024_v3", "faq_billing_section", "terms_of_service_5.1"],
+
     "source": {
+
         "source_type": "HUMAN",
+
         "source_id": "rag_specialist@company.com"
+
     },
+
     "metadata": {
+
         "relevance_threshold": "0.85",
+
         "expected_order": "by_relevance"
+
     }
+
 }
 ```
 

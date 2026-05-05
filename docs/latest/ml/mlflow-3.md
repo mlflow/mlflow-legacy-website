@@ -24,9 +24,13 @@ python
 
 ```
 with mlflow.start_run():
+
     mlflow.pyfunc.log_model(
+
         artifact_path="model",
+
         python_model=python_model,
+
     )
 ```
 
@@ -36,9 +40,13 @@ python
 
 ```
 # No longer requires starting a Run before logging models
+
 mlflow.pyfunc.log_model(
+
     name="model",  # Use 'name' instead of 'artifact_path'
+
     python_model=python_model,
+
 )
 ```
 
@@ -54,9 +62,13 @@ shell
 
 ```
 experiments/
+
   └── <experiment_id>/
+
     └── <run_id>/
+
       └── artifacts/
+
         └── ... # model artifacts stored here
 ```
 
@@ -66,10 +78,15 @@ shell
 
 ```
 experiments/
+
   └── <experiment_id>/
+
     └── models/
+
       └── <model_id>/
+
         └── artifacts/
+
           └── ... # model artifacts stored here
 ```
 
@@ -110,9 +127,13 @@ python
 
 ```
 # MLflow 2.x
+
 run_info.run_uuid
 
+
+
 # MLflow 3
+
 run_info.run_id
 ```
 
@@ -152,10 +173,15 @@ python
 
 ```
 # For classical ML models, use mlflow.models.evaluate
+
 result_1 = mlflow.models.evaluate(model_1, data, targets="label", model_type="classifier")
+
 result_2 = mlflow.models.evaluate(model_2, data, targets="label", model_type="classifier")
 
+
+
 # Compare results
+
 mlflow.validate_evaluation_results(result_1, result_2)
 ```
 
@@ -171,9 +197,13 @@ python
 
 ```
 # MLflow 2.x
+
 threshold = MetricThreshold(higher_is_better=True)
 
+
+
 # MLflow 3
+
 threshold = MetricThreshold(greater_is_better=True)
 ```
 
@@ -189,11 +219,17 @@ python
 
 ```
 mlflow.models.evaluate(
+
     ...,
+
     evaluator_config={
+
         "log_model_explainability": True,
+
         "log_explainer": True,
+
     },
+
 )
 ```
 
@@ -219,21 +255,37 @@ python
 
 ```
 # ❌ Don't use mlflow.get_artifact_uri("model")
+
 with mlflow.start_run() as run:
+
     mlflow.sklearn.log_model(my_model, name="model")
+
     mlflow.sklearn.load_model(mlflow.get_artifact_uri("model"))  # Fails!
 
+
+
 # ✅ Use the model URI from log_model
+
 with mlflow.start_run() as run:
+
     info = mlflow.sklearn.log_model(my_model, name="model")
 
+
+
     # Recommended: use model_uri from result
+
     mlflow.sklearn.load_model(info.model_uri)
 
+
+
     # Alternative: use model_id
+
     mlflow.sklearn.load_model(f"models:/{info.model_id}")
 
+
+
     # Deprecated: use run_id (will be removed in future)
+
     mlflow.sklearn.load_model(f"runs:/{run.info.run_id}/model")
 ```
 
@@ -247,16 +299,29 @@ python
 import mlflow
 
 
+
+
+
 class DummyModel(mlflow.pyfunc.PythonModel):
+
     def predict(self, context, model_input: list[str]) -> list[str]:
+
         return model_input
 
 
+
+
+
 model_info = mlflow.pyfunc.log_model(name="model", python_model=DummyModel())
+
 mlflow.models.update_model_requirements(
+
     model_uri=model_info.model_uri,
+
     operation="add",
+
     requirement_list=["scikit-learn"],
+
 )
 ```
 

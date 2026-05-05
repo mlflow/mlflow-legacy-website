@@ -58,40 +58,75 @@ python
 
 ```
 import mlflow
+
 from mlflow.genai.judges import make_judge
+
 from mlflow.genai.judges.optimizers import MemAlignOptimizer
 
+
+
 # Create a judge
+
 judge = make_judge(
+
     name="politeness",
+
     instructions=(
+
         "Given a user question, evaluate if the chatbot's response is polite and respectful. "
+
         "Consider the tone, language, and context of the response.\n\n"
+
         "Question: {{ inputs }}\n"
+
         "Response: {{ outputs }}"
+
     ),
+
     feedback_value_type=bool,
+
     model="openai:/gpt-5-mini",
+
 )
+
+
 
 # Create the MemAlign optimizer
+
 optimizer = MemAlignOptimizer(
+
     reflection_lm="openai:/gpt-5-mini",
+
 )
 
+
+
 # Retrieve traces with human feedback
+
 all_traces = mlflow.search_traces(return_type="list")
+
 alignment_traces = [
+
     trace
+
     for trace in all_traces
+
     if any(
+
         feedback.name == "politeness"
+
         for feedback in trace.info.assessments
+
         # feedback name must match the judge name for alignment to work
+
     )
+
 ]
 
+
+
 # Align the judge
+
 aligned_judge = judge.align(traces=alignment_traces, optimizer=optimizer)
 ```
 
@@ -113,10 +148,15 @@ python
 
 ```
 # View the updated instructions with distilled guidelines
+
 print(aligned_judge.instructions)
+
 # Output includes appended guidelines like:
+
 # "Distilled Guidelines (7):
+
 #   - Responses must be factually accurate...
+
 #   - Use neutral, descriptive language..."
 ```
 
@@ -129,13 +169,22 @@ python
 ```
 import mlflow
 
+
+
 # Retrieve traces with outdated or incorrect feedback
+
 traces_to_forget: list[mlflow.entities.Trace] = mlflow.search_traces(
+
     filter_string="tag.outdated = 'true'",
+
     return_type="list",
+
 )
 
+
+
 # Remove knowledge derived from those traces
+
 updated_judge = aligned_judge.unalign(traces=traces_to_forget)
 ```
 
@@ -148,6 +197,9 @@ python
 ```
 import logging
 
+
+
 logging.getLogger("mlflow.genai.judges.optimizers.memalign").setLevel(logging.DEBUG)
+
 aligned_judge = judge.align(traces=traces, optimizer=optimizer)
 ```

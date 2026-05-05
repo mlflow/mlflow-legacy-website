@@ -110,52 +110,101 @@ The following example demonstrates how to log a simple chain with this method:
    ```
    # %%writefile chain.py
 
+
+
    import os
+
    from operator import itemgetter
 
+
+
    from langchain_core.output_parsers import StrOutputParser
+
    from langchain_core.prompts import PromptTemplate
+
    from langchain_core.runnables import RunnableLambda
+
    from langchain_openai import OpenAI
+
+
 
    import mlflow
 
+
+
    mlflow.set_experiment("Homework Helper")
+
+
 
    mlflow.langchain.autolog()
 
+
+
    prompt = PromptTemplate(
+
        template="You are a helpful tutor that evaluates my homework assignments and provides suggestions on areas for me to study further."
+
        " Here is the question: {question} and my answer which I got wrong: {answer}",
+
        input_variables=["question", "answer"],
+
    )
 
 
+
+
+
    def get_question(input):
+
        default = "What is your name?"
+
        if isinstance(input_data[0], dict):
+
            return input_data[0].get("content").get("question", default)
+
        return default
+
+
+
 
 
    def get_answer(input):
+
        default = "My name is Bobo"
+
        if isinstance(input_data[0], dict):
+
            return input_data[0].get("content").get("answer", default)
+
        return default
+
+
+
 
 
    model = OpenAI(temperature=0.95)
 
+
+
    chain = (
+
        {
+
            "question": itemgetter("messages") | RunnableLambda(get_question),
+
            "answer": itemgetter("messages") | RunnableLambda(get_answer),
+
        }
+
        | prompt
+
        | model
+
        | StrOutputParser()
+
    )
+
+
 
    mlflow.models.set_model(chain)
    ```
@@ -167,11 +216,18 @@ The following example demonstrates how to log a simple chain with this method:
    ```
    from pprint import pprint
 
+
+
    import mlflow
+
+
 
    chain_path = "chain.py"
 
+
+
    with mlflow.start_run():
+
        info = mlflow.langchain.log_model(lc_model=chain_path, name="chain")
    ```
 
@@ -181,21 +237,38 @@ The following example demonstrates how to log a simple chain with this method:
 
    ```
    # Load the model and run inference
+
    homework_chain = mlflow.langchain.load_model(model_uri=info.model_uri)
 
+
+
    exam_question = {
+
        "messages": [
+
            {
+
                "role": "user",
+
                "content": {
+
                    "question": "What is the primary function of control rods in a nuclear reactor?",
+
                    "answer": "To stir the primary coolant so that the neutrons are mixed well.",
+
                },
+
            },
+
        ]
+
    }
 
+
+
    response = homework_chain.invoke(exam_question)
+
+
 
    pprint(response)
    ```
@@ -224,7 +297,9 @@ To learn more about the details of the MLflow LangChain flavor, read the detaile
 
   ```
   ValueError: This code relies on the pickle module. You will need to set allow_dangerous_deserialization=True if you want to opt-in to
+
   allow deserialization of data using pickle. Data can be compromised by a malicious actor if not handled properly to include a malicious
+
   payload that when deserialized with pickle can execute arbitrary code on your machine.
   ```
 
@@ -277,27 +352,50 @@ python
 ```
 from typing import Literal
 
+
+
 from langchain_core.tools import tool
+
 from langchain_openai import ChatOpenAI
+
 from langgraph.prebuilt import create_react_agent
+
+
 
 import mlflow
 
 
+
+
+
 @tool
+
 def get_weather(city: Literal["seattle", "sf"]):
+
     """Use this to get weather information."""
+
     if city == "seattle":
+
         return "It's probably raining. Again."
+
     elif city == "sf":
+
         return "It's always sunny in sf"
 
 
+
+
+
 llm = ChatOpenAI()
+
 tools = [get_weather]
+
 graph = create_react_agent(llm, tools)
 
+
+
 # specify the Agent as the model interface to be loaded when executing the script
+
 mlflow.models.set_model(graph)
 ```
 
@@ -308,13 +406,22 @@ python
 ```
 import mlflow
 
+
+
 input_example = {"messages": [{"role": "user", "content": "what is the weather in seattle today?"}]}
 
+
+
 with mlflow.start_run():
+
     model_info = mlflow.langchain.log_model(
+
         lc_model="./langgraph.py",  # specify the path to the LangGraph agent script definition
+
         name="langgraph",
+
         input_example=input_example,
+
     )
 ```
 
@@ -326,14 +433,23 @@ python
 
 ```
 agent = mlflow.langchain.load_model(model_info.model_uri)
+
 query = {
+
     "messages": [
+
         {
+
             "role": "user",
+
             "content": "Should I bring an umbrella today when I go to work in San Francisco?",
+
         }
+
     ]
+
 }
+
 agent.invoke(query)
 ```
 
@@ -345,31 +461,58 @@ python
 
 ```
 import json
+
 import mlflow
+
 import os
+
 from operator import itemgetter
+
 from langchain.schema.runnable import RunnablePassthrough
 
+
+
 model = RunnablePassthrough.assign(problem=lambda x: x["messages"][-1]["content"]) | itemgetter(
+
     "problem"
+
 )
 
+
+
 input_example = {
+
     "messages": [
+
         {
+
             "role": "user",
+
             "content": "Hello",
+
         }
+
     ]
+
 }
+
 # this model accepts the input_example
+
 assert model.invoke(input_example) == "Hello"
 
+
+
 # set this environment variable to avoid input conversion
+
 os.environ["MLFLOW_CONVERT_MESSAGES_DICT_FOR_LANGCHAIN"] = "false"
+
 with mlflow.start_run():
+
     model_info = mlflow.langchain.log_model(model, name="model", input_example=input_example)
 
+
+
 pyfunc_model = mlflow.pyfunc.load_model(model_info.model_uri)
+
 assert pyfunc_model.predict(input_example) == ["Hello"]
 ```

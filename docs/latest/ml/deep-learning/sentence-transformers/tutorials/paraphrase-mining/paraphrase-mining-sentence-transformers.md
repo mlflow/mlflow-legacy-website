@@ -30,7 +30,10 @@ python
 ```
 import warnings
 
+
+
 # Disable a few less-than-useful UserWarnings from setuptools and pydantic
+
 warnings.filterwarnings("ignore", category=UserWarning)
 ```
 
@@ -61,91 +64,179 @@ python
 ```
 import warnings
 
+
+
 import pandas as pd
+
 from sentence_transformers import SentenceTransformer, util
 
+
+
 import mlflow
+
 from mlflow.models.signature import infer_signature
+
 from mlflow.pyfunc import PythonModel
 
 
+
+
+
 class ParaphraseMiningModel(PythonModel):
+
   def load_context(self, context):
+
       """Load the model context for inference, including the customer feedback corpus."""
+
       try:
+
           # Load the pre-trained sentence transformer model
+
           self.model = SentenceTransformer.load(context.artifacts["model_path"])
 
+
+
           # Load the customer feedback corpus from the specified file
+
           corpus_file = context.artifacts["corpus_file"]
+
           with open(corpus_file) as file:
+
               self.corpus = file.read().splitlines()
 
+
+
       except Exception as e:
+
           raise ValueError(f"Error loading model and corpus: {e}")
 
+
+
   def _sort_and_filter_matches(
+
       self,
+
       query: str,
+
       paraphrase_pairs: list[tuple[float, int, int]],
+
       similarity_threshold: float,
+
   ):
+
       """Sort and filter the matches by similarity score."""
 
+
+
       # Convert to list of tuples and sort by score
+
       sorted_matches = sorted(paraphrase_pairs, key=lambda x: x[1], reverse=True)
 
+
+
       # Filter and collect paraphrases for the query, avoiding duplicates
+
       query_paraphrases = {}
+
       for score, i, j in sorted_matches:
+
           if score < similarity_threshold:
+
               continue
+
+
 
           paraphrase = self.corpus[j] if self.corpus[i] == query else self.corpus[i]
+
           if paraphrase == query:
+
               continue
 
+
+
           if paraphrase not in query_paraphrases or score > query_paraphrases[paraphrase]:
+
               query_paraphrases[paraphrase] = score
+
+
 
       return sorted(query_paraphrases.items(), key=lambda x: x[1], reverse=True)
 
+
+
   def predict(self, context, model_input, params=None):
+
       """Predict method to perform paraphrase mining over the corpus."""
 
+
+
       # Validate and extract the query input
+
       if isinstance(model_input, pd.DataFrame):
+
           if model_input.shape[1] != 1:
+
               raise ValueError("DataFrame input must have exactly one column.")
+
           query = model_input.iloc[0, 0]
+
       elif isinstance(model_input, dict):
+
           query = model_input.get("query")
+
           if query is None:
+
               raise ValueError("The input dictionary must have a key named 'query'.")
+
       else:
+
           raise TypeError(
+
               f"Unexpected type for model_input: {type(model_input)}. Must be either a Dict or a DataFrame."
+
           )
 
+
+
       # Determine the minimum similarity threshold
+
       similarity_threshold = params.get("similarity_threshold", 0.5) if params else 0.5
 
+
+
       # Add the query to the corpus for paraphrase mining
+
       extended_corpus = self.corpus + [query]
 
+
+
       # Perform paraphrase mining
+
       paraphrase_pairs = util.paraphrase_mining(
+
           self.model, extended_corpus, show_progress_bar=False
+
       )
+
+
 
       # Convert to list of tuples and sort by score
+
       sorted_paraphrases = self._sort_and_filter_matches(
+
           query, paraphrase_pairs, similarity_threshold
+
       )
 
+
+
       # Warning if no paraphrases found
+
       if not sorted_paraphrases:
+
           warnings.warn("No paraphrases found above the similarity threshold.", UserWarning)
+
+
 
       return {sentence[0]: str(sentence[1]) for sentence in sorted_paraphrases}
 ```
@@ -171,84 +262,163 @@ python
 
 ```
 corpus = [
+
   "Exploring ancient cities in Europe offers a glimpse into history.",
+
   "Modern AI technologies are revolutionizing industries.",
+
   "Healthy eating contributes significantly to overall well-being.",
+
   "Advancements in renewable energy are combating climate change.",
+
   "Learning a new language opens doors to different cultures.",
+
   "Gardening is a relaxing hobby that connects you with nature.",
+
   "Blockchain technology could redefine digital transactions.",
+
   "Homemade Italian pasta is a delight to cook and eat.",
+
   "Practicing yoga daily improves both physical and mental health.",
+
   "The art of photography captures moments in time.",
+
   "Baking bread at home has become a popular quarantine activity.",
+
   "Virtual reality is creating new experiences in gaming.",
+
   "Sustainable travel is becoming a priority for eco-conscious tourists.",
+
   "Reading books is a great way to unwind and learn.",
+
   "Jazz music provides a rich tapestry of sound and rhythm.",
+
   "Marathon training requires discipline and perseverance.",
+
   "Studying the stars helps us understand our universe.",
+
   "The rise of electric cars is an important environmental development.",
+
   "Documentary films offer deep insights into real-world issues.",
+
   "Crafting DIY projects can be both fun and rewarding.",
+
   "The history of ancient civilizations is fascinating to explore.",
+
   "Exploring the depths of the ocean reveals a world of marine wonders.",
+
   "Learning to play a musical instrument can be a rewarding challenge.",
+
   "Artificial intelligence is shaping the future of personalized medicine.",
+
   "Cycling is not only a great workout but also eco-friendly transportation.",
+
   "Home automation with IoT devices is enhancing living experiences.",
+
   "Understanding quantum computing requires a grasp of complex physics.",
+
   "A well-brewed cup of coffee is the perfect start to the day.",
+
   "Urban farming is gaining popularity as a sustainable food source.",
+
   "Meditation and mindfulness can lead to a more balanced life.",
+
   "The popularity of podcasts has revolutionized audio storytelling.",
+
   "Space exploration continues to push the boundaries of human knowledge.",
+
   "Wildlife conservation is essential for maintaining biodiversity.",
+
   "The fusion of technology and fashion is creating new trends.",
+
   "E-learning platforms have transformed the educational landscape.",
+
   "Dark chocolate has surprising health benefits when enjoyed in moderation.",
+
   "Robotics in manufacturing is leading to more efficient production.",
+
   "Creating a personal budget is key to financial well-being.",
+
   "Hiking in nature is a great way to connect with the outdoors.",
+
   "3D printing is innovating the way we create and manufacture objects.",
+
   "Sommeliers can identify a wine's characteristics with just a taste.",
+
   "Mind-bending puzzles and riddles are great for cognitive exercise.",
+
   "Social media has a profound impact on communication and culture.",
+
   "Urban sketching captures the essence of city life on paper.",
+
   "The ethics of AI is a growing field in tech philosophy.",
+
   "Homemade skincare remedies are becoming more popular.",
+
   "Virtual travel experiences can provide a sense of adventure at home.",
+
   "Ancient mythology still influences modern storytelling and literature.",
+
   "Building model kits is a hobby that requires patience and precision.",
+
   "The study of languages opens windows into different worldviews.",
+
   "Professional esports has become a major global phenomenon.",
+
   "The mysteries of the universe are unveiled through space missions.",
+
   "Astronauts' experiences in space stations offer unique insights into life beyond Earth.",
+
   "Telescopic observations bring distant galaxies within our view.",
+
   "The study of celestial bodies helps us understand the cosmos.",
+
   "Space travel advancements could lead to interplanetary exploration.",
+
   "Observing celestial events provides valuable data for astronomers.",
+
   "The development of powerful rockets is key to deep space exploration.",
+
   "Mars rover missions are crucial in searching for extraterrestrial life.",
+
   "Satellites play a vital role in our understanding of Earth's atmosphere.",
+
   "Astrophysics is central to unraveling the secrets of space.",
+
   "Zero gravity environments in space pose unique challenges and opportunities.",
+
   "Space tourism might soon become a reality for many.",
+
   "Lunar missions have contributed significantly to our knowledge of the moon.",
+
   "The International Space Station is a hub for groundbreaking space research.",
+
   "Studying comets and asteroids reveals information about the early solar system.",
+
   "Advancements in space technology have implications for many scientific fields.",
+
   "The possibility of life on other planets continues to intrigue scientists.",
+
   "Black holes are among the most mysterious phenomena in space.",
+
   "The history of space exploration is filled with remarkable achievements.",
+
   "Future space missions could unlock the mysteries of dark matter.",
+
 ]
 
+
+
 # Write out the corpus to a file
+
 corpus_file = "/tmp/feedback.txt"
+
 with open(corpus_file, "w") as file:
+
   for sentence in corpus:
+
       file.write(sentence + "
+
 ")
 ```
 
@@ -284,33 +454,61 @@ python
 
 ```
 # Load a pre-trained sentence transformer model
+
 model = SentenceTransformer("all-MiniLM-L6-v2")
 
+
+
 # Create an input example DataFrame
+
 input_example = pd.DataFrame({"query": ["This product works well. I'm satisfied."]})
 
+
+
 # Save the model in the /tmp directory
+
 model_directory = "/tmp/paraphrase_search_model"
+
 model.save(model_directory)
 
+
+
 # Define the path for the corpus file
+
 corpus_file = "/tmp/feedback.txt"
 
+
+
 # Define the artifacts (paths to the model and corpus file)
+
 artifacts = {"model_path": model_directory, "corpus_file": corpus_file}
 
+
+
 # Generate test output for signature
+
 # Sample output for paraphrase mining could be a list of tuples (paraphrase, score)
+
 test_output = [{"This product is satisfactory and functions as expected.": "0.8"}]
 
+
+
 # Define the signature associated with the model
+
 # The signature includes the structure of the input and the expected output, as well as any parameters that
+
 # we would like to expose for overriding at inference time (including their default values if they are not overridden).
+
 signature = infer_signature(
+
   model_input=input_example, model_output=test_output, params={"similarity_threshold": 0.5}
+
 )
 
+
+
 # Visualize the signature, showing our overridden inference parameter and its default.
+
 signature
 ```
 
@@ -331,9 +529,14 @@ python
 
 ```
 # If you are running this tutorial in local mode, leave the next line commented out.
+
 # Otherwise, uncomment the following line and set your tracking uri to your local or remote tracking server.
 
+
+
 # mlflow.set_tracking_uri("http://127.0.0.1:8080")
+
+
 
 mlflow.set_experiment("Paraphrase Mining")
 ```
@@ -365,13 +568,21 @@ python
 
 ```
 with mlflow.start_run() as run:
+
   model_info = mlflow.pyfunc.log_model(
+
       name="paraphrase_model",
+
       python_model=ParaphraseMiningModel(),
+
       input_example=input_example,
+
       signature=signature,
+
       artifacts=artifacts,
+
       pip_requirements=["sentence_transformers"],
+
   )
 ```
 
@@ -414,11 +625,17 @@ python
 
 ```
 # Load our model by supplying the uri that was used to save the model artifacts
+
 loaded_dynamic = mlflow.pyfunc.load_model(model_info.model_uri)
 
+
+
 # Perform a quick validation that our loaded model is performing adequately
+
 loaded_dynamic.predict(
+
   {"query": "Space exploration is fascinating."}, params={"similarity_threshold": 0.65}
+
 )
 ```
 

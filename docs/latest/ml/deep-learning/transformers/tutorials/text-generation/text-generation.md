@@ -32,11 +32,17 @@ python
 
 ```
 # Disable tokenizers warnings when constructing pipelines
+
 %env TOKENIZERS_PARALLELISM=false
+
+
 
 import warnings
 
+
+
 # Disable a few less-than-useful UserWarnings from setuptools and pydantic
+
 warnings.filterwarnings("ignore", category=UserWarning)
 ```
 
@@ -83,22 +89,40 @@ python
 ```
 import transformers
 
+
+
 import mlflow
 
+
+
 # Define the task that we want to use (required for proper pipeline construction)
+
 task = "text2text-generation"
 
+
+
 # Define the pipeline, using the task and a model instance that is applicable for our task.
+
 generation_pipeline = transformers.pipeline(
+
   task=task,
+
   model="declare-lab/flan-alpaca-large",
+
 )
 
+
+
 # Define a simple input example that will be recorded with the model in MLflow, giving
+
 # users of the model an indication of the expected input format.
+
 input_example = ["prompt 1", "prompt 2", "prompt 3"]
 
+
+
 # Define the parameters (and their defaults) for optional overrides at inference time.
+
 parameters = {"max_length": 512, "do_sample": True, "temperature": 0.4}
 ```
 
@@ -142,8 +166,11 @@ python
 
 ```
 # The signature will be automatically inferred when input_example is provided to log_model.
+
 # We can define the input_example as a tuple of (data, params) to include inference parameters.
+
 input_with_params = (input_example, parameters)
+
 input_with_params
 ```
 
@@ -155,9 +182,14 @@ python
 
 ```
 # If you are running this tutorial in local mode, leave the next line commented out.
+
 # Otherwise, uncomment the following line and set your tracking uri to your local or remote tracking server.
 
+
+
 # mlflow.set_tracking_uri("http://127.0.0.1:8080")
+
+
 
 mlflow.set_experiment("Transformers Introduction")
 ```
@@ -188,12 +220,19 @@ python
 
 ```
 with mlflow.start_run():
+
   model_info = mlflow.transformers.log_model(
+
       transformers_model=generation_pipeline,
+
       name="text_generator",
+
       input_example=input_with_params,
+
       # Uncomment the following line to save the model in 'reference-only' mode:
+
       # save_pretrained=False,
+
   )
 ```
 
@@ -211,6 +250,7 @@ python
 
 ```
 # Load our pipeline as a generic python function
+
 sentence_generator = mlflow.pyfunc.load_model(model_info.model_uri)
 ```
 
@@ -226,25 +266,46 @@ python
 
 ```
 def format_predictions(predictions):
+
   """
+
   Function for formatting the output for readability in a Jupyter Notebook
+
   """
+
   formatted_predictions = []
 
+
+
   for prediction in predictions:
+
       # Split the output into sentences, ensuring we don't split on abbreviations or initials
+
       sentences = [
+
           sentence.strip() + ("." if not sentence.endswith(".") else "")
+
           for sentence in prediction.split(". ")
+
           if sentence
+
       ]
 
+
+
       # Join the sentences with a newline character
+
       formatted_text = "
+
 ".join(sentences)
 
+
+
       # Add the formatted text to the list
+
       formatted_predictions.append(formatted_text)
+
+
 
   return formatted_predictions
 ```
@@ -283,20 +344,35 @@ python
 
 ```
 # Validate that our loaded pipeline, as a generic pyfunc, can produce an output that makes sense
+
 predictions = sentence_generator.predict(
+
   data=[
+
       "I can't decide whether to go hiking or kayaking this weekend. Can you help me decide?",
+
       "Please tell me a joke about hiking.",
+
   ],
+
   params={"temperature": 0.7},
+
 )
 
+
+
 # Format each prediction for notebook readability
+
 formatted_predictions = format_predictions(predictions)
 
+
+
 for i, formatted_text in enumerate(formatted_predictions):
+
   print(f"Response to prompt {i + 1}:
+
 {formatted_text}
+
 ")
 ```
 

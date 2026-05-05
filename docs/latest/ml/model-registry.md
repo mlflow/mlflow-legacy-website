@@ -50,9 +50,13 @@ text
 
 ```
 # Option 1: specify `registered_model_name` parameter when logging a model
+
 mlflow.<flavor>.log_model(..., registered_model_name="<YOUR_MODEL_NAME>")
 
+
+
 # Option 2: register a logged model
+
 mlflow.register_model(model_uri="<YOUR_MODEL_URI>", name="<YOUR_MODEL_NAME>")
 ```
 
@@ -103,6 +107,8 @@ python
 ```
 import mlflow
 
+
+
 mlflow.set_registry_uri("databricks-uc")
 ```
 
@@ -112,9 +118,13 @@ text
 
 ```
 # Option 1: specify `registered_model_name` parameter when logging a model
+
 mlflow.<flavor>.log_model(..., registered_model_name="<YOUR_MODEL_NAME>")
 
+
+
 # Option 2: register a logged model
+
 mlflow.register_model(model_uri="<YOUR_MODEL_URI>", name="<YOUR_MODEL_NAME>")
 ```
 

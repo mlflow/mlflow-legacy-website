@@ -46,10 +46,15 @@ bash
 
 ```
 git clone --depth 1 --filter=blob:none --sparse https://github.com/mlflow/mlflow.git
+
 cd mlflow
+
 git sparse-checkout set docker-compose
+
 cd docker-compose
+
 cp .env.dev.example .env
+
 docker compose up -d
 ```
 
@@ -65,29 +70,54 @@ python
 
 ```
 import groq
+
 import mlflow
+
 import os
 
+
+
 # Enable auto-tracing for Groq
+
 mlflow.groq.autolog()
 
+
+
 # Set a tracking URI and an experiment
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("Groq")
 
+
+
 # Initialize Groq client
+
 client = groq.Groq(api_key=os.getenv("GROQ_API_KEY"))
 
+
+
 # Use the create method to create new message
+
 message = client.chat.completions.create(
+
     model="llama3-8b-8192",
+
     messages=[
+
         {
+
             "role": "user",
+
             "content": "Explain the importance of low latency LLMs.",
+
         }
+
     ],
+
 )
+
+
 
 print(message.choices[0].message.content)
 ```

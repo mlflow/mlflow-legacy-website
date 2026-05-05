@@ -14,19 +14,19 @@ For example, the above picture illustrates a set of spans that are organized in 
 
 MLflow's Span object is designed to be compatible with the [OpenTelemetry Span spec](https://opentelemetry.io/docs/concepts/signals/traces#spans). It is a dataclass object that is mostly same as the OpenTelemetry span object, but with some additional convenience accessors and methods to support LLM and AI agent use cases. When exported to OpenTelemetry-compatible backend, the Span object is serialized into the strict OpenTelemetry export format (OTLP).
 
-| Field           | Type              | Description                                                                                                                                                                                                                                                   |
-| --------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `span_id`       | `str`             | A unique identifier that is generated for each span within a trace.                                                                                                                                                                                           |
-| `trace_id`      | `str`             | The unique identifier that links this span to its parent trace.                                                                                                                                                                                               |
-| `parent_id`     | `Optional[str]`   | The identifier that establishes the hierarchical association of a given span with its parent span. If the span is the root span, this field is `None`.                                                                                                        |
-| `name`          | `str`             | The name of the span, either user-defined or automatically generated based on the function or method being instrumented.                                                                                                                                      |
-| `start_time_ns` | `int`             | The unix timestamp (in nanoseconds) when the span was started.                                                                                                                                                                                                |
-| `end_time_ns`   | `int`             | The unix timestamp (in nanoseconds) when the span was ended.                                                                                                                                                                                                  |
-| `status`        | `SpanStatus`      | The status of a span with values of OK, UNSET, or ERROR. The span status object contains an optional description if the status\_code is reflecting an error that occurred.                                                                                    |
-| `inputs`        | `Optional[Any]`   | The input data that is passed into the particular stage of your application.                                                                                                                                                                                  |
-| `outputs`       | `Optional[Any]`   | The output data that is passed out of the particular stage of your application.                                                                                                                                                                               |
-| `attributes`    | `Dict[str, Any]`  | Attributes are metadata that are associated with a given step within your application. These are key-value pairs that provide insight into behavioral modifications for function and method calls.                                                            |
-| `events`        | `List[SpanEvent]` | Events are a system-level property that is optionally applied to a span only if there was an issue during the execution of the span. These events contain information about exceptions that were thrown in the instrumented call, as well as the stack trace. |
+| Field           | Type              | Description                                                                                                                                                                                                                                                                |
+| --------------- | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `span_id`       | `str`             | A unique identifier that is generated for each span within a trace.                                                                                                                                                                                                        |
+| `trace_id`      | `str`             | The unique identifier that links this span to its parent trace.                                                                                                                                                                                                            |
+| `parent_id`     | `Optional[str]`   | The identifier that establishes the hierarchical association of a given span with its parent span. If the span is the root span, this field is `None`.                                                                                                                     |
+| `name`          | `str`             | The name of the span, either user-defined or automatically generated based on the function or method being instrumented.                                                                                                                                                   |
+| `start_time_ns` | `int`             | The unix timestamp (in nanoseconds) when the span was started.                                                                                                                                                                                                             |
+| `end_time_ns`   | `int`             | The unix timestamp (in nanoseconds) when the span was ended.                                                                                                                                                                                                               |
+| `status`        | `SpanStatus`      | The status of a span with values of OK, UNSET, or ERROR. The span status object contains an optional description if the status\_code is reflecting an error that occurred.                                                                                                 |
+| `inputs`        | `Optional[Any]`   | The input data that is passed into the particular stage of your application. May contain [Attachment](/docs/latest/genai/tracing/observe-with-traces/multimodal.md#trace-attachments) objects for binary content, which are automatically replaced with reference URIs.    |
+| `outputs`       | `Optional[Any]`   | The output data that is passed out of the particular stage of your application. May contain [Attachment](/docs/latest/genai/tracing/observe-with-traces/multimodal.md#trace-attachments) objects for binary content, which are automatically replaced with reference URIs. |
+| `attributes`    | `Dict[str, Any]`  | Attributes are metadata that are associated with a given step within your application. These are key-value pairs that provide insight into behavioral modifications for function and method calls.                                                                         |
+| `events`        | `List[SpanEvent]` | Events are a system-level property that is optionally applied to a span only if there was an issue during the execution of the span. These events contain information about exceptions that were thrown in the instrumented call, as well as the stack trace.              |
 
 ## Span Attributes[​](#span-attributes "Direct link to Span Attributes")
 
@@ -36,13 +36,21 @@ python
 
 ```
 span.set_attributes({
+
     "ai.model.name": "o3-mini",
+
     "ai.model.version": "2024-01-01",
+
     "ai.model.provider": "openai",
+
     "ai.model.temperature": 0.7,
+
     "ai.model.max_tokens": 1000,
+
     "infrastructure.gpu.type": "A100",
+
     "infrastructure.memory.used_mb": 2048,
+
 })
 ```
 
@@ -73,23 +81,41 @@ python
 
 ```
 import mlflow
+
 from mlflow.entities import SpanType
 
 
+
+
+
 # Setting a span type with the decorator
+
 @mlflow.trace(span_type=SpanType.RETRIEVER)
+
 def retrieve_documents(query: str): ...
 
 
+
+
+
 # Setting a span type with the context manager
+
 with mlflow.start_span(name="add", span_type=SpanType.TOOL) as span:
+
     span.set_inputs({"x": x, "y": y})
+
     z = x + y
+
     span.set_outputs({"z": z})
 
 
+
+
+
 # You can also define a custom span type string
+
 @mlflow.trace(span_type="ROUTER")
+
 def route_request(request): ...
 ```
 
@@ -101,9 +127,13 @@ python
 
 ```
 import mlflow
+
 from mlflow.entities import SpanType
 
+
+
 trace = mlflow.get_trace("<trace_id>")
+
 retriever_spans = trace.search_spans(span_type=SpanType.RETRIEVER)
 ```
 
@@ -136,41 +166,78 @@ python
 
 ```
 import mlflow
+
 from mlflow.entities import SpanType, Document
 
 
+
+
+
 def search_store(query: str) -> list[tuple[str, str]]:
+
     # Simulate retrieving documents (e.g., from a vector database)
+
     return [
+
         (
+
             "MLflow Tracing helps debug LLM applications and AI agents...",
+
             "docs/mlflow/tracing_intro.md",
+
         ),
+
         (
+
             "Key components of a trace include spans...",
+
             "docs/mlflow/tracing_datamodel.md",
+
         ),
+
         ("MLflow provides automatic instrumentation...", "docs/mlflow/auto_trace.md"),
+
     ]
 
 
+
+
+
 @mlflow.trace(span_type=SpanType.RETRIEVER)
+
 def retrieve_relevant_documents(query: str):
+
     # Get documents from the search store
+
     docs = search_store(query)
 
+
+
     # Get the current active span (created by @mlflow.trace)
+
     span = mlflow.get_current_active_span()
 
+
+
     # Set the outputs of the span in accordance with the tracing schema
+
     outputs = [Document(page_content=doc, metadata={"doc_uri": uri}) for doc, uri in docs]
+
     span.set_outputs(outputs)
 
+
+
     # Return the original format for downstream usage
+
     return docs
 
 
+
+
+
 # Example usage
+
 user_query = "MLflow Tracing benefits"
+
 retrieved_docs = retrieve_relevant_documents(user_query)
 ```

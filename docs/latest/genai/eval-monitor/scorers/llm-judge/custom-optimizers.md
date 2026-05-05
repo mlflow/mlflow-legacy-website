@@ -10,47 +10,89 @@ python
 
 ```
 from mlflow.genai.judges.base import AlignmentOptimizer, Judge
+
 from mlflow.entities.trace import Trace
 
 
+
+
+
 class MyCustomOptimizer(AlignmentOptimizer):
+
     """Custom optimizer implementation for judge alignment."""
 
+
+
     def __init__(self, model: str = None, **kwargs):
+
         """Initialize your optimizer with custom parameters."""
+
         self.model = model
 
+
+
     def align(self, judge: Judge, traces: list[Trace]) -> Judge:
+
         """
+
         Implement your alignment algorithm.
 
+
+
         Args:
+
             judge: The judge to be optimized
+
             traces: List of traces containing human feedback
 
+
+
         Returns:
+
             A new Judge instance with improved alignment
+
         """
+
         # Your custom alignment logic here
+
         # 1. Extract feedback from traces
+
         # 2. Analyze disagreements between judge and human
+
         # 3. Generate improved instructions
+
         # 4. Return new judge with better alignment
+
+
 
         from mlflow.genai.judges import make_judge
 
+
+
         improved_instructions = self._optimize_instructions(judge.instructions, traces)
 
+
+
         return make_judge(
+
             name=judge.name,
+
             instructions=improved_instructions,
+
             feedback_value_type=str,
+
             model=judge.model,
+
         )
 
+
+
     def _optimize_instructions(self, instructions: str, traces: list[Trace]) -> str:
+
         """Your custom optimization logic."""
+
         # Implement your optimization strategy
+
         pass
 ```
 
@@ -62,9 +104,13 @@ python
 
 ```
 # Create your custom optimizer
+
 custom_optimizer = MyCustomOptimizer(model="your-model")
 
+
+
 # Use it for alignment
+
 aligned_judge = initial_judge.align(traces_with_feedback, custom_optimizer)
 ```
 

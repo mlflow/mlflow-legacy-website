@@ -17,9 +17,14 @@ python
 ```
 import mlflow
 
+
+
 mlflow.dspy.autolog(log_compiles=True, log_evals=True, log_traces_from_compile=True)
 
+
+
 # Your DSPy code here
+
 ...
 ```
 
@@ -37,38 +42,71 @@ python
 
 ```
 import dspy
+
 from dspy.datasets.gsm8k import GSM8K, gsm8k_metric
+
 import mlflow
 
+
+
 # Enabling tracing for DSPy
+
 mlflow.dspy.autolog(log_compiles=True, log_evals=True, log_traces_from_compile=True)
 
+
+
 # Optional: Set a tracking URI and an experiment
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("DSPy")
 
+
+
 lm = dspy.LM(model="openai/gpt-3.5-turbo", max_tokens=250)
+
 dspy.configure(lm=lm)
+
+
 
 gsm8k = GSM8K()
 
+
+
 trainset = gsm8k.train
+
 devset = gsm8k.dev[:50]
+
+
 
 program = dspy.ChainOfThought("question -> answer")
 
+
+
 # define a teleprompter
+
 teleprompter = dspy.teleprompt.MIPROv2(
+
     metric=gsm8k_metric,
+
     auto="light",
+
 )
+
 # run the optimizer
+
 optimized_program = teleprompter.compile(
+
     program,
+
     trainset=trainset,
+
     max_bootstrapped_demos=3,
+
     max_labeled_demos=4,
+
     requires_permission_to_run=False,
+
 )
 ```
 
@@ -105,10 +143,16 @@ python
 
 ```
 with mlflow.start_run(run_name="My Optimization Run") as run:
+
     optimized_program = teleprompter.compile(
+
         program,
+
         trainset=trainset,
+
     )
+
     evaluation = dspy.Evaluate(devset=devset, metric=metric)
+
     evaluation(optimized_program)
 ```

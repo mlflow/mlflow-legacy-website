@@ -251,7 +251,9 @@ bash
 
 ```
 # authenticate as built-in admin user
+
 export MLFLOW_TRACKING_USERNAME=admin
+
 export MLFLOW_TRACKING_PASSWORD=password
 ```
 
@@ -260,10 +262,16 @@ python
 ```
 from mlflow.server import get_app_client
 
+
+
 tracking_uri = "http://localhost:5000/"
 
+
+
 auth_client = get_app_client("basic-auth", tracking_uri=tracking_uri)
+
 auth_client.create_user(username="user1", password="pw1")
+
 auth_client.update_user_admin(username="user1", is_admin=True)
 ```
 
@@ -277,6 +285,7 @@ bash
 
 ```
 export MLFLOW_TRACKING_USERNAME=admin
+
 export MLFLOW_TRACKING_PASSWORD=password
 ```
 
@@ -284,19 +293,33 @@ python
 
 ```
 from mlflow import MlflowClient
+
 from mlflow.server import get_app_client
+
+
 
 tracking_uri = "http://localhost:5000/"
 
+
+
 auth_client = get_app_client("basic-auth", tracking_uri=tracking_uri)
+
 auth_client.create_user(username="user1", password="pw1")
+
 auth_client.create_user(username="user2", password="pw2")
 
+
+
 client = MlflowClient(tracking_uri=tracking_uri)
+
 experiment_id = client.create_experiment(name="experiment")
 
+
+
 auth_client.create_experiment_permission(
+
     experiment_id=experiment_id, username="user2", permission="MANAGE"
+
 )
 ```
 
@@ -318,6 +341,7 @@ bash
 
 ```
 export MLFLOW_TRACKING_USERNAME=username
+
 export MLFLOW_TRACKING_PASSWORD=password
 ```
 
@@ -326,8 +350,12 @@ python
 ```
 import mlflow
 
+
+
 mlflow.set_tracking_uri("https://<mlflow_tracking_uri>/")
+
 with mlflow.start_run():
+
     ...
 ```
 
@@ -343,7 +371,9 @@ ini
 
 ```
 [mlflow]
+
 mlflow_tracking_username = username
+
 mlflow_tracking_password = password
 ```
 
@@ -358,17 +388,20 @@ python
 ```
 import requests
 
+
+
 response = requests.get(
+
     "https://<mlflow_tracking_uri>/",
+
     auth=("username", "password"),
+
 )
 ```
 
 ## Creating a New User[​](#creating-a-new-user "Direct link to Creating a New User")
 
-important
-
-To create a new user, you are required to authenticate with admin privileges.
+:::warning important To create a new user, you are required to authenticate with admin privileges. :::
 
 ### Using MLflow UI[​](#using-mlflow-ui-1 "Direct link to Using MLflow UI")
 
@@ -387,12 +420,20 @@ python
 ```
 import requests
 
+
+
 response = requests.post(
+
     "https://<mlflow_tracking_uri>/api/2.0/mlflow/users/create",
+
     json={
+
         "username": "username",
+
         "password": "password",
+
     },
+
 )
 ```
 
@@ -405,9 +446,14 @@ python
 ```
 import mlflow
 
+
+
 auth_client = mlflow.server.get_app_client(
+
     "basic-auth", tracking_uri="https://<mlflow_tracking_uri>/"
+
 )
+
 auth_client.create_user(username="username", password="password")
 ```
 
@@ -448,6 +494,7 @@ ini
 
 ```
 [mlflow]
+
 database_uri = postgresql://username:password@hostname:port/database
 ```
 

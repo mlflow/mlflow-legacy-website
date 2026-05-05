@@ -1,8 +1,6 @@
 # Connect Your Development Environment to MLflow
 
-MLflow Assistant
-
-Need help setting up MLflow? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that can help you set up MLflow for your project.
+:::tip MLflow Assistant Need help setting up MLflow? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that can help you set up MLflow for your project. :::
 
 This guide shows you how to connect your development environment to an MLflow Experiment. You can run MLflow on your local machine, self-host the open source MLflow service, or use a managed offering, such as Databricks Managed MLflow.
 
@@ -52,7 +50,10 @@ python
 ```
 import mlflow
 
+
+
 mlflow.set_tracking_uri("sqlite:///mlflow.db")
+
 mlflow.set_experiment("my-first-experiment")
 ```
 
@@ -65,7 +66,10 @@ python
 ```
 import mlflow
 
+
+
 # Creates local mlruns directory for experiments
+
 mlflow.set_experiment("my-first-experiment")
 ```
 
@@ -82,8 +86,12 @@ python
 ```
 import mlflow
 
+
+
 # Connect to remote MLflow server
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("my-first-experiment")
 ```
 
@@ -93,6 +101,7 @@ bash
 
 ```
 export MLFLOW_TRACKING_URI="http://localhost:5000"
+
 export MLFLOW_EXPERIMENT_NAME="my-first-experiment"
 ```
 
@@ -107,13 +116,22 @@ python
 ```
 import mlflow
 
+
+
 # Print connection information
+
 print(f"MLflow Tracking URI: {mlflow.get_tracking_uri()}")
+
 print(f"Active Experiment: {mlflow.get_experiment_by_name('my-first-experiment')}")
 
+
+
 # Test logging
+
 with mlflow.start_run():
+
     mlflow.log_param("test_param", "test_value")
+
     print("✓ Successfully connected to MLflow!")
 ```
 
@@ -127,8 +145,11 @@ bash
 
 ```
 # For Option A
+
 mlflow server --backend-store-uri sqlite:///mlflow.db --port 5000
+
 # For Option B
+
 mlflow server --port 5000
 ```
 
@@ -175,8 +196,11 @@ bash
 
 ```
 export DATABRICKS_TOKEN=<databricks-personal-access-token>
+
 export DATABRICKS_HOST=https://<workspace-name>.cloud.databricks.com
+
 export MLFLOW_TRACKING_URI=databricks
+
 export MLFLOW_EXPERIMENT_ID=<experiment-id>
 ```
 
@@ -189,8 +213,11 @@ bash
 
 ```
 DATABRICKS_TOKEN=<databricks-personal-access-token>
+
 DATABRICKS_HOST=https://<workspace-name>.cloud.databricks.com
+
 MLFLOW_TRACKING_URI=databricks
+
 MLFLOW_EXPERIMENT_ID=<experiment-id>
 ```
 
@@ -208,9 +235,13 @@ python
 
 ```
 # At the beginning of your Python script
+
 from dotenv import load_dotenv
 
+
+
 # Load environment variables from .env file
+
 load_dotenv()
 ```
 
@@ -223,9 +254,14 @@ python
 ```
 import mlflow
 
+
+
 # Test logging to verify connection
+
 print(f"MLflow Tracking URI: {mlflow.get_tracking_uri()}")
+
 with mlflow.start_run():
+
     print("✓ Successfully connected to MLflow!")
 ```
 
@@ -237,6 +273,7 @@ bash
 
 ```
 %pip install --upgrade 'mlflow[databricks]>=3.1'
+
 dbutils.library.restartPython()
 ```
 
@@ -267,8 +304,13 @@ python
 ```
 import mlflow
 
+
+
 # Test logging to verify connection
+
 print(f"MLflow Tracking URI: {mlflow.get_tracking_uri()}")
+
 with mlflow.start_run():
+
     print("✓ Successfully connected to MLflow!")
 ```

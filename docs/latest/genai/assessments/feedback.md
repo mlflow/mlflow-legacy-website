@@ -39,19 +39,34 @@ python
 ```
 from mlflow.entities import AssessmentSource, AssessmentSourceType
 
+
+
 # Human expert providing evaluation
+
 human_source = AssessmentSource(
+
     source_type=AssessmentSourceType.HUMAN, source_id="expert@company.com"
+
 )
+
+
 
 # Automated rule-based evaluation
+
 code_source = AssessmentSource(
+
     source_type=AssessmentSourceType.CODE, source_id="accuracy_checker_v1"
+
 )
 
+
+
 # AI-powered evaluation at scale
+
 llm_judge_source = AssessmentSource(
+
     source_type=AssessmentSourceType.LLM_JUDGE, source_id="gpt-4-evaluator"
+
 )
 ```
 
@@ -120,12 +135,19 @@ python
 
 ```
 import json
+
 import mlflow
+
 from mlflow.entities import AssessmentSource, AssessmentError
+
 from mlflow.entities.assessment_source import AssessmentSourceType
+
 import openai  # or your preferred LLM client
 
+
+
 # Configure your LLM client
+
 client = openai.OpenAI(api_key="your-api-key")
 ```
 
@@ -135,18 +157,31 @@ python
 
 ```
 def create_evaluation_prompt(user_input, ai_response):
+
     return f"""
+
     Evaluate the AI response for helpfulness and accuracy.
 
+
+
     User Input: {user_input}
+
     AI Response: {ai_response}
 
+
+
     Rate the response on a scale of 0.0 to 1.0 for:
+
     1. Helpfulness: How well does it address the user's needs?
+
     2. Accuracy: Is the information factually correct?
 
+
+
     Respond with only a JSON object:
+
     {{"helpfulness": 0.0-1.0, "accuracy": 0.0-1.0, "rationale": "explanation"}}
+
     """
 ```
 
@@ -156,43 +191,81 @@ python
 
 ```
 def evaluate_with_llm_judge(trace_id, user_input, ai_response):
+
     try:
+
         # Get LLM evaluation
+
         response = client.chat.completions.create(
+
             model="gpt-4",
+
             messages=[
+
                 {
+
                     "role": "user",
+
                     "content": create_evaluation_prompt(user_input, ai_response),
+
                 }
+
             ],
+
             temperature=0.0,
+
         )
+
+
 
         # Parse the evaluation
 
+
+
         evaluation = json.loads(response.choices[0].message.content)
 
+
+
         # Log feedback to MLflow
+
         mlflow.log_feedback(
+
             trace_id=trace_id,
+
             name="llm_judge_evaluation",
+
             value=evaluation,
+
             rationale=evaluation.get("rationale", ""),
+
             source=AssessmentSource(
+
                 source_type=AssessmentSourceType.LLM_JUDGE, source_id="gpt-4-evaluator"
+
             ),
+
         )
 
+
+
     except Exception as e:
+
         # Log evaluation failure
+
         mlflow.log_feedback(
+
             trace_id=trace_id,
+
             name="llm_judge_evaluation",
+
             error=AssessmentError(error_code="EVALUATION_FAILED", error_message=str(e)),
+
             source=AssessmentSource(
+
                 source_type=AssessmentSourceType.LLM_JUDGE, source_id="gpt-4-evaluator"
+
             ),
+
         )
 ```
 
@@ -202,9 +275,14 @@ python
 
 ```
 # Example usage
+
 trace_id = "your-trace-id"
+
 user_question = "What is the capital of France?"
+
 ai_answer = "The capital of France is Paris."
+
+
 
 evaluate_with_llm_judge(trace_id, user_question, ai_answer)
 ```
@@ -217,34 +295,64 @@ python
 
 ```
 def evaluate_response_compliance(response_text):
+
     """Evaluate response against business rules."""
+
     results = {
+
         "has_disclaimer": False,
+
         "appropriate_length": False,
+
         "contains_prohibited_terms": False,
+
         "rationale": [],
+
     }
 
+
+
     # Check for required disclaimer
+
     if "This is not financial advice" in response_text:
+
         results["has_disclaimer"] = True
+
     else:
+
         results["rationale"].append("Missing required disclaimer")
 
+
+
     # Check response length
+
     if 50 <= len(response_text) <= 500:
+
         results["appropriate_length"] = True
+
     else:
+
         results["rationale"].append(
+
             f"Response length {len(response_text)} outside acceptable range"
+
         )
 
+
+
     # Check for prohibited terms
+
     prohibited_terms = ["guaranteed returns", "risk-free", "get rich quick"]
+
     found_terms = [term for term in prohibited_terms if term.lower() in response_text.lower()]
+
     if found_terms:
+
         results["contains_prohibited_terms"] = True
+
         results["rationale"].append(f"Contains prohibited terms: {found_terms}")
+
+
 
     return results
 ```
@@ -255,28 +363,51 @@ python
 
 ```
 def log_compliance_check(trace_id, response_text):
+
     # Run compliance evaluation
+
     evaluation = evaluate_response_compliance(response_text)
 
+
+
     # Calculate overall compliance score
+
     compliance_score = (
+
         sum([
+
             evaluation["has_disclaimer"],
+
             evaluation["appropriate_length"],
+
             not evaluation["contains_prohibited_terms"],
+
         ])
+
         / 3
+
     )
 
+
+
     # Log the feedback
+
     mlflow.log_feedback(
+
         trace_id=trace_id,
+
         name="compliance_check",
+
         value={"overall_score": compliance_score, "details": evaluation},
+
         rationale="; ".join(evaluation["rationale"]) or "All compliance checks passed",
+
         source=AssessmentSource(
+
             source_type=AssessmentSourceType.CODE, source_id="compliance_validator_v2.1"
+
         ),
+
     )
 ```
 
@@ -286,11 +417,17 @@ python
 
 ```
 # Example usage after your AI generates a response
+
 with mlflow.start_span(name="financial_advice") as span:
+
     ai_response = your_ai_model.generate(user_question)
+
     trace_id = span.trace_id
 
+
+
     # Run automated compliance check
+
     log_compliance_check(trace_id, ai_response)
 ```
 
@@ -306,12 +443,19 @@ python
 
 ```
 # Get a specific feedback by ID
+
 feedback = mlflow.get_assessment(trace_id="tr-1234567890abcdef", assessment_id="a-0987654321abcdef")
 
+
+
 # Access feedback details
+
 name = feedback.name
+
 value = feedback.value
+
 source_type = feedback.source.source_type
+
 rationale = feedback.rationale if hasattr(feedback, "rationale") else None
 ```
 
@@ -324,17 +468,30 @@ python
 ```
 from mlflow.entities import Feedback
 
+
+
 # Update feedback with new information
+
 updated_feedback = Feedback(
+
     name="response_quality",
+
     value=0.9,
+
     rationale="Updated after additional review - response is more comprehensive than initially evaluated",
+
 )
 
+
+
 mlflow.update_assessment(
+
     trace_id="tr-1234567890abcdef",
+
     assessment_id="a-0987654321abcdef",
+
     assessment=updated_feedback,
+
 )
 ```
 
@@ -346,6 +503,7 @@ python
 
 ```
 # Delete specific feedback
+
 mlflow.delete_assessment(trace_id="tr-1234567890abcdef", assessment_id="a-5555666677778888")
 ```
 
@@ -368,26 +526,47 @@ python
 
 ```
 # Step 1: Original automated feedback (logged earlier)
+
 llm_feedback = mlflow.log_feedback(
+
     trace_id="tr-1234567890abcdef",
+
     name="relevance",
+
     value=0.6,
+
     rationale="Response partially addresses the question",
+
     source=AssessmentSource(
+
         source_type=AssessmentSourceType.LLM_JUDGE, source_id="gpt-4-evaluator"
+
     ),
+
 )
 
+
+
 # Step 2: Human expert reviews and disagrees
+
 corrected_feedback = mlflow.override_feedback(
+
     trace_id="tr-1234567890abcdef",
+
     assessment_id=llm_feedback.assessment_id,
+
     value=0.9,
+
     rationale="Response fully addresses the question with comprehensive examples",
+
     source=AssessmentSource(
+
         source_type=AssessmentSourceType.HUMAN, source_id="expert_reviewer@company.com"
+
     ),
+
     metadata={"override_reason": "LLM underestimated relevance", "confidence": "high"},
+
 )
 ```
 
@@ -403,12 +582,19 @@ python
 
 ```
 # Good: Descriptive, specific names
+
 mlflow.log_feedback(trace_id=trace_id, name="response_accuracy", value=0.95)
+
 mlflow.log_feedback(trace_id=trace_id, name="sql_syntax_valid", value=True)
+
 mlflow.log_feedback(trace_id=trace_id, name="execution_time_ms", value=245)
 
+
+
 # Poor: Vague, inconsistent names
+
 mlflow.log_feedback(trace_id=trace_id, name="good", value=True)
+
 mlflow.log_feedback(trace_id=trace_id, name="score", value=0.95)
 ```
 
@@ -420,14 +606,23 @@ python
 
 ```
 # Excellent: Version-specific, environment-aware
+
 source = AssessmentSource(
+
     source_type=AssessmentSourceType.CODE, source_id="response_validator_v2.1_prod"
+
 )
 
+
+
 # Good: Individual attribution
+
 source = AssessmentSource(source_type=AssessmentSourceType.HUMAN, source_id="expert@company.com")
 
+
+
 # Poor: Generic, untraceable
+
 source = AssessmentSource(source_type=AssessmentSourceType.CODE, source_id="validator")
 ```
 
@@ -439,17 +634,29 @@ python
 
 ```
 mlflow.log_feedback(
+
     trace_id=trace_id,
+
     name="response_quality",
+
     value=0.85,
+
     source=human_source,
+
     metadata={
+
         "reviewer_expertise": "domain_expert",
+
         "review_duration_seconds": 45,
+
         "confidence": "high",
+
         "criteria_version": "v2.3",
+
         "evaluation_context": "production_review",
+
     },
+
 )
 ```
 

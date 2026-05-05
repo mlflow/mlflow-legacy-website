@@ -17,9 +17,11 @@ MLflow webhooks enable real-time notifications when specific events occur in the
 * **Multiple event types** including model/prompt creation, versioning, and tagging
 * **Built-in testing** to verify webhook connectivity
 
-Authorization
+:::note Authorization
 
 When [MLflow Authentication](/docs/latest/self-hosting/security/basic-http-auth.md) is enabled, all webhook operations (create, list, get, update, delete, and test) require **admin privileges**. Non-admin users will receive a `403 Forbidden` response when attempting to access webhook endpoints.
+
+:::
 
 ## Supported Events[​](#supported-events "Direct link to Supported Events")
 
@@ -52,16 +54,29 @@ python
 ```
 from mlflow import MlflowClient
 
+
+
 client = MlflowClient()
 
+
+
 # Create a webhook for model version creation events
+
 webhook = client.create_webhook(
+
     name="model-version-notifier",
+
     url="https://your-app.com/webhook",
+
     events=["model_version.created"],
+
     description="Notifies when new model versions are created",
+
     secret="your-secret-key",  # Optional: for HMAC signature verification
+
 )
+
+
 
 print(f"Created webhook: {webhook.webhook_id}")
 ```
@@ -74,13 +89,21 @@ python
 
 ```
 # Test the webhook with an example payload
+
 result = client.test_webhook(webhook.webhook_id)
 
+
+
 if result.success:
+
     print(f"Webhook test successful! Status code: {result.response_status}")
+
 else:
+
     print(f"Webhook test failed. Status: {result.response_status}")
+
     if result.error_message:
+
         print(f"Error: {result.error_message}")
 ```
 
@@ -90,6 +113,7 @@ python
 
 ```
 # Test with a specific event type
+
 result = client.test_webhook(webhook.webhook_id, event="model_version.created")
 ```
 
@@ -106,24 +130,43 @@ python
 
 ```
 # Create webhook with multiple events
+
 webhook = client.create_webhook(
+
     name="multi-event-webhook",
+
     url="https://your-domain.com/webhook",
+
     events=[
+
         "registered_model.created",
+
         "model_version.created",
+
         "model_version_tag.set",
+
     ],
+
     secret="your-secret-key",
+
 )
 
+
+
 # Test with first event (registered_model.created)
+
 result = client.test_webhook(webhook.webhook_id)
 
+
+
 # Test with specific event
+
 result = client.test_webhook(
+
     webhook.webhook_id,
+
     event=("model_version_tag.set"),
+
 )
 ```
 
@@ -137,13 +180,21 @@ python
 
 ```
 # List webhooks with pagination
+
 webhooks = client.list_webhooks(max_results=10)
+
 for webhook in webhooks:
+
     print(f"{webhook.name}: {webhook.url} (Status: {webhook.status})")
+
     print(f"  Events: {', '.join(webhook.events)}")
 
+
+
 # Continue to next page if available
+
 if webhooks.next_page_token:
+
     next_page = client.list_webhooks(max_results=10, page_token=webhooks.next_page_token)
 ```
 
@@ -153,16 +204,28 @@ python
 
 ```
 # Retrieve all webhooks across pages
+
 all_webhooks = []
+
 page_token = None
 
+
+
 while True:
+
     page = client.list_webhooks(max_results=100, page_token=page_token)
+
     all_webhooks.extend(page)
 
+
+
     if not page.next_page_token:
+
         break
+
     page_token = page.next_page_token
+
+
 
 print(f"Total webhooks: {len(all_webhooks)}")
 ```
@@ -175,10 +238,15 @@ python
 
 ```
 # Get a specific webhook by ID
+
 webhook = client.get_webhook(webhook_id)
+
 print(f"Name: {webhook.name}")
+
 print(f"URL: {webhook.url}")
+
 print(f"Status: {webhook.status}")
+
 print(f"Events: {webhook.events}")
 ```
 
@@ -190,14 +258,23 @@ python
 
 ```
 # Update webhook configuration
+
 client.update_webhook(
+
     # Unspecified fields will remain unchanged
+
     webhook_id=webhook.webhook_id,
+
     status="DISABLED",  # Temporarily disable the webhook
+
     events=[
+
         "model_version.created",
+
         "model_version_tag.set",
+
     ],
+
 )
 ```
 
@@ -209,6 +286,7 @@ python
 
 ```
 # Delete a webhook
+
 client.delete_webhook(webhook.webhook_id)
 ```
 
@@ -253,17 +331,29 @@ json
 
 ```
 {
+
   "entity": "model_version",
+
   "action": "created",
+
   "timestamp": "2025-07-31T08:27:32.080217+00:00",
+
   "data": {
+
     "name": "example_model",
+
     "version": "1",
+
     "source": "models:/123",
+
     "run_id": "abcd1234abcd5678",
+
     "tags": {"example_key": "example_value"},
+
     "description": "An example model version"
+
   }
+
 }
 ```
 
@@ -319,136 +409,268 @@ python
 
 ```
 from fastapi import FastAPI, Request, HTTPException, Header
+
 from typing import Optional
+
 import hmac
+
 import hashlib
+
 import base64
+
 import logging
+
 import time
 
+
+
 app = FastAPI()
+
 logger = logging.getLogger(__name__)
 
+
+
 # Your webhook secret (keep this secure!)
+
 WEBHOOK_SECRET = "your-secret-key"
 
+
+
 # Maximum allowed age for webhook timestamps (in seconds)
+
 MAX_TIMESTAMP_AGE = 300  # 5 minutes
 
 
+
+
+
 def verify_timestamp_freshness(timestamp_str: str, max_age: int = MAX_TIMESTAMP_AGE) -> bool:
+
     """Verify that the webhook timestamp is recent enough to prevent replay attacks"""
+
     try:
+
         webhook_timestamp = int(timestamp_str)
+
         current_timestamp = int(time.time())
+
         age = current_timestamp - webhook_timestamp
+
         return 0 <= age <= max_age
+
     except (ValueError, TypeError):
+
         return False
+
+
+
 
 
 def verify_mlflow_signature(
+
     payload: str, signature: str, secret: str, delivery_id: str, timestamp: str
+
 ) -> bool:
+
     """Verify the HMAC signature from MLflow webhook"""
+
     # Extract the base64 signature part (remove 'v1,' prefix)
+
     if not signature.startswith("v1,"):
+
         return False
 
+
+
     signature_b64 = signature.removeprefix("v1,")
+
     # Reconstruct the signed content: delivery_id.timestamp.payload
+
     signed_content = f"{delivery_id}.{timestamp}.{payload}"
+
     # Generate expected signature
+
     expected_signature = hmac.new(
+
         secret.encode("utf-8"), signed_content.encode("utf-8"), hashlib.sha256
+
     ).digest()
+
     expected_signature_b64 = base64.b64encode(expected_signature).decode("utf-8")
+
     return hmac.compare_digest(signature_b64, expected_signature_b64)
 
 
+
+
+
 @app.post("/webhook")
+
 async def handle_webhook(
+
     request: Request,
+
     x_mlflow_signature: Optional[str] = Header(None),
+
     x_mlflow_delivery_id: Optional[str] = Header(None),
+
     x_mlflow_timestamp: Optional[str] = Header(None),
+
 ):
+
     """Handle webhook with HMAC signature verification"""
 
+
+
     # Get raw payload for signature verification
+
     payload_bytes = await request.body()
+
     payload = payload_bytes.decode("utf-8")
 
+
+
     # Verify required headers are present
+
     if not x_mlflow_signature:
+
         raise HTTPException(status_code=400, detail="Missing signature header")
+
     if not x_mlflow_delivery_id:
+
         raise HTTPException(status_code=400, detail="Missing delivery ID header")
+
     if not x_mlflow_timestamp:
+
         raise HTTPException(status_code=400, detail="Missing timestamp header")
 
+
+
     # Verify timestamp freshness to prevent replay attacks
+
     if not verify_timestamp_freshness(x_mlflow_timestamp):
+
         raise HTTPException(
+
             status_code=400,
+
             detail="Timestamp is too old or invalid (possible replay attack)",
+
         )
 
+
+
     # Verify signature
+
     if not verify_mlflow_signature(
+
         payload,
+
         x_mlflow_signature,
+
         WEBHOOK_SECRET,
+
         x_mlflow_delivery_id,
+
         x_mlflow_timestamp,
+
     ):
+
         raise HTTPException(status_code=401, detail="Invalid signature")
 
+
+
     # Parse payload
+
     webhook_data = await request.json()
 
+
+
     # Extract webhook metadata
+
     entity = webhook_data.get("entity")
+
     action = webhook_data.get("action")
+
     timestamp = webhook_data.get("timestamp")
+
     payload_data = webhook_data.get("data", {})
 
+
+
     # Print the payload for debugging
+
     print(f"Received webhook: {entity}.{action}")
+
     print(f"Timestamp: {timestamp}")
+
     print(f"Delivery ID: {x_mlflow_delivery_id}")
+
     print(f"Payload: {payload_data}")
 
+
+
     # Add your webhook processing logic here
+
     # For example, handle different event types
+
     if entity == "model_version" and action == "created":
+
         model_name = payload_data.get("name")
+
         version = payload_data.get("version")
+
         print(f"New model version: {model_name} v{version}")
+
         # Add your model version processing logic here
+
     elif entity == "registered_model" and action == "created":
+
         model_name = payload_data.get("name")
+
         print(f"New registered model: {model_name}")
+
         # Add your registered model processing logic here
+
     elif entity == "model_version_tag" and action == "set":
+
         model_name = payload_data.get("name")
+
         version = payload_data.get("version")
+
         tag_key = payload_data.get("key")
+
         tag_value = payload_data.get("value")
+
         print(f"Tag set on {model_name} v{version}: {tag_key}={tag_value}")
+
         # Add your tag processing logic here
+
+
 
     return {"status": "success"}
 
 
+
+
+
 @app.get("/health")
+
 async def health():
+
     """Health check endpoint"""
+
     return {"status": "healthy"}
 
 
+
+
+
 if __name__ == "__main__":
+
     import uvicorn
+
+
 
     uvicorn.run(app, host="0.0.0.0", port=8000)
 ```
@@ -469,9 +691,13 @@ if __name__ == "__main__":
 
    ```
    # Generate a secure encryption key for webhook secrets
+
    export MLFLOW_WEBHOOK_SECRET_ENCRYPTION_KEY=$(python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())")
 
+
+
    # Start MLflow server with webhook support
+
    mlflow server --backend-store-uri sqlite:///mlflow.db
    ```
 
@@ -490,14 +716,24 @@ if __name__ == "__main__":
    ```
    from mlflow import MlflowClient
 
+
+
    client = MlflowClient("http://localhost:5000")
 
+
+
    # Create webhook with HMAC verification
+
    webhook = client.create_webhook(
+
        name="fastapi-receiver",
+
        url="https://your-domain.com/webhook",
+
        events=["model_version.created"],
+
        secret="your-secret-key",
+
    )
    ```
 
@@ -507,11 +743,17 @@ if __name__ == "__main__":
 
    ```
    # Test webhook connectivity
+
    result = client.test_webhook(webhook.webhook_id)
+
    print(f"Test result: {result.success}")
 
+
+
    # Create a model version to trigger the webhook
+
    client.create_registered_model("test-model")
+
    client.create_model_version(name="test-model", source="s3://bucket/model", run_id="abc123")
    ```
 

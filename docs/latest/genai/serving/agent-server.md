@@ -17,6 +17,7 @@ In this example, we'll use the openai-agents-sdk to define our Responses API com
 
    ```
    pip install -U openai-agents 'mlflow>=3.6.0'
+
    export OPENAI_API_KEY=sk-...
    ```
 
@@ -26,20 +27,37 @@ In this example, we'll use the openai-agents-sdk to define our Responses API com
 
    ```
    from agents import Agent, Runner
+
    from mlflow.genai.agent_server import invoke, stream
+
    from mlflow.types.responses import ResponsesAgentRequest, ResponsesAgentResponse
 
+
+
    agent = Agent(
+
        name="Math Tutor",
+
        instructions="You provide help with math problems. Explain your reasoning and include examples",
+
    )
 
 
+
+
+
    @invoke()
+
    async def non_streaming(request: ResponsesAgentRequest) -> ResponsesAgentResponse:
+
        msgs = [i.model_dump() for i in request.input]
+
        result = await Runner.run(agent, msgs)
+
        return ResponsesAgentResponse(output=[item.to_input_item() for item in result.new_items])
+
+
+
 
 
    # You can also optionally register a @stream function to support streaming responses
@@ -51,26 +69,47 @@ In this example, we'll use the openai-agents-sdk to define our Responses API com
 
    ```
    # Need to import the agent to register the functions with the server
+
    import agent  # noqa: F401
+
    from mlflow.genai.agent_server import (
+
        AgentServer,
+
        setup_mlflow_git_based_version_tracking,
+
    )
 
+
+
    agent_server = AgentServer("ResponsesAgent")
+
    app = agent_server.app
 
+
+
    # Optionally, set up MLflow git-based version tracking
+
    # to correspond your agent's traces to a specific git commit
+
    setup_mlflow_git_based_version_tracking()
 
 
+
+
+
    def main():
+
        # To support multiple workers, pass the app as an import string
+
        agent_server.run(app_import_string="start_server:app")
 
 
+
+
+
    if __name__ == "__main__":
+
        main()
    ```
 
@@ -82,9 +121,13 @@ bash
 
 ```
 python3 start_server.py --reload
+
 # Pass in a number of workers to support multiple concurrent requests
+
 # python3 start_server.py --workers 4
+
 # Pass in a port to run the server on
+
 # python3 start_server.py --reload --port 8000
 ```
 
@@ -94,7 +137,9 @@ bash
 
 ```
 curl -X POST http://localhost:8000/invocations \
+
    -H "Content-Type: application/json" \
+
    -d '{ "input": [{ "role": "user", "content": "What is the 14th Fibonacci number?"}]}'
 ```
 
@@ -106,10 +151,15 @@ bash
 
 ```
 curl -X POST http://localhost:8000/invocations \
+
    -H "Content-Type: application/json" \
+
    -d '{
+
     "input": [{ "role": "user", "content": "What is the 14th Fibonacci number?"}],
+
     "stream": true
+
     }'
 ```
 
@@ -124,34 +174,64 @@ You can use [`mlflow.genai.evaluate()`](/docs/latest/api_reference/python_api/ml
    ```
    import asyncio
 
+
+
    import mlflow
 
+
+
    # need to import agent for our @invoke-registered function to be found
+
    from agent import agent  # noqa: F401
+
    from mlflow.genai.agent_server import get_invoke_function
+
    from mlflow.genai.scorers import RelevanceToQuery, Safety
+
    from mlflow.types.responses import ResponsesAgentRequest, ResponsesAgentResponse
 
+
+
    eval_dataset = [
+
        {
+
            "inputs": {
+
                "request": {"input": [{"role": "user", "content": "What's the 15th Fibonacci number"}]}
+
            },
+
            "expected_response": "The 15th Fibonacci number is 610.",
+
        }
+
    ]
 
 
+
+
+
    def sync_invoke_fn(request: dict) -> ResponsesAgentResponse:
+
        # Get the invoke function that was registered via @invoke decorator in your agent
+
        invoke_fn = get_invoke_function()
+
        return asyncio.run(invoke_fn(ResponsesAgentRequest(**request)))
 
 
+
+
+
    mlflow.genai.evaluate(
+
        data=eval_dataset,
+
        predict_fn=sync_invoke_fn,
+
        scorers=[RelevanceToQuery(), Safety()],
+
    )
    ```
 

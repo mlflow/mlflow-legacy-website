@@ -57,13 +57,21 @@ json
 
 ```
 {
+
     "name": "hallucination",
+
     "value": false,
+
     "rationale": "The response is factual and does not contain any hallucinations.",
+
     "source": {
+
         "source_type": "HUMAN",
+
         "source_id": "john@example.com"
+
     }
+
 }
 ```
 
@@ -73,17 +81,29 @@ json
 
 ```
 {
+
     "name": "factual_accuracy",
+
     "value": 0.85,
+
     "rationale": "The response correctly identifies 3 out of 4 key facts about MLflow, but incorrectly states the founding year.",
+
     "source": {
+
         "source_type": "LLM_JUDGE",
+
         "source_id": "openai:/4o-mini"
+
     },
+
     "metadata": {
+
         # Store link to the prompt used for the judge, registered in MLflow Prompt Registry
+
         "judge_prompt": "prompts:factual_accuracy_judge/1"
+
     }
+
 }
 ```
 
@@ -93,16 +113,27 @@ json
 
 ```
 {
+
     "name": "safety",
+
     "error": {
+
         "error_code": "RATE_LIMIT_EXCEEDED",
+
         "error_message": "Rate limit for the judge exceeded.",
+
         "stack_trace": "..."
+
     },
+
     "source": {
+
         "source_type": "LLM_JUDGE",
+
         "source_id": "openai:/4o-mini"
+
     }
+
 }
 ```
 

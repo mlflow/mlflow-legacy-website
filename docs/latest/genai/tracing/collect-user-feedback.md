@@ -14,14 +14,23 @@ python
 
 ```
 import mlflow
+
 from mlflow.entities import AssessmentSource, AssessmentSourceType
 
+
+
 mlflow.log_feedback(
+
     trace_id="<your trace id>",
+
     name="user_satisfaction",
+
     value=True,
+
     rationale="User indicated response was helpful",
+
     source=AssessmentSource(source_type=AssessmentSourceType.HUMAN, source_id="user_123"),
+
 )
 ```
 
@@ -33,24 +42,43 @@ python
 
 ```
 import mlflow
+
 from mlflow.genai.judges import make_judge
+
 from typing import Literal
 
+
+
 coherence_judge = make_judge(
+
     name="coherence",
+
     instructions=(
+
         "Evaluate if the response is coherent, maintaining a constant tone "
+
         "and following a clear flow of thoughts/concepts"
+
         "Trace: {{ trace }}\n"
+
     ),
+
     feedback_value_type=Literal["coherent", "somewhat coherent", "incoherent"],
+
     model="anthropic:/claude-opus-4-1-20250805",
+
 )
 
+
+
 trace = mlflow.get_trace("<your trace id>")
+
 feedback = coherence_judge(trace=trace)
 
+
+
 mlflow.log_assessment(trace_id="<your trace id>", assessment=feedback)
+
 # Equivalent to log_feedback(trace_id="<trace_id>", name=feedback.name, value=feedback.value, ...)"
 ```
 

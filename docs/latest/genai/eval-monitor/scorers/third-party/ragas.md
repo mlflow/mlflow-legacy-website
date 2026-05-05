@@ -21,10 +21,16 @@ python
 ```
 from mlflow.genai.scorers.ragas import Faithfulness
 
+
+
 scorer = Faithfulness(model="openai:/gpt-4")
+
 feedback = scorer(trace=trace)
 
+
+
 print(feedback.value)  # Score between 0.0 and 1.0
+
 print(feedback.rationale)  # Explanation of the score
 ```
 
@@ -34,15 +40,25 @@ python
 
 ```
 import mlflow
+
 from mlflow.genai.scorers.ragas import Faithfulness, ContextPrecision
 
+
+
 traces = mlflow.search_traces()
+
 results = mlflow.genai.evaluate(
+
     data=traces,
+
     scorers=[
+
         Faithfulness(model="openai:/gpt-4"),
+
         ContextPrecision(model="openai:/gpt-4"),
+
     ],
+
 )
 ```
 
@@ -124,11 +140,19 @@ python
 ```
 from mlflow.genai.scorers.ragas import get_scorer
 
+
+
 # Create scorer by name
+
 scorer = get_scorer(
+
     metric_name="Faithfulness",
+
     model="openai:/gpt-4",
+
 )
+
+
 
 feedback = scorer(trace=trace)
 ```
@@ -142,10 +166,16 @@ python
 ```
 from mlflow.genai.scorers.ragas import Faithfulness, ContextPrecision, ExactMatch
 
+
+
 # LLM-based metric with model specification
+
 scorer = Faithfulness(model="openai:/gpt-4")
 
+
+
 # Non-LLM metric (no model required)
+
 deterministic_scorer = ExactMatch()
 ```
 

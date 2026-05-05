@@ -37,10 +37,15 @@ bash
 
 ```
 curl -X POST http://localhost:5000/gateway/my-endpoint/mlflow/invocations \
+
   -H "Content-Type: application/json" \
+
   -d '{
+
     "messages": [{"role": "user", "content": "Hello!"}],
+
     "temperature": 0.7
+
   }'
 ```
 
@@ -49,10 +54,16 @@ python
 ```
 import requests
 
+
+
 response = requests.post(
+
     "http://localhost:5000/gateway/my-endpoint/mlflow/invocations",
+
     json={"messages": [{"role": "user", "content": "Hello!"}], "temperature": 0.7},
+
 )
+
 print(response.json())
 ```
 
@@ -93,23 +104,41 @@ json
 
 ```
 {
+
   "id": "chatcmpl-123",
+
   "object": "chat.completion",
+
   "created": 1677652288,
+
   "model": "gpt-5",
+
   "choices": [{
+
     "index": 0,
+
     "message": {
+
       "role": "assistant",
+
       "content": "Hello! How can I assist you today?"
+
     },
+
     "finish_reason": "stop"
+
   }],
+
   "usage": {
+
     "prompt_tokens": 9,
+
     "completion_tokens": 12,
+
     "total_tokens": 21
+
   }
+
 }
 ```
 
@@ -122,7 +151,11 @@ text
 ```
 data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1677652288,"model":"gpt-5","choices":[{"index":0,"delta":{"content":"Hello"},"finish_reason":null}]}
 
+
+
 data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1677652288,"model":"gpt-5","choices":[{"index":0,"delta":{"content":"!"},"finish_reason":null}]}
+
+
 
 data: [DONE]
 ```
@@ -142,17 +175,29 @@ json
 
 ```
 {
+
   "object": "list",
+
   "data": [{
+
     "object": "embedding",
+
     "embedding": [0.0023064255, -0.009327292, ...],
+
     "index": 0
+
   }],
+
   "model": "text-embedding-ada-002",
+
   "usage": {
+
     "prompt_tokens": 8,
+
     "total_tokens": 8
+
   }
+
 }
 ```
 
@@ -169,11 +214,17 @@ bash
 
 ```
 curl -X POST http://localhost:5000/gateway/mlflow/v1/chat/completions \
+
   -H "Content-Type: application/json" \
+
   -d '{
+
     "model": "my-endpoint",
+
     "messages": [{"role": "user", "content": "Hello!"}],
+
     "temperature": 0.7
+
   }'
 ```
 
@@ -182,16 +233,28 @@ python
 ```
 from openai import OpenAI
 
+
+
 client = OpenAI(
+
     base_url="http://localhost:5000/gateway/mlflow/v1",
+
     api_key="",  # API key not needed, configured server-side
+
 )
 
+
+
 response = client.chat.completions.create(
+
     model="my-endpoint",
+
     messages=[{"role": "user", "content": "Hello!"}],
+
     temperature=0.7,
+
 )
+
 print(response.choices[0].message.content)
 ```
 
@@ -212,19 +275,33 @@ bash
 
 ```
 # Chat Completions API
+
 curl -X POST http://localhost:5000/gateway/openai/v1/chat/completions \
+
   -H "Content-Type: application/json" \
+
   -d '{
+
     "model": "my-endpoint",
+
     "messages": [{"role": "user", "content": "Hello!"}]
+
   }'
 
+
+
 # Responses API
+
 curl -X POST http://localhost:5000/gateway/openai/v1/responses \
+
   -H "Content-Type: application/json" \
+
   -d '{
+
     "model": "my-endpoint",
+
     "input": "Hello!"
+
   }'
 ```
 
@@ -233,22 +310,40 @@ python
 ```
 from openai import OpenAI
 
+
+
 client = OpenAI(
+
     base_url="http://localhost:5000/gateway/openai/v1",
+
     api_key="dummy",  # API key not needed, configured server-side
+
 )
+
+
 
 # Chat Completions API
+
 response = client.chat.completions.create(
+
     model="my-endpoint", messages=[{"role": "user", "content": "Hello!"}]
+
 )
+
 print(response.choices[0].message.content)
 
+
+
 # Responses API
+
 response = client.responses.create(
+
     model="my-endpoint",
+
     input="Hello!",
+
 )
+
 print(response.output_text)
 ```
 
@@ -263,11 +358,17 @@ bash
 
 ```
 curl -X POST http://localhost:5000/gateway/anthropic/v1/messages \
+
   -H "Content-Type: application/json" \
+
   -d '{
+
     "model": "my-endpoint",
+
     "max_tokens": 1024,
+
     "messages": [{"role": "user", "content": "Hello!"}]
+
   }'
 ```
 
@@ -276,16 +377,28 @@ python
 ```
 import anthropic
 
+
+
 client = anthropic.Anthropic(
+
     base_url="http://localhost:5000/gateway/anthropic",
+
     api_key="dummy",  # API key not needed, configured server-side
+
 )
 
+
+
 response = client.messages.create(
+
     model="my-endpoint",
+
     max_tokens=1024,
+
     messages=[{"role": "user", "content": "Hello!"}],
+
 )
+
 print(response.content[0].text)
 ```
 
@@ -300,11 +413,17 @@ bash
 
 ```
 curl -X POST http://localhost:5000/gateway/gemini/v1beta/models/my-endpoint:generateContent \
+
   -H "Content-Type: application/json" \
+
   -d '{
+
     "contents": [{
+
       "parts": [{"text": "Hello!"}]
+
     }]
+
   }'
 ```
 
@@ -313,18 +432,32 @@ python
 ```
 from google import genai
 
+
+
 client = genai.Client(
+
     api_key="dummy",
+
     http_options={
+
         "base_url": "http://localhost:5000/gateway/gemini",
+
     },
+
 )
 
+
+
 response = client.models.generate_content(
+
     model="my-endpoint",
+
     contents={"text": "Hello!"},
+
 )
+
 client.close()
+
 print(response.candidates[0].content.parts[0].text)
 ```
 
@@ -343,12 +476,20 @@ python
 ```
 from langchain_openai import ChatOpenAI
 
+
+
 llm = ChatOpenAI(
+
     model="my-endpoint",
+
     base_url="http://localhost:5000/gateway/mlflow/v1",
+
     api_key="not-needed",
+
 )
+
 response = llm.invoke("Hello!")
+
 print(response.content)
 ```
 
@@ -356,15 +497,25 @@ python
 
 ```
 from langchain_openai import ChatOpenAI
+
 from langgraph.prebuilt import create_react_agent
 
+
+
 llm = ChatOpenAI(
+
     model="my-endpoint",
+
     base_url="http://localhost:5000/gateway/mlflow/v1",
+
     api_key="not-needed",
+
 )
+
 graph = create_react_agent(llm, tools=[])
+
 result = graph.invoke({"messages": [{"role": "user", "content": "Hello!"}]})
+
 print(result["messages"][-1].content)
 ```
 
@@ -373,13 +524,22 @@ python
 ```
 import dspy
 
+
+
 lm = dspy.LM(
+
     model="openai/my-endpoint",
+
     api_base="http://localhost:5000/gateway/mlflow/v1",
+
     api_key="not-needed",
+
 )
+
 dspy.configure(lm=lm)
+
 program = dspy.Predict("question -> answer")
+
 print(program(question="What is MLflow?").answer)
 ```
 
@@ -387,16 +547,27 @@ python
 
 ```
 import openai
+
 from agents import Agent, Runner, set_default_openai_client
 
+
+
 client = openai.AsyncOpenAI(
+
     base_url="http://localhost:5000/gateway/openai/v1",
+
     api_key="not-needed",
+
 )
+
 set_default_openai_client(client)
 
+
+
 agent = Agent(name="Assistant", instructions="You are helpful.", model="my-endpoint")
+
 result = await Runner.run(agent, input="Hello!")
+
 print(result.final_output)
 ```
 
@@ -405,12 +576,20 @@ python
 ```
 import litellm
 
+
+
 response = litellm.completion(
+
     model="openai/my-endpoint",
+
     messages=[{"role": "user", "content": "Hello!"}],
+
     api_base="http://localhost:5000/gateway/mlflow/v1",
+
     api_key="not-needed",
+
 )
+
 print(response.choices[0].message.content)
 ```
 
@@ -430,12 +609,19 @@ bash
 
 ```
 # Query endpoint in a specific workspace
+
 curl -X POST http://localhost:5000/gateway/my-endpoint/mlflow/invocations \
+
   -H "Content-Type: application/json" \
+
   -H "X-MLFLOW-WORKSPACE: team-a" \
+
   -d '{
+
     "messages": [{"role": "user", "content": "Hello!"}],
+
     "temperature": 0.7
+
   }'
 ```
 
@@ -444,12 +630,20 @@ python
 ```
 import requests
 
+
+
 # Query endpoint in a specific workspace by including the header
+
 response = requests.post(
+
     "http://localhost:5000/gateway/my-endpoint/mlflow/invocations",
+
     json={"messages": [{"role": "user", "content": "Hello!"}], "temperature": 0.7},
+
     headers={"X-MLFLOW-WORKSPACE": "team-a"},
+
 )
+
 print(response.json())
 ```
 
@@ -458,18 +652,32 @@ python
 ```
 from openai import OpenAI
 
+
+
 # Create OpenAI client with workspace header
+
 # External SDKs like OpenAI must explicitly set the header via default_headers
+
 client = OpenAI(
+
     base_url="http://localhost:5000/gateway/mlflow/v1",
+
     api_key="",
+
     default_headers={"X-MLFLOW-WORKSPACE": "team-a"},
+
 )
 
+
+
 response = client.chat.completions.create(
+
     model="my-endpoint",
+
     messages=[{"role": "user", "content": "Hello!"}],
+
 )
+
 print(response.choices[0].message.content)
 ```
 
@@ -495,7 +703,10 @@ python
 ```
 from mlflow.genai.scorers import Correctness
 
+
+
 # Use a gateway endpoint for the Correctness judge
+
 scorer = Correctness(model="gateway:/my-chat-endpoint")
 ```
 
@@ -503,18 +714,31 @@ python
 
 ```
 from mlflow.genai.judges import make_judge
+
 from typing import Literal
 
+
+
 # Create a custom judge using a gateway endpoint
+
 coherence_judge = make_judge(
+
     name="coherence",
+
     instructions=(
+
         "Evaluate if the response is coherent and maintains a clear flow.\n"
+
         "Question: {{ inputs }}\n"
+
         "Response: {{ outputs }}\n"
+
     ),
+
     feedback_value_type=Literal["coherent", "somewhat coherent", "incoherent"],
+
     model="gateway:/my-chat-endpoint",
+
 )
 ```
 

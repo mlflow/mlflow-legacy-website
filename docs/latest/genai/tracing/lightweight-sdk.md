@@ -38,20 +38,36 @@ python
 
 ```
 import mlflow
+
 import openai
 
+
+
 # Set the tracking URI to your MLflow server
+
 mlflow.set_tracking_uri("http://your-mlflow-server:5000")
+
 mlflow.set_experiment("genai-production-monitoring")
 
+
+
 # Enable auto-tracing for OpenAI
+
 mlflow.openai.autolog()
 
+
+
 # Use OpenAI as usual - traces will be automatically logged
+
 client = openai.OpenAI()
+
 response = client.chat.completions.create(
+
     model="gpt-4o-mini", messages=[{"role": "user", "content": "What is MLflow?"}]
+
 )
+
+
 
 print(response.choices[0].message.content)
 ```
@@ -99,6 +115,7 @@ bash
 
 ```
 export OTEL_EXPORTER_OTLP_TRACES_ENDPOINT="http://your-collector:4317/v1/traces"
+
 export OTEL_SERVICE_NAME="genai-app"
 ```
 
@@ -167,51 +184,97 @@ python
 
 ```
 import mlflow
+
 import os
+
 from your_app import process_user_request
 
+
+
 # Configure MLflow for production
+
 mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI", "http://mlflow-server:5000"))
+
 mlflow.set_experiment(os.getenv("MLFLOW_EXPERIMENT_NAME", "production-genai-app"))
 
+
+
 # Enable automatic tracing for your LLM library
+
 mlflow.openai.autolog()  # or mlflow.langchain.autolog(), etc.
 
 
+
+
+
 @mlflow.trace
+
 def handle_user_request(user_id: str, session_id: str, message: str):
+
     """Production endpoint with comprehensive tracing."""
 
+
+
     # Add production context to trace
+
     mlflow.update_current_trace(
+
         tags={
+
             "user_id": user_id,
+
             "session_id": session_id,
+
             "environment": "production",
+
             "service_version": os.getenv("SERVICE_VERSION", "1.0.0"),
+
         }
+
     )
 
+
+
     try:
+
         # Your application logic here
+
         response = process_user_request(message)
 
+
+
         # Log success metrics
+
         mlflow.update_current_trace(
+
             tags={"response_length": len(response), "processing_successful": True}
+
         )
+
+
 
         return response
 
+
+
     except Exception as e:
+
         # Log error information
+
         mlflow.update_current_trace(
+
             tags={
+
                 "error": True,
+
                 "error_type": type(e).__name__,
+
                 "error_message": str(e),
+
             },
+
         )
+
         raise
 ```
 
@@ -239,9 +302,13 @@ bash
 
 ```
 # Remove full MLflow
+
 pip uninstall mlflow
 
+
+
 # Install Production Tracing SDK
+
 pip install mlflow-tracing
 ```
 
@@ -253,13 +320,21 @@ python
 
 ```
 # These imports work the same way
+
 import mlflow
+
 import mlflow.openai
+
 from mlflow.tracing import trace
 
+
+
 # These features are NOT available in mlflow-tracing:
+
 # import mlflow.sklearn  # ❌ Model logging
+
 # mlflow.start_run()     # ❌ Run management
+
 # mlflow.log_metric()    # ❌ Metric logging
 ```
 
@@ -271,14 +346,23 @@ python
 
 ```
 # Configure tracking URI (same as before)
+
 mlflow.set_tracking_uri("http://your-server:5000")
+
 mlflow.set_experiment("your-experiment")
 
 
+
+
+
 # Tracing works the same way
+
 @mlflow.trace
+
 def your_function():
+
     # Your code here
+
     pass
 ```
 

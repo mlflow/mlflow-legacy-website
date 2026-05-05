@@ -45,18 +45,31 @@ python
 
 ```
 from mlflow.genai.judges import make_judge
+
 from typing import Literal
 
+
+
 # Agent judge for tool calling correctness
+
 tool_usage_judge = make_judge(
+
     name="tool_usage_validator",
+
     instructions=(
+
         "Analyze the {{ trace }} to verify correct tool usage.\n\n"
+
         "Check that the agent selected appropriate tools for the user's request "
+
         "and called them with correct parameters."
+
     ),
+
     feedback_value_type=Literal["correct", "incorrect"],
+
     model="openai:/gpt-5-mini",  # Required for trace-based judges
+
 )
 ```
 
@@ -73,8 +86,12 @@ python
 ```
 from mlflow.genai.scorers import Correctness
 
+
+
 Correctness(model="openai:/gpt-4o-mini")
+
 Correctness(model="anthropic:/claude-4-opus")
+
 Correctness(model="google:/gemini-2.0-flash")
 ```
 

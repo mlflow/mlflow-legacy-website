@@ -26,51 +26,99 @@ python
 
 ```
 import mlflow
+
 import openai
+
 import os
 
+
+
 # Configure environment
+
 os.environ["OPENAI_API_KEY"] = "your-api-key-here"
+
 mlflow.set_experiment("Customer Support Bot")
 
+
+
 # Enable automatic tracing for OpenAI
+
 mlflow.openai.autolog()
 
 
+
+
+
 class CustomerSupportBot:
+
     def __init__(self):
+
         self.client = openai.OpenAI()
+
         self.knowledge_base = {
+
             "refund": "Full refunds within 30 days with receipt.",
+
             "shipping": "Standard: 5-7 days. Express available.",
+
             "warranty": "1-year manufacturer warranty included.",
+
         }
 
+
+
     @mlflow.trace
+
     def answer(self, question: str) -> str:
+
         # Retrieve relevant context
+
         context = self._get_context(question)
 
+
+
         # Generate response
+
         response = self.client.chat.completions.create(
+
             model="gpt-4o-mini",
+
             messages=[
+
                 {"role": "system", "content": "You are a helpful support assistant."},
+
                 {
+
                     "role": "user",
+
                     "content": f"Context: {context}\n\nQuestion: {question}",
+
                 },
+
             ],
+
             temperature=0.3,
+
         )
+
         return response.choices[0].message.content
 
+
+
     def _get_context(self, question: str) -> str:
+
         # Simple keyword matching for demo
+
         for key, value in self.knowledge_base.items():
+
             if key in question.lower():
+
                 return value
+
         return "General customer support information."
+
+
+
 
 
 bot = CustomerSupportBot()
@@ -84,15 +132,25 @@ python
 
 ```
 # Test scenarios
+
 test_questions = [
+
     "What is your refund policy?",
+
     "How long does shipping take?",
+
     "Is my product under warranty?",
+
     "Can I get express shipping?",
+
 ]
 
+
+
 # Capture traces - automatically logged to the active experiment
+
 for question in test_questions:
+
     response = bot.answer(question)
 ```
 
@@ -106,68 +164,121 @@ python
 
 ```
 # Search for recent traces (uses current active experiment by default)
+
 traces = mlflow.search_traces(
+
     max_results=10,
+
     return_type="list",  # Return list of Trace objects for iteration
+
 )
 
+
+
 # Add expectations to specific traces
+
 for trace in traces:
+
     # Get the question from the root span inputs
+
     root_span = trace.data._get_root_span()
+
     question = root_span.inputs.get("question", "") if root_span and root_span.inputs else ""
 
+
+
     if "refund" in question.lower():
+
         mlflow.log_expectation(
+
             trace_id=trace.info.trace_id,
+
             name="key_information",
+
             value={"must_mention": ["30 days", "receipt"], "tone": "helpful"},
+
         )
+
     elif "shipping" in question.lower():
+
         mlflow.log_expectation(
+
             trace_id=trace.info.trace_id,
+
             name="key_information",
+
             value={"must_mention": ["5-7 days"], "offers_express": True},
+
         )
 ```
 
 ## Step 4: Create an Evaluation Dataset[​](#step-4-create-an-evaluation-dataset "Direct link to Step 4: Create an Evaluation Dataset")
 
-Transform your annotated traces into a reusable evaluation dataset. Use [create\_dataset()](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.datasets.create_dataset) to initialize your dataset and [merge\_records()](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.EvaluationDataset.merge_records) to add test cases from multiple sources.
+Transform your annotated traces into a reusable evaluation dataset. Use [create\_dataset()](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.datasets.create_dataset) to initialize your dataset and [merge\_records()](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset.merge_records) to add test cases from multiple sources.
 
 python
 
 ```
 from mlflow.genai.datasets import create_dataset
 
+
+
 # Create dataset from current experiment
+
 dataset = create_dataset(
+
     name="customer_support_qa_v1",
+
     experiment_id=mlflow.get_experiment_by_name("Customer Support Bot").experiment_id,
+
     tags={"stage": "validation", "domain": "customer_support"},
+
 )
+
+
 
 # Re-fetch traces to get the attached expectations
+
 # The expectations are now part of the trace data
+
 annotated_traces = mlflow.search_traces(
+
     max_results=100,
+
     return_type="list",  # Need list for merge_records
+
 )
 
+
+
 # Add traces to dataset
+
 dataset.merge_records(annotated_traces)
 
+
+
 # Optionally add manual test cases
+
 manual_tests = [
+
     {
+
         "inputs": {"question": "Can I return an item after 45 days?"},
+
         "expectations": {"should_clarify": "30-day policy", "tone": "apologetic"},
+
     },
+
     {
+
         "inputs": {"question": "Do you ship internationally?"},
+
         "expectations": {"provides_alternatives": True},
+
     },
+
 ]
+
 dataset.merge_records(manual_tests)
 ```
 
@@ -179,41 +290,77 @@ python
 
 ```
 from mlflow.genai import evaluate
+
 from mlflow.genai.scorers import Correctness, Guidelines, scorer
 
 
+
+
+
 # Define custom scorer for your specific needs
+
 @scorer
+
 def contains_required_info(outputs: str, expectations: dict) -> float:
+
     """Check if response contains required information."""
+
     if "must_mention" not in expectations:
+
         return 1.0
 
+
+
     output_lower = outputs.lower()
+
     mentioned = [term for term in expectations["must_mention"] if term in output_lower]
+
     return len(mentioned) / len(expectations["must_mention"])
 
 
+
+
+
 # Configure evaluation
+
 scorers = [
+
     Correctness(name="factual_accuracy"),
+
     Guidelines(
+
         name="support_quality",
+
         guidelines="Response must be helpful, accurate, and professional",
+
     ),
+
     contains_required_info,
+
 ]
 
+
+
 # Run evaluation
+
 results = evaluate(
+
     data=dataset,
+
     predict_fn=bot.answer,
+
     scorers=scorers,
+
     model_id="customer-support-bot-v1",
+
 )
 
+
+
 # Access results
+
 metrics = results.metrics
+
 detailed_results = results.tables["eval_results_table"]
 ```
 
@@ -225,28 +372,51 @@ python
 
 ```
 # Analyze results
+
 low_scores = detailed_results[detailed_results["factual_accuracy/score"] < 0.8]
+
 if not low_scores.empty:
+
     # Identify patterns in failures
+
     failed_questions = low_scores["inputs.question"].tolist()
 
+
+
     # Example improvements based on failure analysis
+
     bot.knowledge_base["refund"] = (
+
         "Full refunds available within 30 days with original receipt. Store credit offered after 30 days."
+
     )
+
     bot.client.temperature = 0.2  # Reduce temperature for more consistent responses
 
+
+
     # Re-evaluate with same dataset for comparison
+
     improved_results = evaluate(
+
         data=dataset,
+
         predict_fn=bot.answer,  # Updated bot
+
         scorers=scorers,
+
         model_id="customer-support-bot-v2",
+
     )
 
+
+
     # Compare versions
+
     improvement = (
+
         improved_results.metrics["factual_accuracy/score"] - metrics["factual_accuracy/score"]
+
     )
 ```
 

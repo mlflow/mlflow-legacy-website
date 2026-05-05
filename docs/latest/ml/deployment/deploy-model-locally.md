@@ -79,23 +79,41 @@ python
 
 ```
 # Prerequisite: serve a custom pyfunc OpenAI model (not mlflow.openai) on localhost:5678
+
 #   that defines inputs in the below format and params of `temperature` and `max_tokens`
 
+
+
 import json
+
 import requests
 
+
+
 payload = json.dumps({
+
     "inputs": {"messages": [{"role": "user", "content": "Tell a joke!"}]},
+
     "params": {
+
         "temperature": 0.5,
+
         "max_tokens": 20,
+
     },
+
 })
+
 response = requests.post(
+
     url=f"http://localhost:5678/invocations",
+
     data=payload,
+
     headers={"Content-Type": "application/json"},
+
 )
+
 print(response.json())
 ```
 
@@ -105,9 +123,13 @@ bash
 
 ```
 curl http://127.0.0.1:5000/invocations -H 'Content-Type: application/json' -d '{
+
     "inputs": {"question": ["What color is it?"],
+
                 "context": ["Some people said it was green but I know that it is pink."]},
+
     "params": {"max_answer_len": 10}
+
 }'
 ```
 
@@ -123,8 +145,11 @@ If your payload is in a format that your mlflow served model will accept and it'
 | ------------------------ | ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------- |
 | OpenAI Chat              | [OpenAI chat request payload](https://platform.openai.com/docs/api-reference/chat/create)† | text```
 {
+
     "messages": [{"role": "user", "content": "Tell a joke!"}],  # noqa
+
     "temperature": 0.0,
+
 }
 ``` |
 
@@ -136,21 +161,37 @@ python
 
 ```
 # Prerequisite: serve a Pyfunc model accepts OpenAI-compatible chat requests on localhost:5678 that defines
+
 #   `temperature` and `max_tokens` as parameters within the logged model signature
 
+
+
 import json
+
 import requests
 
+
+
 payload = json.dumps({
+
     "messages": [{"role": "user", "content": "Tell a joke!"}],
+
     "temperature": 0.5,
+
     "max_tokens": 20,
+
 })
+
 requests.post(
+
     url=f"http://localhost:5678/invocations",
+
     data=payload,
+
     headers={"Content-Type": "application/json"},
+
 )
+
 print(requests.json())
 ```
 
@@ -168,23 +209,39 @@ bash
 
 ```
 # record-oriented DataFrame input with binary column "b"
+
 curl http://127.0.0.1:5000/invocations -H 'Content-Type: application/json' -d '[
+
     {"a": 0, "b": "dGVzdCBiaW5hcnkgZGF0YSAw"},
+
     {"a": 1, "b": "dGVzdCBiaW5hcnkgZGF0YSAx"},
+
     {"a": 2, "b": "dGVzdCBiaW5hcnkgZGF0YSAy"}
+
 ]'
 
+
+
 # record-oriented DataFrame input with datetime column "b"
+
 curl http://127.0.0.1:5000/invocations -H 'Content-Type: application/json' -d '[
+
     {"a": 0, "b": "2020-01-01T00:00:00Z"},
+
     {"a": 1, "b": "2020-02-01T12:34:56Z"},
+
     {"a": 2, "b": "2021-03-01T00:00:00Z"}
+
 ]'
 ```
 
 ## Serving Frameworks[​](#serving-frameworks "Direct link to Serving Frameworks")
 
 By default, MLflow uses [FastAPI](https://fastapi.tiangolo.com/), a modern ASGI web application framework for Python, to serve the inference endpoint. FastAPI handles requests asynchronously and is recognized as one of the fastest Python frameworks. This production-ready framework works well for most use cases. Additionally, MLflow also integrates with [MLServer](https://mlserver.readthedocs.io/en/latest) as an alternative serving engine. MLServer achieves higher performance and scalability by leveraging asynchronous request/response paradigm and workload offloading. Also MLServer is used as the core Python inference server in Kubernetes-native frameworks like [Seldon Core](https://docs.seldon.io/projects/seldon-core/en/latest) and [KServe (formerly known as KFServing)](https://kserve.github.io/website), hence which provides advanced features such as canary deployment and auto scaling out of the box.
+
+MLServer integration is deprecated
+
+The MLflow MLServer integration (`--enable-mlserver` / `enable_mlserver=True`) is deprecated and will be removed in **MLflow 3.13**. Seldon, the company that maintained MLServer, is in [liquidation](https://github.com/SeldonIO/MLServer/issues/2404#issuecomment-4210286631), and the [MLServer project is no longer actively maintained](https://github.com/SeldonIO/MLServer/commits/master/). Use the default FastAPI scoring server or deploy your model to a managed serving platform instead.
 
 |                 | ![](data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgd2lkdGg9IjQ1MS41MjMxNm1tIgogICBoZWlnaHQ9IjE2Mi44MjE5OW1tIgogICB2aWV3Qm94PSIwIDAgNDUxLjUyMzE2IDE2Mi44MjE5OCIKICAgdmVyc2lvbj0iMS4xIgogICBpZD0ic3ZnOCIKICAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIgogICB4bWxuczpzdmc9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIgogICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgIHhtbG5zOmNjPSJodHRwOi8vY3JlYXRpdmVjb21tb25zLm9yZy9ucyMiCiAgIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyI+CiAgPGRlZnMKICAgICBpZD0iZGVmczIiIC8+CiAgPG1ldGFkYXRhCiAgICAgaWQ9Im1ldGFkYXRhNSI+CiAgICA8cmRmOlJERj4KICAgICAgPGNjOldvcmsKICAgICAgICAgcmRmOmFib3V0PSIiPgogICAgICAgIDxkYzpmb3JtYXQ+aW1hZ2Uvc3ZnK3htbDwvZGM6Zm9ybWF0PgogICAgICAgIDxkYzp0eXBlCiAgICAgICAgICAgcmRmOnJlc291cmNlPSJodHRwOi8vcHVybC5vcmcvZGMvZGNtaXR5cGUvU3RpbGxJbWFnZSIgLz4KICAgICAgPC9jYzpXb3JrPgogICAgPC9yZGY6UkRGPgogIDwvbWV0YWRhdGE+CiAgPGcKICAgICBpZD0iZzIxMDYiCiAgICAgdHJhbnNmb3JtPSJtYXRyaXgoMC45NjU2NDI2NCwwLDAsMC45NjI1MTk4NywtODQ2LjgyOTksMjQ0LjI5MTE2KSI+CiAgICA8Y2lyY2xlCiAgICAgICBzdHlsZT0iZmlsbDojMDA5Njg4O2ZpbGwtb3BhY2l0eTowLjk4MDM5MjtzdHJva2U6bm9uZTtzdHJva2Utd2lkdGg6MC4xNDE0MDQ7c3RvcC1jb2xvcjojMDAwMDAwIgogICAgICAgaWQ9InBhdGg4NzUtNS05LTctMy0yLTMtOS05LTgtMC0wLTUtODctNyIKICAgICAgIGN4PSI5NjQuNTYxNjUiCiAgICAgICBjeT0iLTE2OS4yMjI2NiIKICAgICAgIHI9IjMzLjIzNDE5MiIgLz4KICAgIDxwYXRoCiAgICAgICBpZD0icmVjdDEyNDktNi0zLTQtNC0zLTYtNi0xLTIiCiAgICAgICBzdHlsZT0iZmlsbDojZmZmZmZmO2ZpbGwtb3BhY2l0eTowLjk4MDM5MjtzdHJva2U6bm9uZTtzdHJva2Utd2lkdGg6MC4xNDY4OTU7c3RvcC1jb2xvcjojMDAwMDAwIgogICAgICAgZD0ibSA5NjIuMjY4NSwtMTg3LjQwODM3IC02LjY0NDAzLDE0LjgwMzc1IC0zLjAzNTk5LDYuNzYzOTMgLTYuNjQ0NTYsMTQuODAzNzUgMzAuNTkxNDIsLTIxLjU2NzY4IGggLTE0LjM1MzEyIGwgMjAuOTk3MTUsLTE0LjgwMzc1IHoiIC8+CiAgPC9nPgogIDxwYXRoCiAgICAgc3R5bGU9ImZvbnQtc2l6ZTo3OS43MTUxcHg7bGluZS1oZWlnaHQ6MS4yNTtmb250LWZhbWlseTpVYnVudHU7LWlua3NjYXBlLWZvbnQtc3BlY2lmaWNhdGlvbjpVYnVudHU7bGV0dGVyLXNwYWNpbmc6MHB4O3dvcmQtc3BhY2luZzowcHg7ZmlsbDojMDA5Njg4O3N0cm9rZS13aWR0aDoxLjk5Mjg4IgogICAgIGQ9Ik0gMTQyLjAyMjYxLDEwOC44MzMwMyBWIDUzLjU5MDQ2NSBoIDMzLjMyMDkyIHYgNi42MTYzNTMgaCAtMjUuNTg4NTUgdiAxNi42NjA0NTcgaCAyMi43MTg4MSB2IDYuNTM2NjM4IGggLTIyLjcxODgxIHYgMjUuNDI5MTE3IHogbSA1Mi4yOTI5NywtNS4zNDA5MSBxIDIuNjMwNiwwIDQuNjIzNDgsLTAuMDc5NyAyLjA3MjU5LC0wLjE1OTQzIDMuNDI3NzQsLTAuNDc4MjkgViA5MC41NzgyNzMgcSAtMC43OTcxNSwtMC4zOTg1NzYgLTIuNjMwNTksLTAuNjM3NzIxIC0xLjc1Mzc0LC0wLjMxODg2IC00LjMwNDYyLC0wLjMxODg2IC0xLjY3NDAyLDAgLTMuNTg3MTgsMC4yMzkxNDUgLTEuODMzNDUsMC4yMzkxNDUgLTMuNDI3NzUsMS4wMzYyOTYgLTEuNTE0NTksMC43MTc0MzYgLTIuNTUwODgsMi4wNzI1OTMgLTEuMDM2MywxLjI3NTQ0MiAtMS4wMzYzLDMuNDI3NzQ5IDAsMy45ODU3NTUgMi41NTA4OSw1LjU4MDA1NSAyLjU1MDg4LDEuNTE0NTkgNi45MzUyMSwxLjUxNDU5IHogbSAtMC42Mzc3MiwtMzcuMTQ3MjM5IHEgNC40NjQwNCwwIDcuNDkzMjIsMS4xOTU3MjcgMy4xMDg4OSwxLjExNjAxMSA0Ljk0MjMzLDMuMjY4MzE5IDEuOTEzMTcsMi4wNzI1OTMgMi43MTAzMiw1LjAyMjA1MiAwLjc5NzE1LDIuODY5NzQzIDAuNzk3MTUsNi4zNzcyMDggViAxMDguMTE1NiBxIC0wLjk1NjU4LDAuMTU5NDMgLTIuNzEwMzEsMC40NzgyOSAtMS42NzQwMiwwLjIzOTE0IC0zLjgyNjMzLDAuNDc4MjkgLTIuMTUyMzEsMC4yMzkxNCAtNC43MDMxOSwwLjM5ODU3IC0yLjQ3MTE3LDAuMjM5MTUgLTQuOTQyMzQsMC4yMzkxNSAtMy41MDc0NiwwIC02LjQ1NjkyLC0wLjcxNzQ0IC0yLjk0OTQ2LC0wLjcxNzQzIC01LjEwMTc3LC0yLjIzMjAyIC0yLjE1MjMsLTEuNTk0MyAtMy4zNDgwMywtNC4xNDUxOSAtMS4xOTU3MywtMi41NTA4OCAtMS4xOTU3MywtNi4xMzgwNiAwLC0zLjQyNzc0OSAxLjM1NTE2LC01Ljg5ODkxNyAxLjQzNDg3LC0yLjQ3MTE2OCAzLjgyNjMyLC0zLjk4NTc1NSAyLjM5MTQ2LC0xLjUxNDU4NyA1LjU4MDA2LC0yLjIzMjAyMyAzLjE4ODYxLC0wLjcxNzQzNiA2LjY5NjA3LC0wLjcxNzQzNiAxLjExNjAxLDAgMi4zMTE3NCwwLjE1OTQzIDEuMTk1NzIsMC4wNzk3MiAyLjIzMjAyLDAuMzE4ODYgMS4xMTYwMSwwLjE1OTQzMSAxLjkxMzE2LDAuMzE4ODYxIDAuNzk3MTUsMC4xNTk0MyAxLjExNjAxLDAuMjM5MTQ1IHYgLTIuMDcyNTkzIHEgMCwtMS44MzM0NDcgLTAuMzk4NTcsLTMuNTg3MTc5IC0wLjM5ODU4LC0xLjgzMzQ0OCAtMS40MzQ4NywtMy4xODg2MDQgLTEuMDM2MywtMS40MzQ4NzIgLTIuODY5NzUsLTIuMjMyMDIzIC0xLjc1MzczLC0wLjg3Njg2NiAtNC42MjM0NywtMC44NzY4NjYgLTMuNjY2OSwwIC02LjQ1NjkzLDAuNTU4MDA1IC0yLjcxMDMxLDAuNDc4MjkxIC00LjA2NTQ3LDEuMDM2Mjk3IGwgLTAuODc2ODYsLTYuMTM4MDYzIHEgMS40MzQ4NywtMC42Mzc3MjEgNC43ODI5LC0xLjE5NTcyNyAzLjM0ODA0LC0wLjYzNzcyMSA3LjI1NDA4LC0wLjYzNzcyMSB6IG0gMzcuODY0NjIsMzcuMTQ3MjM5IHEgNC41NDM3NywwIDYuNjk2MDcsLTEuMTk1NzMgMi4yMzIwMywtMS4xOTU3MiAyLjIzMjAzLC0zLjgyNjMyMiAwLC0yLjcxMDMxNCAtMi4xNTIzMSwtNC4zMDQ2MTYgLTIuMTUyMzEsLTEuNTk0MzAyIC03LjA5NDY1LC0zLjU4NzE3OSAtMi4zOTE0NSwtMC45NTY1ODEgLTQuNjIzNDcsLTEuOTEzMTYzIC0yLjE1MjMxLC0xLjAzNjI5NiAtMy43NDY2MSwtMi4zOTE0NTMgLTEuNTk0MywtMS4zNTUxNTcgLTIuNTUwODgsLTMuMjY4MzE5IC0wLjk1NjU5LC0xLjkxMzE2MyAtMC45NTY1OSwtNC43MDMxOTEgMCwtNS41MDAzNDIgNC4wNjU0NywtOC42ODg5NDYgNC4wNjU0NywtMy4yNjgzMiAxMS4wODA0LC0zLjI2ODMyIDEuNzUzNzQsMCAzLjUwNzQ3LDAuMjM5MTQ2IDEuNzUzNzMsMC4xNTk0MyAzLjI2ODMyLDAuNDc4MjkgMS41MTQ1OCwwLjIzOTE0NiAyLjYzMDYsMC41NTgwMDYgMS4xOTU3MiwwLjMxODg2IDEuODMzNDQsMC41NTgwMDYgbCAtMS4zNTUxNSw2LjM3NzIwOCBxIC0xLjE5NTczLC0wLjYzNzcyMSAtMy43NDY2MSwtMS4yNzU0NDIgLTIuNTUwODksLTAuNzE3NDM2IC02LjEzODA3LC0wLjcxNzQzNiAtMy4xMDg4OSwwIC01LjQyMDYyLDEuMjc1NDQyIC0yLjMxMTc0LDEuMTk1NzI3IC0yLjMxMTc0LDMuODI2MzI1IDAsMS4zNTUxNTcgMC40NzgyOSwyLjM5MTQ1MyAwLjU1ODAxLDEuMDM2Mjk2IDEuNTk0MywxLjkxMzE2MyAxLjExNjAxLDAuNzk3MTUxIDIuNzEwMzEsMS41MTQ1ODcgMS41OTQzMSwwLjcxNzQzNiAzLjgyNjMzLDEuNTE0NTg3IDIuOTQ5NDYsMS4xMTYwMTEgNS4yNjEyLDIuMjMyMDIyIDIuMzExNzMsMS4wMzYyOTcgMy45MDYwNCwyLjQ3MTE2OSAxLjY3NDAxLDEuNDM0ODcxIDIuNTUwODgsMy41MDc0NjQgMC44NzY4NywxLjk5Mjg3OCAwLjg3Njg3LDQuOTQyMzM3IDAsNS43Mzk0ODIgLTQuMzA0NjIsOC42ODg5NDIgLTQuMjI0OSwyLjk0OTQ2IC0xMi4xMTY3LDIuOTQ5NDYgLTUuNTAwMzQsMCAtOC42MDkyMywtMC45NTY1OCAtMy4xMDg4OSwtMC44NzY4NiAtNC4yMjQ5LC0xLjM1NTE1IGwgMS4zNTUxNiwtNi4zNzcyMSBxIDEuMjc1NDQsMC40NzgyOSA0LjA2NTQ3LDEuNDM0ODcgMi43OTAwMywwLjk1NjU4IDcuNDEzNSwwLjk1NjU4IHogbSAzMi44NDI1NiwtMzYuMTEwOTQyIGggMTUuNzAzODcgdiA2LjIxNzc3OCBoIC0xNS43MDM4NyB2IDE5LjEzMTYyNSBxIDAsMy4xMDg4ODkgMC40NzgyOSw1LjE4MTQ4MSAwLjQ3ODI5LDEuOTkyODc4IDEuNDM0ODcsMy4xODg2MDggMC45NTY1OCwxLjExNjAxIDIuMzkxNDUsMS41OTQzIDEuNDM0ODcsMC40NzgyOSAzLjM0ODA0LDAuNDc4MjkgMy4zNDgwMywwIDUuMzQwOTEsLTAuNzE3NDQgMi4wNzI1OSwtMC43OTcxNSAyLjg2OTc0LC0xLjExNjAxIGwgMS40MzQ4Nyw2LjEzODA2IHEgLTEuMTE2MDEsMC41NTgwMSAtMy45MDYwNCwxLjM1NTE2IC0yLjc5MDAzLDAuODc2ODcgLTYuMzc3MjEsMC44NzY4NyAtNC4yMjQ5LDAgLTcuMDE0OTIsLTEuMDM2MyAtMi43MTAzMiwtMS4xMTYwMSAtNC4zODQzNCwtMy4yNjgzMiAtMS42NzQwMSwtMi4xNTIzMSAtMi4zOTE0NSwtNS4yNjEyIC0wLjYzNzcyLC0zLjE4ODU5OSAtMC42Mzc3MiwtNy4zMzM3ODQgViA1NS44MjI0ODggbCA3LjQxMzUxLC0xLjI3NTQ0MiB6IG0gNjIuNDk2NTIsNDEuNDUxODUyIHEgLTEuMzU1MTYsLTMuNTg3MTggLTIuNTUwODgsLTcuMDE0OTMgLTEuMTk1NzMsLTMuNTA3NDYyIC0yLjQ3MTE3LC03LjA5NDY0MiBoIC0yNS4wMzA1NCBsIC01LjAyMjA1LDE0LjEwOTU3MiBoIC04LjA1MTIzIHEgMy4xODg2MSwtOC43Njg2NiA1Ljk3ODYzLC0xNi4xODIxNjUgMi43OTAwMywtNy40OTMyMTkgNS40MjA2MywtMTQuMTg5Mjg4IDIuNzEwMzEsLTYuNjk2MDY5IDUuMzQwOTEsLTEyLjc1NDQxNiAyLjYzMDYsLTYuMTM4MDYzIDUuNTAwMzQsLTEyLjExNjY5NiBoIDcuMDk0NjUgcSAyLjg2OTc0LDUuOTc4NjMzIDUuNTAwMzQsMTIuMTE2Njk2IDIuNjMwNiw2LjA1ODM0NyA1LjI2MTIsMTIuNzU0NDE2IDIuNzEwMzEsNi42OTYwNjkgNS41MDAzNCwxNC4xODkyODggMi43OTAwMyw3LjQxMzUwNSA1Ljk3ODYzLDE2LjE4MjE2NSB6IG0gLTcuMjU0MDcsLTIwLjQ4Njc4IHEgLTIuNTUwODksLTYuOTM1MjE0IC01LjEwMTc3LC0xMy4zOTIxMzcgLTIuNDcxMTcsLTYuNTM2NjM5IC01LjE4MTQ4LC0xMi41MTUyNzIgLTIuNzkwMDMsNS45Nzg2MzMgLTUuMzQwOTEsMTIuNTE1MjcyIC0yLjQ3MTE3LDYuNDU2OTIzIC00Ljk0MjM0LDEzLjM5MjEzNyB6IG0gMzcuODY0NTMsLTM1LjMxMzc5MSBxIDExLjYzODQsMCAxNy44NTYxOCw0LjQ2NDA0NiA2LjI5NzQ5LDQuMzg0MzMxIDYuMjk3NDksMTMuMTUyOTkyIDAsNC43ODI5MDYgLTEuNzUzNzMsOC4yMTA2NTYgLTEuNjc0MDIsMy4zNDgwMzQgLTQuOTQyMzQsNS41MDAzNDIgLTMuMTg4NiwyLjA3MjU5MiAtNy44MTIwOCwzLjAyOTE3NCAtNC42MjM0NywwLjk1NjU4MSAtMTAuNDQyNjgsMC45NTY1ODEgaCAtNi4xMzgwNiB2IDIwLjQ4Njc4IGggLTcuNzMyMzYgViA1NC4zODc2MTYgcSAzLjI2ODMyLC0wLjc5NzE1MSA3LjI1NDA3LC0xLjAzNjI5NiA0LjA2NTQ3LC0wLjMxODg2MSA3LjQxMzUxLC0wLjMxODg2MSB6IG0gMC42Mzc3Miw2Ljc3NTc4NCBxIC00Ljk0MjM0LDAgLTcuNTcyOTQsMC4yMzkxNDUgdiAyMS42ODI1MDggaCA1LjgxOTIgcSAzLjk4NTc2LDAgNy4xNzQzNiwtMC40NzgyOSAzLjE4ODYxLC0wLjU1ODAwNiA1LjM0MDkyLC0xLjc1MzczMyAyLjIzMjAyLC0xLjI3NTQ0MSAzLjQyNzc0LC0zLjQyNzc0OSAxLjE5NTczLC0yLjE1MjMwOCAxLjE5NTczLC01LjUwMDM0MiAwLC0zLjE4ODYwNCAtMS4yNzU0NCwtNS4yNjExOTcgLTEuMTk1NzMsLTIuMDcyNTkzIC0zLjM0ODAzLC0zLjI2ODMxOSAtMi4wNzI2LC0xLjI3NTQ0MiAtNC44NjI2MywtMS43NTM3MzIgLTIuNzkwMDIsLTAuNDc4MjkxIC01Ljg5ODkxLC0wLjQ3ODI5MSB6IG0gMzMuMTYxNDYsLTYuMjE3Nzc4IGggNy43MzIzNyB2IDU1LjI0MjU2NSBoIC03LjczMjM3IHoiCiAgICAgaWQ9InRleHQ5NzktMSIKICAgICBhcmlhLWxhYmVsPSJGYXN0QVBJIiAvPgogIDxyZWN0CiAgICAgeT0iNy4xMDU0Mjc0ZS0xNSIKICAgICB4PSIwIgogICAgIGhlaWdodD0iMTYyLjgyMTk5IgogICAgIHdpZHRoPSI0NTEuNTIzMTYiCiAgICAgaWQ9InJlY3Q4MjQiCiAgICAgc3R5bGU9Im9wYWNpdHk6MC45ODAwMDAwNDtmaWxsOm5vbmU7ZmlsbC1vcGFjaXR5OjE7c3Ryb2tlLXdpZHRoOjAuMzExMDM2NTYiIC8+CiAgPGcKICAgICBpZD0ibGF5ZXIxIgogICAgIHRyYW5zZm9ybT0idHJhbnNsYXRlKDgzLjEzMTExNCwtNi4wNzkxMTQ4KSIgLz4KPC9zdmc+Cg==) | ![](/docs/latest/assets/images/seldon-mlserver-logo-1c6ba2f4aecdd4434e37221e5f4ceba4.png)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -221,8 +278,12 @@ python
 ```
 import mlflow
 
+
+
 model = mlflow.pyfunc.load_model("models:/<model_id>")
+
 predictions = model.predict(pd.read_csv("input.csv"))
+
 predictions.to_csv("output.csv")
 ```
 

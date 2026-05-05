@@ -31,15 +31,25 @@ json
 
 ```
 {
+
   "budget_policy_id": "bp-abc123",
+
   "budget_unit": "USD",
+
   "budget_amount": 500.0,
+
   "current_spend": 523.40,
+
   "duration_unit": "MONTHS",
+
   "duration_value": 1,
+
   "target_scope": "GLOBAL",
+
   "workspace": "default",
+
   "window_start": 1704067200000
+
 }
 ```
 
@@ -52,8 +62,12 @@ text
 ```
 HTTP/1.1 429 Too Many Requests
 
+
+
 {
+
   "detail": "Budget limit exceeded for policy 'bp-abc123'. Limit: $500.00 USD per 1 month. Request rejected."
+
 }
 ```
 
@@ -92,6 +106,7 @@ bash
 
 ```
 # No extra environment variables required
+
 mlflow server --host 0.0.0.0 --port 5000
 ```
 
@@ -116,6 +131,7 @@ bash
 
 ```
 export MLFLOW_GATEWAY_BUDGET_REDIS_URL=redis://localhost:6379/0
+
 mlflow server --host 0.0.0.0 --port 5000
 ```
 
@@ -127,5 +143,6 @@ bash
 
 ```
 export MLFLOW_GATEWAY_BUDGET_REFRESH_INTERVAL=30
+
 mlflow server --host 0.0.0.0 --port 5000
 ```
