@@ -34,6 +34,7 @@ bash
 
 ```
 export OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://localhost:5000/v1/traces
+
 export OTEL_EXPORTER_OTLP_TRACES_HEADERS=x-mlflow-experiment-id=123
 ```
 
@@ -49,30 +50,55 @@ kotlin
 
 ```
 import ai.koog.agents.core.agent.AIAgent
+
 import ai.koog.agents.features.opentelemetry.feature.OpenTelemetry
+
 import ai.koog.prompt.executor.clients.openai.OpenAIModels
+
 import ai.koog.prompt.executor.llms.all.simpleOpenAIExecutor
+
 import io.opentelemetry.exporter.otlp.http.trace.OtlpHttpSpanExporter
+
 import kotlinx.coroutines.runBlocking
 
+
+
 fun main() = runBlocking {
+
     val agent = AIAgent(
+
         promptExecutor = simpleOpenAIExecutor(System.getenv("OPENAI_API_KEY")),
+
         llmModel = OpenAIModels.Chat.GPT4oMini,
+
         systemPrompt = "You are a helpful assistant."
+
     ) {
+
         install(OpenTelemetry) {
+
             addSpanExporter(
+
                 OtlpHttpSpanExporter.builder()
+
                     .setEndpoint("http://localhost:5000/v1/traces")
+
                     .addHeader("x-mlflow-experiment-id", "0")
+
                     .build()
+
             )
+
         }
+
     }
 
+
+
     val result = agent.run("Tell me a joke about programming")
+
     println("Result: $result")
+
 }
 ```
 
@@ -98,15 +124,25 @@ kotlin
 
 ```
 install(OpenTelemetry) {
+
     setServiceInfo("koog-agent", "1.0.0")
+
     setVerbose(true)
 
+
+
     addSpanExporter(
+
         OtlpHttpSpanExporter.builder()
+
             .setEndpoint("http://localhost:5000/v1/traces")
+
             .addHeader("x-mlflow-experiment-id", "0")
+
             .build()
+
     )
+
 }
 ```
 

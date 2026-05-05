@@ -56,10 +56,15 @@ bash
 
 ```
 git clone --depth 1 --filter=blob:none --sparse https://github.com/mlflow/mlflow.git
+
 cd mlflow
+
 git sparse-checkout set docker-compose
+
 cd docker-compose
+
 cp .env.dev.example .env
+
 docker compose up -d
 ```
 
@@ -78,22 +83,39 @@ python
 
 ```
 import mlflow
+
 import google.generativeai as genai
+
 import os
 
+
+
 # Enable auto-tracing for Gemini
+
 mlflow.gemini.autolog()
 
+
+
 # Set a tracking URI and an experiment
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("Gemini")
 
+
+
 # Configure your API key
+
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
+
+
 # Use Gemini as usual - traces will be automatically captured
+
 model = genai.GenerativeModel("gemini-2.5-flash")
+
 response = model.generate_content("What is the capital of France?")
+
 print(response.text)
 ```
 
@@ -103,14 +125,23 @@ typescript
 
 ```
 import { GoogleGenerativeAI } from "@google/generative-ai";
+
 import { tracedGemini } from "@mlflow/gemini";
 
+
+
 // Wrap the Gemini client with the tracedGemini function
+
 const genAI = tracedGemini(new GoogleGenerativeAI(process.env.GOOGLE_API_KEY));
+
 const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
+
+
 // Invoke the client as usual
+
 const result = await model.generateContent("What is the capital of France?");
+
 console.log(result.response.text());
 ```
 
@@ -159,23 +190,41 @@ python
 
 ```
 import mlflow
+
 import google.genai as genai
+
 import os
 
+
+
 # Turn on auto tracing for Gemini
+
 mlflow.gemini.autolog()
 
+
+
 # Optional: Set a tracking URI and an experiment
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("Gemini")
 
 
+
+
+
 # Configure the SDK with your API key.
+
 client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
 
+
+
 # Use the generate_content method to generate responses to your prompts.
+
 response = client.models.generate_content(
+
     model="gemini-1.5-flash", contents="The opposite of hot is"
+
 )
 ```
 
@@ -183,13 +232,21 @@ typescript
 
 ```
 import { GoogleGenAI } from "@google/genai";
+
 import { tracedGemini } from "@mlflow/gemini";
+
+
 
 const client = tracedGemini(new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY }));
 
+
+
 const response = await client.models.generateContent({
+
     model: "gemini-2.5-flash",
+
     contents: "What is the capital of France?"
+
 });
 ```
 
@@ -202,12 +259,20 @@ python
 ```
 import mlflow
 
+
+
 mlflow.gemini.autolog()
 
+
+
 chat = client.chats.create(model="gemini-1.5-flash")
+
 response = chat.send_message("In one sentence, explain how a computer works to a young child.")
+
 print(response.text)
+
 response = chat.send_message("Okay, how about a more detailed explanation to a high schooler?")
+
 print(response.text)
 ```
 
@@ -222,11 +287,17 @@ python
 
 ```
 # Configure the SDK with your API key.
+
 client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
 
+
+
 # Async API is invoked through the `aio` namespace.
+
 response = await client.aio.models.generate_content(
+
     model="gemini-1.5-flash", contents="The opposite of hot is"
+
 )
 ```
 

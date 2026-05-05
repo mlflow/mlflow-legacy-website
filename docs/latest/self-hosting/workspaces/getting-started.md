@@ -11,13 +11,17 @@ Before enabling workspaces, ensure you have:
 * A configured `--default-artifact-root`
 * Database migrations applied via `mlflow db upgrade`
 
-File-based backends not supported
+:::warning File-based backends not supported
 
 Workspaces require a SQL database backend store. File-based tracking and model registry stores (for example `./mlruns` or `file:///...`) are not supported when workspaces are enabled.
 
-Custom experiment artifact locations are not supported
+:::
+
+:::warning Custom experiment artifact locations are not supported
 
 For security, experiments cannot override artifact locations when workspaces are enabled. Workspace stores can customize the artifact location at the workspace level.
+
+:::
 
 ## Step 1: Start MLflow with Workspaces Enabled[​](#step-1-start-mlflow-with-workspaces-enabled "Direct link to Step 1: Start MLflow with Workspaces Enabled")
 
@@ -27,8 +31,11 @@ bash
 
 ```
 mlflow server \
+
   --backend-store-uri postgresql://user:pass@localhost/mlflow \
+
   --default-artifact-root s3://mlflow-artifacts \
+
   --enable-workspaces
 ```
 
@@ -38,8 +45,11 @@ bash
 
 ```
 export MLFLOW_ENABLE_WORKSPACES=true
+
 mlflow server \
+
   --backend-store-uri postgresql://user:pass@localhost/mlflow \
+
   --default-artifact-root s3://mlflow-artifacts
 ```
 
@@ -58,15 +68,26 @@ python
 ```
 import mlflow
 
+
+
 mlflow.set_tracking_uri("http://localhost:5000")
 
+
+
 # Create a new workspace
+
 workspace = mlflow.create_workspace(
+
     name="team-a",
+
     description="Workspace for Team A machine learning projects",
+
     # Optional: override artifact root for this workspace
+
     default_artifact_root="s3://team-a-artifacts",
+
 )
+
 print(f"Created workspace: {workspace.name}")
 ```
 
@@ -76,11 +97,17 @@ bash
 
 ```
 curl -X POST http://localhost:5000/api/3.0/mlflow/workspaces \
+
   -H "Content-Type: application/json" \
+
   -d '{
+
     "name": "team-a",
+
     "description": "Workspace for Team A machine learning projects",
+
     "default_artifact_root": "s3://team-a-artifacts"
+
   }'
 ```
 
@@ -109,10 +136,15 @@ bash
 
 ```
 curl -X POST http://localhost:5000/api/3.0/mlflow/workspaces/team-a/permissions \
+
   -H "Content-Type: application/json" \
+
   -d '{
+
     "username": "alice",
+
     "permission": "MANAGE"
+
   }'
 ```
 
@@ -135,19 +167,35 @@ python
 ```
 import mlflow
 
+
+
 # Configure tracking URI
+
 mlflow.set_tracking_uri("http://localhost:5000")
 
+
+
 # Set active workspace
+
 mlflow.set_workspace("team-a")
 
+
+
 # Create experiment (automatically scoped to team-a)
+
 experiment_id = mlflow.create_experiment("my-experiment")
 
+
+
 # Start a run
+
 with mlflow.start_run(experiment_id=experiment_id):
+
     mlflow.log_param("learning_rate", 0.01)
+
     mlflow.log_metric("accuracy", 0.95)
+
+
 
 print(f"Logged run in workspace: {mlflow.get_workspace()}")
 ```
@@ -161,11 +209,18 @@ python
 ```
 import mlflow
 
+
+
 mlflow.set_tracking_uri("http://localhost:5000")
 
+
+
 # List all accessible workspaces
+
 workspaces = mlflow.list_workspaces()
+
 for workspace in workspaces:
+
     print(f"{workspace.name}: {workspace.description}")
 ```
 
@@ -178,9 +233,14 @@ python
 ```
 from mlflow import MlflowClient
 
+
+
 client = MlflowClient("http://localhost:5000")
+
 workspace = client.get_workspace("team-a")
+
 print(f"Workspace: {workspace.name}")
+
 print(f"Description: {workspace.description}")
 ```
 
@@ -191,21 +251,34 @@ python
 ```
 import mlflow
 
+
+
 mlflow.set_tracking_uri("http://localhost:5000")
 
+
+
 # Update workspace description
+
 updated = mlflow.update_workspace(
+
     name="team-a",
+
     description="Updated description for Team A",
+
     # Optional: update (or clear) the workspace artifact root override
+
     default_artifact_root="s3://team-a-artifacts",
+
 )
+
 print(f"Updated: {updated.name}")
 ```
 
-Workspace names are immutable
+:::note Workspace names are immutable
 
 Workspace names cannot be changed after creation. Only the description can be updated.
+
+:::
 
 ### Delete Workspace[​](#delete-workspace "Direct link to Delete Workspace")
 
@@ -216,9 +289,14 @@ python
 ```
 import mlflow
 
+
+
 mlflow.set_tracking_uri("http://localhost:5000")
 
+
+
 # Delete empty workspace
+
 mlflow.delete_workspace("team-a")
 ```
 
@@ -232,17 +310,29 @@ bash
 
 ```
 # List workspaces
+
 curl http://localhost:5000/api/3.0/mlflow/workspaces
 
+
+
 # Get workspace
+
 curl http://localhost:5000/api/3.0/mlflow/workspaces/team-a
 
+
+
 # Update workspace
+
 curl -X PATCH http://localhost:5000/api/3.0/mlflow/workspaces/team-a \
+
   -H "Content-Type: application/json" \
+
   -d '{"description": "Updated description"}'
 
+
+
 # Delete workspace
+
 curl -X DELETE http://localhost:5000/api/3.0/mlflow/workspaces/team-a
 ```
 
@@ -254,13 +344,21 @@ bash
 
 ```
 # Create experiment in team-a workspace
+
 curl -X POST http://localhost:5000/api/2.0/mlflow/experiments/create \
+
   -H "Content-Type: application/json" \
+
   -H "X-MLFLOW-WORKSPACE: team-a" \
+
   -d '{"name": "my-experiment"}'
 
+
+
 # List experiments in team-a workspace
+
 curl http://localhost:5000/api/2.0/mlflow/experiments/list \
+
   -H "X-MLFLOW-WORKSPACE: team-a"
 ```
 

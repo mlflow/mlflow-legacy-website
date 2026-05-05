@@ -35,6 +35,7 @@ bash
 
 ```
 export OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:5000
+
 export OTEL_EXPORTER_OTLP_HEADERS=x-mlflow-experiment-id=123
 ```
 
@@ -46,43 +47,81 @@ python
 
 ```
 # my_agent/agent.py
+
 from google.adk.agents import LlmAgent
+
 from google.adk.tools import FunctionTool
 
+
+
 from opentelemetry import trace
+
 from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
+
 from opentelemetry.sdk.trace import TracerProvider
+
 from opentelemetry.sdk.trace.export import SimpleSpanProcessor
 
+
+
 # Configure the tracer provider and add the exporter
+
 tracer_provider = TracerProvider()
+
 tracer_provider.add_span_processor(SimpleSpanProcessor(OTLPSpanExporter()))
+
 trace.set_tracer_provider(tracer_provider)
 
 
+
+
+
 def calculator(a: float, b: float) -> str:
+
     """Add two numbers and return the result.
 
+
+
     Args:
+
         a: First number
+
         b: Second number
 
+
+
     Returns:
+
         The sum of a and b
+
     """
+
     return str(a + b)
+
+
+
 
 
 calculator_tool = FunctionTool(func=calculator)
 
+
+
 root_agent = LlmAgent(
+
     name="MathAgent",
+
     model="gemini-2.0-flash-exp",
+
     instruction=(
+
         "You are a helpful assistant that can do math. "
+
         "When asked a math problem, use the calculator tool to solve it."
+
     ),
+
     tools=[calculator_tool],
+
 )
 ```
 
@@ -107,19 +146,34 @@ python
 ```
 import os
 
+
+
 os.environ["MLFLOW_USE_DEFAULT_TRACER_PROVIDER"] = "false"
 
+
+
 import mlflow
+
 from mlflow.entities.trace_location import MlflowExperimentLocation
 
+
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 exp_id = mlflow.set_experiment("Google ADK").experiment_id
+
 mlflow.tracing.set_destination(MlflowExperimentLocation(exp_id))
 
+
+
 # Add custom MLflow spans alongside the auto-generated ADK traces
+
 with mlflow.start_span("custom_step") as span:
+
     span.set_inputs({"query": "test"})
+
     # your application logic here
+
     span.set_outputs({"result": "success"})
 ```
 

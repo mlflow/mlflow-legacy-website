@@ -57,10 +57,15 @@ bash
 
 ```
 git clone --depth 1 --filter=blob:none --sparse https://github.com/mlflow/mlflow.git
+
 cd mlflow
+
 git sparse-checkout set docker-compose
+
 cd docker-compose
+
 cp .env.dev.example .env
+
 docker compose up -d
 ```
 
@@ -79,25 +84,45 @@ python
 
 ```
 import anthropic
+
 import mlflow
 
+
+
 # Enable auto-tracing for Anthropic
+
 mlflow.anthropic.autolog()
 
+
+
 # Set a tracking URI and an experiment
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("Anthropic")
 
+
+
 # Invoke the Anthropic model as usual.
+
 # Make sure your API key is set via the ANTHROPIC_API_KEY environment variable.
+
 client = anthropic.Anthropic()
 
+
+
 message = client.messages.create(
+
     model="claude-sonnet-4-5-2025092",
+
     max_tokens=512,
+
     messages=[
+
         {"role": "user", "content": "Hello, Claude"},
+
     ],
+
 )
 ```
 
@@ -107,18 +132,31 @@ typescript
 
 ```
 import Anthropic from "@anthropic-ai/sdk";
+
 import { tracedAnthropic } from "@mlflow/anthropic";
 
+
+
 // Wrap the Anthropic client with the tracedAnthropic function
+
 const client = tracedAnthropic(new Anthropic());
 
+
+
 // Invoke the client as usual
+
 const message = await client.messages.create({
+
   model: "claude-3-7-sonnet-20250219",
+
   max_tokens: 512,
+
   messages: [
+
     { role: "user", content: "Hello, Claude" },
+
   ],
+
 });
 ```
 
@@ -142,9 +180,7 @@ MLflow supports automatic tracing for the following Anthropic APIs:
 
 To request support for additional APIs, please open a [feature request](https://github.com/mlflow/mlflow/issues) on GitHub.
 
-Image Support in Anthropic Traces
-
-MLflow automatically captures images sent to Anthropic models and normalizes them to the standard trace format. See [Image and Audio (Multimodal) Content in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md) for examples.
+:::tip Image Support in Anthropic Traces MLflow automatically captures images sent to Anthropic models and normalizes them to the standard trace format. See [Multimodal Content and Attachments in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md) for examples. :::
 
 ## Async[​](#async "Direct link to Async")
 
@@ -158,17 +194,30 @@ python
 ```
 import anthropic
 
+
+
 # Enable trace logging
+
 mlflow.anthropic.autolog()
+
+
 
 client = anthropic.AsyncAnthropic()
 
+
+
 response = await client.messages.create(
+
     model="claude-3-5-sonnet-20241022",
+
     max_tokens=1024,
+
     messages=[
+
         {"role": "user", "content": "Hello, Claude"},
+
     ],
+
 )
 ```
 
@@ -184,89 +233,173 @@ python
 
 ```
 import json
+
 import anthropic
+
 import mlflow
+
 import asyncio
+
 from mlflow.entities import SpanType
 
+
+
 client = anthropic.AsyncAnthropic()
+
 model_name = "claude-sonnet-4-5-20250929"
 
 
+
+
+
 # Define the tool function. Decorate it with `@mlflow.trace` to create a span for its execution.
+
 @mlflow.trace(span_type=SpanType.TOOL)
+
 async def get_weather(city: str) -> str:
+
     if city == "Tokyo":
+
         return "sunny"
+
     elif city == "Paris":
+
         return "rainy"
+
     return "unknown"
 
 
+
+
+
 tools = [
+
     {
+
         "name": "get_weather",
+
         "description": "Returns the weather condition of a given city.",
+
         "input_schema": {
+
             "type": "object",
+
             "properties": {"city": {"type": "string"}},
+
             "required": ["city"],
+
         },
+
     }
+
 ]
+
+
 
 _tool_functions = {"get_weather": get_weather}
 
 
+
+
+
 # Define a simple tool calling agent
+
 @mlflow.trace(span_type=SpanType.AGENT)
+
 async def run_tool_agent(question: str):
+
     messages = [{"role": "user", "content": question}]
 
+
+
     # Invoke the model with the given question and available tools
+
     ai_msg = await client.messages.create(
+
         model=model_name,
+
         messages=messages,
+
         tools=tools,
+
         max_tokens=2048,
+
     )
+
     messages.append({"role": "assistant", "content": ai_msg.content})
 
+
+
     # If the model requests tool call(s), invoke the function with the specified arguments
+
     tool_calls = [c for c in ai_msg.content if c.type == "tool_use"]
+
     for tool_call in tool_calls:
+
         if tool_func := _tool_functions.get(tool_call.name):
+
             tool_result = await tool_func(**tool_call.input)
+
         else:
+
             raise RuntimeError("An invalid tool is returned from the assistant!")
 
+
+
         messages.append({
+
             "role": "user",
+
             "content": [
+
                 {
+
                     "type": "tool_result",
+
                     "tool_use_id": tool_call.id,
+
                     "content": tool_result,
+
                 }
+
             ],
+
         })
 
+
+
     # Send the tool results to the model and get a new response
+
     response = await client.messages.create(
+
         model=model_name,
+
         messages=messages,
+
         max_tokens=2048,
+
     )
+
+
 
     return response.content[-1].text
 
 
+
+
+
 # Run the tool calling agent
+
 cities = ["Tokyo", "Paris", "Sydney"]
+
 questions = [f"What's the weather like in {city} today?" for city in cities]
+
 answers = await asyncio.gather(*(run_tool_agent(q) for q in questions))
 
+
+
 for city, answer in zip(cities, answers):
+
     print(f"{city}: {answer}")
 ```
 

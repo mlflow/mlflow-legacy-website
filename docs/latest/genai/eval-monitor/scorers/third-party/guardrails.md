@@ -22,10 +22,17 @@ python
 ```
 from mlflow.genai.scorers.guardrails import ToxicLanguage
 
+
+
 scorer = ToxicLanguage(threshold=0.7)
+
 feedback = scorer(
+
     outputs="This is a professional and helpful response.",
+
 )
+
+
 
 print(feedback.value)  # "yes" or "no"
 ```
@@ -34,25 +41,45 @@ python
 
 ```
 import mlflow
+
 from mlflow.genai.scorers.guardrails import ToxicLanguage, DetectPII
 
+
+
 eval_dataset = [
+
     {
+
         "inputs": {"query": "What is MLflow?"},
+
         "outputs": "MLflow is an open-source AI engineering platform for agents and LLMs.",
+
     },
+
     {
+
         "inputs": {"query": "How do I contact support?"},
+
         "outputs": "You can reach us at support@example.com or call 555-0123.",
+
     },
+
 ]
 
+
+
 results = mlflow.genai.evaluate(
+
     data=eval_dataset,
+
     scorers=[
+
         ToxicLanguage(threshold=0.7),
+
         DetectPII(),
+
     ],
+
 )
 ```
 
@@ -80,14 +107,24 @@ python
 ```
 from mlflow.genai.scorers.guardrails import get_scorer
 
+
+
 # Create scorer by name
+
 scorer = get_scorer(
+
     validator_name="ToxicLanguage",
+
     threshold=0.7,
+
 )
 
+
+
 feedback = scorer(
+
     outputs="This is a professional response.",
+
 )
 ```
 
@@ -100,20 +137,36 @@ python
 ```
 from mlflow.genai.scorers.guardrails import ToxicLanguage, DetectPII, DetectJailbreak
 
+
+
 # Toxicity detection with custom threshold
+
 scorer = ToxicLanguage(
+
     threshold=0.7,  # Confidence threshold for detection
+
     validation_method="sentence",  # "sentence" or "full" text validation
+
 )
+
+
 
 # PII detection with custom entity types
+
 pii_scorer = DetectPII(
+
     pii_entities=["CREDIT_CARD", "SSN", "EMAIL_ADDRESS"],
+
 )
 
+
+
 # Jailbreak detection with custom sensitivity
+
 jailbreak_scorer = DetectJailbreak(
+
     threshold=0.9,  # Lower values are more sensitive
+
 )
 ```
 

@@ -88,9 +88,13 @@ json
 
 ```
 {
+
   "name": "factual_accuracy",
+
   "value": 0.85,
+
   "rationale": "The response correctly identifies 3 out of 4 key facts about MLflow, but incorrectly states the founding year."
+
 }
 ```
 
@@ -106,9 +110,13 @@ json
 
 ```
 {
+
   "name": "relevance_to_query",
+
   "value": "HIGH",
+
   "rationale": "Response directly answers the user's question about MLflow features and provides relevant examples."
+
 }
 ```
 
@@ -124,9 +132,13 @@ json
 
 ```
 {
+
   "name": "is_safe",
+
   "value": true,
+
   "rationale": "Content contains no harmful, toxic, or inappropriate material."
+
 }
 ```
 
@@ -142,9 +154,13 @@ json
 
 ```
 {
+
   "name": "helpfulness",
+
   "value": 4,
+
   "rationale": "Response provides clear, actionable information but could include more specific examples."
+
 }
 ```
 
@@ -224,13 +240,21 @@ json
 
 ```
 {
+
   "name": "comprehensive_quality",
+
   "value": {
+
     "overall_score": 0.85,
+
     "accuracy": 0.9,
+
     "fluency": 0.8,
+
     "confidence": 0.75
+
   }
+
 }
 ```
 

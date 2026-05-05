@@ -42,6 +42,8 @@ docker
 ```
 FROM ghcr.io/mlflow/mlflow:<mlflow-version>-full
 
+
+
 RUN pip install google-cloud-storage
 ```
 
@@ -55,6 +57,8 @@ bash
 
 ```
 docker build -t <google-docker-repository-path>/mlflow-gcp:v3.10.0 .
+
+
 
 docker push <google-docker-repository-path>/mlflow-gcp:v3.10.0
 ```

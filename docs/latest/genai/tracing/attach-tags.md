@@ -16,10 +16,19 @@ python
 import mlflow
 
 
+
+
+
 @mlflow.trace
+
 def my_func(x):
+
     mlflow.update_current_trace(tags={"fruit": "apple"})
+
     return x + 1
+
+
+
 
 
 result = my_func(5)
@@ -38,6 +47,8 @@ python
 ```
 import mlflow
 
+
+
 mlflow.set_trace_tag(trace_id="your-trace-id", key="tag_key", value="tag_value")
 ```
 
@@ -50,8 +61,12 @@ python
 ```
 import mlflow
 
+
+
 trace = mlflow.get_trace(trace_id="your-trace-id")
+
 print(trace.info.tags)
+
 # Output: {'tag_key': 'tag_value'}
 ```
 
@@ -63,6 +78,7 @@ python
 
 ```
 # Search for traces with tag 'environment' set to 'production'
+
 traces = mlflow.search_traces(filter_string="tags.environment = 'production'")
 ```
 
@@ -72,6 +88,7 @@ python
 
 ```
 # Search for traces with tag that contains the word 'mlflow'
+
 traces = mlflow.search_traces(filter_string="tags.topic LIKE '%mlflow%'")
 ```
 

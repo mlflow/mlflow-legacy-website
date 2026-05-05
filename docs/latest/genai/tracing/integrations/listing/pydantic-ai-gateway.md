@@ -6,9 +6,7 @@ Since Pydantic AI Gateway exposes OpenAI and Anthropic-compatible APIs, you can 
 
 ![Pydantic AI Gateway Tracing](/docs/latest/images/llms/pydantic-ai/pydanticai-gateway-tracing.png)
 
-Looking for PydanticAI Agent Framework?
-
-This guide covers tracing LLM calls through **Pydantic AI Gateway**. If you're building agents using the Pydantic AI framework directly, see the [PydanticAI Integration](/docs/latest/genai/tracing/integrations/listing/pydantic_ai.md) guide instead.
+:::tip Looking for PydanticAI Agent Framework? This guide covers tracing LLM calls through **Pydantic AI Gateway**. If you're building agents using the Pydantic AI framework directly, see the [PydanticAI Integration](/docs/latest/genai/tracing/integrations/listing/pydantic_ai.md) guide instead. :::
 
 ## Prerequisite[​](#prerequisite "Direct link to Prerequisite")
 
@@ -31,10 +29,15 @@ bash
 
 ```
 git clone --depth 1 --filter=blob:none --sparse https://github.com/mlflow/mlflow.git
+
 cd mlflow
+
 git sparse-checkout set docker-compose
+
 cd docker-compose
+
 cp .env.dev.example .env
+
 docker compose up -d
 ```
 
@@ -58,26 +61,47 @@ python
 
 ```
 import mlflow
+
 from openai import OpenAI
 
+
+
 # Enable auto-tracing for OpenAI
+
 mlflow.openai.autolog()
 
+
+
 # Set MLflow tracking URI and experiment
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("Pydantic AI Gateway")
 
+
+
 # Point OpenAI client to Pydantic AI Gateway
+
 client = OpenAI(
+
     base_url="https://gateway.pydantic.dev/proxy/chat/",
+
     api_key="<PYDANTIC_AI_GATEWAY_API_KEY>",
+
 )
 
+
+
 # Make API calls - traces will be captured automatically
+
 response = client.chat.completions.create(
+
     model="gpt-5",
+
     messages=[{"role": "user", "content": "Hello world"}],
+
 )
+
 print(response.choices[0].message.content)
 ```
 
@@ -87,27 +111,49 @@ python
 
 ```
 import mlflow
+
 import anthropic
 
+
+
 # Enable auto-tracing for Anthropic
+
 mlflow.anthropic.autolog()
 
+
+
 # Set tracking URI and experiment
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("Pydantic AI Gateway")
 
+
+
 # Point Anthropic client to Pydantic AI Gateway
+
 client = anthropic.Anthropic(
+
     base_url="https://gateway.pydantic.dev/proxy/chat/",
+
     api_key="<PYDANTIC_AI_GATEWAY_API_KEY>",
+
 )
 
+
+
 # Make API calls - traces will be captured automatically
+
 response = client.messages.create(
+
     max_tokens=1000,
+
     model="claude-sonnet-4-5",
+
     messages=[{"role": "user", "content": "Hello world"}],
+
 )
+
 print(response.content[0].text)
 ```
 
@@ -117,7 +163,9 @@ export
 
 ```
 PYDANTIC_AI_GATEWAY_API_KEY=your-pydantic-ai-gateway-api-key
+
 MLFLOW_TRACKING_URI=http://localhost:5000
+
 MLFLOW_EXPERIMENT_NAME=Pydantic AI Gateway
 ```
 
@@ -125,31 +173,57 @@ python
 
 ```
 import mlflow
+
 from pydantic_ai import Agent
 
+
+
 # Enable auto-tracing for PydanticAI
+
 mlflow.pydantic_ai.autolog()
 
+
+
 # Create an agent with the gateway model
+
 # Use the appropriate model identifier for your gateway configuration
+
 agent = Agent(
+
     "gateway/openai:gpt-4o",  # or your gateway model identifier
+
     system_prompt="You are a helpful assistant.",
+
     instrument=True,
+
 )
 
 
+
+
+
 # Run the agent - traces will be captured automatically
+
 async def main():
+
     result = await agent.run("What is the capital of France?")
+
     print(result.output)
 
 
+
+
+
 # If running in a notebook
+
 await main()
 
+
+
 # If running as a script
+
 # import asyncio
+
 # asyncio.run(main())
 ```
 

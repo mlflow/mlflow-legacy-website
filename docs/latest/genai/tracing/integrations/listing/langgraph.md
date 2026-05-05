@@ -14,6 +14,8 @@ python
 ```
 import mlflow
 
+
+
 mlflow.langchain.autolog()
 ```
 
@@ -45,11 +47,18 @@ python
 ```
 import mlflow
 
+
+
 # Calling autolog for LangChain will enable trace logging.
+
 mlflow.langchain.autolog()
 
+
+
 # Optional: Set a tracking URI and an experiment
+
 mlflow.set_experiment("LangChain")
+
 mlflow.set_tracking_uri("http://localhost:5000")
 ```
 
@@ -60,36 +69,68 @@ python
 ```
 from typing import Literal
 
+
+
 import mlflow
 
+
+
 from langchain_core.messages import AIMessage, ToolCall
+
 from langchain_core.outputs import ChatGeneration, ChatResult
+
 from langchain_core.tools import tool
+
 from langchain_openai import ChatOpenAI
+
 from langgraph.prebuilt import create_react_agent
 
+
+
 # Enabling tracing for LangGraph (LangChain)
+
 mlflow.langchain.autolog()
 
+
+
 # Optional: Set a tracking URI and an experiment
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("LangGraph")
 
 
+
+
+
 @tool
+
 def get_weather(city: Literal["nyc", "sf"]):
+
     """Use this to get weather information."""
+
     if city == "nyc":
+
         return "It might be cloudy in nyc"
+
     elif city == "sf":
+
         return "It's always sunny in sf"
 
 
+
+
+
 llm = ChatOpenAI(model="gpt-4o-mini")
+
 tools = [get_weather]
+
 graph = create_react_agent(llm, tools)
 
+
+
 # Invoke the graph
+
 result = graph.invoke({"messages": [{"role": "user", "content": "what is the weather in sf?"}]})
 ```
 
@@ -117,27 +158,49 @@ typescript
 
 ```
 import { NodeTracerProvider, SimpleSpanProcessor } from "@opentelemetry/sdk-trace-node";
+
 import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-proto";
+
 import { LangChainInstrumentation } from "@arizeai/openinference-instrumentation-langchain";
+
 import * as CallbackManagerModule from "@langchain/core/callbacks/manager";
 
+
+
 // Set up the OpenTelemetry
+
 const provider = new NodeTracerProvider(
+
   {
+
     spanProcessors: [new SimpleSpanProcessor(new OTLPTraceExporter({
+
       // Set MLflow tracking server URL with `/v1/traces` path. You can also use the OTEL_EXPORTER_OTLP_TRACES_ENDPOINT environment variable instead.
+
       url: "http://localhost:5000/v1/traces",
+
       // Set the experiment ID in the header. You can also use the OTEL_EXPORTER_OTLP_TRACES_HEADERS environment variable instead.
+
       headers: {
+
         "x-mlflow-experiment-id": "123",
+
       },
+
     }))],
+
   }
+
 );
+
 provider.register();
 
+
+
 // Enable LangChain instrumentation
+
 const lcInstrumentation = new LangChainInstrumentation();
+
 lcInstrumentation.manuallyInstrument(CallbackManagerModule);
 ```
 
@@ -163,55 +226,105 @@ python
 
 ```
 def code_check(state: GraphState):
+
     # State
+
     messages = state["messages"]
+
     code_solution = state["generation"]
+
     iterations = state["iterations"]
 
+
+
     # Get solution components
+
     imports = code_solution.imports
+
     code = code_solution.code
 
+
+
     # Check imports
+
     try:
+
         # Create a child span manually with mlflow.start_span() API
+
         with mlflow.start_span(name="import_check", span_type=SpanType.TOOL) as span:
+
             span.set_inputs(imports)
+
             exec(imports)
+
             span.set_outputs("ok")
+
     except Exception as e:
+
         error_message = [("user", f"Your solution failed the import test: {e}")]
+
         messages += error_message
+
         return {
+
             "generation": code_solution,
+
             "messages": messages,
+
             "iterations": iterations,
+
             "error": "yes",
+
         }
+
+
 
     # Check execution
+
     try:
+
         code = imports + "\n" + code
+
         with mlflow.start_span(name="execution_check", span_type=SpanType.TOOL) as span:
+
             span.set_inputs(code)
+
             exec(code)
+
             span.set_outputs("ok")
+
     except Exception as e:
+
         error_message = [("user", f"Your solution failed the code execution test: {e}")]
+
         messages += error_message
+
         return {
+
             "generation": code_solution,
+
             "messages": messages,
+
             "iterations": iterations,
+
             "error": "yes",
+
         }
 
+
+
     # No errors
+
     return {
+
         "generation": code_solution,
+
         "messages": messages,
+
         "iterations": iterations,
+
         "error": "no",
+
     }
 ```
 
@@ -219,9 +332,7 @@ This way, the span for the `check_code` node will have child spans, which record
 
 ![LangGraph Child Span](/docs/latest/assets/images/langgraph-child-span-076b0cb599aeabce965b36602d5fda82.png)
 
-Async Context Propagation
-
-When using async methods like `ainvoke()` with manual `@mlflow.trace` decorators inside LangGraph nodes or tools, enable inline tracer execution to ensure proper context propagation:
+:::info Async Context Propagation When using async methods like `ainvoke()` with manual `@mlflow.trace` decorators inside LangGraph nodes or tools, enable inline tracer execution to ensure proper context propagation:
 
 python
 
@@ -264,26 +375,47 @@ typescript
 
 ```
 import { init, withSpan } from "@mlflow/core";
+
 import { LangChainInstrumentation } from "@arizeai/openinference-instrumentation-langchain";
+
 import * as CallbackManagerModule from "@langchain/core/callbacks/manager";
 
+
+
 // Initialize MLflow SDK - sets up the OTel provider to capture all spans
+
 init({
+
   trackingUri: "http://localhost:5000",
+
   experimentId: "<your-experiment-id>",
+
 });
 
+
+
 // Enable LangChain instrumentation (also instruments LangGraph)
+
 const lcInstrumentation = new LangChainInstrumentation();
+
 lcInstrumentation.manuallyInstrument(CallbackManagerModule);
 
+
+
 // Add custom MLflow spans alongside the auto-generated LangGraph traces
+
 const result = await withSpan(
+
   { name: "custom_step", inputs: { query: "test" } },
+
   async (span) => {
+
     // your LangGraph application logic here
+
     return { result: "success" };
+
   }
+
 );
 ```
 

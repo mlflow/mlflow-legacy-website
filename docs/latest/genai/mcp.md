@@ -46,15 +46,25 @@ json
 
 ```
 {
+
   "servers": {
+
     "mlflow-mcp": {
+
       "command": "uv",
+
       "args": ["run", "--with", "mlflow[mcp]>=3.5.1", "mlflow", "mcp", "run"],
+
       "env": {
+
         "MLFLOW_TRACKING_URI": "<MLFLOW_TRACKING_URI>"
+
       }
+
     }
+
   }
+
 }
 ```
 
@@ -64,15 +74,25 @@ json
 
 ```
 {
+
   "mcpServers": {
+
     "mlflow-mcp": {
+
       "command": "uv",
+
       "args": ["run", "--with", "mlflow[mcp]>=3.5.1", "mlflow", "mcp", "run"],
+
       "env": {
+
         "MLFLOW_TRACKING_URI": "<MLFLOW_TRACKING_URI>"
+
       }
+
     }
+
   }
+
 }
 ```
 
@@ -82,6 +102,7 @@ bash
 
 ```
 claude mcp add mlflow-mcp -e MLFLOW_TRACKING_URI=<MLFLOW_TRACKING_URI> \
+
   -- uv run --with "mlflow[mcp]>=3.5.1" mlflow mcp run
 ```
 
@@ -91,15 +112,25 @@ json
 
 ```
 {
+
   "mcpServers": {
+
     "mlflow-mcp": {
+
       "command": "uv",
+
       "args": ["run", "--with", "mlflow[mcp]>=3.5.1", "mlflow", "mcp", "run"],
+
       "env": {
+
         "MLFLOW_TRACKING_URI": "<MLFLOW_TRACKING_URI>"
+
       }
+
     }
+
   }
+
 }
 ```
 
@@ -141,15 +172,25 @@ python
 
 ```
 # With search_traces
+
 search_traces(
+
     experiment_id="1",
+
     extract_fields="info.trace_id,info.state,data.spans.*.name",
+
 )
 
+
+
 # With get_trace
+
 get_trace(
+
     trace_id="tr-abc123",
+
     extract_fields="info.assessments.*,info.tags.*",
+
 )
 ```
 
@@ -187,18 +228,31 @@ bash
 
 ```
 # Get basic trace info
+
 info.trace_id,info.state,info.execution_duration
 
+
+
 # Get all assessments
+
 info.assessments.*
 
+
+
 # Get feedback values only
+
 info.assessments.*.feedback.value
 
+
+
 # Get span names
+
 data.spans.*.name
 
+
+
 # Get trace name (use backticks for dots in field names)
+
 info.tags.`mlflow.traceName`
 ```
 
@@ -212,6 +266,7 @@ text
 
 ```
 User: Find all failed traces in experiment 1 from the last hour
+
 Agent: Uses `search_traces` with `filter_string="status='ERROR' AND timestamp_ms > [recent_timestamp]"`
 ```
 
@@ -223,6 +278,7 @@ text
 
 ```
 User: Show me the slowest traces in experiment 2 with execution times over 5 seconds
+
 Agent: Uses `search_traces` with `filter_string="execution_time_ms > 5000"` and `order_by="execution_time_ms DESC"`
 ```
 
@@ -234,6 +290,7 @@ text
 
 ```
 User: Log a relevance score of 0.85 for trace tr-abc123 with rationale about accuracy
+
 Agent: Uses `log_feedback` with appropriate parameters
 ```
 
@@ -245,6 +302,7 @@ text
 
 ```
 User: Delete traces older than 30 days from experiment 1
+
 Agent: Uses `delete_traces` with timestamp-based filtering
 ```
 
@@ -277,6 +335,7 @@ bash
 
 ```
 # Enable only specific categories
+
 export MLFLOW_MCP_TOOLS="traces,scorers,experiments"
 ```
 
@@ -286,16 +345,27 @@ json
 
 ```
 {
+
   "mcpServers": {
+
     "mlflow-mcp": {
+
       "command": "uv",
+
       "args": ["run", "--with", "mlflow[mcp]>=3.5.1", "mlflow", "mcp", "run"],
+
       "env": {
+
         "MLFLOW_TRACKING_URI": "<MLFLOW_TRACKING_URI>",
+
         "MLFLOW_MCP_TOOLS": "all"
+
       }
+
     }
+
   }
+
 }
 ```
 

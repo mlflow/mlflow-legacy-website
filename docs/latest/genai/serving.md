@@ -31,12 +31,19 @@ bash
 
 ```
 # Serve a logged model
+
 mlflow models serve -m "models:/<model-id>" -p 5000
 
+
+
 # Serve a registered model
+
 mlflow models serve -m "models:/<model-name>/<model-version>" -p 5000
 
+
+
 # Serve a model from local path
+
 mlflow models serve -m ./path/to/model -p 5000
 ```
 
@@ -48,7 +55,9 @@ bash
 
 ```
 curl -X POST http://localhost:5000/invocations \
+
   -H "Content-Type: application/json" \
+
   -d '{"inputs": [[1, 2, 3, 4]]}'
 ```
 
@@ -58,20 +67,36 @@ python
 
 ```
 import requests
+
 import json
 
+
+
 data = {
+
     "dataframe_split": {
+
         "columns": ["feature1", "feature2", "feature3", "feature4"],
+
         "data": [[1, 2, 3, 4]],
+
     }
+
 }
 
+
+
 response = requests.post(
+
     "http://localhost:5000/invocations",
+
     headers={"Content-Type": "application/json"},
+
     data=json.dumps(data),
+
 )
+
+
 
 print(response.json())
 ```
@@ -115,9 +140,13 @@ python
 
 ```
 # For models that accept parameters
+
 raw_predictions = model.predict(data, params=params)
 
+
+
 # For traditional models
+
 raw_predictions = model.predict(data)
 ```
 
@@ -150,24 +179,43 @@ json
 
 ```
 // dataframe_split format
+
 {
+
   "dataframe_split": {
+
     "columns": ["feature1", "feature2", "feature3"],
+
     "data": [[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]]
+
   }
+
 }
+
+
 
 // dataframe_records format
+
 {
+
   "dataframe_records": [
+
     {"feature1": 1.0, "feature2": 2.0, "feature3": 3.0},
+
     {"feature1": 4.0, "feature2": 5.0, "feature3": 6.0}
+
   ]
+
 }
 
+
+
 // instances format (for simple models)
+
 {
+
   "instances": [[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]]
+
 }
 ```
 
@@ -190,21 +238,37 @@ python
 
 ```
 import mlflow
+
 from mlflow.models.signature import infer_signature
+
 from mlflow.tracking import MlflowClient
 
+
+
 # Log model with comprehensive serving metadata
+
 signature = infer_signature(X_train, model.predict(X_train))
+
 mlflow.sklearn.log_model(
+
     sk_model=model,
+
     name="my_model",
+
     signature=signature,
+
     registered_model_name="production_model",
+
     input_example=X_train[:5],  # Visible example for the MLflow UI
+
 )
 
+
+
 # Use aliases for production deployment
+
 client = MlflowClient()
+
 client.set_registered_model_alias(name="production_model", alias="production", version="1")
 ```
 
@@ -219,18 +283,31 @@ bash
 
 ```
 # Configure server for production workloads
+
 export MLFLOW_SCORING_SERVER_REQUEST_TIMEOUT=60
 
+
+
 # For uvicorn-based deployments (Docker):
+
 export MLFLOW_MODELS_WORKERS=4
 
+
+
 # For deployments that use gunicorn:
+
 export GUNICORN_CMD_ARGS="--timeout 60 --workers 4"
 
+
+
 # Serve with optimal settings
+
 mlflow models serve \
+
   --model-uri models:/my_model@production \
+
   --port 5000 \
+
   --env-manager local  # For production, use conda or virtualenv
 ```
 
@@ -245,49 +322,93 @@ python
 
 ```
 import joblib
+
 import mlflow
+
 import pandas as pd
+
 import numpy as np
+
 from typing import Dict, Any
 
 
+
+
+
 class EnsembleModel(mlflow.pyfunc.PythonModel):
+
     def load_context(self, context):
+
         """Load multiple models for ensemble prediction"""
+
         self.model_a = joblib.load(context.artifacts["model_a"])
+
         self.model_b = joblib.load(context.artifacts["model_b"])
+
         self.preprocessor = joblib.load(context.artifacts["preprocessor"])
+
         # Load ensemble weights from config
+
         self.weights = context.model_config.get("weights", [0.5, 0.5])
 
+
+
     def predict(self, model_input: pd.DataFrame) -> np.ndarray:
+
         """Combine predictions from multiple models"""
+
         # Preprocess input
+
         processed = self.preprocessor.transform(model_input)
 
+
+
         # Get predictions from both models
+
         pred_a = self.model_a.predict(processed)
+
         pred_b = self.model_b.predict(processed)
 
+
+
         # Weighted average ensemble
+
         ensemble_pred = self.weights[0] * pred_a + self.weights[1] * pred_b
+
+
 
         return ensemble_pred
 
 
+
+
+
 # Log ensemble model with artifacts
+
 artifacts = {
+
     "model_a": "path/to/model_a.pkl",
+
     "model_b": "path/to/model_b.pkl",
+
     "preprocessor": "path/to/preprocessor.pkl",
+
 }
 
+
+
 mlflow.pyfunc.log_model(
+
     name="ensemble_model",
+
     python_model=EnsembleModel(),
+
     artifacts=artifacts,
+
     model_config={"weights": [0.6, 0.4]},
+
     pip_requirements=["scikit-learn", "pandas", "numpy"],
+
 )
 ```
 
@@ -306,38 +427,71 @@ python
 
 ```
 import mlflow
+
 import mlflow.sklearn
+
 from sklearn.ensemble import RandomForestClassifier
+
 from sklearn.datasets import load_iris
+
 from sklearn.model_selection import train_test_split
+
 import pandas as pd
 
+
+
 # Load sample data
+
 iris = load_iris()
+
 X = iris.data
+
 y = iris.target
+
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
+
+
 # Enable sklearn autologging with model registration
+
 mlflow.sklearn.autolog(registered_model_name="iris_classifier")
 
+
+
 # Train model - MLflow automatically logs everything
+
 with mlflow.start_run() as run:
+
     model = RandomForestClassifier(n_estimators=10, random_state=42)
+
     model.fit(X_train, y_train)
 
+
+
     # Autologging automatically captures:
+
     # - Model artifacts
+
     # - Training parameters (n_estimators, random_state, etc.)
+
     # - Training metrics (score on training data)
+
     # - Model signature (inferred from training data)
+
     # - Input example
 
+
+
     # Optional: Log additional custom metrics
+
     accuracy = model.score(X_test, y_test)
+
     mlflow.log_metric("test_accuracy", accuracy)
 
+
+
     print(f"Run ID: {run.info.run_id}")
+
     print("Model automatically logged and registered!")
 ```
 
@@ -348,20 +502,36 @@ python
 ```
 from mlflow.tracking import MlflowClient
 
+
+
 client = MlflowClient()
 
+
+
 # Get the latest registered version (autologging creates version 1)
+
 model_version = client.get_registered_model("iris_classifier").latest_versions[0]
 
+
+
 # Set production alias (replaces deprecated stages)
+
 client.set_registered_model_alias(
+
     name="iris_classifier", alias="production", version=model_version.version
+
 )
+
+
 
 print(f"Model version {model_version.version} tagged as 'production'")
 
+
+
 # Model URI for serving (using alias)
+
 model_uri = "models:/iris_classifier@production"
+
 print(f"Production model URI: {model_uri}")
 ```
 
@@ -371,15 +541,25 @@ bash
 
 ```
 # Serve using model alias (MLflow 3.x way)
+
 mlflow models serve \
+
   --model-uri "models:/iris_classifier@production" \
+
   --port 5000 \
+
   --env-manager local
 
+
+
 # Server will start at http://localhost:5000
+
 # Available endpoints:
+
 # - POST /invocations (predictions)
+
 # - GET /ping (health check)
+
 # - GET /version (model info)
 ```
 
@@ -389,13 +569,21 @@ bash
 
 ```
 # Serve by specific version number
+
 mlflow models serve \
+
   --model-uri "models:/iris_classifier/1" \
+
   --port 5000
 
+
+
 # Serve from run URI
+
 mlflow models serve \
+
   --model-uri "runs:/<run-id>/model" \
+
   --port 5000
 ```
 
@@ -405,47 +593,89 @@ python
 
 ```
 import requests
+
 import json
+
 import pandas as pd
 
+
+
 # Prepare test data (same format as training)
+
 test_data = {
+
     "dataframe_split": {
+
         "columns": [
+
             "sepal length (cm)",
+
             "sepal width (cm)",
+
             "petal length (cm)",
+
             "petal width (cm)",
+
         ],
+
         "data": [
+
             [5.1, 3.5, 1.4, 0.2],  # setosa
+
             [6.2, 2.9, 4.3, 1.3],  # versicolor
+
             [7.3, 2.9, 6.3, 1.8],  # virginica
+
         ],
+
     }
+
 }
 
+
+
 # Make prediction request
+
 response = requests.post(
+
     "http://localhost:5000/invocations",
+
     headers={"Content-Type": "application/json"},
+
     data=json.dumps(test_data),
+
 )
 
+
+
 # Parse response
+
 if response.status_code == 200:
+
     predictions = response.json()
+
     print("Predictions:", predictions)
+
     # Output: {"predictions": [0, 1, 2]}
+
 else:
+
     print(f"Error: {response.status_code}, {response.text}")
 
+
+
 # Health check
+
 health = requests.get("http://localhost:5000/ping")
+
 print("Health status:", health.status_code)  # Should be 200
 
+
+
 # Model info
+
 info = requests.get("http://localhost:5000/version")
+
 print("Model version info:", info.json())
 ```
 
@@ -453,9 +683,7 @@ print("Model version info:", info.json())
 
 Ready to build more advanced serving applications? Explore these specialized topics:
 
-Get Started
-
-The examples in each section are designed to be practical and ready-to-use. Start with the Quick Start above, then explore the use cases that match your deployment needs.
+:::tip Get Started The examples in each section are designed to be practical and ready-to-use. Start with the Quick Start above, then explore the use cases that match your deployment needs. :::
 
 ### [Custom Applications](/docs/latest/genai/serving/custom-apps.md)
 

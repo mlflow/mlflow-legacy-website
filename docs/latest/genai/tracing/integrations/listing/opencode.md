@@ -38,7 +38,9 @@ json
 
 ```
 {
+
   "plugin": ["@mlflow/opencode"]
+
 }
 ```
 
@@ -52,6 +54,7 @@ bash
 
 ```
 MLFLOW_TRACKING_URI=http://localhost:5000
+
 MLFLOW_EXPERIMENT_ID=123456
 ```
 
@@ -61,6 +64,7 @@ bash
 
 ```
 export MLFLOW_TRACKING_URI=http://localhost:5000
+
 export MLFLOW_EXPERIMENT_ID=123456
 ```
 
@@ -88,6 +92,7 @@ bash
 
 ```
 # Run OpenCode normally - tracing happens automatically
+
 opencode
 ```
 
@@ -109,15 +114,25 @@ bash
 
 ```
 # Local MLflow server
+
 export MLFLOW_TRACKING_URI=http://localhost:5000
+
 export MLFLOW_EXPERIMENT_ID=0
 
+
+
 # Remote MLflow server
+
 export MLFLOW_TRACKING_URI=http://mlflow.example.com:5000
+
 export MLFLOW_EXPERIMENT_ID=123456
 
+
+
 # Databricks MLflow
+
 export MLFLOW_TRACKING_URI=databricks
+
 export MLFLOW_EXPERIMENT_ID=123456789
 ```
 
@@ -148,6 +163,7 @@ bash
 
 ```
 export MLFLOW_OPENCODE_DEBUG=true
+
 opencode
 ```
 
@@ -163,6 +179,7 @@ Debug output is written to stderr to avoid interfering with OpenCode's TUI.
 
    ```
    echo $MLFLOW_TRACKING_URI
+
    echo $MLFLOW_EXPERIMENT_ID
    ```
 
@@ -198,7 +215,9 @@ Debug output is written to stderr to avoid interfering with OpenCode's TUI.
 
    ```
    {
+
      "plugin": ["@mlflow/opencode"]
+
    }
    ```
 
@@ -214,7 +233,9 @@ json
 
 ```
 {
+
   "plugin": []
+
 }
 ```
 
@@ -224,6 +245,7 @@ bash
 
 ```
 unset MLFLOW_TRACKING_URI
+
 unset MLFLOW_EXPERIMENT_ID
 ```
 

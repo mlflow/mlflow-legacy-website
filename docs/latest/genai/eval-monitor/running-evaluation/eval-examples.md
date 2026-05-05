@@ -12,17 +12,29 @@ python
 
 ```
 import mlflow
+
 from mlflow.genai.scorers import Correctness, Safety
+
 from my_app import agent  # Your app with tracing
 
+
+
 # Load versioned evaluation dataset
+
 dataset = mlflow.genai.datasets.get_dataset(dataset_id="d-7f2e3a9b8c1d4e5f6a7b8c9d0e1f2a3b")
 
+
+
 # Run evaluation
+
 results = mlflow.genai.evaluate(
+
     data=dataset,
+
     predict_fn=agent,
+
     scorers=[Correctness(), Safety()],
+
 )
 ```
 
@@ -36,32 +48,59 @@ python
 
 ```
 import mlflow
+
 from mlflow.genai.scorers import Correctness, RelevanceToQuery
+
 from my_app import agent  # Your app with tracing
 
+
+
 # Define test data as a list of dictionaries
+
 eval_data = [
+
     {
+
         "inputs": {"question": "What is MLflow?"},
+
         "expectations": {"expected_facts": ["open-source", "AI engineering platform"]},
+
     },
+
     {
+
         "inputs": {"question": "How do I track experiments?"},
+
         "expectations": {"expected_facts": ["mlflow.start_run()", "log metrics", "log parameters"]},
+
     },
+
     {
+
         "inputs": {"question": "What does MLflow offer for agents and LLMs?"},
+
         "expectations": {
+
             "expected_facts": ["observability", "evaluation", "prompt management", "AI Gateway"]
+
         },
+
     },
+
 ]
 
+
+
 # Run evaluation
+
 results = mlflow.genai.evaluate(
+
     data=eval_data,
+
     predict_fn=agent,
+
     scorers=[Correctness(), RelevanceToQuery()],
+
 )
 ```
 
@@ -75,29 +114,53 @@ python
 
 ```
 import mlflow
+
 import pandas as pd
+
 from mlflow.genai.scorers import Correctness, Safety
+
 from my_app import agent  # Your app with tracing
 
+
+
 # Create evaluation data as a Pandas DataFrame
+
 eval_df = pd.DataFrame([
+
     {
+
         "inputs": {"question": "What is MLflow?"},
+
         "expectations": {
+
             "expected_response": "MLflow is an open-source AI engineering platform for agents and LLMs"
+
         },
+
     },
+
     {
+
         "inputs": {"question": "How do I log metrics?"},
+
         "expectations": {"expected_response": "Use mlflow.log_metric() to log metrics"},
+
     },
+
 ])
 
+
+
 # Run evaluation
+
 results = mlflow.genai.evaluate(
+
     data=eval_df,
+
     predict_fn=agent,
+
     scorers=[Correctness(), Safety()],
+
 )
 ```
 
@@ -111,17 +174,29 @@ python
 
 ```
 import mlflow
+
 from mlflow.genai.scorers import Safety, RelevanceToQuery
+
 from my_app import agent  # Your app with tracing
 
+
+
 # Load evaluation data from a Parquet file or any Spark-compatible source
+
 eval_df = spark.read.parquet("path/to/evaluation/data")
 
+
+
 # Run evaluation
+
 results = mlflow.genai.evaluate(
+
     data=eval_df,
+
     predict_fn=agent,
+
     scorers=[Safety(), RelevanceToQuery()],
+
 )
 ```
 
@@ -135,28 +210,51 @@ python
 
 ```
 import mlflow
+
 from mlflow.genai.scorers import RelevanceToQuery, Safety
 
 
+
+
+
 # Your app that accepts 'question' as a parameter
+
 @mlflow.trace
+
 def my_chatbot_app(question: str) -> dict:
+
     # Your app logic here
+
     response = f"I can help you with: {question}"
+
     return {"response": response}
 
 
+
+
+
 # Evaluation data with 'question' key matching the function parameter
+
 eval_data = [
+
     {"inputs": {"question": "What is MLflow?"}},
+
     {"inputs": {"question": "How do I track experiments?"}},
+
 ]
 
+
+
 # Pass your app directly since parameter names match
+
 results = mlflow.genai.evaluate(
+
     data=eval_data,
+
     predict_fn=my_chatbot_app,  # Direct reference, no wrapper needed
+
     scorers=[RelevanceToQuery(), Safety()],
+
 )
 ```
 
@@ -168,46 +266,87 @@ python
 
 ```
 import mlflow
+
 from mlflow.genai.scorers import RelevanceToQuery, Safety
 
 
+
+
+
 # Your existing app with different parameter names
+
 @mlflow.trace
+
 def customer_support_bot(user_message: str, chat_history: list = None) -> dict:
+
     # Your app logic here
+
     context = f"History: {chat_history}" if chat_history else "New conversation"
+
     return {
+
         "bot_response": f"Helping with: {user_message}. {context}",
+
         "confidence": 0.95,
+
     }
+
+
+
 
 
 # Wrapper function to translate evaluation data to your app's interface
+
 def evaluate_support_bot(question: str, history: str = None) -> dict:
+
     # Convert evaluation dataset format to your app's expected format
+
     chat_history = history.split("|") if history else []
 
+
+
     # Call your app with the translated parameters
+
     result = customer_support_bot(user_message=question, chat_history=chat_history)
 
+
+
     # Translate output to standard format if needed
+
     return {
+
         "response": result["bot_response"],
+
         "confidence_score": result["confidence"],
+
     }
 
 
+
+
+
 # Evaluation data with different key names
+
 eval_data = [
+
     {"inputs": {"question": "Reset password", "history": "logged in|forgot email"}},
+
     {"inputs": {"question": "Track my order"}},
+
 ]
 
+
+
 # Use the wrapper function for evaluation
+
 results = mlflow.genai.evaluate(
+
     data=eval_data,
+
     predict_fn=evaluate_support_bot,  # Wrapper handles translation
+
     scorers=[RelevanceToQuery(), Safety()],
+
 )
 ```
 
@@ -221,19 +360,34 @@ python
 
 ```
 import mlflow
+
 from mlflow.genai.scorers import Safety
 
+
+
 # Make sure to load your logged model outside of the predict_fn so MLflow only loads it once!
+
 model = mlflow.pyfunc.load_model("models:/chatbot/staging")
 
 
+
+
+
 def evaluate_model(question: str) -> dict:
+
     return model.predict({"question": question})
 
 
+
+
+
 results = mlflow.genai.evaluate(
+
     data=[{"inputs": {"question": "Tell me about MLflow"}}],
+
     predict_fn=evaluate_model,
+
     scorers=[Safety()],
+
 )
 ```

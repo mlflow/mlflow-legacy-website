@@ -25,40 +25,75 @@ python
 
 ```
 from mlflow.genai.judges import custom_prompt_judge
+
 from mlflow.genai.scorers import scorer
 
 
+
+
+
 issue_resolution_prompt = """
+
 Evaluate the entire conversation between a customer and an LLM-based agent. Determine if the issue was resolved in the conversation.
+
+
 
 You must choose one of the following categories.
 
+
+
 [[fully_resolved]]: The response directly and comprehensively addresses the user's question or problem, providing a clear solution or answer. No further immediate action seems required from the user on the same core issue.
+
 [[partially_resolved]]: The response offers some help or relevant information but doesn't completely solve the problem or answer the question. It might provide initial steps, require more information from the user, or address only a part of a multi-faceted query.
+
 [[needs_follow_up]]: The response does not adequately address the user's query, misunderstands the core issue, provides unhelpful or incorrect information, or inappropriately deflects the question. The user will likely need to re-engage or seek further assistance.
 
+
+
 Conversation to evaluate: {{conversation}}
+
 """
 
 
+
+
+
 # Define a custom scorer that wraps the custom prompt judge to check if the issue was resolved
+
 @scorer
+
 def is_issue_resolved(inputs, outputs):
+
     issue_judge = custom_prompt_judge(
+
         name="issue_resolution",
+
         prompt_template=issue_resolution_prompt,
+
         # Optionally map the categories to numeric values for ease
+
         # of aggregation and comparison. When not provided, the judge
+
         # directly returns the choice value as a string.
+
         numeric_values={
+
             "fully_resolved": 1,
+
             "partially_resolved": 0.5,
+
             "needs_follow_up": 0,
+
         },
+
     )
 
+
+
     # Pass values for the placeholders ({{conversation}}) as kwargs
+
     conversation = inputs["messages"] + outputs["messages"]
+
     return issue_judge(conversation=conversation)
 ```
 
@@ -69,9 +104,11 @@ The prompt template for the judge must have:
 * Placeholders for input values with **double curly braces**, e.g., `{{conversation}}`.
 * Choices for the judge to select from as output, enclosed in **square brackets**, e.g., `[[fully_resolved]]`. The choice name can contain alphanumeric characters and underscores.
 
-Handling Parsing Errors
+:::tip Handling Parsing Errors
 
 MLflow uses raw prompt-based instructions for handling structured outputs to make the API generic to all LLM providers. This may not be strict enough to enforce structured outputs in all cases. If you see output parsing errors frequently, consider using [code-based custom scorers](/docs/latest/genai/eval-monitor/scorers/custom.md) and invoke the specific structured output API for the LLM provider you are using to get more reliable results.
+
+:::
 
 ## Maintaining Your Prompt[​](#maintaining-your-prompt "Direct link to Maintaining Your Prompt")
 
@@ -82,9 +119,14 @@ python
 ```
 from mlflow.genai import register_prompt
 
+
+
 register_prompt(
+
     name="issue_resolution",
+
     template=issue_resolution_prompt,
+
 )
 ```
 
@@ -99,10 +141,16 @@ python
 ```
 from mlflow.genai.judges import custom_prompt_judge
 
+
+
 custom_prompt_judge(
+
     name="is_issue_resolved",
+
     prompt_template=issue_resolution_prompt,
+
     model="anthropic:/claude-3-opus",
+
 )
 ```
 

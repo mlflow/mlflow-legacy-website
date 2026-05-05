@@ -4,9 +4,7 @@
 
 [MLflow Tracing](/docs/latest/genai/tracing.md) provides automatic tracing capability for [VoltAgent](https://github.com/VoltAgent/voltagent), an open-source TypeScript framework for building AI agents. MLflow supports tracing for VoltAgent through the [OpenTelemetry](/docs/latest/genai/tracing/opentelemetry.md) integration.
 
-What is VoltAgent?
-
-VoltAgent is an open-source TypeScript framework that simplifies the development of AI agent applications by providing modular building blocks, standardized patterns, and abstractions. Whether you're creating chatbots, virtual assistants, automated workflows, or complex multi-agent systems, VoltAgent handles the underlying complexity, allowing you to focus on defining your agents' capabilities and logic.
+:::tip What is VoltAgent? VoltAgent is an open-source TypeScript framework that simplifies the development of AI agent applications by providing modular building blocks, standardized patterns, and abstractions. Whether you're creating chatbots, virtual assistants, automated workflows, or complex multi-agent systems, VoltAgent handles the underlying complexity, allowing you to focus on defining your agents' capabilities and logic. :::
 
 ## Step 1: Create a VoltAgent Project[​](#step-1-create-a-voltagent-project "Direct link to Step 1: Create a VoltAgent Project")
 
@@ -16,6 +14,7 @@ bash
 
 ```
 npm create voltagent-app@latest
+
 cd my-voltagent-app
 ```
 
@@ -43,13 +42,11 @@ bash
 npm install @opentelemetry/sdk-trace-base @opentelemetry/exporter-trace-otlp-proto dotenv
 ```
 
-MLflow Trace Translation
-
-MLflow automatically translates VoltAgent's semantic conventions for optimal UI visualization:
+:::note MLflow Trace Translation MLflow automatically translates VoltAgent's semantic conventions for optimal UI visualization:
 
 * **Chat UI**: Converts VoltAgent's message format to standard chat format with `role` and `content` fields for rich message display
 * **Token Usage**: Extracts token metrics (`usage.prompt_tokens`, `usage.completion_tokens`) and displays them in the trace summary
-* **Span Types**: Maps VoltAgent spans (agent, llm, tool, memory) to MLflow span types for proper iconography and filtering
+* **Span Types**: Maps VoltAgent spans (agent, llm, tool, memory) to MLflow span types for proper iconography and filtering :::
 
 ## Step 4: Configure OpenTelemetry[​](#step-4-configure-opentelemetry "Direct link to Step 4: Configure OpenTelemetry")
 
@@ -59,32 +56,59 @@ typescript
 
 ```
 import "dotenv/config";
+
 import { VoltAgent, Agent, VoltAgentObservability } from "@voltagent/core";
+
 import { openai } from "@ai-sdk/openai";
+
 import { BatchSpanProcessor } from "@opentelemetry/sdk-trace-base";
+
 import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-proto";
 
+
+
 // Configure the OTLP exporter to send traces to MLflow
+
 const mlflowExporter = new OTLPTraceExporter({
+
   url: `${process.env.MLFLOW_TRACKING_URI}/v1/traces`,
+
   headers: { "x-mlflow-experiment-id": process.env.MLFLOW_EXPERIMENT_ID ?? "0" },
+
 });
+
+
 
 // Create span processor and observability instance
+
 const mlflowSpanProcessor = new BatchSpanProcessor(mlflowExporter);
+
 const observability = new VoltAgentObservability({
+
   spanProcessors: [mlflowSpanProcessor],
+
 });
+
+
 
 const agent = new Agent({
+
   name: "my-voltagent-app",
+
   instructions: "A helpful assistant that answers questions",
+
   model: openai("gpt-4o-mini"),
+
 });
 
+
+
 new VoltAgent({
+
   agents: { agent },
+
   observability,
+
 });
 ```
 
@@ -94,7 +118,9 @@ bash
 
 ```
 OPENAI_API_KEY=your-api-key
+
 MLFLOW_TRACKING_URI=http://localhost:5000
+
 MLFLOW_EXPERIMENT_ID=0
 ```
 
@@ -127,19 +153,34 @@ typescript
 ```
 import { init, withSpan } from "@mlflow/core";
 
+
+
 // Initialize MLflow SDK - sets up the OTel provider to capture all spans
+
 init({
+
   trackingUri: "http://localhost:5000",
+
   experimentId: "<your-experiment-id>",
+
 });
 
+
+
 // Add custom MLflow spans alongside the auto-generated VoltAgent traces
+
 const result = await withSpan(
+
   { name: "custom_step", inputs: { query: "test" } },
+
   async (span) => {
+
     // your application logic here
+
     return { result: "success" };
+
   }
+
 );
 ```
 

@@ -47,10 +47,15 @@ bash
 
 ```
 git clone --depth 1 --filter=blob:none --sparse https://github.com/mlflow/mlflow.git
+
 cd mlflow
+
 git sparse-checkout set docker-compose
+
 cd docker-compose
+
 cp .env.dev.example .env
+
 docker compose up -d
 ```
 
@@ -66,33 +71,61 @@ python
 
 ```
 import boto3
+
 import mlflow
 
+
+
 # Enable auto-tracing for Amazon Bedrock
+
 mlflow.bedrock.autolog()
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("Bedrock")
 
+
+
 # Create a boto3 client for invoking the Bedrock API
+
 bedrock = boto3.client(
+
     service_name="bedrock-runtime",
+
     region_name="<REPLACE_WITH_YOUR_AWS_REGION>",
+
 )
 
+
+
 # Make a standard Bedrock call
+
 response = bedrock.converse(
+
     modelId="anthropic.claude-3-7-sonnet-20250219-v1:0",
+
     messages=[
+
         {
+
             "role": "user",
+
             "content": "Describe the purpose of a 'hello world' program in one line.",
+
         },
+
     ],
+
     inferenceConfig={
+
         "maxTokens": 512,
+
         "temperature": 0.1,
+
         "topP": 0.9,
+
     },
+
 )
 ```
 
@@ -151,21 +184,37 @@ python
 
 ```
 response = bedrock.converse_stream(
+
     modelId="anthropic.claude-3-5-sonnet-20241022-v2:0",
+
     messages=[
+
         {
+
             "role": "user",
+
             "content": [{"text": "Describe the purpose of a 'hello world' program in one line."}],
+
         }
+
     ],
+
     inferenceConfig={
+
         "maxTokens": 300,
+
         "temperature": 0.1,
+
         "topP": 0.9,
+
     },
+
 )
 
+
+
 for chunk in response["stream"]:
+
     print(chunk)
 ```
 
@@ -185,90 +234,175 @@ python
 
 ```
 import boto3
+
 import mlflow
+
 from mlflow.entities import SpanType
 
+
+
 # Enable auto-tracing for Amazon Bedrock
+
 mlflow.bedrock.autolog()
+
 mlflow.set_experiment("Bedrock")
+
 # Create a boto3 client for invoking the Bedrock API
+
 bedrock = boto3.client(
+
     service_name="bedrock-runtime",
+
     region_name="<REPLACE_WITH_YOUR_AWS_REGION>",
+
 )
+
 model_id = "anthropic.claude-3-5-sonnet-20241022-v2:0"
 
 
+
+
+
 # Define the tool function. Decorate it with `@mlflow.trace` to create a span for its execution.
+
 @mlflow.trace(span_type=SpanType.TOOL)
+
 def get_weather(city: str) -> str:
+
     """ "Get the current weather in a given location"""
+
     return "sunny" if city == "San Francisco, CA" else "unknown"
 
 
+
+
+
 # Define the tool configuration passed to Bedrock
+
 tools = [
+
     {
+
         "toolSpec": {
+
             "name": "get_weather",
+
             "description": "Get the current weather in a given location",
+
             "inputSchema": {
+
                 "json": {
+
                     "type": "object",
+
                     "properties": {
+
                         "city": {
+
                             "type": "string",
+
                             "description": "The city and state, e.g., San Francisco, CA",
+
                         },
+
                     },
+
                     "required": ["city"],
+
                 }
+
             },
+
         }
+
     }
+
 ]
+
 tool_functions = {"get_weather": get_weather}
 
 
+
+
+
 # Define a simple tool calling agent
+
 @mlflow.trace(span_type=SpanType.AGENT)
+
 def run_tool_agent(question: str) -> str:
+
     messages = [{"role": "user", "content": [{"text": question}]}]
+
     # Invoke the model with the given question and available tools
+
     response = bedrock.converse(
+
         modelId=model_id,
+
         messages=messages,
+
         toolConfig={"tools": tools},
+
     )
+
     assistant_message = response["output"]["message"]
+
     messages.append(assistant_message)
+
     # If the model requests tool call(s), invoke the function with the specified arguments
+
     tool_use = next((c["toolUse"] for c in assistant_message["content"] if "toolUse" in c), None)
+
     if tool_use:
+
         tool_func = tool_functions[tool_use["name"]]
+
         tool_result = tool_func(**tool_use["input"])
+
         messages.append({
+
             "role": "user",
+
             "content": [
+
                 {
+
                     "toolResult": {
+
                         "toolUseId": tool_use["toolUseId"],
+
                         "content": [{"text": tool_result}],
+
                     }
+
                 }
+
             ],
+
         })
+
         # Send the tool results to the model and get a new response
+
         response = bedrock.converse(
+
             modelId=model_id,
+
             messages=messages,
+
             toolConfig={"tools": tools},
+
         )
+
     return response["output"]["message"]["content"][0]["text"]
 
 
+
+
+
 # Run the tool calling agent
+
 question = "What's the weather like in San Francisco today?"
+
 answer = run_tool_agent(question)
 ```
 

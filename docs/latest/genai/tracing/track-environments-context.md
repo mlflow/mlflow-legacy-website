@@ -15,8 +15,12 @@ python
 ```
 import mlflow
 
+
+
 trace = mlflow.get_trace(trace_id="your-trace-id")
+
 print(trace.info.trace_metadata)
+
 # Output: {'environment': 'production', 'app_version': '1.0.0'}
 ```
 
@@ -73,67 +77,125 @@ python
 
 ```
 import mlflow
+
 import os
+
 from fastapi import FastAPI, Request
+
 from pydantic import BaseModel
+
+
 
 app = FastAPI()
 
 
+
+
+
 class ChatRequest(BaseModel):
+
     message: str
 
 
+
+
+
 @app.post("/chat")  # FastAPI decorator should be outermost
+
 @mlflow.trace  # Ensure @mlflow.trace is the inner decorator
+
 def handle_chat(request: Request, chat_request: ChatRequest):
+
     # Retrieve all context from request headers
+
     client_request_id = request.headers.get("X-Request-ID")
+
     session_id = request.headers.get("X-Session-ID")
+
     user_id = request.headers.get("X-User-ID")
 
+
+
     # Update the current trace with all context and environment metadata
+
     # The @mlflow.trace decorator ensures an active trace is available
+
     mlflow.update_current_trace(
+
+        session_id=session_id,
+
+        user=user_id,
+
         client_request_id=client_request_id,
+
         metadata={
-            # Reserved session metadata - groups traces from multi-turn conversations
-            "mlflow.trace.session": session_id,
-            # Reserved user metadata - associates traces with specific users
-            "mlflow.trace.user": user_id,
+
             # Override automatically populated environment metadata
+
             "mlflow.source.type": os.getenv(
+
                 "APP_ENVIRONMENT", "development"
+
             ),  # Override default LOCAL/NOTEBOOK
+
             # Add custom environment metadata
+
             "environment": "production",
+
             "app_version": os.getenv("APP_VERSION", "1.0.0"),
+
             "deployment_id": os.getenv("DEPLOYMENT_ID", "unknown"),
+
             "region": os.getenv("REGION", "us-east-1"),
+
         },
+
     )
 
+
+
     # --- Your application logic for processing the chat message ---
+
     # For example, calling a language model with context
+
     # response_text = my_llm_call(
+
     #     message=chat_request.message,
+
     #     session_id=session_id,
+
     #     user_id=user_id
+
     # )
+
     response_text = f"Processed message: '{chat_request.message}'"
+
+
 
     return {"response": response_text}
 
 
+
+
+
 # To run this example (requires uvicorn and fastapi):
+
 # uvicorn your_file_name:app --reload
+
 #
+
 # Example curl request with context headers:
+
 # curl -X POST "http://127.0.0.1:8000/chat" \
+
 #      -H "Content-Type: application/json" \
+
 #      -H "X-Request-ID: req-abc-123-xyz-789" \
+
 #      -H "X-Session-ID: session-def-456-uvw-012" \
+
 #      -H "X-User-ID: user-jane-doe-12345" \
+
 #      -d '{"message": "What is my account balance?"}'
 ```
 

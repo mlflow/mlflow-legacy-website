@@ -33,52 +33,99 @@ python
 
 ```
 import mlflow
+
 import numpy as np
+
+
 
 mlflow.set_experiment("search-run-guide")
 
+
+
 accuracy = np.arange(0, 1, 0.1)
+
 loss = np.arange(1, 0, -0.1)
+
 log_scale_loss = np.log(loss)
+
 f1_score = np.arange(0, 1, 0.1)
 
+
+
 batch_size = [2] * 5 + [4] * 5
+
 learning_rate = [0.001, 0.01] * 5
+
 model = ["GPT-2", "GPT-3", "GPT-3.5", "GPT-4"] + [None] * 6
 
+
+
 task = ["classification", "regression", "causal lm"] + [None] * 7
+
 environment = ["notebook"] * 5 + [None] * 5
 
+
+
 dataset_name = ["custom"] * 5 + ["also custom"] * 5
+
 dataset_digest = ["s8ds293b", "jks834s2"] + [None] * 8
+
 dataset_context = ["train"] * 5 + ["test"] * 5
 
+
+
 for i in range(10):
+
     with mlflow.start_run():
+
         mlflow.log_metrics({
+
             "loss": loss[i],
+
             "accuracy": accuracy[i],
+
             "log-scale-loss": log_scale_loss[i],
+
             "f1 score": f1_score[i],
+
         })
+
+
 
         mlflow.log_params({
+
             "batch_size": batch_size[i],
+
             "learning rate": learning_rate[i],
+
             "model": model[i],
+
         })
+
+
 
         mlflow.set_tags({
+
             "task": task[i],
+
             "environment": environment[i],
+
         })
 
+
+
         dataset = mlflow.data.from_numpy(
+
             features=np.random.uniform(size=[20, 28, 28, 3]),
+
             targets=np.random.randint(0, 10, size=[20]),
+
             name=dataset_name[i],
+
             digest=dataset_digest[i],
+
         )
+
         mlflow.log_input(dataset, context=dataset_context[i])
 ```
 
@@ -99,7 +146,10 @@ python
 ```
 import mlflow
 
+
+
 all_runs = mlflow.search_runs(search_all_experiments=True)
+
 print(all_runs)
 ```
 
@@ -109,16 +159,28 @@ Output
 
 ```
                              run_id  ... tags.mlflow.user
+
 0  5984a3488161440f92de9847e846b342  ...     michael.berk
+
 1  41160f238a5841998dda263794b26067  ...     michael.berk
+
 2  babe221a676b4fa4b204f8240f2c4f14  ...     michael.berk
+
 3  45eb4f02c5a1461aa6098fa550233be6  ...     michael.berk
+
 4  1c7c459486c44b23bb016028aee1f153  ...     michael.berk
+
 5  4453f59f1ab04491bb9582d8cba5f437  ...     michael.berk
+
 6  22db81f070f6413588641c8c343cdd72  ...     michael.berk
+
 7  c3680e37d0fa44eb9c9fb7828f6b5481  ...     michael.berk
+
 8  67973142b9c0470d8d764ada07c5a988  ...     michael.berk
+
 9  59853d5f17f946218f63de1dc82de07b  ...     michael.berk
+
+
 
 [10 rows x 19 columns]
 ```
@@ -130,7 +192,10 @@ python
 ```
 import mlflow
 
+
+
 bad_runs = mlflow.search_runs(filter_string="metrics.loss > 0.8", search_all_experiments=True)
+
 print(bad_runs)
 ```
 
@@ -140,8 +205,12 @@ Output
 
 ```
                              run_id  ... tags.mlflow.source.name
+
 0  67973142b9c0470d8d764ada07c5a988  ...               delete.py
+
 1  59853d5f17f946218f63de1dc82de07b  ...               delete.py
+
+
 
 [2 rows x 19 columns]
 ```
@@ -206,9 +275,13 @@ diff
 
 ```
 - Bad:  metrics.cross-entropy-loss < 0.5
+
 + Good: metrics.`cross-entropy-loss` < 0.5
 
+
+
 - Bad:  params.1st_iteration_timestamp = "2022-01-01"
+
 + Good: params.`1st_iteration_timestamp` = "2022-01-01"
 ```
 
@@ -218,6 +291,7 @@ diff
 
 ```
 - Bad:  attributes.run_id IN ("5984a3488161440f92de9847e846b342", "babe221a676b4fa4b204f8240f2c4f14")
+
 + Good: attributes.run_id IN ('5984a3488161440f92de9847e846b342', 'babe221a676b4fa4b204f8240f2c4f14')
 ```
 
@@ -242,7 +316,9 @@ Other than the that, the syntax should be intuitive to anyone who has used SQL. 
 
      ```
      metrics.accuracy > 0.72
+
      metrics.loss <= 0.15
+
      metrics.accuracy != 0.15
      ```
 
@@ -252,7 +328,9 @@ Other than the that, the syntax should be intuitive to anyone who has used SQL. 
 
      ```
      params.model = "GPT-4o"
+
      params.model LIKE "GPT%"
+
      params.model ILIKE "gpt%"
      ```
 
@@ -262,6 +340,7 @@ Other than the that, the syntax should be intuitive to anyone who has used SQL. 
 
      ```
      tags.environment IS NOT NULL
+
      params.model IS NULL
      ```
 
@@ -271,7 +350,9 @@ Other than the that, the syntax should be intuitive to anyone who has used SQL. 
 
      ```
      datasets.name IN ('custom', 'also custom', 'another custom name')
+
      datasets.digest IN ('s8ds293b', 'jks834s2')
+
      attributes.run_id IN ('5984a3488161440f92de9847e846b342')
      ```
 
@@ -293,10 +374,15 @@ sql
 
 ```
 metrics.accuracy > 0.72
+
 metrics."accuracy" > 0.72
+
 metrics.loss <= 0.15
+
 metrics.`log-scale-loss` <= 0
+
 metrics.`f1 score` >= 0.5
+
 metrics.accuracy > 0.72 AND metrics.loss <= 0.15
 ```
 
@@ -312,10 +398,15 @@ sql
 
 ```
 params.batch_size = "2"
+
 params.model LIKE "GPT%"
+
 params.model ILIKE "gPt%"
+
 params.model IS NULL
+
 params.model IS NOT NULL
+
 params.model LIKE "GPT%" AND params.batch_size = "2"
 ```
 
@@ -329,10 +420,15 @@ sql
 
 ```
 tags."environment" = "notebook"
+
 tags.environment = "notebook"
+
 tags.task = "Classification"
+
 tags.task ILIKE "classif%"
+
 tags.environment IS NOT NULL
+
 tags.task IS NULL
 ```
 
@@ -352,7 +448,9 @@ sql
 
 ```
 datasets.name LIKE "custom"
+
 datasets.digest IN ('s8ds293b', 'jks834s2')
+
 datasets.context = "train"
 ```
 
@@ -372,9 +470,13 @@ sql
 
 ```
 attributes.status = "ACTIVE"
+
 attributes.user_id LIKE "user1"
+
 attributes.run_name = "my-run"
+
 attributes.run_id = "a1b2c3d4"
+
 attributes.run_id IN ('a1b2c3d4', 'e5f6g7h8')
 ```
 
@@ -384,7 +486,9 @@ sql
 
 ```
 attributes.start_time >= 1664067852747
+
 attributes.end_time < 1664067852747
+
 attributes.created > 1664067852747
 ```
 
@@ -399,7 +503,9 @@ sql
 
 ```
 datasets.name IN ('custom', 'also custom')
+
 datasets.digest IN ('s8ds293b', 'jks834s2')
+
 attributes.run_id IN ('a1b2c3d4', 'e5f6g7h8')
 ```
 
@@ -411,7 +517,9 @@ sql
 
 ```
 metrics.accuracy > 0.72 AND metrics.loss <= 0.15
+
 metrics.accuracy > 0.72 AND metrics.batch_size != 0
+
 metrics.accuracy > 0.72 AND metrics.batch_size != 0 AND attributes.run_id IN ('a1b2c3d4', 'e5f6g7h8')
 ```
 
@@ -433,9 +541,13 @@ sql
 
 ```
 params.model IS NULL
+
 params.model IS NOT NULL
+
 tags.environment IS NULL
+
 tags.environment IS NOT NULL
+
 tags.task IS NOT NULL AND params.model IS NULL
 ```
 
@@ -472,20 +584,36 @@ python
 ```
 import mlflow
 
+
+
 run_ids = ["22db81f070f6413588641c8c343cdd72", "c3680e37d0fa44eb9c9fb7828f6b5481"]
+
 run_id_condition = "'" + "','".join(run_ids) + "'"
 
+
+
 complex_filter = f"""
+
 attributes.run_id IN ({run_id_condition})
+
   AND metrics.loss > 0.3
+
   AND metrics."f1 score" < 0.5
+
   AND params.model LIKE "GPT%"
+
 """
 
+
+
 runs_with_complex_filter = mlflow.search_runs(
+
     experiment_names=["search-run-guide"],
+
     filter_string=complex_filter,
+
 )
+
 print(runs_with_complex_filter)
 ```
 
@@ -495,8 +623,12 @@ text
 
 ```
                              run_id  ... tags.mlflow.runName
+
 0  22db81f070f6413588641c8c343cdd72  ...   orderly-quail-568
+
 1  c3680e37d0fa44eb9c9fb7828f6b5481  ...    melodic-lynx-301
+
+
 
 [2 rows x 19 columns]
 ```
@@ -509,12 +641,19 @@ python
 
 ```
 import mlflow
+
 from mlflow.entities import ViewType
 
+
+
 active_runs = mlflow.search_runs(
+
     experiment_names=["search-run-guide"],
+
     run_view_type=ViewType.ACTIVE_ONLY,
+
     order_by=["metrics.accuracy DESC"],
+
 )
 ```
 
@@ -526,12 +665,19 @@ python
 
 ```
 import mlflow
+
 from mlflow.entities import ViewType
 
+
+
 active_runs_ordered_by_accuracy = mlflow.search_runs(
+
     experiment_names=["search-run-guide"],
+
     run_view_type=ViewType.ACTIVE_ONLY,
+
     order_by=["metrics.accuracy DESC"],
+
 )
 ```
 
@@ -541,13 +687,21 @@ python
 
 ```
 import mlflow
+
 from mlflow.entities import ViewType
 
+
+
 highest_accuracy_run = mlflow.search_runs(
+
     experiment_names=["search-run-guide"],
+
     run_view_type=ViewType.ACTIVE_ONLY,
+
     max_results=1,
+
     order_by=["metrics.accuracy DESC"],
+
 )[0]
 ```
 
@@ -559,13 +713,21 @@ python
 
 ```
 import mlflow
+
 from mlflow.entities import ViewType
 
+
+
 model_of_interest = "GPT-4"
+
 gpt_4_runs_global = mlflow.search_runs(
+
     filter_string=f"params.model = '{model_of_interest}'",
+
     run_view_type=ViewType.ALL,
+
     search_all_experiments=True,
+
 )
 ```
 
@@ -579,10 +741,15 @@ r
 
 ```
 library(mlflow)
+
 mlflow_search_runs(
+
   filter = "metrics.rmse < 0.9 and tags.production = 'true'",
+
   experiment_ids = as.character(1:2),
+
   order_by = "params.lr DESC"
+
 )
 ```
 
@@ -594,5 +761,6 @@ java
 
 ```
 List<Long> experimentIds = Arrays.asList("1", "2", "4", "8");
+
 List<RunInfo> searchResult = client.searchRuns(experimentIds, "metrics.accuracy_score < 99.90");
 ```

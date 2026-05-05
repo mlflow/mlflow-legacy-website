@@ -20,7 +20,9 @@ python
 
 ```
 %pip install mlflow>=2.11.0 -q -U
+
 # OpenAI-compatible chat model support is available for Transformers 4.34.0 and above
+
 %pip install transformers>=4.34.0 -q -U
 ```
 
@@ -28,11 +30,17 @@ python
 
 ```
 # Disable tokenizers warnings when constructing pipelines
+
 %env TOKENIZERS_PARALLELISM=false
+
+
 
 import warnings
 
+
+
 # Disable a few less-than-useful UserWarnings from setuptools and pydantic
+
 warnings.filterwarnings("ignore", category=UserWarning)
 ```
 
@@ -65,16 +73,28 @@ python
 ```
 from transformers import pipeline
 
+
+
 import mlflow
 
+
+
 generator = pipeline(
+
   "text-generation",
+
   model="TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+
 )
 
+
+
 # save the model using the vanilla `text-generation` task type
+
 mlflow.transformers.save_model(
+
   path="tinyllama-text-generation", transformers_model=generator, task="text-generation"
+
 )
 ```
 
@@ -89,7 +109,10 @@ python
 
 ```
 # load the model for inference
+
 model = mlflow.pyfunc.load_model("tinyllama-text-generation")
+
+
 
 model.metadata.signature
 ```
@@ -121,12 +144,20 @@ python
 
 ```
 # first, apply the tokenizer's chat template, since the
+
 # model is tuned to accept prompts in a chat format. this
+
 # also converts the list of messages to a string.
+
 messages = [{"role": "user", "content": "Write me a hello world program in python"}]
+
 prompt = generator.tokenizer.apply_chat_template(
+
   messages, tokenize=False, add_generation_prompt=True
+
 )
+
+
 
 model.predict(prompt)
 ```
@@ -154,9 +185,13 @@ python
 
 ```
 # save the model using the `"llm/v1/chat"`
+
 # task type instead of `text-generation`
+
 mlflow.transformers.save_model(
+
   path="tinyllama-chat", transformers_model=generator, task="llm/v1/chat"
+
 )
 ```
 
@@ -171,6 +206,8 @@ python
 
 ```
 model = mlflow.pyfunc.load_model("tinyllama-chat")
+
+
 
 model.metadata.signature
 ```
@@ -202,6 +239,8 @@ python
 
 ```
 messages = [{"role": "user", "content": "Write me a hello world program in python"}]
+
+
 
 model.predict({"messages": messages})
 ```
@@ -244,6 +283,7 @@ python
 
 ```
 %%sh
+
 curl http://127.0.0.1:5000/invocations   -H 'Content-Type: application/json'   -d '{ "messages": [{"role": "user", "content": "Write me a hello world program in python"}] }'   | jq
 ```
 

@@ -22,31 +22,35 @@ text
 
 ```
 INFO:     Started server process [28550]
+
 INFO:     Waiting for application startup.
+
 INFO:     Application startup complete.
+
 INFO:     Uvicorn running on http://127.0.0.1:8080 (Press CTRL+C to quit)
 ```
 
 There are many options to configure the server, refer to [Configure Server](#configure-server) for more details.
 
-important
+:::warning important The server listens on <http://localhost:5000> by default and only accepts connections from the local machine. To let the server accept connections from other machines, you will need to pass `--host 0.0.0.0` to listen on all network interfaces (or a specific interface address). This is typically required configuration when running the server **in a Kubernetes pod or a Docker container**.
 
-The server listens on <http://localhost:5000> by default and only accepts connections from the local machine. To let the server accept connections from other machines, you will need to pass `--host 0.0.0.0` to listen on all network interfaces (or a specific interface address). This is typically required configuration when running the server **in a Kubernetes pod or a Docker container**.
+MLflow 3.5.0+ includes built-in security middleware to protect against DNS rebinding and CORS attacks. When using `--host 0.0.0.0`, configure the `--allowed-hosts` option to specify which domains can access your server. See [Security Configuration](/docs/latest/self-hosting/security/network.md) for details. :::
 
-MLflow 3.5.0+ includes built-in security middleware to protect against DNS rebinding and CORS attacks. When using `--host 0.0.0.0`, configure the `--allowed-hosts` option to specify which domains can access your server. See [Security Configuration](/docs/latest/self-hosting/security/network.md) for details.
-
-Read-only Filesystems
-
-When running in containers with read-only root filesystems (common in Kubernetes with `securityContext.readOnlyRootFilesystem: true`), configure remote artifact storage using `--artifacts-destination` (artifact serving is enabled by default). The tracking server does not create local directories at startup when using remote artifact storage, making it compatible with read-only environments.
+:::tip Read-only Filesystems When running in containers with read-only root filesystems (common in Kubernetes with `securityContext.readOnlyRootFilesystem: true`), configure remote artifact storage using `--artifacts-destination` (artifact serving is enabled by default). The tracking server does not create local directories at startup when using remote artifact storage, making it compatible with read-only environments.
 
 bash
 
 ```
 mlflow server \
+
     --host 0.0.0.0 \
+
     --backend-store-uri postgresql://user:pass@host/db \
+
     --artifacts-destination s3://my-bucket
 ```
+
+:::
 
 ## Logging to a Tracking Server[​](#logging_to_a_tracking_server "Direct link to Logging to a Tracking Server")
 
@@ -64,18 +68,32 @@ python
 ```
 import mlflow
 
+
+
 remote_server_uri = "..."  # set to your server URI, e.g. http://127.0.0.1:8080
+
 mlflow.set_tracking_uri(remote_server_uri)
+
 mlflow.set_experiment("/my-experiment")
 
+
+
 # Logging a run
+
 with mlflow.start_run():
+
     mlflow.log_param("a", 1)
+
     mlflow.log_metric("b", 2)
 
+
+
 # Logging a trace
+
 with mlflow.start_span(name="test_trace") as span:
+
     span.set_inputs({"x": 1, "y": 2})
+
     span.set_outputs(3)
 ```
 
@@ -84,17 +102,30 @@ typescript
 ```
 import * as mlflow from "@mlflow/core";
 
+
+
 mlflow.init({
+
     trackingUri: "<your-tracking-server-uri>",
+
     experimentId: "<your-experiment-id>",
+
 });
 
+
+
 const myFunc = mlflow.trace(
+
     (a: number, b: number) => {
+
         return a + b;
+
     },
+
     { name: 'my-func' }
+
 )
+
 myFunc(1, 2);
 ```
 
@@ -102,10 +133,15 @@ r
 
 ```
 library(mlflow)
+
 install_mlflow()
+
 remote_server_uri = "..." # set to your server URI
+
 mlflow_set_tracking_uri(remote_server_uri)
+
 mlflow_set_experiment("/my-experiment")
+
 mlflow_log_param("a", "1")
 ```
 
@@ -114,13 +150,22 @@ scala
 ```
 import org.mlflow.tracking.MlflowClient
 
+
+
 val remoteServerUri = "..." // set to your server URI
+
 val client = new MlflowClient(remoteServerUri)
 
+
+
 val experimentId = client.createExperiment("my-experiment")
+
 client.setExperiment(experimentId)
 
+
+
 val run = client.createRun(experimentId)
+
 client.logParam(run.getRunId(), "a", "1")
 ```
 
@@ -138,12 +183,19 @@ bash
 
 ```
 # Default: SQLite database (mlflow.db in current directory)
+
 mlflow server
 
+
+
 # PostgreSQL: connect to an existing PostgreSQL database
+
 mlflow server --backend-store-uri postgresql://username:password@host:port/database
 
+
+
 # File-based (legacy): use local filesystem under ./mlruns directory
+
 mlflow server --backend-store-uri ./mlruns
 ```
 
@@ -159,16 +211,17 @@ bash
 
 ```
 mlflow server \
+
     --host 0.0.0.0 \
+
     --port 8885 \
+
     --artifacts-destination s3://my-bucket
 ```
 
 With this setting, MLflow server works as a proxy for accessing remote artifacts. The MLflow clients make HTTP request to the server for fetching artifacts.
 
-important
-
-If you are using remote storage, you have to configure the credentials for the server to access the artifacts. Be aware of that The MLflow artifact proxied access service enables users to have an *assumed role of access to all artifacts* that are accessible to the Tracking Server. Refer [Manage Access](/docs/latest/self-hosting/architecture/artifact-store.md#artifacts-stores-manage-access) for further details.
+:::warning important If you are using remote storage, you have to configure the credentials for the server to access the artifacts. Be aware of that The MLflow artifact proxied access service enables users to have an *assumed role of access to all artifacts* that are accessible to the Tracking Server. Refer [Manage Access](/docs/latest/self-hosting/architecture/artifact-store.md#artifacts-stores-manage-access) for further details. :::
 
 The tracking server resolves the uri `mlflow-artifacts:/` in tracking request from the client to an otherwise explicit object store destination (e.g., "s3:/my\_bucket/mlartifacts") for interfacing with artifacts. The following patterns will all resolve to the configured proxied object store location (in above example, `s3://my-root-bucket/mlartifacts`):
 
@@ -178,9 +231,7 @@ The tracking server resolves the uri `mlflow-artifacts:/` in tracking request fr
 * `mlflow-artifacts://<host>:<port>/mlartifacts`
 * `mlflow-artifacts:/mlartifacts`
 
-important
-
-The MLflow client caches artifact location information on a per-run basis. It is therefore not recommended to alter a run's artifact location before it has terminated.
+:::warning important The MLflow client caches artifact location information on a per-run basis. It is therefore not recommended to alter a run's artifact location before it has terminated. :::
 
 #### Use tracking server w/o proxying artifacts access[​](#tracking-server-no-proxy "Direct link to Use tracking server w/o proxying artifacts access")
 
@@ -194,12 +245,14 @@ mlflow server --no-serve-artifacts --default-artifact-root s3://my-bucket
 
 With this setting, the MLflow client still makes minimum HTTP requests to the tracking server for fetching proper remote storage URI, but can directly upload artifacts to / download artifacts from the remote storage. While this might not be a good practice for access and security governance, it could be useful when you want to avoid the overhead of proxying artifacts through the tracking server.
 
-Use the right configuration keys
+:::info Use the right configuration keys
 
 The two options `--serve-artifacts` and `--default-artifact-root` look similar, but they are used for different purposes. When you pick the wrong one, the artifact logging requests will not go through the expected route and may cause access issues. The rule of thumb is:
 
 1. **Want the server to proxy uploads?** Specify `--artifacts-destination` option and **do not set** `--default-artifact-root`. New experiments will get `mlflow-artifacts:/...` run URIs and clients upload and download artifacts via the server. Credentials are managed by the tracking server and clients do not need to set them.
 2. **Want clients to write straight to storage?** Set `--default-artifact-root` option and `--no-serve-artifacts`. Runs will get `s3://...` / `gs://...` URIs and clients must have credentials to access the storage.
+
+:::
 
 note
 
@@ -223,6 +276,7 @@ bash
 
 ```
 # Launch the artifact-only server
+
 mlflow server --artifacts-only ...
 ```
 
@@ -231,7 +285,10 @@ python
 ```
 import requests
 
+
+
 # Attempt to list experiments from the server
+
 response = requests.get("http://0.0.0.0:8885/api/2.0/mlflow/experiments/list")
 ```
 
@@ -265,7 +322,9 @@ bash
 
 ```
 mlflow server --host 0.0.0.0 \
+
   --allowed-hosts "mlflow.company.com" \
+
   --cors-allowed-origins "https://app.company.com"
 ```
 
@@ -296,9 +355,13 @@ python
 
 ```
 import requests
+
 import mlflow
 
+
+
 response = requests.get("http://<mlflow-host>:<mlflow-port>/version")
+
 assert response.text == mlflow.__version__  # Checking for a strict version match
 ```
 
@@ -314,6 +377,7 @@ bash
 
 ```
 export MLFLOW_CREATE_MODEL_VERSION_SOURCE_VALIDATION_REGEX="^mlflow-artifacts:/.*$"
+
 mlflow server --host 0.0.0.0 --port 5000
 ```
 
@@ -327,6 +391,7 @@ bash
 
 ```
 export MLFLOW_CREATE_MODEL_VERSION_SOURCE_VALIDATION_REGEX="^mlflow-artifacts:/.*$"
+
 mlflow server --host 0.0.0.0 --port 5000
 ```
 
@@ -336,22 +401,39 @@ python
 
 ```
 import mlflow
+
 from mlflow import MlflowClient
+
+
 
 client = MlflowClient("http://localhost:5000")
 
+
+
 # This will work - source matches the pattern
+
 client.create_model_version(
+
     name="my-model",
+
     source="mlflow-artifacts://1/artifacts/model",
+
     run_id="abc123",
+
 )
 
+
+
 # This will fail - source doesn't match the pattern
+
 client.create_model_version(
+
     name="my-model",
+
     source="s3://my-bucket/model",
+
     run_id="def456",
+
 )  # Raises MlflowException: Invalid model version source
 ```
 
@@ -363,6 +445,7 @@ bash
 
 ```
 export MLFLOW_CREATE_MODEL_VERSION_SOURCE_VALIDATION_REGEX="^s3://(production-models|staging-models)/.*$"
+
 mlflow server --host 0.0.0.0 --port 5000
 ```
 
@@ -391,9 +474,13 @@ python
 
 ```
 import requests
+
 import mlflow
 
+
+
 response = requests.get("http://<mlflow-host>:<mlflow-port>/version")
+
 assert response.text == mlflow.__version__  # Checking for a strict version match
 ```
 
@@ -408,8 +495,12 @@ python
 ```
 import mlflow
 
+
+
 mlflow.set_tracking_uri("<TRACKING_SERVER_URI>")
+
 with mlflow.start_run():
+
     mlflow.log_artifact("large.txt")
 ```
 
@@ -419,16 +510,27 @@ text
 
 ```
 Traceback (most recent call last):
+
   File "/Users/user/python3.10/site-packages/requests/adapters.py", line 486, in send
+
     resp = conn.urlopen(
+
   File "/Users/user/python3.10/site-packages/urllib3/connectionpool.py", line 826, in urlopen
+
     return self.urlopen(
+
   ...
+
   File "/Users/user/python3.10/site-packages/urllib3/connectionpool.py", line 798, in urlopen
+
     retries = retries.increment(
+
   File "/Users/user/python3.10/site-packages/urllib3/util/retry.py", line 592, in increment
+
     raise MaxRetryError(_pool, url, error or ResponseError(cause))
+
 urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='mlflow.example.com', port=443): Max retries exceeded with url: ... (Caused by SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:2426)')))
+
 During handling of the above exception, another exception occurred:
 ```
 
@@ -438,11 +540,17 @@ bash
 
 ```
 INFO:     Started server process [82]
+
 INFO:     Waiting for application startup.
+
 INFO:     Application startup complete.
+
 INFO:     Uvicorn running on http://0.0.0.0:5000 (Press CTRL+C to quit)
+
 ...
+
 WARNING:  Request timeout exceeded
+
 ERROR:    Exception in ASGI application
 ```
 

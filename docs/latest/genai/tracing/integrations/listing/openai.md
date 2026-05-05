@@ -58,10 +58,15 @@ bash
 
 ```
 git clone --depth 1 --filter=blob:none --sparse https://github.com/mlflow/mlflow.git
+
 cd mlflow
+
 git sparse-checkout set docker-compose
+
 cd docker-compose
+
 cp .env.dev.example .env
+
 docker compose up -d
 ```
 
@@ -81,24 +86,43 @@ python
 
 ```
 import openai
+
 import mlflow
 
+
+
 # Enable auto-tracing for OpenAI
+
 mlflow.openai.autolog()
 
+
+
 # Set a tracking URI and an experiment
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("OpenAI")
 
+
+
 # Invoke the OpenAI model as usual
+
 client = openai.OpenAI()
+
 response = client.chat.completions.create(
+
     model="o4-mini",
+
     messages=[
+
         {"role": "system", "content": "You are a helpful weather assistant."},
+
         {"role": "user", "content": "What is the capital of France?"},
+
     ],
+
     max_completion_tokens=100,
+
 )
 ```
 
@@ -108,16 +132,28 @@ python
 
 ```
 import openai
+
 import mlflow
 
+
+
 # Enable auto-tracing for OpenAI
+
 mlflow.openai.autolog()
 
+
+
 # Optional: Set a tracking URI and an experiment
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("OpenAI")
 
+
+
 openai_client = openai.OpenAI()
+
+
 
 response = client.responses.create(model="o4-mini", input="What is the capital of France?")
 ```
@@ -128,18 +164,31 @@ typescript
 
 ```
 import { OpenAI } from "openai";
+
 import { tracedOpenAI } from "@mlflow/openai";
 
+
+
 // Wrap the OpenAI client with the tracedOpenAI function
+
 const client = tracedOpenAI(new OpenAI());
 
+
+
 // Invoke the client as usual
+
 const response = await client.chat.completions.create({
+
     model: "o4-mini",
+
     messages: [
+
         {"role": "system", "content": "You are a helpful weather assistant."},
+
         {"role": "user", "content": "What's the weather like in Seattle?"},
+
     ],
+
 })
 ```
 
@@ -181,9 +230,7 @@ See [OpenAI Agents SDK Tracing](/docs/latest/genai/tracing/integrations/listing/
 | ------ | ----- |
 | ✅     | ✅    |
 
-Image and Audio Support for OpenAI Traces
-
-MLflow automatically captures images and audio sent to OpenAI models. See [Image and Audio (Multimodal) Content in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md) for examples and supported formats.
+:::tip Image and Audio Support for OpenAI Traces MLflow automatically captures images and audio sent to OpenAI models. See [Multimodal Content and Attachments in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md) for examples and supported formats. :::
 
 ## Streaming[​](#streaming "Direct link to Streaming")
 
@@ -197,19 +244,33 @@ python
 
 ```
 import openai
+
 import mlflow
 
+
+
 # Enable trace logging
+
 mlflow.openai.autolog()
+
+
 
 client = openai.OpenAI()
 
+
+
 stream = client.chat.completions.create(
+
     model="o4-mini",
+
     messages=[{"role": "user", "content": "How fast would a glass of water freeze on Titan?"}],
+
     stream=True,  # Enable streaming response
+
 )
+
 for chunk in stream:
+
     print(chunk.choices[0].delta.content or "", end="")
 ```
 
@@ -217,19 +278,33 @@ python
 
 ```
 import openai
+
 import mlflow
 
+
+
 # Enable trace logging
+
 mlflow.openai.autolog()
+
+
 
 client = openai.OpenAI()
 
+
+
 stream = client.responses.create(
+
     model="o4-mini",
+
     input="How fast would a glass of water freeze on Titan?",
+
     stream=True,  # Enable streaming response
+
 )
+
 for event in stream:
+
     print(event)
 ```
 
@@ -237,17 +312,29 @@ typescript
 
 ```
 import { OpenAI } from "openai";
+
 import { tracedOpenAI } from "@mlflow/openai";
 
+
+
 // Wrap the OpenAI client with the tracedOpenAI function
+
 const client = tracedOpenAI(new OpenAI());
 
+
+
 const stream = await client.chat.completions.create({
+
     model: "o4-mini",
+
     messages: [
+
         {"role": "user", "content": "How fast would a glass of water freeze on Titan?"},
+
     ],
+
     stream: true,
+
 });
 ```
 
@@ -264,16 +351,28 @@ python
 ```
 import openai
 
+
+
 # Enable trace logging
+
 mlflow.openai.autolog()
+
+
 
 client = openai.AsyncOpenAI()
 
+
+
 response = await client.chat.completions.create(
+
     model="gpt-4o-mini",
+
     messages=[{"role": "user", "content": "How fast would a glass of water freeze on Titan?"}],
+
     # Async streaming is also supported
+
     # stream=True
+
 )
 ```
 
@@ -282,13 +381,22 @@ python
 ```
 import openai
 
+
+
 # Enable trace logging
+
 mlflow.openai.autolog()
+
+
 
 client = openai.AsyncOpenAI()
 
+
+
 response = await client.responses.create(
+
     model="gpt-4o-mini", input="How fast would a glass of water freeze on Titan?"
+
 )
 ```
 
@@ -310,77 +418,149 @@ python
 
 ```
 import json
+
 from openai import OpenAI
+
 import mlflow
+
 from mlflow.entities import SpanType
+
+
 
 client = OpenAI()
 
 
+
+
+
 # Define the tool function. Decorate it with `@mlflow.trace` to create a span for its execution.
+
 @mlflow.trace(span_type=SpanType.TOOL)
+
 def get_weather(city: str) -> str:
+
     if city == "Tokyo":
+
         return "sunny"
+
     elif city == "Paris":
+
         return "rainy"
+
     return "unknown"
 
 
+
+
+
 tools = [
+
     {
+
         "type": "function",
+
         "function": {
+
             "name": "get_weather",
+
             "parameters": {
+
                 "type": "object",
+
                 "properties": {"city": {"type": "string"}},
+
             },
+
         },
+
     }
+
 ]
+
+
 
 _tool_functions = {"get_weather": get_weather}
 
 
+
+
+
 # Define a simple tool calling agent
+
 @mlflow.trace(span_type=SpanType.AGENT)
+
 def run_tool_agent(question: str):
+
     messages = [{"role": "user", "content": question}]
 
+
+
     # Invoke the model with the given question and available tools
+
     response = client.chat.completions.create(
+
         model="gpt-4o-mini",
+
         messages=messages,
+
         tools=tools,
+
     )
+
     ai_msg = response.choices[0].message
+
     messages.append(ai_msg)
 
+
+
     # If the model request tool call(s), invoke the function with the specified arguments
+
     if tool_calls := ai_msg.tool_calls:
+
         for tool_call in tool_calls:
+
             function_name = tool_call.function.name
+
             if tool_func := _tool_functions.get(function_name):
+
                 args = json.loads(tool_call.function.arguments)
+
                 tool_result = tool_func(**args)
+
             else:
+
                 raise RuntimeError("An invalid tool is returned from the assistant!")
 
+
+
             messages.append({
+
                 "role": "tool",
+
                 "tool_call_id": tool_call.id,
+
                 "content": tool_result,
+
             })
 
+
+
         # Sent the tool results to the model and get a new response
+
         response = client.chat.completions.create(model="gpt-4o-mini", messages=messages)
+
+
 
     return response.choices[0].message.content
 
 
+
+
+
 # Run the tool calling agent
+
 question = "What's the weather like in Paris today?"
+
 answer = run_tool_agent(question)
 ```
 
@@ -388,79 +568,153 @@ python
 
 ```
 import json
+
 import requests
+
 from openai import OpenAI
+
 import mlflow
+
 from mlflow.entities import SpanType
+
+
 
 client = OpenAI()
 
 
+
+
+
 # Define the tool function. Decorate it with `@mlflow.trace` to create a span for its execution.
+
 @mlflow.trace(span_type=SpanType.TOOL)
+
 def get_weather(latitude, longitude):
+
     response = requests.get(
+
         f"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m"
+
     )
+
     data = response.json()
+
     return data["current"]["temperature_2m"]
 
 
+
+
+
 tools = [
+
     {
+
         "type": "function",
+
         "name": "get_weather",
+
         "description": "Get current temperature for provided coordinates in celsius.",
+
         "parameters": {
+
             "type": "object",
+
             "properties": {
+
                 "latitude": {"type": "number"},
+
                 "longitude": {"type": "number"},
+
             },
+
             "required": ["latitude", "longitude"],
+
             "additionalProperties": False,
+
         },
+
         "strict": True,
+
     }
+
 ]
 
 
+
+
+
 # Define a simple tool calling agent
+
 @mlflow.trace(span_type=SpanType.AGENT)
+
 def run_tool_agent(question: str):
+
     messages = [{"role": "user", "content": question}]
 
+
+
     # Invoke the model with the given question and available tools
+
     response = client.responses.create(
+
         model="gpt-4o-mini",
+
         input=question,
+
         tools=tools,
+
     )
+
+
 
     # Invoke the function with the specified arguments
+
     tool_call = response.output[0]
+
     args = json.loads(tool_call.arguments)
+
     result = get_weather(args["latitude"], args["longitude"])
 
+
+
     # Sent the tool results to the model and get a new response
+
     messages.append(tool_call)
+
     messages.append({
+
         "type": "function_call_output",
+
         "call_id": tool_call.call_id,
+
         "output": str(result),
+
     })
 
+
+
     response = client.responses.create(
+
         model="gpt-4o-mini",
+
         input=input_messages,
+
         tools=tools,
+
     )
+
+
 
     return response.output[0].content[0].text
 
 
+
+
+
 # Run the tool calling agent
+
 question = "What's the weather like in Paris today?"
+
 answer = run_tool_agent(question)
 ```
 

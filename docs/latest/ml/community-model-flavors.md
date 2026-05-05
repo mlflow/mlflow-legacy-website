@@ -12,14 +12,23 @@ bash
 
 ```
 # Time series forecasting
+
 pip install 'mlflow[sktime]'
+
 pip install mlflavors
 
+
+
 # Visualization and plotting
+
 pip install mlflow-vizmod
 
+
+
 # Big data and cloud platforms
+
 pip install bigmlflow
+
 pip install 'mlflow[aliyun-oss]'
 ```
 
@@ -31,18 +40,31 @@ python
 
 ```
 import mlflow
+
 import community_flavor  # Replace with actual flavor
 
+
+
 # Train your model
+
 model = SomeModel()
+
 model.fit(data)
 
+
+
 # Log with MLflow
+
 with mlflow.start_run():
+
     community_flavor.log_model(model, "model_path")
 
+
+
 # Load for inference
+
 loaded_model = community_flavor.load_model("model_uri")
+
 predictions = loaded_model.predict(new_data)
 ```
 
@@ -68,25 +90,45 @@ python
 
 ```
 import pandas as pd
+
 from sktime.datasets import load_airline
+
 from sktime.forecasting.arima import AutoARIMA
+
 from sktime.utils import mlflow_sktime
 
+
+
 # Load data and train model
+
 airline = load_airline()
+
 model = AutoARIMA(sp=12, d=0, max_p=2, max_q=2, suppress_warnings=True)
+
 model.fit(airline, fh=[1, 2, 3])
 
+
+
 # Save and load with MLflow
+
 mlflow_sktime.save_model(sktime_model=model, path="model")
+
 loaded_model = mlflow_sktime.load_model(model_uri="model")
 
+
+
 # Make predictions
+
 predictions = loaded_model.predict()
+
 print(predictions)
 
+
+
 # Load as PyFunc for serving
+
 loaded_pyfunc = mlflow_sktime.pyfunc.load_model(model_uri="model")
+
 pyfunc_predictions = loaded_pyfunc.predict(pd.DataFrame())
 ```
 
@@ -115,30 +157,55 @@ python
 
 ```
 import mlflow
+
 from pyod.models.knn import KNN
+
 from pyod.utils.data import generate_data
+
 import mlflavors
 
+
+
 # Generate synthetic data
+
 contamination = 0.1
+
 n_train = 200
+
 n_test = 100
+
 X_train, X_test, _, y_test = generate_data(
+
     n_train=n_train, n_test=n_test, contamination=contamination
+
 )
 
+
+
 with mlflow.start_run():
+
     # Train KNN detector
+
     clf = KNN()
+
     clf.fit(X_train)
 
+
+
     # Log model
+
     mlflavors.pyod.log_model(
+
         pyod_model=clf, artifact_path="anomaly_detector", serialization_format="pickle"
+
     )
 
+
+
     # Evaluate
+
     scores = clf.decision_function(X_test)
+
     mlflow.log_metric("mean_anomaly_score", scores.mean())
 ```
 
@@ -148,12 +215,20 @@ python
 
 ```
 # Load as PyFunc
+
 loaded_pyfunc = mlflavors.pyod.pyfunc.load_model(model_uri="model_uri")
 
+
+
 # Create configuration for inference
+
 import pandas as pd
 
+
+
 predict_conf = pd.DataFrame([{"X": X_test, "predict_method": "decision_function"}])
+
+
 
 anomaly_scores = loaded_pyfunc.predict(predict_conf)[0]
 ```
@@ -174,29 +249,53 @@ python
 
 ```
 from sklearn.datasets import load_iris
+
 import altair as alt
+
 import mlflow_vismod
 
+
+
 # Load data
+
 df_iris = load_iris(as_frame=True)
 
+
+
 # Create Altair visualization
+
 viz_iris = (
+
     alt
+
     .Chart(df_iris)
+
     .mark_circle(size=60)
+
     .encode(x="sepal_length:Q", y="sepal_width:Q", color="target:N")
+
     .properties(height=375, width=575)
+
     .interactive()
+
 )
 
+
+
 # Log visualization as a model
+
 with mlflow.start_run():
+
     mlflow_vismod.log_model(
+
         model=viz_iris,
+
         artifact_path="iris_viz",
+
         style="vegalite",
+
         input_example=df_iris.head(5),
+
     )
 ```
 
@@ -216,28 +315,51 @@ python
 
 ```
 import json
+
 import mlflow
+
 import bigmlflow
 
+
+
 # Load BigML model from JSON
+
 MODEL_FILE = "logistic_regression.json"
+
 with mlflow.start_run():
+
     with open(MODEL_FILE) as handler:
+
         model = json.load(handler)
 
+
+
     # Log BigML model
+
     bigmlflow.log_model(
+
         model,
+
         artifact_path="bigml_model",
+
         registered_model_name="production_classifier",
+
     )
 
+
+
 # Load and use for inference
+
 loaded_model = bigmlflow.load_model("model_uri")
+
 predictions = loaded_model.predict(test_dataframe)
 
+
+
 # Load as PyFunc
+
 pyfunc_model = mlflow.pyfunc.load_model("model_uri")
+
 pyfunc_predictions = pyfunc_model.predict(test_dataframe)
 ```
 
@@ -268,9 +390,13 @@ bash
 
 ```
 # Traditional MLflow server
+
 mlflow server --backend-store-uri postgresql://user:pass@localhost:5432/mlflow
 
+
+
 # High-performance Go backend
+
 mlflow-go server --backend-store-uri postgresql://user:pass@localhost:5432/mlflow
 ```
 
@@ -280,10 +406,15 @@ bash
 
 ```
 mlflow-go server \
+
   --backend-store-uri postgresql://user:pass@localhost:5432/mlflow \
+
   --artifacts-destination s3://my-mlflow-artifacts \
+
   --host 0.0.0.0 \
+
   --port 5000 \
+
   --workers 4
 ```
 
@@ -295,20 +426,35 @@ python
 
 ```
 import mlflow
+
 import mlflow_go_backend
 
+
+
 # Enable the Go client implementation
+
 mlflow_go_backend.enable_go()
 
+
+
 # Set tracking URI (database required)
+
 mlflow.set_tracking_uri("postgresql://user:pass@localhost:5432/mlflow")
 
+
+
 # Use MLflow as normal - all operations now use Go backend
+
 mlflow.set_experiment("high-performance-experiment")
 
+
+
 with mlflow.start_run():
+
     mlflow.log_param("algorithm", "xgboost")
+
     mlflow.log_metric("accuracy", 0.95)
+
     mlflow.log_artifact("model.pkl")
 ```
 
@@ -320,20 +466,35 @@ python
 
 ```
 import mlflow
+
 import mlflow_go_backend
 
+
+
 # Enable the Go client implementation (disabled by default)
+
 mlflow_go_backend.enable_go()
 
+
+
 # Set the tracking URI (you can also set it via the environment variable MLFLOW_TRACKING_URI)
+
 # Currently only database URIs are supported
+
 mlflow.set_tracking_uri("sqlite:///mlflow.db")
 
+
+
 # Use MLflow as usual
+
 mlflow.set_experiment("my-experiment")
 
+
+
 with mlflow.start_run():
+
     mlflow.log_param("param", 1)
+
     mlflow.log_metric("metric", 2)
 ```
 
@@ -361,11 +522,17 @@ python
 
 ```
 # Supported database URIs
+
 mlflow.set_tracking_uri("sqlite:///mlflow.db")
+
 mlflow.set_tracking_uri("postgresql://user:pass@host:5432/db")
+
 mlflow.set_tracking_uri("mysql://user:pass@host:3306/db")
 
+
+
 # Not supported yet
+
 # mlflow.set_tracking_uri("file:///local/mlruns")
 ```
 
@@ -387,9 +554,13 @@ bash
 
 ```
 # Old command
+
 mlflow server --backend-store-uri postgresql://...
 
+
+
 # New command
+
 mlflow-go server --backend-store-uri postgresql://...
 ```
 
@@ -400,6 +571,8 @@ python
 ```
 import mlflow_go_backend
 
+
+
 mlflow_go_backend.enable_go()
 ```
 
@@ -409,14 +582,23 @@ python
 
 ```
 import time
+
 import mlflow
 
+
+
 # Benchmark your workload
+
 start_time = time.time()
+
 with mlflow.start_run():
+
     for i in range(1000):
+
         mlflow.log_metric(f"metric_{i}", i)
+
 duration = time.time() - start_time
+
 print(f"Logged 1000 metrics in {duration:.2f} seconds")
 ```
 
@@ -442,23 +624,41 @@ python
 
 ```
 # Required functions for any custom flavor
+
 def save_model(model, path, **kwargs):
+
     """Save model to specified path with MLflow format"""
+
     pass
+
+
+
 
 
 def log_model(model, artifact_path, **kwargs):
+
     """Log model to current MLflow run"""
+
     pass
+
+
+
 
 
 def load_model(model_uri):
+
     """Load model from MLflow format"""
+
     pass
 
 
+
+
+
 def _load_pyfunc(path):
+
     """Load model as PyFunc for generic inference"""
+
     pass
 ```
 
@@ -468,112 +668,219 @@ python
 
 ```
 import os
+
 import pickle
+
 import mlflow
+
 from mlflow import pyfunc
+
 from mlflow.models import Model
+
 from mlflow.models.model import MLMODEL_FILE_NAME
+
 from mlflow.utils.environment import _CONDA_ENV_FILE_NAME, _PYTHON_ENV_FILE_NAME
 
+
+
 FLAVOR_NAME = "sktime"
+
 SERIALIZATION_FORMAT_PICKLE = "pickle"
 
 
+
+
+
 def save_model(
+
     sktime_model, path, conda_env=None, serialization_format=SERIALIZATION_FORMAT_PICKLE
+
 ):
+
     """Save sktime model in MLflow format"""
 
+
+
     # Validate and prepare save path
+
     os.makedirs(path, exist_ok=True)
 
+
+
     # Create MLflow model configuration
+
     mlflow_model = Model()
 
+
+
     # Save the actual model
+
     model_data_subpath = "model.pkl"
+
     model_data_path = os.path.join(path, model_data_subpath)
 
+
+
     with open(model_data_path, "wb") as f:
+
         pickle.dump(sktime_model, f)
 
+
+
     # Add PyFunc flavor for generic inference
+
     pyfunc.add_to_model(
+
         mlflow_model,
+
         loader_module="custom_sktime_flavor",  # Your module name
+
         model_path=model_data_subpath,
+
         conda_env=_CONDA_ENV_FILE_NAME,
+
         python_env=_PYTHON_ENV_FILE_NAME,
+
     )
+
+
 
     # Add custom flavor configuration
+
     mlflow_model.add_flavor(
+
         FLAVOR_NAME,
+
         pickled_model=model_data_subpath,
+
         sktime_version=sktime.__version__,
+
         serialization_format=serialization_format,
+
     )
 
+
+
     # Save MLmodel configuration file
+
     mlflow_model.save(os.path.join(path, MLMODEL_FILE_NAME))
 
 
+
+
+
 def log_model(sktime_model, artifact_path, **kwargs):
+
     """Log sktime model to current MLflow run"""
+
     return Model.log(
+
         artifact_path=artifact_path,
+
         flavor=custom_sktime_flavor,  # Your module reference
+
         sktime_model=sktime_model,
+
         **kwargs,
+
     )
 
 
+
+
+
 def load_model(model_uri):
+
     """Load sktime model from MLflow format"""
+
     local_model_path = mlflow.artifacts.download_artifacts(model_uri)
 
+
+
     # Read flavor configuration
+
     model_config = Model.load(os.path.join(local_model_path, MLMODEL_FILE_NAME))
+
     flavor_conf = model_config.flavors[FLAVOR_NAME]
 
+
+
     # Load the pickled model
+
     model_path = os.path.join(local_model_path, flavor_conf["pickled_model"])
+
     with open(model_path, "rb") as f:
+
         return pickle.load(f)
 
 
+
+
+
 class SktimeModelWrapper:
+
     """PyFunc wrapper for sktime models"""
 
+
+
     def __init__(self, sktime_model):
+
         self.sktime_model = sktime_model
 
+
+
     def predict(self, context, model_input):
+
         """Predict using configuration DataFrame"""
+
         if len(model_input) != 1:
+
             raise ValueError("Configuration DataFrame must have exactly 1 row")
 
+
+
         config = model_input.iloc[0].to_dict()
+
         predict_method = config.get("predict_method", "predict")
 
+
+
         if predict_method == "predict":
+
             fh = config.get("fh", None)
+
             X = config.get("X", None)
+
             return self.sktime_model.predict(fh=fh, X=X)
 
+
+
         elif predict_method == "predict_interval":
+
             fh = config.get("fh", None)
+
             X = config.get("X", None)
+
             coverage = config.get("coverage", 0.9)
+
             return self.sktime_model.predict_interval(fh=fh, X=X, coverage=coverage)
 
+
+
         else:
+
             raise ValueError(f"Unsupported predict_method: {predict_method}")
 
 
+
+
+
 def _load_pyfunc(path):
+
     """Load model as PyFunc"""
+
     model = load_model(path)
+
     return SktimeModelWrapper(model)
 ```
 
@@ -583,37 +890,70 @@ python
 
 ```
 import mlflow
+
 import pandas as pd
+
 from sktime.forecasting.naive import NaiveForecaster
+
 from sktime.datasets import load_longley
 
+
+
 # Train model
+
 y, X = load_longley()
+
 forecaster = NaiveForecaster()
+
 forecaster.fit(y, X=X)
 
+
+
 # Log with custom flavor
+
 with mlflow.start_run():
+
     model_info = custom_sktime_flavor.log_model(
+
         sktime_model=forecaster, artifact_path="custom_forecaster"
+
     )
 
+
+
 # Load and use natively
+
 loaded_model = custom_sktime_flavor.load_model(model_info.model_uri)
+
 native_predictions = loaded_model.predict(fh=[1, 2, 3])
 
+
+
 # Load as PyFunc for serving
+
 loaded_pyfunc = mlflow.pyfunc.load_model(model_info.model_uri)
 
+
+
 # Create configuration for PyFunc prediction
+
 config_df = pd.DataFrame([
+
     {
+
         "predict_method": "predict_interval",
+
         "fh": [1, 2, 3, 4],
+
         "coverage": [0.9, 0.95],
+
         "X": X.tail(4).values.tolist(),  # JSON serializable
+
     }
+
 ])
+
+
 
 pyfunc_predictions = loaded_pyfunc.predict(config_df)
 ```
@@ -624,6 +964,7 @@ bash
 
 ```
 # Serve your custom flavor model
+
 mlflow models serve -m runs:/RUN_ID/custom_forecaster --host 127.0.0.1 --port 5000
 ```
 
@@ -631,15 +972,26 @@ python
 
 ```
 # Request predictions from served model
+
 import requests
+
 import pandas as pd
+
+
 
 config_df = pd.DataFrame([{"predict_method": "predict", "fh": [1, 2, 3, 4]}])
 
+
+
 response = requests.post(
+
     "http://127.0.0.1:5000/invocations",
+
     json={"dataframe_split": config_df.to_dict(orient="split")},
+
 )
+
+
 
 predictions = response.json()
 ```
@@ -668,28 +1020,51 @@ python
 
 ```
 import mlflow
+
 import community_flavor
 
+
+
 # 1. Train your model
+
 model = SomeFrameworkModel()
+
 model.fit(training_data)
 
+
+
 # 2. Log with MLflow
+
 with mlflow.start_run():
+
     community_flavor.log_model(
+
         model=model,
+
         artifact_path="model",
+
         # Framework-specific parameters
+
         serialization_format="pickle",
+
         custom_config={"param": "value"},
+
     )
 
+
+
 # 3. Load for inference
+
 loaded_model = community_flavor.load_model(model_uri)
+
 predictions = loaded_model.predict(new_data)
 
+
+
 # 4. Load as PyFunc for generic serving
+
 pyfunc_model = community_flavor.pyfunc.load_model(model_uri)
+
 generic_predictions = pyfunc_model.predict(input_dataframe)
 ```
 
@@ -700,20 +1075,36 @@ python
 ```
 import pandas as pd
 
+
+
 # Many community flavors use configuration DataFrames
+
 # for complex inference parameters
+
 config_df = pd.DataFrame([
+
     {
+
         "predict_method": "predict_interval",  # What type of prediction
+
         "fh": [1, 2, 3, 4],  # Forecast horizon
+
         "coverage": [0.9, 0.95],  # Confidence intervals
+
         "X": exogenous_data.tolist(),  # Additional features
+
         "custom_param": "value",  # Framework-specific options
+
     }
+
 ])
 
+
+
 # Use configuration with PyFunc model
+
 pyfunc_model = community_flavor.pyfunc.load_model(model_uri)
+
 predictions = pyfunc_model.predict(config_df)
 ```
 
@@ -723,29 +1114,53 @@ text
 
 ```
 # 1. Register model in MLflow Model Registry
+
 mlflow.register_model(
+
     model_uri="runs:/RUN_ID/model",
+
     name="production_forecaster"
+
 )
+
+
 
 # 2. Transition to production stage
+
 client = mlflow.MlflowClient()
+
 client.transition_model_version_stage(
+
     name="production_forecaster",
+
     version=1,
+
     stage="Production"
+
 )
 
+
+
 # 3. Serve model
+
 # Option A: Local serving
+
 mlflow models serve \
+
   -m "models:/production_forecaster/Production" \
+
   --host 0.0.0.0 --port 5000
 
+
+
 # Option B: Cloud deployment (Azure ML example)
+
 mlflow deployments create \
+
   -t azureml \
+
   -m "models:/production_forecaster/Production" \
+
   --name forecaster-service
 ```
 
@@ -765,17 +1180,29 @@ python
 
 ```
 # Efficient serialization for large models
+
 def save_model(model, path, serialization_format="pickle"):
+
     if serialization_format == "joblib":
+
         # Use joblib for sklearn-compatible models
+
         import joblib
 
+
+
         joblib.dump(model, os.path.join(path, "model.joblib"))
+
     elif serialization_format == "cloudpickle":
+
         # Use cloudpickle for complex models with custom objects
+
         import cloudpickle
 
+
+
         with open(os.path.join(path, "model.pkl"), "wb") as f:
+
             cloudpickle.dump(model, f)
 ```
 
@@ -785,13 +1212,21 @@ python
 
 ```
 def load_model(model_uri):
+
     try:
+
         # Attempt to load model
+
         return _load_model_internal(model_uri)
+
     except Exception as e:
+
         raise mlflow.exceptions.MlflowException(
+
             f"Failed to load {FLAVOR_NAME} model. "
+
             f"Ensure model was saved with compatible version. Error: {str(e)}"
+
         )
 ```
 
@@ -807,14 +1242,23 @@ def load_model(model_uri):
 
    ```
    mlflow-myframework/
+
    ├── setup.py
+
    ├── README.md
+
    ├── mlflow_myframework/
+
    │   ├── __init__.py
+
    │   └── flavor.py
+
    ├── examples/
+
    │   └── example_usage.ipynb
+
    └── tests/
+
        └── test_flavor.py
    ```
 

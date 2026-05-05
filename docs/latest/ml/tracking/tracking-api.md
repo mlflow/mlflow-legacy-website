@@ -15,9 +15,14 @@ python
 ```
 import mlflow
 
+
+
 mlflow.autolog()  # That's it!
 
+
+
 # Your existing training code works unchanged
+
 model.fit(X_train, y_train)
 ```
 
@@ -46,20 +51,36 @@ python
 ```
 import mlflow
 
+
+
 with mlflow.start_run():
+
     # Log parameters
+
     mlflow.log_param("learning_rate", 0.01)
+
     mlflow.log_param("batch_size", 32)
 
+
+
     # Your training logic here
+
     for epoch in range(num_epochs):
+
         train_loss = train_model()
+
         val_loss = validate_model()
 
+
+
         # Log metrics with step tracking
+
         mlflow.log_metrics({"train_loss": train_loss, "val_loss": val_loss}, step=epoch)
 
+
+
     # Log final model
+
     mlflow.sklearn.log_model(model, name="model")
 ```
 
@@ -67,17 +88,29 @@ java
 
 ```
 MlflowClient client = new MlflowClient();
+
 RunInfo run = client.createRun();
 
+
+
 // Log parameters
+
 client.logParam(run.getRunId(), "learning_rate", "0.01");
+
 client.logParam(run.getRunId(), "batch_size", "32");
 
+
+
 // Log metrics with timesteps
+
 for (int epoch = 0; epoch < numEpochs; epoch++) {
+
     double trainLoss = trainModel();
+
     client.logMetric(run.getRunId(), "train_loss", trainLoss,
+
                     System.currentTimeMillis(), epoch);
+
 }
 ```
 
@@ -86,16 +119,28 @@ r
 ```
 library(mlflow)
 
+
+
 with(mlflow_start_run(), {
+
   # Log parameters
+
   mlflow_log_param("learning_rate", 0.01)
+
   mlflow_log_param("batch_size", 32)
 
+
+
   # Training loop
+
   for (epoch in 1:num_epochs) {
+
     train_loss <- train_model()
+
     mlflow_log_metric("train_loss", train_loss, step = epoch)
+
   }
+
 })
 ```
 
@@ -169,9 +214,7 @@ with(mlflow_start_run(), {
 | **Dataset Tracking**        | ✅ Full            | ✅ Basic         | ✅ Basic         | ✅ Basic         |
 | **Search & Query**          | ✅ Advanced        | ✅ Basic         | ✅ Basic         | ✅ Full          |
 
-api-parity
-
-The Python API provides the most comprehensive feature set. Java and R APIs offer core functionality with ongoing feature additions in each release.
+:::note api-parity The Python API provides the most comprehensive feature set. Java and R APIs offer core functionality with ongoing feature additions in each release. :::
 
 ## Advanced Tracking Patterns[​](#advanced-tracking-patterns "Direct link to Advanced Tracking Patterns")
 
@@ -188,27 +231,50 @@ python
 ```
 import mlflow
 
+
+
 # Create an external model for tracking without storing artifacts in MLflow
+
 model = mlflow.create_external_model(
+
     name="chatbot_agent",
+
     model_type="agent",
+
     tags={"version": "v1.0", "environment": "production"},
+
 )
 
+
+
 # Log parameters specific to this model
+
 mlflow.log_model_params({"temperature": "0.7", "max_tokens": "1000"}, model_id=model.model_id)
 
+
+
 # Set as active model for automatic trace linking
+
 mlflow.set_active_model(model_id=model.model_id)
 
 
+
+
+
 @mlflow.trace
+
 def chat_with_agent(message):
+
     # This trace will be automatically linked to the active model
+
     return agent.chat(message)
 
 
+
+
+
 # Traces are now linked to your external model
+
 traces = mlflow.search_traces(model_id=model.model_id)
 ```
 
@@ -220,37 +286,69 @@ python
 
 ```
 import mlflow
+
 from mlflow.entities import LoggedModelStatus
 
+
+
 # Initialize model in PENDING state
+
 model = mlflow.initialize_logged_model(
+
     name="custom_neural_network",
+
     model_type="neural_network",
+
     tags={"architecture": "transformer", "dataset": "custom"},
+
 )
 
+
+
 try:
+
     # Custom model preparation logic
+
     train_model()
+
     validate_model()
 
+
+
     # Save model artifacts using standard MLflow model logging
+
     mlflow.pytorch.log_model(
+
         pytorch_model=model_instance,
+
         name="model",
+
         model_id=model.model_id,  # Link to the logged model
+
     )
 
+
+
     # Finalize model as READY
+
     mlflow.finalize_logged_model(model.model_id, LoggedModelStatus.READY)
 
+
+
 except Exception as e:
+
     # Mark model as FAILED if issues occur
+
     mlflow.finalize_logged_model(model.model_id, LoggedModelStatus.FAILED)
+
     raise
 
+
+
 # Retrieve and work with the logged model
+
 final_model = mlflow.get_logged_model(model.model_id)
+
 print(f"Model {final_model.name} is {final_model.status}")
 ```
 
@@ -260,22 +358,39 @@ python
 
 ```
 # Find all production-ready transformer models
+
 production_models = mlflow.search_logged_models(
+
     filter_string="tags.environment = 'production' AND model_type = 'transformer'",
+
     order_by=[{"field_name": "creation_time", "ascending": False}],
+
     output_format="pandas",
+
 )
+
+
 
 # Search for models with specific performance metrics
+
 high_accuracy_models = mlflow.search_logged_models(
+
     filter_string="metrics.accuracy > 0.95",
+
     datasets=[{"dataset_name": "test_set"}],  # Only consider test set metrics
+
     max_results=10,
+
 )
 
+
+
 # Get the most recently logged model in current session
+
 latest_model = mlflow.last_logged_model()
+
 if latest_model:
+
     print(f"Latest model: {latest_model.name} (ID: {latest_model.model_id})")
 ```
 
@@ -287,18 +402,31 @@ python
 
 ```
 import time
+
 from datetime import datetime
 
+
+
 # Log with custom step (training iteration/epoch)
+
 for epoch in range(100):
+
     loss = train_epoch()
+
     mlflow.log_metric("train_loss", loss, step=epoch)
 
+
+
 # Log with custom timestamp
+
 now = int(time.time() * 1000)  # MLflow expects milliseconds
+
 mlflow.log_metric("inference_latency", latency, timestamp=now)
 
+
+
 # Log with both step and timestamp
+
 mlflow.log_metric("gpu_utilization", gpu_usage, step=epoch, timestamp=now)
 ```
 
@@ -316,18 +444,31 @@ python
 
 ```
 # Method 1: Environment variables
+
 import os
+
+
 
 os.environ["MLFLOW_EXPERIMENT_NAME"] = "fraud-detection-v2"
 
+
+
 # Method 2: Explicit experiment setting
+
 mlflow.set_experiment("hyperparameter-tuning")
 
+
+
 # Method 3: Create with custom configuration
+
 experiment_id = mlflow.create_experiment(
+
     "production-models",
+
     artifact_location="s3://my-bucket/experiments/",
+
     tags={"team": "data-science", "environment": "prod"},
+
 )
 ```
 
@@ -339,37 +480,69 @@ python
 
 ```
 # Parent run for the entire experiment
+
 with mlflow.start_run(run_name="hyperparameter_sweep") as parent_run:
+
     mlflow.log_param("search_strategy", "random")
 
+
+
     best_score = 0
+
     best_params = {}
 
+
+
     # Child runs for each parameter combination
+
     for lr in [0.001, 0.01, 0.1]:
+
         for batch_size in [16, 32, 64]:
+
             with mlflow.start_run(nested=True, run_name=f"lr_{lr}_bs_{batch_size}") as child_run:
+
                 mlflow.log_params({"learning_rate": lr, "batch_size": batch_size})
 
+
+
                 # Train and evaluate
+
                 model = train_model(lr, batch_size)
+
                 score = evaluate_model(model)
+
                 mlflow.log_metric("accuracy", score)
 
+
+
                 # Track best configuration in parent
+
                 if score > best_score:
+
                     best_score = score
+
                     best_params = {"learning_rate": lr, "batch_size": batch_size}
 
+
+
     # Log best results to parent run
+
     mlflow.log_params(best_params)
+
     mlflow.log_metric("best_accuracy", best_score)
 
+
+
 # Query child runs
+
 child_runs = mlflow.search_runs(
+
     filter_string=f"tags.mlflow.parentRunId = '{parent_run.info.run_id}'"
+
 )
+
 print("Child run results:")
+
 print(child_runs[["run_id", "params.learning_rate", "metrics.accuracy"]])
 ```
 
@@ -387,16 +560,27 @@ python
 
 ```
 configs = [
+
     {"model": "RandomForest", "n_estimators": 100},
+
     {"model": "XGBoost", "max_depth": 6},
+
     {"model": "LogisticRegression", "C": 1.0},
+
 ]
 
+
+
 for config in configs:
+
     with mlflow.start_run(run_name=config["model"]):
+
         mlflow.log_params(config)
+
         model = train_model(config)
+
         score = evaluate_model(model)
+
         mlflow.log_metric("f1_score", score)
 ```
 
@@ -408,24 +592,46 @@ python
 import multiprocessing as mp
 
 
+
+
+
 def train_with_config(config):
+
     # Set tracking URI in each process (required for spawn method)
+
     mlflow.set_tracking_uri("http://localhost:5000")
+
     mlflow.set_experiment("parallel-training")
 
+
+
     with mlflow.start_run():
+
         mlflow.log_params(config)
+
         model = train_model(config)
+
         score = evaluate_model(model)
+
         mlflow.log_metric("accuracy", score)
+
         return score
 
 
+
+
+
 if __name__ == "__main__":
+
     configs = [{"lr": lr, "bs": bs} for lr in [0.01, 0.1] for bs in [16, 32]]
 
+
+
     with mp.Pool(processes=4) as pool:
+
         results = pool.map(train_with_config, configs)
+
+
 
     print(f"Completed {len(results)} experiments")
 ```
@@ -436,28 +642,51 @@ python
 
 ```
 import threading
+
 from concurrent.futures import ThreadPoolExecutor
 
 
+
+
+
 def train_worker(config):
+
     with mlflow.start_run(nested=True):
+
         mlflow.log_params(config)
+
         model = train_model(config)
+
         score = evaluate_model(model)
+
         mlflow.log_metric("accuracy", score)
+
         return score
 
 
+
+
+
 # Start parent run
+
 with mlflow.start_run(run_name="threaded_experiment"):
+
     configs = [{"lr": 0.01, "epochs": e} for e in range(10, 101, 10)]
 
+
+
     with ThreadPoolExecutor(max_workers=4) as executor:
+
         futures = [executor.submit(train_worker, config) for config in configs]
+
         results = [future.result() for future in futures]
 
+
+
     # Log summary to parent run
+
     mlflow.log_metric("avg_accuracy", sum(results) / len(results))
+
     mlflow.log_metric("max_accuracy", max(results))
 ```
 
@@ -469,22 +698,40 @@ python
 
 ```
 with mlflow.start_run():
+
     # Descriptive tags for filtering
+
     mlflow.set_tags({
+
         "model_family": "transformer",
+
         "dataset_version": "v2.1",
+
         "environment": "production",
+
         "team": "nlp-research",
+
         "gpu_type": "V100",
+
         "experiment_phase": "hyperparameter_tuning",
+
     })
 
+
+
     # Special notes tag for documentation
+
     mlflow.set_tag(
+
         "mlflow.note.content",
+
         "Baseline transformer model with attention dropout. "
+
         "Testing different learning rate schedules.",
+
     )
+
+
 
     # Training code here...
 ```
@@ -495,11 +742,17 @@ python
 
 ```
 # Find all transformer experiments
+
 transformer_runs = mlflow.search_runs(filter_string="tags.model_family = 'transformer'")
 
+
+
 # Find production-ready models
+
 prod_models = mlflow.search_runs(
+
     filter_string="tags.environment = 'production' AND metrics.accuracy > 0.95"
+
 )
 ```
 
@@ -518,9 +771,7 @@ MLflow automatically sets several system tags to capture execution context:
 | `mlflow.docker.image.name` | Docker image used                        | Docker environments    |
 | `mlflow.note.content`      | **User-editable** description            | Manual only            |
 
-pro-tip
-
-Use `mlflow.note.content` to document experiment insights, hypotheses, or results directly in the MLflow UI. This tag appears in a dedicated Notes section on the run page.
+:::tip pro-tip Use `mlflow.note.content` to document experiment insights, hypotheses, or results directly in the MLflow UI. This tag appears in a dedicated Notes section on the run page. :::
 
 ### Integration with Auto Logging[​](#integration-with-auto-logging "Direct link to Integration with Auto Logging")
 
@@ -530,42 +781,79 @@ python
 
 ```
 import mlflow
+
 from sklearn.ensemble import RandomForestClassifier
+
 from sklearn.metrics import classification_report
 
+
+
 # Enable auto logging
+
 mlflow.autolog()
 
+
+
 with mlflow.start_run():
+
     # Auto logging captures model training automatically
+
     model = RandomForestClassifier(n_estimators=100)
+
     model.fit(X_train, y_train)
 
+
+
     # Add custom metrics and artifacts
+
     predictions = model.predict(X_test)
 
+
+
     # Log custom evaluation metrics
+
     report = classification_report(y_test, predictions, output_dict=True)
+
     mlflow.log_metrics({
+
         "precision_macro": report["macro avg"]["precision"],
+
         "recall_macro": report["macro avg"]["recall"],
+
         "f1_macro": report["macro avg"]["f1-score"],
+
     })
+
+
 
     # Log custom artifacts
+
     feature_importance = pd.DataFrame({
+
         "feature": feature_names,
+
         "importance": model.feature_importances_,
+
     })
+
     feature_importance.to_csv("feature_importance.csv")
+
     mlflow.log_artifact("feature_importance.csv")
 
+
+
     # Access the auto-logged run for additional processing
+
     current_run = mlflow.active_run()
+
     print(f"Auto-logged run ID: {current_run.info.run_id}")
 
+
+
 # Access the completed run
+
 last_run = mlflow.last_active_run()
+
 print(f"Final run status: {last_run.info.status}")
 ```
 

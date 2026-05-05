@@ -29,6 +29,7 @@ bash
 
 ```
 pip install 'mlflow[genai]>=3.10.0'
+
 mlflow server
 ```
 
@@ -36,12 +37,15 @@ bash
 
 ```
 uv add 'mlflow[genai]>=3.10.0'
+
 uv run mlflow server
 ```
 
-What is the GenAI extra?
+:::tip What is the GenAI extra?
 
 The `[genai]` extra enables other powerful features such as [AI Gateway](/docs/latest/genai/governance/ai-gateway.md), [Automatic Evaluation](/docs/latest/genai/eval-monitor/automatic-evaluations.md), and [Prompt Optimization](/docs/latest/genai/prompt-registry/optimize-prompts.md). It is recommended to start your MLflow server with the extra installed, even if you don't need cost tracking.
+
+:::
 
 info
 
@@ -71,24 +75,44 @@ python
 ```
 import mlflow
 
+
+
 # Get the most recent trace
+
 last_trace_id = mlflow.get_last_active_trace_id()
+
 trace = mlflow.get_trace(trace_id=last_trace_id)
 
+
+
 # Access token usage
+
 total_usage = trace.info.token_usage
+
 if total_usage:
+
     print("== Total token usage: ==")
+
     print(f"  Input tokens: {total_usage['input_tokens']}")
+
     print(f"  Output tokens: {total_usage['output_tokens']}")
+
     print(f"  Total tokens: {total_usage['total_tokens']}")
 
+
+
 # Access cost (requires MLflow >= 3.10.0 and LiteLLM)
+
 total_cost = trace.info.cost
+
 if total_cost:
+
     print("\n== Total cost (USD): ==")
+
     print(f"  Input cost: ${total_cost['input_cost']:.6f}")
+
     print(f"  Output cost: ${total_cost['output_cost']:.6f}")
+
     print(f"  Total cost: ${total_cost['total_cost']:.6f}")
 ```
 
@@ -97,23 +121,42 @@ python
 ```
 import mlflow
 
+
+
 # Get the most recent trace
+
 last_trace_id = mlflow.get_last_active_trace_id()
+
 trace = mlflow.get_trace(trace_id=last_trace_id)
 
+
+
 # Access token usage and cost for each LLM call
+
 print("== Token usage and cost for each LLM call: ==")
+
 for span in trace.data.spans:
+
     usage = span.get_attribute("mlflow.chat.tokenUsage")
+
     cost = span.llm_cost
+
     print(f"{span.name}:")
+
     if usage:
+
         print(f"  Input tokens: {usage['input_tokens']}")
+
         print(f"  Output tokens: {usage['output_tokens']}")
+
         print(f"  Total tokens: {usage['total_tokens']}")
+
     if cost:
+
         print(f"  Input cost: ${cost['input_cost']:.6f}")
+
         print(f"  Output cost: ${cost['output_cost']:.6f}")
+
         print(f"  Total cost: ${cost['total_cost']:.6f}")
 ```
 
@@ -128,26 +171,48 @@ typescript
 ```
 import * as mlflow from "mlflow-tracing";
 
+
+
 // Flush any pending spans then fetch the most recent trace
+
 await mlflow.flushTraces();
+
 const lastTraceId = mlflow.getLastActiveTraceId();
 
+
+
 if (lastTraceId) {
+
   const client = new mlflow.MlflowClient({ trackingUri: "http://localhost:5000" });
+
   const trace = await client.getTrace(lastTraceId);
 
+
+
   // Access token usage
+
   console.log("== Total token usage: ==");
+
   console.log(trace.info.tokenUsage); // { input_tokens, output_tokens, total_tokens }
 
+
+
   // Per-span usage
+
   console.log("\n== Usage for each LLM call: ==");
+
   for (const span of trace.data.spans) {
+
     const usage = span.attributes?.["mlflow.chat.tokenUsage"];
+
     if (usage) {
+
       console.log(`${span.name}:`, usage);
+
     }
+
   }
+
 }
 ```
 
@@ -157,23 +222,41 @@ bash
 
 ```
 == Total token usage: ==
+
   Input tokens: 84
+
   Output tokens: 22
+
   Total tokens: 106
 
+
+
 == Total cost (USD): ==
+
   Input cost: $0.000013
+
   Output cost: $0.000013
+
   Total cost: $0.000026
 
+
+
 == Token usage for each LLM call: ==
+
 Completions_1:
+
   Input tokens: 45
+
   Output tokens: 14
+
   Total tokens: 59
+
 Completions_2:
+
   Input tokens: 39
+
   Output tokens: 8
+
   Total tokens: 47
 ```
 
@@ -217,32 +300,62 @@ python
 import mlflow
 
 
+
+
+
 @mlflow.trace
+
 def my_llm_call():
+
     # Get the current span
+
     span = mlflow.get_current_active_span()
+
+
 
     # Your LLM call logic here...
 
+
+
     # Manually set token usage
+
     span.set_attribute(
+
         "mlflow.chat.tokenUsage",
+
         {
+
             "input_tokens": 100,
+
             "output_tokens": 50,
+
             "total_tokens": 150,
+
         },
+
     )
 
+
+
     # Manually set cost (in USD)
+
     span.set_attribute(
+
         "mlflow.llm.cost",
+
         {
+
             "input_cost": 0.0001,
+
             "output_cost": 0.0002,
+
             "total_cost": 0.0003,
+
         },
+
     )
+
+
 
     return "response"
 ```

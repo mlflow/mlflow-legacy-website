@@ -55,23 +55,42 @@ python
 
 ```
 # Matches experiments with name equal to 'x'
+
 "attributes.name = 'x'"  # or "name = 'x'"
 
+
+
 # Matches experiments with name starting with 'x'
+
 "attributes.name LIKE 'x%'"
 
+
+
 # Matches experiments with 'group' tag value not equal to 'x'
+
 "tags.group != 'x'"
 
+
+
 # Matches experiments with 'group' tag value containing 'x' or 'X'
+
 "tags.group ILIKE '%x%'"
 
+
+
 # Matches experiments with name starting with 'x' and 'group' tag value equal to 'y'
+
 "attributes.name LIKE 'x%' AND tags.group = 'y'"
 
+
+
 # Matches experiments that have a 'group' tag
+
 "tags.group IS NOT NULL"
 
+
+
 # Matches experiments that do NOT have a 'deprecated' tag
+
 "tags.deprecated IS NULL"
 ```

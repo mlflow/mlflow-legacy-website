@@ -74,9 +74,13 @@ bash
 
 ```
 $ mlflow deployments create -t sagemaker -m runs:/<run_id>/model \
+
     -C region_name=<your-region> \
+
     -C instance-type=ml.m4.xlarge \
+
     -C instance-count=1 \
+
     -C env='{"DISABLE_NGINX": "true"}''
 ```
 

@@ -85,6 +85,8 @@ python
 ```
 import mlflow
 
+
+
 mlflow.set_experiment("my-experiment")
 ```
 
@@ -95,10 +97,16 @@ python
 ```
 from mlflow.genai.scorers import ToolCallCorrectness, ScorerSamplingConfig
 
+
+
 tool_judge = ToolCallCorrectness(model="gateway:/my-llm-endpoint")
+
 registered_tool_judge = tool_judge.register(name="tool_call_correctness")
+
 registered_tool_judge.start(
+
     sampling_config=ScorerSamplingConfig(sample_rate=0.5),  # Evaluate 50% of traces
+
 )
 ```
 
@@ -109,14 +117,24 @@ python
 ```
 from mlflow.genai.scorers import ConversationalGuidelines, ScorerSamplingConfig
 
+
+
 frustration_judge = ConversationalGuidelines(
+
     name="user_frustration",
+
     guidelines="The user should not express frustration, confusion, or dissatisfaction during the conversation.",
+
     model="gateway:/my-llm-endpoint",
+
 )
+
 registered_frustration_judge = frustration_judge.register(name="user_frustration")
+
 registered_frustration_judge.start(
+
     sampling_config=ScorerSamplingConfig(sample_rate=1.0),  # Evaluate all conversations
+
 )
 ```
 
@@ -127,8 +145,12 @@ python
 ```
 from mlflow.genai.scorers import get_scorer, ScorerSamplingConfig
 
+
+
 judge = get_scorer(name="tool_call_correctness")
+
 judge.update(sampling_config=ScorerSamplingConfig(sample_rate=0.3))  # Change sample rate
+
 judge.stop()  # Or, disable the judge
 ```
 
@@ -163,9 +185,13 @@ python
 
 ```
 # Only evaluate successful traces
+
 filter_string = "trace.status = 'OK'"
 
+
+
 # Only evaluate traces from production environment
+
 filter_string = "metadata.environment = 'production'"
 ```
 

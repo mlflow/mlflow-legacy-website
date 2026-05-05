@@ -20,23 +20,41 @@ python
 
 ```
 import numpy as np
+
 import pandas as pd
 
+
+
 import mlflow
+
 from mlflow.models.signature import infer_signature, set_signature
 
 
+
+
+
 def report_signature_info(input_data, output_data=None, params=None):
+
   inferred_signature = infer_signature(input_data, output_data, params)
 
+
+
   report = f"""
+
 The input data: 
+
 	{input_data}.
+
 The data is of type: {type(input_data)}.
+
 The inferred signature is:
 
+
+
 {inferred_signature}
+
 """
+
   print(report)
 ```
 
@@ -52,6 +70,8 @@ python
 
 ```
 # List of strings
+
+
 
 report_signature_info(["a", "list", "of", "strings"])
 ```
@@ -76,6 +96,8 @@ python
 ```
 # List of floats
 
+
+
 report_signature_info([np.float32(0.117), np.float32(1.99)])
 ```
 
@@ -98,7 +120,9 @@ python
 
 ```
 # Adding a column header to a list of doubles
+
 my_data = pd.DataFrame({"input_data": [np.float64(0.117), np.float64(1.99)]})
+
 report_signature_info(my_data)
 ```
 
@@ -123,6 +147,7 @@ python
 
 ```
 # List of Dictionaries
+
 report_signature_info([{"a": "a1", "b": "b1"}, {"a": "a2", "b": "b2"}])
 ```
 
@@ -145,6 +170,7 @@ python
 
 ```
 # List of Arrays of strings
+
 report_signature_info([["a", "b", "c"], ["d", "e", "f"]])
 ```
 
@@ -167,9 +193,13 @@ python
 
 ```
 # List of Arrays of Dictionaries
+
 report_signature_info([
+
   [{"a": "a", "b": "b"}, {"a": "a", "b": "b"}],
+
   [{"a": "a", "b": "b"}, {"a": "a", "b": "b"}],
+
 ])
 ```
 
@@ -202,6 +232,7 @@ python
 
 ```
 # List of integers
+
 report_signature_info([1, 2, 3])
 ```
 
@@ -229,6 +260,7 @@ python
 
 ```
 # List of Booleans
+
 report_signature_info([True, False, False, False, True])
 ```
 
@@ -251,6 +283,7 @@ python
 
 ```
 # List of Datetimes
+
 report_signature_info([np.datetime64("2023-12-24 11:59:59"), np.datetime64("2023-12-25 00:00:00")])
 ```
 
@@ -273,6 +306,7 @@ python
 
 ```
 # Complex list of Dictionaries
+
 report_signature_info([{"a": "b", "b": [1, 2, 3], "c": {"d": [4, 5, 6]}}])
 ```
 
@@ -296,11 +330,19 @@ python
 ```
 # Pandas DF input
 
+
+
 data = [
+
   {"a": "a", "b": ["a", "b", "c"], "c": {"d": 1, "e": 0.1}, "f": [{"g": "g"}, {"h": 1}]},
+
   {"b": ["a", "b"], "c": {"d": 2, "f": "f"}, "f": [{"g": "g"}]},
+
 ]
+
 data = pd.DataFrame(data)
+
+
 
 report_signature_info(data)
 ```
@@ -334,7 +376,9 @@ python
 
 ```
 class MyModel(mlflow.pyfunc.PythonModel):
+
   def predict(self, context, model_input, params=None):
+
       return model_input
 ```
 
@@ -342,6 +386,8 @@ python
 
 ```
 data = [{"a": ["a", "b", "c"], "b": "b", "c": {"d": "d"}}, {"a": ["a"], "c": {"d": "d", "e": "e"}}]
+
+
 
 report_signature_info(data)
 ```
@@ -365,17 +411,30 @@ python
 
 ```
 # Generate a prediction that will serve as the model output example for signature inference
+
 model_output = MyModel().predict(context=None, model_input=data)
 
+
+
 with mlflow.start_run():
+
   model_info = mlflow.pyfunc.log_model(
+
       python_model=MyModel(),
+
       name="test_model",
+
       signature=infer_signature(model_input=data, model_output=model_output),
+
   )
 
+
+
 loaded_model = mlflow.pyfunc.load_model(model_info.model_uri)
+
 prediction = loaded_model.predict(data)
+
+
 
 prediction
 ```
@@ -437,6 +496,8 @@ python
 ```
 # Using the model while not providing an optional input (note the output return structure and the non existent optional columns)
 
+
+
 loaded_model.predict([{"a": ["a", "b", "c"], "c": {"d": "d"}}])
 ```
 
@@ -448,7 +509,10 @@ python
 
 ```
 # Using the model while omitting the input of required fields (this will raise an Exception from schema enforcement,
+
 # stating that the required fields "a" and "c" are missing)
+
+
 
 loaded_model.predict([{"b": "b"}])
 ```
@@ -522,22 +586,42 @@ python
 # Updating an existing model that wasn't saved with a signature
 
 
+
+
+
 class MyTypeCheckerModel(mlflow.pyfunc.PythonModel):
+
   def predict(self, context, model_input, params=None):
+
       print(type(model_input))
+
       print(model_input)
+
       if not isinstance(model_input, (pd.DataFrame, list)):
+
           raise ValueError("The input must be a list.")
+
       return "Input is valid."
 
 
+
+
+
 with mlflow.start_run():
+
   model_info = mlflow.pyfunc.log_model(
+
       python_model=MyTypeCheckerModel(),
+
       name="test_model",
+
   )
 
+
+
 loaded_model = mlflow.pyfunc.load_model(model_info.model_uri)
+
+
 
 loaded_model.metadata.signature
 ```
@@ -546,6 +630,7 @@ python
 
 ```
 test_data = [{"a": "we are expecting strings", "b": "and only strings"}, [1, 2, 3]]
+
 loaded_model.predict(test_data)
 ```
 
@@ -575,7 +660,11 @@ python
 ```
 expected_data_structure = [{"a": "string", "b": "another string"}, {"a": "string"}]
 
+
+
 signature = infer_signature(expected_data_structure, loaded_model.predict(expected_data_structure))
+
+
 
 set_signature(model_info.model_uri, signature)
 ```
@@ -589,6 +678,8 @@ python
 
 ```
 loaded_with_signature = mlflow.pyfunc.load_model(model_info.model_uri)
+
+
 
 loaded_with_signature.metadata.signature
 ```

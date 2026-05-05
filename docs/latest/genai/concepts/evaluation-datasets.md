@@ -36,22 +36,23 @@ Links to MLflow experiments enable tracking which datasets were used for which m
 
 ## Dataset Object Schema[​](#dataset-object-schema "Direct link to Dataset Object Schema")
 
-The [`mlflow.entities.EvaluationDataset()`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.EvaluationDataset) object contains the following fields:
+The [`mlflow.genai.datasets.EvaluationDataset()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset) object returned by [`mlflow.genai.datasets.create_dataset()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.datasets.create_dataset) and [`mlflow.genai.datasets.get_dataset()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.datasets.get_dataset) exposes the following fields:
 
-| Field              | Type                  | Description                                                              |
-| ------------------ | --------------------- | ------------------------------------------------------------------------ |
-| `dataset_id`       | `str`                 | Unique identifier for the dataset (format: `d-{32 hex chars}`)           |
-| `name`             | `str`                 | Human-readable name for the dataset                                      |
-| `digest`           | `str`                 | Content hash for data integrity verification                             |
-| `records`          | `list[DatasetRecord]` | The actual test data records containing inputs and expectations          |
-| `schema`           | `Optional[str]`       | JSON string describing the structure of records (automatically computed) |
-| `profile`          | `Optional[str]`       | JSON string containing statistical information about the dataset         |
-| `tags`             | `dict[str, str]`      | Key-value pairs for organizing and categorizing datasets                 |
-| `experiment_ids`   | `list[str]`           | List of MLflow experiment IDs this dataset is associated with            |
-| `created_time`     | `int`                 | Timestamp when the dataset was created (milliseconds)                    |
-| `last_update_time` | `int`                 | Timestamp of the last modification (milliseconds)                        |
-| `created_by`       | `Optional[str]`       | User who created the dataset (auto-detected from tags)                   |
-| `last_updated_by`  | `Optional[str]`       | User who last modified the dataset                                       |
+| Field              | Type             | Description                                                              |
+| ------------------ | ---------------- | ------------------------------------------------------------------------ |
+| `dataset_id`       | `str`            | Unique identifier for the dataset (format: `d-{32 hex chars}`)           |
+| `name`             | `str`            | Human-readable name for the dataset                                      |
+| `digest`           | `str`            | Content hash for data integrity verification                             |
+| `schema`           | `Optional[str]`  | JSON string describing the structure of records (automatically computed) |
+| `profile`          | `Optional[str]`  | JSON string containing statistical information about the dataset         |
+| `tags`             | `dict[str, str]` | Key-value pairs for organizing and categorizing datasets                 |
+| `experiment_ids`   | `list[str]`      | List of MLflow experiment IDs this dataset is associated with            |
+| `created_time`     | `int`            | Timestamp when the dataset was created (milliseconds)                    |
+| `last_update_time` | `int`            | Timestamp of the last modification (milliseconds)                        |
+| `created_by`       | `Optional[str]`  | User who created the dataset (auto-detected from tags)                   |
+| `last_updated_by`  | `Optional[str]`  | User who last modified the dataset                                       |
+
+Records are fetched lazily — call [`mlflow.genai.datasets.EvaluationDataset.to_df()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset.to_df) to load them into a pandas `DataFrame`.
 
 ## Record Structure[​](#record-structure "Direct link to Record Structure")
 
@@ -61,30 +62,55 @@ json
 
 ```
 {
+
     "inputs": {
+
         "question": "What is the capital of France?",
+
         "context": "France is a country in Western Europe",
+
         "temperature": 0.7
+
     },
+
     "outputs": {
+
         "answer": "The capital of France is Paris."
+
     },
+
     "expectations": {
+
         "name": "expected_answer",
+
         "value": "Paris",
+
     },
+
     "source": {
+
         "source_type": "HUMAN",
+
         "source_data": {
+
             "annotator": "geography_expert@company.com",
+
             "annotation_date": "2024-08-07"
+
         }
+
     },
+
     "tags": {
+
         "category": "geography",
+
         "difficulty": "easy",
+
         "validated": "true"
+
     }
+
 }
 ```
 
@@ -98,7 +124,7 @@ json
 
 ### Record Identity and Deduplication[​](#record-identity-and-deduplication "Direct link to Record Identity and Deduplication")
 
-Records are uniquely identified by a **hash of their inputs**. When merging records with [`mlflow.entities.EvaluationDataset.merge_records()`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.EvaluationDataset.merge_records), if a record with identical inputs already exists, its expectations and tags are merged rather than creating a duplicate. This enables iterative refinement of test cases without data duplication.
+Records are uniquely identified by a **hash of their inputs**. When merging records with [`mlflow.genai.datasets.EvaluationDataset.merge_records()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset.merge_records), if a record with identical inputs already exists, its expectations and tags are merged rather than creating a duplicate. This enables iterative refinement of test cases without data duplication.
 
 ## Schema Evolution[​](#schema-evolution "Direct link to Schema Evolution")
 

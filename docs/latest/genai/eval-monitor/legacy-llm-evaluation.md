@@ -50,9 +50,11 @@ Update the metrics to use the new built-in or custom scorers offered by MLflow 3
 
 Execute the evaluation and make sure the results are as expected.
 
-Before you start the migration
+:::tip Before you start the migration
 
 Before starting the migration, we highly recommend you to visit the [Evaluation Guide](/docs/latest/genai/eval-monitor.md) and go through the [Quickstart](/docs/latest/genai/eval-monitor/quickstart.md) to get a sense of the new evaluation suite. Basic understanding of the concepts will help you to migrate your existing workload smoothly.
+
+:::
 
 ### 1. Wrap Your Model in a Function[​](#1-wrap-your-model-in-a-function "Direct link to 1. Wrap Your Model in a Function")
 
@@ -96,11 +98,17 @@ python
 
 ```
 # IMPORTANT: Load the model outside the predict_fn function. Otherwise the model will be loaded
+
 # for each input in the dataset and significantly slow down the evaluation.
+
 model = mlflow.pyfunc.load_model(model_uri)
 
 
+
+
+
 def predict_fn(question: str) -> str:
+
     return model.predict([question])[0]
 ```
 
@@ -180,17 +188,30 @@ python
 ```
 from mlflow.genai import make_judge
 
+
+
 answer_similarity = make_judge(
+
     name="answer_similarity",
+
     instructions=(
+
         "Evaluated on the degree of semantic similarity of the provided output to the expected answer.\n\n"
+
         "Output: {{ outputs }}\n\n"
+
         "Expected: {{ expectations }}"
+
     ),
+
     feedback_value_type=int,
+
 )
 
+
+
 # Pass the scorer to the evaluation API.
+
 mlflow.genai.evaluate(scorers=[answer_similarity, ...])
 ```
 
@@ -204,11 +225,17 @@ python
 
 ```
 @scorer
+
 def exact_match(outputs: dict, expectations: dict) -> bool:
+
     return outputs == expectations["expected_response"]
 
 
+
+
+
 # Pass the scorer to the evaluation API.
+
 mlflow.genai.evaluate(scorers=[exact_match, ...])
 ```
 
@@ -222,9 +249,13 @@ python
 
 ```
 mlflow.genai.evaluate(
+
     data=eval_data,
+
     predict_fn=predict_fn,
+
     scorers=[answer_similarity, exact_match, ...],
+
 )
 ```
 

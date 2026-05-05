@@ -21,14 +21,24 @@ python
 ```
 from mlflow.genai.scorers.phoenix import Hallucination
 
+
+
 scorer = Hallucination(model="openai:/gpt-4")
+
 feedback = scorer(
+
     inputs="What is the capital of France?",
+
     outputs="Paris is the capital of France.",
+
     expectations={"context": "France is a country in Europe. Its capital is Paris."},
+
 )
 
+
+
 print(feedback.value)  # "factual" or "hallucinated"
+
 print(feedback.metadata["score"])  # Numeric score
 ```
 
@@ -38,31 +48,57 @@ python
 
 ```
 import mlflow
+
 from mlflow.genai.scorers.phoenix import Hallucination, Relevance
 
+
+
 eval_dataset = [
+
     {
+
         "inputs": {"query": "What is MLflow?"},
+
         "outputs": "MLflow is an open-source AI engineering platform for agents and LLMs.",
+
         "expectations": {
+
             "context": "MLflow is an ML platform for experiment tracking and model deployment."
+
         },
+
     },
+
     {
+
         "inputs": {"query": "How do I track experiments?"},
+
         "outputs": "You can use mlflow.start_run() to begin tracking experiments.",
+
         "expectations": {
+
             "context": "MLflow provides APIs like mlflow.start_run() for experiment tracking."
+
         },
+
     },
+
 ]
 
+
+
 results = mlflow.genai.evaluate(
+
     data=eval_dataset,
+
     scorers=[
+
         Hallucination(model="openai:/gpt-4"),
+
         Relevance(model="openai:/gpt-4"),
+
     ],
+
 )
 ```
 
@@ -87,16 +123,28 @@ python
 ```
 from mlflow.genai.scorers.phoenix import get_scorer
 
+
+
 # Create scorer by name
+
 scorer = get_scorer(
+
     metric_name="Hallucination",
+
     model="openai:/gpt-4",
+
 )
 
+
+
 feedback = scorer(
+
     inputs="What is MLflow?",
+
     outputs="MLflow is a platform for ML workflows.",
+
     expectations={"context": "MLflow is an ML platform."},
+
 )
 ```
 

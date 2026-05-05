@@ -11,6 +11,8 @@ python
 ```
 import mlflow
 
+
+
 mlflow.autogen.autolog()
 ```
 
@@ -41,31 +43,58 @@ python
 ```
 import os
 
+
+
 # Imports of autogen classes should happen before calling autolog.
+
 from autogen_agentchat.agents import AssistantAgent
+
 from autogen_ext.models.openai import OpenAIChatCompletionClient
+
+
 
 import mlflow
 
+
+
 # Turn on auto tracing for AutoGen
+
 mlflow.autogen.autolog()
 
+
+
 # Optional: Set a tracking URI and an experiment
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("AutoGen")
 
+
+
 model_client = OpenAIChatCompletionClient(
+
     model="gpt-4.1-nano",
+
     # api_key="YOUR_API_KEY",
+
 )
+
+
 
 agent = AssistantAgent(
+
     name="assistant",
+
     model_client=model_client,
+
     system_message="You are a helpful assistant.",
+
 )
 
+
+
 result = await agent.run(task="Say 'Hello World!'")
+
 print(result)
 ```
 
@@ -76,36 +105,69 @@ python
 ```
 import os
 
+
+
 # Imports of autogen classes should happen before calling autolog.
+
 from autogen_agentchat.agents import AssistantAgent
+
 from autogen_ext.models.openai import OpenAIChatCompletionClient
+
+
 
 import mlflow
 
+
+
 # Turn on auto tracing for AutoGen
+
 mlflow.autogen.autolog()
 
+
+
 # Optional: Set a tracking URI and an experiment
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("AutoGen")
 
+
+
 model_client = OpenAIChatCompletionClient(
+
     model="gpt-4.1-nano",
+
     # api_key="YOUR_API_KEY",
+
 )
+
+
+
 
 
 def add(a: int, b: int) -> int:
+
     """add two numbers"""
+
     return a + b
 
 
+
+
+
 agent = AssistantAgent(
+
     name="assistant",
+
     model_client=model_client,
+
     system_message="You are a helpful assistant.",
+
     tools=[add],
+
 )
+
+
 
 await agent.run(task="1+1")
 ```

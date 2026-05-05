@@ -32,42 +32,69 @@ python
 
 ```
 import mlflow
+
 import xgboost as xgb
+
 from sklearn.datasets import load_diabetes
+
 from sklearn.model_selection import train_test_split
 
+
+
 # Enable autologging - captures everything automatically
+
 mlflow.xgboost.autolog()
 
+
+
 # Load and prepare data
+
 data = load_diabetes()
+
 X_train, X_test, y_train, y_test = train_test_split(
+
     data.data, data.target, test_size=0.2, random_state=42
+
 )
 
+
+
 # Prepare data in XGBoost format
+
 dtrain = xgb.DMatrix(X_train, label=y_train)
+
 dtest = xgb.DMatrix(X_test, label=y_test)
 
+
+
 # Train model - MLflow automatically logs everything!
+
 with mlflow.start_run():
+
     model = xgb.train(
+
         params={
+
             "objective": "reg:squarederror",
+
             "max_depth": 6,
+
             "learning_rate": 0.1,
+
         },
+
         dtrain=dtrain,
+
         num_boost_round=100,
+
         evals=[(dtrain, "train"), (dtest, "test")],
+
     )
 ```
 
 Autologging captures parameters, metrics per iteration, feature importance with visualizations, and the trained model.
 
-Tracking Server Setup
-
-Running locally? MLflow stores experiments in the current directory by default. For team collaboration or remote tracking, **[set up a tracking server](/docs/latest/ml/tracking/tutorials/remote-server.md)**.
+:::tip Tracking Server Setup Running locally? MLflow stores experiments in the current directory by default. For team collaboration or remote tracking, **[set up a tracking server](/docs/latest/ml/tracking/tutorials/remote-server.md)**. :::
 
 ## Autologging[​](#autologging "Direct link to Autologging")
 
@@ -80,26 +107,47 @@ python
 
 ```
 import mlflow
+
 import xgboost as xgb
+
 from sklearn.datasets import load_diabetes
+
 from sklearn.model_selection import train_test_split
 
+
+
 # Load data
+
 data = load_diabetes()
+
 X_train, X_test, y_train, y_test = train_test_split(
+
     data.data, data.target, test_size=0.2, random_state=42
+
 )
 
+
+
 # Enable autologging
+
 mlflow.xgboost.autolog()
 
+
+
 # Train with native API
+
 with mlflow.start_run():
+
     dtrain = xgb.DMatrix(X_train, label=y_train)
+
     model = xgb.train(
+
         params={"objective": "reg:squarederror", "max_depth": 6},
+
         dtrain=dtrain,
+
         num_boost_round=100,
+
     )
 ```
 
@@ -107,22 +155,39 @@ python
 
 ```
 import mlflow
+
 from sklearn.datasets import load_diabetes
+
 from sklearn.model_selection import train_test_split
+
 from xgboost import XGBRegressor
 
+
+
 # Load data
+
 data = load_diabetes()
+
 X_train, X_test, y_train, y_test = train_test_split(
+
     data.data, data.target, test_size=0.2, random_state=42
+
 )
 
+
+
 # Enable sklearn autologging (works with XGBoost estimators)
+
 mlflow.sklearn.autolog()
 
+
+
 # Train with sklearn-compatible API
+
 with mlflow.start_run():
+
     model = XGBRegressor(n_estimators=100, max_depth=6)
+
     model.fit(X_train, y_train)
 ```
 
@@ -144,13 +209,21 @@ python
 
 ```
 mlflow.xgboost.autolog(
+
     log_input_examples=True,
+
     log_model_signatures=True,
+
     log_models=True,
+
     log_datasets=True,
+
     model_format="json",  # Recommended for portability
+
     registered_model_name="XGBoostModel",
+
     extra_tags={"team": "data-science"},
+
 )
 ```
 
@@ -164,31 +237,58 @@ python
 
 ```
 import mlflow
+
 from sklearn.datasets import load_breast_cancer
+
 from sklearn.model_selection import GridSearchCV, train_test_split
+
 from xgboost import XGBClassifier
 
+
+
 # Load data
+
 data = load_breast_cancer()
+
 X_train, X_test, y_train, y_test = train_test_split(
+
     data.data, data.target, test_size=0.2, random_state=42
+
 )
 
+
+
 # Enable autologging
+
 mlflow.sklearn.autolog()
 
+
+
 # Define parameter grid
+
 param_grid = {
+
     "n_estimators": [50, 100, 200],
+
     "max_depth": [3, 6, 9],
+
     "learning_rate": [0.01, 0.1, 0.3],
+
 }
 
+
+
 # Run grid search - MLflow logs each combination as a child run
+
 with mlflow.start_run():
+
     model = XGBClassifier(random_state=42)
+
     grid_search = GridSearchCV(model, param_grid, cv=5, scoring="roc_auc", n_jobs=-1)
+
     grid_search.fit(X_train, y_train)
+
+
 
     print(f"Best score: {grid_search.best_score_}")
 ```
@@ -201,41 +301,77 @@ python
 
 ```
 import mlflow
+
 import optuna
+
 from sklearn.datasets import load_breast_cancer
+
 from sklearn.model_selection import train_test_split
+
 from xgboost import XGBClassifier
 
+
+
 # Load data
+
 data = load_breast_cancer()
+
 X_train, X_test, y_train, y_test = train_test_split(
+
     data.data, data.target, test_size=0.2, random_state=42
+
 )
+
+
 
 mlflow.xgboost.autolog()
 
 
+
+
+
 def objective(trial):
+
     params = {
+
         "n_estimators": trial.suggest_int("n_estimators", 50, 300),
+
         "max_depth": trial.suggest_int("max_depth", 3, 10),
+
         "learning_rate": trial.suggest_float("learning_rate", 0.01, 0.3, log=True),
+
         "subsample": trial.suggest_float("subsample", 0.6, 1.0),
+
         "colsample_bytree": trial.suggest_float("colsample_bytree", 0.6, 1.0),
+
     }
 
+
+
     with mlflow.start_run(nested=True):
+
         model = XGBClassifier(**params, random_state=42)
+
         model.fit(X_train, y_train)
+
         score = model.score(X_test, y_test)
+
         return score
 
 
+
+
+
 with mlflow.start_run():
+
     study = optuna.create_study(direction="maximize")
+
     study.optimize(objective, n_trials=50)
 
+
+
     mlflow.log_params({f"best_{k}": v for k, v in study.best_params.items()})
+
     mlflow.log_metric("best_score", study.best_value)
 ```
 
@@ -247,33 +383,53 @@ python
 
 ```
 import mlflow.xgboost
+
 import xgboost as xgb
+
 from sklearn.datasets import load_diabetes
+
 from sklearn.model_selection import train_test_split
 
+
+
 # Load data
+
 data = load_diabetes()
+
 X_train, X_test, y_train, y_test = train_test_split(
+
     data.data, data.target, test_size=0.2, random_state=42
+
 )
+
+
 
 dtrain = xgb.DMatrix(X_train, label=y_train)
 
+
+
 with mlflow.start_run():
+
     params = {"objective": "reg:squarederror", "max_depth": 6}
+
     model = xgb.train(params, dtrain, num_boost_round=100)
 
+
+
     mlflow.xgboost.log_model(
+
         xgb_model=model,
+
         name="model",
+
         model_format="json",  # Recommended for portability
+
         registered_model_name="production_model",
+
     )
 ```
 
-Model Format
-
-Use `model_format="json"` for the best portability across XGBoost versions. The `json` format is human-readable and cross-platform compatible.
+:::tip Model Format Use `model_format="json"` for the best portability across XGBoost versions. The `json` format is human-readable and cross-platform compatible. :::
 
 Load models for inference:
 
@@ -281,12 +437,19 @@ python
 
 ```
 # Load as native XGBoost model
+
 model = mlflow.xgboost.load_model("runs:/<run_id>/model")
 
+
+
 # Load as PyFunc for generic interface
+
 pyfunc_model = mlflow.pyfunc.load_model("runs:/<run_id>/model")
 
+
+
 # Load from model registry using alias
+
 model = mlflow.pyfunc.load_model("models:/XGBoostModel@champion")
 ```
 
@@ -298,38 +461,71 @@ python
 
 ```
 import mlflow.xgboost
+
 import xgboost as xgb
+
 from mlflow import MlflowClient
+
 from sklearn.datasets import load_diabetes
+
 from sklearn.model_selection import train_test_split
 
+
+
 # Load and prepare data
+
 data = load_diabetes()
+
 X_train, X_test, y_train, y_test = train_test_split(
+
     data.data, data.target, test_size=0.2, random_state=42
+
 )
+
 dtrain = xgb.DMatrix(X_train, label=y_train)
 
+
+
 # Register model during training
+
 with mlflow.start_run():
+
     params = {"objective": "reg:squarederror", "max_depth": 6}
+
     model = xgb.train(params, dtrain, num_boost_round=100)
 
+
+
     mlflow.xgboost.log_model(
+
         xgb_model=model,
+
         name="model",
+
         registered_model_name="XGBoostModel",
+
     )
 
+
+
 # Set alias for deployment
+
 client = MlflowClient()
+
 client.set_registered_model_alias(
+
     name="XGBoostModel",
+
     alias="champion",
+
     version=1,
+
 )
 
+
+
 # Load model by alias
+
 model = mlflow.pyfunc.load_model("models:/XGBoostModel@champion")
 ```
 
@@ -349,19 +545,34 @@ python
 
 ```
 import requests
+
 import pandas as pd
 
+
+
 data = pd.DataFrame({
+
     "feature1": [1.2, 2.3],
+
     "feature2": [0.8, 1.5],
+
     "feature3": [3.4, 4.2],
+
 })
 
+
+
 response = requests.post(
+
     "http://localhost:5000/invocations",
+
     headers={"Content-Type": "application/json"},
+
     json={"dataframe_split": data.to_dict(orient="split")},
+
 )
+
+
 
 predictions = response.json()
 ```
@@ -372,15 +583,25 @@ bash
 
 ```
 # Deploy to AWS SageMaker
+
 mlflow deployments create \
+
     -t sagemaker \
+
     --name xgboost-endpoint \
+
     -m models:/XGBoostModel@champion
 
+
+
 # Deploy to Azure ML
+
 mlflow deployments create \
+
     -t azureml \
+
     --name xgboost-service \
+
     -m models:/XGBoostModel@champion
 ```
 

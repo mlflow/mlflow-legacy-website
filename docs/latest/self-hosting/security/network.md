@@ -20,11 +20,13 @@ Automatic headers prevent MIME sniffing and XSS
 
 Security settings can be configured through CLI options or environment variables. Default settings are designed to be safe for local development while requiring explicit configuration for production:
 
-Requirements
+:::important Requirements
 
 Security middleware features require the FastAPI-based tracking server (uvicorn), which is the default server in MLflow 3.5.0+.
 
 These features are not available when using `--gunicorn-opts` or `--waitress-opts`.
+
+:::
 
 ### Allowed Hosts[​](#allowed-hosts "Direct link to Allowed Hosts")
 
@@ -40,12 +42,19 @@ bash
 
 ```
 # Specific hosts
+
 mlflow server --allowed-hosts "mlflow.company.com,192.168.1.100"
 
+
+
 # Wildcard patterns
+
 mlflow server --allowed-hosts "*.company.com,192.168.*"
 
+
+
 # Allow all (not recommended)
+
 mlflow server --allowed-hosts "*"
 ```
 
@@ -61,12 +70,19 @@ bash
 
 ```
 # Specific origins
+
 mlflow server --cors-allowed-origins "https://app.company.com,https://notebook.company.com"
 
+
+
 # Wildcard for subdomains
+
 mlflow server --cors-allowed-origins "https://*.company.com"
 
+
+
 # Allow all origins (development only)
+
 mlflow server --cors-allowed-origins "*"
 ```
 
@@ -86,6 +102,7 @@ bash
 
 ```
 # Allow cross-origin iframe embedding
+
 mlflow server --x-frame-options NONE
 ```
 
@@ -134,15 +151,24 @@ python
 ```
 import mlflow
 
+
+
 # Connect to remote server
+
 mlflow.set_tracking_uri("http://mlflow.company.com:5000")
 
+
+
 with mlflow.start_run():
+
     mlflow.log_param("alpha", 0.5)
+
     mlflow.log_metric("rmse", 0.1)
 ```
 
-Host vs Allowed Hosts
+:::info Host vs Allowed Hosts
+
+:::
 
 ### Render MLflow UI within Jupyter Notebooks[​](#render-mlflow-ui-within-jupyter-notebooks "Direct link to Render MLflow UI within Jupyter Notebooks")
 
@@ -152,8 +178,11 @@ bash
 
 ```
 # Allow embedding from notebook domain
+
 mlflow server --host 0.0.0.0 \
+
   --x-frame-options NONE \
+
   --cors-allowed-origins "https://jupyter.company.com"
 ```
 
@@ -164,7 +193,10 @@ python
 ```
 from IPython.display import IFrame
 
+
+
 # Embed MLflow UI
+
 IFrame(src="http://mlflow.company.com:5000", width=1000, height=600)
 ```
 
@@ -176,13 +208,21 @@ jsx
 
 ```
 function MLflowDashboard() {
+
   return (
+
     <iframe
+
       src="http://mlflow.company.com:5000/experiments/1"
+
       style={{ width: '100%', height: '800px' }}
+
       title="MLflow"
+
     />
+
   );
+
 }
 ```
 
@@ -192,7 +232,9 @@ bash
 
 ```
 mlflow server --host 0.0.0.0 \
+
   --x-frame-options NONE \
+
   --cors-allowed-origins "http://localhost:3000,https://app.company.com"
 ```
 
@@ -202,19 +244,34 @@ html
 
 ```
 <!DOCTYPE html>
+
 <html>
+
 <head>
+
     <title>MLflow iframe Test</title>
+
 </head>
+
 <body>
+
     <h1>MLflow Embedding Test</h1>
+
     <iframe
+
         src="http://localhost:5000"
+
         style="width: 100%; height: 600px; border: 1px solid #ccc;"
+
         onload="document.getElementById('status').innerHTML = '✅ Loaded'"
+
         onerror="document.getElementById('status').innerHTML = '❌ Failed'">
+
     </iframe>
+
     <div id="status">Loading...</div>
+
 </body>
+
 </html>
 ```

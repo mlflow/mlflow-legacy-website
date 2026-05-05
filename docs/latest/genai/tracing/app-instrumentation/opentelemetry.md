@@ -10,11 +10,17 @@ python
 
 ```
 import mlflow
+
 from openai import OpenAI
+
+
 
 mlflow.openai.autolog()
 
+
+
 client = OpenAI()
+
 response = client.responses.create(model="gpt-4o-mini", input="Hello, world!")
 ```
 
@@ -28,6 +34,7 @@ bash
 
 ```
 export OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://localhost:5000/v1/traces
+
 export OTEL_EXPORTER_OTLP_TRACES_HEADERS=x-mlflow-experiment-id=123
 ```
 
@@ -43,36 +50,67 @@ python
 
 ```
 import os
+
 import mlflow
+
 from mlflow.entities.trace_location import MlflowExperimentLocation
+
 from contextlib import asynccontextmanager
+
 from fastapi import FastAPI, Request, Response
+
 from openai import OpenAI
+
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 
+
+
 # Use the OpenTelemetry tracer provider instead of MLflow's default tracer provider.
+
 os.environ["MLFLOW_USE_DEFAULT_TRACER_PROVIDER"] = "false"
 
 
+
+
+
 # Enable MLflow OpenAI auto-tracing at application startup.
+
 @asynccontextmanager
+
 async def lifespan(app: FastAPI):
+
     mlflow.set_tracking_uri("http://localhost:5000")
+
     exp_id = mlflow.set_experiment("FastAPI").experiment_id
+
     # this ensures mlflow spans and FastAPI instrumentation spans are combined
+
     mlflow.tracing.set_destination(MlflowExperimentLocation(exp_id))
+
     mlflow.openai.autolog()
+
     yield
 
 
+
+
+
 app = FastAPI(lifespan=lifespan)
+
 # Enable FastAPI auto-instrumentation, which creates an OpenTelemetry span for each endpoint call.
+
 FastAPIInstrumentor.instrument_app(app)
 
 
+
+
+
 @app.post("/rag/v1/answer")
+
 @mlflow.trace
+
 async def answer_question(query: Request) -> Response:
+
     return ...
 ```
 
@@ -92,35 +130,65 @@ python
 
 ```
 import os
+
 import mlflow
+
 from mlflow.entities.trace_location import MlflowExperimentLocation
+
 from opentelemetry import trace as otel_trace
+
 from opentelemetry.sdk.trace import TracerProvider
 
+
+
 # Use the OpenTelemetry tracer provider instead of MLflow's default tracer provider.
+
 os.environ["MLFLOW_USE_DEFAULT_TRACER_PROVIDER"] = "false"
 
+
+
 # Set up the MLflow experiment
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 experiment_id = mlflow.set_experiment("my_experiment").experiment_id
 
+
+
 # Create and set your own TracerProvider
+
 external_provider = TracerProvider()
+
 otel_trace.set_tracer_provider(external_provider)
 
+
+
 # Set MLflow tracing destination to the experiment (or UC schema), this ensures mlflow
+
 # span processors are added to the tracer provider
+
 mlflow.tracing.set_destination(MlflowExperimentLocation(experiment_id))
 
+
+
 # Now you can use both OpenTelemetry and MLflow tracing together
+
 otel_tracer = otel_trace.get_tracer("my_app")
 
+
+
 with otel_tracer.start_as_current_span("http_request") as external_span:
+
     external_span.set_attribute("http.method", "GET")
 
+
+
     # MLflow spans will be nested under the OpenTelemetry span
+
     with mlflow.start_span("model_prediction") as mlflow_span:
+
         mlflow_span.set_inputs({"query": "test"})
+
         mlflow_span.set_outputs({"result": "success"})
 ```
 

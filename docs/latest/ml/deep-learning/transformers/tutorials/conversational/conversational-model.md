@@ -33,11 +33,17 @@ python
 
 ```
 # Disable tokenizers warnings when constructing pipelines
+
 %env TOKENIZERS_PARALLELISM=false
+
+
 
 import warnings
 
+
+
 # Disable a few less-than-useful UserWarnings from setuptools and pydantic
+
 warnings.filterwarnings("ignore", category=UserWarning)
 ```
 
@@ -66,9 +72,14 @@ python
 ```
 import transformers
 
+
+
 import mlflow
 
+
+
 # Define our pipeline, using the default configuration specified in the model card for DialoGPT-medium
+
 conversational_pipeline = transformers.pipeline(model="microsoft/DialoGPT-medium")
 ```
 
@@ -80,11 +91,17 @@ python
 
 ```
 # If you are running this tutorial in local mode, leave the next line commented out.
+
 # Otherwise, uncomment the following line and set your tracking uri to your local or remote tracking server.
+
+
 
 # mlflow.set_tracking_uri("http://127.0.0.1:8080")
 
+
+
 # Set a name for the experiment that is indicative of what the runs being created within it are in regards to
+
 mlflow.set_experiment("Conversational")
 ```
 
@@ -116,11 +133,17 @@ python
 
 ```
 with mlflow.start_run():
+
   model_info = mlflow.transformers.log_model(
+
       transformers_model=conversational_pipeline,
+
       name="chatbot",
+
       task="conversational",
+
       input_example="A clever and witty question",
+
   )
 ```
 
@@ -145,12 +168,19 @@ python
 
 ```
 # Load the model as a generic python function in order to leverage the integrated Conversational Context
+
 # Note that loading a conversational model with the native flavor (i.e., `mlflow.transformers.load_model()`) will not include anything apart from the
+
 # pipeline itself; if choosing to load in this way, you will need to manage your own Conversational Context instance to maintain state on the
+
 # conversation history.
+
 chatbot = mlflow.pyfunc.load_model(model_uri=model_info.model_uri)
 
+
+
 # Validate that the model is capable of responding to a question
+
 first = chatbot.predict("What is the best way to get to Antarctica?")
 ```
 
@@ -194,7 +224,9 @@ python
 
 ```
 # Verify that the PyFunc implementation has maintained state on the conversation history by asking a vague follow-up question that requires context
+
 # in order to answer properly
+
 second = chatbot.predict("What sort of boat should I use?")
 ```
 

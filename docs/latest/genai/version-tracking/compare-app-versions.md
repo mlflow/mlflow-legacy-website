@@ -28,49 +28,95 @@ python
 
 ```
 import mlflow
+
 import openai
 
 
+
+
+
 @mlflow.trace
+
 def basic_agent(question: str) -> str:
+
     """Basic customer support agent."""
+
     client = openai.OpenAI()
 
+
+
     response = client.chat.completions.create(
+
         model="gpt-4o-mini",
+
         messages=[
+
             {"role": "system", "content": "You are a helpful customer support agent."},
+
             {"role": "user", "content": question},
+
         ],
+
         temperature=0.3,
+
         max_tokens=100,
+
     )
+
+
 
     return response.choices[0].message.content
 
 
+
+
+
 @mlflow.trace
+
 def empathetic_agent(question: str) -> str:
+
     """Enhanced customer support agent with empathetic prompting."""
+
     client = openai.OpenAI()
+
+
 
     # Enhanced system prompt
+
     system_prompt = """You are a caring and empathetic customer support agent.
+
     Always acknowledge the customer's feelings before providing solutions.
+
     Use phrases like 'I understand how frustrating this must be'.
+
     Provide clear, actionable steps with a warm, supportive tone."""
 
+
+
     response = client.chat.completions.create(
+
         model="gpt-4o-mini",
+
         messages=[
+
             {"role": "system", "content": system_prompt},
+
             {"role": "user", "content": question},
+
         ],
+
         temperature=0.7,
+
         max_tokens=150,
+
     )
 
+
+
     return response.choices[0].message.content
+
+
+
 
 
 print("✅ Agent functions ready for comparison")
@@ -82,28 +128,52 @@ python
 
 ```
 # Test scenarios for fair comparison
+
 test_questions = [
+
     "How can I track my package?",
+
     "What's your return policy?",
+
     "I need help with my account login",
+
     "My order arrived damaged, what should I do?",
+
     "Can I cancel my subscription?",
+
 ]
+
+
 
 print("🔄 Generating traces for version comparison...")
 
+
+
 # Run both versions on the same inputs
+
 for i, question in enumerate(test_questions):
+
     print(f"Testing scenario {i + 1}: {question[:30]}...")
 
+
+
     # Generate trace for v1
+
     v1_response = basic_agent(question)
 
+
+
     # Generate trace for v2
+
     v2_response = empathetic_agent(question)
 
+
+
     print(f"  V1 response: {v1_response[:50]}...")
+
     print(f"  V2 response: {v2_response[:50]}...")
+
+
 
 print(f"\n✅ Generated {len(test_questions) * 2} traces for comparison")
 ```
@@ -130,81 +200,157 @@ python
 
 ```
 from datetime import datetime, timedelta
+
 import pandas as pd
 
+
+
 # Search for traces from the last hour (adjust timeframe as needed)
+
 recent_time = datetime.now() - timedelta(hours=1)
 
+
+
 # Get traces for both versions
+
 all_traces = mlflow.search_traces(
+
     filter_string=f"timestamp >= '{recent_time.isoformat()}'", max_results=100
+
 )
+
+
 
 print(f"Found {len(all_traces)} recent traces\n")
 
+
+
 # Separate traces by version using trace metadata
+
 v1_traces = []
+
 v2_traces = []
 
+
+
 for trace in all_traces:
+
     # Parse trace data to get metadata
+
     trace_data = trace if isinstance(trace, dict) else trace.to_dict()
 
+
+
     if "customer_support_v1" in trace_data.get("info", {}).get("name", ""):
+
         v1_traces.append(trace_data)
+
     elif "customer_support_v2" in trace_data.get("info", {}).get("name", ""):
+
         v2_traces.append(trace_data)
 
+
+
 print(f"Version 1 traces: {len(v1_traces)}")
+
 print(f"Version 2 traces: {len(v2_traces)}")
 
 
+
+
+
 # Calculate performance metrics for each version
+
 def analyze_traces(traces, version_name):
+
     """Extract key metrics from a list of traces."""
+
     if not traces:
+
         return {}
 
+
+
     execution_times = []
+
     response_lengths = []
 
+
+
     for trace in traces:
+
         # Extract execution time (in milliseconds)
+
         exec_time = trace.get("info", {}).get("execution_time_ms", 0)
+
         execution_times.append(exec_time)
 
+
+
         # Extract response length from spans
+
         spans = trace.get("data", {}).get("spans", [])
+
         if spans:
+
             # Get the root span's output
+
             root_span = spans[0]
+
             output = root_span.get("outputs", "")
+
             response_lengths.append(len(str(output)) if output else 0)
 
+
+
     return {
+
         "version": version_name,
+
         "trace_count": len(traces),
+
         "avg_execution_time_ms": sum(execution_times) / len(execution_times)
+
         if execution_times
+
         else 0,
+
         "avg_response_length": sum(response_lengths) / len(response_lengths)
+
         if response_lengths
+
         else 0,
+
         "min_execution_time_ms": min(execution_times) if execution_times else 0,
+
         "max_execution_time_ms": max(execution_times) if execution_times else 0,
+
     }
 
 
+
+
+
 # Analyze both versions
+
 v1_metrics = analyze_traces(v1_traces, "v1.0")
+
 v2_metrics = analyze_traces(v2_traces, "v2.0")
 
+
+
 print("\n📊 Version Performance Comparison:")
+
 print(
+
     f"V1 - Avg Execution: {v1_metrics['avg_execution_time_ms']:.1f}ms, Avg Response: {v1_metrics['avg_response_length']:.0f} chars"
+
 )
+
 print(
+
     f"V2 - Avg Execution: {v2_metrics['avg_execution_time_ms']:.1f}ms, Avg Response: {v2_metrics['avg_response_length']:.0f} chars"
+
 )
 ```
 

@@ -48,10 +48,15 @@ bash
 
 ```
 git clone --depth 1 --filter=blob:none --sparse https://github.com/mlflow/mlflow.git
+
 cd mlflow
+
 git sparse-checkout set docker-compose
+
 cd docker-compose
+
 cp .env.dev.example .env
+
 docker compose up -d
 ```
 
@@ -67,23 +72,41 @@ python
 
 ```
 import mlflow
+
 import litellm
+
 import os
 
+
+
 # Enable auto-tracing for LiteLLM
+
 mlflow.litellm.autolog()
 
+
+
 # Set a tracking URI and an experiment
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("LiteLLM")
 
+
+
 # Set your API keys (LiteLLM will use them automatically)
+
 os.environ["ANTHROPIC_API_KEY"] = "your-anthropic-key"  # Example for Anthropic
 
+
+
 # Call Anthropic API via LiteLLM
+
 response = litellm.completion(
+
     model="claude-3-5-sonnet-20240620",
+
     messages=[{"role": "user", "content": "Hey! how's it going?"}],
+
 )
 ```
 
@@ -109,27 +132,49 @@ python
 
 ```
 import mlflow
+
 import litellm
+
 import os
 
+
+
 # Enable auto-tracing for LiteLLM
+
 mlflow.litellm.autolog()
 
+
+
 # Optional: Set a tracking URI and an experiment
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("LiteLLM")
 
+
+
 # Call different providers via LiteLLM's unified interface
+
 # Example with OpenAI
+
 response = litellm.completion(
+
     model="gpt-4o-mini",
+
     messages=[{"role": "user", "content": "Hello from LiteLLM!"}],
+
 )
 
+
+
 # Example with Anthropic
+
 response = litellm.completion(
+
     model="claude-3-5-sonnet-20240620",
+
     messages=[{"role": "user", "content": "Hey! how's it going?"}],
+
 )
 ```
 
@@ -142,9 +187,14 @@ python
 ```
 mlflow.litellm.autolog()
 
+
+
 response = await litellm.acompletion(
+
     model="claude-3-5-sonnet-20240620",
+
     messages=[{"role": "user", "content": "Hey! how's it going?"}],
+
 )
 ```
 
@@ -157,12 +207,20 @@ python
 ```
 mlflow.litellm.autolog()
 
+
+
 response = litellm.completion(
+
     model="claude-3-5-sonnet-20240620",
+
     messages=[{"role": "user", "content": "Hey! how's it going?"}],
+
     stream=True,
+
 )
+
 for chunk in response:
+
     print(chunk.choices[0].delta.content, end="|")
 ```
 

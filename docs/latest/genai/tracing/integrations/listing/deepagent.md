@@ -11,6 +11,8 @@ python
 ```
 import mlflow
 
+
+
 mlflow.langchain.autolog()
 ```
 
@@ -47,10 +49,15 @@ bash
 
 ```
 git clone --depth 1 --filter=blob:none --sparse https://github.com/mlflow/mlflow.git
+
 cd mlflow
+
 git sparse-checkout set docker-compose
+
 cd docker-compose
+
 cp .env.dev.example .env
+
 docker compose up -d
 ```
 
@@ -64,55 +71,105 @@ python
 
 ```
 import os
+
 from typing import Literal
 
+
+
 import mlflow
+
 from deepagents import create_deep_agent
+
 from tavily import TavilyClient
 
+
+
 # Enable auto-tracing for LangChain (and LangGraph-based frameworks like Deep Agent)
+
 mlflow.langchain.autolog()
 
+
+
 # Optional: Set a tracking URI and an experiment
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("Deep Agent")
 
+
+
 # Initialize search provider
+
 tavily_client = TavilyClient(api_key=os.environ["TAVILY_API_KEY"])
 
 
+
+
+
 # Define your tool
+
 def internet_search(
+
     query: str,
+
     max_results: int = 5,
+
     topic: Literal["general", "news", "finance"] = "general",
+
     include_raw_content: bool = False,
+
 ):
+
     """Run a web search to find relevant information."""
+
     return tavily_client.search(
+
         query,
+
         max_results=max_results,
+
         include_raw_content=include_raw_content,
+
         topic=topic,
+
     )
 
 
+
+
+
 # Create agent with system instructions
+
 research_instructions = """You are an expert researcher. Your job is to conduct
+
 thorough research and then write a polished report. You have access to an internet
+
 search tool as your primary means of gathering information."""
+
+
 
 agent = create_deep_agent(tools=[internet_search], system_prompt=research_instructions)
 
+
+
 # Invoke the agent
+
 result = agent.invoke({
+
     "messages": [
+
         {
+
             "role": "user",
+
             "content": "What are the latest developments in AI agents?",
+
         }
+
     ]
+
 })
+
 print(result["messages"][-1].content)
 ```
 

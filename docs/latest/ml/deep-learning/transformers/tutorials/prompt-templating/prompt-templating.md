@@ -32,11 +32,17 @@ python
 
 ```
 # Disable tokenizers warnings when constructing pipelines
+
 %env TOKENIZERS_PARALLELISM=false
+
+
 
 import warnings
 
+
+
 # Disable a few less-than-useful UserWarnings from setuptools and pydantic
+
 warnings.filterwarnings("ignore", category=UserWarning)
 ```
 
@@ -55,32 +61,60 @@ python
 ```
 from transformers import pipeline
 
+
+
 generator = pipeline("text-generation", model="TinyLlama/TinyLlama-1.1B-intermediate-step-1431k-3T")
 
+
+
 user_input = "Tell me the largest bird"
+
 prompt_templates = [
+
   # no template
+
   "{prompt}",
+
   # question-answer style template
+
   "Q: {prompt}
+
 A:",
+
   # dialogue style template with a system prompt
+
   (
+
       "You are an assistant that is knowledgeable about birds. "
+
       "If asked about the largest bird, you will reply 'Duck'.
+
 "
+
       "User: {prompt}
+
 "
+
       "Assistant:"
+
   ),
+
 ]
 
+
+
 responses = generator(
+
   [template.format(prompt=user_input) for template in prompt_templates], max_new_tokens=15
+
 )
+
 for idx, response in enumerate(responses):
+
   print(f"Response to Template #{idx}:")
+
   print(response[0]["generated_text"] + "
+
 ")
 ```
 
@@ -118,11 +152,18 @@ python
 ```
 import mlflow
 
+
+
 sample_input = "Tell me the largest bird"
+
 params = {"max_new_tokens": 15}
 
+
+
 # The input_example can be a tuple of (data, params) to include inference parameters.
+
 # The signature will be automatically inferred when input_example is provided to log_model.
+
 input_example = (sample_input, params)
 ```
 
@@ -144,26 +185,47 @@ python
 
 ```
 # If you are running this tutorial in local mode, leave the next line commented out.
+
 # Otherwise, uncomment the following line and set your tracking uri to your local or remote tracking server.
+
+
 
 mlflow.set_tracking_uri("http://127.0.0.1:5000")
 
+
+
 # Set a name for the experiment that is indicative of what the runs being created within it are in regards to
+
 mlflow.set_experiment("prompt-templating")
 
+
+
 prompt_template = "Q: {prompt}
+
 A:"
+
 with mlflow.start_run():
+
   model_info = mlflow.transformers.log_model(
+
       transformers_model=generator,
+
       name="model",
+
       task="text-generation",
+
       input_example=input_example,
+
       prompt_template=prompt_template,
+
       # Since MLflow 2.11.0, you can save the model in 'reference-only' mode to reduce storage usage by not saving
+
       # the base model weights but only the reference to the HuggingFace model hub. To enable this, uncomment the
+
       # following line:
+
       # save_pretrained=False,
+
   )
 ```
 
@@ -181,6 +243,8 @@ python
 
 ```
 loaded_generator = mlflow.pyfunc.load_model(model_uri=model_info.model_uri)
+
+
 
 loaded_generator.predict("Tell me the largest bird")
 ```

@@ -10,15 +10,25 @@ python
 
 ```
 import mlflow
+
 import openai
 
+
+
 # Enable automatic tracing for OpenAI
+
 mlflow.openai.autolog()
 
+
+
 # Your existing code now generates traces automatically
+
 client = openai.OpenAI()
+
 response = client.chat.completions.create(
+
     model="gpt-4o-mini", messages=[{"role": "user", "content": "Hello!"}]
+
 )
 ```
 
@@ -28,8 +38,11 @@ python
 
 ```
 @mlflow.trace
+
 def my_function(input_data):
+
     # Your logic here
+
     return "processed result"
 ```
 
@@ -52,16 +65,28 @@ python
 ```
 import mlflow
 
+
+
 # Set tracking URI to your MLflow server
+
 mlflow.set_tracking_uri("http://localhost:5000")
 
 
+
+
+
 @mlflow.trace
+
 def my_function():
+
     return "Hello World"
 
 
+
+
+
 # Trace UI will appear automatically in the notebook
+
 my_function()
 ```
 
@@ -71,9 +96,13 @@ python
 
 ```
 # Disable notebook display
+
 mlflow.tracing.disable_notebook_display()
 
+
+
 # Enable notebook display
+
 mlflow.tracing.enable_notebook_display()
 ```
 
@@ -85,16 +114,27 @@ python
 
 ```
 @mlflow.trace
+
 def predict(messages: list[dict]) -> str:
+
     # Customize the request preview for long message histories
+
     custom_preview = f"{messages[0]['content'][:10]} ... {messages[-1]['content'][:10]}"
+
     mlflow.update_current_trace(request_preview=custom_preview)
 
+
+
     # Your model logic here
+
     result = process_messages(messages)
 
+
+
     # Customize response preview
+
     mlflow.update_current_trace(response_preview=f"Result: {result[:50]}...")
+
     return result
 ```
 
@@ -115,15 +155,26 @@ python
 ```
 import mlflow
 
+
+
 # Enable async logging
+
 mlflow.config.enable_async_logging()
 
+
+
 # Traces will be logged asynchronously
+
 with mlflow.start_span(name="foo") as span:
+
     span.set_inputs({"a": 1})
+
     span.set_outputs({"b": 2})
 
+
+
 # Manually flush if needed
+
 mlflow.flush_trace_async_logging()
 ```
 
@@ -149,22 +200,39 @@ python
 
 ```
 import mlflow
+
 from mlflow.entities.span import Span, SpanType
 
 
+
+
+
 # Define a custom hook that takes a span as input and mutates it in-place.
+
 def filter_retrieval_output(span: Span):
+
     """Filter out the document contents from the retriever span output and only keep the document ids."""
+
     if span.span_type == SpanType.RETRIEVAL:
+
         documents = span.outputs.get("documents")
+
         document_ids = [doc.id for doc in documents]
+
         span.set_outputs({"document_ids": document_ids})
 
 
+
+
+
 # Register the hook
+
 mlflow.tracing.configure(span_processors=[filter_retrieval_output])
 
+
+
 # Any traces created after the configuration will be filtered by the hook.
+
 ...
 ```
 
@@ -186,12 +254,19 @@ python
 
 ```
 import mlflow
+
 from mlflow.entities.trace_location import MlflowExperimentLocation
 
 
+
+
+
 @mlflow.trace(trace_destination=MlflowExperimentLocation(experiment_id="1234"))
+
 def math_agent(request: Request):
+
     # Your model logic here
+
     ...
 ```
 
@@ -205,25 +280,45 @@ python
 
 ```
 import mlflow
+
 from mlflow.entities.trace_location import MlflowExperimentLocation
 
 
+
+
+
 @app.get("/math-agent")
+
 def math_agent(request: Request):
+
     # The API is super low-overhead, so you can call it inside the request handler.
+
     mlflow.tracing.set_destination(MlflowExperimentLocation(experiment_id="1234"))
 
+
+
     # Your model logic here
+
     with mlflow.start_span(name="math-agent") as span:
+
         ...
 
 
+
+
+
 @app.get("/chat-agent")
+
 def chat_agent(request: Request):
+
     mlflow.tracing.set_destination(MlflowExperimentLocation(experiment_id="5678"))
 
+
+
     # Your model logic here
+
     with mlflow.start_span(name="chat-agent") as span:
+
         ...
 ```
 
@@ -263,23 +358,43 @@ python
 
 ```
 import mlflow
+
 import os
+
 import time
 
+
+
 # Set the timeout to 5 seconds for demonstration purposes
+
 os.environ["MLFLOW_TRACE_TIMEOUT_SECONDS"] = "5"
 
 
+
+
+
 # Simulate a long-running operation
+
 @mlflow.trace
+
 def long_running():
+
     for _ in range(10):
+
         child()
 
 
+
+
+
 @mlflow.trace
+
 def child():
+
     time.sleep(1)
+
+
+
 
 
 long_running()
@@ -299,6 +414,8 @@ python
 
 ```
 import mlflow
+
+
 
 mlflow.set_tracking_uri("http://localhost:5000")  # or your server URL
 ```
@@ -331,26 +448,47 @@ python
 
 ```
 import contextvars
+
 import mlflow
+
 from concurrent.futures import ThreadPoolExecutor
 
 
+
+
+
 @mlflow.trace
+
 def worker_function(data):
+
     # Worker logic here
+
     return process_data(data)
 
 
+
+
+
 @mlflow.trace
+
 def main_function(data_list):
+
     with ThreadPoolExecutor() as executor:
+
         futures = []
+
         for data in data_list:
+
             # Copy context to worker thread
+
             ctx = contextvars.copy_context()
+
             futures.append(executor.submit(ctx.run, worker_function, data))
 
+
+
         results = [future.result() for future in futures]
+
     return results
 ```
 
@@ -362,17 +500,29 @@ python
 
 ```
 import asyncio
+
 import mlflow
 
 
+
+
+
 @mlflow.trace
+
 async def async_function(query: str):
+
     # Async operations are traced normally
+
     result = await some_async_operation(query)
+
     return result
 
 
+
+
+
 # Usage
+
 asyncio.run(async_function("test query"))
 ```
 
@@ -389,22 +539,40 @@ python
 ```
 import mlflow
 
+
+
 # Disable tracing
+
 mlflow.tracing.disable()
 
 
+
+
+
 # Your traced functions won't generate traces
+
 @mlflow.trace
+
 def my_function():
+
     return "No trace generated"
+
+
+
 
 
 my_function()
 
+
+
 # Re-enable tracing
+
 mlflow.tracing.enable()
 
+
+
 # Now traces will be generated again
+
 my_function()  # This will generate a trace
 ```
 
@@ -418,6 +586,7 @@ bash
 
 ```
 export MLFLOW_TRACING_ENABLED=false
+
 python your_app.py  # No traces will be generated
 ```
 
@@ -427,10 +596,15 @@ python
 
 ```
 import mlflow
+
 import os
 
+
+
 # Only trace in development
+
 if os.getenv("ENVIRONMENT") == "development":
+
     mlflow.openai.autolog()
 ```
 
@@ -445,14 +619,24 @@ python
 ```
 import mlflow
 
+
+
 # Create and activate an experiment
+
 mlflow.set_experiment("Run Associated Tracing")
 
+
+
 # Start a new MLflow Run
+
 with mlflow.start_run() as run:
+
     # Traces created here are associated with the run
+
     with mlflow.start_span(name="Run Span") as parent_span:
+
         parent_span.set_inputs({"input": "a"})
+
         parent_span.set_outputs({"response": "b"})
 ```
 
@@ -462,7 +646,9 @@ python
 
 ```
 # Retrieve traces associated with a specific Run
+
 traces = mlflow.search_traces(run_id=run.info.run_id)
+
 print(traces)
 ```
 
@@ -476,16 +662,27 @@ python
 
 ```
 from mlflow.client import MlflowClient
+
 import time
+
+
 
 client = MlflowClient()
 
+
+
 # Get the current timestamp in milliseconds
+
 current_time = int(time.time() * 1000)
 
+
+
 # Delete traces older than a specific timestamp
+
 deleted_count = client.delete_traces(
+
     experiment_id="1", max_timestamp_millis=current_time, max_traces=10
+
 )
 ```
 

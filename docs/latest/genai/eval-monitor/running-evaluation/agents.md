@@ -62,6 +62,7 @@ shell
 
 ```
 pip install --upgrade mlflow
+
 mlflow server
 ```
 
@@ -75,10 +76,15 @@ shell
 
 ```
 git clone --depth 1 --filter=blob:none --sparse https://github.com/mlflow/mlflow.git
+
 cd mlflow
+
 git sparse-checkout set docker-compose
+
 cd docker-compose
+
 cp .env.dev.example .env
+
 docker compose up -d
 ```
 
@@ -94,31 +100,59 @@ python
 from agents import Agent, Runner, function_tool
 
 
+
+
+
 @function_tool
+
 def add(a: float, b: float) -> float:
+
     """Adds two numbers."""
+
     return a + b
 
 
+
+
+
 @function_tool
+
 def multiply(a: float, b: float) -> float:
+
     """Multiply two numbers."""
+
     return a * b
 
 
+
+
+
 @function_tool
+
 def modular(a: int, b: int) -> int:
+
     """Modular arithmetic"""
+
     return a % b
 
 
+
+
+
 agent = Agent(
+
     name="Math Agent",
+
     instructions=(
+
         "You will be given a math question. Calculate the answer using the given calculator tools. "
+
         "Return the final number only as an integer."
+
     ),
+
     tools=[add, multiply, modular],
+
 )
 ```
 
@@ -129,8 +163,12 @@ python
 ```
 from agents import Runner
 
+
+
 result = await Runner.run(agent, "What is 15% of 240?")
+
 print(result.final_output)
+
 # 36
 ```
 
@@ -141,12 +179,20 @@ python
 ```
 from openai import OpenAI
 
+
+
 # If you are using Jupyter Notebook, you need to apply nest_asyncio.
+
 # import nest_asyncio
+
 # nest_asyncio.apply()
 
 
+
+
+
 def predict_fn(question: str) -> str:
+
     return Runner.run_sync(agent, question).final_output
 ```
 
@@ -160,12 +206,19 @@ python
 
 ```
 async def predict_fn(question: str) -> str:
+
     result = await Runner.run(agent, question)
+
     return result.final_output
 
 
+
+
+
 mlflow.genai.evaluate(
+
     data=eval_dataset, predict_fn=predict_fn, scorers=[exact_match, uses_correct_tools]
+
 )
 ```
 
@@ -185,25 +238,45 @@ python
 
 ```
 eval_dataset = [
+
     {
+
         "inputs": {"task": "What is 15% of 240?"},
+
         "expectations": {"answer": 36},
+
         "tags": {"topic": "math"},
+
     },
+
     {
+
         "inputs": {
+
             "task": "I have 8 cookies and 3 friends. How many more cookies should I buy to share equally?"
+
         },
+
         "expectations": {"answer": 1},
+
         "tags": {"topic": "math"},
+
     },
+
     {
+
         "inputs": {
+
             "task": "I bought 2 shares of stock at $100 each. It's now worth $150. How much profit did I make?"
+
         },
+
         "expectations": {"answer": 100},
+
         "tags": {"topic": "math"},
+
     },
+
 ]
 ```
 
@@ -217,8 +290,13 @@ python
 from mlflow.genai import scorer
 
 
+
+
+
 @scorer
+
 def exact_match(outputs, expectations) -> bool:
+
     return int(outputs) == expectations["answer"]
 ```
 
@@ -242,14 +320,24 @@ python
 ```
 from mlflow.genai.scorers import ToolCallCorrectness, ToolCallEfficiency
 
+
+
 results = mlflow.genai.evaluate(
+
     data=eval_dataset,
+
     predict_fn=predict_fn,
+
     scorers=[
+
         exact_match,
+
         ToolCallCorrectness(),
+
         ToolCallEfficiency(),
+
     ],
+
 )
 ```
 
@@ -282,18 +370,32 @@ python
 ```
 import mlflow
 
+
+
 # Load the model **outside** the prediction function.
+
 model = mlflow.pyfunc.load_model("models:/math_agent/1")
 
 
+
+
+
 # Wrap the model in a function that MLflow can call.
+
 def predict_fn(question: str) -> str:
+
     return model.predict(question)
 
 
+
+
+
 # Run the evaluation as usual.
+
 mlflow.genai.evaluate(
+
     data=eval_dataset, predict_fn=predict_fn, scorers=[exact_match, uses_correct_tools]
+
 )
 ```
 
@@ -305,40 +407,75 @@ python
 
 ```
 from openai import OpenAI
+
 from mlflow.genai.simulators import ConversationSimulator
+
 from mlflow.genai.scorers import ConversationCompleteness, Safety
+
+
 
 client = OpenAI()
 
 
+
+
+
 # Define conversation scenarios to test
+
 simulator = ConversationSimulator(
+
     test_cases=[
+
         {"goal": "Get help calculating compound interest"},
+
         {"goal": "Debug why a calculation is wrong", "persona": "Frustrated user"},
+
     ],
+
     max_turns=5,
+
 )
 
 
+
+
+
 # The predict function follows the Chat Completions API format
+
 def predict_fn(input: list[dict], **kwargs):
+
     # input is a list of message dicts with "role" and "content" keys
+
     response = client.chat.completions.create(
+
         model="gpt-5-mini",
+
         messages=input,
+
     )
+
     return response.choices[0].message.content
 
 
+
+
+
 # Evaluate with both conversation-level and turn-level scorers
+
 results = mlflow.genai.evaluate(
+
     data=simulator,
+
     predict_fn=predict_fn,
+
     scorers=[
+
         ConversationCompleteness(),  # Conversation-level
+
         Safety(),  # Applied to each turn
+
     ],
+
 )
 ```
 

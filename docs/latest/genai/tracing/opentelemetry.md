@@ -24,11 +24,17 @@ python
 
 ```
 import mlflow
+
 from openai import OpenAI
+
+
 
 mlflow.openai.autolog()
 
+
+
 client = OpenAI()
+
 response = client.responses.create(model="gpt-5", input="Hello, world!")
 ```
 

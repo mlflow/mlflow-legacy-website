@@ -24,6 +24,7 @@ bash
 
 ```
 export OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://localhost:5000/v1/traces
+
 export OTEL_EXPORTER_OTLP_TRACES_HEADERS=x-mlflow-experiment-id=123
 ```
 
@@ -39,28 +40,51 @@ python
 
 ```
 import os
+
 import uvicorn
+
 from fastapi import FastAPI
+
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 
+
+
 # Set the endpoint and header
+
 MLFLOW_TRACKING_URI = "http://localhost:5000"
+
 MLFLOW_EXPERIMENT_ID = "123"
 
+
+
 os.environ["OTEL_EXPORTER_OTLP_TRACES_ENDPOINT"] = f"{MLFLOW_TRACKING_URI}/v1/traces"
+
 os.environ["OTEL_EXPORTER_OTLP_TRACES_HEADERS"] = f"x-mlflow-experiment-id={MLFLOW_EXPERIMENT_ID}"
 
 
+
+
+
 app = FastAPI()
+
 FastAPIInstrumentor.instrument_app(app)
 
 
+
+
+
 @app.get("/")
+
 async def root():
+
     return {"message": "Hello, World!"}
 
 
+
+
+
 if __name__ == "__main__":
+
     uvicorn.run(app, host="0.0.0.0", port=8000)
 ```
 
@@ -72,6 +96,7 @@ bash
 
 ```
 export MLFLOW_TRACKING_URI=http://localhost:5000
+
 export MLFLOW_EXPERIMENT_ID=123
 ```
 
@@ -81,24 +106,43 @@ yaml
 
 ```
 receivers:
+
   otlp:
+
     protocols:
+
       grpc:
+
         endpoint: 0.0.0.0:4317
+
       http:
+
         endpoint: 0.0.0.0:4318
 
+
+
 exporters:
+
   otlphttp:
+
     endpoint: ${MLFLOW_TRACKING_URI}
+
     headers:
+
       x-mlflow-experiment-id: ${MLFLOW_EXPERIMENT_ID}
 
+
+
 service:
+
   pipelines:
+
     traces:
+
       receivers: [otlp]
+
       processors: [batch]
+
       exporters: [otlphttp]
 ```
 
@@ -106,9 +150,13 @@ bash
 
 ```
 docker run -d --name opentelemetry-collector \
+
   -p 4317:4317 \
+
   -p 4318:4318 \
+
   -v $(pwd)/opentelemetry-collector.yaml:/etc/otel/collector/config.yaml \
+
   otel/opentelemetry-collector
 ```
 
@@ -120,7 +168,9 @@ bash
 
 ```
 export OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://localhost:5000/v1/traces
+
 export OTEL_EXPORTER_OTLP_TRACES_HEADERS=x-mlflow-experiment-id=123
+
 export OTEL_EXPORTER_OTLP_TRACES_COMPRESSION=gzip
 ```
 
@@ -130,9 +180,14 @@ yaml
 
 ```
 exporters:
+
   otlphttp:
+
     endpoint: ${MLFLOW_TRACKING_URI}
+
     headers:
+
       x-mlflow-experiment-id: ${MLFLOW_EXPERIMENT_ID}
+
     compression: gzip
 ```

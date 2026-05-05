@@ -88,12 +88,20 @@ python
 ```
 import mlflow
 
+
+
 # Enable Git-based version tracking
+
 # This automatically creates/reuses a LoggedModel based on your Git state
+
 context = mlflow.genai.enable_git_model_versioning()
 
+
+
 # Check which version is active
+
 print(f"Active version - Branch: {context.info.branch}, Commit: {context.info.commit[:8]}")
+
 print(f"Repository dirty: {context.info.dirty}")
 ```
 
@@ -103,9 +111,14 @@ python
 
 ```
 with mlflow.genai.enable_git_model_versioning() as context:
+
     # All traces within this block are linked to the Git-based version
+
     # Your application code here
+
     ...
+
+
 
 # Version tracking is automatically disabled when exiting the context
 ```
@@ -118,37 +131,69 @@ python
 
 ```
 import mlflow
+
 import openai
 
+
+
 # Enable Git-based version tracking
+
 context = mlflow.genai.enable_git_model_versioning()
 
+
+
 # Enable MLflow's autologging to instrument your application with Tracing
+
 mlflow.openai.autolog()
 
+
+
 # Set up OpenAI client
+
 client = openai.OpenAI()
 
 
+
+
+
 # Use the trace decorator to capture the application's entry point
+
 @mlflow.trace
+
 def my_app(input: str) -> str:
+
     """Customer support agent application"""
+
     # This call is automatically instrumented by `mlflow.openai.autolog()`
+
     response = client.chat.completions.create(
+
         model="gpt-4o-mini",
+
         messages=[
+
             {"role": "system", "content": "You are a helpful customer support agent."},
+
             {"role": "user", "content": input},
+
         ],
+
         temperature=0.7,
+
         max_tokens=150,
+
     )
+
     return response.choices[0].message.content
 
 
+
+
+
 # Test the application - traces are automatically linked to the Git version
+
 result = my_app(input="What is MLflow?")
+
 print(result)
 ```
 
@@ -169,11 +214,17 @@ python
 
 ```
 # Initial run - creates a LoggedModel for current Git state
+
 result = my_app(input="What is MLflow?")
+
 print(result)
 
+
+
 result = my_app(input="What is Databricks?")
+
 print(result)
+
 # Both traces are linked to the same version since Git state hasn't changed
 ```
 
@@ -183,14 +234,23 @@ python
 
 ```
 # Make a change to your application code (e.g., modify temperature)
+
 # The repository is now "dirty" with uncommitted changes
 
+
+
 # Re-enable versioning - MLflow will detect the dirty state
+
 context = mlflow.genai.enable_git_model_versioning()
+
 print(f"Repository dirty: {context.info.dirty}")  # Will show True
 
+
+
 # This trace will be linked to a different version (same commit but dirty=True)
+
 result = my_app(input="What is GenAI?")
+
 print(result)
 ```
 
@@ -221,10 +281,16 @@ python
 ```
 import mlflow
 
+
+
 # Using the context from enable_git_model_versioning()
+
 context = mlflow.genai.enable_git_model_versioning()
 
+
+
 traces = mlflow.search_traces(model_id=context.active_model.model_id)
+
 print(traces)
 ```
 
@@ -234,25 +300,45 @@ python
 
 ```
 import mlflow
+
 import datetime
 
+
+
 # Get the active Git-based version
+
 context = mlflow.genai.enable_git_model_versioning()
 
+
+
 # Get LoggedModel metadata
+
 logged_model = mlflow.get_logged_model(model_id=context.active_model.model_id)
 
+
+
 # Inspect basic properties
+
 print(f"\n=== LoggedModel Information ===")
+
 print(logged_model)
 
+
+
 # Access Git metadata from tags
+
 print(f"\n=== Git Information ===")
+
 git_tags = {k: v for k, v in logged_model.tags.items() if k.startswith("mlflow.git")}
+
 for tag_key, tag_value in git_tags.items():
+
     if tag_key == "mlflow.git.diff" and len(tag_value) > 100:
+
         print(f"{tag_key}: <diff with {len(tag_value)} characters>")
+
     else:
+
         print(f"{tag_key}: {tag_value}")
 ```
 

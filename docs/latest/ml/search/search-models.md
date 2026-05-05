@@ -30,116 +30,227 @@ python
 
 ```
 import mlflow
+
 import mlflow.sklearn
+
 import numpy as np
+
 import pandas as pd
+
 from sklearn.ensemble import RandomForestClassifier
+
 from sklearn.linear_model import LogisticRegression
+
 from sklearn.svm import SVC
+
 from mlflow.models import infer_signature
+
 import warnings
 
+
+
 # Suppress the MLflow model config warning if present
+
 warnings.filterwarnings("ignore", message=".*Failed to log model config as params.*")
+
+
 
 mlflow.set_experiment("model-search-guide")
 
+
+
 # Model configurations
+
 model_configs = [
+
     {"model_type": "RandomForest", "n_estimators": 100, "max_depth": 10},
+
     {"model_type": "RandomForest", "n_estimators": 200, "max_depth": 20},
+
     {"model_type": "LogisticRegression", "C": 1.0, "solver": "lbfgs"},
+
     {"model_type": "LogisticRegression", "C": 0.1, "solver": "saga"},
+
     {"model_type": "SVM", "kernel": "rbf", "C": 1.0},
+
     {"model_type": "SVM", "kernel": "linear", "C": 0.5},
+
 ]
+
+
 
 # Performance metrics (simulated)
+
 accuracy_scores = [0.92, 0.94, 0.88, 0.86, 0.90, 0.87]
+
 precision_scores = [0.91, 0.93, 0.87, 0.85, 0.89, 0.86]
+
 recall_scores = [0.93, 0.95, 0.89, 0.87, 0.91, 0.88]
+
 f1_scores = [0.92, 0.94, 0.88, 0.86, 0.90, 0.87]
 
+
+
 # Model metadata
+
 versions = ["v1.0", "v1.1", "v1.0", "v2.0", "v1.0", "v1.1"]
+
 environments = [
+
     "production",
+
     "staging",
+
     "production",
+
     "development",
+
     "staging",
+
     "production",
+
 ]
+
 frameworks = ["sklearn", "sklearn", "sklearn", "sklearn", "sklearn", "sklearn"]
 
+
+
 # Create dummy training data
+
 X_train = np.random.rand(100, 10)
+
 y_train = np.random.randint(0, 2, 100)
 
+
+
 # Create input example for model signature
+
 input_example = pd.DataFrame(X_train[:5], columns=[f"feature_{i}" for i in range(10)])
 
+
+
 for i, config in enumerate(model_configs):
+
     with mlflow.start_run():
+
         # Create and train model based on type
+
         if config["model_type"] == "RandomForest":
+
             model = RandomForestClassifier(
+
                 n_estimators=config["n_estimators"],
+
                 max_depth=config["max_depth"],
+
                 random_state=42,
+
             )
+
             mlflow.log_param("n_estimators", config["n_estimators"])
+
             mlflow.log_param("max_depth", config["max_depth"])
+
         elif config["model_type"] == "LogisticRegression":
+
             model = LogisticRegression(
+
                 C=config["C"],
+
                 solver=config["solver"],
+
                 random_state=42,
+
                 max_iter=1000,  # Increase iterations for convergence
+
             )
+
             mlflow.log_param("C", config["C"])
+
             mlflow.log_param("solver", config["solver"])
+
         else:  # SVM
+
             model = SVC(
+
                 kernel=config["kernel"],
+
                 C=config["C"],
+
                 random_state=42,
+
                 probability=True,  # Enable probability estimates
+
             )
+
             mlflow.log_param("kernel", config["kernel"])
+
             mlflow.log_param("C", config["C"])
+
+
 
         # Log common parameters
+
         mlflow.log_param("model_type", config["model_type"])
 
+
+
         # Fit model
+
         model.fit(X_train, y_train)
 
+
+
         # Get predictions for signature
+
         predictions = model.predict(X_train[:5])
 
+
+
         # Create model signature
+
         signature = infer_signature(X_train[:5], predictions)
 
+
+
         # Log metrics
+
         mlflow.log_metric("accuracy", accuracy_scores[i])
+
         mlflow.log_metric("precision", precision_scores[i])
+
         mlflow.log_metric("recall", recall_scores[i])
+
         mlflow.log_metric("f1_score", f1_scores[i])
 
+
+
         # Log tags
+
         mlflow.set_tag("version", versions[i])
+
         mlflow.set_tag("environment", environments[i])
+
         mlflow.set_tag("framework", frameworks[i])
 
+
+
         # Log the model with signature and input example
+
         model_name = f"{config['model_type']}_model_{i}"
+
         mlflow.sklearn.log_model(
+
             model,
+
             name=model_name,
+
             signature=signature,
+
             input_example=input_example,
+
             registered_model_name=f"SearchGuide{config['model_type']}",
+
         )
 ```
 
@@ -190,16 +301,28 @@ python
 ```
 import mlflow
 
+
+
 # Find high-performing models
+
 high_accuracy_models = mlflow.search_logged_models(
+
     experiment_ids=["1"],  # Replace with your experiment ID
+
     filter_string="metrics.accuracy > 0.9",
+
 )
 
+
+
 # Multiple metric conditions
+
 balanced_models = mlflow.search_logged_models(
+
     experiment_ids=["1"],
+
     filter_string="metrics.precision > 0.88 AND metrics.recall > 0.90",
+
 )
 ```
 
@@ -211,14 +334,23 @@ python
 
 ```
 # Find specific model types
+
 rf_models = mlflow.search_logged_models(
+
     experiment_ids=["1"], filter_string="params.model_type = 'RandomForest'"
+
 )
 
+
+
 # Parameter combination search
+
 tuned_rf_models = mlflow.search_logged_models(
+
     experiment_ids=["1"],
+
     filter_string="params.model_type = 'RandomForest' AND params.n_estimators = '200'",
+
 )
 ```
 
@@ -230,17 +362,29 @@ python
 
 ```
 # Exact name match
+
 specific_model = mlflow.search_logged_models(
+
     experiment_ids=["1"], filter_string="name = 'SVM_model_5'"
+
 )
+
+
 
 # Multiple model names
+
 multiple_models = mlflow.search_logged_models(
+
     experiment_ids=["1"],
+
     filter_string="name IN ('SVM_model_5', 'RandomForest_model_0')",
+
 )
 
+
+
 # Exclude specific model
+
 not_svm = mlflow.search_logged_models(experiment_ids=["1"], filter_string="name != 'SVM_model_4'")
 ```
 
@@ -252,12 +396,19 @@ python
 
 ```
 # Find recently created models (timestamp in milliseconds)
+
 import time
+
+
 
 last_week = int((time.time() - 7 * 24 * 60 * 60) * 1000)
 
+
+
 recent_models = mlflow.search_logged_models(
+
     experiment_ids=["1"], filter_string=f"creation_time > {last_week}"
+
 )
 ```
 
@@ -269,17 +420,29 @@ python
 
 ```
 # Find models with high accuracy on test dataset
+
 test_accurate_models = mlflow.search_logged_models(
+
     experiment_ids=["1"],
+
     filter_string="metrics.accuracy > 0.9",
+
     datasets=[{"dataset_name": "test_dataset", "dataset_digest": "abc123"}],  # Optional
+
 )
 
+
+
 # Multiple dataset conditions
+
 multi_dataset_models = mlflow.search_logged_models(
+
     experiment_ids=["1"],
+
     filter_string="metrics.accuracy > 0.85",
+
     datasets=[{"dataset_name": "test_dataset"}, {"dataset_name": "validation_dataset"}],
+
 )
 ```
 
@@ -291,13 +454,21 @@ python
 
 ```
 # Production-ready RandomForest models with high performance
+
 production_ready = mlflow.search_logged_models(
+
     experiment_ids=["1"],
+
     filter_string="""
+
         params.model_type = 'RandomForest'
+
         AND metrics.accuracy > 0.9
+
         AND metrics.precision > 0.88
+
     """,
+
 )
 ```
 
@@ -314,22 +485,40 @@ python
 ```
 import mlflow
 
+
+
 # Basic search with pandas output (default)
+
 models_df = mlflow.search_logged_models(
+
     experiment_ids=["1"], filter_string="metrics.accuracy > 0.9"
+
 )
+
+
 
 # Check available columns
+
 print("Available columns:", models_df.columns.tolist())
+
 print("\nModel information:")
+
 print(models_df[["name", "source_run_id"]])
 
+
+
 # Get results as a list instead of DataFrame
+
 models_list = mlflow.search_logged_models(
+
     experiment_ids=["1"], filter_string="metrics.accuracy > 0.9", output_format="list"
+
 )
 
+
+
 for model in models_list:
+
     print(f"Model: {model.name}, Run ID: {model.source_run_id}")
 ```
 
@@ -342,25 +531,47 @@ python
 ```
 from mlflow import MlflowClient
 
+
+
 client = MlflowClient()
 
+
+
 # Search with pagination
+
 page_token = None
+
 all_models = []
 
+
+
 while True:
+
     result = client.search_logged_models(
+
         experiment_ids=["1"],
+
         filter_string="metrics.accuracy > 0.85",
+
         max_results=10,
+
         page_token=page_token,
+
     )
+
+
 
     all_models.extend(result.to_list())
 
+
+
     if not result.token:
+
         break
+
     page_token = result.token
+
+
 
 print(f"Found {len(all_models)} models")
 ```
@@ -377,35 +588,65 @@ python
 
 ```
 # Order by single metric
+
 best_models = mlflow.search_logged_models(
+
     experiment_ids=["1"],
+
     filter_string="params.model_type = 'RandomForest'",
+
     order_by=[
+
         {"field_name": "metrics.accuracy", "ascending": False}  # Highest accuracy first
+
     ],
+
 )
+
+
 
 # Order by dataset-specific metric
+
 dataset_ordered = mlflow.search_logged_models(
+
     experiment_ids=["1"],
+
     filter_string="metrics.f1_score > 0.8",
+
     order_by=[
+
         {
+
             "field_name": "metrics.f1_score",
+
             "ascending": False,
+
             "dataset_name": "test_dataset",
+
             "dataset_digest": "abc123",  # Optional
+
         }
+
     ],
+
 )
 
+
+
 # Multiple ordering criteria
+
 complex_order = mlflow.search_logged_models(
+
     experiment_ids=["1"],
+
     order_by=[
+
         {"field_name": "metrics.accuracy", "ascending": False},
+
         {"field_name": "creation_time", "ascending": True},
+
     ],
+
 )
 ```
 
@@ -417,21 +658,37 @@ python
 
 ```
 # Get top 5 models by accuracy
+
 top_5_models = mlflow.search_logged_models(
+
     experiment_ids=["1"],
+
     max_results=5,
+
     order_by=[{"field_name": "metrics.accuracy", "ascending": False}],
+
 )
 
+
+
 # Get the single best model
+
 best_model = mlflow.search_logged_models(
+
     experiment_ids=["1"],
+
     max_results=1,
+
     order_by=[{"field_name": "metrics.f1_score", "ascending": False}],
+
     output_format="list",
+
 )[0]
 
+
+
 accuracy_metric = next((metric for metric in best_model.metrics if metric.key == "accuracy"), None)
+
 print(f"Model ID: {best_model.model_id}, Accuracy: {accuracy_metric.value}")
 ```
 
@@ -447,8 +704,11 @@ python
 
 ```
 # Search specific experiments
+
 multi_exp_models = mlflow.search_logged_models(
+
     experiment_ids=["1", "2", "3"], filter_string="metrics.accuracy > 0.9"
+
 )
 ```
 
@@ -462,14 +722,23 @@ python
 
 ```
 deployment_candidates = mlflow.search_logged_models(
+
     experiment_ids=exp_ids,
+
     filter_string="""
+
         metrics.accuracy > 0.95
+
         AND metrics.precision > 0.93
+
     """,
+
     datasets=[{"dataset_name": "production_test_set"}],
+
     max_results=1,
+
     order_by=[{"field_name": "metrics.f1_score", "ascending": False}],
+
 )
 ```
 
@@ -481,32 +750,59 @@ python
 
 ```
 # Get best model of each type
+
 model_types = ["RandomForest", "LogisticRegression", "SVM"]
+
 best_by_type = {}
 
+
+
 for model_type in model_types:
+
     models = mlflow.search_logged_models(
+
         experiment_ids=["1"],
+
         filter_string=f"params.model_type = '{model_type}'",
+
         max_results=1,
+
         order_by=[{"field_name": "metrics.accuracy", "ascending": False}],
+
         output_format="list",
+
     )
+
     if models:
+
         best_by_type[model_type] = models[0]
 
+
+
 # Compare results
+
 for model_type, model in best_by_type.items():
+
     # Find accuracy in the metrics list
+
     accuracy = None
+
     for metric in model.metrics:
+
         if metric.key == "accuracy":
+
             accuracy = metric.value
+
             break
 
+
+
     accuracy_display = f"{accuracy:.4f}" if accuracy is not None else "N/A"
+
     print(
+
         f"{model_type}: Model ID = {model.model_id}, Run ID = {model.source_run_id}, Accuracy = {accuracy_display}"
+
     )
 ```
 
@@ -520,24 +816,43 @@ python
 
 ```
 # Option 1: Access metrics from LoggedModel objects (list output)
+
 models_list = mlflow.search_logged_models(
+
     experiment_ids=["1"], filter_string="metrics.accuracy > 0.9", output_format="list"
+
 )
+
+
 
 for model in models_list:
+
     print(f"\nModel: {model.name}")
+
     # Access metrics as a list of Metric objects
+
     for metric in model.metrics:
+
         print(f"  {metric.key}: {metric.value}")
 
+
+
 # Option 2: Use the DataFrame output which includes flattened metrics
+
 models_df = mlflow.search_logged_models(
+
     experiment_ids=["1"], filter_string="metrics.accuracy > 0.9", output_format="pandas"
+
 )
 
+
+
 # The DataFrame has a 'metrics' column containing the list of Metric objects
+
 first_model_metrics = models_df.iloc[0].get("metrics", [])
+
 for metric in first_model_metrics:
+
     print(f"{metric.key}: {metric.value}")
 ```
 

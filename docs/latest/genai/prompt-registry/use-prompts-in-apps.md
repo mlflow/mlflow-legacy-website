@@ -16,15 +16,26 @@ python
 ```
 import mlflow
 
+
+
 prompt_name = "my-sdk-prompt"
 
+
+
 # Load the latest version of the prompt
+
 mlflow.genai.load_prompt(name_or_uri=f"prompts:/{prompt_name}@latest")
 
+
+
 # Load by specific version (assuming version 1 exists)
+
 mlflow.genai.load_prompt(name_or_uri=f"prompts:/{prompt_name}/1")
 
+
+
 # Load by alias (assuming an alias 'staging' points to a version of a prompt)
+
 mlflow.genai.load_prompt(name_or_uri=f"prompts:/{prompt_name}@staging")
 ```
 
@@ -37,37 +48,70 @@ python
 ```
 import mlflow
 
+
+
 # define a prompt template
+
 prompt_template = """\
+
 You are an expert AI assistant. Answer the user's question with clarity, accuracy, and conciseness.
 
+
+
 ## Question:
+
 {{question}}
 
+
+
 ## Guidelines:
+
 - Keep responses factual and to the point.
+
 - If relevant, provide examples or step-by-step instructions.
+
 - If the question is ambiguous, clarify before answering.
 
+
+
 Respond below:
+
 """
+
 prompt = mlflow.genai.register_prompt(
+
     name="ai_assistant_prompt",
+
     template=prompt_template,
+
     commit_message="Initial version of AI assistant",
+
 )
 
+
+
 question = "What is MLflow?"
+
 response = (
+
     client.chat.completions
+
     .create(
+
         messages=[{"role": "user", "content": prompt.format(question=question)}],
+
         model="gpt-4o-mini",
+
         temperature=0.1,
+
         max_tokens=2000,
+
     )
+
     .choices[0]
+
     .message.content
+
 )
 ```
 
@@ -79,28 +123,51 @@ python
 
 ```
 import mlflow
+
 from langchain_core.prompts import ChatPromptTemplate
+
 from langchain_openai import ChatOpenAI
 
+
+
 # Load registered prompt
+
 prompt = mlflow.genai.load_prompt("prompts:/summarization-prompt/2")
 
+
+
 # Create LangChain prompt object
+
 langchain_prompt = ChatPromptTemplate.from_messages([
+
     (
+
         # IMPORTANT: Convert prompt template from double to single curly braces format
+
         "system",
+
         prompt.to_single_brace_format(),
+
     ),
+
     ("placeholder", "{messages}"),
+
 ])
 
+
+
 # Define the LangChain chain
+
 llm = ChatOpenAI()
+
 chain = langchain_prompt | llm
 
+
+
 # Invoke the chain
+
 response = chain.invoke({"num_sentences": 1, "sentences": "This is a test sentence."})
+
 print(response)
 ```
 
@@ -116,19 +183,37 @@ python
 from openai import OpenAI
 
 
+
+
+
 @mlflow.trace
+
 def question(name):
+
     # Load the prompt - this creates an automatic link to the trace
+
     prompt = mlflow.genai.load_prompt("prompts:/question@latest")
+
     client = OpenAI()
+
+
 
     messages = [{"role": "user", "content": prompt.format(name=name)}]
 
+
+
     response = client.chat.completions.create(
+
         model="gpt-5-mini",
+
         messages=messages,
+
     )
+
     return response.choices[0].message.content
+
+
+
 
 
 question("1+1")  # The prompt is linked to the trace created for this call
@@ -145,17 +230,30 @@ python
 ```
 from openai import OpenAI
 
+
+
 with mlflow.start_run():
+
     # Load the prompt - this creates an automatic link to the run
+
     prompt = mlflow.genai.load_prompt("prompts:/question@latest")
+
     client = OpenAI()
+
+
 
     messages = [{"role": "user", "content": prompt.format(name="1+1")}]
 
+
+
     response = client.chat.completions.create(
+
         model="gpt-5-mini",
+
         messages=messages,
+
     )
+
     response.choices[0].message.content
 ```
 

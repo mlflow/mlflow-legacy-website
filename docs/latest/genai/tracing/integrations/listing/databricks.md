@@ -8,9 +8,11 @@
 
 Databricks offers a fully managed MLflow service as a part of their platform. This is the easiest way to get started with MLflow tracing, without having to set up any infrastructure. If you are using Databricks Foundation Model APIs, it is no brainer to use the managed MLflow for end-to-end [LLMOps](https://mlflow.org/llmops) including tracing.
 
-Visit Databricks documentation
+:::warning Visit Databricks documentation
 
 This guide only covers how to trace Databricks Foundation Model APIs using MLflow tracing. For more details on how to get started with MLflow tracing on Databricks (e.g., tracing agent deployed on Databricks), please refer to the [Databricks documentation](https://docs.databricks.com/aws/en/mlflow3/genai/).
+
+:::
 
 ## Getting Started[​](#getting-started "Direct link to Getting Started")
 
@@ -44,23 +46,41 @@ python
 
 ```
 import openai
+
 import mlflow
 
+
+
 # Enable auto-tracing for OpenAI (works with Databricks)
+
 mlflow.openai.autolog()
 
+
+
 # Initialize the OpenAI client with Databricks API endpoint
+
 client = openai.OpenAI(
+
     base_url="https://example.staging.cloud.databricks.com/serving-endpoints",
+
     api_key="<your_databricks_token>",
+
 )
 
+
+
 response = client.chat.completions.create(
+
     model="databricks-gemini-3-pro",
+
     messages=[
+
         {"role": "system", "content": "You are a helpful assistant."},
+
         {"role": "user", "content": "What is the capital of France?"},
+
     ],
+
 )
 ```
 
@@ -68,22 +88,39 @@ typescript
 
 ```
 import { OpenAI } from "openai";
+
 import { tracedOpenAI } from "@mlflow/openai";
 
+
+
 // Wrap the OpenAI client and point to Databricks endpoint
+
 const client = tracedOpenAI(
+
   new OpenAI({
+
     baseURL: "https://example.staging.cloud.databricks.com/serving-endpoints",
+
     apiKey: "<your_databricks_token>",
+
   })
+
 );
 
+
+
 const response = await client.chat.completions.create({
+
   model: "databricks-gemini-3-pro",
+
   messages: [
+
     { role: "system", content: "You are a helpful assistant." },
+
     { role: "user", content: "What is the capital of France?" },
+
   ],
+
 });
 ```
 

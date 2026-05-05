@@ -27,10 +27,15 @@ text
 
 ```
 my_model/
+
 ├── MLmodel
+
 ├── model.pkl
+
 ├── conda.yaml
+
 ├── python_env.yaml
+
 └── requirements.txt
 ```
 
@@ -66,7 +71,9 @@ text
 
 ```
 mlflow==2.9.2
+
 scikit-learn==1.3.2
+
 cloudpickle==3.0.0
 ```
 
@@ -76,12 +83,19 @@ text
 
 ```
 mlflow==2.9.2
+
 scikit-learn==1.3.2
+
 cloudpickle==3.0.0
+
 numpy==1.24.3
+
 scipy==1.11.4
+
 joblib==1.3.2
+
 threadpoolctl==3.2.0
+
 # ... other transitive dependencies
 ```
 
@@ -109,11 +123,17 @@ yaml
 
 ```
 python: 3.9.8
+
 build_dependencies:
+
   - pip==23.3.2
+
   - setuptools==69.0.3
+
   - wheel==0.42.0
+
 dependencies:
+
   - -r requirements.txt
 ```
 
@@ -123,7 +143,9 @@ text
 
 ```
 mlflow==2.9.2
+
 scikit-learn==1.3.2
+
 cloudpickle==3.0.0
 ```
 
@@ -133,14 +155,23 @@ yaml
 
 ```
 name: mlflow-env
+
 channels:
+
   - conda-forge
+
 dependencies:
+
   - python=3.9.8
+
   - pip
+
   - pip:
+
       - mlflow==2.9.2
+
       - scikit-learn==1.3.2
+
       - cloudpickle==3.0.0
 ```
 
@@ -180,14 +211,23 @@ python
 
 ```
 import mlflow
+
 from sklearn.linear_model import LinearRegression
+
 from sklearn.datasets import make_regression
 
+
+
 X, y = make_regression(n_samples=100, n_features=4)
+
 model = LinearRegression().fit(X, y)
 
+
+
 # uv.lock is auto-detected in the current directory
+
 mlflow.sklearn.log_model(model, name="model")
+
 # Requirements are exported from uv.lock, not inferred from imports
 ```
 
@@ -209,6 +249,7 @@ bash
 
 ```
 # Disable copying uv.lock, pyproject.toml, and .python-version into model artifacts
+
 export MLFLOW_LOG_UV_FILES=false
 ```
 
@@ -221,11 +262,18 @@ python
 ```
 import mlflow
 
+
+
 mlflow.pyfunc.log_model(
+
     python_model=my_model,
+
     name="model",
+
     input_example=input_data,
+
     uv_project_path="/path/to/my-uv-project",
+
 )
 ```
 
@@ -240,11 +288,18 @@ python
 ```
 import mlflow
 
+
+
 mlflow.pyfunc.log_model(
+
     python_model=my_model,
+
     name="model",
+
     input_example=input_data,
+
     uv_groups=["ml", "data"],
+
 )
 ```
 
@@ -259,11 +314,18 @@ python
 ```
 import mlflow
 
+
+
 mlflow.pyfunc.log_model(
+
     python_model=my_model,
+
     name="model",
+
     input_example=input_data,
+
     uv_extras=["gpu", "serving"],
+
 )
 ```
 
@@ -289,21 +351,39 @@ python
 import mlflow
 
 
+
+
+
 class CustomModel(mlflow.pyfunc.PythonModel):
+
     def predict(self, context, model_input):
+
         # your model depends on pandas
+
         import pandas as pd
 
+
+
         ...
+
         return prediction
 
 
+
+
+
 # Log the model
+
 mlflow.pyfunc.log_model(
+
     python_model=CustomModel(),
+
     name="model",
+
     extra_pip_requirements=["pandas==2.0.3"],
+
     input_example=input_data,
+
 )
 ```
 
@@ -313,7 +393,9 @@ yaml
 
 ```
 mlflow==2.9.2
+
 cloudpickle==3.0.0
+
 pandas==2.0.3 # added
 ```
 
@@ -332,15 +414,26 @@ python
 ```
 import mlflow
 
+
+
 # Log the model
+
 mlflow.sklearn.log_model(
+
     sk_model=model,
+
     name="model",
+
     pip_requirements=[
+
         "mlflow-skinny==2.9.2",
+
         "cloudpickle==2.5.8",
+
         "scikit-learn==1.3.1",
+
     ],
+
 )
 ```
 
@@ -350,7 +443,9 @@ yaml
 
 ```
 mlflow-skinny==2.9.2
+
 cloudpickle==2.5.8
+
 scikit-learn==1.3.1
 ```
 
@@ -381,10 +476,16 @@ python
 ```
 from typing import List
 
+
+
 iris_types = ["setosa", "versicolor", "viginica"]
 
 
+
+
+
 def map_iris_types(predictions: int) -> List[str]:
+
     return [iris_types[pred] for pred in predictions]
 ```
 
@@ -397,26 +498,48 @@ python
 ```
 from typing import Any, Dict, List, Optional
 
+
+
 from custom_code import map_iris_types  # import the external reference
+
+
 
 import mlflow
 
 
+
+
+
 class FlowerMapping(mlflow.pyfunc.PythonModel):
+
     """Custom model with an external dependency"""
 
+
+
     def predict(self, context, model_input, params: Optional[Dict[str, Any]] = None) -> List[str]:
+
         predictions = [pred % 3 for pred in model_input]
 
+
+
         # Call the external function
+
         return map_iris_types(predictions)
 
 
+
+
+
 with mlflow.start_run():
+
     model_info = mlflow.pyfunc.log_model(
+
         name="flowers",
+
         python_model=FlowerMapping(),
+
         infer_code_paths=True,  # Enabling automatic code dependency inference
+
     )
 ```
 
@@ -454,7 +577,9 @@ text
 
 ```
 my_project/
+
 ├── utils.py
+
 └── train.py
 ```
 
@@ -466,22 +591,41 @@ python
 import mlflow
 
 
+
+
+
 class MyModel(mlflow.pyfunc.PythonModel):
+
     def predict(self, context, model_input):
+
         from utils import my_func
 
+
+
         x = my_func(model_input)
+
         # .. your prediction logic
+
         return prediction
 
 
+
+
+
 # Log the model
+
 with mlflow.start_run() as run:
+
     mlflow.pyfunc.log_model(
+
         python_model=MyModel(),
+
         name="model",
+
         input_example=input_data,
+
         code_paths=["utils.py"],
+
     )
 ```
 
@@ -491,9 +635,13 @@ text
 
 ```
 model/
+
 ├── MLmodel
+
 ├── ...
+
 └── code/
+
     └── utils.py
 ```
 
@@ -513,7 +661,9 @@ text
 
 ```
 my_project/
+
 |── train.py
+
 └── custom_package.whl
 ```
 
@@ -525,24 +675,43 @@ python
 
 ```
 import mlflow
+
 from custom_package import my_func
 
 
+
+
+
 class MyModel(mlflow.pyfunc.PythonModel):
+
     def predict(self, context, model_input):
+
         x = my_func(model_input)
+
         # .. your prediction logic
+
         return prediction
 
 
+
+
+
 # Log the model
+
 with mlflow.start_run() as run:
+
     mlflow.pyfunc.log_model(
+
         python_model=MyModel(),
+
         name="model",
+
         extra_pip_requirements=["code/custom_package.whl"],
+
         input_example=input_data,
+
         code_paths=["custom_package.whl"],
+
     )
 ```
 
@@ -554,8 +723,11 @@ text
 
 ```
 my_project/
+
 |── train.py
+
 └── src/
+
     └──  utils.py
 ```
 
@@ -565,22 +737,40 @@ python
 
 ```
 class MyModel(mlflow.pyfunc.PythonModel):
+
     def predict(self, context, model_input):
+
         from src.utils import my_func
 
+
+
         # .. your prediction logic
+
         return prediction
 
 
+
+
+
 with mlflow.start_run() as run:
+
     mlflow.pyfunc.log_model(
+
         python_model=MyModel(),
+
         name="model",
+
         input_example=input_data,
+
         code_paths=[
+
             "src/utils.py"
+
         ],  # the file will be saved at code/utils.py not code/src/utils.py
+
     )
+
+
 
 # => Model serving will fail with ModuleNotFoundError: No module named 'src'
 ```
@@ -593,19 +783,33 @@ python
 
 ```
 class MyModel(mlflow.pyfunc.PythonModel):
+
     def predict(self, context, model_input):
+
         from src.utils import my_func
 
+
+
         # .. your prediction logic
+
         return prediction
 
 
+
+
+
 with mlflow.start_run() as run:
+
     mlflow.pyfunc.log_model(
+
         python_model=model,
+
         name="model",
+
         input_example=input_data,
+
         code_paths=["src"],  # the whole /src directory will be saved at code/src
+
     )
 ```
 
@@ -621,64 +825,123 @@ python
 
 ```
 import importlib
+
 import sys
+
 import tempfile
+
 from pathlib import Path
 
+
+
 import mlflow
+
+
 
 with tempfile.TemporaryDirectory() as tmpdir:
+
     tmpdir = Path(tmpdir)
+
     my_model_path = tmpdir / "my_model.py"
+
     code_template = """
+
 import mlflow
 
+
+
 class MyModel(mlflow.pyfunc.PythonModel):
+
     def predict(self, context, model_input):
+
         return [{n}] * len(model_input)
+
 """
+
+
 
     my_model_path.write_text(code_template.format(n=1))
 
+
+
     sys.path.insert(0, str(tmpdir))
+
     import my_model
 
+
+
     # model 1
+
     model1 = my_model.MyModel()
+
     assert model1.predict(context=None, model_input=[0]) == [1]
 
+
+
     with mlflow.start_run():
+
         info1 = mlflow.pyfunc.log_model(
+
             name="model",
+
             python_model=model1,
+
             code_paths=[my_model_path],
+
         )
+
+
 
     # model 2
+
     my_model_path.write_text(code_template.format(n=2))
+
     importlib.reload(my_model)
+
     model2 = my_model.MyModel()
+
     assert model2.predict(context=None, model_input=[0]) == [2]
 
+
+
     with mlflow.start_run():
+
         info2 = mlflow.pyfunc.log_model(
+
             name="model",
+
             python_model=model2,
+
             code_paths=[my_model_path],
+
         )
 
+
+
 # To simulate a fresh Python process, remove the `my_model` module from the cache
+
 sys.modules.pop("my_model")
 
+
+
 # Now we have two models that depend on modules with the same name but different implementations.
+
 # Let's load them and check the prediction results.
+
 pred = mlflow.pyfunc.load_model(info1.model_uri).predict([0])
+
 assert pred == [1], pred  # passes
 
+
+
 # As the `my_model` module was loaded and cached in the previous `load_model` call,
+
 # the next `load_model` call will reuse it and return the wrong prediction result.
+
 assert "my_model" in sys.modules
+
 pred = mlflow.pyfunc.load_model(info2.model_uri).predict([0])
+
 assert pred == [2], pred  # doesn't pass, `pred` is [1]
 ```
 
@@ -688,7 +951,9 @@ python
 
 ```
 model1 = mlflow.pyfunc.load_model(info1.model_uri)
+
 sys.modules.pop("my_model")
+
 model2 = mlflow.pyfunc.load_model(info2.model_uri)
 ```
 
@@ -698,15 +963,25 @@ python
 
 ```
 mlflow.pyfunc.log_model(
+
     name="model1",
+
     python_model=model1,
+
     code_paths=["my_model1.py"],
+
 )
 
+
+
 mlflow.pyfunc.log_model(
+
     name="model",
+
     python_model=model2,
+
     code_paths=["my_model2.py"],
+
 )
 ```
 
@@ -718,13 +993,21 @@ text
 
 ```
 my_project/
+
 |-- model.py # Defines the custom pyfunc model
+
 |── train.py # Trains and logs the model
+
 |── core/    # Required modules for prediction
+
 |   |── preprocessing.py
+
 |   └── ...
+
 └── helper/  # Other helper modules used for training, evaluation
+
     |── evaluation.py
+
     └── ...
 ```
 
@@ -750,9 +1033,14 @@ python
 ```
 import mlflow
 
+
+
 mlflow.models.predict(
+
     model_uri="runs:/<run_id>/model",
+
     input_data="<input_data>",
+
 )
 ```
 
@@ -776,9 +1064,13 @@ bash
 
 ```
 mlflow models serve -m runs:/<run_id>/model -p <port>
+
 # In another terminal
+
 curl -X POST -H "Content-Type: application/json" \
+
     --data '{"inputs": [[1, 2], [3, 4]]}' \
+
     http://localhost:<port>/invocations
 ```
 
@@ -794,10 +1086,15 @@ bash
 
 ```
 mlflow models build-docker -m runs:/<run_id>/model -n <image_name>
+
 docker run -p <port>:8080 <image_name>
+
 # In another terminal
+
 curl -X POST -H "Content-Type: application/json" \
+
     --data '{"inputs": [[1, 2], [3, 4]]}' \
+
     http://localhost:<port>/invocations
 ```
 
@@ -807,9 +1104,7 @@ curl -X POST -H "Content-Type: application/json" \
 
 One of the most common issues experienced during model deployment centers around dependency issues. When logging or saving your model, MLflow tries to infer the model dependencies and save them as part of the MLflow Model metadata. However, this might not always be complete and miss some dependencies e.g. \[extras] dependencies for certain libraries. This can cause errors when serving your model, such as "ModuleNotFoundError" or "ImportError". Below are some steps that can help to diagnose and fix missing dependency errors.
 
-hint
-
-To reduce the possibility of dependency errors, you can add `input_example` when saving your model. This enables MLflow to perform a model prediction before saving the model, thereby capturing the dependencies used during the prediction. Please refer to [Model Input Example](/docs/latest/ml/model/signatures.md) for additional, detailed usage of this parameter.
+:::tip hint To reduce the possibility of dependency errors, you can add `input_example` when saving your model. This enables MLflow to perform a model prediction before saving the model, thereby capturing the dependencies used during the prediction. Please refer to [Model Input Example](/docs/latest/ml/model/signatures.md) for additional, detailed usage of this parameter. :::
 
 #### 1. Check the missing dependencies[​](#1-check-the-missing-dependencies "Direct link to 1. Check the missing dependencies")
 
@@ -835,10 +1130,16 @@ python
 ```
 import mlflow
 
+
+
 mlflow.models.predict(
+
     model_uri="runs:/<run_id>/<model_path>",
+
     input_data="<input_data>",
+
     pip_requirements_override=["opencv-python==4.8.0"],
+
 )
 ```
 
@@ -846,8 +1147,11 @@ bash
 
 ```
 mlflow models predict \
+
     -m runs:/<run_id>/<model_path> \
+
     -I <input_path> \
+
     --pip-requirements-override opencv-python==4.8.0
 ```
 
@@ -868,10 +1172,16 @@ python
 ```
 import mlflow
 
+
+
 mlflow.models.update_model_requirements(
+
     model_uri="runs:/<run_id>/<model_path>",
+
     operation="add",
+
     requirement_list=["opencv-python==4.8.0"],
+
 )
 ```
 
@@ -890,11 +1200,18 @@ python
 ```
 import mlflow
 
+
+
 mlflow.pyfunc.log_model(
+
     name="model",
+
     python_model=python_model,
+
     extra_pip_requirements=["opencv-python==4.8.0"],
+
     input_example=input_data,
+
 )
 ```
 
@@ -906,7 +1223,9 @@ text
 
 ```
 hint: `mlflow-skinny` was requested with a pre-release marker (e.g.,
+
       mlflow-skinny==3.2.0rc0), but pre-releases weren't enabled (try:
+
       `--prerelease=allow`)
 ```
 
@@ -916,9 +1235,13 @@ python
 
 ```
 mlflow.models.predict(
+
     model_uri=model_info.model_uri,
+
     input_data=["a", "b", "c"],
+
     extra_envs={"UV_PRERELEASE": "allow"},
+
 )
 ```
 
@@ -934,14 +1257,23 @@ yaml
 
 ```
 name: mlflow-env
+
 channels:
+
   - defaults
+
 dependencies:
+
   - python=3.8.8
+
   - pip
+
   - pip:
+
       - mlflow==2.3
+
       - scikit-learn==0.23.2
+
       - cloudpickle==1.6.0
 ```
 

@@ -27,33 +27,61 @@ python
 
 ```
 from sklearn.datasets import make_regression
+
 from sklearn.ensemble import RandomForestRegressor
+
 from sklearn.metrics import mean_squared_error
+
 from sklearn.model_selection import train_test_split
 
+
+
 import mlflow
+
 import mlflow.sklearn
 
+
+
 with mlflow.start_run() as run:
+
     X, y = make_regression(n_features=4, n_informative=2, random_state=0, shuffle=False)
+
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
+
+
     params = {"max_depth": 2, "random_state": 42}
+
     model = RandomForestRegressor(**params)
+
     model.fit(X_train, y_train)
 
+
+
     # Log parameters and metrics using the MLflow APIs
+
     mlflow.log_params(params)
 
+
+
     y_pred = model.predict(X_test)
+
     mlflow.log_metrics({"mse": mean_squared_error(y_test, y_pred)})
 
+
+
     # Log the sklearn model and register as version 1
+
     mlflow.sklearn.log_model(
+
         sk_model=model,
+
         name="sklearn-model",
+
         input_example=X_train,
+
         registered_model_name="sk-learn-random-forest-reg-model",
+
     )
 ```
 
@@ -63,6 +91,7 @@ bash
 
 ```
 Successfully registered model 'sk-learn-random-forest-reg-model'.
+
 Created version '1' of model 'sk-learn-random-forest-reg-model'.
 ```
 
@@ -87,34 +116,63 @@ text
 
 ```
 mlruns/
+
 ├── 0/                                    # Experiment ID
+
 │   ├── bc6dc2a4f38d47b4b0c99d154bbc77ad/ # Run ID
+
 │   │   ├── metrics/
+
 │   │   │   └── mse                       # Example metric file for mean squared error
+
 │   │   ├── artifacts/                    # Artifacts associated with our run
+
 │   │   │   └── sklearn-model/
+
 │   │   │       ├── python_env.yaml
+
 │   │   │       ├── requirements.txt      # Python package requirements
+
 │   │   │       ├── MLmodel               # MLflow model file with model metadata
+
 │   │   │       ├── model.pkl             # Serialized model file
+
 │   │   │       ├── input_example.json
+
 │   │   │       └── conda.yaml
+
 │   │   ├── tags/
+
 │   │   │   ├── mlflow.user
+
 │   │   │   ├── mlflow.source.git.commit
+
 │   │   │   ├── mlflow.runName
+
 │   │   │   ├── mlflow.source.name
+
 │   │   │   ├── mlflow.log-model.history
+
 │   │   │   └── mlflow.source.type
+
 │   │   ├── params/
+
 │   │   │   ├── max_depth
+
 │   │   │   └── random_state
+
 │   │   └── meta.yaml
+
 │   └── meta.yaml
+
 ├── models/                               # Model Registry Directory
+
     ├── sk-learn-random-forest-reg-model/ # Registered model name
+
     │   ├── version-1/                    # Model version directory
+
     │   │   └── meta.yaml
+
     │   └── meta.yaml
 ```
 
@@ -140,8 +198,11 @@ text
 
 ```
 INFO:     Started server process [26393]
+
 INFO:     Waiting for application startup.
+
 INFO:     Application startup complete.
+
 INFO:     Uvicorn running on http://127.0.0.1:8080 (Press CTRL+C to quit)
 ```
 
@@ -170,18 +231,32 @@ python
 
 ```
 import mlflow.sklearn
+
 from sklearn.datasets import make_regression
 
+
+
 model_name = "sk-learn-random-forest-reg-model"
+
 model_version = "latest"
 
+
+
 # Load the model from the Model Registry
+
 model_uri = f"models:/{model_name}/{model_version}"
+
 model = mlflow.sklearn.load_model(model_uri)
 
+
+
 # Generate a new dataset for prediction and predict
+
 X_new, _ = make_regression(n_features=4, n_informative=2, random_state=0, shuffle=False)
+
 y_pred_new = model.predict(X_new)
+
+
 
 print(y_pred_new)
 ```
@@ -222,23 +297,42 @@ python
 
 ```
 import mlflow.sklearn
+
 from mlflow import MlflowClient
+
+
 
 client = MlflowClient()
 
+
+
 # Set model version alias
+
 model_name = "sk-learn-random-forest-reg-model"
+
 model_version_alias = "the_best_model_ever"
+
 client.set_registered_model_alias(model_name, model_version_alias, "1")  # Duplicate of step in UI
 
+
+
 # Get information about the model
+
 model_info = client.get_model_version_by_alias(model_name, model_version_alias)
+
 model_tags = model_info.tags
+
 print(model_tags)
 
+
+
 # Get the model version using a model URI
+
 model_uri = f"models:/{model_name}@{model_version_alias}"
+
 model = mlflow.sklearn.load_model(model_uri)
+
+
 
 print(model)
 ```
@@ -249,6 +343,7 @@ Output
 
 ```
 {'problem_type': 'regression'}
+
 RandomForestRegressor(max_depth=2, random_state=42)
 ```
 

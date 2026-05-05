@@ -33,19 +33,33 @@ All tool call judges require MLflow Traces with at least one span marked as `spa
 
    ```
    import mlflow
+
    import os
+
    import openai
 
+
+
    # Ensure your OPENAI_API_KEY is set in your environment
+
    # os.environ["OPENAI_API_KEY"] = "<YOUR_API_KEY>" # Uncomment and set if not globally configured
 
+
+
    # Enable auto-tracing for OpenAI
+
    mlflow.openai.autolog()
 
+
+
    # Create an OpenAI client
+
    client = openai.OpenAI()
 
+
+
    # Select an LLM
+
    model_name = "gpt-4o-mini"
    ```
 
@@ -57,75 +71,145 @@ python
 
 ```
 import json
+
 import mlflow
+
 import openai
+
 from mlflow.genai.scorers import ToolCallCorrectness, ToolCallEfficiency
 
+
+
 mlflow.openai.autolog()
+
 client = openai.OpenAI()
 
+
+
 # Define the tool schema for the LLM
+
 tools = [
+
     {
+
         "type": "function",
+
         "function": {
+
             "name": "get_weather",
+
             "description": "Get the current weather for a location",
+
             "parameters": {
+
                 "type": "object",
+
                 "properties": {
+
                     "location": {"type": "string", "description": "City and country"},
+
                 },
+
                 "required": ["location"],
+
             },
+
         },
+
     },
+
 ]
 
 
+
+
+
 # Define the tool function with proper span type
+
 @mlflow.trace(span_type="TOOL")
+
 def get_weather(location: str) -> dict:
+
     # Simulated weather data - in practice, this would call a weather API
+
     return {"temperature": 72, "condition": "sunny", "location": location}
 
 
+
+
+
 # Define your agent
+
 @mlflow.trace
+
 def agent(query: str):
+
     # Call the LLM with tools
+
     response = client.chat.completions.create(
+
         model="gpt-4o-mini",
+
         messages=[{"role": "user", "content": query}],
+
         tools=tools,
+
     )
+
     message = response.choices[0].message
+
     responses = []
+
     if message.tool_calls:
+
         for tool_call in message.tool_calls:
+
             args = json.loads(tool_call.function.arguments)
+
             result = get_weather(**args)
+
             responses.append({
+
                 "response": f"Weather in {result['location']}: {result['condition']}, {result['temperature']}°F"
+
             })
+
+
 
     return {"response": responses if responses else message.content}
 
 
+
+
+
 # Create evaluation dataset
+
 eval_dataset = [
+
     {"inputs": {"query": "What's the weather like in Paris?"}},
+
     {"inputs": {"query": "How's the weather in Tokyo?"}},
+
 ]
 
+
+
 # Run evaluation with tool call judges
+
 eval_results = mlflow.genai.evaluate(
+
     data=eval_dataset,
+
     predict_fn=agent,
+
     scorers=[
+
         ToolCallCorrectness(model="openai:/gpt-4o-mini"),
+
         ToolCallEfficiency(model="openai:/gpt-4o-mini"),
+
     ],
+
 )
 ```
 

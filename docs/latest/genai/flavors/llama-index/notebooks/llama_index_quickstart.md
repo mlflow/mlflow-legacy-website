@@ -30,12 +30,20 @@ python
 
 ```
 import os
+
 from getpass import getpass
 
+
+
 from llama_index.core import Document, VectorStoreIndex
+
 from llama_index.core.llms import ChatMessage
 
+
+
 import mlflow
+
+
 
 os.environ["OPENAI_API_KEY"] = getpass("Enter your OpenAI API key: ")
 ```
@@ -71,28 +79,51 @@ python
 
 ```
 print("------------- Example Document used to Enrich LLM Context -------------")
+
 llama_index_example_document = Document.example()
+
 print(llama_index_example_document)
+
+
 
 index = VectorStoreIndex.from_documents([llama_index_example_document])
 
-print("
-------------- Example Query Engine -------------")
-query_response = index.as_query_engine().query("What is llama_index?")
-print(query_response)
+
 
 print("
+
+------------- Example Query Engine -------------")
+
+query_response = index.as_query_engine().query("What is llama_index?")
+
+print(query_response)
+
+
+
+print("
+
 ------------- Example Chat Engine  -------------")
+
 chat_response = index.as_chat_engine().chat(
+
   "What is llama_index?",
+
   chat_history=[ChatMessage(role="system", content="You are an expert on RAG!")],
+
 )
+
 print(chat_response)
 
 
+
+
+
 print("
+
 ------------- Example Retriever   -------------")
+
 retriever_response = index.as_retriever().retrieve("What is llama_index?")
+
 print(retriever_response)
 ```
 
@@ -156,17 +187,30 @@ python
 ```
 mlflow.llama_index.autolog()  # This is for enabling tracing
 
+
+
 with mlflow.start_run() as run:
+
   mlflow.llama_index.log_model(
+
       index,
+
       name="llama_index",
+
       engine_type="query",  # Defines the pyfunc and spark_udf inference type
+
       input_example="hi",  # Infers signature
+
       registered_model_name="my_llama_index_vector_store",  # Stores an instance in the model registry
+
   )
 
+
+
   run_id = run.info.run_id
+
   model_uri = f"runs:/{run_id}/llama_index"
+
   print(f"Unique identifier for the model location for loading: {model_uri}")
 ```
 
@@ -198,15 +242,25 @@ python
 
 ```
 print("
+
 ------------- Inference via Llama Index   -------------")
+
 index = mlflow.llama_index.load_model(model_uri)
+
 query_response = index.as_query_engine().query("hi")
+
 print(query_response)
 
+
+
 print("
+
 ------------- Inference via MLflow PyFunc -------------")
+
 index = mlflow.pyfunc.load_model(model_uri)
+
 query_response = index.predict("hi")
+
 print(query_response)
 ```
 
@@ -234,16 +288,27 @@ python
 
 ```
 # Optional: Spark UDF inference
+
 show_spark_udf_inference = False
+
 if show_spark_udf_inference:
+
   print("
+
 ------------- Inference via MLflow Spark UDF -------------")
+
   from pyspark.sql import SparkSession
+
+
 
   spark = SparkSession.builder.getOrCreate()
 
+
+
   udf = mlflow.pyfunc.spark_udf(spark, model_uri, result_type="string")
+
   df = spark.createDataFrame([("hi",), ("hello",)], ["text"])
+
   df.withColumn("response", udf("text")).toPandas()
 ```
 
@@ -255,14 +320,23 @@ python
 
 ```
 import os
+
 import subprocess
+
+
 
 from IPython.display import IFrame
 
+
+
 # Start the MLflow UI in a background process
+
 mlflow_ui_command = ["mlflow", "ui", "--port", "5000"]
+
 subprocess.Popen(
+
   mlflow_ui_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, preexec_fn=os.setsid
+
 )
 ```
 
@@ -274,7 +348,9 @@ python
 
 ```
 # Wait for the MLflow server to start then run the following command
+
 # Note that cached results don't render, so you need to run this to see the UI
+
 IFrame(src="http://localhost:5000", width=1000, height=600)
 ```
 

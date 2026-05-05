@@ -21,13 +21,13 @@ Use workspaces when you need:
 * Integration with platform-level constructs (for example, Kubernetes namespaces) to keep resources grouped
 * Simplified MLflow administration across multiple teams without deploying separate servers
 
-Not a hard isolation boundary
+::::caution Not a hard isolation boundary Workspaces provide logical separation and authorization controls inside one MLflow server. For strict data-plane or compliance isolation, run independent MLflow deployments instead of sharing a server. ::::
 
-Workspaces provide logical separation and authorization controls inside one MLflow server. For strict data-plane or compliance isolation, run independent MLflow deployments instead of sharing a server.
-
-Requirements
+:::warning Requirements
 
 Workspaces require a SQL database backend store. File-based backends are not supported when workspaces are enabled.
+
+:::
 
 note
 
@@ -73,15 +73,15 @@ text
 
 For backward compatibility, resources that existed before enabling workspaces in the reserved `default` workspace keep their stored artifact locations (which may be unprefixed) and remain accessible.
 
-Client-specified artifact locations
+:::note Client-specified artifact locations
 
 When workspaces are enabled, client-supplied `artifact_location` values are rejected to prevent bypassing workspace isolation. The server automatically manages artifact locations to ensure proper isolation.
 
+:::
+
 ## Quick Start[​](#quick-start "Direct link to Quick Start")
 
-Backend and enablement
-
-Workspaces require the SQL backend (file backend not supported). Enable with `MLFLOW_ENABLE_WORKSPACES=1` and configure a workspace provider (the default SQL provider is used when one is not specified).
+:::info Backend and enablement Workspaces require the SQL backend (file backend not supported). Enable with `MLFLOW_ENABLE_WORKSPACES=1` and configure a workspace provider (the default SQL provider is used when one is not specified). :::
 
 Enable workspaces when starting the MLflow server:
 
@@ -89,8 +89,11 @@ bash
 
 ```
 mlflow server \
+
   --backend-store-uri postgresql://user:pass@localhost/mlflow \
+
   --default-artifact-root s3://mlflow-artifacts \
+
   --enable-workspaces
 ```
 
@@ -101,17 +104,30 @@ python
 ```
 import mlflow
 
+
+
 # Set tracking URI (no workspace in URI)
+
 mlflow.set_tracking_uri("https://mlflow.example.com")
 
+
+
 # Set active workspace
+
 mlflow.set_workspace("team-a")
 
+
+
 # All subsequent operations are scoped to team-a
+
 experiment_id = mlflow.create_experiment("my-experiment")
 
+
+
 with mlflow.start_run(experiment_id=experiment_id):
+
     mlflow.log_param("alpha", 0.5)
+
     mlflow.log_metric("rmse", 0.8)
 ```
 
@@ -121,7 +137,9 @@ python
 
 ```
 workspaces = mlflow.list_workspaces()
+
 for workspace in workspaces:
+
     print(f"{workspace.name}: {workspace.description}")
 ```
 

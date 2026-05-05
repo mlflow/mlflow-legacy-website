@@ -4,6 +4,10 @@
 
 **Try the MLflow LLMs and Agents Demo**<br />The quickest way to learn about MLflow for LLMs and AI Agents is to try the demo. **Click to launch the demo ↓**
 
+#### **Public Demo**[​](#public-demo "Direct link to public-demo")
+
+Visit **[demo.mlflow.org](https://demo.mlflow.org/#/experiments/1/overview)** to explore a publicly hosted MLflow instance pre-loaded with sample data.
+
 #### **Starting from UI**[​](#starting-from-ui "Direct link to starting-from-ui")
 
 To start the demo, click on the "Start Demo" button on the top page of the MLflow UI.
@@ -64,28 +68,52 @@ python
 ```
 import mlflow
 
+
+
 # Use double curly braces for variables in the template
+
 initial_template = """\
+
 Summarize content you are provided with in {{ num_sentences }} sentences.
 
+
+
 Sentences: {{ sentences }}
+
 """
 
+
+
 # Register a new prompt
+
 prompt = mlflow.genai.register_prompt(
+
     name="summarization-prompt",
+
     template=initial_template,
+
     # Optional: Provide a commit message to describe the changes
+
     commit_message="Initial commit",
+
     # Optional: Specify tags for this prompt
+
     tags={
+
         "author": "author@example.com",
+
         "task": "summarization",
+
         "language": "en",
+
     },
+
 )
 
+
+
 # The prompt object contains information about the registered prompt
+
 print(f"Created prompt '{prompt.name}' (version {prompt.version})")
 ```
 
@@ -112,26 +140,48 @@ python
 ```
 import mlflow
 
+
+
 new_template = """\
+
 You are an expert summarizer. Condense the following content into exactly {{ num_sentences }} clear and informative sentences that capture the key points.
+
+
 
 Sentences: {{ sentences }}
 
+
+
 Your summary should:
+
 - Contain exactly {{ num_sentences }} sentences
+
 - Include only the most important information
+
 - Be written in a neutral, objective tone
+
 - Maintain the same level of formality as the original text
+
 """
 
+
+
 # Register a new version of an existing prompt
+
 updated_prompt = mlflow.genai.register_prompt(
+
     name="summarization-prompt",  # Specify the existing prompt name
+
     template=new_template,
+
     commit_message="Improvement",
+
     tags={
+
         "author": "author@example.com",
+
     },
+
 )
 ```
 
@@ -150,28 +200,52 @@ python
 
 ```
 import mlflow
+
 import openai
 
+
+
 target_text = """
+
 MLflow is the largest open source AI engineering platform for agents and LLMs. It enables teams of all sizes
+
 to debug, evaluate, monitor, and optimize production-quality AI applications,
+
 while controlling costs and managing access to LLMs and data.
+
 """
 
+
+
 # Load the prompt
+
 prompt = mlflow.genai.load_prompt("prompts:/summarization-prompt/2")
 
+
+
 # Use the prompt with an LLM
+
 client = openai.OpenAI()
+
 response = client.chat.completions.create(
+
     messages=[
+
         {
+
             "role": "user",
+
             "content": prompt.format(num_sentences=1, sentences=target_text),
+
         }
+
     ],
+
     model="gpt-4o-mini",
+
 )
+
+
 
 print(response.choices[0].message.content)
 ```
@@ -185,26 +259,48 @@ python
 ```
 import mlflow
 
+
+
 # Fluent API: returns a flat list of all matching prompts
+
 prompts = mlflow.genai.search_prompts(filter_string="task='summarization'")
+
 print(f"Found {len(prompts)} prompts")
 
+
+
 # For pagination control, use the client API:
+
 from mlflow.tracking import MlflowClient
 
+
+
 client = MlflowClient()
+
 all_prompts = []
+
 token = None
+
 while True:
+
     page = client.search_prompts(
+
         filter_string="task='summarization'",
+
         max_results=50,
+
         page_token=token,
+
     )
+
     all_prompts.extend(page)
+
     token = page.token
+
     if not token:
+
         break
+
 print(f"Total prompts across pages: {len(all_prompts)}")
 ```
 
@@ -257,8 +353,11 @@ python
 
 ```
 chat_template = [
+
     {"role": "system", "content": "You are a helpful {{ style }} assistant."},
+
     {"role": "user", "content": "{{ question }}"},
+
 ]
 ```
 
@@ -271,25 +370,46 @@ python
 ```
 import mlflow
 
+
+
 # Jinja2 template with conditionals and loops
+
 jinja_template = """\
+
 Hello {% if name %}{{ name }}{% else %}Guest{% endif %}!
 
+
+
 {% if items %}
+
 Here are your items:
+
 {% for item in items %}
+
 - {{ item }}
+
 {% endfor %}
+
 {% endif %}
+
 """
 
+
+
 # Register the Jinja2 prompt
+
 prompt = mlflow.genai.register_prompt(
+
     name="greeting-prompt",
+
     template=jinja_template,
+
 )
 
+
+
 # Format with variables
+
 result = prompt.format(name="Alice", items=["Book", "Pen", "Notebook"])
 ```
 
@@ -309,20 +429,37 @@ python
 from pydantic import BaseModel
 
 
+
+
+
 class SummaryResponse(BaseModel):
+
     summary: str
+
     key_points: list[str]
+
     word_count: int
 
 
+
+
+
 # Or as a dictionary
+
 response_format_dict = {
+
     "type": "object",
+
     "properties": {
+
         "summary": {"type": "string"},
+
         "key_points": {"type": "array", "items": {"type": "string"}},
+
         "word_count": {"type": "integer"},
+
     },
+
 }
 ```
 
@@ -335,14 +472,24 @@ python
 ```
 import mlflow
 
+
+
 # Prompt-level tag operations
+
 mlflow.genai.set_prompt_tag("summarization-prompt", "language", "en")
+
 mlflow.genai.get_prompt_tags("summarization-prompt")
+
 mlflow.genai.delete_prompt_tag("summarization-prompt", "language")
 
+
+
 # Prompt-version tag operations
+
 mlflow.genai.set_prompt_version_tag("summarization-prompt", 1, "author", "alice")
+
 mlflow.genai.load_prompt("prompts:/summarization-prompt/1").tags
+
 mlflow.genai.delete_prompt_version_tag("summarization-prompt", 1, "author")
 ```
 
@@ -364,24 +511,44 @@ python
 ```
 import mlflow
 
+
+
 # Using a dictionary
+
 model_config = {
+
     "model_name": "gpt-4",
+
     "temperature": 0.7,
+
     "max_tokens": 1000,
+
     "top_p": 0.9,
+
 }
 
+
+
 mlflow.genai.register_prompt(
+
     name="qa-prompt",
+
     template="Answer the following question: {{question}}",
+
     model_config=model_config,
+
     commit_message="QA prompt with model config",
+
 )
 
+
+
 # Load and access the model config
+
 prompt = mlflow.genai.load_prompt("qa-prompt")
+
 print(f"Model: {prompt.model_config['model_name']}")
+
 print(f"Temperature: {prompt.model_config['temperature']}")
 ```
 
@@ -393,23 +560,41 @@ python
 
 ```
 import mlflow
+
 from mlflow.entities.model_registry import PromptModelConfig
 
+
+
 # Create a validated config object
+
 config = PromptModelConfig(
+
     model_name="gpt-4-turbo",
+
     temperature=0.5,
+
     max_tokens=2000,
+
     top_p=0.95,
+
     frequency_penalty=0.2,
+
     presence_penalty=0.1,
+
     stop_sequences=["END", "\n\n"],
+
 )
 
+
+
 mlflow.genai.register_prompt(
+
     name="creative-prompt",
+
     template="Write a creative story about {{topic}}",
+
     model_config=config,
+
 )
 ```
 
@@ -419,9 +604,13 @@ python
 
 ```
 # This will raise a ValueError
+
 config = PromptModelConfig(temperature=-1.0)  # temperature must be non-negative
 
+
+
 # This will raise a ValueError
+
 config = PromptModelConfig(max_tokens=-100)  # max_tokens must be positive
 ```
 
@@ -447,39 +636,73 @@ python
 
 ```
 # Anthropic-specific configuration with extended thinking
+
 # See: https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking
+
 anthropic_thinking_config = PromptModelConfig(
+
     model_name="claude-sonnet-4-20250514",
+
     max_tokens=16000,
+
     extra_params={
+
         # Enable extended thinking for complex reasoning tasks
+
         "thinking": {
+
             "type": "enabled",
+
             "budget_tokens": 10000,  # Max tokens for internal reasoning
+
         },
+
         # User tracking for abuse detection
+
         "metadata": {
+
             "user_id": "user-123",
+
         },
+
     },
+
 )
 
+
+
 # OpenAI-specific configuration with reproducibility and structured output
+
 # See: https://platform.openai.com/docs/api-reference/chat/create
+
 openai_config = PromptModelConfig(
+
     model_name="gpt-4o",
+
     temperature=0.7,
+
     max_tokens=2000,
+
     extra_params={
+
         # Seed for reproducible outputs
+
         "seed": 42,
+
         # Bias specific tokens (token_id: bias from -100 to 100)
+
         "logit_bias": {"50256": -100},  # Discourage <|endoftext|>
+
         # User identifier for abuse tracking
+
         "user": "user-123",
+
         # Service tier for priority processing
+
         "service_tier": "default",
+
     },
+
 )
 ```
 
@@ -495,30 +718,55 @@ python
 
 ```
 import mlflow
+
 from mlflow.entities.model_registry import PromptModelConfig
 
+
+
 # Register a prompt without model config
+
 mlflow.genai.register_prompt(
+
     name="my-prompt",
+
     template="Analyze: {{text}}",
+
 )
+
+
 
 # Later, add model config
+
 mlflow.genai.set_prompt_model_config(
+
     name="my-prompt",
+
     version=1,
+
     model_config={"model_name": "gpt-4", "temperature": 0.7},
+
 )
+
+
 
 # Or update existing model config
+
 mlflow.genai.set_prompt_model_config(
+
     name="my-prompt",
+
     version=1,
+
     model_config={"model_name": "gpt-4-turbo", "temperature": 0.8, "max_tokens": 2000},
+
 )
 
+
+
 # Verify the update
+
 prompt = mlflow.genai.load_prompt("my-prompt", version=1)
+
 print(prompt.model_config)
 ```
 
@@ -531,11 +779,18 @@ python
 ```
 import mlflow
 
+
+
 # Remove model config
+
 mlflow.genai.delete_prompt_model_config(name="my-prompt", version=1)
 
+
+
 # Verify removal
+
 prompt = mlflow.genai.load_prompt("my-prompt", version=1)
+
 assert prompt.model_config is None
 ```
 
@@ -566,15 +821,26 @@ python
 ```
 import mlflow
 
+
+
 # Custom TTL: Cache for 5 minutes
+
 prompt = mlflow.genai.load_prompt("prompts:/summarization-prompt/1", cache_ttl_seconds=300)
 
+
+
 # Bypass cache entirely: Always fetch from registry
+
 prompt = mlflow.genai.load_prompt("prompts:/summarization-prompt@production", cache_ttl_seconds=0)
 
+
+
 # Use infinite TTL even for alias-based prompts
+
 prompt = mlflow.genai.load_prompt(
+
     "prompts:/summarization-prompt@latest", cache_ttl_seconds=float("inf")
+
 )
 ```
 
@@ -586,13 +852,21 @@ bash
 
 ```
 # Set alias-based prompt cache TTL to 5 minutes
+
 export MLFLOW_ALIAS_PROMPT_CACHE_TTL_SECONDS=300
 
+
+
 # Set version-based prompt cache TTL to 1 hour (instead of infinite)
+
 export MLFLOW_VERSION_PROMPT_CACHE_TTL_SECONDS=3600
 
+
+
 # Disable caching globally
+
 export MLFLOW_ALIAS_PROMPT_CACHE_TTL_SECONDS=0
+
 export MLFLOW_VERSION_PROMPT_CACHE_TTL_SECONDS=0
 ```
 
@@ -616,8 +890,12 @@ python
 ```
 import mlflow
 
+
+
 # Delete a prompt version
+
 client = mlflow.MlflowClient()
+
 client.delete_prompt_version("summarization-prompt", version=2)
 ```
 
@@ -635,7 +913,9 @@ python
 
 ```
 prompt = mlflow.genai.load_prompt("summarization-prompt")
+
 # or
+
 prompt = mlflow.genai.load_prompt("prompts:/summarization-prompt@latest")
 ```
 
@@ -647,15 +927,25 @@ python
 
 ```
 import mlflow
+
 from langchain.prompts import PromptTemplate
 
+
+
 # Load prompt from MLflow
+
 prompt = mlflow.genai.load_prompt("question_answering")
 
+
+
 # Convert the prompt to single brace format for LangChain (MLflow uses double braces),
+
 # using the `to_single_brace_format` method.
+
 langchain_prompt = PromptTemplate.from_template(prompt.to_single_brace_format())
+
 print(langchain_prompt.input_variables)
+
 # Output: ['num_sentences', 'sentences']
 ```
 

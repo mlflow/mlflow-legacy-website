@@ -10,9 +10,7 @@ MLflow by default stores artifacts in a local (file system) `./mlruns` directory
 
 To allow the server and clients to access the artifact location, you should configure your cloud provider credentials as you would for accessing them in any other capacity. For example, for S3, you can set the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` environment variables, use an IAM role, or configure a default profile in `~/.aws/credentials`.
 
-important
-
-Access of credentials and configurations for the artifact storage location are configured **once during the tracking server initialization** instead of having to provide access credentials for artifact-based operations through the client APIs. Note that **all users who have access to the Tracking Server in this mode will have access to artifacts served through this assumed role**.
+:::warning important Access of credentials and configurations for the artifact storage location are configured **once during the tracking server initialization** instead of having to provide access credentials for artifact-based operations through the client APIs. Note that **all users who have access to the Tracking Server in this mode will have access to artifacts served through this assumed role**. :::
 
 ### Setting an access Timeout[​](#setting-an-access-timeout "Direct link to Setting an access Timeout")
 
@@ -22,9 +20,7 @@ You can set the environment variable `MLFLOW_ARTIFACT_UPLOAD_DOWNLOAD_TIMEOUT` (
 
 MLflow automatically records the `artifact_uri` property as a part of [`mlflow.entities.RunInfo`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.RunInfo) so that you can retrieve the location of the artifacts for historical runs using the [`mlflow.get_artifact_uri()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.get_artifact_uri) API. Also, `artifact_location` is a property recorded on [`mlflow.entities.Experiment`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.Experiment) for setting the default location to store artifacts for all runs for models within a given experiment.
 
-important
-
-If you do not specify a `--default-artifact-root` or an artifact URI when creating the experiment (for example, `mlflow experiments create --artifact-location s3://<my-bucket>`), the artifact root will be set as a path inside the local file store (the hard drive of the computer executing your run). Typically this is not an appropriate location, as the client and server probably refer to different physical locations (that is, the same path on different disks or computers).
+:::warning important If you do not specify a `--default-artifact-root` or an artifact URI when creating the experiment (for example, `mlflow experiments create --artifact-location s3://<my-bucket>`), the artifact root will be set as a path inside the local file store (the hard drive of the computer executing your run). Typically this is not an appropriate location, as the client and server probably refer to different physical locations (that is, the same path on different disks or computers). :::
 
 ## Supported storage types for the Artifact Store[​](#artifacts-store-supported-storages "Direct link to Supported storage types for the Artifact Store")
 
@@ -92,7 +88,9 @@ bash
 
 ```
 export MLFLOW_S3_IGNORE_TLS=true
+
 #or
+
 export AWS_CA_BUNDLE=/some/ca/bundle.pem
 ```
 
@@ -144,7 +142,9 @@ bash
 
 ```
 export AWS_ACCESS_KEY_ID="your_b2_application_key_id"
+
 export AWS_SECRET_ACCESS_KEY="your_b2_application_key"
+
 export AWS_DEFAULT_REGION="us-east-005"
 ```
 
@@ -177,6 +177,7 @@ bash
 
 ```
 export MLFLOW_KERBEROS_TICKET_CACHE=/tmp/krb5cc_22222222
+
 export MLFLOW_KERBEROS_USER=user_name_to_use
 ```
 

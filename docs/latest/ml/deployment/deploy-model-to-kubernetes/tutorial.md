@@ -1,5 +1,9 @@
 # Develop ML model with MLflow and deploy to Kubernetes
 
+MLServer integration is deprecated
+
+This tutorial uses MLflow's MLServer integration (`--enable-mlserver` / `enable_mlserver=True`), which is deprecated and will be removed in **MLflow 3.13**. Seldon, the company that maintained MLServer, is in [liquidation](https://github.com/SeldonIO/MLServer/issues/2404#issuecomment-4210286631), and the [MLServer project is no longer actively maintained](https://github.com/SeldonIO/MLServer/commits/master/). The tutorial is preserved for existing MLServer-based workflows; for new deployments, drop the `--enable-mlserver` flag (and `enable_mlserver=True`) to use the default FastAPI scoring server, or use a managed serving platform.
+
 note
 
 This tutorial assumes that you have access to a Kubernetes cluster. However, you can also complete this tutorial on your local machine by using local cluster emulation tools such as [Kind](https://kind.sigs.k8s.io/docs/user/quick-start) or [Minikube](https://minikube.sigs.k8s.io/docs/start).
@@ -74,35 +78,66 @@ python
 ```
 import mlflow
 
+
+
 import numpy as np
+
 from sklearn import datasets, metrics
+
 from sklearn.linear_model import ElasticNet
+
 from sklearn.model_selection import train_test_split
 
 
+
+
+
 def eval_metrics(pred, actual):
+
     rmse = np.sqrt(metrics.mean_squared_error(actual, pred))
+
     mae = metrics.mean_absolute_error(actual, pred)
+
     r2 = metrics.r2_score(actual, pred)
+
     return rmse, mae, r2
 
 
+
+
+
 # Set th experiment name
+
 mlflow.set_experiment("wine-quality")
 
+
+
 # Enable auto-logging to MLflow
+
 mlflow.sklearn.autolog()
 
+
+
 # Load wine quality dataset
+
 X, y = datasets.load_wine(return_X_y=True)
+
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25)
 
+
+
 # Start a run and train a model
+
 with mlflow.start_run(run_name="default-params"):
+
     lr = ElasticNet()
+
     lr.fit(X_train, y_train)
 
+
+
     y_pred = lr.predict(X_test)
+
     rmse, mae, r2 = eval_metrics(y_pred, y_test)
 ```
 
@@ -128,39 +163,73 @@ python
 
 ```
 from scipy.stats import uniform
+
 from sklearn.model_selection import RandomizedSearchCV
+
+
 
 lr = ElasticNet()
 
+
+
 # Define distribution to pick parameter values from
+
 distributions = dict(
+
     alpha=uniform(loc=0, scale=10),  # sample alpha uniformly from [-5.0, 5.0]
+
     l1_ratio=uniform(),  # sample l1_ratio uniformlyfrom [0, 1.0]
+
 )
+
+
 
 # Initialize random search instance
+
 clf = RandomizedSearchCV(
+
     estimator=lr,
+
     param_distributions=distributions,
+
     # Optimize for mean absolute error
+
     scoring="neg_mean_absolute_error",
+
     # Use 5-fold cross validation
+
     cv=5,
+
     # Try 100 samples. Note that MLflow only logs the top 5 runs.
+
     n_iter=100,
+
 )
 
+
+
 # Start a parent run
+
 with mlflow.start_run(run_name="hyperparameter-tuning"):
+
     search = clf.fit(X_train, y_train)
 
+
+
     # Evaluate the best model on test dataset
+
     y_pred = clf.best_estimator_.predict(X_test)
+
     rmse, mae, r2 = eval_metrics(y_pred, y_test)
+
     mlflow.log_metrics({
+
         "mean_squared_error_X_test": rmse,
+
         "mean_absolute_error_X_test": mae,
+
         "r2_score_X_test": r2,
+
     })
 ```
 
@@ -195,10 +264,15 @@ text
 
 ```
 model
+
 ├── MLmodel
+
 ├── model.pkl
+
 ├── conda.yaml
+
 ├── python_env.yaml
+
 └── requirements.txt
 ```
 
@@ -230,6 +304,8 @@ bash
 
 ```
 $ curl -X POST -H "Content-Type:application/json" --data '{"inputs": [[14.23, 1.71, 2.43, 15.6, 127.0, 2.8, 3.06, 0.28, 2.29, 5.64, 1.04, 3.92, 1065.0]]}' http://127.0.0.1:1234/invocations
+
+
 
 {"predictions": [-0.03416275504140387]}
 ```
@@ -300,20 +376,35 @@ yaml
 
 ```
 apiVersion: "serving.kserve.io/v1beta1"
+
 kind: "InferenceService"
+
 metadata:
+
   name: "mlflow-wine-classifier"
+
   namespace: "mlflow-kserve-test"
+
 spec:
+
   predictor:
+
     containers:
+
       - name: "mlflow-wine-classifier"
+
         image: "<your_docker_user_name>/mlflow-wine-classifier"
+
         ports:
+
           - containerPort: 8080
+
             protocol: TCP
+
         env:
+
           - name: PROTOCOL
+
             value: "v2"
 ```
 
@@ -331,16 +422,27 @@ yaml
 
 ```
 apiVersion: "serving.kserve.io/v1beta1"
+
 kind: "InferenceService"
+
 metadata:
+
   name: "mlflow-wine-classifier"
+
   namespace: "mlflow-kserve-test"
+
 spec:
+
   predictor:
+
     model:
+
       modelFormat:
+
         name: mlflow
+
       protocolVersion: v2
+
       storageUri: "<your_model_uri>"
 ```
 
@@ -353,6 +455,8 @@ bash
 ```
 $ kubectl apply -f YOUR_CONFIG_FILE.yaml
 
+
+
 inferenceservice.serving.kserve.io/mlflow-wine-classifier created
 ```
 
@@ -363,7 +467,10 @@ bash
 ```
 $ kubectl get inferenceservice mlflow-wine-classifier
 
+
+
 NAME                     URL                                                     READY   PREV   LATEST   PREVROLLEDOUTREVISION   LATESTREADYREVISION
+
 mlflow-wine-classifier   http://mlflow-wine-classifier.mlflow-kserve-test.local   True             100                    mlflow-wine-classifier-100
 ```
 
@@ -381,14 +488,23 @@ json
 
 ```
 {
+
   "inputs": [
+
     {
+
       "name": "input",
+
       "shape": [13],
+
       "datatype": "FP32",
+
       "data": [14.23, 1.71, 2.43, 15.6, 127.0, 2.8, 3.06, 0.28, 2.29, 5.64, 1.04, 3.92, 1065.0]
+
     }
+
   ]
+
 }
 ```
 
@@ -403,10 +519,15 @@ bash
 
 ```
 $ SERVICE_HOSTNAME=$(kubectl get inferenceservice mlflow-wine-classifier -n mlflow-kserve-test -o jsonpath='{.status.url}' | cut -d "/" -f 3)
+
 $ curl -v \
+
   -H "Host: ${SERVICE_HOSTNAME}" \
+
   -H "Content-Type: application/json" \
+
   -d @./test-input.json \
+
   http://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/mlflow-wine-classifier/infer
 ```
 
@@ -418,9 +539,13 @@ bash
 
 ```
 $ INGRESS_GATEWAY_SERVICE=$(kubectl get svc -n istio-system --selector="app=istio-ingressgateway" -o jsonpath='{.items[0].metadata.name}')
+
 $ kubectl port-forward -n istio-system svc/${INGRESS_GATEWAY_SERVICE} 8080:80
 
+
+
 Forwarding from 127.0.0.1:8080 -> 8080
+
 Forwarding from [::1]:8080 -> 8080
 ```
 
@@ -430,10 +555,15 @@ bash
 
 ```
 $ SERVICE_HOSTNAME=$(kubectl get inferenceservice mlflow-wine-classifier -n mlflow-kserve-test -o jsonpath='{.status.url}' | cut -d "/" -f 3)
+
 $ curl -v \
+
   -H "Host: ${SERVICE_HOSTNAME}" \
+
   -H "Content-Type: application/json" \
+
   -d @./test-input.json \
+
   http://localhost:8080/v2/models/mlflow-wine-classifier/infer
 ```
 

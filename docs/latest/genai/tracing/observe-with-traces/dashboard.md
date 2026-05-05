@@ -57,9 +57,13 @@ bash
 
 ```
 # Migrate existing data from file store to SQLite
+
 mlflow migrate-filestore --source /path/to/mlruns --target sqlite:///path/to/mlflow.db
 
+
+
 # Start the server with the SQL backend
+
 mlflow server --backend-store-uri sqlite:///path/to/mlflow.db
 ```
 

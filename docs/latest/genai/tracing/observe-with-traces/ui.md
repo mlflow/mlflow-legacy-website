@@ -8,9 +8,11 @@ After logging your traces, you can view them in the MLflow UI, under the "Traces
 
 The trace table you see first when you open the "Traces" page includes high-level information about the traces, such as the trace ID, the inputs / outputs of the root span, and more. The table displays the following columns.
 
-Not Seeing All Columns?
+:::tip Not Seeing All Columns?
 
 Trace table does not display all fields by default. Some columns are hidden by default and can be enabled via the column selector.
+
+:::
 
 | Column         | Description                                                                                                                                                   | Data Source                                                                                                                                                                                                                                                                                        |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -31,9 +33,11 @@ Trace table does not display all fields by default. Some columns are hidden by d
 | Assessments    | Feedback scores logged to the trace, either by a human or an automated evaluation.                                                                            | See [Collecting User Feedback](/docs/latest/genai/tracing/collect-user-feedback.md) and [Evaluating Traces](/docs/latest/genai/eval-monitor.md) for how to log assessments.                                                                                                                        |
 | Expectations   | Ground truth values annotated to the trace.                                                                                                                   | See [Ground Truth Expectations](/docs/latest/genai/assessments/expectations.md) for how to log expectations.                                                                                                                                                                                       |
 
-Traces ingested via OTLP
+:::info Traces ingested via OTLP
 
 Traces ingested through the [OTLP endpoint](/docs/latest/genai/tracing/opentelemetry/ingest.md) go through automatic attribute translation to derive these columns from framework-specific OpenTelemetry attributes. MLflow supports translation for OpenTelemetry GenAI Semantic Conventions, and various frameworks including OpenLLMetry, OpenInference, Langfuse, and more. Please see the [Attribute Mapping Reference](/docs/latest/genai/tracing/opentelemetry/attribute-mapping.md) for details on how each framework's attributes are mapped to these columns.
+
+:::
 
 ## Browsing Single Trace[​](#browsing-single-trace "Direct link to Browsing Single Trace")
 
@@ -49,9 +53,7 @@ By clicking on a trace ID `tr-...` or the request link in the trace table, you c
 
 ![Browsing single trace](/docs/latest/images/llms/tracing/trace-ui-detail-view.png)
 
-Image and Audio Content
-
-MLflow renders images and audio inline in the trace viewer. For supported formats, framework examples, and how to attach multimodal content to traces, see [Image and Audio (Multimodal) Content in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md).
+:::tip Multimodal Content and Attachments MLflow renders images, audio, and supported attachment types inline in the trace viewer. For supported formats, framework examples, and how to use the `Attachment` class for binary content, see [Multimodal Content and Attachments in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md). :::
 
 ## Performing Actions[​](#performing-actions "Direct link to Performing Actions")
 

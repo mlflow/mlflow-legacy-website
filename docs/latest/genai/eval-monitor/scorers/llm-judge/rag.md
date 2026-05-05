@@ -38,19 +38,33 @@ All RAG judges require MLflow Traces with at least one span marked as `span_type
 
    ```
    import mlflow
+
    import os
+
    import openai
 
+
+
    # Ensure your OPENAI_API_KEY is set in your environment
+
    # os.environ["OPENAI_API_KEY"] = "<YOUR_API_KEY>" # Uncomment and set if not globally configured
 
+
+
    # Enable auto-tracing for OpenAI
+
    mlflow.openai.autolog()
 
+
+
    # Create an OpenAI client
+
    client = openai.OpenAI()
 
+
+
    # Select an LLM
+
    model_name = "gpt-4o-mini"
    ```
 
@@ -62,90 +76,175 @@ python
 
 ```
 import mlflow
+
 import openai
+
 from mlflow.genai.scorers import (
+
     RetrievalRelevance,
+
     RetrievalGroundedness,
+
     RetrievalSufficiency,
+
 )
+
 from mlflow.entities import Document
+
 from typing import List
 
+
+
 mlflow.openai.autolog()
+
 client = openai.OpenAI()
 
+
+
 # Sample knowledge base - in practice, this would be a vector database
+
 KNOWLEDGE_BASE = {
+
     "mlflow": [
+
         Document(
+
             id="doc_1",
+
             page_content="MLflow is an open source AI engineering platform for agents, LLMs, and ML models. Its features include observability, evaluation, prompt management, and an AI Gateway for managing costs and model access.",
+
             metadata={"source": "mlflow_overview.txt"},
+
         ),
+
     ],
+
 }
 
 
+
+
+
 # Define a retriever function with proper span type
+
 @mlflow.trace(span_type="RETRIEVER")
+
 def retrieve_docs(query: str) -> List[Document]:
+
     # Simulated retrieval - in practice, this would query a vector database
+
     # using embeddings to find semantically similar documents
+
     query_lower = query.lower()
 
+
+
     if "mlflow" in query_lower:
+
         return KNOWLEDGE_BASE["mlflow"]
+
     else:
+
         return []  # No relevant documents found
 
 
+
+
+
 # Define your RAG agent
+
 @mlflow.trace
+
 def rag_agent(query: str):
+
     docs = retrieve_docs(query)
+
     if not docs:
+
         return {"response": "I don't have information to answer that question."}
+
     context = "\n\n".join([doc.page_content for doc in docs])
 
+
+
     # Pass retrieved context to your LLM
+
     messages = [
+
         {
+
             "role": "system",
+
             "content": f"Answer the user's question based only on the following context:\n\n{context}",
+
         },
+
         {"role": "user", "content": query},
+
     ]
 
+
+
     response = client.chat.completions.create(
+
         model=model_name,
+
         messages=messages,
+
     )
+
+
 
     return {"response": response.choices[0].message.content}
 
 
+
+
+
 # Create evaluation dataset with ground truth expectations
+
 eval_dataset = [
+
     {
+
         "inputs": {"query": "What does MLflow offer for agents and LLMs?"},
+
         "expectations": {
+
             "expected_facts": [
+
                 "MLflow is an open source AI engineering platform",
+
                 "Features include observability, evaluation, prompt management, and an AI Gateway",
+
             ]
+
         },
+
     }
+
 ]
 
+
+
 # Run evaluation with multiple RAG judges
+
 eval_results = mlflow.genai.evaluate(
+
     data=eval_dataset,
+
     predict_fn=rag_agent,
+
     scorers=[
+
         RetrievalRelevance(model="openai:/gpt-4o-mini"),
+
         RetrievalGroundedness(model="openai:/gpt-4o-mini"),
+
         RetrievalSufficiency(model="openai:/gpt-4o-mini"),
+
     ],
+
 )
 ```
 

@@ -37,9 +37,7 @@ The [Production Tracing SDK (`mlflow-tracing`)](/docs/latest/genai/tracing/light
 
 <br />
 
-Compatibility Warning
-
-When installing the MLflow Tracing SDK, make sure the environment **does not have** the full MLflow package installed. Having both packages in the same environment might cause conflicts and unexpected behaviors.
+:::warning Compatibility Warning When installing the MLflow Tracing SDK, make sure the environment **does not have** the full MLflow package installed. Having both packages in the same environment might cause conflicts and unexpected behaviors. :::
 
 ## Automatic (Online) Quality Evaluation[​](#automatic-online-quality-evaluation "Direct link to Automatic (Online) Quality Evaluation")
 
@@ -62,24 +60,43 @@ python
 
 ```
 import mlflow
+
 from mlflow.genai.scorers import Guidelines, ScorerSamplingConfig
+
+
 
 mlflow.set_experiment("production-genai-app")
 
+
+
 # Create a judge for detecting potential issues
+
 safety_judge = Guidelines(
+
     name="safety_check",
+
     guidelines="The response must not contain PII, harmful content, or hallucinated information.",
+
     model="gateway:/my-llm-endpoint",
+
 )
 
+
+
 # Register and start automatic evaluation
+
 registered_judge = safety_judge.register(name="production_safety_check")
+
 registered_judge.start(
+
     sampling_config=ScorerSamplingConfig(
+
         sample_rate=0.1,  # Evaluate 10% of traces
+
         filter_string="metadata.environment = 'production'",  # Only production traces
+
     ),
+
 )
 ```
 
@@ -93,27 +110,35 @@ bash
 
 ```
 # Required: Set MLflow Tracking URI
+
 export MLFLOW_TRACKING_URI="http://your-mlflow-server:5000"
 
+
+
 # Optional: Configure the experiment name for organizing traces
+
 export MLFLOW_EXPERIMENT_NAME="production-genai-app"
 
-# Optional: Configure async logging (recommended for production)
-export MLFLOW_ENABLE_ASYNC_TRACE_LOGGING=true
+
+
 export MLFLOW_ASYNC_TRACE_LOGGING_MAX_WORKERS=10
+
 export MLFLOW_ASYNC_TRACE_LOGGING_MAX_QUEUE_SIZE=1000
 
+
+
 # Optional: Configure trace sampling ratio (default is 1.0)
+
 export MLFLOW_TRACE_SAMPLING_RATIO=0.1
 ```
 
 ### Asynchronous Trace Logging[​](#asynchronous-trace-logging "Direct link to Asynchronous Trace Logging")
 
-For production applications, MLflow can log traces asynchronously to prevent blocking your application. For OSS MLflow and Databricks notebooks, async trace logging is **disabled by default** and must be explicitly enabled by setting `MLFLOW_ENABLE_ASYNC_TRACE_LOGGING=true`. In Databricks non-notebook workloads (for example, jobs or model serving), async logging is **enabled by default** unless you override it.
+For production applications, MLflow can log traces asynchronously to prevent blocking your application. Async trace logging is **enabled by default** for OSS MLflow and Databricks non-notebook workloads (for example, jobs or model serving). In Databricks notebooks, async logging is **disabled by default** and must be explicitly enabled by setting `MLFLOW_ENABLE_ASYNC_TRACE_LOGGING=true`.
 
 | Environment Variable                        | Description                                                                                                                                                                                                                                                   | Default Value                                                                    |
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `MLFLOW_ENABLE_ASYNC_TRACE_LOGGING`         | Whether to log traces asynchronously. When set to `False`, traces will be logged in a blocking manner.                                                                                                                                                        | `False` (OSS + Databricks notebooks), `True` (Databricks non-notebook workloads) |
+| `MLFLOW_ENABLE_ASYNC_TRACE_LOGGING`         | Whether to log traces asynchronously. When set to `False`, traces will be logged in a blocking manner.                                                                                                                                                        | `True` (OSS + Databricks non-notebook workloads), `False` (Databricks notebooks) |
 | `MLFLOW_ASYNC_TRACE_LOGGING_MAX_WORKERS`    | The maximum number of worker threads to use for async trace logging per process. Increasing this allows higher throughput of trace logging, but also increases CPU usage and memory consumption.                                                              | `10`                                                                             |
 | `MLFLOW_ASYNC_TRACE_LOGGING_MAX_QUEUE_SIZE` | The maximum number of traces that can be queued before being logged to backend by the worker threads. When the queue is full, new traces will be discarded. Increasing this allows higher durability of trace logging, but also increases memory consumption. | `1000`                                                                           |
 | `MLFLOW_ASYNC_TRACE_LOGGING_RETRY_TIMEOUT`  | The timeout in seconds for retrying failed trace logging. When a trace logging fails, it will be retried up to this timeout with backoff, after which it will be discarded.                                                                                   | `500`                                                                            |
@@ -144,21 +169,39 @@ python
 import mlflow
 
 
+
+
+
 # High-volume endpoint: sample only 10% of traces
+
 @mlflow.trace(sampling_ratio_override=0.1)
+
 def high_volume_endpoint(request):
+
     return process_request(request)
 
 
+
+
+
 # Critical transaction: always trace
+
 @mlflow.trace(sampling_ratio_override=1.0)
+
 def payment_processing(transaction):
+
     return process_payment(transaction)
 
 
+
+
+
 # Use global sampling ratio (default behavior)
+
 @mlflow.trace
+
 def normal_endpoint(request):
+
     return handle_request(request)
 ```
 
@@ -181,44 +224,80 @@ python
 
 ```
 import mlflow
+
 import os
+
 from fastapi import FastAPI, Request
+
 from pydantic import BaseModel
 
+
+
 # Initialize FastAPI app
+
 app = FastAPI()
 
 
+
+
+
 class ChatRequest(BaseModel):
+
     message: str
 
 
+
+
+
 @app.post("/chat")  # FastAPI decorator should be outermost
+
 @mlflow.trace  # Ensure @mlflow.trace is the inner decorator
+
 def handle_chat(request: Request, chat_request: ChatRequest):
+
     # Retrieve all context from request headers
+
     client_request_id = request.headers.get("X-Request-ID")
+
     session_id = request.headers.get("X-Session-ID")
+
     user_id = request.headers.get("X-User-ID")
 
+
+
     # Update the current trace with all context and environment metadata
+
     mlflow.update_current_trace(
+
+        session_id=session_id,
+
+        user=user_id,
+
         client_request_id=client_request_id,
+
         tags={
-            # Session context - groups traces from multi-turn conversations
-            "mlflow.trace.session": session_id,
-            # User context - associates traces with specific users
-            "mlflow.trace.user": user_id,
+
             # Environment metadata - tracks deployment context
+
             "environment": "production",
+
             "app_version": os.getenv("APP_VERSION", "1.0.0"),
+
             "deployment_id": os.getenv("DEPLOYMENT_ID", "unknown"),
+
             "region": os.getenv("REGION", "us-east-1"),
+
         },
+
     )
 
+
+
     # Your application logic for processing the chat message
+
     response_text = f"Processed message: '{chat_request.message}'"
+
+
 
     return {"response": response_text}
 ```
@@ -231,56 +310,107 @@ python
 
 ```
 import mlflow
+
 from mlflow.client import MlflowClient
+
 from fastapi import FastAPI, Query, Request
+
 from pydantic import BaseModel
+
 from typing import Optional
+
 from mlflow.entities import AssessmentSource
+
+
 
 app = FastAPI()
 
 
+
+
+
 class FeedbackRequest(BaseModel):
+
     is_correct: bool  # True for correct, False for incorrect
+
     comment: Optional[str] = None
 
 
+
+
+
 @app.post("/chat_feedback")
+
 def handle_chat_feedback(
+
     request: Request,
+
     client_request_id: str = Query(
+
         ..., description="The client request ID from the original chat request"
+
     ),
+
     feedback: FeedbackRequest = ...,
+
 ):
+
     """
+
     Collect user feedback for a specific chat interaction identified by client_request_id.
+
     """
+
     # Search for the trace with the matching client_request_id
+
     client = MlflowClient()
+
     experiment = client.get_experiment_by_name("production-genai-app")
+
     traces = client.search_traces(locations=[experiment.experiment_id])
+
     traces = [trace for trace in traces if trace.info.client_request_id == client_request_id][:1]
 
+
+
     if not traces:
+
         return {
+
             "status": "error",
+
             "message": f"Unable to find data for client request ID: {client_request_id}",
+
         }, 500
 
+
+
     # Log feedback using MLflow's log_feedback API
+
     mlflow.log_feedback(
+
         trace_id=traces[0].info.trace_id,
+
         name="response_is_correct",
+
         value=feedback.is_correct,
+
         source=AssessmentSource(source_type="HUMAN", source_id=request.headers.get("X-User-ID")),
+
         rationale=feedback.comment,
+
     )
 
+
+
     return {
+
         "status": "success",
+
         "message": "Feedback recorded successfully",
+
         "trace_id": traces[0].info.trace_id,
+
     }
 ```
 
@@ -293,24 +423,44 @@ python
 ```
 import mlflow
 
+
+
 mlflow.set_experiment("production-genai-app")
 
+
+
 # Query traces by user
+
 user_traces = mlflow.search_traces(
-    filter_string="tags.`mlflow.trace.user` = 'user-jane-doe-12345'",
+
+    filter_string="metadata.`mlflow.trace.user` = 'user-jane-doe-12345'",
+
     max_results=100,
+
 )
+
+
 
 # Query traces by session
+
 session_traces = mlflow.search_traces(
-    filter_string="tags.`mlflow.trace.session` = 'session-def-456'",
+
+    filter_string="metadata.`mlflow.trace.session` = 'session-def-456'",
+
     max_results=100,
+
 )
 
+
+
 # Query traces by environment
+
 production_traces = mlflow.search_traces(
-    filter_string="tags.environment = 'production'",
+
+    filter_string="metadata.environment = 'production'",
+
     max_results=100,
+
 )
 ```
 

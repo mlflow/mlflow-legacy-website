@@ -40,10 +40,15 @@ bash
 
 ```
 # Interactive setup (recommended)
+
 modal setup
 
+
+
 # Or use environment variables
+
 export MODAL_TOKEN_ID=your-token-id
+
 export MODAL_TOKEN_SECRET=your-token-secret
 ```
 
@@ -60,11 +65,18 @@ python
 ```
 from mlflow_modal import run_local
 
+
+
 run_local(
+
     target_uri="modal",
+
     name="test-model",
+
     model_uri="runs:/<run_id>/model",
+
     config={"gpu": "T4"},
+
 )
 ```
 
@@ -86,17 +98,31 @@ python
 ```
 from mlflow.deployments import get_deploy_client
 
+
+
 client = get_deploy_client("modal")
 
+
+
 deployment = client.create_deployment(
+
     name="my-classifier",
+
     model_uri="runs:/<run_id>/model",
+
     config={
+
         "gpu": "T4",
+
         "memory": 2048,
+
         "min_containers": 1,
+
     },
+
 )
+
+
 
 print(f"Deployed to: {deployment['endpoint_url']}")
 ```
@@ -105,10 +131,15 @@ bash
 
 ```
 # Deploy a model
+
 mlflow deployments create -t modal -m runs:/<run_id>/model --name my-model
 
+
+
 # Deploy with GPU and custom configuration
+
 mlflow deployments create -t modal -m runs:/<run_id>/model --name gpu-model \
+
     -C gpu=T4 -C memory=4096 -C min_containers=1
 ```
 
@@ -124,19 +155,34 @@ python
 ```
 from mlflow.deployments import get_deploy_client
 
+
+
 client = get_deploy_client("modal")
 
+
+
 # Standard predictions
+
 predictions = client.predict(
+
     deployment_name="my-classifier",
+
     inputs={"feature1": [1, 2, 3], "feature2": [4, 5, 6]},
+
 )
 
+
+
 # Streaming predictions (for LLM models)
+
 for chunk in client.predict_stream(
+
     deployment_name="my-llm",
+
     inputs={"messages": [{"role": "user", "content": "Hello!"}]},
+
 ):
+
     print(chunk, end="", flush=True)
 ```
 
@@ -144,6 +190,7 @@ bash
 
 ```
 # Make predictions
+
 mlflow deployments predict -t modal --name my-model --input-path input.json
 ```
 
@@ -185,18 +232,31 @@ python
 
 ```
 # Single GPU
+
 config = {"gpu": "T4"}  # Cost-effective for inference
 
+
+
 # High-performance GPU
+
 config = {"gpu": "H100"}  # Best for large models
 
+
+
 # Multi-GPU for large models
+
 config = {"gpu": "H100:8"}  # 8x H100 GPUs
 
+
+
 # Dedicated GPU (no sharing)
+
 config = {"gpu": "H100!"}
 
+
+
 # Fallback list (uses first available)
+
 config = {"gpu": ["H100", "A100", "A10"]}
 ```
 
@@ -208,16 +268,27 @@ python
 
 ```
 client.create_deployment(
+
     name="batch-classifier",
+
     model_uri="runs:/<run_id>/model",
+
     config={
+
         "gpu": "A100",
+
         "enable_batching": True,
+
         "max_batch_size": 32,
+
         "batch_wait_ms": 50,
+
         "min_containers": 2,
+
         "max_containers": 20,
+
     },
+
 )
 ```
 
@@ -229,6 +300,7 @@ python
 
 ```
 # Use workspace-specific URI
+
 client = get_deploy_client("modal:/production")
 ```
 
@@ -246,12 +318,19 @@ bash
 
 ```
 # List all deployments
+
 mlflow deployments list -t modal
 
+
+
 # Get deployment info
+
 mlflow deployments get -t modal --name my-model
 
+
+
 # Delete deployment
+
 mlflow deployments delete -t modal --name my-model
 ```
 
@@ -263,9 +342,13 @@ bash
 
 ```
 # Re-authenticate with Modal
+
 modal setup
 
+
+
 # Verify authentication
+
 modal profile list
 ```
 
@@ -277,8 +360,11 @@ python
 
 ```
 config = {
+
     "startup_timeout": 600,  # 10 minutes for model loading
+
     "timeout": 300,  # 5 minutes for inference requests
+
 }
 ```
 
@@ -290,7 +376,9 @@ python
 
 ```
 config = {
+
     "extra_pip_packages": ["missing-package>=1.0"],
+
 }
 ```
 

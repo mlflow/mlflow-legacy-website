@@ -21,6 +21,8 @@ python
 ```
 import mlflow
 
+
+
 mlflow.txtai.autolog()
 ```
 
@@ -36,17 +38,29 @@ python
 
 ```
 import mlflow
+
 from txtai.pipeline import Textractor
 
+
+
 # Enable MLflow auto-tracing for txtai
+
 mlflow.txtai.autolog()
 
+
+
 # Optional: Set a tracking URI and an experiment
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("txtai")
 
+
+
 # Define and run a simple Textractor pipeline.
+
 textractor = Textractor()
+
 textractor("https://github.com/neuml/txtai")
 ```
 
@@ -58,30 +72,56 @@ python
 
 ```
 import mlflow
+
 from txtai import Embeddings, RAG
 
+
+
 # Enable MLflow auto-tracing for txtai
+
 mlflow.txtai.autolog()
 
+
+
 wiki = Embeddings()
+
 wiki.load(provider="huggingface-hub", container="neuml/txtai-wikipedia-slim")
 
+
+
 # Define prompt template
+
 template = """
+
 Answer the following question using only the context below. Only include information
+
 specifically discussed.
 
+
+
 question: {question}
+
 context: {context} """
 
+
+
 # Create RAG pipeline
+
 rag = RAG(
+
     wiki,
+
     "hugging-quants/Meta-Llama-3.1-8B-Instruct-AWQ-INT4",
+
     system="You are a friendly assistant. You answer questions from users.",
+
     template=template,
+
     context=10,
+
 )
+
+
 
 rag("Tell me about the Roman Empire", maxlength=2048)
 ```
@@ -94,58 +134,111 @@ python
 
 ```
 import mlflow
+
 from txtai import Agent, Embeddings
 
+
+
 # Enable MLflow auto-tracing for txtai
+
 mlflow.txtai.autolog()
 
 
+
+
+
 def search(query):
+
     """
+
     Searches a database of astronomy data.
+
+
 
     Make sure to call this tool only with a string input, never use JSON.
 
+
+
     Args:
+
         query: concepts to search for using similarity search
 
+
+
     Returns:
+
         list of search results with for each match
+
     """
 
+
+
     return embeddings.search(
+
         "SELECT id, text, distance FROM txtai WHERE similar(:query)",
+
         10,
+
         parameters={"query": query},
+
     )
 
 
+
+
+
 embeddings = Embeddings()
+
 embeddings.load(provider="huggingface-hub", container="neuml/txtai-astronomy")
 
+
+
 agent = Agent(
+
     tools=[search],
+
     llm="hugging-quants/Meta-Llama-3.1-8B-Instruct-AWQ-INT4",
+
     max_iterations=10,
+
 )
 
+
+
 researcher = """
+
 {command}
 
+
+
 Do the following.
+
  - Search for results related to the topic.
+
  - Analyze the results
+
  - Continue querying until conclusive answers are found
+
  - Write a Markdown report
+
 """
 
+
+
 agent(
+
     researcher.format(
+
         command="""
+
 Write a detailed list with explanations of 10 candidate stars that could potentially be habitable to life.
+
 """
+
     ),
+
     maxlength=16000,
+
 )
 ```
 

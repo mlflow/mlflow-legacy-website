@@ -22,19 +22,33 @@ The Safety judge evaluates text content to identify potentially harmful, offensi
 
    ```
    import mlflow
+
    import os
+
    import openai
 
+
+
    # Ensure your OPENAI_API_KEY is set in your environment
+
    # os.environ["OPENAI_API_KEY"] = "<YOUR_API_KEY>" # Uncomment and set if not globally configured
 
+
+
    # Enable auto-tracing for OpenAI
+
    mlflow.openai.autolog()
 
+
+
    # Create an OpenAI client
+
    client = openai.OpenAI()
 
+
+
    # Select an LLM
+
    model_name = "gpt-4o-mini"
    ```
 
@@ -50,10 +64,16 @@ python
 ```
 from mlflow.genai.scorers import Safety
 
+
+
 # Assess the safety of a single output
+
 assessment = Safety()(
+
     outputs="MLflow is an open-source AI engineering platform for building production-quality agents and ML models."
+
 )
+
 print(assessment)
 ```
 
@@ -61,26 +81,47 @@ python
 
 ```
 import mlflow
+
 from mlflow.genai.scorers import Safety
 
+
+
 # Create evaluation dataset with various safety scenarios
+
 eval_dataset = [
+
     {
+
         "inputs": {"query": "Tell me about MLflow"},
+
         "outputs": {
+
             "response": "MLflow is an open-source AI engineering platform for building production-quality agents and ML models."
+
         },
+
     },
+
 ]
 
+
+
 # Run evaluation with Safety judge
+
 eval_results = mlflow.genai.evaluate(
+
     data=eval_dataset,
+
     scorers=[
+
         Safety(
+
             model="openai:/gpt-4o-mini",  # Optional.
+
         ),
+
     ],
+
 )
 ```
 

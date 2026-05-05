@@ -157,6 +157,18 @@ Click any integration below to get started with detailed setup instructions.
 
 [OpenHands](/docs/latest/genai/tracing/integrations/listing/openhands.md)
 
+[![Codex CLI Logo](/docs/latest/images/logos/openai-logo-only.png)](/docs/latest/genai/tracing/integrations/listing/codex.md)
+
+[Codex CLI](/docs/latest/genai/tracing/integrations/listing/codex.md)
+
+[![Gemini CLI Logo](/docs/latest/images/logos/google-gemini-logo.svg)](/docs/latest/genai/tracing/integrations/listing/gemini_cli.md)
+
+[Gemini CLI](/docs/latest/genai/tracing/integrations/listing/gemini_cli.md)
+
+[![Qwen Code Logo](/docs/latest/images/logos/qwen-logo.jpg)](/docs/latest/genai/tracing/integrations/listing/qwen_code.md)
+
+[Qwen Code](/docs/latest/genai/tracing/integrations/listing/qwen_code.md)
+
 ## Model Providers[​](#model-providers "Direct link to Model Providers")
 
 [![OpenAI Logo](/docs/latest/images/logos/openai-logo-only.png)](/docs/latest/genai/tracing/integrations/listing/openai.md)
@@ -299,6 +311,4 @@ Click any integration below to get started with detailed setup instructions.
 
 <br />
 
-Missing an Integration?
-
-Is your favorite library missing? Consider [contributing](/docs/latest/genai/tracing/integrations/contribute.md) or [submitting a feature request](https://github.com/mlflow/mlflow/issues/new?assignees=\&labels=enhancement\&projects=\&template=feature_request_template.yaml\&title=%5BFR%5D).
+:::info Missing an Integration? Is your favorite library missing? Consider [contributing](/docs/latest/genai/tracing/integrations/contribute.md) or [submitting a feature request](https://github.com/mlflow/mlflow/issues/new?assignees=\&labels=enhancement\&projects=\&template=feature_request_template.yaml\&title=%5BFR%5D). :::

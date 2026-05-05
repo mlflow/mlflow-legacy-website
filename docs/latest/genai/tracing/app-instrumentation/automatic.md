@@ -272,9 +272,7 @@ Each integration automatically captures your application's logic and intermediat
 
 <br />
 
-Missing your favorite library?
-
-Is your favorite library missing from the list? Consider [contributing to MLflow Tracing](/docs/latest/genai/tracing/integrations/contribute.md) or [submitting a feature request](https://github.com/mlflow/mlflow/issues/new?assignees=\&labels=enhancement\&projects=\&template=feature_request_template.yaml\&title=%5BFR%5D) to our Github repository.
+:::info Missing your favorite library? Is your favorite library missing from the list? Consider [contributing to MLflow Tracing](/docs/latest/genai/tracing/integrations/contribute.md) or [submitting a feature request](https://github.com/mlflow/mlflow/issues/new?assignees=\&labels=enhancement\&projects=\&template=feature_request_template.yaml\&title=%5BFR%5D) to our Github repository. :::
 
 ## Advanced Usage[​](#advanced-usage "Direct link to Advanced Usage")
 
@@ -292,35 +290,67 @@ python
 
 ```
 import mlflow
+
 import openai
+
 from mlflow.entities import SpanType
+
+
 
 mlflow.openai.autolog()
 
 
+
+
+
 @mlflow.trace(span_type=SpanType.CHAIN)
+
 def run(question):
+
     messages = build_messages(question)
+
     # MLflow automatically generates a span for OpenAI invocation
+
     response = openai.OpenAI().chat.completions.create(
+
         model="gpt-4o-mini",
+
         max_tokens=100,
+
         messages=messages,
+
     )
+
     return parse_response(response)
 
 
+
+
+
 @mlflow.trace
+
 def build_messages(question):
+
     return [
+
         {"role": "system", "content": "You are a helpful chatbot."},
+
         {"role": "user", "content": question},
+
     ]
 
 
+
+
+
 @mlflow.trace
+
 def parse_response(response):
+
     return response.choices[0].message.content
+
+
+
 
 
 run("What is MLflow?")
@@ -346,40 +376,75 @@ python
 
 ```
 import mlflow
+
 import openai
+
 from mlflow.entities import SpanType
+
 from langchain_openai import ChatOpenAI
+
 from langchain_core.prompts import ChatPromptTemplate
 
+
+
 # Enable auto-tracing for both OpenAI and LangChain
+
 mlflow.openai.autolog()
+
 mlflow.langchain.autolog()
 
 
+
+
+
 @mlflow.trace(span_type=SpanType.CHAIN)
+
 def multi_provider_workflow(query: str):
+
     # First, use OpenAI directly for initial processing
+
     analysis = openai.OpenAI().chat.completions.create(
+
         model="gpt-4o-mini",
+
         messages=[
+
             {"role": "system", "content": "Analyze the query and extract key topics."},
+
             {"role": "user", "content": query},
+
         ],
+
     )
+
     topics = analysis.choices[0].message.content
 
+
+
     # Then use LangChain for structured processing
+
     llm = ChatOpenAI(model="gpt-4o-mini")
+
     prompt = ChatPromptTemplate.from_template(
+
         "Based on these topics: {topics}\nGenerate a detailed response to: {query}"
+
     )
+
     chain = prompt | llm
+
     response = chain.invoke({"topics": topics, "query": query})
+
+
 
     return response
 
 
+
+
+
 # Run the function
+
 result = multi_provider_workflow("Explain quantum computing")
 ```
 

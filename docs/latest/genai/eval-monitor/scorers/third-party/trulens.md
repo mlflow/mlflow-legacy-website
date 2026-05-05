@@ -22,16 +22,28 @@ python
 ```
 from mlflow.genai.scorers.trulens import Groundedness
 
+
+
 scorer = Groundedness(model="openai:/gpt-5-mini")
+
 feedback = scorer(
+
     inputs="What is MLflow?",
+
     outputs="MLflow is an open-source AI engineering platform for agents and LLMs.",
+
     expectations={
+
         "context": "MLflow is an ML platform for experiment tracking and model deployment."
+
     },
+
 )
 
+
+
 print(feedback.value)  # "yes" or "no"
+
 print(feedback.metadata["score"])  # 0.85
 ```
 
@@ -39,31 +51,57 @@ python
 
 ```
 import mlflow
+
 from mlflow.genai.scorers.trulens import Groundedness, AnswerRelevance
 
+
+
 eval_dataset = [
+
     {
+
         "inputs": {"query": "What is MLflow?"},
+
         "outputs": "MLflow is an open-source AI engineering platform for agents and LLMs.",
+
         "expectations": {
+
             "context": "MLflow is an ML platform for experiment tracking and model deployment."
+
         },
+
     },
+
     {
+
         "inputs": {"query": "How do I track experiments?"},
+
         "outputs": "You can use mlflow.start_run() to begin tracking experiments.",
+
         "expectations": {
+
             "context": "MLflow provides APIs like mlflow.start_run() for experiment tracking."
+
         },
+
     },
+
 ]
 
+
+
 results = mlflow.genai.evaluate(
+
     data=eval_dataset,
+
     scorers=[
+
         Groundedness(model="openai:/gpt-5-mini"),
+
         AnswerRelevance(model="openai:/gpt-5-mini"),
+
     ],
+
 )
 ```
 
@@ -101,15 +139,25 @@ python
 
 ```
 import mlflow
+
 from mlflow.genai.scorers.trulens import LogicalConsistency, ToolSelection
 
+
+
 traces = mlflow.search_traces(experiment_ids=["1"])
+
 results = mlflow.genai.evaluate(
+
     data=traces,
+
     scorers=[
+
         LogicalConsistency(model="openai:/gpt-5-mini"),
+
         ToolSelection(model="openai:/gpt-5-mini"),
+
     ],
+
 )
 ```
 
@@ -122,16 +170,28 @@ python
 ```
 from mlflow.genai.scorers.trulens import get_scorer
 
+
+
 # Create scorer by name
+
 scorer = get_scorer(
+
     metric_name="Groundedness",
+
     model="openai:/gpt-5-mini",
+
 )
 
+
+
 feedback = scorer(
+
     inputs="What is MLflow?",
+
     outputs="MLflow is a platform for ML workflows.",
+
     expectations={"context": "MLflow is an ML platform."},
+
 )
 ```
 
@@ -144,13 +204,22 @@ python
 ```
 from mlflow.genai.scorers.trulens import Groundedness, ContextRelevance
 
+
+
 # Common parameters
+
 scorer = Groundedness(
+
     model="openai:/gpt-5-mini",  # Model URI (also supports "databricks", "databricks:/endpoint", etc.)
+
     threshold=0.7,  # Pass/fail threshold (0.0-1.0, scorer passes if score >= threshold)
+
 )
 
+
+
 # Default threshold is 0.5
+
 scorer = ContextRelevance(model="openai:/gpt-5-mini")
 ```
 

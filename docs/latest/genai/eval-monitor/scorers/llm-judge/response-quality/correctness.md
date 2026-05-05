@@ -22,19 +22,33 @@ This built-in LLM judge is designed for evaluating application responses against
 
    ```
    import mlflow
+
    import os
+
    import openai
 
+
+
    # Ensure your OPENAI_API_KEY is set in your environment
+
    # os.environ["OPENAI_API_KEY"] = "<YOUR_API_KEY>" # Uncomment and set if not globally configured
 
+
+
    # Enable auto-tracing for OpenAI
+
    mlflow.openai.autolog()
 
+
+
    # Create an OpenAI client
+
    client = openai.OpenAI()
 
+
+
    # Select an LLM
+
    model_name = "gpt-4o-mini"
    ```
 
@@ -48,32 +62,60 @@ python
 ```
 from mlflow.genai.scorers import Correctness
 
+
+
 correctness_judge = Correctness()
 
+
+
 # Example 1: Response contains expected facts
+
 feedback = correctness_judge(
+
     inputs={"request": "What is MLflow?"},
+
     outputs={"response": "MLflow is an open-source AI engineering platform for agents and LLMs."},
+
     expectations={
+
         "expected_facts": [
+
             "MLflow is open-source",
+
             "MLflow is an AI engineering platform",
+
         ]
+
     },
+
 )
+
+
 
 # Example 2: Response missing or contradicting facts
+
 feedback = correctness_judge(
+
     inputs={"request": "When was MLflow released?"},
+
     outputs={"response": "MLflow was released in 2017."},
+
     expectations={"expected_facts": ["MLflow was released in June 2018"]},
+
 )
 
+
+
 # Example 3: Using expected_response instead of expected_facts
+
 feedback = correctness_judge(
+
     inputs={"request": "What is the capital of France?"},
+
     outputs={"response": "The capital of France is Paris."},
+
     expectations={"expected_response": "Paris is the capital of France."},
+
 )
 ```
 
@@ -81,45 +123,85 @@ python
 
 ```
 import mlflow
+
 from mlflow.genai.scorers import Correctness
 
+
+
 # Create evaluation dataset with ground truth
+
 eval_dataset = [
+
     # Example 1: Response contains expected facts
+
     {
+
         "inputs": {"request": "What is MLflow?"},
+
         "outputs": {
+
             "response": "MLflow is an open-source AI engineering platform for agents and LLMs."
+
         },
+
         "expectations": {
+
             "expected_facts": [
+
                 "MLflow is open-source",
+
                 "MLflow is an AI engineering platform",
+
             ]
+
         },
+
     },
+
     # Example 2: Response missing or contradicting facts
+
     {
+
         "inputs": {"request": "When was MLflow released?"},
+
         "outputs": {"response": "MLflow was released in 2017."},
+
         "expectations": {"expected_facts": ["MLflow was released in June 2018"]},
+
     },
+
     # Example 3: Using expected_response instead of expected_facts
+
     {
+
         "inputs": {"request": "What is the capital of France?"},
+
         "outputs": {"response": "The capital of France is Paris."},
+
         "expectations": {"expected_response": "Paris is the capital of France."},
+
     },
+
 ]
 
+
+
 # Run evaluation with Correctness judge
+
 eval_results = mlflow.genai.evaluate(
+
     data=eval_dataset,
+
     scorers=[
+
         Correctness(
+
             model="openai:/gpt-4o-mini",  # Optional.
+
         )
+
     ],
+
 )
 ```
 

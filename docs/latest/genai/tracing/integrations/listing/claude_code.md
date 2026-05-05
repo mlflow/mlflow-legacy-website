@@ -38,15 +38,25 @@ bash
 
 ```
 # Set up tracing in current directory
+
 mlflow autolog claude
 
+
+
 # Set up tracing in specific directory
+
 mlflow autolog claude -d ~/my-project
 
+
+
 # Check tracing status
+
 mlflow autolog claude --status
 
+
+
 # Disable tracing
+
 mlflow autolog claude --disable
 ```
 
@@ -56,13 +66,21 @@ bash
 
 ```
 # Set up with custom tracking URI
+
 mlflow autolog claude -u file://./custom-mlruns
+
 mlflow autolog claude -u sqlite:///mlflow.db
 
+
+
 # Set up with Databricks backend and a specific experiment ID
+
 mlflow autolog claude -u databricks -e 123456789
 
+
+
 # Set up with specific experiment
+
 mlflow autolog claude -n "My AI Project"
 ```
 
@@ -78,15 +96,25 @@ bash
 
 ```
 # Set up tracing in your project
+
 mlflow autolog claude -d ~/my-project
 
+
+
 # Navigate to project directory
+
 cd ~/my-project
 
+
+
 # Use Claude Code normally - tracing happens automatically
+
 claude "help me refactor this Python function to be more efficient"
 
+
+
 # View traces in MLflow UI
+
 mlflow server
 ```
 
@@ -106,7 +134,10 @@ python
 ```
 import mlflow.anthropic
 
+
+
 # Enable automatic tracing for Claude Agent SDK
+
 mlflow.anthropic.autolog()
 ```
 
@@ -122,25 +153,45 @@ python
 
 ```
 import asyncio
+
 import mlflow.anthropic
+
 from claude_agent_sdk import ClaudeSDKClient
 
+
+
 # Enable autologging
+
 mlflow.anthropic.autolog()
 
+
+
 # Optionally configure MLflow experiment
+
 mlflow.set_experiment("my_claude_app")
 
 
+
+
+
 async def main():
+
     async with ClaudeSDKClient() as client:
+
         await client.query("What is the capital of France?")
 
+
+
         async for message in client.receive_response():
+
             print(message)
 
 
+
+
+
 if __name__ == "__main__":
+
     asyncio.run(main())
 ```
 
@@ -152,52 +203,99 @@ python
 
 ```
 import asyncio
+
 import pandas as pd
+
 from claude_agent_sdk import ClaudeSDKClient
+
 from typing import Literal
 
+
+
 import mlflow.anthropic
+
 from mlflow.genai import evaluate, scorer
+
 from mlflow.genai.judges import make_judge
+
+
 
 mlflow.anthropic.autolog()
 
 
+
+
+
 async def run_agent(query: str) -> str:
+
     """Run Claude Agent SDK and return response"""
+
     async with ClaudeSDKClient() as client:
+
         await client.query(query)
 
+
+
         response_text = ""
+
         async for message in client.receive_response():
+
             response_text += str(message) + "\n\n"
+
+
 
         return response_text
 
 
+
+
+
 def predict_fn(query: str) -> str:
+
     """Synchronous wrapper for evaluation"""
+
     return asyncio.run(run_agent(query))
 
 
+
+
+
 relevance = make_judge(
+
     name="relevance",
+
     instructions=(
+
         "Evaluate if the response in {{ outputs }} is relevant to "
+
         "the question in {{ inputs }}. Return either 'pass' or 'fail'."
+
     ),
+
     feedback_value_type=Literal["pass", "fail"],
+
     model="openai:/gpt-4o",
+
 )
 
+
+
 # Create evaluation dataset
+
 eval_data = pd.DataFrame([
+
     {"inputs": {"query": "What is machine learning?"}},
+
     {"inputs": {"query": "Explain neural networks"}},
+
 ])
 
+
+
 # Run evaluation with automatic tracing
+
 mlflow.set_experiment("claude_evaluation")
+
 evaluate(data=eval_data, predict_fn=predict_fn, scorers=[relevance])
 ```
 

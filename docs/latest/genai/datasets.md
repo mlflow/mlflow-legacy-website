@@ -76,41 +76,77 @@ python
 
 ```
 import mlflow
+
 from mlflow.genai.datasets import create_dataset, set_dataset_tags
 
+
+
 # Create your evaluation dataset
+
 dataset = create_dataset(
+
     name="production_validation_set",
+
     experiment_id=["0"],  # "0" is the default experiment
+
     tags={"team": "ml-platform", "stage": "validation"},
+
 )
+
+
 
 # Optionally, add additional tags to your dataset.
+
 # Tags can be used to search for datasets with search_datasets API
+
 set_dataset_tags(
+
     dataset_id=dataset.dataset_id,
+
     tags={"environment": "dev", "validation_version": "1.3"},
+
 )
 
+
+
 # 2. Search for traces
+
 traces = mlflow.search_traces(
+
     filter_string="attributes.name = 'chat_completion' AND tags.environment = 'production'",
+
     order_by=["attributes.timestamp_ms DESC"],
+
     max_results=10,
+
 )
+
+
 
 print(f"Found {len(traces)} successful traces")
 
+
+
 # 3. Add expectations to the traces
+
 for trace in traces:
+
     mlflow.log_expectation(
+
         trace_id=trace.info.trace_id,
+
         name="expected_answer",
+
         value=("Correct answer for this input"),
+
     )
 
+
+
 # 4. Add the traces to the evaluation dataset
+
 eval_dataset = eval_dataset.merge_records(traces)
+
 print(f"Added {len(traces)} records to evaluation dataset")
 ```
 
@@ -129,23 +165,41 @@ python
 
 ```
 import mlflow
+
 import pandas as pd
 
+
+
 # Search for traces with potential quality issues
+
 traces_df = mlflow.search_traces(
+
     filter_string="tag.quality_score < 0.7",
+
     max_results=100,
+
     extract_fields=[
+
         "span.end_time",
+
         "span.inputs.messages",
+
         "span.outputs.choices",
+
         "span.attributes.usage.total_tokens",
+
     ],
+
 )
 
+
+
 # Analyze patterns
+
 # For example, check if quality issues correlate with token usage
+
 correlation = traces_df["span.attributes.usage.total_tokens"].corr(traces_df["tag.quality_score"])
+
 print(f"Correlation between token usage and quality: {correlation}")
 ```
 
@@ -170,46 +224,88 @@ python
 
 ```
 import mlflow
+
 from mlflow.genai.datasets import create_dataset
 
+
+
 # Create dataset with manual test cases
+
 dataset = create_dataset(
+
     name="regression_test_suite",
+
     experiment_id=["0", "1"],  # Multiple experiments
+
     tags={"type": "regression", "priority": "critical"},
+
 )
 
+
+
 # Define test cases with expected outputs (ground truth)
+
 test_cases = [
+
     {
+
         "inputs": {
+
             "question": "How do I reset my password?",
+
             "context": "user_support",
+
         },
+
         "expectations": {
+
             "expected_answer": (
+
                 "To reset your password, click 'Forgot Password' on the login page, "
+
                 "enter your email, and follow the link sent to your inbox"
+
             ),
+
             "must_contain_steps": True,
+
             "expected_tone": "helpful",
+
         },
+
     },
+
     {
+
         "inputs": {
+
             "question": "What are your refund policies?",
+
             "context": "customer_service",
+
         },
+
         "expectations": {
+
             "expected_answer": (
+
                 "We offer full refunds within 30 days of purchase. "
+
                 "Refunds after 30 days are subject to approval."
+
             ),
+
             "must_include_timeframe": True,
+
             "must_mention_exceptions": True,
+
         },
+
     },
+
 ]
+
+
 
 dataset.merge_records(test_cases)
 ```
@@ -218,50 +314,95 @@ python
 
 ```
 import pandas as pd
+
 from mlflow.genai.datasets import create_dataset
 
+
+
 # Create dataset
+
 dataset = create_dataset(
+
     name="benchmark_dataset",
+
     experiment_id=["0"],
+
     tags={"source": "benchmark", "version": "2024.1"},
+
 )
 
+
+
 # Create DataFrame with inputs and expectations (ground truth)
+
 df = pd.DataFrame([
+
     {
+
         "inputs": {
+
             "question": "What is MLflow?",
+
             "domain": "general",
+
         },
+
         "expectations": {
+
             "expected_answer": "MLflow is an open-source AI engineering platform for agents and LLMs",
+
             "must_mention": ["tracking", "experiments", "models"],
+
         },
+
     },
+
     {
+
         "inputs": {
+
             "question": "How do I track experiments?",
+
             "domain": "technical",
+
         },
+
         "expectations": {
+
             "expected_answer": "Use mlflow.start_run() and mlflow.log_params()",
+
             "must_mention": ["log_params", "log_metrics"],
+
         },
+
     },
+
     {
+
         "inputs": {
+
             "question": "Explain model versioning",
+
             "domain": "technical",
+
         },
+
         "expectations": {
+
             "expected_answer": "Model Registry provides versioning",
+
             "must_mention": ["Model Registry", "versions"],
+
         },
+
     },
+
 ])
 
+
+
 # Add records from DataFrame
+
 dataset.merge_records(df)
 ```
 
@@ -271,41 +412,77 @@ python
 
 ```
 from mlflow.genai.datasets import create_dataset, get_dataset
+
 from mlflow.genai.simulators import ConversationSimulator
 
+
+
 # Create a dataset for simulation test cases
+
 dataset = create_dataset(
+
     name="conversation_scenarios",
+
     tags={"type": "simulation", "agent": "support-bot"},
+
 )
 
+
+
 # Define test cases with goals and personas
+
 simulation_test_cases = [
+
     {
+
         "inputs": {
+
             "goal": "Get help setting up experiment tracking",
+
             "persona": "You are a data scientist new to MLflow",
+
         },
+
     },
+
     {
+
         "inputs": {
+
             "goal": "Debug a model deployment error",
+
             "persona": "You are a senior engineer who expects precise answers",
+
         },
+
     },
+
     {
+
         "inputs": {
+
             "goal": "Understand model versioning best practices",
+
             "persona": "You are building an ML platform for your team",
+
             "context": {"team_size": "large", "compliance": "strict"},
+
         },
+
     },
+
 ]
+
+
 
 dataset.merge_records(simulation_test_cases)
 
+
+
 # Later, use the dataset with ConversationSimulator
+
 dataset = get_dataset(name="conversation_scenarios")
+
 simulator = ConversationSimulator(test_cases=dataset)
 ```
 
@@ -317,10 +494,15 @@ python
 
 ```
 df = eval_dataset.to_df()
+
 print(f"\nDataset preview:")
+
 print(f"Total records: {len(df)}")
+
 print("\nSample record:")
+
 sample = df.iloc[0]
+
 print(f"Inputs: {sample['inputs']}")
 ```
 
@@ -338,23 +520,41 @@ python
 
 ```
 import mlflow.genai.datasets
+
 import pandas as pd
 
+
+
 # Load existing dataset
+
 dataset = mlflow.genai.datasets.get_dataset(name="eval_dataset")
 
+
+
 # Add new test cases
+
 new_cases = [
+
     {
+
         "inputs": {"question": "What are MLflow models?"},
+
         "expectations": {
+
             "expected_facts": ["model packaging", "deployment", "registry"],
+
             "min_response_length": 100,
+
         },
+
     }
+
 ]
 
+
+
 # Merge new cases
+
 dataset = dataset.merge_records(new_cases)
 ```
 

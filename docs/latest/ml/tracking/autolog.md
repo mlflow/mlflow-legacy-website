@@ -7,10 +7,16 @@ python
 ```
 import mlflow
 
+
+
 mlflow.autolog()
 
+
+
 with mlflow.start_run():
+
     # your training code goes here
+
     ...
 ```
 
@@ -43,17 +49,30 @@ python
 ```
 import mlflow
 
+
+
 from sklearn.model_selection import train_test_split
+
 from sklearn.datasets import load_diabetes
+
 from sklearn.ensemble import RandomForestRegressor
+
+
 
 mlflow.autolog()
 
+
+
 db = load_diabetes()
+
 X_train, X_test, y_train, y_test = train_test_split(db.data, db.target)
 
+
+
 rf = RandomForestRegressor(n_estimators=100, max_depth=6, max_features=3)
+
 # MLflow triggers logging automatically upon model fitting
+
 rf.fit(X_train, y_train)
 ```
 
@@ -86,9 +105,14 @@ python
 ```
 import mlflow
 
+
+
 mlflow.autolog(
+
     log_model_signatures=False,
+
     extra_tags={"YOUR_TAG": "VALUE"},
+
 )
 ```
 
@@ -103,11 +127,18 @@ python
 ```
 import mlflow
 
+
+
 # Option 1: Enable autologging only for PyTorch
+
 mlflow.pytorch.autolog()
 
+
+
 # Option 2: Disable autologging for scikit-learn, but enable it for other libraries
+
 mlflow.sklearn.autolog(disable=True)
+
 mlflow.autolog()
 ```
 
@@ -220,8 +251,11 @@ text
 
 ```
 - Parent run
+
   - Child run 1
+
   - Child run 2
+
   - ...
 ```
 
@@ -246,9 +280,7 @@ note
 
 * Moreover, Spark datasource autologging occurs asynchronously - as such, it's possible (though unlikely) to see race conditions when launching short-lived MLflow runs that result in datasource information not being logged.
 
-important
-
-With Pyspark 3.2.0 or above, Spark datasource autologging requires `PYSPARK_PIN_THREAD` environment variable to be set to `false`.
+:::warning important With Pyspark 3.2.0 or above, Spark datasource autologging requires `PYSPARK_PIN_THREAD` environment variable to be set to `false`. :::
 
 ### Statsmodels[​](#autolog-statsmodels "Direct link to Statsmodels")
 

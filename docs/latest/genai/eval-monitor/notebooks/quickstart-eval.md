@@ -35,13 +35,22 @@ python
 ```
 import os
 
+
+
 import mlflow
 
+
+
 # Configure environment
+
 os.environ["OPENAI_API_KEY"] = "your-api-key-here"  # Replace with your API key
+
 mlflow.set_tracking_uri("http://localhost:5000")
 
+
+
 # Set experiment
+
 mlflow.set_experiment("GenAI Evaluation Quickstart")
 ```
 
@@ -54,25 +63,46 @@ python
 ```
 from openai import OpenAI
 
+
+
 client = OpenAI()
 
 
+
+
+
 def my_agent(question: str) -> str:
+
   response = client.chat.completions.create(
+
       model="gpt-4o-mini",
+
       messages=[
+
           {
+
               "role": "system",
+
               "content": "You are a helpful assistant. Answer questions concisely.",
+
           },
+
           {"role": "user", "content": question},
+
       ],
+
   )
+
   return response.choices[0].message.content
 
 
+
+
+
 # Wrapper function for evaluation
+
 def qa_predict_fn(question: str) -> str:
+
   return my_agent(question)
 ```
 
@@ -87,19 +117,33 @@ python
 
 ```
 # Define a simple Q&A dataset with questions and expected answers
+
 eval_dataset = [
+
   {
+
       "inputs": {"question": "What is the capital of France?"},
+
       "expectations": {"expected_response": "Paris"},
+
   },
+
   {
+
       "inputs": {"question": "Who was the first person to build an airplane?"},
+
       "expectations": {"expected_response": "Wright Brothers"},
+
   },
+
   {
+
       "inputs": {"question": "Who wrote Romeo and Juliet?"},
+
       "expectations": {"expected_response": "William Shakespeare"},
+
   },
+
 ]
 ```
 
@@ -119,19 +163,33 @@ python
 
 ```
 from mlflow.genai import scorer
+
 from mlflow.genai.scorers import Correctness, Guidelines
 
 
+
+
+
 @scorer
+
 def is_concise(outputs: str) -> bool:
+
   """Evaluate if the answer is concise (less than 5 words)"""
+
   return len(outputs.split()) <= 5
 
 
+
+
+
 scorers = [
+
   Correctness(),
+
   Guidelines(name="is_english", guidelines="The answer must be in English"),
+
   is_concise,
+
 ]
 ```
 
@@ -143,10 +201,15 @@ python
 
 ```
 # Run evaluation
+
 results = mlflow.genai.evaluate(
+
   data=eval_dataset,
+
   predict_fn=qa_predict_fn,
+
   scorers=scorers,
+
 )
 ```
 

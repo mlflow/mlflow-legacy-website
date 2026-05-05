@@ -25,9 +25,7 @@ The `@mlflow.trace` decorator currently supports the following types of function
 
 The following code is a minimum example of using the decorator for tracing Python functions.
 
-Decorator Order
-
-To ensure complete observability, the `@mlflow.trace` decorator should generally be the **outermost** one if using multiple decorators. See [Using @mlflow.trace with Other Decorators](#using-mlflowtrace-with-other-decorators) for a detailed explanation and examples.
+:::tip Decorator Order To ensure complete observability, the `@mlflow.trace` decorator should generally be the **outermost** one if using multiple decorators. See [Using @mlflow.trace with Other Decorators](#using-mlflowtrace-with-other-decorators) for a detailed explanation and examples. :::
 
 python
 
@@ -35,20 +33,39 @@ python
 import mlflow
 
 
+
+
+
 @mlflow.trace(span_type="func", attributes={"key": "value"})
+
 def add_1(x):
+
     return x + 1
 
 
+
+
+
 @mlflow.trace(span_type="func", attributes={"key1": "value1"})
+
 def minus_1(x):
+
     return x - 1
 
 
+
+
+
 @mlflow.trace(name="Trace Test")
+
 def trace_test(x):
+
     step1 = add_1(x)
+
     return minus_1(step1)
+
+
+
 
 
 trace_test(4)
@@ -65,11 +82,18 @@ typescript
 ```
 import * as mlflow from "@mlflow/core";
 
+
+
 class MyClass {
+
     @mlflow.trace({ spanType: mlflow.SpanType.LLM })
+
     generateText(prompt: string) {
+
         return "It's sunny in Seattle!";
+
     }
+
 }
 ```
 
@@ -94,17 +118,31 @@ python
 
 ```
 import math
+
 import mlflow
 
 
-def invocation(x, y, exp=2):
+
+
+
+def invocation(x, exp=2):
+
     # Wrap an external function from the math library
+
     traced_pow = mlflow.trace(math.pow)
+
     raised = traced_pow(x, exp)
 
+
+
     traced_factorial = mlflow.trace(math.factorial)
+
     factorial = traced_factorial(int(raised))
+
     return factorial
+
+
+
 
 
 invocation(4, 2)
@@ -117,17 +155,30 @@ typescript
 ```
 import * as mlflow from "@mlflow/core";
 
+
+
 const getWeather = async (city: string) => {
+
     return `The weather in ${city} is sunny`;
+
 };
 
+
+
 // Wrap the function with mlflow.trace to create a traced function.
+
 const tracedGetWeather = mlflow.trace(
+
     getWeather,
+
     { name: 'get-weather' }
+
 );
 
+
+
 // Invoke the traced function as usual.
+
 await tracedGetWeather('San Francisco');
 ```
 
@@ -138,15 +189,26 @@ typescript
 ```
 import * as mlflow from "@mlflow/core";
 
+
+
 const getWeather = mlflow.trace(
+
     (city: string) => {
+
         return `The weather in ${city} is sunny`;
+
     },
+
     // When wrapping an anonymous function, you need to specify the span name.
+
     { name: 'get-weather' }
+
 );
 
+
+
 // Invoke the traced function as usual.
+
 getWeather('San Francisco');
 ```
 
@@ -167,8 +229,13 @@ python
 from mlflow.entities import SpanType
 
 
+
+
+
 @mlflow.trace(name="call-local-llm", span_type=SpanType.LLM, attributes={"model": "gpt-4o-mini"})
+
 def invoke(prompt: str):
+
     return client.invoke(messages=[{"role": "user", "content": prompt}], model="gpt-4o-mini")
 ```
 
@@ -177,15 +244,26 @@ typescript
 ```
 import * as mlflow from "@mlflow/core";
 
+
+
 class MyClass {
+
     @mlflow.trace({
+
         name: "call-local-llm",
+
         spanType: mlflow.SpanType.LLM,
+
         attributes: {"model": "gpt-4o-mini"}
+
     })
+
     generateText(prompt: string) {
+
         return "It's sunny in Seattle!";
+
     }
+
 }
 ```
 
@@ -202,13 +280,23 @@ python
 from mlflow.entities import SpanType
 
 
+
+
+
 @mlflow.trace(span_type=SpanType.LLM)
+
 def invoke(prompt: str):
+
     model_id = "gpt-4o-mini"
+
     # Get the current span (created by the @mlflow.trace decorator)
+
     span = mlflow.get_current_active_span()
+
     # Set the attribute to the span
+
     span.set_attributes({"model": model_id})
+
     return client.invoke(messages=[{"role": "user", "content": prompt}], model=model_id)
 ```
 
@@ -219,14 +307,24 @@ typescript
 ```
 import * as mlflow from "@mlflow/core";
 
+
+
 class MyClass {
+
     @mlflow.trace({ spanType: mlflow.SpanType.LLM })
+
     generateText(prompt: string) {
+
         const modelId = "gpt-4o-mini";
+
         const span = mlflow.getCurrentActiveSpan();
+
         span?.setAttribute("model", modelId);
+
         return "It's sunny in Seattle!";
+
     }
+
 }
 ```
 
@@ -241,8 +339,11 @@ python
 
 ```
 @mlflow.trace
+
 def my_func(x):
+
     mlflow.update_current_trace(tags={"fruit": "apple"})
+
     return x + 1
 ```
 
@@ -251,12 +352,20 @@ typescript
 ```
 import * as mlflow from "@mlflow/core";
 
+
+
 class MyClass {
+
     @mlflow.trace({ spanType: mlflow.SpanType.LLM })
+
     generateText(prompt: string) {
+
         mlflow.updateCurrentTrace({ tags: { fruit: "apple" } });
+
         return "It's sunny in Seattle!";
+
     }
+
 }
 ```
 
@@ -277,34 +386,65 @@ python
 import mlflow
 
 
+
+
+
 @mlflow.trace(name="Summarization Pipeline")
+
 def summarize_document(document_content: str, user_instructions: str):
+
     # Construct a custom preview for the request column
+
     # For example, show beginning of document and user instructions
+
     request_p = f"Doc: {document_content[:30]}... Instr: {user_instructions[:30]}..."
+
     mlflow.update_current_trace(request_preview=request_p)
 
+
+
     # Simulate LLM call
+
     # messages = [
+
     #     {"role": "system", "content": "Summarize the following document based on user instructions."},
+
     #     {"role": "user", "content": f"Document: {document_content}\nInstructions: {user_instructions}"}
+
     # ]
+
     # completion = client.chat.completions.create(model="gpt-4o-mini", messages=messages)
+
     # summary = completion.choices[0].message.content
+
     summary = f"Summary of document starting with '{document_content[:20]}...' based on '{user_instructions}'"
 
+
+
     # Customize the response preview
+
     response_p = f"Summary: {summary[:50]}..."
+
     mlflow.update_current_trace(response_preview=response_p)
+
+
 
     return summary
 
 
+
+
+
 # Example Call
+
 long_document = (
+
     "This is a very long document that contains many details about various topics..." * 10
+
 )
+
 instructions = "Focus on the key takeaways regarding topic X."
+
 summary_result = summarize_document(long_document, instructions)
 ```
 
@@ -313,60 +453,98 @@ typescript
 ```
 import * as mlflow from "@mlflow/core";
 
+
+
 class MyClass {
+
     @mlflow.trace({ name: "Summarization Pipeline" })
+
     summarizeDocument(documentContent: string, userInstructions: string) {
+
         // Construct a custom preview for the request column
+
         // For example, show beginning of document and user instructions
+
         const requestPreview = `Doc: ${documentContent.slice(0, 30)}... Instr: ${userInstructions.slice(0, 30)}...`;
+
         mlflow.updateCurrentTrace({ requestPreview: requestPreview });
 
+
+
         // Simulate LLM call
+
         // const messages = [
+
         //   { role: "system", content: "Summarize the following document based on user instructions." },
+
         //   { role: "user", content: `Document: ${documentContent}\nInstructions: ${userInstructions}` }
+
         // ];
+
         // const completion = await client.chat.completions.create({ model: "gpt-4o-mini", messages });
+
         // const summary = completion.choices[0].message.content;
+
         const summary = `Summary of document starting with '${documentContent.slice(0, 20)}...' based on '${userInstructions}'`;
 
+
+
         // Customize the response preview
+
         const responsePreview = `Summary: ${summary.slice(0, 50)}...`;
+
         mlflow.updateCurrentTrace({ responsePreview: responsePreview });
 
+
+
         return summary;
+
     }
+
 }
 ```
 
 By setting `request_preview` and `response_preview` on the trace (typically the root span), you control how the overall interaction is summarized in the main trace list view, making it easier to identify and understand traces at a glance.
 
-Images and Audio Content in MLflow Traces
-
-You can attach images and audio to spans using content parts lists in `set_inputs()` and `set_outputs()`:
+:::tip Images and Audio Content in MLflow Traces You can attach images and audio to spans using content parts lists in `set_inputs()` and `set_outputs()`:
 
 python
 
 ```
 with mlflow.start_span(name="multimodal-call") as span:
+
     messages = [
+
         {
+
             "role": "user",
+
             "content": [
+
                 {"type": "text", "text": "What's in this image?"},
+
                 {
+
                     "type": "image_url",
+
                     "image_url": {"url": "https://example.com/photo.png"},
+
                 },
+
             ],
+
         }
+
     ]
+
     span.set_inputs({"messages": messages})
+
     result = "A photo of a cat."
+
     span.set_outputs({"content": result})
 ```
 
-See [Image and Audio (Multimodal) Content in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md#manual-tracing) for more examples.
+See [Multimodal Content and Attachments in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md#manual-tracing) for more examples. :::
 
 ## Code Block[​](#code-block "Direct link to Code Block")
 
@@ -384,9 +562,14 @@ python
 ```
 import mlflow
 
+
+
 with mlflow.start_span(name="my_span") as span:
+
     span.set_inputs({"x": 1, "y": 2})
+
     z = x + y
+
     span.set_outputs(z)
 ```
 
@@ -397,17 +580,30 @@ typescript
 ```
 import * as mlflow from "@mlflow/core";
 
+
+
 const result = await mlflow.withSpan(
+
     async (span: mlflow.Span) => {
+
         const x = 1;
+
         const y = 2;
+
         span.setInputs({ "x": x, "y": y });
+
         const z = x + y;
+
         span.setOutputs(z);
+
     },
+
     {
+
         name: "MySpan",
+
     }
+
 );
 ```
 
@@ -420,36 +616,69 @@ python
 
 ```
 import mlflow
+
 import openai
+
 from mlflow.entities import SpanType
 
+
+
 # Enable auto-tracing for OpenAI
+
 mlflow.openai.autolog()
 
 
+
+
+
 @mlflow.trace(span_type=SpanType.CHAIN)
+
 def start_session():
+
     messages = [{"role": "system", "content": "You are a friendly chat bot"}]
+
     while True:
+
         with mlflow.start_span(name="User") as span:
+
             span.set_inputs(messages)
+
             user_input = input(">> ")
+
             span.set_outputs(user_input)
 
+
+
         if user_input == "BYE":
+
             break
+
+
 
         messages.append({"role": "user", "content": user_input})
 
+
+
         response = openai.OpenAI().chat.completions.create(
+
             model="gpt-4o-mini",
+
             max_tokens=100,
+
             messages=messages,
+
         )
+
         answer = response.choices[0].message.content
+
         print(f"🤖: {answer}")
 
+
+
         messages.append({"role": "assistant", "content": answer})
+
+
+
 
 
 start_session()
@@ -459,65 +688,125 @@ typescript
 
 ```
 import * as mlflow from "@mlflow/core";
+
 import { tracedOpenAI } from "@mlflow/openai";
+
 import { OpenAI } from "openai";
+
 import * as readline from "readline";
+
+
 
 const openai = tracedOpenAI(new OpenAI());
 
+
+
 class MyClass {
+
     @mlflow.trace({ spanType: mlflow.SpanType.CHAIN })
+
     async startSession() {
+
         var messages: OpenAI.ChatCompletionMessageParam[] = [{"role": "system", "content": "You are a friendly chat bot"}];
+
         // Create readline interface for user input
+
         const rl = readline.createInterface({
+
             input: process.stdin,
+
             output: process.stdout
+
         });
 
+
+
         const getUserInput = (prompt: string): Promise<string> => {
+
             return new Promise((resolve) => {
+
                     rl.question(prompt, (answer) => {
+
                     resolve(answer);
+
                 });
+
             });
+
         };
 
+
+
         while (true) {
+
             let userInput: string = "";
 
+
+
             await mlflow.withSpan(
+
                 async (span) => {
+
                     span.setInputs({ messages });
+
                     userInput = await getUserInput(">> ");
+
                     span.setOutputs({ userInput });
+
                 },
+
                 { name: "User" }
+
             );
 
+
+
             if (userInput === "BYE") {
+
                 break;
+
             }
+
+
 
             messages.push({ role: "user", content: userInput });
 
+
+
             const response = await openai.chat.completions.create({
+
                 model: "gpt-4o-mini",
+
                 max_tokens: 100,
+
                 messages: messages
+
             });
 
+
+
             const answer = response.choices[0].message.content || "";
+
             console.log(`🤖: ${answer}`);
 
+
+
             messages.push({ role: "assistant", content: answer });
+
         }
 
+
+
         rl.close();
+
     }
+
 }
 
+
+
 const myClass = new MyClass();
+
 myClass.startSession();
 ```
 
@@ -529,9 +818,7 @@ If an `Exception` is raised during processing of a trace-instrumented operation,
 
 ***
 
-Python Only Features
-
-The below documentation applies only to the MLflow Python SDK.
+:::note Python Only Features The below documentation applies only to the MLflow Python SDK. :::
 
 ## Using `@mlflow.trace` with Other Decorators[​](#using-mlflowtrace-with-other-decorators "Direct link to using-mlflowtrace-with-other-decorators")
 
@@ -549,65 +836,125 @@ python
 
 ```
 import mlflow
+
 import functools
+
 import time
 
 
+
+
+
 # A hypothetical additional decorator
+
 def simple_timing_decorator(func):
+
     @functools.wraps(func)
+
     def wrapper(*args, **kwargs):
+
         start_time = time.time()
+
         result = func(*args, **kwargs)
+
         end_time = time.time()
+
         print(
+
             f"{func.__name__} executed in {end_time - start_time:.4f} seconds by simple_timing_decorator."
+
         )
+
         return result
+
+
 
     return wrapper
 
 
+
+
+
 # Correct order: @mlflow.trace is outermost
+
 @mlflow.trace(name="my_decorated_function_correct_order")
+
 @simple_timing_decorator
+
 def my_complex_function(x, y):
+
     # Function logic here
+
     time.sleep(0.1)  # Simulate work
+
     return x + y
+
+
+
 
 
 # Incorrect order: @mlflow.trace is NOT outermost
+
 @simple_timing_decorator
+
 @mlflow.trace(name="my_decorated_function_incorrect_order")
+
 def my_other_complex_function(x, y):
+
     time.sleep(0.1)
+
     return x * y
+
+
+
 
 
 # Correct order for web framework: @mlflow.trace is NOT outermost
+
 @another_web_framework_decorator  # e.g., @app.route("/mypath") from Flask
+
 @mlflow.trace(name="my_decorated_function_correct_order")
+
 def my_web_framework_function(x, y):
+
     # Function logic here
+
     time.sleep(0.1)  # Simulate work
+
     return x + y
 
 
+
+
+
 # Incorrect order for web framework: @mlflow.trace is outermost
+
 @mlflow.trace(name="my_decorated_function_incorrect_order")
+
 @another_web_framework_decorator  # e.g., @app.route("/mypath") from Flask
+
 def my_other_web_framework_function(x, y):
+
     time.sleep(0.1)
+
     return x * y
 
 
+
+
+
 # Example calls
+
 if __name__ == "__main__":
+
     print("Calling function with correct decorator order:")
+
     my_complex_function(5, 3)
 
+
+
     print("\nCalling function with incorrect decorator order:")
+
     my_other_complex_function(5, 3)
 ```
 
@@ -623,8 +970,11 @@ python
 
 ```
 @mlflow.trace
+
 def stream_data():
+
     for i in range(5):
+
         yield i
 ```
 
@@ -642,8 +992,11 @@ python
 
 ```
 @mlflow.trace(output_reducer=lambda x: ",".join(x))
+
 def stream_data():
+
     for c in "hello":
+
         yield c
 ```
 
@@ -661,50 +1014,95 @@ python
 
 ```
 import mlflow
+
 import openai
+
 from openai.types.chat import *
+
 from typing import Optional
 
 
+
+
+
 def aggregate_chunks(outputs: list[ChatCompletionChunk]) -> Optional[ChatCompletion]:
+
     """Consolidate ChatCompletionChunks to a single ChatCompletion"""
+
     if not outputs:
+
         return None
 
+
+
     first_chunk = outputs[0]
+
     delta = first_chunk.choices[0].delta
+
     message = ChatCompletionMessage(
+
         role=delta.role, content=delta.content, tool_calls=delta.tool_calls or []
+
     )
+
     finish_reason = first_chunk.choices[0].finish_reason
+
     for chunk in outputs[1:]:
+
         delta = chunk.choices[0].delta
+
         message.content += delta.content or ""
+
         message.tool_calls += delta.tool_calls or []
+
         finish_reason = finish_reason or chunk.choices[0].finish_reason
 
+
+
     base = ChatCompletion(
+
         id=first_chunk.id,
+
         choices=[Choice(index=0, message=message, finish_reason=finish_reason)],
+
         created=first_chunk.created,
+
         model=first_chunk.model,
+
         object="chat.completion",
+
     )
+
     return base
 
 
+
+
+
 @mlflow.trace(output_reducer=aggregate_chunks)
+
 def predict(messages: list[dict]):
+
     stream = openai.OpenAI().chat.completions.create(
+
         model="gpt-4o-mini",
+
         messages=messages,
+
         stream=True,
+
     )
+
     for chunk in stream:
+
         yield chunk
 
 
+
+
+
 for chunk in predict([{"role": "user", "content": "Hello"}]):
+
     print(chunk)
 ```
 
@@ -722,52 +1120,100 @@ python
 
 ```
 import contextvars
+
 from concurrent.futures import ThreadPoolExecutor, as_completed
+
 import mlflow
+
 from mlflow.entities import SpanType
+
 import openai
+
+
 
 client = openai.OpenAI()
 
+
+
 # Enable MLflow Tracing for OpenAI
+
 mlflow.openai.autolog()
 
 
+
+
+
 @mlflow.trace
+
 def worker(question: str) -> str:
+
     messages = [
+
         {"role": "system", "content": "You are a helpful assistant."},
+
         {"role": "user", "content": question},
+
     ]
+
     response = client.chat.completions.create(
+
         model="gpt-4o-mini",
+
         messages=messages,
+
         temperature=0.1,
+
         max_tokens=100,
+
     )
+
     return response.choices[0].message.content
 
 
+
+
+
 @mlflow.trace
+
 def main(questions: list[str]) -> list[str]:
+
     results = []
+
     # Almost same as how you would use ThreadPoolExecutor, but two additional steps
+
     #  1. Copy the context in the main thread using copy_context()
+
     #  2. Use ctx.run() to run the worker in the copied context
+
     with ThreadPoolExecutor(max_workers=2) as executor:
+
         futures = []
+
         for question in questions:
+
             ctx = contextvars.copy_context()
+
             futures.append(executor.submit(ctx.run, worker, question))
+
         for future in as_completed(futures):
+
             results.append(future.result())
+
     return results
 
 
+
+
+
 questions = [
+
     "What is the capital of France?",
+
     "What is the capital of Germany?",
+
 ]
+
+
 
 main(questions)
 ```
@@ -788,26 +1234,47 @@ python
 
 ```
 import asyncio
+
 import mlflow
 
 
+
+
+
 @mlflow.trace
+
 async def async_operation(data: str) -> str:
+
     # Simulate async work
+
     await asyncio.sleep(0.1)
+
     return f"Processed: {data}"
 
 
+
+
+
 @mlflow.trace
+
 async def async_pipeline(items: list[str]) -> list[str]:
+
     results = []
+
     for item in items:
+
         result = await async_operation(item)
+
         results.append(result)
+
     return results
 
 
+
+
+
 # Run the async pipeline
+
 asyncio.run(async_pipeline(["item1", "item2", "item3"]))
 ```
 

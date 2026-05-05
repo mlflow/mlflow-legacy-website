@@ -88,6 +88,8 @@ python
 ```
 import mlflow
 
+
+
 mlflow.login()
 ```
 
@@ -95,8 +97,11 @@ text
 
 ```
 2025/02/19 12:25:04 INFO mlflow.utils.credentials: No valid Databricks credentials found, please enter your credentials...
+
 Databricks Host (should begin with https://):  https://<your workspace host>.cloud.databricks.com/
+
 Token:  ········
+
 2025/02/19 12:26:24 INFO mlflow.utils.credentials: Successfully connected to MLflow hosted tracking server! Host: https://<your workspace host>.cloud.databricks.com.
 ```
 
@@ -120,13 +125,21 @@ python
 
 ```
 mlflow.create_experiment(
+
     "/Users/<your email>/check-databricks-connection",
+
     artifact_location="dbfs:/Volumes/test/mlflow/check-databricks-connection",
+
 )
+
 mlflow.set_experiment("/Users/<your email>/check-databricks-connection")
 
+
+
 with mlflow.start_run():
+
     mlflow.log_metric("foo", 1)
+
     mlflow.log_metric("bar", 2)
 ```
 

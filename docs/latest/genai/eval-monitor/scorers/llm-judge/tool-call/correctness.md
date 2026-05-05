@@ -22,19 +22,33 @@ This built-in LLM judge is designed for evaluating AI agents and tool-calling ap
 
    ```
    import mlflow
+
    import os
+
    import openai
 
+
+
    # Ensure your OPENAI_API_KEY is set in your environment
+
    # os.environ["OPENAI_API_KEY"] = "<YOUR_API_KEY>" # Uncomment and set if not globally configured
 
+
+
    # Enable auto-tracing for OpenAI
+
    mlflow.openai.autolog()
 
+
+
    # Create an OpenAI client
+
    client = openai.OpenAI()
 
+
+
    # Select an LLM
+
    model_name = "gpt-4o-mini"
    ```
 
@@ -64,13 +78,21 @@ python
 
 ```
 from mlflow.genai.scorers import ToolCallCorrectness
+
 import mlflow
 
+
+
 # Get a trace from a previous run
+
 trace = mlflow.get_trace("<your-trace-id>")
 
+
+
 # Assess if tool calls are correct (ground-truth free mode)
+
 feedback = ToolCallCorrectness(name="my_tool_call_correctness")(trace=trace)
+
 print(feedback)
 ```
 
@@ -78,12 +100,19 @@ python
 
 ```
 import mlflow
+
 from mlflow.genai.scorers import ToolCallCorrectness
 
+
+
 # Evaluate traces from previous runs
+
 results = mlflow.genai.evaluate(
+
     data=traces,  # DataFrame or list containing trace data
+
     scorers=[ToolCallCorrectness()],
+
 )
 ```
 
@@ -111,31 +140,58 @@ python
 ```
 from mlflow.genai.scorers import ToolCallCorrectness
 
+
+
 # Define expected tool calls
+
 eval_dataset = [
+
     {
+
         "inputs": {"query": "What's the weather in San Francisco?"},
+
         "expectations": {
+
             "expected_tool_calls": [
+
                 {"name": "get_weather", "arguments": {"location": "San Francisco, CA"}},
+
             ]
+
         },
+
     },
+
     {
+
         "inputs": {"query": "What's the weather in Tokyo?"},
+
         "expectations": {
+
             "expected_tool_calls": [
+
                 {"name": "get_weather", "arguments": {"location": "Tokyo, Japan"}},
+
             ]
+
         },
+
     },
+
 ]
 
+
+
 # Evaluate with fuzzy matching (default)
+
 eval_results = mlflow.genai.evaluate(
+
     data=eval_dataset,
+
     predict_fn=weather_agent,
+
     scorers=[ToolCallCorrectness()],  # should_exact_match=False by default
+
 )
 ```
 
@@ -148,25 +204,46 @@ python
 ```
 from mlflow.genai.scorers import ToolCallCorrectness
 
+
+
 # Define expected tool calls
+
 eval_dataset = [
+
     {
+
         "inputs": {"query": "What's the weather in San Francisco?"},
+
         "expectations": {
+
             "expected_tool_calls": [
+
                 {"name": "get_weather", "arguments": {"location": "San Francisco, CA"}},
+
             ]
+
         },
+
     },
+
 ]
 
+
+
 # Use exact matching for stricter comparison
+
 scorer = ToolCallCorrectness(should_exact_match=True)
 
+
+
 eval_results = mlflow.genai.evaluate(
+
     data=eval_dataset,
+
     predict_fn=weather_agent,
+
     scorers=[scorer],
+
 )
 ```
 
@@ -179,22 +256,40 @@ python
 ```
 from mlflow.genai.scorers import ToolCallCorrectness
 
+
+
 eval_dataset = [
+
     {
+
         "inputs": {"query": "What's the weather in Tokyo?"},
+
         "expectations": {
+
             "expected_tool_calls": [
+
                 {"name": "get_weather"},  # Only check tool name
+
             ]
+
         },
+
     },
+
 ]
 
+
+
 scorer = ToolCallCorrectness(should_exact_match=True)
+
 eval_results = mlflow.genai.evaluate(
+
     data=eval_dataset,
+
     predict_fn=weather_agent,
+
     scorers=[scorer],
+
 )
 ```
 
@@ -207,29 +302,54 @@ python
 ```
 from mlflow.genai.scorers import ToolCallCorrectness
 
+
+
 # Enforce that tools are called in the expected order
+
 scorer = ToolCallCorrectness(
+
     should_exact_match=True,
+
     should_consider_ordering=True,
+
 )
 
+
+
 # Example with multiple expected tool calls
+
 eval_dataset = [
+
     {
+
         "inputs": {"query": "Get weather for Paris and then for London"},
+
         "expectations": {
+
             "expected_tool_calls": [
+
                 {"name": "get_weather", "arguments": {"location": "Paris"}},
+
                 {"name": "get_weather", "arguments": {"location": "London"}},
+
             ]
+
         },
+
     },
+
 ]
 
+
+
 eval_results = mlflow.genai.evaluate(
+
     data=eval_dataset,
+
     predict_fn=weather_agent,
+
     scorers=[scorer],
+
 )
 ```
 

@@ -9,6 +9,8 @@ python
 ```
 import mlflow
 
+
+
 mlflow.otel.autolog()
 ```
 
@@ -60,10 +62,15 @@ bash
 
 ```
 git clone --depth 1 --filter=blob:none --sparse https://github.com/mlflow/mlflow.git
+
 cd mlflow
+
 git sparse-checkout set docker-compose
+
 cd docker-compose
+
 cp .env.dev.example .env
+
 docker compose up -d
 ```
 
@@ -77,24 +84,43 @@ python
 
 ```
 import mlflow
+
 from openai import OpenAI
+
 from openinference.instrumentation.openai import OpenAIInstrumentor
 
+
+
 # Register the MLflow span processor on the global OTEL TracerProvider
+
 mlflow.otel.autolog()
 
+
+
 # Auto-instrument all OpenAI SDK calls
+
 OpenAIInstrumentor().instrument()
 
+
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("Phoenix")
 
+
+
 client = OpenAI()
+
 response = client.chat.completions.create(
+
     model="gpt-4o-mini",
+
     messages=[{"role": "user", "content": "What is MLflow?"}],
+
     max_tokens=256,
+
 )
+
 print(response.choices[0].message.content)
 ```
 
@@ -116,28 +142,51 @@ python
 
 ```
 import mlflow
+
 from openai import OpenAI
+
 from openinference.instrumentation.openai import OpenAIInstrumentor
+
 from opentelemetry import trace
+
 from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
+
 from opentelemetry.sdk.trace.export import SimpleSpanProcessor
 
+
+
 # Register MLflow span processor
+
 mlflow.otel.autolog()
 
+
+
 # Also send spans to Phoenix (running on port 6006)
+
 provider = trace.get_tracer_provider()
+
 provider.add_span_processor(
+
     SimpleSpanProcessor(OTLPSpanExporter("http://localhost:6006/v1/traces"))
+
 )
 
+
+
 # Auto-instrument OpenAI
+
 OpenAIInstrumentor().instrument()
 
+
+
 client = OpenAI()
+
 response = client.chat.completions.create(
+
     model="gpt-4o-mini",
+
     messages=[{"role": "user", "content": "Hello!"}],
+
 )
 ```
 

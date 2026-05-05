@@ -24,6 +24,7 @@ bash
 
 ```
 export MLFLOW_TRACKING_URI="http://localhost:5000"
+
 export MLFLOW_EXPERIMENT_NAME="distributed-tracing-demo"
 ```
 
@@ -34,7 +35,10 @@ python
 ```
 import mlflow
 
+
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("distributed-tracing-demo")
 ```
 
@@ -54,31 +58,57 @@ python
 
 ```
 import mlflow
+
 import uvicorn
+
 from fastapi import FastAPI, Request
+
 from mlflow.tracing import set_tracing_context_from_http_request_headers
 
+
+
 # Set the tracking URI and experiment
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("distributed-tracing-demo")
+
+
 
 app = FastAPI()
 
 
+
+
+
 @app.post("/handle")
+
 async def handle(request: Request):
+
     headers = dict(request.headers)
+
     body = await request.json()
+
     with set_tracing_context_from_http_request_headers(headers):
+
         # This span will be added to the same trace as a child span
+
         with mlflow.start_span("server-handler") as span:
+
             span.set_inputs(body)
+
             result = {"response": f"Processed: {body.get('input', '')}"}
+
             span.set_outputs(result)
+
     return result
 
 
+
+
+
 if __name__ == "__main__":
+
     uvicorn.run(app, host="0.0.0.0", port=5001)
 ```
 
@@ -92,20 +122,35 @@ python
 
 ```
 import requests
+
 import mlflow
+
 from mlflow.tracing import get_tracing_context_headers_for_http_request
 
+
+
 # Connect to the same tracking server and experiment as the server
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("distributed-tracing-demo")
 
+
+
 # Create a root span at client side
+
 with mlflow.start_span("client-root") as span:
+
     span.set_inputs({"input": "hello"})
+
     headers = get_tracing_context_headers_for_http_request()
+
     response = requests.post(
+
         "http://localhost:5001/handle", headers=headers, json={"input": "hello"}
+
     )
+
     span.set_outputs(response.json())
 ```
 
@@ -115,9 +160,13 @@ bash
 
 ```
 # Terminal 1 — start the server
+
 python server.py
 
+
+
 # Terminal 2 — run the client
+
 python client.py
 ```
 
@@ -138,21 +187,37 @@ python
 
 ```
 import mlflow
+
 import requests
+
 from mlflow.tracing import get_tracing_context_headers_for_http_request
+
 from openai import OpenAI
 
+
+
 client = OpenAI(
+
     base_url="http://localhost:5000/gateway/openai/v1",
+
     api_key="dummy",
+
 )
 
+
+
 with mlflow.start_span("my-agent"):
+
     headers = get_tracing_context_headers_for_http_request()
+
     response = client.chat.completions.create(
+
         model="my-endpoint",
+
         messages=[{"role": "user", "content": "Hello!"}],
+
         extra_headers=headers,
+
     )
 ```
 

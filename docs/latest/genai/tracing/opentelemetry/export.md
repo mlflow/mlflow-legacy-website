@@ -16,16 +16,27 @@ python
 
 ```
 import mlflow
+
 import os
 
+
+
 # Set the endpoint of the OpenTelemetry Collector
+
 os.environ["OTEL_EXPORTER_OTLP_TRACES_ENDPOINT"] = "http://localhost:4317/v1/traces"
+
 # Optionally, set the service name to group traces
+
 os.environ["OTEL_SERVICE_NAME"] = "your-service-name"
 
+
+
 # Trace will be exported to the OTel collector
+
 with mlflow.start_span(name="foo") as span:
+
     span.set_inputs({"a": 1})
+
     span.set_outputs({"b": 2})
 ```
 
@@ -37,7 +48,9 @@ bash
 
 ```
 export OTEL_EXPORTER_OTLP_TRACES_ENDPOINT="http://localhost:4317/v1/traces"
+
 export OTEL_EXPORTER_OTLP_TRACES_PROTOCOL="http/protobuf"
+
 export OTEL_EXPORTER_OTLP_TRACES_HEADERS="api_key=12345"
 ```
 
@@ -61,6 +74,8 @@ Click on the following icons to learn more about how to set up OpenTelemetry exp
 
 [![ServiceNow Logo](/docs/latest/assets/images/servicenow-logo-9dddf91d4524445cc278a5b475a243e0.avif)](https://docs.lightstep.com/docs/collector-home-page)
 
+[![Middleware Logo](/docs/latest/assets/images/middleware-logo-267a55a71b8ffb284ae2600b5b4874fa.svg)](https://docs.middleware.io/open-telemetry/otel-getting-started)
+
 ## Dual Export[​](#dual-export "Direct link to Dual Export")
 
 By default, when OTLP export is configured, MLflow sends traces only to the OpenTelemetry Collector. To send traces to both MLflow Tracking Server and OpenTelemetry Collector simultaneously, set `MLFLOW_TRACE_ENABLE_OTLP_DUAL_EXPORT=true`:
@@ -69,19 +84,33 @@ python
 
 ```
 import mlflow
+
 import os
 
+
+
 # Enable dual export
+
 os.environ["MLFLOW_TRACE_ENABLE_OTLP_DUAL_EXPORT"] = "true"
+
 os.environ["OTEL_EXPORTER_OTLP_TRACES_ENDPOINT"] = "http://localhost:4317/v1/traces"
 
+
+
 # Configure MLflow tracking
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("my-experiment")
 
+
+
 # Traces will be sent to both MLflow and the OpenTelemetry Collector
+
 with mlflow.start_span(name="foo") as span:
+
     span.set_inputs({"a": 1})
+
     span.set_outputs({"b": 2})
 ```
 
@@ -94,7 +123,10 @@ python
 ```
 import os
 
+
+
 os.environ["MLFLOW_ENABLE_OTEL_GENAI_SEMCONV"] = "true"
+
 os.environ["OTEL_EXPORTER_OTLP_TRACES_ENDPOINT"] = "http://localhost:4317/v1/traces"
 ```
 
@@ -120,11 +152,17 @@ bash
 
 ```
 # For OpenTelemetry Collector (gRPC endpoint)
+
 export OTEL_EXPORTER_OTLP_METRICS_ENDPOINT="http://localhost:4317"
+
 export OTEL_EXPORTER_OTLP_METRICS_PROTOCOL="grpc"
 
+
+
 # OR for OpenTelemetry Collector (HTTP endpoint)
+
 export OTEL_EXPORTER_OTLP_METRICS_ENDPOINT="http://localhost:4318/v1/metrics"
+
 export OTEL_EXPORTER_OTLP_METRICS_PROTOCOL="http/protobuf"
 ```
 
@@ -136,7 +174,9 @@ bash
 
 ```
 # Configure MLflow to send metrics directly to Prometheus
+
 export OTEL_EXPORTER_OTLP_METRICS_ENDPOINT="http://localhost:9090/api/v1/otlp/v1/metrics"
+
 export OTEL_EXPORTER_OTLP_METRICS_PROTOCOL="http/protobuf"
 ```
 
@@ -179,15 +219,26 @@ python
 
 ```
 import mlflow
+
 import os
 
+
+
 # Enable metrics collection and export
+
 os.environ["OTEL_EXPORTER_OTLP_METRICS_ENDPOINT"] = "http://localhost:4317"
+
 os.environ["OTEL_EXPORTER_OTLP_METRICS_PROTOCOL"] = "grpc"
 
+
+
 # Metrics will be exported to OpenTelemetry Collector
+
 with mlflow.start_span(name="process_request", span_type="CHAIN") as span:
+
     span.set_inputs({"query": "What is MLflow?"})
+
     # Your application logic here
+
     span.set_outputs({"response": "MLflow is an open source platform..."})
 ```

@@ -10,12 +10,19 @@ python
 
 ```
 from joblib import dump
+
 from sklearn.datasets import load_iris
+
 from sklearn.linear_model import LogisticRegression
+
 from sklearn.model_selection import train_test_split
 
+
+
 import mlflow
+
 from mlflow.models import infer_signature
+
 from mlflow.pyfunc import PythonModel
 ```
 
@@ -57,10 +64,16 @@ python
 
 ```
 iris = load_iris()
+
 x = iris.data[:, 2:]
+
 y = iris.target
 
+
+
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=9001)
+
+
 
 model = LogisticRegression(random_state=0, max_iter=5_000, solver="newton-cg").fit(x_train, y_train)
 ```
@@ -122,13 +135,22 @@ python
 ```
 mlflow.set_experiment("Overriding Predict Tutorial")
 
+
+
 sklearn_path = "/tmp/sklearn_model"
 
+
+
 with mlflow.start_run() as run:
+
   mlflow.sklearn.save_model(
+
       sk_model=model,
+
       path=sklearn_path,
+
       input_example=x_train[:2],
+
   )
 ```
 
@@ -174,9 +196,14 @@ shell
 
 ```
 ---------------------------------------------------------------------------
+
 AttributeError                            Traceback (most recent call last)
+
 /var/folders/cd/n8n0rm2x53l_s0xv_j_xklb00000gp/T/ipykernel_15410/1677830262.py in <cell line: 1>()
+
 ----> 1 loaded_logreg_model.predict_proba(x_text)
+
+
 
 AttributeError: 'PyFuncModel' object has no attribute 'predict_proba'
 ```
@@ -199,7 +226,10 @@ python
 ```
 from joblib import dump
 
+
+
 from mlflow.models import infer_signature
+
 from mlflow.pyfunc import PythonModel
 ```
 
@@ -209,6 +239,7 @@ python
 
 ```
 model_directory = "/tmp/sklearn_model.joblib"
+
 dump(model, model_directory)
 ```
 
@@ -224,25 +255,45 @@ python
 
 ```
 class ModelWrapper(PythonModel):
+
   def __init__(self):
+
       self.model = None
 
+
+
   def load_context(self, context):
+
       from joblib import load
+
+
 
       self.model = load(context.artifacts["model_path"])
 
+
+
   def predict(self, context, model_input, params=None):
+
       params = params or {"predict_method": "predict"}
+
       predict_method = params.get("predict_method")
 
+
+
       if predict_method == "predict":
+
           return self.model.predict(model_input)
+
       elif predict_method == "predict_proba":
+
           return self.model.predict_proba(model_input)
+
       elif predict_method == "predict_log_proba":
+
           return self.model.predict_log_proba(model_input)
+
       else:
+
           raise ValueError(f"The prediction method '{predict_method}' is not supported.")
 ```
 
@@ -254,9 +305,13 @@ python
 
 ```
 # Define the required artifacts associated with the saved custom pyfunc
+
 artifacts = {"model_path": model_directory}
 
+
+
 # Define the signature associated with the model
+
 signature = infer_signature(x_train, params={"predict_method": "predict_proba"})
 ```
 
@@ -292,14 +347,24 @@ python
 ```
 pyfunc_path = "/tmp/dynamic_regressor"
 
+
+
 with mlflow.start_run() as run:
+
   mlflow.pyfunc.save_model(
+
       path=pyfunc_path,
+
       python_model=ModelWrapper(),
+
       input_example=x_train,
+
       signature=signature,
+
       artifacts=artifacts,
+
       pip_requirements=["joblib", "sklearn"],
+
   )
 ```
 

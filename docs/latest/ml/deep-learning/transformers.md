@@ -27,16 +27,27 @@ python
 
 ```
 import mlflow
+
 from transformers import pipeline
 
+
+
 # Create a text generation pipeline
+
 text_gen = pipeline("text-generation", model="gpt2")
 
+
+
 # Log the pipeline
+
 with mlflow.start_run():
+
     mlflow.transformers.log_model(
+
         transformers_model=text_gen,
+
         name="model",
+
     )
 ```
 
@@ -46,11 +57,17 @@ python
 
 ```
 # Load as native transformers
+
 model = mlflow.transformers.load_model("runs:/<run_id>/model")
+
 result = model("Hello, how are you?")
 
+
+
 # Load as PyFunc
+
 pyfunc_model = mlflow.pyfunc.load_model("runs:/<run_id>/model")
+
 result = pyfunc_model.predict("Hello, how are you?")
 ```
 
@@ -63,18 +80,33 @@ python
 ```
 from transformers import TrainingArguments, Trainer
 
+
+
 training_args = TrainingArguments(
+
     output_dir="./results",
+
     report_to="mlflow",  # Enable MLflow logging
+
     # ... other training arguments
+
 )
 
+
+
 trainer = Trainer(
+
     model=model,
+
     args=training_args,
+
     train_dataset=train_dataset,
+
     # ... other trainer arguments
+
 )
+
+
 
 trainer.train()
 ```
@@ -93,11 +125,9 @@ This automatically logs training metrics, hyperparameters, and model checkpoints
 
 [Fine-tuning a Foundation Model](/docs/latest/ml/deep-learning/transformers/tutorials/fine-tuning/transformers-fine-tuning.md)
 
-[Track fine-tuning experiments and log optimized models](/docs/latest/ml/deep-learning/transformers/tutorials/fine-tuning/transformers-fine-tuning.md)[](/docs/latest/ml/deep-learning/transformers/tutorials/fine-tuning/transformers-peft.md)
+[Track fine-tuning experiments and log optimized models](/docs/latest/ml/deep-learning/transformers/tutorials/fine-tuning/transformers-fine-tuning.md)
 
 [Fine-tuning with PEFT](/docs/latest/ml/deep-learning/transformers/tutorials/fine-tuning/transformers-peft.md)
-
-[](/docs/latest/ml/deep-learning/transformers/tutorials/fine-tuning/transformers-peft.md)
 
 [Memory-efficient fine-tuning using PEFT (QLoRA) techniques](/docs/latest/ml/deep-learning/transformers/tutorials/fine-tuning/transformers-peft.md)
 
@@ -105,29 +135,21 @@ This automatically logs training metrics, hyperparameters, and model checkpoints
 
 [Audio Transcription](/docs/latest/ml/deep-learning/transformers/tutorials/audio-transcription/whisper.md)
 
-[Use Whisper models for audio transcription](/docs/latest/ml/deep-learning/transformers/tutorials/audio-transcription/whisper.md)[](/docs/latest/ml/deep-learning/transformers/tutorials/translation/component-translation.md)
+[Use Whisper models for audio transcription](/docs/latest/ml/deep-learning/transformers/tutorials/audio-transcription/whisper.md)
 
 [Translation](/docs/latest/ml/deep-learning/transformers/tutorials/translation/component-translation.md)
 
-[](/docs/latest/ml/deep-learning/transformers/tutorials/translation/component-translation.md)
-
-[Component-based model logging for translation tasks](/docs/latest/ml/deep-learning/transformers/tutorials/translation/component-translation.md)[](/docs/latest/ml/deep-learning/transformers/tutorials/conversational/conversational-model.md)
+[Component-based model logging for translation tasks](/docs/latest/ml/deep-learning/transformers/tutorials/translation/component-translation.md)
 
 [Conversational Pipelines](/docs/latest/ml/deep-learning/transformers/tutorials/conversational/conversational-model.md)
 
-[](/docs/latest/ml/deep-learning/transformers/tutorials/conversational/conversational-model.md)
-
-[Stateful chat with conversational pipelines](/docs/latest/ml/deep-learning/transformers/tutorials/conversational/conversational-model.md)[](/docs/latest/ml/deep-learning/transformers/tutorials/conversational/pyfunc-chat-model.md)
+[Stateful chat with conversational pipelines](/docs/latest/ml/deep-learning/transformers/tutorials/conversational/conversational-model.md)
 
 [OpenAI-Compatible Chatbot](/docs/latest/ml/deep-learning/transformers/tutorials/conversational/pyfunc-chat-model.md)
 
-[](/docs/latest/ml/deep-learning/transformers/tutorials/conversational/pyfunc-chat-model.md)
-
-[Build and serve an OpenAI-compatible chatbot](/docs/latest/ml/deep-learning/transformers/tutorials/conversational/pyfunc-chat-model.md)[](/docs/latest/ml/deep-learning/transformers/tutorials/prompt-templating/prompt-templating.md)
+[Build and serve an OpenAI-compatible chatbot](/docs/latest/ml/deep-learning/transformers/tutorials/conversational/pyfunc-chat-model.md)
 
 [Prompt Templating](/docs/latest/ml/deep-learning/transformers/tutorials/prompt-templating/prompt-templating.md)
-
-[](/docs/latest/ml/deep-learning/transformers/tutorials/prompt-templating/prompt-templating.md)
 
 [Optimize LLM outputs with prompt templates](/docs/latest/ml/deep-learning/transformers/tutorials/prompt-templating/prompt-templating.md)
 

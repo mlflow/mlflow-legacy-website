@@ -20,15 +20,26 @@ python
 
 ```
 import json
+
 import warnings
 
+
+
 import numpy as np
+
 import pandas as pd
+
 import requests
+
 from sklearn.ensemble import RandomForestRegressor
 
+
+
 import mlflow
+
 from mlflow.models import infer_signature
+
+
 
 warnings.filterwarnings("ignore")
 ```
@@ -37,6 +48,7 @@ python
 
 ```
 DOW_MODEL_NAME_PREFIX = "DOW_model_"
+
 MME_MODEL_NAME = "MME_DOW_model"
 ```
 
@@ -48,18 +60,31 @@ python
 
 ```
 def create_weekly_dataset(n_dates, n_observations_per_date):
+
   rng = pd.date_range(start="today", periods=n_dates, freq="D")
+
   df = pd.DataFrame(
+
       np.random.randn(n_dates * n_observations_per_date, 4),
+
       columns=["x1", "x2", "x3", "y"],
+
       index=np.tile(rng, n_observations_per_date),
+
   )
+
   df["dow"] = df.index.dayofweek
+
   return df
 
 
+
+
+
 df = create_weekly_dataset(n_dates=30, n_observations_per_date=500)
+
 print(df.shape)
+
 df.head()
 ```
 
@@ -81,27 +106,49 @@ python
 
 ```
 for dow in df["dow"].unique():
+
   # Create dataset corresponding to a single day of the week
+
   X = df.loc[df["dow"] == dow]
+
   X.pop("dow")  # Remove DOW as a predictor column
+
   y = X.pop("y")
 
+
+
   # Fit our DOW model
+
   model = RandomForestRegressor().fit(X, y)
 
+
+
   # Infer signature of the model
+
   signature = infer_signature(X, model.predict(X))
 
+
+
   with mlflow.start_run():
+
       model_path = f"model_{dow}"
 
+
+
       # Log and register our DOW model with signature
+
       mlflow.sklearn.log_model(
+
           model,
+
           name=model_path,
+
           signature=signature,
+
           registered_model_name=f"{DOW_MODEL_NAME_PREFIX}{dow}",
+
       )
+
       mlflow.set_tag("dow", dow)
 ```
 
@@ -128,15 +175,25 @@ python
 
 ```
 # Load Tuesday's model
+
 tuesday_dow = 1
+
 model_name = f"{DOW_MODEL_NAME_PREFIX}{tuesday_dow}"
+
 model_uri = f"models:/{model_name}/latest"
+
 model = mlflow.sklearn.load_model(model_uri)
 
+
+
 # Perform inference using our training data for Tuesday
+
 predictor_columns = [column for column in df.columns if column not in {"y", "dow"}]
+
 head_of_training_data = df.loc[df["dow"] == tuesday_dow, predictor_columns].head()
+
 tuesday_fitted_values = model.predict(head_of_training_data)
+
 print(tuesday_fitted_values)
 ```
 
@@ -152,32 +209,59 @@ python
 
 ```
 class DOWModel(mlflow.pyfunc.PythonModel):
+
   def __init__(self, model_uris):
+
       self.model_uris = model_uris
+
       self.models = {}
 
+
+
   @staticmethod
+
   def _model_uri_to_dow(model_uri: str) -> int:
+
       return int(model_uri.split("/")[-2].split("_")[-1])
 
+
+
   def load_context(self, context):
+
       self.models = {
+
           self._model_uri_to_dow(model_uri): mlflow.sklearn.load_model(model_uri)
+
           for model_uri in self.model_uris
+
       }
 
+
+
   def predict(self, context, model_input, params):
+
       # Parse the dow parameter
+
       dow = params.get("dow")
+
       if dow is None:
+
           raise ValueError("DOW param is not passed.")
 
+
+
       # Get the model associated with the dow parameter
+
       model = self.models.get(dow)
+
       if model is None:
+
           raise ValueError(f"Model {dow} version was not found: {self.models.keys()}.")
 
+
+
       # Perform inference
+
       return model.predict(model_input)
 ```
 
@@ -201,19 +285,33 @@ python
 
 ```
 # Instantiate our DOW MME
+
 model_uris = [f"models:/{DOW_MODEL_NAME_PREFIX}{i}/latest" for i in df["dow"].unique()]
+
 dow_model = DOWModel(model_uris)
+
 dow_model.load_context(None)
+
 print("Model URIs:")
+
 print(model_uris)
 
+
+
 # Perform inference using our training data for Tuesday
+
 params = {"dow": 1}
+
 mme_tuesday_fitted_values = dow_model.predict(None, head_of_training_data, params=params)
+
 assert all(tuesday_fitted_values == mme_tuesday_fitted_values)
 
+
+
 print("
+
 Tuesday fitted values:")
+
 print(mme_tuesday_fitted_values)
 ```
 
@@ -231,29 +329,53 @@ python
 
 ```
 with mlflow.start_run():
+
   # Instantiate the custom pyfunc model
+
   model = DOWModel(model_uris)
+
   model.load_context(None)
+
   model_path = "MME_model_path"
 
+
+
   signature = infer_signature(
+
       model_input=head_of_training_data,
+
       model_output=tuesday_fitted_values,
+
       params=params,
+
   )
+
   print(signature)
 
+
+
   # Log the model to the experiment
+
   mlflow.pyfunc.log_model(
+
       name=model_path,
+
       python_model=model,
+
       signature=signature,
+
       pip_requirements=["scikit-learn=1.3.2"],
+
       registered_model_name=MME_MODEL_NAME,  # also register the model for easy access
+
   )
 
+
+
   # Set some relevant information about our model
+
   # (Assuming model has a property 'models' that can be counted)
+
   mlflow.log_param("num_models", len(model.models))
 ```
 
@@ -283,9 +405,13 @@ python
 
 ```
 PORT = 1234
+
 print(
+
   f"""Run the below command in a new window. You must be in the same repo as your mlruns directory and have mlflow installed...
+
   mlflow models serve -m "models:/{MME_MODEL_NAME}/latest" --env-manager local -p {PORT}"""
+
 )
 ```
 
@@ -300,19 +426,33 @@ python
 
 ```
 def score_model(pdf, params):
+
   headers = {"Content-Type": "application/json"}
+
   url = f"http://127.0.0.1:{PORT}/invocations"
+
   ds_dict = {"dataframe_split": pdf, "params": params}
+
   data_json = json.dumps(ds_dict, allow_nan=True)
 
+
+
   response = requests.request(method="POST", headers=headers, url=url, data=data_json)
+
   response.raise_for_status()
+
+
 
   return response.json()
 
 
+
+
+
 print("Inference on dow model 1 (Tuesday):")
+
 inference_df = head_of_training_data.reset_index(drop=True).to_dict(orient="split")
+
 print(score_model(inference_df, params={"dow": 1}))
 ```
 

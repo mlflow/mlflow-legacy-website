@@ -34,8 +34,13 @@ python
 import mlflow
 
 
+
+
+
 class MyModel(mlflow.pyfunc.PythonModel):
+
     def predict(self, model_input: list[str], params=None) -> list[str]:
+
         return model_input
 ```
 
@@ -53,8 +58,13 @@ python
 from mlflow.pyfunc.utils import pyfunc
 
 
+
+
+
 @pyfunc
+
 def predict(model_input: list[str]) -> list[str]:
+
     return model_input
 ```
 
@@ -67,11 +77,18 @@ python
 ```
 import mlflow
 
+
+
 with mlflow.start_run():
+
     model_info = mlflow.pyfunc.log_model(
+
         name="model",
+
         python_model=MyModel(),
+
         input_example=input_example,
+
     )
 ```
 
@@ -84,12 +101,20 @@ python
 ```
 import mlflow
 
+
+
 mlflow.models.predict(
+
     model_uri=model_info.model_uri,
+
     input_data=["a", "b", "c"],
+
     env_manager="uv",
+
     # ONLY SET THIS if your model dependencies include pre-release packages (e.g. mlflow==3.2.0rc0)
+
     extra_envs={"UV_PRERELEASE": "allow"},
+
 )
 ```
 
@@ -100,7 +125,10 @@ python
 ```
 import mlflow
 
+
+
 pyfunc_model = mlflow.pyfunc.load_model(model_info.model_uri)
+
 pyfunc_model.predict(["hello", "world"])
 ```
 
@@ -149,40 +177,75 @@ python
 
 ```
 from mlflow.pyfunc.utils import pyfunc
+
 import pydantic
+
 from typing import Optional
 
 
+
+
+
 class Message(pydantic.BaseModel):
+
     role: str
+
     content: str
 
 
+
+
+
 class FunctionParams(pydantic.BaseModel):
+
     properties: dict[str, str]
+
     type: str = "object"
+
     required: Optional[list[str]] = None
+
     additionalProperties: Optional[bool] = None
 
 
+
+
+
 class ToolDefinition(pydantic.BaseModel):
+
     name: str
+
     description: Optional[str] = None
+
     parameters: Optional[FunctionParams] = None
+
     strict: Optional[bool] = None
 
 
+
+
+
 class ChatRequest(pydantic.BaseModel):
+
     messages: list[Message]
+
     tool: Optional[ToolDefinition] = None
 
 
+
+
+
 @pyfunc
+
 def predict(model_input: list[ChatRequest]) -> list[list[str]]:
+
     return [[msg.content for msg in request.messages] for request in model_input]
 
 
+
+
+
 input_example = [ChatRequest(messages=[Message(role="user", content="Hello")])]
+
 print(predict(input_example))  # Output: [['Hello']]
 ```
 
@@ -194,16 +257,27 @@ python
 
 ```
 import pydantic
+
 import mlflow
 
 
+
+
+
 class Message(pydantic.BaseModel):
+
     role: str
+
     content: str
 
 
+
+
+
 class CustomModel(mlflow.pyfunc.PythonModel):
+
     def predict(self, model_input: list[Message], params=None) -> list[str]:
+
         return [msg.content for msg in model_input]
 ```
 
@@ -218,32 +292,60 @@ python
 ```
 model = CustomModel()
 
+
+
 # The input_example can be a list of Message objects as defined in the type hint
+
 input_example = [
+
     Message(role="system", content="Hello"),
+
     Message(role="user", content="Hi"),
+
 ]
+
 print(model.predict(input_example))  # Output: ['Hello', 'Hi']
+
+
 
 # The input_example can also be a list of dict with the same schema as Message
+
 input_example = [
+
     {"role": "system", "content": "Hello"},
+
     {"role": "user", "content": "Hi"},
+
 ]
+
 print(model.predict(input_example))  # Output: ['Hello', 'Hi']
 
+
+
 # If your input doesn't match the schema, it will raise an exception
+
 # e.g. content field is missing here, but it's required in the Message definition
+
 model.predict([{"role": "system"}])
+
 # Output: 1 validation error for Message\ncontent\n  Field required [type=missing, input_value={'role': 'system'}, input_type=dict]
 
+
+
 # The same data validation works if you log and load the model as pyfunc
+
 model_info = mlflow.pyfunc.log_model(
+
     name="model",
+
     python_model=model,
+
     input_example=input_example,
+
 )
+
 pyfunc_model = mlflow.pyfunc.load_model(model_info.model_uri)
+
 print(pyfunc_model.predict(input_example))
 ```
 
@@ -255,29 +357,55 @@ python
 from mlflow.pyfunc.utils import pyfunc
 
 
+
+
+
 @pyfunc
+
 def predict(model_input: list[Message]) -> list[str]:
+
     return [msg.content for msg in model_input]
 
 
+
+
+
 # The input_example can be a list of Message objects as defined in the type hint
+
 input_example = [
+
     Message(role="system", content="Hello"),
+
     Message(role="user", content="Hi"),
+
 ]
+
 print(predict(input_example))  # Output: ['Hello', 'Hi']
+
+
 
 # The input_example can also be a list of dict with the same schema as Message
+
 input_example = [
+
     {"role": "system", "content": "Hello"},
+
     {"role": "user", "content": "Hi"},
+
 ]
+
 print(predict(input_example))  # Output: ['Hello', 'Hi']
 
+
+
 # If your input doesn't match the schema, it will raise an exception
+
 # e.g. passing a list of string here will raise an exception
+
 predict(["hello"])
+
 # Output: Failed to validate data against type hint `list[Message]`, invalid elements:
+
 # [('hello', "Expecting example to be a dictionary or pydantic model instance for Pydantic type hint, got <class 'str'>")]
 ```
 
@@ -295,40 +423,75 @@ python
 
 ```
 from pydantic import BaseModel, ConfigDict
+
 from mlflow.pyfunc.utils import pyfunc
 
 
+
+
+
 class BaseMessage(BaseModel):
+
     # set extra='allow' to allow extra fields in the subclass
+
     model_config = ConfigDict(extra="allow")
 
+
+
     role: str
+
     content: str
 
 
+
+
+
 class SystemMessage(BaseMessage):
+
     system_prompt: str
 
 
+
+
+
 class UserMessage(BaseMessage):
+
     user_prompt: str
 
 
+
+
+
 @pyfunc
+
 def predict(model_input: list[BaseMessage]) -> list[str]:
+
     result = []
+
     for msg in model_input:
+
         if hasattr(msg, "system_prompt"):
+
             result.append(msg.system_prompt)
+
         elif hasattr(msg, "user_prompt"):
+
             result.append(msg.user_prompt)
+
     return result
 
 
+
+
+
 input_example = [
+
     {"role": "system", "content": "Hello", "system_prompt": "Hi"},
+
     {"role": "user", "content": "Hi", "user_prompt": "Hello"},
+
 ]
+
 print(predict(input_example))  # Output: ['Hi', 'Hello']
 ```
 
@@ -364,10 +527,16 @@ python
 ```
 import mlflow
 
+
+
 mlflow.pyfunc.log_model(
+
     name="model",
+
     python_model=CustomModel(),
+
     input_example=["a", "b", "c"],
+
 )
 ```
 
@@ -379,6 +548,7 @@ bash
 
 ```
 mlflow models serve -m runs:/<run_id>/model --env-manager local
+
 curl http://127.0.0.1:5000/invocations -H 'Content-Type: application/json' -d '{"inputs": [{"role": "system", "content": "Hello"}]}'
 ```
 
@@ -406,21 +576,37 @@ python
 
 ```
 import mlflow
+
 from mlflow.types.type_hints import TypeFromExample
 
 
+
+
+
 class Model(mlflow.pyfunc.PythonModel):
+
     def predict(self, model_input: TypeFromExample):
+
         return model_input
 
 
+
+
+
 with mlflow.start_run():
+
     model_info = mlflow.pyfunc.log_model(
+
         name="model",
+
         python_model=Model(),
+
         input_example=["a", "b", "c"],
+
     )
+
 pyfunc_model = mlflow.pyfunc.load_model(model_info.model_uri)
+
 assert pyfunc_model.predict(["d", "e", "f"]) == ["d", "e", "f"]
 ```
 

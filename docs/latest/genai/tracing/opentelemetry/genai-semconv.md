@@ -11,8 +11,12 @@ python
 ```
 import os
 
+
+
 # Enable GenAI Semantic Convention format for OTLP export
+
 os.environ["MLFLOW_ENABLE_OTEL_GENAI_SEMCONV"] = "true"
+
 os.environ["OTEL_EXPORTER_OTLP_TRACES_ENDPOINT"] = "http://localhost:4317/v1/traces"
 ```
 
@@ -63,16 +67,29 @@ python
 ```
 import os
 
+
+
 # Enable both GenAI semconv format and dual export
+
 os.environ["MLFLOW_ENABLE_OTEL_GENAI_SEMCONV"] = "true"
+
 os.environ["MLFLOW_TRACE_ENABLE_OTLP_DUAL_EXPORT"] = "true"
 
+
+
 # Configure the MLflow tracking server URI and experiment ID
+
 os.environ["MLFLOW_TRACKING_URI"] = "http://localhost:5000"
+
 os.environ["MLFLOW_EXPERIMENT_ID"] = "123"
 
+
+
 # Configure the other OpenTelemetry-compatible backend OTLP endpoint
+
 os.environ["OTEL_EXPORTER_OTLP_TRACES_ENDPOINT"] = (
+
     "http://other-backend-otlp-endpoint:4317/v1/traces"
+
 )
 ```

@@ -52,49 +52,93 @@ python
 
 ```
 import mlflow
+
 import openai
+
 import os
 
+
+
 # Fix: Added missing import
+
 os.environ["OPENAI_API_KEY"] = "your-api-key-here"
 
+
+
 # Configure MLflow experiment
+
 mlflow.set_experiment("customer-support-agent")
 
+
+
 # Get current git commit using MLflow's built-in utilities
+
 from mlflow.utils.git_utils import get_git_commit
 
+
+
 git_commit = get_git_commit(".")
+
 if git_commit:
+
     git_commit = git_commit[:8]  # Use short hash
+
 else:
+
     git_commit = "local-dev"  # Fallback if not in git repo
 
+
+
 # Create version identifier
+
 app_name = "customer_support_agent"
+
 version_name = f"{app_name}-{git_commit}"
 
+
+
 # Set active model context - all traces will link to this version
+
 mlflow.set_active_model(name=version_name)
 
+
+
 # Enable automatic tracing
+
 mlflow.openai.autolog()
 
+
+
 # Your application code - now automatically versioned and traced
+
 client = openai.OpenAI()
+
 test_questions = [
+
     "How do I reset my password?",
+
     "What are your business hours?",
+
     "Can I get a refund for my order?",
+
 ]
 
+
+
 for question in test_questions:
+
     response = client.chat.completions.create(
+
         model="gpt-4o-mini",
+
         messages=[{"role": "user", "content": question}],
+
         temperature=0.7,
+
         max_tokens=1000,
+
     )
+
     # ✅ Automatically: traced, versioned, and linked to git commit
 ```
 
@@ -111,20 +155,35 @@ python
 
 ```
 # Create a new version for experimentation
+
 with mlflow.set_active_model(name=f"agent-v2-{new_commit}"):
+
     # Test new prompt engineering approach
+
     improved_response = client.chat.completions.create(
+
         model="gpt-4o-mini",
+
         messages=[
+
             {
+
                 "role": "system",
+
                 "content": "You are a helpful customer support agent. Be concise and actionable.",
+
             },
+
             {"role": "user", "content": question},
+
         ],
+
         temperature=0.3,  # Lower temperature for consistency
+
         max_tokens=500,  # More focused responses
+
     )
+
     # ✅ New version automatically tracked with different configurations
 ```
 
@@ -137,33 +196,63 @@ python
 ```
 import pandas as pd
 
+
+
 # Evaluate multiple versions against the same test set
+
 eval_data = pd.DataFrame({
+
     "inputs": test_questions,
+
     "expected_categories": ["account", "business_info", "billing"],
+
 })
 
+
+
 # Version A: Original configuration
+
 results_v1 = mlflow.evaluate(
+
     model_uri=f"models:/{app_name}-{commit_v1}",
+
     data=eval_data,
+
     extra_metrics=[
+
         mlflow.metrics.toxicity(),
+
         mlflow.metrics.latency(),
+
         mlflow.metrics.flesch_kincaid_grade_level(),
+
     ],
+
 )
 
+
+
 # Version B: Improved prompts
+
 results_v2 = mlflow.evaluate(
+
     model_uri=f"models:/{app_name}-{commit_v2}",
+
     data=eval_data,
+
     extra_metrics=[
+
         mlflow.metrics.toxicity(),
+
         mlflow.metrics.latency(),
+
         mlflow.metrics.flesch_kincaid_grade_level(),
+
     ],
+
 )
+
+
 
 # ✅ Side-by-side comparison shows which version performs better
 ```

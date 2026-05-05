@@ -51,13 +51,21 @@ python
 
 ```
 mlflow.log_expectation(
+
     trace_id=trace_id,
+
     name="expected_answer",
+
     value="The speed of light in vacuum is 299,792,458 meters per second",
+
     source=AssessmentSource(
+
         source_type=AssessmentSourceType.HUMAN,
+
         source_id="physics_expert@university.edu",
+
     ),
+
 )
 ```
 
@@ -69,17 +77,29 @@ python
 
 ```
 mlflow.log_expectation(
+
     trace_id=trace_id,
+
     name="expected_extraction",
+
     value={
+
         "company": "TechCorp Inc.",
+
         "sentiment": "positive",
+
         "key_topics": ["product_launch", "quarterly_earnings", "market_expansion"],
+
         "action_required": True,
+
     },
+
     source=AssessmentSource(
+
         source_type=AssessmentSourceType.HUMAN, source_id="business_analyst@company.com"
+
     ),
+
 )
 ```
 
@@ -91,18 +111,31 @@ python
 
 ```
 mlflow.log_expectation(
+
     trace_id=trace_id,
+
     name="expected_behavior",
+
     value={
+
         "should_escalate": True,
+
         "required_elements": ["empathy", "solution_offer", "follow_up"],
+
         "max_response_length": 150,
+
         "tone": "professional_friendly",
+
     },
+
     source=AssessmentSource(
+
         source_type=AssessmentSourceType.HUMAN,
+
         source_id="customer_success_lead@company.com",
+
     ),
+
 )
 ```
 
@@ -114,15 +147,25 @@ python
 
 ```
 # Expected documents for RAG retrieval
+
 mlflow.log_expectation(
+
     trace_id=trace_id,
+
     span_id=retrieval_span_id,
+
     name="expected_documents",
+
     value=["policy_doc_2024", "faq_section_3", "user_guide_ch5"],
+
     source=AssessmentSource(
+
         source_type=AssessmentSourceType.HUMAN,
+
         source_id="information_architect@company.com",
+
     ),
+
 )
 ```
 
@@ -151,12 +194,19 @@ python
 
 ```
 import mlflow
+
 from mlflow.entities import AssessmentSource
+
 from mlflow.entities.assessment_source import AssessmentSourceType
 
+
+
 # Define your domain expert source
+
 expert_source = AssessmentSource(
+
     source_type=AssessmentSourceType.HUMAN, source_id="domain_expert@company.com"
+
 )
 ```
 
@@ -166,48 +216,91 @@ python
 
 ```
 def log_factual_expectation(trace_id, question, correct_answer):
+
     """Log expectation for factual questions."""
+
     mlflow.log_expectation(
+
         trace_id=trace_id,
+
         name="expected_factual_answer",
+
         value=correct_answer,
+
         source=expert_source,
+
         metadata={
+
             "question": question,
+
             "expectation_type": "factual",
+
             "confidence": "high",
+
             "verified_by": "subject_matter_expert",
+
         },
+
     )
+
+
+
 
 
 def log_structured_expectation(trace_id, expected_extraction):
+
     """Log expectation for structured data extraction."""
+
     mlflow.log_expectation(
+
         trace_id=trace_id,
+
         name="expected_extraction",
+
         value=expected_extraction,
+
         source=expert_source,
+
         metadata={
+
             "expectation_type": "structured",
+
             "schema_version": "v1.0",
+
             "annotation_guidelines": "company_extraction_standards_v2",
+
         },
+
     )
 
 
+
+
+
 def log_behavioral_expectation(trace_id, expected_behavior):
+
     """Log expectation for AI behavior patterns."""
+
     mlflow.log_expectation(
+
         trace_id=trace_id,
+
         name="expected_behavior",
+
         value=expected_behavior,
+
         source=expert_source,
+
         metadata={
+
             "expectation_type": "behavioral",
+
             "behavior_category": "customer_service",
+
             "compliance_requirement": "company_policy_v3",
+
         },
+
     )
 ```
 
@@ -217,28 +310,51 @@ python
 
 ```
 # Example: Annotating a customer service interaction
+
 trace_id = "tr-customer-service-001"
 
+
+
 # Define what the AI should have said
+
 factual_answer = "Your account balance is $1,234.56 as of today."
+
 log_factual_expectation(trace_id, "What is my account balance?", factual_answer)
 
+
+
 # Define expected data extraction
+
 expected_extraction = {
+
     "intent": "account_balance_inquiry",
+
     "account_type": "checking",
+
     "urgency": "low",
+
     "requires_authentication": True,
+
 }
+
 log_structured_expectation(trace_id, expected_extraction)
 
+
+
 # Define expected behavior
+
 expected_behavior = {
+
     "should_verify_identity": True,
+
     "tone": "professional_helpful",
+
     "should_offer_additional_help": True,
+
     "escalation_required": False,
+
 }
+
 log_behavioral_expectation(trace_id, expected_behavior)
 ```
 
@@ -250,25 +366,45 @@ python
 
 ```
 def annotate_batch_expectations(annotation_data):
+
     """Annotate multiple traces with ground truth expectations."""
+
     for item in annotation_data:
+
         try:
+
             mlflow.log_expectation(
+
                 trace_id=item["trace_id"],
+
                 name=item["expectation_name"],
+
                 value=item["expected_value"],
+
                 source=AssessmentSource(
+
                     source_type=AssessmentSourceType.HUMAN,
+
                     source_id=item["annotator_id"],
+
                 ),
+
                 metadata={
+
                     "batch_id": item["batch_id"],
+
                     "annotation_session": item["session_id"],
+
                     "quality_checked": True,
+
                 },
+
             )
+
             print(f"✓ Annotated {item['trace_id']}")
+
         except Exception as e:
+
             print(f"✗ Failed to annotate {item['trace_id']}: {e}")
 ```
 
@@ -278,23 +414,41 @@ python
 
 ```
 # Example batch annotation data
+
 batch_data = [
+
     {
+
         "trace_id": "tr-001",
+
         "expectation_name": "expected_answer",
+
         "expected_value": "Paris is the capital of France",
+
         "annotator_id": "expert1@company.com",
+
         "batch_id": "geography_qa_batch_1",
+
         "session_id": "session_2024_01_15",
+
     },
+
     {
+
         "trace_id": "tr-002",
+
         "expectation_name": "expected_answer",
+
         "expected_value": "The speed of light is 299,792,458 m/s",
+
         "annotator_id": "expert2@company.com",
+
         "batch_id": "physics_qa_batch_1",
+
         "session_id": "session_2024_01_15",
+
     },
+
 ]
 ```
 
@@ -336,21 +490,37 @@ python
 
 ```
 mlflow.log_expectation(
+
     trace_id=trace_id,
+
     name="expected_diagnosis",
+
     value={
+
         "primary": "Type 2 Diabetes",
+
         "risk_factors": ["obesity", "family_history"],
+
         "recommended_tests": ["HbA1c", "fasting_glucose"],
+
     },
+
     metadata={
+
         "guideline_version": "ADA_2024",
+
         "confidence": "high",
+
         "based_on": "clinical_presentation_and_history",
+
     },
+
     source=AssessmentSource(
+
         source_type=AssessmentSourceType.HUMAN, source_id="endocrinologist@hospital.org"
+
     ),
+
 )
 ```
 
@@ -370,14 +540,23 @@ python
 
 ```
 # Get a specific expectation by ID
+
 expectation = mlflow.get_assessment(
+
     trace_id="tr-1234567890abcdef", assessment_id="a-0987654321abcdef"
+
 )
 
+
+
 # Access expectation details
+
 name = expectation.name
+
 value = expectation.value
+
 source_type = expectation.source.source_type
+
 metadata = expectation.metadata if hasattr(expectation, "metadata") else None
 ```
 
@@ -390,16 +569,28 @@ python
 ```
 from mlflow.entities import Expectation
 
+
+
 # Update expectation with corrected information
+
 updated_expectation = Expectation(
+
     name="expected_answer",
+
     value="The capital of France is Paris, located in the Île-de-France region",
+
 )
 
+
+
 mlflow.update_assessment(
+
     trace_id="tr-1234567890abcdef",
+
     assessment_id="a-0987654321abcdef",
+
     assessment=updated_expectation,
+
 )
 ```
 
@@ -411,6 +602,7 @@ python
 
 ```
 # Delete specific expectation
+
 mlflow.delete_assessment(trace_id="tr-1234567890abcdef", assessment_id="a-5555666677778888")
 ```
 

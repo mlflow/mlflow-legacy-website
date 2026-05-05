@@ -56,24 +56,43 @@ python
 
 ```
 import mlflow
+
 from openai import OpenAI
 
+
+
 # Enable auto-tracing for OpenAI
+
 mlflow.openai.autolog()
 
+
+
 # Set MLflow tracking URI and experiment
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("MLflow AI Gateway")
 
+
+
 # Point OpenAI client to MLflow AI Gateway
+
 client = OpenAI(
+
     base_url="http://localhost:5000/gateway/openai/v1",
+
     api_key="dummy",  # API key not needed, configured server-side
+
 )
 
+
+
 response = client.chat.completions.create(
+
     model="my-endpoint", messages=[{"role": "user", "content": "Hello!"}]
+
 )
+
 print(response.choices[0].message.content)
 ```
 
@@ -83,27 +102,49 @@ python
 
 ```
 import mlflow
+
 import anthropic
 
+
+
 # Enable auto-tracing for Anthropic
+
 mlflow.anthropic.autolog()
 
+
+
 # Set MLflow tracking URI and experiment
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("MLflow AI Gateway")
 
+
+
 # Point Anthropic client to MLflow AI Gateway
+
 client = anthropic.Anthropic(
+
     base_url="http://localhost:5000/gateway/anthropic",
+
     api_key="dummy",  # API key not needed, configured server-side
+
 )
 
+
+
 # Make API calls - traces will be captured automatically
+
 response = client.messages.create(
+
     max_tokens=1004,
+
     model="<your-endpoint-name>",  # Use your endpoint name
+
     messages=[{"role": "user", "content": "Hello world"}],
+
 )
+
 print(response.content[0].text)
 ```
 
@@ -113,26 +154,47 @@ python
 
 ```
 import mlflow
+
 from google import genai
 
+
+
 # Enable auto-tracing for Gemini
+
 mlflow.gemini.autolog()
 
+
+
 # Set MLflow tracking URI and experiment
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("MLflow AI Gateway")
 
+
+
 # Point Gemini client to MLflow AI Gateway
+
 client = genai.Client(
+
     http_options={"base_url": "http://localhost:5000/gateway/gemini"},
+
     api_key="dummy",  # API key not needed, configured server-side
+
 )
 
+
+
 # Make API calls - traces will be captured automatically
+
 response = client.models.generate_content(
+
     model="<your-endpoint-name>",  # Use your endpoint name
+
     contents={"text": "Hello!"},
+
 )
+
 print(response.text)
 ```
 
@@ -142,35 +204,65 @@ python
 
 ```
 import mlflow
+
 from langchain.agents import create_agent
+
 from langchain_openai import ChatOpenAI
 
+
+
 # Enable auto-tracing for LangChain
+
 mlflow.langchain.autolog()
 
+
+
 # Set MLflow tracking URI and experiment
+
 mlflow.set_tracking_uri("http://localhost:5000")
+
 mlflow.set_experiment("MLflow AI Gateway")
 
+
+
 # Point LangChain to MLflow AI Gateway
+
 llm = ChatOpenAI(
+
     base_url="http://localhost:5000/gateway/mlflow/v1",
+
     model="<your-endpoint-name>",  # Use your endpoint name
+
     api_key="dummy",  # API key not needed, configured server-side
+
 )
+
+
+
 
 
 def get_weather(city: str) -> str:
+
     """Get weather for a given city."""
+
     return f"It's always sunny in {city}!"
 
 
+
+
+
 # Run the agent as usual
+
 agent = create_agent(
+
     llm,
+
     tools=[get_weather],
+
     system_prompt="You are a helpful assistant",
+
 )
+
 agent.invoke({"input": "What's the weather in San Francisco?"})
 ```
 

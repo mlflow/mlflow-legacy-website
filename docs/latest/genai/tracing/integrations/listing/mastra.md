@@ -10,6 +10,7 @@ bash
 
 ```
 npm create mastra@latest
+
 npm install @mastra/otel-exporter
 ```
 
@@ -38,30 +39,56 @@ typescript
 ```
 import { OtelExporter } from "@mastra/otel-exporter";
 
+
+
 export const mastra = new Mastra({
+
   workflows: { weatherWorkflow },
+
   ...
 
+
+
   // Add the following observability configuration to enable OpenTelemetry tracing.
+
   observability: {
+
     configs: {
+
       otel: {
+
         serviceName: "maestra-app",
+
         exporters: [new OtelExporter({
+
           provider: {
+
             custom: {
+
               // Specify tracking server URI with the `/v1/traces` path.
+
               endpoint: "http://localhost:5000/v1/traces",
+
               // Set the MLflow experiment ID in the header.
+
               headers: { "x-mlflow-experiment-id": "<your-experiment-id>"},
+
               // MLflow support HTTP/Protobuf protocol.
+
               protocol: "http/protobuf"
+
             }
+
           }
+
         })]
+
       }
+
     }
+
   },
+
 });
 ```
 
@@ -82,19 +109,34 @@ typescript
 ```
 import { init, withSpan } from "@mlflow/core";
 
+
+
 // Initialize MLflow SDK - sets up the OTel provider to capture all spans
+
 init({
+
   trackingUri: "http://localhost:5000",
+
   experimentId: "<your-experiment-id>",
+
 });
 
+
+
 // Add custom MLflow spans alongside the auto-generated Mastra traces
+
 const result = await withSpan(
+
   { name: "custom_step", inputs: { query: "test" } },
+
   async (span) => {
+
     // your application logic here
+
     return { result: "success" };
+
   }
+
 );
 ```
 

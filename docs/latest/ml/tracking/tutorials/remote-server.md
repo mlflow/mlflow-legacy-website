@@ -82,51 +82,97 @@ yaml
 
 ```
 version: "3.7"
+
 services:
+
   # PostgreSQL database
+
   postgres:
+
     image: postgres:latest
+
     environment:
+
       POSTGRES_USER: user
+
       POSTGRES_PASSWORD: password
+
       POSTGRES_DB: mlflowdb
+
     ports:
+
       - 5432:5432
+
     volumes:
+
       - ./postgres-data:/var/lib/postgresql
 
+
+
   # MinIO server
+
   minio:
+
     image: minio/minio
+
     expose:
+
       - "9000"
+
     ports:
+
       - "9000:9000"
+
       # MinIO Console is available at http://localhost:9001
+
       - "9001:9001"
+
     environment:
+
       MINIO_ROOT_USER: "minio_user"
+
       MINIO_ROOT_PASSWORD: "minio_password"
+
     healthcheck:
+
       test: timeout 5s bash -c ':> /dev/tcp/127.0.0.1/9000' || exit 1
+
       interval: 1s
+
       timeout: 10s
+
       retries: 5
+
     command: server /data --console-address ":9001"
+
   # Create a bucket named "bucket" if it doesn't exist
+
   minio-create-bucket:
+
     image: minio/mc
+
     depends_on:
+
       minio:
+
         condition: service_healthy
+
     entrypoint: >
+
       bash -c "
+
       mc alias set minio http://minio:9000 minio_user minio_password &&
+
       if ! mc ls minio/bucket; then
+
         mc mb minio/bucket
+
       else
+
         echo 'bucket already exists'
+
       fi
+
       "
 ```
 
@@ -154,7 +200,9 @@ bash
 
 ```
 export MLFLOW_S3_ENDPOINT_URL=http://localhost:9000 # Replace this with remote storage endpoint e.g. s3://my-bucket in real use cases
+
 export AWS_ACCESS_KEY_ID=minio_user
+
 export AWS_SECRET_ACCESS_KEY=minio_password
 ```
 
@@ -168,9 +216,13 @@ bash
 
 ```
 mlflow server \
+
   --backend-store-uri postgresql://user:password@localhost:5432/mlflowdb \
+
   --artifacts-destination s3://bucket \
+
   --host 0.0.0.0 \
+
   --port 5000
 ```
 
@@ -193,20 +245,36 @@ python
 ```
 import mlflow
 
+
+
 from sklearn.model_selection import train_test_split
+
 from sklearn.datasets import load_diabetes
+
 from sklearn.ensemble import RandomForestRegressor
+
+
 
 mlflow.autolog()
 
+
+
 db = load_diabetes()
+
 X_train, X_test, y_train, y_test = train_test_split(db.data, db.target)
 
+
+
 # Create and train models.
+
 rf = RandomForestRegressor(n_estimators=100, max_depth=6, max_features=3)
+
 rf.fit(X_train, y_train)
 
+
+
 # Use the model to make predictions on the test dataset.
+
 predictions = rf.predict(X_test)
 ```
 
@@ -223,13 +291,22 @@ python
 ```
 import mlflow
 
+
+
 model_id = "YOUR_MODEL_ID"  # You can find model ID in the Tracking UI
 
+
+
 # Download artifact via the tracking server
+
 mlflow_artifact_uri = f"models:/{model_id}"
+
 local_path = mlflow.artifacts.download_artifacts(mlflow_artifact_uri)
 
+
+
 # Load the model
+
 model = mlflow.sklearn.load_model(local_path)
 ```
 

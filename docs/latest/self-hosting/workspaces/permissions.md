@@ -71,7 +71,10 @@ python
 ```
 from mlflow.server import get_app_client
 
+
+
 tracking_uri = "http://localhost:5000"
+
 auth_client = get_app_client("basic-auth", tracking_uri=tracking_uri)
 ```
 
@@ -81,10 +84,15 @@ bash
 
 ```
 curl -X POST http://localhost:5000/api/3.0/mlflow/workspaces/team-a/permissions \
+
   -H "Content-Type: application/json" \
+
   -d '{
+
     "username": "alice",
+
     "permission": "READ"
+
   }'
 ```
 
@@ -94,10 +102,15 @@ bash
 
 ```
 curl -X POST http://localhost:5000/api/3.0/mlflow/workspaces/team-a/permissions \
+
   -H "Content-Type: application/json" \
+
   -d '{
+
     "username": "bob",
+
     "permission": "MANAGE"
+
   }'
 ```
 
@@ -105,9 +118,13 @@ python
 
 ```
 auth_client.set_workspace_permission(
+
     workspace_name="team-a",
+
     username="alice",
+
     permission="READ",
+
 )
 ```
 
@@ -135,9 +152,7 @@ bash
 curl "http://localhost:5000/api/3.0/mlflow/workspace-permissions?username=alice"
 ```
 
-Response format
-
-The API returns `user_id` (the internal user identifier) in responses, not `username`. Use the users API to look up usernames if needed.
+:::note Response format The API returns `user_id` (the internal user identifier) in responses, not `username`. Use the users API to look up usernames if needed. :::
 
 python
 
@@ -174,27 +189,49 @@ python
 
 ```
 # alice has workspace permission on team-a
+
 # bob has only resource permission on exp-123 in team-a
 
+
+
 import os
+
 import mlflow
+
+
 
 mlflow.set_tracking_uri("http://localhost:5000")
 
+
+
 # As alice - provide Basic Auth credentials via environment variables
+
 os.environ["MLFLOW_TRACKING_USERNAME"] = "alice"
+
 os.environ["MLFLOW_TRACKING_PASSWORD"] = "password"
+
 workspaces = mlflow.list_workspaces()
+
 print([w.name for w in workspaces])  # ["team-a"] - alice sees the workspace
 
+
+
 # As bob
+
 os.environ["MLFLOW_TRACKING_USERNAME"] = "bob"
+
 os.environ["MLFLOW_TRACKING_PASSWORD"] = "password"
+
 workspaces = mlflow.list_workspaces()
+
 print([w.name for w in workspaces])  # [] - bob doesn't see team-a
 
+
+
 # But bob can still access the experiment directly if he knows it exists
+
 mlflow.set_workspace("team-a")
+
 experiment = mlflow.get_experiment("123")  # Works!
 ```
 
@@ -228,7 +265,9 @@ If a workspace doesn't appear in `mlflow.list_workspaces()`:
 
    ```
    curl -X POST http://localhost:5000/api/3.0/mlflow/workspaces/team-a/permissions \
+
      -H "Content-Type: application/json" \
+
      -d '{"username": "user", "permission": "READ"}'
    ```
 
