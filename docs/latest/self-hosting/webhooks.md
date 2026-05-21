@@ -338,6 +338,8 @@ json
 
   "timestamp": "2025-07-31T08:27:32.080217+00:00",
 
+  "workspace": "team-a",
+
   "data": {
 
     "name": "example_model",
@@ -362,6 +364,7 @@ json
 * **`entity`**: The type of MLflow entity that triggered the webhook (e.g., `"registered_model"`, `"model_version"`, `"prompt"`, `"prompt_version"`)
 * **`action`**: The action that was performed (e.g., `"created"`, `"updated"`, `"deleted"`, `"set"`)
 * **`timestamp`**: ISO 8601 timestamp indicating when the webhook was sent
+* **`workspace`**: The active workspace (only present when `MLFLOW_ENABLE_WORKSPACES` is enabled)
 * **`data`**: The actual payload data containing entity-specific information (see payload schema links in the events table above)
 
 This structured format makes it easy to:
@@ -594,6 +597,8 @@ async def handle_webhook(
 
     timestamp = webhook_data.get("timestamp")
 
+    workspace = webhook_data.get("workspace")
+
     payload_data = webhook_data.get("data", {})
 
 
@@ -603,6 +608,8 @@ async def handle_webhook(
     print(f"Received webhook: {entity}.{action}")
 
     print(f"Timestamp: {timestamp}")
+
+    print(f"Workspace: {workspace}")
 
     print(f"Delivery ID: {x_mlflow_delivery_id}")
 

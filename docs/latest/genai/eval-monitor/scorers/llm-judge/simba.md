@@ -1,6 +1,6 @@
 # SIMBA Alignment Optimizer
 
-MLflow provides the **default alignment optimizer** using [DSPy's implementation of SIMBA](https://dspy.ai/api/optimizers/SIMBA/) (Simplified Multi-Bootstrap Aggregation). When you call `align()` without specifying an optimizer, the SIMBA optimizer is used automatically.
+MLflow provides a prompt-optimization alignment optimizer built on [DSPy's implementation of SIMBA](https://dspy.ai/api/optimizers/SIMBA/) (Simplified Multi-Bootstrap Aggregation). Pass `SIMBAAlignmentOptimizer` to `align()` to use it instead of the [default MemAlign optimizer](/docs/latest/genai/eval-monitor/scorers/llm-judge/memalign.md).
 
 ## Requirements[​](#requirements "Direct link to Requirements")
 
@@ -58,13 +58,7 @@ traces_with_feedback = mlflow.search_traces(return_type="list")
 
 
 
-# Default: Uses SIMBA optimizer automatically
-
-aligned_judge = judge.align(traces_with_feedback)
-
-
-
-# Explicit: Same as above but with custom model specification
+# Opt into SIMBA explicitly (the default optimizer is MemAlign)
 
 optimizer = SIMBAAlignmentOptimizer(
 
@@ -74,10 +68,6 @@ optimizer = SIMBAAlignmentOptimizer(
 
 aligned_judge = judge.align(traces_with_feedback, optimizer)
 ```
-
-Default Optimizer Behavior
-
-When using `align()` without an optimizer parameter, MLflow automatically uses the SIMBA optimizer. This simplifies the alignment process while still allowing customization when needed.
 
 ## Debugging[​](#debugging "Direct link to Debugging")
 

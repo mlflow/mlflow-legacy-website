@@ -105,8 +105,6 @@ Explore the MLflow's machine learning capabilities and integrations below to enh
 
 [Cloud Deployment Options](/docs/latest/ml/deployment/deploy-model-to-sagemaker.md)
 
-[Kubernetes Deployment](/docs/latest/ml/deployment/deploy-model-to-kubernetes.md)
-
 [Modal Deployment](/docs/latest/ml/deployment/deploy-model-to-modal.md)
 
 ![MLflow Deployment](/docs/latest/assets/images/mlflow-deployment-overview-f0b56bbb6d5689f022a5cff47f16f832.png)

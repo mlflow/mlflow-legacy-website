@@ -143,7 +143,7 @@ Click any integration below to get started with detailed setup instructions.
 
 [Quarkus LangChain4j](/docs/latest/genai/tracing/integrations/listing/quarkus-langchain4j.md)
 
-## Coding Agents[​](#coding-agents "Direct link to Coding Agents")
+## Coding Agents & Long-Running Agents[​](#coding-agents--long-running-agents "Direct link to Coding Agents & Long-Running Agents")
 
 [![Claude Code Logo](/docs/latest/images/logos/claude-code-logo.png)](/docs/latest/genai/tracing/integrations/listing/claude_code.md)
 
@@ -164,6 +164,10 @@ Click any integration below to get started with detailed setup instructions.
 [![Gemini CLI Logo](/docs/latest/images/logos/google-gemini-logo.svg)](/docs/latest/genai/tracing/integrations/listing/gemini_cli.md)
 
 [Gemini CLI](/docs/latest/genai/tracing/integrations/listing/gemini_cli.md)
+
+[![Hermes Agent Logo](/docs/latest/images/logos/hermes-agent-logo.svg)](/docs/latest/genai/tracing/integrations/listing/hermes_agent.md)
+
+[Hermes Agent](/docs/latest/genai/tracing/integrations/listing/hermes_agent.md)
 
 [![Qwen Code Logo](/docs/latest/images/logos/qwen-logo.jpg)](/docs/latest/genai/tracing/integrations/listing/qwen_code.md)
 
@@ -308,6 +312,14 @@ Click any integration below to get started with detailed setup instructions.
 [![Langflow Logo](/docs/latest/images/logos/langflow.svg)](/docs/latest/genai/tracing/integrations/listing/langflow.md)
 
 [Langflow](/docs/latest/genai/tracing/integrations/listing/langflow.md)
+
+[![Open WebUI Logo](/docs/latest/images/logos/open-webui-logo.png)](/docs/latest/genai/tracing/integrations/listing/open-webui.md)
+
+[Open WebUI](/docs/latest/genai/tracing/integrations/listing/open-webui.md)
+
+[![n8n Logo](/docs/latest/images/logos/n8n-logo.png)](/docs/latest/genai/tracing/integrations/listing/n8n.md)
+
+[n8n](/docs/latest/genai/tracing/integrations/listing/n8n.md)
 
 <br />
 

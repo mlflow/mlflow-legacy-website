@@ -270,6 +270,14 @@ Each integration automatically captures your application's logic and intermediat
 
 [Langflow](/docs/latest/genai/tracing/integrations/listing/langflow.md)
 
+[![Open WebUI Logo](/docs/latest/images/logos/open-webui-logo.png)](/docs/latest/genai/tracing/integrations/listing/open-webui.md)
+
+[Open WebUI](/docs/latest/genai/tracing/integrations/listing/open-webui.md)
+
+[![n8n Logo](/docs/latest/images/logos/n8n-logo.png)](/docs/latest/genai/tracing/integrations/listing/n8n.md)
+
+[n8n](/docs/latest/genai/tracing/integrations/listing/n8n.md)
+
 <br />
 
 :::info Missing your favorite library? Is your favorite library missing from the list? Consider [contributing to MLflow Tracing](/docs/latest/genai/tracing/integrations/contribute.md) or [submitting a feature request](https://github.com/mlflow/mlflow/issues/new?assignees=\&labels=enhancement\&projects=\&template=feature_request_template.yaml\&title=%5BFR%5D) to our Github repository. :::

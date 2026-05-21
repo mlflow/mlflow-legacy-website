@@ -241,7 +241,7 @@ for trace_id, truth_value in ground_truth.items():
 
 ## Step 3: Align Judge with Human Feedback[​](#step-3-align-judge-with-human-feedback "Direct link to Step 3: Align Judge with Human Feedback")
 
-Use the SIMBA optimizer to improve judge accuracy:
+Use the MemAlign optimizer to improve judge accuracy:
 
 python
 
@@ -288,9 +288,9 @@ if len(aligned_traces) >= 10:
 
     # Option 2: Explicitly specify optimizer with custom model
 
-    # from mlflow.genai.judges.optimizers import SIMBAAlignmentOptimizer
+    # from mlflow.genai.judges.optimizers import MemAlignOptimizer
 
-    # optimizer = SIMBAAlignmentOptimizer(model="anthropic:/claude-opus-4-1-20250805")
+    # optimizer = MemAlignOptimizer(reflection_lm="anthropic:/claude-opus-4-1-20250805")
 
     # aligned_judge = support_judge.align(aligned_traces, optimizer)
 
