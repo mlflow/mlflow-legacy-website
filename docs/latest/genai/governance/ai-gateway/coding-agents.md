@@ -1,8 +1,8 @@
-# Coding Agents & AI Gateway
+# Coding Agents & Long-Running Agents
 
-The MLflow AI Gateway supports popular AI coding agents such as **Claude Code**, **OpenAI Codex**, and **Gemini CLI** out of the box.
+The MLflow AI Gateway supports popular AI coding agents such as **Claude Code**, **OpenAI Codex**, and **Gemini CLI**, as well as long-running agent runtimes like **Hermes Agent**.
 
-AI coding agents make dozens or hundreds of LLM calls per session, often running autonomously for extended periods. Without visibility or controls in place, it's easy to lose track of what they're doing, how much they're spending, and whether they're operating within your organization's policies. Routing coding agents through the gateway gives your team three key capabilities:
+Coding agents and long-running agent runtimes can make dozens or hundreds of LLM calls per session, often running autonomously for extended periods while also invoking tools and managing their own state. Without visibility or controls in place, it's easy to lose track of what they're doing, how much they're spending, and whether they're operating within your organization's policies. Routing these agents through the gateway gives your team three key capabilities:
 
 ### [Observability](/docs/latest/genai/governance/ai-gateway/usage-tracking.md)
 
@@ -49,3 +49,11 @@ AI coding agents make dozens or hundreds of LLM calls per session, often running
 [Route Gemini CLI through the gateway using your Google subscription](/docs/latest/genai/governance/ai-gateway/coding-agents/gemini-cli.md)
 
 [Set up Gemini CLI →](/docs/latest/genai/governance/ai-gateway/coding-agents/gemini-cli.md)
+
+[![Hermes Agent](/docs/latest/images/logos/hermes-agent-logo.svg)](/docs/latest/genai/governance/ai-gateway/coding-agents/hermes-agent.md)
+
+### [Hermes Agent](/docs/latest/genai/governance/ai-gateway/coding-agents/hermes-agent.md)
+
+[Route Hermes Agent through the gateway using Hermes's custom provider support](/docs/latest/genai/governance/ai-gateway/coding-agents/hermes-agent.md)
+
+[Set up Hermes Agent →](/docs/latest/genai/governance/ai-gateway/coding-agents/hermes-agent.md)

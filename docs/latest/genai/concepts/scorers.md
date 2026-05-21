@@ -419,7 +419,7 @@ traces_with_feedback = mlflow.search_traces(
 
 
 
-# Align the judge with human preferences (uses default DSPy-SIMBA optimizer)
+# Align the judge with human preferences (uses default MemAlign optimizer)
 
 aligned_judge = quality_judge.align(traces_with_feedback)
 

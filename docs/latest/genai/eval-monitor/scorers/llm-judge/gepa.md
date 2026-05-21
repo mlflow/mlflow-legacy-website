@@ -81,7 +81,7 @@ GEPA is particularly effective when:
 * **Rich textual feedback**: Human reviewers provide detailed explanations for their assessments
 * **Iterative refinement**: You want the optimizer to learn from failures and propose targeted improvements
 
-For simpler alignment tasks, consider using the default [SIMBA optimizer](/docs/latest/genai/eval-monitor/scorers/llm-judge/simba.md).
+For simpler alignment tasks, consider using the default [MemAlign optimizer](/docs/latest/genai/eval-monitor/scorers/llm-judge/memalign.md).
 
 ## Debugging[​](#debugging "Direct link to Debugging")
 

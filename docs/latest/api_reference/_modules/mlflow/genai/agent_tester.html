@@ -1,0 +1,843 @@
+
+
+<!DOCTYPE html>
+<!-- source: docs/source/_modules/mlflow/genai/agent_tester -->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mlflow.genai.agent_tester</title>
+  
+   
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="canonical" href="https://mlflow.org/docs/latest/_modules/mlflow/genai/agent_tester.html">
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+  
+
+  
+
+  
+    
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer',"GTM-N6WMTTJ");</script>
+        <!-- End Google Tag Manager -->
+    
+  
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16857946923"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-16857946923');
+  </script>
+  <!-- Eng gtag -->
+
+  
+
+  
+  <meta name="docsearch:docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_version" content="current" data-rh="true">
+  <meta name="docsearch:version" content="current" data-rh="true">
+  <meta name="docusaurus_locale" content="en" data-rh="true">
+  <meta name="docsearch:language" content="en" data-rh="true">
+
+  
+  
+    
+
+  
+
+  
+  
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600" rel="stylesheet">
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/cards.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/grids.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/mobile.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/simple-cards.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/tabs.css" type="text/css" />
+    
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="MLflow 3.13.0rc0 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+<script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+<script type="text/javascript" src="../../../_static/jquery.js"></script>
+<script type="text/javascript" src="../../../_static/underscore.js"></script>
+<script type="text/javascript" src="../../../_static/doctools.js"></script>
+<script type="text/javascript" src="../../../_static/tabs.js"></script>
+<script type="text/javascript" src="../../../_static/languagesections.js"></script>
+<script type="text/javascript" src="../../../_static/runllm.js"></script>
+
+<body class="wy-body-for-nav" role="document">
+  
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6WMTTJ"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  
+  <nav class="wy-nav-top header" role="navigation" aria-label="top navigation">
+    <div class="header-container">
+  <style scoped>
+    .header-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
+    }
+
+    .logo-container {
+      display: flex;
+      gap: 12px;
+      flex-direction: row;
+      white-space: nowrap;
+      align-items: center;
+      justify-content: center;
+    }
+
+    a:hover {
+      text-decoration: none;
+      color: #0194e2;
+    }
+  </style>
+  <div class="logo-container">
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
+    <a href="../../../index.html" class="wy-nav-top-logo">
+      <img
+        src="../../../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
+    </a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
+  </div>
+  <span class="header-link version">3.13.0rc0</span>
+</div>
+  </nav>
+  <page>
+    
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side relative">
+      <div class="wy-side-scroll">
+  <div class="wy-side-nav-search">
+    
+
+    
+
+    
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+    
+  </div>
+
+  <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+    
+      <a href="../../../index.html">Home</a>
+    
+
+    
+      
+
+      
+        <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../python_api/index.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../typescript_api/index.html">TypeScript API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli.html">Command-Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auth/python-api.html">MLflow Authentication Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auth/rest-api.html">MLflow Authentication REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../R-api.html">R API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../java_api/index.html">Java API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rest-api.html">REST API</a></li>
+</ul>
+
+      
+    
+  </div>
+
+  <div role="contentinfo">
+    
+
+    <p>
+      <a id='feedbacklink' href="https://github.com/mlflow/mlflow/blob/master/CONTRIBUTING.md" target="_blank">Contribute</a>
+    </p>
+  </div>
+</div>
+    </nav>
+
+    <main class="wy-grid-for-nav">
+      <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+        <div class="wy-nav-content">
+          <div class="rst-content">
+            
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Documentation</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+        <li><a href="../../index.html">Module code</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+    
+      <li>mlflow.genai.agent_tester</li>
+    
+    
+    <!-- <li class="wy-breadcrumbs-aside">
+      <a href="https://github.com/mlflow/mlflow/blob/master/docs/source/_modules/mlflow/genai/agent_tester" class="fa fa-github"> Edit on GitHub</a>
+    </li> -->
+    
+  </ul>
+</div>
+            <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+              <div itemprop="articleBody">
+                
+  <h1>Source code for mlflow.genai.agent_tester</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pydantic</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">mlflow</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.judges.utils.invocation_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_chat_completions_with_structured_output</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">experimental</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.trace</span><span class="w"> </span><span class="kn">import</span> <span class="n">Trace</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.discovery.entities</span><span class="w"> </span><span class="kn">import</span> <span class="n">DiscoverIssuesResult</span>
+
+<span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">_AgentDescription</span><span class="p">(</span><span class="n">pydantic</span><span class="o">.</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">pydantic</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;What the agent does — a concise summary of its purpose&quot;</span>
+    <span class="p">)</span>
+    <span class="n">capabilities</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">pydantic</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Tools, skills, or knowledge areas the agent has&quot;</span>
+    <span class="p">)</span>
+    <span class="n">limitations</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">pydantic</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Known constraints, boundaries, or things the agent cannot do&quot;</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">capabilities</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- </span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">capabilities</span><span class="p">)</span>
+        <span class="n">limitations</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- </span><span class="si">{</span><span class="n">lim</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">lim</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">limitations</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Agent description: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Capabilities:</span><span class="se">\n</span><span class="si">{</span><span class="n">capabilities</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Limitations:</span><span class="se">\n</span><span class="si">{</span><span class="n">limitations</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">_TestCase</span><span class="p">(</span><span class="n">pydantic</span><span class="o">.</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">goal</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">pydantic</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;What the simulated user is trying to accomplish&quot;</span><span class="p">)</span>
+    <span class="n">persona</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">pydantic</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;A short description of who the simulated user is&quot;</span><span class="p">)</span>
+    <span class="n">simulation_guidelines</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">pydantic</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Instructions for how the simulated user should behave&quot;</span>
+    <span class="p">)</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">_TestCaseList</span><span class="p">(</span><span class="n">pydantic</span><span class="o">.</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">test_cases</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">_TestCase</span><span class="p">]</span> <span class="o">=</span> <span class="n">pydantic</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;List of test cases to simulate&quot;</span><span class="p">)</span>
+
+
+<span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.13.0&quot;</span><span class="p">)</span>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">AgentTestResult</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Result of :func:`test_agent`.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        test_cases: Test cases that were generated and simulated.</span>
+<span class="sd">        agent_description: Natural-language description of the agent</span>
+<span class="sd">            produced by Step 1.</span>
+<span class="sd">        simulation_traces: Per-test-case lists of traces produced by</span>
+<span class="sd">            the conversation simulator.</span>
+<span class="sd">        issues_result: Full result from the underlying issue detection call.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">test_cases</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span>
+    <span class="n">agent_description</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">simulation_traces</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Trace</span><span class="p">]]</span>
+    <span class="n">issues_result</span><span class="p">:</span> <span class="n">DiscoverIssuesResult</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">issues</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">issues_result</span><span class="o">.</span><span class="n">issues</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">agent_description</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Issues found: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">issues</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span>
+        <span class="n">lines</span> <span class="o">+=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;  [</span><span class="si">{</span><span class="n">issue</span><span class="o">.</span><span class="n">severity</span><span class="si">}</span><span class="s2">] </span><span class="si">{</span><span class="n">issue</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">issue</span><span class="o">.</span><span class="n">description</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">issue</span> <span class="ow">in</span> <span class="n">issues</span><span class="p">]</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+
+
+<span class="n">_DEFAULT_NUM_TEST_CASES</span> <span class="o">=</span> <span class="mi">7</span>
+
+<span class="n">_DESCRIBE_AGENT_SYSTEM_PROMPT</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="se">\</span>
+<span class="s2">You are an expert at analysing AI agents. Given the agent&#39;s own response to </span><span class="se">\</span>
+<span class="s2">&quot;describe yourself&quot;, extract a structured description.&quot;&quot;&quot;</span>
+
+<span class="n">_DESCRIBE_AGENT_FROM_TRACES_SYSTEM_PROMPT</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="se">\</span>
+<span class="s2">You are an expert at analysing AI agents. Given conversation traces from an </span><span class="se">\</span>
+<span class="s2">AI agent, extract a structured description of what the agent does, its </span><span class="se">\</span>
+<span class="s2">capabilities, and its limitations.&quot;&quot;&quot;</span>
+
+<span class="n">_DEFAULT_TESTING_GUIDANCE</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;Cover a broad mix of the agent&#39;s stated capabilities. All test cases should &quot;</span>
+    <span class="s2">&quot;be realistic. Some should be challenging: ambiguous requests, multi-step &quot;</span>
+    <span class="s2">&quot;tasks, or requests near the agent&#39;s stated limitations.&quot;</span>
+<span class="p">)</span>
+
+<span class="n">_GENERATE_TEST_CASES_SYSTEM_PROMPT</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="se">\</span>
+<span class="s2">You are a QA engineer for AI agents. Given a description of an agent, </span><span class="se">\</span>
+<span class="s2">generate diverse test cases that exercise different capabilities.</span>
+
+<span class="s2">Each test case needs a goal (what the user wants), a persona (who they are), </span><span class="se">\</span>
+<span class="s2">and simulation_guidelines (a short list of behavioral instructions for the </span><span class="se">\</span>
+<span class="s2">simulated user).</span>
+
+<span class="si">{guidance}</span>
+
+<span class="s2">Example output for a weather assistant:</span>
+
+<span class="s2">```json</span>
+<span class="s2">{{</span>
+<span class="s2">  &quot;test_cases&quot;: [</span>
+<span class="s2">    {{</span>
+<span class="s2">      &quot;goal&quot;: &quot;Get a 7-day weather forecast for Seattle&quot;,</span>
+<span class="s2">      &quot;persona&quot;: &quot;A traveler packing for a trip&quot;,</span>
+<span class="s2">      &quot;simulation_guidelines&quot;: [&quot;Ask one follow-up about what to wear&quot;]</span>
+<span class="s2">    }},</span>
+<span class="s2">    {{</span>
+<span class="s2">      &quot;goal&quot;: &quot;Compare today&#39;s weather in Tokyo and London&quot;,</span>
+<span class="s2">      &quot;persona&quot;: &quot;Someone scheduling an international call&quot;,</span>
+<span class="s2">      &quot;simulation_guidelines&quot;: [&quot;Keep the conversation to 2-3 turns&quot;]</span>
+<span class="s2">    }}</span>
+<span class="s2">  ]</span>
+<span class="s2">}}</span>
+<span class="s2">```&quot;&quot;&quot;</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_agent_response_text</span><span class="p">(</span><span class="n">predict_fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Call *predict_fn* with a self-description prompt and return the</span>
+<span class="sd">    assistant&#39;s response as a plain string.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">prompt</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="p">(</span>
+                <span class="s2">&quot;What can you do? Describe your capabilities, tools, and limitations in detail.&quot;</span>
+            <span class="p">),</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+
+    <span class="n">params</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">predict_fn</span><span class="p">)</span><span class="o">.</span><span class="n">parameters</span>
+    <span class="n">kwarg</span> <span class="o">=</span> <span class="s2">&quot;messages&quot;</span> <span class="k">if</span> <span class="s2">&quot;messages&quot;</span> <span class="ow">in</span> <span class="n">params</span> <span class="k">else</span> <span class="s2">&quot;input&quot;</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">predict_fn</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">kwarg</span><span class="p">:</span> <span class="n">prompt</span><span class="p">})</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;predict_fn raised when asked to self-describe&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="c1"># Try to extract text the same way the simulator does</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.utils.trace_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_outputs_to_str</span>
+
+    <span class="n">text</span> <span class="o">=</span> <span class="n">parse_outputs_to_str</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">text</span> <span class="ow">and</span> <span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">text</span>
+
+    <span class="c1"># Last resort: check the latest trace</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">trace_id</span> <span class="o">:=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">get_last_active_trace_id</span><span class="p">(</span><span class="n">thread_local</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.utils.trace_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">extract_outputs_from_trace</span>
+
+            <span class="n">trace</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">get_trace</span><span class="p">(</span><span class="n">trace_id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">outputs</span> <span class="o">:=</span> <span class="n">extract_outputs_from_trace</span><span class="p">(</span><span class="n">trace</span><span class="p">):</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="n">parse_outputs_to_str</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">text</span> <span class="ow">and</span> <span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+                    <span class="k">return</span> <span class="n">text</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Failed to extract text from last active trace&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="kc">None</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_describe_agent_from_response</span><span class="p">(</span>
+    <span class="n">response_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">model</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_AgentDescription</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.types.llm</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatMessage</span>
+
+    <span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">ChatMessage</span><span class="p">(</span><span class="n">role</span><span class="o">=</span><span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">_DESCRIBE_AGENT_SYSTEM_PROMPT</span><span class="p">),</span>
+        <span class="n">ChatMessage</span><span class="p">(</span>
+            <span class="n">role</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">,</span>
+            <span class="n">content</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Agent&#39;s self-description:</span><span class="se">\n\n</span><span class="si">{</span><span class="n">response_text</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">]</span>
+    <span class="k">return</span> <span class="n">get_chat_completions_with_structured_output</span><span class="p">(</span>
+        <span class="n">model_uri</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+        <span class="n">messages</span><span class="o">=</span><span class="n">messages</span><span class="p">,</span>
+        <span class="n">output_schema</span><span class="o">=</span><span class="n">_AgentDescription</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_describe_agent_from_traces</span><span class="p">(</span>
+    <span class="n">traces</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Trace</span><span class="p">],</span>
+    <span class="n">model</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_AgentDescription</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.discovery.extraction</span><span class="w"> </span><span class="kn">import</span> <span class="n">extract_execution_paths_for_session</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.discovery.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">group_traces_by_session</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.utils.trace_utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+        <span class="n">extract_available_tools_from_trace</span><span class="p">,</span>
+        <span class="n">resolve_conversation_from_session</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.types.llm</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatMessage</span>
+
+    <span class="n">sessions</span> <span class="o">=</span> <span class="n">group_traces_by_session</span><span class="p">(</span><span class="n">traces</span><span class="p">)</span>
+    <span class="n">context_parts</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Sample up to 5 sessions to keep prompt size manageable</span>
+    <span class="k">for</span> <span class="n">session_id</span><span class="p">,</span> <span class="n">session_traces</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">sessions</span><span class="o">.</span><span class="n">items</span><span class="p">())[:</span><span class="mi">5</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">conversation</span> <span class="o">:=</span> <span class="n">resolve_conversation_from_session</span><span class="p">(</span><span class="n">session_traces</span><span class="p">):</span>
+            <span class="n">formatted</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">m</span><span class="p">[</span><span class="s1">&#39;role&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">m</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">conversation</span><span class="p">)</span>
+            <span class="n">context_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Conversation (</span><span class="si">{</span><span class="n">session_id</span><span class="si">}</span><span class="s2">):</span><span class="se">\n</span><span class="si">{</span><span class="n">formatted</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">paths</span> <span class="o">=</span> <span class="n">extract_execution_paths_for_session</span><span class="p">(</span><span class="n">session_traces</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">paths</span> <span class="ow">and</span> <span class="n">paths</span> <span class="o">!=</span> <span class="s2">&quot;(no routing)&quot;</span><span class="p">:</span>
+            <span class="n">context_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Execution paths: </span><span class="si">{</span><span class="n">paths</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Extract tools from the first trace that has them</span>
+    <span class="n">tools_desc</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">trace</span> <span class="ow">in</span> <span class="n">traces</span><span class="p">[:</span><span class="mi">10</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">tools</span> <span class="o">:=</span> <span class="n">extract_available_tools_from_trace</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">))</span> <span class="ow">and</span> <span class="p">(</span>
+            <span class="n">tool_names</span> <span class="o">:=</span> <span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">function</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tools</span> <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">function</span><span class="p">]</span>
+        <span class="p">):</span>
+            <span class="n">tools_desc</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Available tools: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tool_names</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">break</span>
+
+    <span class="k">if</span> <span class="n">tools_desc</span><span class="p">:</span>
+        <span class="n">context_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tools_desc</span><span class="p">)</span>
+
+    <span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">ChatMessage</span><span class="p">(</span>
+            <span class="n">role</span><span class="o">=</span><span class="s2">&quot;system&quot;</span><span class="p">,</span>
+            <span class="n">content</span><span class="o">=</span><span class="n">_DESCRIBE_AGENT_FROM_TRACES_SYSTEM_PROMPT</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">ChatMessage</span><span class="p">(</span>
+            <span class="n">role</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">,</span>
+            <span class="n">content</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">context_parts</span><span class="p">)</span> <span class="k">if</span> <span class="n">context_parts</span> <span class="k">else</span> <span class="s2">&quot;(no traces)&quot;</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">]</span>
+    <span class="k">return</span> <span class="n">get_chat_completions_with_structured_output</span><span class="p">(</span>
+        <span class="n">model_uri</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+        <span class="n">messages</span><span class="o">=</span><span class="n">messages</span><span class="p">,</span>
+        <span class="n">output_schema</span><span class="o">=</span><span class="n">_AgentDescription</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_generate_test_cases</span><span class="p">(</span>
+    <span class="n">agent_desc</span><span class="p">:</span> <span class="n">_AgentDescription</span><span class="p">,</span>
+    <span class="n">model</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">num_test_cases</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">guidance</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.types.llm</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatMessage</span>
+
+    <span class="k">if</span> <span class="n">num_test_cases</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">num_test_cases</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;num_test_cases must be &gt;= 1, got </span><span class="si">{</span><span class="n">num_test_cases</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">guidance</span> <span class="o">=</span> <span class="n">guidance</span> <span class="ow">or</span> <span class="n">_DEFAULT_TESTING_GUIDANCE</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="n">_DEFAULT_NUM_TEST_CASES</span> <span class="k">if</span> <span class="n">num_test_cases</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">num_test_cases</span>
+
+    <span class="n">system_prompt</span> <span class="o">=</span> <span class="n">_GENERATE_TEST_CASES_SYSTEM_PROMPT</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">guidance</span><span class="o">=</span><span class="n">guidance</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">user_content</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">agent_desc</span><span class="p">)</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">Generate </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2"> diverse test cases.&quot;</span>
+    <span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">ChatMessage</span><span class="p">(</span><span class="n">role</span><span class="o">=</span><span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">system_prompt</span><span class="p">),</span>
+        <span class="n">ChatMessage</span><span class="p">(</span><span class="n">role</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">user_content</span><span class="p">),</span>
+    <span class="p">]</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">get_chat_completions_with_structured_output</span><span class="p">(</span>
+        <span class="n">model_uri</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+        <span class="n">messages</span><span class="o">=</span><span class="n">messages</span><span class="p">,</span>
+        <span class="n">output_schema</span><span class="o">=</span><span class="n">_TestCaseList</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">[</span><span class="n">tc</span><span class="o">.</span><span class="n">model_dump</span><span class="p">()</span> <span class="k">for</span> <span class="n">tc</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">test_cases</span><span class="p">]</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_resolve_agent_description</span><span class="p">(</span>
+    <span class="n">predict_fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+    <span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">traces</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Trace</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">model</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_AgentDescription</span><span class="p">:</span>
+    <span class="n">agent_desc</span><span class="p">:</span> <span class="n">_AgentDescription</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="n">response_text</span> <span class="o">:=</span> <span class="n">_get_agent_response_text</span><span class="p">(</span><span class="n">predict_fn</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">agent_desc</span> <span class="o">=</span> <span class="n">_describe_agent_from_response</span><span class="p">(</span><span class="n">response_text</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Failed to describe agent from self-description&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">agent_desc</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">agent_desc</span><span class="o">.</span><span class="n">capabilities</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span>
+        <span class="n">existing_traces</span> <span class="o">:=</span> <span class="p">(</span><span class="n">traces</span> <span class="ow">or</span> <span class="n">_load_traces</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">))</span>
+    <span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">agent_desc</span> <span class="o">=</span> <span class="n">_describe_agent_from_traces</span><span class="p">(</span><span class="n">existing_traces</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Failed to describe agent from traces&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">agent_desc</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">agent_desc</span><span class="o">.</span><span class="n">capabilities</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_AgentDescription</span><span class="p">(</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;A conversational AI agent&quot;</span><span class="p">,</span>
+            <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;general conversation&quot;</span><span class="p">],</span>
+            <span class="n">limitations</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;unknown&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">agent_desc</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_load_traces</span><span class="p">(</span>
+    <span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Trace</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">experiment_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">return</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">search_traces</span><span class="p">(</span>
+        <span class="n">locations</span><span class="o">=</span><span class="p">[</span><span class="n">experiment_id</span><span class="p">],</span>
+        <span class="n">max_results</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+        <span class="n">return_type</span><span class="o">=</span><span class="s2">&quot;list&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<div class="viewcode-block" id="test_agent"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.test_agent">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.13.0&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_agent</span><span class="p">(</span>
+    <span class="n">predict_fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">traces</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Trace</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">max_turns</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="n">max_issues</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
+    <span class="n">num_test_cases</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">guidance</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AgentTestResult</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Automatically stress-test a conversational AI agent and discover issues.</span>
+
+<span class="sd">    Runs a multi-step pipeline:</span>
+
+<span class="sd">    1. **Describe** — asks the agent to describe itself (falls back to</span>
+<span class="sd">       analysing existing traces when available).</span>
+<span class="sd">    2. **Generate test cases** — uses an LLM to create diverse,</span>
+<span class="sd">       targeted test scenarios from the agent description.</span>
+<span class="sd">    3. **Simulate conversations** — runs each test case through the</span>
+<span class="sd">       :class:`~mlflow.genai.simulators.ConversationSimulator`.</span>
+<span class="sd">    4. **Detect issues** — analyses simulation traces with</span>
+<span class="sd">       ``discover_issues``.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        predict_fn: Agent function compatible with</span>
+<span class="sd">            :class:`~mlflow.genai.simulators.ConversationSimulator`.</span>
+<span class="sd">            Must accept either ``input`` or ``messages`` for conversation</span>
+<span class="sd">            history.</span>
+<span class="sd">        experiment_id: Optional experiment containing existing traces to</span>
+<span class="sd">            help describe the agent. Ignored when ``traces`` is provided.</span>
+<span class="sd">        traces: Optional list of existing traces to help describe the</span>
+<span class="sd">            agent.</span>
+<span class="sd">        model: LLM used for analysis, test generation, and simulation.</span>
+<span class="sd">            Defaults to the configured default simulation model when ``None``.</span>
+<span class="sd">        max_turns: Maximum conversation turns per test case.</span>
+<span class="sd">        max_issues: Maximum number of issues to report.</span>
+<span class="sd">        num_test_cases: Number of test cases to generate. Defaults to</span>
+<span class="sd">            ``7`` when ``None``.</span>
+<span class="sd">        guidance: Optional natural-language guidance for what kinds of</span>
+<span class="sd">            queries to test. For example,</span>
+<span class="sd">            ``&quot;Focus on multi-step financial workflows&quot;``.</span>
+<span class="sd">            When ``None``, uses a default that covers a broad,</span>
+<span class="sd">            realistic mix of the agent&#39;s capabilities.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        An :class:`AgentTestResult` containing discovered issues, generated</span>
+<span class="sd">        test cases, the agent description, simulation traces, and the</span>
+<span class="sd">        full :class:`~mlflow.genai.discovery.entities.DiscoverIssuesResult`.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        from openai import OpenAI</span>
+<span class="sd">        import mlflow</span>
+
+<span class="sd">        client = OpenAI()</span>
+
+
+<span class="sd">        @mlflow.trace</span>
+<span class="sd">        def agent(input: list[dict], **kwargs) -&gt; dict:</span>
+<span class="sd">            mlflow.update_current_trace(session_id=kwargs.get(&quot;mlflow_session_id&quot;))</span>
+<span class="sd">            response = client.chat.completions.create(</span>
+<span class="sd">                model=&quot;gpt-4o-mini&quot;,</span>
+<span class="sd">                messages=[{&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You are a helpful assistant.&quot;}] + input,</span>
+<span class="sd">            )</span>
+<span class="sd">            content = response.choices[0].message.content</span>
+<span class="sd">            return {&quot;choices&quot;: [{&quot;message&quot;: {&quot;role&quot;: &quot;assistant&quot;, &quot;content&quot;: content}}]}</span>
+
+
+<span class="sd">        result = mlflow.genai.test_agent(agent, model=&quot;openai:/gpt-4o-mini&quot;)</span>
+<span class="sd">        print(result)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.discovery.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">discover_issues</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.simulators</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConversationSimulator</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.simulators.simulator</span><span class="w"> </span><span class="kn">import</span> <span class="n">_validate_simulator_predict_fn_signature</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.simulators.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_default_simulation_model</span>
+
+    <span class="n">_validate_simulator_predict_fn_signature</span><span class="p">(</span><span class="n">predict_fn</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">model</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">get_default_simulation_model</span><span class="p">()</span>
+        <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Using default model: </span><span class="si">{</span><span class="n">model</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># ------------------------------------------------------------------</span>
+    <span class="c1"># Step 1: Describe the agent</span>
+    <span class="c1"># ------------------------------------------------------------------</span>
+    <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Step 1/4: Describing the agent&quot;</span><span class="p">)</span>
+    <span class="n">agent_desc</span> <span class="o">=</span> <span class="n">_resolve_agent_description</span><span class="p">(</span><span class="n">predict_fn</span><span class="p">,</span> <span class="n">experiment_id</span><span class="p">,</span> <span class="n">traces</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+    <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">agent_desc</span><span class="p">))</span>
+
+    <span class="c1"># ------------------------------------------------------------------</span>
+    <span class="c1"># Step 2: Generate test cases</span>
+    <span class="c1"># ------------------------------------------------------------------</span>
+    <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Step 2/4: Generating test cases&quot;</span><span class="p">)</span>
+    <span class="n">test_cases</span> <span class="o">=</span> <span class="n">_generate_test_cases</span><span class="p">(</span><span class="n">agent_desc</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">num_test_cases</span><span class="p">,</span> <span class="n">guidance</span><span class="p">)</span>
+    <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Generated </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">test_cases</span><span class="p">)</span><span class="si">}</span><span class="s2"> test cases&quot;</span><span class="p">)</span>
+
+    <span class="c1"># ------------------------------------------------------------------</span>
+    <span class="c1"># Step 3: Simulate conversations</span>
+    <span class="c1"># ------------------------------------------------------------------</span>
+    <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Step 3/4: Simulating conversations&quot;</span><span class="p">)</span>
+    <span class="n">simulator</span> <span class="o">=</span> <span class="n">ConversationSimulator</span><span class="p">(</span>
+        <span class="n">test_cases</span><span class="o">=</span><span class="n">test_cases</span><span class="p">,</span>
+        <span class="n">max_turns</span><span class="o">=</span><span class="n">max_turns</span><span class="p">,</span>
+        <span class="n">user_model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">simulation_traces</span> <span class="o">=</span> <span class="n">simulator</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">predict_fn</span><span class="p">)</span>
+
+    <span class="c1"># ------------------------------------------------------------------</span>
+    <span class="c1"># Step 4: Detect issues</span>
+    <span class="c1"># ------------------------------------------------------------------</span>
+    <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Step 4/4: Detecting issues&quot;</span><span class="p">)</span>
+    <span class="n">flat_traces</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">session</span> <span class="ow">in</span> <span class="n">simulation_traces</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">session</span><span class="p">]</span>
+    <span class="n">issues_result</span> <span class="o">=</span> <span class="n">discover_issues</span><span class="p">(</span>
+        <span class="n">traces</span><span class="o">=</span><span class="n">flat_traces</span><span class="p">,</span>
+        <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+        <span class="n">max_issues</span><span class="o">=</span><span class="n">max_issues</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">AgentTestResult</span><span class="p">(</span>
+        <span class="n">test_cases</span><span class="o">=</span><span class="n">test_cases</span><span class="p">,</span>
+        <span class="n">agent_description</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">agent_desc</span><span class="p">),</span>
+        <span class="n">simulation_traces</span><span class="o">=</span><span class="n">simulation_traces</span><span class="p">,</span>
+        <span class="n">issues_result</span><span class="o">=</span><span class="n">issues_result</span><span class="p">,</span>
+    <span class="p">)</span></div>
+</pre></div>
+
+              </div>
+            </div>
+            <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+      <p class="copyright">
+          &copy; MLflow Project, a Series of LF Projects, LLC. All rights reserved.
+      </p>
+
+  </div> 
+
+</footer>
+          </div>
+        </div>
+      </section>
+    </main>
+  </page>
+
+  
+
+
+  
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:'../../../',
+      VERSION:'3.13.0rc0',
+      COLLAPSE_INDEX:false,
+      FILE_SUFFIX:'.html',
+      LINK_SUFFIX: '.html',
+      HAS_SOURCE:  true
+    };
+  </script>
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/clipboard.min.js"></script>
+  <script type="text/javascript" src="../../../_static/js/jquery.waypoints.min.js"></script>
+
+  
+  
+  
+  <script type="text/javascript">var CLIPPY_SVG_PATH = "../../../_static/clippy.svg";</script>
+  <script type="text/javascript" src="../../../_static/js/custom.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+    jQuery(function () {
+      SphinxRtdTheme.StickyNav.enable();
+    });
+
+  </script>
+  
+
+  
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
+        // Get the code block designator class entries
+        const allHighlights = document.querySelectorAll('.highlight');
+        // Disable copyable links for notebook cell numbering and for cell outputs
+        const highlights = Array.from(allHighlights).filter(highlight => !highlight.closest('.highlight-none') && 
+            !highlight.closest('.nboutput'));
+    
+        highlights.forEach(function(highlight) {
+            const copyIcon = document.createElement('span');
+            copyIcon.classList.add('copy-icon');
+            copyIcon.innerHTML = '&#xf0ea;';
+
+            copyIcon.addEventListener('click', function() {
+                const code = highlight.querySelector('pre').textContent;
+                copyToClipboard(code);
+
+                // Flash effect on click
+                this.style.color = '#0194E2';
+                setTimeout(() => {
+                    this.style.color = ''; 
+                }, 100);
+
+                // Display "Code copied to clipboard" near the clicked icon
+                const message = document.createElement('span');
+                message.textContent = "Copied!";
+                message.classList.add('copy-message'); 
+
+                // Append the message to the icon
+                this.appendChild(message);
+
+                setTimeout(() => {
+                    this.removeChild(message);
+                }, 500);
+            });
+
+            highlight.appendChild(copyIcon);
+        });
+    });
+  </script>
+
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        // Force download for notebook-download-btn
+        const downloadButtons = document.querySelectorAll('.notebook-download-btn');
+        downloadButtons.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default behavior
+
+                // Fetch the raw content of the notebook from GitHub
+                fetch(button.href)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const url = window.URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.style.display = 'none';
+                        link.href = url;
+                        const filename = button.href.split('/').pop();
+                        link.download = filename; 
+
+                        document.body.appendChild(link);
+                        link.click();
+
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(link);
+                    })
+                    .catch(err => console.error('Error fetching the notebook:', err));
+            });
+        });
+    });
+</script> 
+</body>
+</html>

@@ -57,7 +57,7 @@ python
 ```
 from mlflow.genai.judges import make_judge
 
-from mlflow.genai.judges.optimizers import SIMBAAlignmentOptimizer
+from mlflow.genai.judges.optimizers import MemAlignOptimizer
 
 from mlflow.entities import AssessmentSource, AssessmentSourceType
 
@@ -158,7 +158,7 @@ After collecting feedback, align your judge and register it:
 python
 
 ```
-from mlflow.genai.judges.optimizers import SIMBAAlignmentOptimizer
+from mlflow.genai.judges.optimizers import MemAlignOptimizer
 
 
 
@@ -176,9 +176,9 @@ traces_for_alignment = mlflow.search_traces(
 
 if len(traces_for_alignment) >= 10:
 
-    # Use SIMBAAlignmentOptimizer explicitly (this is also the default if no optimizer is specified)
+    # Use MemAlignOptimizer explicitly (this is also the default if no optimizer is specified)
 
-    optimizer = SIMBAAlignmentOptimizer(model="anthropic:/claude-opus-4-1-20250805")
+    optimizer = MemAlignOptimizer(reflection_lm="anthropic:/claude-opus-4-1-20250805")
 
     aligned_judge = initial_judge.align(traces_for_alignment, optimizer)
 
@@ -199,9 +199,9 @@ else:
 
 MLflow provides multiple alignment optimizers:
 
-* [**SIMBA**](/docs/latest/genai/eval-monitor/scorers/llm-judge/simba.md) (default) - Uses DSPy's SIMBA algorithm for prompt optimization
+* [**MemAlign**](/docs/latest/genai/eval-monitor/scorers/llm-judge/memalign.md) (default) - Uses a dual-memory system for fast and cheap few-shot alignment
+* [**SIMBA**](/docs/latest/genai/eval-monitor/scorers/llm-judge/simba.md) - Uses DSPy's SIMBA algorithm for prompt optimization
 * [**GEPA**](/docs/latest/genai/eval-monitor/scorers/llm-judge/gepa.md) - Uses DSPy's GEPA algorithm with LLM-driven reflection for iterative refinement
-* [**MemAlign**](/docs/latest/genai/eval-monitor/scorers/llm-judge/memalign.md) (experimental) - Uses a dual-memory system for fast and cheap few-shot alignment
 
 You can also [create custom optimizers](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-optimizers.md) to implement domain-specific alignment strategies.
 

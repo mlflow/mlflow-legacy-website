@@ -50,6 +50,10 @@ export TRACELOOP_HEADERS=x-mlflow-experiment-id=123
 
 Refer to the [Langflow Traceloop documentation](https://docs.langflow.org/integrations-instana-traceloop) for setting up tracing in Langflow and specify OTLP HTTP exporter with above environment variables.
 
+Limitation
+
+This integration exports HTTP-level metrics only. It does not capture LLM-level data such as prompts, responses, or token usage.
+
 ## Combine with the MLflow Tracing SDK[​](#combine-with-the-mlflow-tracing-sdk "Direct link to Combine with the MLflow Tracing SDK")
 
 You can combine the auto-generated OpenTelemetry traces with the [MLflow Tracing SDK](/docs/latest/genai/tracing.md) to add custom spans, set tags, and log assessments within the same trace.
