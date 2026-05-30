@@ -37,7 +37,9 @@ The [Production Tracing SDK (`mlflow-tracing`)](/docs/latest/genai/tracing/light
 
 <br />
 
-:::warning Compatibility Warning When installing the MLflow Tracing SDK, make sure the environment **does not have** the full MLflow package installed. Having both packages in the same environment might cause conflicts and unexpected behaviors. :::
+Compatibility Warning
+
+When installing the MLflow Tracing SDK, make sure the environment **does not have** the full MLflow package installed. Having both packages in the same environment might cause conflicts and unexpected behaviors.
 
 ## Automatic (Online) Quality Evaluation[​](#automatic-online-quality-evaluation "Direct link to Automatic (Online) Quality Evaluation")
 

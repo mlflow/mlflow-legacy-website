@@ -43,6 +43,10 @@ Click any integration below to get started with detailed setup instructions.
 
 [Google ADK](/docs/latest/genai/tracing/integrations/listing/google-adk.md)
 
+[![Claude Agent SDK Logo](/docs/latest/images/logos/claude-code-logo.png)](/docs/latest/genai/tracing/integrations/listing/claude_agent_sdk_python.md)
+
+[Claude Agent SDK](/docs/latest/genai/tracing/integrations/listing/claude_agent_sdk_python.md)
+
 [![Microsoft Agent Framework Logo](/docs/latest/images/logos/microsoft-agent-framework-logo.png)](/docs/latest/genai/tracing/integrations/listing/microsoft-agent-framework.md)
 
 [Microsoft Agent Framework](/docs/latest/genai/tracing/integrations/listing/microsoft-agent-framework.md)
@@ -133,6 +137,10 @@ Click any integration below to get started with detailed setup instructions.
 
 [VoltAgent](/docs/latest/genai/tracing/integrations/listing/voltagent.md)
 
+[![Claude Agent SDK (TS) Logo](/docs/latest/images/logos/claude-code-logo.png)](/docs/latest/genai/tracing/integrations/listing/claude_agent_sdk_typescript.md)
+
+[Claude Agent SDK (TS)](/docs/latest/genai/tracing/integrations/listing/claude_agent_sdk_typescript.md)
+
 ## Agent Frameworks (Java)[​](#agent-frameworks-java "Direct link to Agent Frameworks (Java)")
 
 [![Spring AI Logo](/docs/latest/images/logos/spring-ai-logo.png)](/docs/latest/genai/tracing/integrations/listing/spring-ai.md)
@@ -145,7 +153,7 @@ Click any integration below to get started with detailed setup instructions.
 
 ## Coding Agents & Long-Running Agents[​](#coding-agents--long-running-agents "Direct link to Coding Agents & Long-Running Agents")
 
-[![Claude Code Logo](/docs/latest/images/logos/claude-code-logo.png)](/docs/latest/genai/tracing/integrations/listing/claude_code.md)
+[![Claude Code Logo](/docs/latest/images/logos/claude-code-icon.png)](/docs/latest/genai/tracing/integrations/listing/claude_code.md)
 
 [Claude Code](/docs/latest/genai/tracing/integrations/listing/claude_code.md)
 
@@ -323,4 +331,6 @@ Click any integration below to get started with detailed setup instructions.
 
 <br />
 
-:::info Missing an Integration? Is your favorite library missing? Consider [contributing](/docs/latest/genai/tracing/integrations/contribute.md) or [submitting a feature request](https://github.com/mlflow/mlflow/issues/new?assignees=\&labels=enhancement\&projects=\&template=feature_request_template.yaml\&title=%5BFR%5D). :::
+Missing an Integration?
+
+Is your favorite library missing? Consider [contributing](/docs/latest/genai/tracing/integrations/contribute.md) or [submitting a feature request](https://github.com/mlflow/mlflow/issues/new?assignees=\&labels=enhancement\&projects=\&template=feature_request_template.yaml\&title=%5BFR%5D).

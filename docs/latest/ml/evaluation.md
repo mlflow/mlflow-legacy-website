@@ -1,6 +1,6 @@
 # Model Evaluation
 
-:::warning Classic ML Evaluation System
+Classic ML Evaluation System
 
 This documentation covers MLflow's **classic evaluation system** (`mlflow.models.evaluate`) which uses `EvaluationMetric` and `make_metric` for custom metrics.
 
@@ -10,7 +10,7 @@ This documentation covers MLflow's **classic evaluation system** (`mlflow.models
 * `Scorer` objects instead of `EvaluationMetric`
 * Built-in LLM judges and scorers
 
-**Important**: These two systems are **not interoperable**. `EvaluationMetric` objects cannot be used with `mlflow.genai.evaluate()`, and `Scorer` objects cannot be used with `mlflow.models.evaluate()`. :::
+**Important**: These two systems are **not interoperable**. `EvaluationMetric` objects cannot be used with `mlflow.genai.evaluate()`, and `Scorer` objects cannot be used with `mlflow.models.evaluate()`.
 
 ## Introduction[​](#introduction "Direct link to Introduction")
 
@@ -528,11 +528,11 @@ Define custom evaluation metrics and create specialized visualizations.
 
 ### Custom Metrics[​](#custom-metrics "Direct link to Custom Metrics")
 
-:::note Classic System Only
+Classic System Only
 
 The `make_metric` function is part of MLflow's classic evaluation system.
 
-For GenAI/LLM custom metrics, use the [@scorer decorator](/docs/latest/genai/eval-monitor/scorers/custom.md) instead. :::
+For GenAI/LLM custom metrics, use the [@scorer decorator](/docs/latest/genai/eval-monitor/scorers/custom.md) instead.
 
 Create custom metrics with `make_metric`:
 

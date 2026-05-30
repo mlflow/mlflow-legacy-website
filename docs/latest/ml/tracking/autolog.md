@@ -280,7 +280,9 @@ note
 
 * Moreover, Spark datasource autologging occurs asynchronously - as such, it's possible (though unlikely) to see race conditions when launching short-lived MLflow runs that result in datasource information not being logged.
 
-:::warning important With Pyspark 3.2.0 or above, Spark datasource autologging requires `PYSPARK_PIN_THREAD` environment variable to be set to `false`. :::
+important
+
+With Pyspark 3.2.0 or above, Spark datasource autologging requires `PYSPARK_PIN_THREAD` environment variable to be set to `false`.
 
 ### Statsmodels[​](#autolog-statsmodels "Direct link to Statsmodels")
 

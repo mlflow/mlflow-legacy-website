@@ -4,7 +4,7 @@
 
 MLflow is fully open-source. Thousands of users and organizations run their own MLflow instances to meet their specific needs. Being open-source and trusted by the popular cloud providers, MLflow is the best choice for teams/organizations that worry about vendor lock-in.
 
-:::warning Default Storage Backend Change
+Default Storage Backend Change
 
 As of MLflow 3.7.0, the default tracking backend has changed from file-based storage (`./mlruns`) to SQLite database (`sqlite:///mlflow.db`) for better performance and reliability.
 
@@ -13,8 +13,6 @@ As of MLflow 3.7.0, the default tracking backend has changed from file-based sto
 **New users:** New MLflow servers will use SQLite by default. To use file-based storage instead, set `MLFLOW_TRACKING_URI=./mlruns` or specify `--backend-store-uri ./mlruns` when starting the server.
 
 For more details and migration guidance, see [GitHub Issue #18534](https://github.com/mlflow/mlflow/issues/18534).
-
-:::
 
 ## The Quickest Path: Run `mlflow` Command[​](#the-quickest-path-run-mlflow-command "Direct link to the-quickest-path-run-mlflow-command")
 
@@ -129,11 +127,9 @@ MLflow support [username/password login](/docs/latest/self-hosting/security/basi
 
 MLflow also provides built-in [network protection](/docs/latest/self-hosting/security/network.md) middleware to protect your tracking server from network exposure.
 
-:::tip Try Managed MLflow
+Try Managed MLflow
 
 Need highly secure MLflow server? Check out [Databricks Managed MLflow](https://www.databricks.com/product/managed-mlflow) to get fully managed MLflow servers with unified governance and security.
-
-:::
 
 ## FAQs[​](#faqs "Direct link to FAQs")
 

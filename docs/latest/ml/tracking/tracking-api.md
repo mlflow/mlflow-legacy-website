@@ -214,7 +214,9 @@ with(mlflow_start_run(), {
 | **Dataset Tracking**        | ✅ Full            | ✅ Basic         | ✅ Basic         | ✅ Basic         |
 | **Search & Query**          | ✅ Advanced        | ✅ Basic         | ✅ Basic         | ✅ Full          |
 
-:::note api-parity The Python API provides the most comprehensive feature set. Java and R APIs offer core functionality with ongoing feature additions in each release. :::
+api-parity
+
+The Python API provides the most comprehensive feature set. Java and R APIs offer core functionality with ongoing feature additions in each release.
 
 ## Advanced Tracking Patterns[​](#advanced-tracking-patterns "Direct link to Advanced Tracking Patterns")
 
@@ -771,7 +773,9 @@ MLflow automatically sets several system tags to capture execution context:
 | `mlflow.docker.image.name` | Docker image used                        | Docker environments    |
 | `mlflow.note.content`      | **User-editable** description            | Manual only            |
 
-:::tip pro-tip Use `mlflow.note.content` to document experiment insights, hypotheses, or results directly in the MLflow UI. This tag appears in a dedicated Notes section on the run page. :::
+pro-tip
+
+Use `mlflow.note.content` to document experiment insights, hypotheses, or results directly in the MLflow UI. This tag appears in a dedicated Notes section on the run page.
 
 ### Integration with Auto Logging[​](#integration-with-auto-logging "Direct link to Integration with Auto Logging")
 

@@ -94,7 +94,9 @@ with mlflow.start_run():
 
 Autologging captures parameters, metrics per iteration, feature importance with visualizations, and the trained model.
 
-:::tip Tracking Server Setup Running locally? MLflow stores experiments in the current directory by default. For team collaboration or remote tracking, **[set up a tracking server](/docs/latest/ml/tracking/tutorials/remote-server.md)**. :::
+Tracking Server Setup
+
+Running locally? MLflow stores experiments in the current directory by default. For team collaboration or remote tracking, **[set up a tracking server](/docs/latest/ml/tracking/tutorials/remote-server.md)**.
 
 ## Autologging[​](#autologging "Direct link to Autologging")
 
@@ -429,7 +431,9 @@ with mlflow.start_run():
     )
 ```
 
-:::tip Model Format Use `model_format="json"` for the best portability across XGBoost versions. The `json` format is human-readable and cross-platform compatible. :::
+Model Format
+
+Use `model_format="json"` for the best portability across XGBoost versions. The `json` format is human-readable and cross-platform compatible.
 
 Load models for inference:
 

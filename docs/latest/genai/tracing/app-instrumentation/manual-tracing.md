@@ -25,7 +25,9 @@ The `@mlflow.trace` decorator currently supports the following types of function
 
 The following code is a minimum example of using the decorator for tracing Python functions.
 
-:::tip Decorator Order To ensure complete observability, the `@mlflow.trace` decorator should generally be the **outermost** one if using multiple decorators. See [Using @mlflow.trace with Other Decorators](#using-mlflowtrace-with-other-decorators) for a detailed explanation and examples. :::
+Decorator Order
+
+To ensure complete observability, the `@mlflow.trace` decorator should generally be the **outermost** one if using multiple decorators. See [Using @mlflow.trace with Other Decorators](#using-mlflowtrace-with-other-decorators) for a detailed explanation and examples.
 
 python
 
@@ -506,7 +508,9 @@ class MyClass {
 
 By setting `request_preview` and `response_preview` on the trace (typically the root span), you control how the overall interaction is summarized in the main trace list view, making it easier to identify and understand traces at a glance.
 
-:::tip Images and Audio Content in MLflow Traces You can attach images and audio to spans using content parts lists in `set_inputs()` and `set_outputs()`:
+Images and Audio Content in MLflow Traces
+
+You can attach images and audio to spans using content parts lists in `set_inputs()` and `set_outputs()`:
 
 python
 
@@ -544,7 +548,7 @@ with mlflow.start_span(name="multimodal-call") as span:
     span.set_outputs({"content": result})
 ```
 
-See [Multimodal Content and Attachments in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md#manual-tracing) for more examples. :::
+See [Multimodal Content and Attachments in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md#manual-tracing) for more examples.
 
 ## Code Block[​](#code-block "Direct link to Code Block")
 
@@ -818,7 +822,9 @@ If an `Exception` is raised during processing of a trace-instrumented operation,
 
 ***
 
-:::note Python Only Features The below documentation applies only to the MLflow Python SDK. :::
+Python Only Features
+
+The below documentation applies only to the MLflow Python SDK.
 
 ## Using `@mlflow.trace` with Other Decorators[​](#using-mlflowtrace-with-other-decorators "Direct link to using-mlflowtrace-with-other-decorators")
 

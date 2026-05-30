@@ -648,11 +648,9 @@ client.rename_registered_model(
 
 ### Listing and Searching MLflow Models[​](#listing-and-searching-mlflow-models "Direct link to Listing and Searching MLflow Models")
 
-:::warning important
+important
 
 When using MLflow ≥ 2.21.0 clients with older Model Registry servers (< 2.21.0), search API behavior may differ from expected results. This version mismatch can cause inconsistent search outcomes or missing results. To ensure consistent behavior, please align MLflow versions by either upgrading your server to MLflow 2.21.0 or newer (recommended) or downgrading your client to match your server version.
-
-:::
 
 You can fetch a list of registered models in the registry with a simple method.
 

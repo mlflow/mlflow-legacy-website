@@ -48,4 +48,6 @@ Click an integration below to get started with detailed setup instructions.
 
 [Learn more →](/docs/latest/genai/eval-monitor/scorers/third-party/google-adk.md)
 
-:::info Missing an Integration? Is your favorite evaluation framework missing? Consider [submitting a feature request](https://github.com/mlflow/mlflow/issues/new?assignees=\&labels=enhancement\&projects=\&template=feature_request_template.yaml\&title=%5BFR%5D). :::
+Missing an Integration?
+
+Is your favorite evaluation framework missing? Consider [submitting a feature request](https://github.com/mlflow/mlflow/issues/new?assignees=\&labels=enhancement\&projects=\&template=feature_request_template.yaml\&title=%5BFR%5D).

@@ -38,7 +38,9 @@ Open <http://localhost:5000> to see your tracked experiment:
 
 ![Quickstart UI](/docs/latest/assets/images/quickstart_ui_screenshot-3ea56ba2b1c9970e1ff466b8dc57b37d.png)
 
-:::tip Plugin Benefits Plugins let you integrate MLflow with your existing infrastructure without modifying core MLflow code, ensuring smooth upgrades and maintenance. :::
+Plugin Benefits
+
+Plugins let you integrate MLflow with your existing infrastructure without modifying core MLflow code, ensuring smooth upgrades and maintenance.
 
 ## Plugin Types & Use Cases[​](#plugin-types--use-cases "Direct link to Plugin Types & Use Cases")
 

@@ -142,11 +142,9 @@ Define judges that check for the common failure modes. For example, if the answe
 
 LLM-as-a-Judge has natural biases. Relying on biased evaluation will lead to incorrect decision making. Therefore, it is important to refine the scorer to align with human feedback. You can manually iterate on prompts or instructions, or use the [Automatic Judge Alignment](/docs/latest/genai/eval-monitor/scorers/llm-judge/alignment.md) feature of MLflow to optimize the instruction with a state-of-the-art algorithm powered by [DSPy](https://dspy.ai/).
 
-:::tip Pro tip: Version Control Judges
+Pro tip: Version Control Judges
 
 As you iterate on the judge, version control becomes important. MLflow can track [Judge Versions](/docs/latest/genai/eval-monitor/scorers/versioning.md) to help you maintain changes and share the improved judges with your team.
-
-:::
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 

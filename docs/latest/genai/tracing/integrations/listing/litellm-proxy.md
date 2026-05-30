@@ -4,7 +4,9 @@
 
 ![LiteLLM Proxy Tracing](/docs/latest/images/llms/litellm-proxy/litellm-proxy-tracing.png)
 
-:::tip Looking for LiteLLM SDK? This guide covers the **LiteLLM Proxy Server**. If you're using the LiteLLM Python SDK directly in your application, see the [LiteLLM SDK Integration](/docs/latest/genai/tracing/integrations/listing/litellm.md) guide instead. :::
+Looking for LiteLLM SDK?
+
+This guide covers the **LiteLLM Proxy Server**. If you're using the LiteLLM Python SDK directly in your application, see the [LiteLLM SDK Integration](/docs/latest/genai/tracing/integrations/listing/litellm.md) guide instead.
 
 ## Integration Options[​](#integration-options "Direct link to Integration Options")
 

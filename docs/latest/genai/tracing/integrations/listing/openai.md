@@ -230,7 +230,9 @@ See [OpenAI Agents SDK Tracing](/docs/latest/genai/tracing/integrations/listing/
 | ------ | ----- |
 | ✅     | ✅    |
 
-:::tip Image and Audio Support for OpenAI Traces MLflow automatically captures images and audio sent to OpenAI models. See [Multimodal Content and Attachments in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md) for examples and supported formats. :::
+Image and Audio Support for OpenAI Traces
+
+MLflow automatically captures images and audio sent to OpenAI models. See [Multimodal Content and Attachments in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md) for examples and supported formats.
 
 ## Streaming[​](#streaming "Direct link to Streaming")
 

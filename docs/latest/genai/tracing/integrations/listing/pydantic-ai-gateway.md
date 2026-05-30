@@ -6,7 +6,9 @@ Since Pydantic AI Gateway exposes OpenAI and Anthropic-compatible APIs, you can 
 
 ![Pydantic AI Gateway Tracing](/docs/latest/images/llms/pydantic-ai/pydanticai-gateway-tracing.png)
 
-:::tip Looking for PydanticAI Agent Framework? This guide covers tracing LLM calls through **Pydantic AI Gateway**. If you're building agents using the Pydantic AI framework directly, see the [PydanticAI Integration](/docs/latest/genai/tracing/integrations/listing/pydantic_ai.md) guide instead. :::
+Looking for PydanticAI Agent Framework?
+
+This guide covers tracing LLM calls through **Pydantic AI Gateway**. If you're building agents using the Pydantic AI framework directly, see the [PydanticAI Integration](/docs/latest/genai/tracing/integrations/listing/pydantic_ai.md) guide instead.
 
 ## Prerequisite[​](#prerequisite "Direct link to Prerequisite")
 

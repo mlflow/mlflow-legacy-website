@@ -13,7 +13,7 @@ MLflow supports multiple optimization algorithms to improve your prompts:
 
 See [Choosing Your Optimizer](#choosing-your-optimizer) for guidance on which optimizer to use for your specific needs.
 
-:::tip Why Use MLflow Prompt Optimization?
+Why Use MLflow Prompt Optimization?
 
 * **Zero Framework Lock-in**: Works with ANY agent framework—LangChain, OpenAI Agent, CrewAI, or custom solutions
 * **Minimal Code Changes**: Add a few lines to start optimizing; no architectural rewrites needed
@@ -22,8 +22,6 @@ See [Choosing Your Optimizer](#choosing-your-optimizer) for guidance on which op
 * **Granular Control**: Optimize single prompts or entire multi-prompt workflows—you decide what to improve
 * **Production-Ready**: Built-in version control and registry for seamless deployment
 * **Extensible**: Bring your own optimization algorithms with simple base class extension
-
-:::
 
 Version Requirements
 
@@ -199,11 +197,9 @@ GEPA is a prompt optimization technique that uses natural language reflection to
 * Tasks where you have clear evaluation metrics and a dataset of decent size (e.g., 100+ records)
 * Tasks where quality is critical to your system (e.g., medical agents, financial agents, etc.), so that the optimization cost and longer prompt as produced by GEPA is worth it
 
-:::tip Reduce the Cost of GEPA Optimization
+Reduce the Cost of GEPA Optimization
 
 The cost of GEPA optimization is tightly coupled with the reflection model you use and the max number of metric calls you allow. You can reduce the cost by using a cheaper reflection model or reducing the max number of metric calls.
-
-:::
 
 **Learn More:** [GEPA Research Paper](https://arxiv.org/abs/2507.19457) | [GEPA GitHub Repository](https://github.com/gepa-ai/gepa)
 

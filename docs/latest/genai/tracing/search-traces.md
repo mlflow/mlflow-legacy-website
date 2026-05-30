@@ -8,6 +8,10 @@ important
 
 **Local File Store offers only limited search capabilities and can become slow as data volume grows.** As of MLflow 3.6.0, the FileStore is deprecated. We recommend migrating to a SQL-backed store or Databricks for improved performance and more robust search functionality.
 
+note
+
+**Archived traces and content search**. Archived traces remain viewable in MLflow, but filters that depend on stored span payloads, such as `trace.text` and `span.content`, no longer match once that payload has been archived out of the SQL store. Tag, metadata, status, and other trace-level filters continue to work. See [Archive Traces](/docs/latest/genai/tracing/observe-with-traces/archive-traces.md) for details.
+
 ## Search Traces Overview[​](#search-traces-overview "Direct link to Search Traces Overview")
 
 When working with MLflow tracing in production environments, you'll often have thousands of traces across different experiments representing various model inferences, LLM calls, or ML pipeline executions. The `search_traces` API helps you find specific traces based on their execution characteristics, metadata, tags, and other attributes - making trace analysis and debugging much more efficient.
@@ -592,7 +596,9 @@ print(f"Found {len(all_traces)} total traces")
 
 ### MLflow Version Compatibility[​](#mlflow-version-compatibility "Direct link to MLflow Version Compatibility")
 
-:::note Schema Changes in MLflow 3 **DataFrame Schema**: The format depends on the MLflow version used to **call** the `search_traces` API, not the version used to log the traces. MLflow 3.x uses different column names than 2.x. :::
+Schema Changes in MLflow 3
+
+**DataFrame Schema**: The format depends on the MLflow version used to **call** the `search_traces` API, not the version used to log the traces. MLflow 3.x uses different column names than 2.x.
 
 ### Performance Tips[​](#performance-tips "Direct link to Performance Tips")
 

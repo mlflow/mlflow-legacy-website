@@ -2,14 +2,12 @@
 
 Combining [MLflow Prompt Registry](/docs/latest/genai/prompt-registry.md) with [MLflow LLM Evaluation](/docs/latest/genai/eval-monitor.md) enables you to evaluate prompt performance across different models and datasets, and track the evaluation results in a centralized registry. You can also inspect model outputs from the **traces** logged during evaluation to understand how the model responds to different prompts.
 
-:::tip Key Benefits of MLflow Prompt Evaluation
+Key Benefits of MLflow Prompt Evaluation
 
 * **Effective Evaluation**: \`MLflow's LLM Evaluation API provides a simple and consistent way to evaluate prompts across different models and datasets without writing boilerplate code.
 * **Compare Results**: Compare evaluation results with ease in the MLflow UI.
 * **Tracking Results**: Track evaluation results in MLflow Experiment to maintain the history of prompt performance and different evaluation settings.
 * **Tracing**: Inspect model behavior during inference deeply with traces generated during evaluation.
-
-:::
 
 ## Quickstart[​](#quickstart "Direct link to Quickstart")
 

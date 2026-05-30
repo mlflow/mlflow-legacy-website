@@ -1,6 +1,8 @@
 # Tracking Hyperparameter Tuning with MLflow
 
-:::tip MLflow Assistant Need help setting up tracking? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that can help you set up MLflow tracking for your project. :::
+MLflow Assistant
+
+Need help setting up tracking? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that can help you set up MLflow tracking for your project.
 
 ![MLflow UI Chart page](/docs/latest/images/tutorials/introductory/hyperparameter-tuning/ui-compare-metrics.png)
 
@@ -25,7 +27,9 @@ pip install mlflow optuna
 
 Then, follow the instructions in the [Set Up MLflow](/docs/latest/ml/getting-started/running-notebooks.md) guide to set up MLflow.
 
-:::tip Team Collaboration and Managed Setup For production environments or team collaboration, consider hosting a shared [MLflow Tracking Server](/docs/latest/self-hosting.md). For a fully-managed solution, get started with Databricks Free Trial by visiting the [Databricks Trial Signup Page](https://signup.databricks.com/?destination_url=/ml/experiments-signup?source=OSS_DOCS\&dbx_source=TRY_MLFLOW\&signup_experience_step=EXPRESS\&provider=MLFLOW\&utm_source=OSS_DOCS) and follow the instructions outlined there. :::
+Team Collaboration and Managed Setup
+
+For production environments or team collaboration, consider hosting a shared [MLflow Tracking Server](/docs/latest/self-hosting.md). For a fully-managed solution, get started with Databricks Free Trial by visiting the [Databricks Trial Signup Page](https://signup.databricks.com/?destination_url=/ml/experiments-signup?source=OSS_DOCS\&dbx_source=TRY_MLFLOW\&signup_experience_step=EXPRESS\&provider=MLFLOW\&utm_source=OSS_DOCS) and follow the instructions outlined there.
 
 ## Step 1: Create a new experiment[​](#step-1-create-a-new-experiment "Direct link to Step 1: Create a new experiment")
 
