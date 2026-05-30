@@ -180,7 +180,9 @@ MLflow supports automatic tracing for the following Anthropic APIs:
 
 To request support for additional APIs, please open a [feature request](https://github.com/mlflow/mlflow/issues) on GitHub.
 
-:::tip Image Support in Anthropic Traces MLflow automatically captures images sent to Anthropic models and normalizes them to the standard trace format. See [Multimodal Content and Attachments in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md) for examples. :::
+Image Support in Anthropic Traces
+
+MLflow automatically captures images sent to Anthropic models and normalizes them to the standard trace format. See [Multimodal Content and Attachments in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md) for examples.
 
 ## Async[​](#async "Direct link to Async")
 

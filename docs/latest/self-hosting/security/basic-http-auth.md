@@ -420,7 +420,9 @@ response = requests.get(
 
 ## Creating a New User[​](#creating-a-new-user "Direct link to Creating a New User")
 
-:::warning important To create a new user, you are required to authenticate with admin privileges. :::
+important
+
+To create a new user, you are required to authenticate with admin privileges.
 
 ### Using MLflow UI[​](#using-mlflow-ui-1 "Direct link to Using MLflow UI")
 

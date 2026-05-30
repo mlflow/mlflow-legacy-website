@@ -2,7 +2,9 @@
 
 [Databricks AI Gateway](https://docs.databricks.com/en/ai-gateway/index.html) (formerly Mosaic AI Gateway) is the Databricks solution for governing and monitoring access to generative AI models and their associated model serving endpoints. It is a centralized service that brings governance, monitoring, and production readiness to model serving endpoints.
 
-:::tip Looking for Databricks Foundation Model APIs? This guide covers tracing LLM calls through **Databricks AI Gateway**. If you're using Databricks Foundation Model APIs directly, see the [Databricks Integration](/docs/latest/genai/tracing/integrations/listing/databricks.md) guide instead. :::
+Looking for Databricks Foundation Model APIs?
+
+This guide covers tracing LLM calls through **Databricks AI Gateway**. If you're using Databricks Foundation Model APIs directly, see the [Databricks Integration](/docs/latest/genai/tracing/integrations/listing/databricks.md) guide instead.
 
 ## What is Databricks AI Gateway?[​](#what-is-databricks-ai-gateway "Direct link to What is Databricks AI Gateway?")
 

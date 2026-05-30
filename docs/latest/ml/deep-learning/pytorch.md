@@ -88,7 +88,9 @@ for epoch in range(10):
 
 Autologging captures training metrics, model parameters, optimizer configuration, and model checkpoints automatically.
 
-:::note PyTorch Lightning Support MLflow's autologging works seamlessly with PyTorch Lightning. For vanilla PyTorch with custom training loops, use manual logging as shown in the section below. :::
+PyTorch Lightning Support
+
+MLflow's autologging works seamlessly with PyTorch Lightning. For vanilla PyTorch with custom training loops, use manual logging as shown in the section below.
 
 ## Manual Logging[​](#manual-logging "Direct link to Manual Logging")
 
@@ -318,11 +320,9 @@ For PyTorch training, monitoring GPU metrics is especially valuable for:
 * Optimizing batch sizes based on GPU memory usage
 * Comparing resource efficiency across different model architectures
 
-:::tip Advanced Configuration
+Advanced Configuration
 
 You can customize system metrics collection frequency and behavior. See the **[System Metrics documentation](/docs/latest/ml/tracking/system-metrics.md)** for detailed configuration options.
-
-:::
 
 ## Model Logging with Signatures[​](#model-logging-with-signatures "Direct link to Model Logging with Signatures")
 

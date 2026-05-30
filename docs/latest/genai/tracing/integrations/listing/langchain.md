@@ -347,7 +347,9 @@ shell
 pip install openai==1.30.5 langchain==0.2.1 langchain-openai==0.1.8 langchain-community==0.2.1 mlflow==2.14.0 tiktoken==0.7.0
 ```
 
-:::tip Image Support for LangChain Traces MLflow captures image content parts passed through LangChain models. See [Multimodal Content and Attachments in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md) for details. :::
+Image Support for LangChain Traces
+
+MLflow captures image content parts passed through LangChain models. See [Multimodal Content and Attachments in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md) for details.
 
 ## Supported APIs[​](#supported-apis "Direct link to Supported APIs")
 

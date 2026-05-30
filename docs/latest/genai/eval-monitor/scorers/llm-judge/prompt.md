@@ -104,11 +104,9 @@ The prompt template for the judge must have:
 * Placeholders for input values with **double curly braces**, e.g., `{{conversation}}`.
 * Choices for the judge to select from as output, enclosed in **square brackets**, e.g., `[[fully_resolved]]`. The choice name can contain alphanumeric characters and underscores.
 
-:::tip Handling Parsing Errors
+Handling Parsing Errors
 
 MLflow uses raw prompt-based instructions for handling structured outputs to make the API generic to all LLM providers. This may not be strict enough to enforce structured outputs in all cases. If you see output parsing errors frequently, consider using [code-based custom scorers](/docs/latest/genai/eval-monitor/scorers/custom.md) and invoke the specific structured output API for the LLM provider you are using to get more reliable results.
-
-:::
 
 ## Maintaining Your Prompt[​](#maintaining-your-prompt "Direct link to Maintaining Your Prompt")
 

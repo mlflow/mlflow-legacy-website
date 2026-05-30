@@ -40,6 +40,10 @@ Each integration automatically captures your application's logic and intermediat
 
 [Google ADK](/docs/latest/genai/tracing/integrations/listing/google-adk.md)
 
+[![Claude Agent SDK Logo](/docs/latest/images/logos/claude-code-logo.png)](/docs/latest/genai/tracing/integrations/listing/claude_agent_sdk_python.md)
+
+[Claude Agent SDK](/docs/latest/genai/tracing/integrations/listing/claude_agent_sdk_python.md)
+
 [![Microsoft Agent Framework Logo](/docs/latest/images/logos/microsoft-agent-framework-logo.png)](/docs/latest/genai/tracing/integrations/listing/microsoft-agent-framework.md)
 
 [Microsoft Agent Framework](/docs/latest/genai/tracing/integrations/listing/microsoft-agent-framework.md)
@@ -129,6 +133,10 @@ Each integration automatically captures your application's logic and intermediat
 [![VoltAgent Logo](/docs/latest/images/logos/voltagent-logo.png)](/docs/latest/genai/tracing/integrations/listing/voltagent.md)
 
 [VoltAgent](/docs/latest/genai/tracing/integrations/listing/voltagent.md)
+
+[![Claude Agent SDK (TS) Logo](/docs/latest/images/logos/claude-code-logo.png)](/docs/latest/genai/tracing/integrations/listing/claude_agent_sdk_typescript.md)
+
+[Claude Agent SDK (TS)](/docs/latest/genai/tracing/integrations/listing/claude_agent_sdk_typescript.md)
 
 ### Model Providers[​](#model-providers "Direct link to Model Providers")
 
@@ -280,7 +288,9 @@ Each integration automatically captures your application's logic and intermediat
 
 <br />
 
-:::info Missing your favorite library? Is your favorite library missing from the list? Consider [contributing to MLflow Tracing](/docs/latest/genai/tracing/integrations/contribute.md) or [submitting a feature request](https://github.com/mlflow/mlflow/issues/new?assignees=\&labels=enhancement\&projects=\&template=feature_request_template.yaml\&title=%5BFR%5D) to our Github repository. :::
+Missing your favorite library?
+
+Is your favorite library missing from the list? Consider [contributing to MLflow Tracing](/docs/latest/genai/tracing/integrations/contribute.md) or [submitting a feature request](https://github.com/mlflow/mlflow/issues/new?assignees=\&labels=enhancement\&projects=\&template=feature_request_template.yaml\&title=%5BFR%5D) to our Github repository.
 
 ## Advanced Usage[​](#advanced-usage "Direct link to Advanced Usage")
 

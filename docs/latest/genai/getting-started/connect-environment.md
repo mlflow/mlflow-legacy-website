@@ -1,6 +1,8 @@
 # Set Up MLflow Server
 
-:::tip MLflow Assistant Need help with this setup? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that understands your codebase and can set up MLflow for you. :::
+MLflow Assistant
+
+Need help with this setup? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that understands your codebase and can set up MLflow for you.
 
 MLflow is open source, and you can set up the MLflow server using either `pip` or `docker`.
 

@@ -1,6 +1,8 @@
 # Tracing Quickstart
 
-:::tip MLflow Assistant Need help setting up tracing? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that can add MLflow tracing to your project automatically. :::
+MLflow Assistant
+
+Need help setting up tracing? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that can add MLflow tracing to your project automatically.
 
 This quickstart guide will walk you through setting up a simple LLM application with MLflow Tracing. In less than 10 minutes, you'll enable tracing, run a basic application, and explore the generated traces in the MLflow UI.
 
@@ -267,11 +269,9 @@ For a deeper dive into using MLflow together with OpenTelemetry, see the [OpenTe
 
 After running the code above, go to the MLflow UI and select the "My Application" experiment, and then select the "Traces" tab. It should show the newly created trace.
 
-:::tip Learn More About Tracing UI
+Learn More About Tracing UI
 
 The "Traces" page includes rich information about the trace and supports various actions such as searching, filtering, adding feedbacks, and more. See [View Traces](/docs/latest/genai/tracing/observe-with-traces/ui.md) for comprehensive guide about how to get the most out of the MLflow Tracing UI.
-
-:::
 
 ![Single Trace](/docs/latest/images/llms/tracing/quickstart/single-openai-trace-list.png)
 

@@ -1,6 +1,8 @@
 # MLflow DSPy Flavor
 
-:::warning attention The `dspy` flavor is under active development and is marked as Experimental. Public APIs are subject to change and new features may be added as the flavor evolves. :::
+attention
+
+The `dspy` flavor is under active development and is marked as Experimental. Public APIs are subject to change and new features may be added as the flavor evolves.
 
 ## Introduction[​](#introduction "Direct link to Introduction")
 

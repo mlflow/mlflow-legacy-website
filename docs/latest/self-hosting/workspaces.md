@@ -23,11 +23,9 @@ Use workspaces when you need:
 
 ::::caution Not a hard isolation boundary Workspaces provide logical separation and authorization controls inside one MLflow server. For strict data-plane or compliance isolation, run independent MLflow deployments instead of sharing a server. ::::
 
-:::warning Requirements
+Requirements
 
 Workspaces require a SQL database backend store. File-based backends are not supported when workspaces are enabled.
-
-:::
 
 note
 
@@ -73,15 +71,15 @@ text
 
 For backward compatibility, resources that existed before enabling workspaces in the reserved `default` workspace keep their stored artifact locations (which may be unprefixed) and remain accessible.
 
-:::note Client-specified artifact locations
+Client-specified artifact locations
 
 When workspaces are enabled, client-supplied `artifact_location` values are rejected to prevent bypassing workspace isolation. The server automatically manages artifact locations to ensure proper isolation.
 
-:::
-
 ## Quick Start[​](#quick-start "Direct link to Quick Start")
 
-:::info Backend and enablement Workspaces require the SQL backend (file backend not supported). Enable with `MLFLOW_ENABLE_WORKSPACES=1` and configure a workspace provider (the default SQL provider is used when one is not specified). :::
+Backend and enablement
+
+Workspaces require the SQL backend (file backend not supported). Enable with `MLFLOW_ENABLE_WORKSPACES=1` and configure a workspace provider (the default SQL provider is used when one is not specified).
 
 Enable workspaces when starting the MLflow server:
 

@@ -4,7 +4,9 @@
 
 [MLflow Tracing](/docs/latest/genai/tracing.md) provides automatic tracing capability for [Goose](https://github.com/block/goose), an open-source AI agent by Block that automates engineering tasks on your local machine. MLflow supports tracing for Goose through the [OpenTelemetry](/docs/latest/genai/tracing/opentelemetry.md) integration.
 
-:::tip What is Goose? [Goose](https://block.github.io/goose/) is an open-source, on-device AI agent built by Block. It goes beyond code suggestions — Goose can autonomously write and execute code, manage files, run shell commands, interact with APIs, browse the web, and orchestrate pipelines. It works with any LLM provider and is extensible through [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) servers. :::
+What is Goose?
+
+[Goose](https://block.github.io/goose/) is an open-source, on-device AI agent built by Block. It goes beyond code suggestions — Goose can autonomously write and execute code, manage files, run shell commands, interact with APIs, browse the web, and orchestrate pipelines. It works with any LLM provider and is extensible through [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) servers.
 
 ## Step 1: Install Goose[​](#step-1-install-goose "Direct link to Step 1: Install Goose")
 
@@ -38,7 +40,9 @@ mlflow server --port 5000
 
 This example uses SQLite as the backend store. To use other types of SQL databases such as PostgreSQL, MySQL, and MSSQL, change the store URI as described in the [backend store documentation](/docs/latest/self-hosting/architecture/backend-store.md).
 
-:::tip Managed MLflow For a fully managed experience with built-in authentication, scalable storage, and team collaboration, [try Managed MLflow for free](/docs/latest/genai/getting-started/databricks-trial.md). :::
+Managed MLflow
+
+For a fully managed experience with built-in authentication, scalable storage, and team collaboration, [try Managed MLflow for free](/docs/latest/genai/getting-started/databricks-trial.md).
 
 ## Step 3: Set Environment Variables[​](#step-3-set-environment-variables "Direct link to Step 3: Set Environment Variables")
 
@@ -52,15 +56,15 @@ export OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:5000
 export OTEL_EXPORTER_OTLP_HEADERS=x-mlflow-experiment-id=0
 ```
 
-:::note About `x-mlflow-experiment-id` The `x-mlflow-experiment-id` header tells MLflow which experiment to associate the traces with. You can use `0` for the default experiment, or specify a custom experiment ID. To create a new experiment and get its ID, run:
+About `x-mlflow-experiment-id`
+
+The `x-mlflow-experiment-id` header tells MLflow which experiment to associate the traces with. You can use `0` for the default experiment, or specify a custom experiment ID. To create a new experiment and get its ID, run:
 
 bash
 
 ```
 mlflow experiments create --experiment-name "goose-traces"
 ```
-
-:::
 
 To export only traces (and disable metrics/logs export), you can optionally set:
 

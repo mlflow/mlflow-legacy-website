@@ -4,7 +4,7 @@
 
 MLflow is fully open-source. Thousands of users and organizations run their own MLflow instances to meet their specific needs. Being open-source and trusted by the popular cloud providers, MLflow is the best choice for teams/organizations that worry about vendor lock-in.
 
-:::warning Default Storage Backend Change
+Default Storage Backend Change
 
 As of MLflow 3.7.0, the default tracking backend has changed from file-based storage (`./mlruns`) to SQLite database (`sqlite:///mlflow.db`) for better performance and reliability.
 
@@ -13,8 +13,6 @@ As of MLflow 3.7.0, the default tracking backend has changed from file-based sto
 **New users:** New MLflow servers will use SQLite by default. To use file-based storage instead, set `MLFLOW_TRACKING_URI=./mlruns` or specify `--backend-store-uri ./mlruns` when starting the server.
 
 For more details and migration guidance, see [GitHub Issue #18534](https://github.com/mlflow/mlflow/issues/18534).
-
-:::
 
 ## The Quickest Path: Run `mlflow` Command[​](#the-quickest-path-run-mlflow-command "Direct link to the-quickest-path-run-mlflow-command")
 
@@ -93,7 +91,7 @@ Read the instructions [here](https://github.com/mlflow/mlflow/tree/master/docker
 
 ### Kubernetes[​](#kubernetes "Direct link to Kubernetes")
 
-MLflow provides an official Helm chart for deploying on Kubernetes. See the [charts directory](https://github.com/mlflow/mlflow/tree/master/charts) for installation instructions, configuration options, and examples.
+MLflow provides an official Helm chart for deploying on Kubernetes. See the [Kubernetes Helm Deployment guide](/docs/latest/self-hosting/kubernetes-helm.md) for step-by-step installation instructions, configuration options, and production examples.
 
 Alternatively, a third-party chart is also available via [Community Helm Charts](https://artifacthub.io/packages/helm/community-charts/mlflow).
 
@@ -129,11 +127,9 @@ MLflow support [username/password login](/docs/latest/self-hosting/security/basi
 
 MLflow also provides built-in [network protection](/docs/latest/self-hosting/security/network.md) middleware to protect your tracking server from network exposure.
 
-:::tip Try Managed MLflow
+Try Managed MLflow
 
 Need highly secure MLflow server? Check out [Databricks Managed MLflow](https://www.databricks.com/product/managed-mlflow) to get fully managed MLflow servers with unified governance and security.
-
-:::
 
 ## FAQs[​](#faqs "Direct link to FAQs")
 

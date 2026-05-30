@@ -50,11 +50,9 @@ Update the metrics to use the new built-in or custom scorers offered by MLflow 3
 
 Execute the evaluation and make sure the results are as expected.
 
-:::tip Before you start the migration
+Before you start the migration
 
 Before starting the migration, we highly recommend you to visit the [Evaluation Guide](/docs/latest/genai/eval-monitor.md) and go through the [Quickstart](/docs/latest/genai/eval-monitor/quickstart.md) to get a sense of the new evaluation suite. Basic understanding of the concepts will help you to migrate your existing workload smoothly.
-
-:::
 
 ### 1. Wrap Your Model in a Function[​](#1-wrap-your-model-in-a-function "Direct link to 1. Wrap Your Model in a Function")
 

@@ -9,16 +9,7 @@ Route [Claude Code](https://docs.anthropic.com/en/docs/claude-code) through the 
 
 ## Step 1: Create an Anthropic Endpoint[​](#step-1-create-an-anthropic-endpoint "Direct link to Step 1: Create an Anthropic Endpoint")
 
-Navigate to the **AI Gateway** tab at `http://localhost:5000/#/gateway` and click **Create Endpoint**.
-
-* **Provider:** Anthropic
-* **Model:** choose any model as the actual model is selected by Claude CLI.
-* **Endpoint name:** choose a name, e.g. `my-claude-endpoint`
-* **LLM Connection:** select an existing connection or create a new one (see [Create an LLM Connection](/docs/latest/genai/governance/ai-gateway/api-keys/create-and-manage.md))
-
-tip
-
-The server-side API key in the LLM Connection can be set to a dummy value (e.g. `dummy`). The gateway detects Claude Code's `User-Agent` and forwards the client's own credentials, either your Anthropic subscription or their own API key, to the upstream provider instead.
+Navigate to the **AI Gateway** tab at `http://localhost:5000/#/gateway` and click **Claude Code** in the quick start. Then click "create" to create an endpoint. The endpoint name is pre-filled as `claude-code` — you can change it, but make sure to use the same name in the next step.
 
 ## Step 2: Configure Environment Variables[​](#step-2-configure-environment-variables "Direct link to Step 2: Configure Environment Variables")
 
@@ -27,7 +18,7 @@ Set the following environment variables so Claude Code routes through the gatewa
 bash
 
 ```
-export ANTHROPIC_BASE_URL="http://localhost:5000/gateway/proxy/my-claude-endpoint"
+export ANTHROPIC_BASE_URL="http://localhost:5000/gateway/proxy/claude-code"
 ```
 
 ## Step 3: Run Claude Code[​](#step-3-run-claude-code "Direct link to Step 3: Run Claude Code")

@@ -275,4 +275,6 @@ with mlflow.start_run():
     )
 ```
 
-:::warning attention The `stop` parameter can be used to specify the stop sequence for the `llm/v1/chat` and `llm/v1/completions` tasks. We emulate the behavior of the `stop` parameter in the OpenAI APIs by passing the [stopping\_criteria](https://huggingface.co/docs/transformers/main_classes/text_generation#transformers.GenerationMixin.generate.stopping_criteria) to the Transformers pipeline, with the token IDs of the given stop sequence. However, the behavior may not be stable because the tokenizer does not always generate the same token IDs for the same sequence in different sentences, especially for `sentence-piece` based tokenizers. :::
+attention
+
+The `stop` parameter can be used to specify the stop sequence for the `llm/v1/chat` and `llm/v1/completions` tasks. We emulate the behavior of the `stop` parameter in the OpenAI APIs by passing the [stopping\_criteria](https://huggingface.co/docs/transformers/main_classes/text_generation#transformers.GenerationMixin.generate.stopping_criteria) to the Transformers pipeline, with the token IDs of the given stop sequence. However, the behavior may not be stable because the tokenizer does not always generate the same token IDs for the same sequence in different sentences, especially for `sentence-piece` based tokenizers.

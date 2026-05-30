@@ -82,7 +82,9 @@ with mlflow.start_run():
 
 Autologging captures all model parameters, training metrics, the trained model, and model signatures.
 
-:::tip Tracking Server Setup Running locally? MLflow stores experiments in the current directory by default. For team collaboration or remote tracking, **[set up a tracking server](/docs/latest/ml/tracking/tutorials/remote-server.md)**. :::
+Tracking Server Setup
+
+Running locally? MLflow stores experiments in the current directory by default. For team collaboration or remote tracking, **[set up a tracking server](/docs/latest/ml/tracking/tutorials/remote-server.md)**.
 
 ## Autologging[​](#autologging "Direct link to Autologging")
 
@@ -293,7 +295,9 @@ with mlflow.start_run():
     mlflow.log_metric("best_accuracy", study.best_value)
 ```
 
-:::note Nested Runs The `nested=True` parameter creates child runs for each trial under the parent run, enabling hierarchical organization of hyperparameter tuning experiments. Learn more about **[hierarchical runs](/docs/latest/ml/tracking/tracking-api.md#hierarchical-runs-with-parent-child-relationships)**. :::
+Nested Runs
+
+The `nested=True` parameter creates child runs for each trial under the parent run, enabling hierarchical organization of hyperparameter tuning experiments. Learn more about **[hierarchical runs](/docs/latest/ml/tracking/tracking-api.md#hierarchical-runs-with-parent-child-relationships)**.
 
 ## Learn More[​](#learn-more "Direct link to Learn More")
 

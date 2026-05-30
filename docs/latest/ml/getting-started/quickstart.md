@@ -4,7 +4,9 @@ info
 
 Looking for using MLflow for LLMs/Agent development? Checkout the [MLflow for GenAI](/docs/latest/genai.md) documentation instead. This guide is intended for data scientists who train traditional machine learning models, such as decision trees.
 
-:::tip MLflow Assistant Need help setting up tracking? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that can help you set up MLflow tracking for your project. :::
+MLflow Assistant
+
+Need help setting up tracking? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that can help you set up MLflow tracking for your project.
 
 Welcome to MLflow! The purpose of this quickstart is to provide a quick guide to the most essential core APIs of MLflow Tracking. In just a few minutes of following along with this quickstart, you will learn:
 

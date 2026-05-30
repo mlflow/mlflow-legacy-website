@@ -1,10 +1,14 @@
 # Pickle-Free Model format
 
-:::note Experimental This feature is experimental and may change in future releases. :::
+Experimental
+
+This feature is experimental and may change in future releases.
 
 Saving models with Python's `pickle` or `cloudpickle` relies on Python's object serialization mechanism, which can execute arbitrary code during deserialization. MLflow supports safer **pickle-free** saving formats for several model flavors. Prefer these formats when possible.
 
-:::warning Upcoming Default Behavior Change Pickle-free saving formats will become the **default** in an upcoming MLflow release. **Most users (scikit-learn, LightGBM, LangChain, custom Python) will see no breaking change.** PyTorch users should review the [requirements](#pickle-free-format-for-pytorch-model) — `input_example` will be required and `torch.jit.ScriptModule` is not supported. To avoid getting affected by the change, pin the MLflow version or specify `serialization_format="pickle"` in the model logging code. :::
+Upcoming Default Behavior Change
+
+Pickle-free saving formats will become the **default** in an upcoming MLflow release. **Most users (scikit-learn, LightGBM, LangChain, custom Python) will see no breaking change.** PyTorch users should review the [requirements](#pickle-free-format-for-pytorch-model) — `input_example` will be required and `torch.jit.ScriptModule` is not supported. To avoid getting affected by the change, pin the MLflow version or specify `serialization_format="pickle"` in the model logging code.
 
 ## Pickle-free format for Scikit-learn model[​](#pickle-free-format-for-scikit-learn-model "Direct link to Pickle-free format for Scikit-learn model")
 
@@ -108,13 +112,13 @@ See [`mlflow.sklearn.log_model()`](/docs/latest/api_reference/python_api/mlflow.
 
 When saving a PyTorch model, saving with `serialization_format="pt2"` uses `torch.export.save` and stores the model as a traced graph instead of pickle serialization format.
 
-:::danger Requirements and Limitations
+Requirements and Limitations
 
 * `torch` >= 2.4
 * An **input\_example** is required (and only `Tensor` type inputs are supported for the exported model)
 * Not supported for `torch.jit.ScriptModule` models
 * Model weights **cannot be transferred between devices** after loading. If the model is saved with weights on GPU device 0, it must also be loaded onto GPU device 0 — not CPU or a different GPU.
-* To avoid these limitations, use the pickle-based serialization by setting `serialization_format="pickle"`. :::
+* To avoid these limitations, use the pickle-based serialization by setting `serialization_format="pickle"`.
 
 python
 

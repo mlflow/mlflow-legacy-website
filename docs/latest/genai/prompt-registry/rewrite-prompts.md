@@ -2,15 +2,13 @@
 
 When migrating to a new language model, you often discover that your carefully crafted prompts don't work as well with the new model. MLflow's [`mlflow.genai.optimize_prompts()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.optimize_prompts) API helps you **automatically rewrite prompts** to maintain output quality when switching models, using your existing application's outputs as training data.
 
-:::tip Key Benefits
+Key Benefits
 
 * **Model Migration**: Seamlessly switch between language models while maintaining output consistency
 * **Automatic Optimization**: Automatically rewrites prompts based on your existing data
 * **No Ground Truth Requirement**: No human labeling is required if you optimize prompts based on the existing outputs
 * **Trace-Aware**: Leverages MLflow tracing to understand prompt usage patterns
 * **Flexible**: Works with any function that uses MLflow Prompt Registry
-
-:::
 
 Version Requirements
 

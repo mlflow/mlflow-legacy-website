@@ -1,6 +1,8 @@
 # Deep Learning Quickstart
 
-:::tip MLflow Assistant Need help setting up tracking? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that can help you set up MLflow tracking for your project. :::
+MLflow Assistant
+
+Need help setting up tracking? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that can help you set up MLflow tracking for your project.
 
 ![MLflow UI System metrics page](/docs/latest/images/tutorials/introductory/deep-learning/ui-system-metrics.png)
 
