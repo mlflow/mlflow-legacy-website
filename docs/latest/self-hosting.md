@@ -91,7 +91,7 @@ Read the instructions [here](https://github.com/mlflow/mlflow/tree/master/docker
 
 ### Kubernetes[​](#kubernetes "Direct link to Kubernetes")
 
-MLflow provides an official Helm chart for deploying on Kubernetes. See the [charts directory](https://github.com/mlflow/mlflow/tree/master/charts) for installation instructions, configuration options, and examples.
+MLflow provides an official Helm chart for deploying on Kubernetes. See the [Kubernetes Helm Deployment guide](/docs/latest/self-hosting/kubernetes-helm.md) for step-by-step installation instructions, configuration options, and production examples.
 
 Alternatively, a third-party chart is also available via [Community Helm Charts](https://artifacthub.io/packages/helm/community-charts/mlflow).
 

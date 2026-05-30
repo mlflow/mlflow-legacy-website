@@ -324,6 +324,7 @@
 - [Deploying MLflow to AWS](/docs/latest/self-hosting/deploy-to-cloud/aws.md): MLflow core components include:
 - [Deploying MLflow to Azure](/docs/latest/self-hosting/deploy-to-cloud/azure.md): MLflow core components include:
 - [Deploying MLflow to Google Cloud platform](/docs/latest/self-hosting/deploy-to-cloud/gcp.md): MLflow core components include:
+- [Kubernetes Helm Deployment](/docs/latest/self-hosting/kubernetes-helm.md): Deploy MLflow on Kubernetes using the official Helm chart. Covers quick-start, production configuration, TLS, Ingress, Prometheus metrics, and more.
 - [Migrate from File Store to Database](/docs/latest/self-hosting/migrate-from-file-store.md): If you have existing data in a file-based backend (./mlruns), you can migrate it to a database using the built-in migration command.
 - [How to Upgrade MLflow](/docs/latest/self-hosting/migration.md): MLflow evolves rapidly to provide new features and improve the framework. This document outlines the steps to upgrade self-hosted MLflow servers to the latest version.
 - [Authentication with Username and Password](/docs/latest/self-hosting/security/basic-http-auth.md): MLflow supports basic HTTP authentication to enable access control over experiments, registered models, and scorers.

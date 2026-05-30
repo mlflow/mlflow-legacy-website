@@ -4,7 +4,7 @@
 
 [Strands Agents SDK](https://github.com/strands-agents/sdk-python) is an open‑source, model‑driven SDK developed by AWS that enables developers to create autonomous AI agents simply by defining a model, a set of tools, and a prompt in just a few lines of code.
 
-[MLflow Tracing](/docs/3.13.0/genai/tracing/integrations.md) provides automatic tracing capability for Strands Agents SDK. By enabling auto tracing for Strands Agents SDK by calling the [`mlflow.strands.autolog()`](/docs/3.13.0/api_reference/python_api/mlflow.strands.html#mlflow.strands.autolog) function, MLflow will capture traces for Agent invocation and log them to the active MLflow Experiment.
+[MLflow Tracing](/docs/3.13.0/genai/tracing/integrations.md) provides automatic tracing capability for Strands Agents SDK. By enabling auto tracing for Strands Agents SDK by calling the [`mlflow.strands.autolog()`](/docs/3.13.0/api_reference/python_api/mlflow.html#mlflow.strands.autolog) function, MLflow will capture traces for Agent invocation and log them to the active MLflow Experiment.
 
 python
 

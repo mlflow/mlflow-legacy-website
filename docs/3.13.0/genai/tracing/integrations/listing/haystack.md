@@ -4,7 +4,7 @@
 
 [Haystack](https://github.com/deepset-ai/haystack) is an open-source AI orchestration framework developed by deepset, designed to help Python developers build production-ready LLM-powered applications. It features a modular architecture - built around components and pipelines for building everything from retrieval-augmented generation (RAG) workflows to autonomous agentic systems and scalable search engines.
 
-[MLflow Tracing](/docs/3.13.0/genai/tracing/integrations.md) provides automatic tracing capability when using Haystack pipelines and components. When Haystack auto-tracing is enabled by calling the [`mlflow.haystack.autolog()`](/docs/3.13.0/api_reference/python_api/mlflow.haystack.html#mlflow.haystack.autolog) function, usage of Haystack pipelines and components will automatically record generated traces during interactive development.
+[MLflow Tracing](/docs/3.13.0/genai/tracing/integrations.md) provides automatic tracing capability when using Haystack pipelines and components. When Haystack auto-tracing is enabled by calling the [`mlflow.haystack.autolog()`](/docs/3.13.0/api_reference/python_api/mlflow.html#mlflow.haystack.autolog) function, usage of Haystack pipelines and components will automatically record generated traces during interactive development.
 
 python
 
