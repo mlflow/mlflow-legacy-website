@@ -130,10 +130,12 @@ results = mlflow.genai.evaluate(
 
 Multi-turn judges evaluate entire conversation sessions rather than individual turns. They require traces with session IDs and are experimental in MLflow 3.7.0. See [Track Users and Sessions](/docs/latest/genai/tracing/track-users-sessions.md)
 
-:::info Multi-Turn Evaluation Requirements Multi-turn judges require:
+Multi-Turn Evaluation Requirements
+
+Multi-turn judges require:
 
 1. **Session IDs**: Traces must have `mlflow.trace.session` metadata
-2. **List or DataFrame input**: Currently only supports pre-collected traces (no `predict_fn` support yet) :::
+2. **List or DataFrame input**: Currently only supports pre-collected traces (no `predict_fn` support yet)
 
 | Judge                                                                                                                                                 | What does it evaluate?                                                     | Requires Session? |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ----------------- |
@@ -145,7 +147,9 @@ Multi-turn judges evaluate entire conversation sessions rather than individual t
 | [KnowledgeRetention](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.KnowledgeRetention)\*\*                             | Does the assistant correctly retain information from earlier user inputs?  | Yes               |
 | [UserFrustration](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.UserFrustration)\*\*                                   | Is the user frustrated? Was the frustration resolved?                      | Yes               |
 
-:::note Availability Safety and RetrievalRelevance judges are currently only available in [Databricks managed MLflow](https://docs.databricks.com/mlflow3/genai/eval-monitor/) and will be open-sourced soon. :::
+Availability
+
+Safety and RetrievalRelevance judges are currently only available in [Databricks managed MLflow](https://docs.databricks.com/mlflow3/genai/eval-monitor/) and will be open-sourced soon.
 
 tip
 

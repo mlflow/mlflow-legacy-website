@@ -41,11 +41,9 @@ uv add 'mlflow[genai]>=3.10.0'
 uv run mlflow server
 ```
 
-:::tip What is the GenAI extra?
+What is the GenAI extra?
 
 The `[genai]` extra enables other powerful features such as [AI Gateway](/docs/latest/genai/governance/ai-gateway.md), [Automatic Evaluation](/docs/latest/genai/eval-monitor/automatic-evaluations.md), and [Prompt Optimization](/docs/latest/genai/prompt-registry/optimize-prompts.md). It is recommended to start your MLflow server with the extra installed, even if you don't need cost tracking.
-
-:::
 
 info
 

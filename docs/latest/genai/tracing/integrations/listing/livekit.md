@@ -4,13 +4,15 @@
 
 [MLflow Tracing](/docs/latest/genai/tracing.md) provides automatic tracing capability for [LiveKit Agents](https://github.com/livekit/agents), an open-source framework for building real-time multimodal AI applications. MLflow supports tracing for LiveKit Agents through the [OpenTelemetry](/docs/latest/genai/tracing/opentelemetry.md) integration.
 
-:::tip What is LiveKit Agents? LiveKit Agents is a framework for building real-time, multimodal AI applications. It enables developers to create voice-enabled AI assistants that can:
+What is LiveKit Agents?
+
+LiveKit Agents is a framework for building real-time, multimodal AI applications. It enables developers to create voice-enabled AI assistants that can:
 
 * Process speech-to-text (STT) in real-time
 * Generate responses using LLMs (OpenAI, Anthropic, etc.)
 * Convert text to speech (TTS) with natural voices
 * Handle voice activity detection (VAD)
-* Execute tools and function calls :::
+* Execute tools and function calls
 
 ## Step 1: Install Libraries[​](#step-1-install-libraries "Direct link to Step 1: Install Libraries")
 
@@ -64,7 +66,9 @@ export LIVEKIT_API_SECRET=your-api-secret
 export OPENAI_API_KEY=your-openai-api-key
 ```
 
-:::note About `x-mlflow-experiment-id` The `x-mlflow-experiment-id` header tells MLflow which experiment to associate the traces with. You can use `0` for the default experiment, or specify a custom experiment ID. To create a new experiment and get its ID, run:
+About `x-mlflow-experiment-id`
+
+The `x-mlflow-experiment-id` header tells MLflow which experiment to associate the traces with. You can use `0` for the default experiment, or specify a custom experiment ID. To create a new experiment and get its ID, run:
 
 bash
 
@@ -72,9 +76,11 @@ bash
 mlflow experiments create --experiment-name "my-livekit-experiment"
 ```
 
-This will output the experiment ID which you can use in the header. :::
+This will output the experiment ID which you can use in the header.
 
-:::tip Free LiveKit Cloud Account [LiveKit Cloud](https://cloud.livekit.io) offers a free tier with no credit card required. Sign up to get your `LIVEKIT_URL`, `LIVEKIT_API_KEY`, and `LIVEKIT_API_SECRET`. :::
+Free LiveKit Cloud Account
+
+[LiveKit Cloud](https://cloud.livekit.io) offers a free tier with no credit card required. Sign up to get your `LIVEKIT_URL`, `LIVEKIT_API_KEY`, and `LIVEKIT_API_SECRET`.
 
 ## Step 4: Create Your Voice Agent[​](#step-4-create-your-voice-agent "Direct link to Step 4: Create Your Voice Agent")
 

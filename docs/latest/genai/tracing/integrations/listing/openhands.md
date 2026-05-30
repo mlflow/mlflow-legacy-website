@@ -171,7 +171,7 @@ MLflow automatically tracks token usage for each LLM call within OpenHands agent
 
 ![OpenHands Token Usage](/docs/latest/images/llms/openhands/openhands-token-usage.png)
 
-:::tip Governing OpenHands Agents with AI Gateway
+Governing OpenHands Agents with AI Gateway
 
 [AI Gateway](/docs/latest/genai/governance/ai-gateway.md) provides centralized governance for all LLM traffic from OpenHands, including budget control, usage tracking, and secret management.
 
@@ -195,8 +195,6 @@ This gives you:
 * **Usage tracking** - every LLM call is logged with token-level cost visibility
 * **Secret management** - store API keys securely in the gateway instead of your scripts
 * **Fallback routing** - define fallback chains for provider availability
-
-:::
 
 ## Next Steps[​](#next-steps "Direct link to Next Steps")
 

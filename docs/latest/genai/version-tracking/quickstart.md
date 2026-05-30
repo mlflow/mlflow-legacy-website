@@ -6,7 +6,9 @@ Build and track a LangChain-based chatbot with MLflow's version management capab
 
 ### Install Required Packages[​](#install-required-packages "Direct link to Install Required Packages")
 
-:::note MLflow 3 Required This quickstart requires MLflow version 3.0 or higher for full LLM and AI agent functionality. :::
+MLflow 3 Required
+
+This quickstart requires MLflow version 3.0 or higher for full LLM and AI agent functionality.
 
 bash
 

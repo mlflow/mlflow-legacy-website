@@ -1,8 +1,12 @@
 # Models From Code
 
-:::info availability Models from Code is available in MLflow 2.12.2 and above. For earlier versions, use the legacy serialization methods outlined in the [Custom Python Model](/docs/latest/ml/model.md#custom-python-models) documentation. :::
+availability
 
-:::note target use cases Models from Code is designed for models without optimized weights (GenAI Agents, applications, custom logic). For traditional ML/DL models with trained weights, use the built-in `log_model()` APIs or custom `PythonModel` with `mlflow.pyfunc.log_model()`. :::
+Models from Code is available in MLflow 2.12.2 and above. For earlier versions, use the legacy serialization methods outlined in the [Custom Python Model](/docs/latest/ml/model.md#custom-python-models) documentation.
+
+target use cases
+
+Models from Code is designed for models without optimized weights (GenAI Agents, applications, custom logic). For traditional ML/DL models with trained weights, use the built-in `log_model()` APIs or custom `PythonModel` with `mlflow.pyfunc.log_model()`.
 
 Models from Code transforms how you define, store, and load custom models and applications. Instead of relying on complex serialization, it saves your model as readable Python scripts, making development more transparent and debugging significantly easier.
 
@@ -42,9 +46,13 @@ Only include imports you actually use. MLflow infers requirements from all top-l
 
 Non-pip installable packages must be specified via `code_paths`. The system doesn't automatically capture external references beyond standard package imports.
 
-:::tip development workflow Use a linter to identify unused imports while developing. This keeps your model's requirements clean and deployment lightweight. :::
+development workflow
 
-:::warning security consideration Model code is stored in plain text. Never include sensitive information like API keys or passwords in your scripts. Use environment variables or secure configuration management instead. :::
+Use a linter to identify unused imports while developing. This keeps your model's requirements clean and deployment lightweight.
+
+security consideration
+
+Model code is stored in plain text. Never include sensitive information like API keys or passwords in your scripts. Use environment variables or secure configuration management instead.
 
 ## Development in Jupyter Notebooks[​](#development-in-jupyter-notebooks "Direct link to Development in Jupyter Notebooks")
 

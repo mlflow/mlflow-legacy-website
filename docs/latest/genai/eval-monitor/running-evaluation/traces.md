@@ -400,11 +400,9 @@ email_scorers = [
 ]
 ```
 
-:::tip Scoring Intermediate Information in Traces
+Scoring Intermediate Information in Traces
 
 Scorers have access to the complete MLflow traces, including spans, attributes, and outputs. This allows you to evaluate the agent's behavior precisely, not only the final output, such as the **tool call trajectory**, the **sub-agents routing**, the **retrieved document recall**, etc. See [Parsing Traces for Scoring](/docs/latest/genai/eval-monitor/scorers/custom.md#parsing-traces-for-scoring) for more details.
-
-:::
 
 ### Step 3: Evaluate trace quality[​](#step-3-evaluate-trace-quality "Direct link to Step 3: Evaluate trace quality")
 

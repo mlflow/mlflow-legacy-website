@@ -1104,7 +1104,9 @@ curl -X POST -H "Content-Type: application/json" \
 
 One of the most common issues experienced during model deployment centers around dependency issues. When logging or saving your model, MLflow tries to infer the model dependencies and save them as part of the MLflow Model metadata. However, this might not always be complete and miss some dependencies e.g. \[extras] dependencies for certain libraries. This can cause errors when serving your model, such as "ModuleNotFoundError" or "ImportError". Below are some steps that can help to diagnose and fix missing dependency errors.
 
-:::tip hint To reduce the possibility of dependency errors, you can add `input_example` when saving your model. This enables MLflow to perform a model prediction before saving the model, thereby capturing the dependencies used during the prediction. Please refer to [Model Input Example](/docs/latest/ml/model/signatures.md) for additional, detailed usage of this parameter. :::
+hint
+
+To reduce the possibility of dependency errors, you can add `input_example` when saving your model. This enables MLflow to perform a model prediction before saving the model, thereby capturing the dependencies used during the prediction. Please refer to [Model Input Example](/docs/latest/ml/model/signatures.md) for additional, detailed usage of this parameter.
 
 #### 1. Check the missing dependencies[​](#1-check-the-missing-dependencies "Direct link to 1. Check the missing dependencies")
 

@@ -81,13 +81,17 @@ note
 
 When a model registered in the MLflow Model Registry is downloaded, a YAML file named `registered_model_meta` is added to the model directory on the downloader's side. This file contains the name and version of the model referenced in the MLflow Model Registry, and will be used for deployment and other purposes.
 
-:::warning attention If you log a model within Databricks, MLflow also creates a `metadata` subdirectory within the model directory. This subdirectory contains the lightweight copy of aforementioned metadata files for internal use. :::
+attention
+
+If you log a model within Databricks, MLflow also creates a `metadata` subdirectory within the model directory. This subdirectory contains the lightweight copy of aforementioned metadata files for internal use.
 
 ### Environment variables file[​](#environment-variables-file "Direct link to Environment variables file")
 
 MLflow records the environment variables that are used during model inference in `environment_variables.txt` file when logging a model.
 
-:::warning attention `environment_variables.txt` file **only contains names** of the environment variables that are used during model inference, **values are not stored**. :::
+attention
+
+`environment_variables.txt` file **only contains names** of the environment variables that are used during model inference, **values are not stored**.
 
 Currently MLflow only logs the environment variables whose name contains any of the following keywords:
 
@@ -175,7 +179,9 @@ text
 TEST_API_KEY
 ```
 
-:::warning attention Before you deploy a model to a serving endpoint, **review the environment\_variables.txt file** to ensure all necessary environment variables for model inference are set. Note that **not all environment variables listed in the file are always required for model inference.** For detailed instructions on setting environment variables on a databricks serving endpoint, refer to [this guidance](https://docs.databricks.com/en/machine-learning/model-serving/store-env-variable-model-serving.html#add-plain-text-environment-variables). :::
+attention
+
+Before you deploy a model to a serving endpoint, **review the environment\_variables.txt file** to ensure all necessary environment variables for model inference are set. Note that **not all environment variables listed in the file are always required for model inference.** For detailed instructions on setting environment variables on a databricks serving endpoint, refer to [this guidance](https://docs.databricks.com/en/machine-learning/model-serving/store-env-variable-model-serving.html#add-plain-text-environment-variables).
 
 note
 

@@ -20,7 +20,9 @@ Model signatures and input examples provide crucial benefits:
 * **Deployment Safety**: Enable MLflow deployment tools to validate requests automatically
 * **UI Integration**: Allow MLflow UI to display clear model requirements
 
-:::warning Databricks Unity Catalog Requirement **Model signatures are REQUIRED for registering models in Databricks Unity Catalog.** Unity Catalog enforces concrete type definitions for all registered models and will reject models without proper signatures. Always include a signature when logging models that you plan to register in Databricks environments.
+Databricks Unity Catalog Requirement
+
+**Model signatures are REQUIRED for registering models in Databricks Unity Catalog.** Unity Catalog enforces concrete type definitions for all registered models and will reject models without proper signatures. Always include a signature when logging models that you plan to register in Databricks environments.
 
 python
 
@@ -45,8 +47,6 @@ mlflow.sklearn.log_model(
 
 mlflow.sklearn.log_model(model, name="my_model")  # No signature
 ```
-
-:::
 
 ## Quick Start: Adding Signatures to Your Models[​](#quick-start-adding-signatures-to-your-models "Direct link to Quick Start: Adding Signatures to Your Models")
 
@@ -98,7 +98,9 @@ MLflow automatically:
 2. **Validates the model works with the example**
 3. **Stores both signature and example with your model**
 
-:::info Automatic Signature Inference MLflow automatically generates model signatures when you provide an `input_example` during model logging. This works for all model flavors and is the recommended approach for most use cases. :::
+Automatic Signature Inference
+
+MLflow automatically generates model signatures when you provide an `input_example` during model logging. This works for all model flavors and is the recommended approach for most use cases.
 
 ## Understanding Model Signatures[​](#understanding-model-signatures "Direct link to Understanding Model Signatures")
 
@@ -224,7 +226,9 @@ np.array([[[1, 2, 3], [4, 5, 6]], [[7, 8, 9], [1, 2, 3]]])  # Shape: (2, 2, 3)
 
 ## Type Hints for Model Signatures[​](#type-hints-for-model-signatures "Direct link to Type Hints for Model Signatures")
 
-:::info Version Compatibility Type hint support was introduced in MLflow 2.20.0. If you are using an earlier version of MLflow, see [the Working with Signatures](#working-with-signatures) section. :::
+Version Compatibility
+
+Type hint support was introduced in MLflow 2.20.0. If you are using an earlier version of MLflow, see [the Working with Signatures](#working-with-signatures) section.
 
 You can use Python type hints to automatically define model signatures and enable data validation. This provides a more Pythonic way to specify your model's interface while getting automatic validation and schema inference.
 
@@ -306,7 +310,9 @@ with mlflow.start_run():
 
 ### Input Type Requirements[​](#input-type-requirements "Direct link to Input Type Requirements")
 
-:::warning Signature Interface Input signatures must be `List[...]` since PythonModel expects batch data:
+Signature Interface
+
+Input signatures must be `List[...]` since PythonModel expects batch data:
 
 python
 
@@ -335,8 +341,6 @@ def predict(self, model_input: str) -> str: ...
 
 def predict(self, model_input: Message) -> Dict: ...
 ```
-
-:::
 
 ### Primitive Types[​](#primitive-types "Direct link to Primitive Types")
 
@@ -726,7 +730,9 @@ except Exception as e:
 
 ### Validation Scope[​](#validation-scope "Direct link to Validation Scope")
 
-:::note Output Validation MLflow validates **input data** against type hints but does **not validate model output**. The output type hint is used only for model signature inference. :::
+Output Validation
+
+MLflow validates **input data** against type hints but does **not validate model output**. The output type hint is used only for model signature inference.
 
 ### TypeFromExample[​](#typefromexample "Direct link to TypeFromExample")
 
@@ -1047,11 +1053,11 @@ class MyModel(mlflow.pyfunc.PythonModel):
 * Use `TypeFromExample` when you want flexibility without explicit typing
 * Test validation locally before deployment
 
-:::warning Important Notes
+Important Notes
 
 * **Never pass explicit `signature` parameter** when using type hints - MLflow will use the inferred signature and warn if they don't match
 * **Union types become AnyType** - use Pydantic discriminated unions for proper validation
-* **Input examples are required** for `TypeFromExample` and legacy type hints :::
+* **Input examples are required** for `TypeFromExample` and legacy type hints
 
 ## Data Types and Examples[​](#data-types-and-examples "Direct link to Data Types and Examples")
 
@@ -1063,7 +1069,9 @@ class MyModel(mlflow.pyfunc.PythonModel):
 
 **Python to MLflow type mappings:**
 
-:::note Type Restrictions Usage of these types support only scalar definitions or 1-dimensional Arrays. Mixed types are not permitted. :::
+Type Restrictions
+
+Usage of these types support only scalar definitions or 1-dimensional Arrays. Mixed types are not permitted.
 
 | Python Type  | MLflow Type | Example                      | Notes           |
 | ------------ | ----------- | ---------------------------- | --------------- |
@@ -1123,15 +1131,13 @@ pd.DataFrame({
 
 ### Compatibility Notes[​](#compatibility-notes "Direct link to Compatibility Notes")
 
-:::warning version compatibility
+version compatibility
 
 **Version Requirements:**
 
 * **Array and Object types**: Require MLflow ≥ 2.10.0
 * **Spark ML vectors**: Require MLflow ≥ 2.15.0
 * **AnyType**: Requires MLflow ≥ 2.19.0
-
-:::
 
 ### NumPy Data Types[​](#numpy-data-types "Direct link to NumPy Data Types")
 

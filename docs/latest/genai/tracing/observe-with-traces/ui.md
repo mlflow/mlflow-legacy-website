@@ -8,11 +8,9 @@ After logging your traces, you can view them in the MLflow UI, under the "Traces
 
 The trace table you see first when you open the "Traces" page includes high-level information about the traces, such as the trace ID, the inputs / outputs of the root span, and more. The table displays the following columns.
 
-:::tip Not Seeing All Columns?
+Not Seeing All Columns?
 
 Trace table does not display all fields by default. Some columns are hidden by default and can be enabled via the column selector.
-
-:::
 
 | Column         | Description                                                                                                                                                   | Data Source                                                                                                                                                                                                                                                                                        |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -33,11 +31,9 @@ Trace table does not display all fields by default. Some columns are hidden by d
 | Assessments    | Feedback scores logged to the trace, either by a human or an automated evaluation.                                                                            | See [Collecting User Feedback](/docs/latest/genai/tracing/collect-user-feedback.md) and [Evaluating Traces](/docs/latest/genai/eval-monitor.md) for how to log assessments.                                                                                                                        |
 | Expectations   | Ground truth values annotated to the trace.                                                                                                                   | See [Ground Truth Expectations](/docs/latest/genai/assessments/expectations.md) for how to log expectations.                                                                                                                                                                                       |
 
-:::info Traces ingested via OTLP
+Traces ingested via OTLP
 
 Traces ingested through the [OTLP endpoint](/docs/latest/genai/tracing/opentelemetry/ingest.md) go through automatic attribute translation to derive these columns from framework-specific OpenTelemetry attributes. MLflow supports translation for OpenTelemetry GenAI Semantic Conventions, and various frameworks including OpenLLMetry, OpenInference, Langfuse, and more. Please see the [Attribute Mapping Reference](/docs/latest/genai/tracing/opentelemetry/attribute-mapping.md) for details on how each framework's attributes are mapped to these columns.
-
-:::
 
 ## Browsing Single Trace[​](#browsing-single-trace "Direct link to Browsing Single Trace")
 
@@ -53,7 +49,9 @@ By clicking on a trace ID `tr-...` or the request link in the trace table, you c
 
 ![Browsing single trace](/docs/latest/images/llms/tracing/trace-ui-detail-view.png)
 
-:::tip Multimodal Content and Attachments MLflow renders images, audio, and supported attachment types inline in the trace viewer. For supported formats, framework examples, and how to use the `Attachment` class for binary content, see [Multimodal Content and Attachments in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md). :::
+Multimodal Content and Attachments
+
+MLflow renders images, audio, and supported attachment types inline in the trace viewer. For supported formats, framework examples, and how to use the `Attachment` class for binary content, see [Multimodal Content and Attachments in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md).
 
 ## Performing Actions[​](#performing-actions "Direct link to Performing Actions")
 
@@ -70,6 +68,12 @@ Using the  search bar in the UI, you can easily filter your traces based on name
 The  filter dropdown allows you to filter the traces table by various criteria, such as state, name, user, session, tags, feedback values, and more. See [Filtering Traces](/docs/latest/genai/tracing/search-traces.md#filtering-traces-in-the-ui) for details.
 
 ![Searching traces](/docs/latest/images/llms/tracing/trace-ui-filter.png)
+
+### Viewing Trace Archival Status[​](#viewing-trace-archival-status "Direct link to Viewing Trace Archival Status")
+
+When trace archival is enabled for an experiment, MLflow shows an `Archive after: ...` badge on trace-focused experiment views so you can see the effective retention at a glance.
+
+Archived traces remain accessible, but searches that depend on span payloads stop working after those payloads move out of the tracking store. See [Archive Traces](/docs/latest/genai/tracing/observe-with-traces/archive-traces.md) for the retention model, scheduler behavior, and setup options.
 
 ### Deleting Traces[​](#deleting-traces "Direct link to Deleting Traces")
 

@@ -1,6 +1,8 @@
 # Evaluation Quickstart
 
-:::tip MLflow Assistant Need help setting up evaluation? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that can help you set up evaluation for your project. :::
+MLflow Assistant
+
+Need help setting up evaluation? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that can help you set up evaluation for your project.
 
 This quickstart guide will walk you through evaluating your LLM applications and AI agents with MLflow's comprehensive evaluation framework. In less than 5 minutes, you'll learn how to evaluate LLM outputs, use built-in and custom evaluation criteria, and analyze results in the MLflow UI.
 

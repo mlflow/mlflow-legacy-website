@@ -28,7 +28,7 @@ To use file-based storage, specify `--backend-store-uri ./mlruns` when starting 
 
 TO BE DEPRECATED SOON
 
-File system backend is in Keep-the-Light-On (KTLO) mode and is no longer receiving new feature updates. We strongly recommend using the database backend (now the default) for better performance and reliability. See [Migrate from File Store](/docs/latest/self-hosting/migrate-from-file-store.md) for how to migrate existing data.
+File system backend is in maintenance mode and will not receive further updates. We strongly recommend using the database backend (now the default) for better performance and reliability. See [Migrate from File Store](/docs/latest/self-hosting/migrate-from-file-store.md) for how to migrate existing data.
 
 ## Configure Backend Store[​](#configure-backend-store "Direct link to Configure Backend Store")
 
@@ -49,15 +49,19 @@ MLflow supports the following types of tracking URI for backend stores:
 * HTTP server (specified as `https://my-server:5000`), which is a server hosting an [MLflow tracking server](/docs/latest/self-hosting/architecture/tracking-server.md).
 * Databricks workspace (specified as `databricks` or as `databricks://<profileName>`, a [Databricks CLI profile](https://github.com/databricks/databricks-cli#installation)). Refer to Access the MLflow tracking server from outside Databricks [\[AWS\]](http://docs.databricks.com/applications/mlflow/access-hosted-tracking-server.html) [\[Azure\]](http://docs.microsoft.com/azure/databricks/applications/mlflow/access-hosted-tracking-server).
 
-:::warning database-requirements **Database-Backed Store Requirements**
+database-requirements
+
+**Database-Backed Store Requirements**
 
 When using database-backed stores, please note:
 
 * **Model Registry Integration**: [Model Registry](/docs/latest/ml/model-registry.md) functionality requires a database-backed store. See [this FAQ](/docs/latest/ml/tracking.md#tracking-with-model-registry) for more information.
 
-* **Schema Migrations**: `mlflow server` will fail against a database with an out-of-date schema. Always run `mlflow db upgrade [db_uri]` to upgrade your database schema before starting the server. Schema migrations can result in database downtime and may take longer on larger databases. **Always backup your database before running migrations.** :::
+* **Schema Migrations**: `mlflow server` will fail against a database with an out-of-date schema. Always run `mlflow db upgrade [db_uri]` to upgrade your database schema before starting the server. Schema migrations can result in database downtime and may take longer on larger databases. **Always backup your database before running migrations.**
 
-:::note parameter-limits In Sep 2023, we increased the max length for params recorded in a Run from 500 to 8k (but we limit param value max length to 6000 internally). [mlflow/2d6e25af4d3e\_increase\_max\_param\_val\_length](https://github.com/mlflow/mlflow/blob/master/mlflow/store/db_migrations/versions/2d6e25af4d3e_increase_max_param_val_length.py) is a non-invertible migration script that increases the cap in existing database to 8k. Please be careful if you want to upgrade and backup your database before upgrading. :::
+parameter-limits
+
+In Sep 2023, we increased the max length for params recorded in a Run from 500 to 8k (but we limit param value max length to 6000 internally). [mlflow/2d6e25af4d3e\_increase\_max\_param\_val\_length](https://github.com/mlflow/mlflow/blob/master/mlflow/store/db_migrations/versions/2d6e25af4d3e_increase_max_param_val_length.py) is a non-invertible migration script that increases the cap in existing database to 8k. Please be careful if you want to upgrade and backup your database before upgrading.
 
 ## Deletion Behavior[​](#deletion-behavior "Direct link to Deletion Behavior")
 

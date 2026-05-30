@@ -1,6 +1,8 @@
 # Tutorial: Getting Started with ChatModel
 
-:::warning attention Starting in MLflow 3.0.0, we recommend [`ResponsesAgent`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent) instead of [`ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel). See more details in the [ResponsesAgent Introduction](/docs/latest/genai/flavors/responses-agent-intro.md). :::
+attention
+
+Starting in MLflow 3.0.0, we recommend [`ResponsesAgent`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent) instead of [`ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel). See more details in the [ResponsesAgent Introduction](/docs/latest/genai/flavors/responses-agent-intro.md).
 
 MLflow's [`ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) class provides a standardized way to create production-ready conversational AI models. The resulting models are fully integrated with MLflow's tracking, evaluation, and lifecycle management capabilities. They can be shared with others in the MLflow Model Registry, deployed as a REST API, or loaded in a notebook for interactive use. Furthermore, they are compatible with the widely-adopted OpenAI chat API spec, making them easy to integrate with other AI systems and tools.
 

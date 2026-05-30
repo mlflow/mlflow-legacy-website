@@ -4,7 +4,9 @@
 
 [MLflow Tracing](/docs/latest/genai/tracing.md) provides automatic tracing capability for [VoltAgent](https://github.com/VoltAgent/voltagent), an open-source TypeScript framework for building AI agents. MLflow supports tracing for VoltAgent through the [OpenTelemetry](/docs/latest/genai/tracing/opentelemetry.md) integration.
 
-:::tip What is VoltAgent? VoltAgent is an open-source TypeScript framework that simplifies the development of AI agent applications by providing modular building blocks, standardized patterns, and abstractions. Whether you're creating chatbots, virtual assistants, automated workflows, or complex multi-agent systems, VoltAgent handles the underlying complexity, allowing you to focus on defining your agents' capabilities and logic. :::
+What is VoltAgent?
+
+VoltAgent is an open-source TypeScript framework that simplifies the development of AI agent applications by providing modular building blocks, standardized patterns, and abstractions. Whether you're creating chatbots, virtual assistants, automated workflows, or complex multi-agent systems, VoltAgent handles the underlying complexity, allowing you to focus on defining your agents' capabilities and logic.
 
 ## Step 1: Create a VoltAgent Project[​](#step-1-create-a-voltagent-project "Direct link to Step 1: Create a VoltAgent Project")
 
@@ -42,11 +44,13 @@ bash
 npm install @opentelemetry/sdk-trace-base @opentelemetry/exporter-trace-otlp-proto dotenv
 ```
 
-:::note MLflow Trace Translation MLflow automatically translates VoltAgent's semantic conventions for optimal UI visualization:
+MLflow Trace Translation
+
+MLflow automatically translates VoltAgent's semantic conventions for optimal UI visualization:
 
 * **Chat UI**: Converts VoltAgent's message format to standard chat format with `role` and `content` fields for rich message display
 * **Token Usage**: Extracts token metrics (`usage.prompt_tokens`, `usage.completion_tokens`) and displays them in the trace summary
-* **Span Types**: Maps VoltAgent spans (agent, llm, tool, memory) to MLflow span types for proper iconography and filtering :::
+* **Span Types**: Maps VoltAgent spans (agent, llm, tool, memory) to MLflow span types for proper iconography and filtering
 
 ## Step 4: Configure OpenTelemetry[​](#step-4-configure-opentelemetry "Direct link to Step 4: Configure OpenTelemetry")
 

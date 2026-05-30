@@ -25,15 +25,19 @@ Certain *TextGenerationPipeline* types, particularly instructional-based ones, m
 
 In the current version, audio and text-based large language models are supported for use with `pyfunc`, while computer vision, multi-modal, timeseries, reinforcement learning, and graph models are only supported for native type loading via [`mlflow.transformers.load_model()`](/docs/latest/api_reference/python_api/mlflow.transformers.html#mlflow.transformers.load_model)
 
-:::warning attention Not all `transformers` pipeline types are supported. See the table below for the list of currently supported Pipeline types that can be loaded as `pyfunc`.
+attention
 
-Future releases of MLflow will introduce `pyfunc` support for these additional types. :::
+Not all `transformers` pipeline types are supported. See the table below for the list of currently supported Pipeline types that can be loaded as `pyfunc`.
+
+Future releases of MLflow will introduce `pyfunc` support for these additional types.
 
 The table below shows the mapping of `transformers` pipeline types to the [python\_function (pyfunc) model flavor](/docs/latest/ml/model.md#pyfunc-model-flavor) data type inputs and outputs.
 
-:::warning important The inputs and outputs of the `pyfunc` implementation of these pipelines *are not guaranteed to match* the input types and output types that would return from a native use of a given pipeline type. If your use case requires access to scores, top\_k results, or other additional references within the output from a pipeline inference call, please use the native implementation by loading via [`mlflow.transformers.load_model()`](/docs/latest/api_reference/python_api/mlflow.transformers.html#mlflow.transformers.load_model) to receive the full output.
+important
 
-Similarly, if your use case requires the use of raw tensor outputs or processing of outputs through an external `processor` module, load the model components directly as a `dict` by calling [`mlflow.transformers.load_model()`](/docs/latest/api_reference/python_api/mlflow.transformers.html#mlflow.transformers.load_model) and specify the `return_type` argument as 'components'. :::
+The inputs and outputs of the `pyfunc` implementation of these pipelines *are not guaranteed to match* the input types and output types that would return from a native use of a given pipeline type. If your use case requires access to scores, top\_k results, or other additional references within the output from a pipeline inference call, please use the native implementation by loading via [`mlflow.transformers.load_model()`](/docs/latest/api_reference/python_api/mlflow.transformers.html#mlflow.transformers.load_model) to receive the full output.
+
+Similarly, if your use case requires the use of raw tensor outputs or processing of outputs through an external `processor` module, load the model components directly as a `dict` by calling [`mlflow.transformers.load_model()`](/docs/latest/api_reference/python_api/mlflow.transformers.html#mlflow.transformers.load_model) and specify the `return_type` argument as 'components'.
 
 | Pipeline Type                 | Input Type                          | Output Type                                                               |
 | ----------------------------- | ----------------------------------- | ------------------------------------------------------------------------- |
@@ -356,7 +360,9 @@ note
 
 The components that are logged can be retrieved in their original structure (a dictionary) by setting the attribute `return_type` to "components" in the `load_model()` API.
 
-:::warning attention Not all model types are compatible with the pipeline API constructor via component elements. Incompatible models will raise an `MLflowException` error stating that the model is missing the *name\_or\_path* attribute. In the event that this occurs, please construct the model directly via the `transformers.pipeline(<repo name>)` API and save the pipeline object directly. :::
+attention
+
+Not all model types are compatible with the pipeline API constructor via component elements. Incompatible models will raise an `MLflowException` error stating that the model is missing the *name\_or\_path* attribute. In the event that this occurs, please construct the model directly via the `transformers.pipeline(<repo name>)` API and save the pipeline object directly.
 
 python
 

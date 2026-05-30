@@ -6,11 +6,9 @@
 
 MLflow's Prophet integration provides experiment tracking, model versioning, and deployment capabilities for time series forecasting workflows.
 
-:::note No Autologging for Prophet
+No Autologging for Prophet
 
 Prophet does not support autologging to prevent overwhelming the tracking server. Time series forecasting often involves training hundreds or thousands of models (e.g., one per product or location), which would create excessive load on the tracking server if autologging were enabled. Use manual logging with bulk APIs for large-scale forecasting workflows.
-
-:::
 
 ## Why MLflow + Prophet?[​](#why-mlflow--prophet "Direct link to Why MLflow + Prophet?")
 
@@ -450,7 +448,7 @@ def train_hierarchical_forecasts(data_dict):
                 mlflow.prophet.log_model(pr_model=model, name=f"model_{series_name}")
 ```
 
-:::tip High-Volume Model Training
+High-Volume Model Training
 
 When training many Prophet models (e.g., for thousands of products), use bulk logging to reduce tracking server load:
 
@@ -495,8 +493,6 @@ with mlflow.start_run():
 
     mlflow.log_params(params_batch)
 ```
-
-:::
 
 ## Forecast Component Logging[​](#forecast-component-logging "Direct link to Forecast Component Logging")
 

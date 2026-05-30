@@ -1,6 +1,8 @@
 # Tutorial: Custom LLM and AI Agent Models using ChatModel
 
-:::warning attention Starting in MLflow 3.0.0, we recommend [`ResponsesAgent`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent) instead of [`ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel). See more details in the [ResponsesAgent Introduction](/docs/latest/genai/flavors/responses-agent-intro.md). :::
+attention
+
+Starting in MLflow 3.0.0, we recommend [`ResponsesAgent`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent) instead of [`ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel). See more details in the [ResponsesAgent Introduction](/docs/latest/genai/flavors/responses-agent-intro.md).
 
 The rapidly evolving landscape of LLM applications and AI agents presents exciting opportunities and integration challenges. To leverage the latest advancements effectively, developers need a framework that balances flexibility with standardization. MLflow addresses this need with the [`mlflow.pyfunc.ChatModel`](/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatModel) class introduced in [version 2.11.0](https://mlflow.org/releases/2.11.0#chatmodel-interface-for-a-unified-chat-experience-with-pyfunc-models), providing a consistent interface for LLM applications and AI agents while simplifying deployment and testing.
 

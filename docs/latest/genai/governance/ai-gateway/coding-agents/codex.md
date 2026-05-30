@@ -9,16 +9,7 @@ Route [OpenAI Codex](https://github.com/openai/codex) through the MLflow AI Gate
 
 ## Step 1: Create an OpenAI Endpoint[​](#step-1-create-an-openai-endpoint "Direct link to Step 1: Create an OpenAI Endpoint")
 
-Navigate to the **AI Gateway** tab at `http://localhost:5000/#/gateway` and click **Create Endpoint**.
-
-* **Provider:** OpenAI
-* **Model:** choose any model as the actual model is selected by Codex CLI
-* **Endpoint name:** choose a name, e.g. `my-codex-endpoint`
-* **LLM Connection:** select an existing connection or create a new one (see [Create an LLM Connection](/docs/latest/genai/governance/ai-gateway/api-keys/create-and-manage.md))
-
-tip
-
-The server-side API key in the LLM Connection can be set to a dummy value (e.g. `dummy`). The gateway detects Codex's `User-Agent` and forwards the client's own credentials.
+Navigate to the **AI Gateway** tab at `http://localhost:5000/#/gateway` and click **OpenAI Codex** in the quick start. Then click "create" to create an endpoint. The endpoint name is pre-filled as `codex` — you can change it, but make sure to use the same name in the next step.
 
 ## Step 2: Run Codex[​](#step-2-run-codex "Direct link to Step 2: Run Codex")
 
@@ -27,7 +18,7 @@ Configure Codex to point to the gateway base URL and run it.
 bash
 
 ```
-codex --config 'openai_base_url="http://localhost:5000/gateway/proxy/my-codex-endpoint/v1"'
+codex --config 'openai_base_url="http://localhost:5000/gateway/proxy/codex/v1"'
 ```
 
 For a persistent setup, add the same value to `~/.codex/config.toml`:
@@ -37,7 +28,7 @@ For a persistent setup, add the same value to `~/.codex/config.toml`:
 toml
 
 ```
-openai_base_url = "http://localhost:5000/gateway/openai/v1"
+openai_base_url = "http://localhost:5000/gateway/proxy/codex/v1
 ```
 
 Note that you need to authenticate with your API key instead of ChatGPT subscription.
