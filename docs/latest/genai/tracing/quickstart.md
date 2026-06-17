@@ -4,6 +4,18 @@ MLflow Assistant
 
 Need help setting up tracing? Try [MLflow Assistant](/docs/latest/genai/getting-started/try-assistant.md) - a powerful AI assistant that can add MLflow tracing to your project automatically.
 
+Set up Tracing with the MLflow CLI
+
+From inside your project's Git repository, run a single command to install the MLflow skills and instrument your app for tracing — no manual setup:
+
+bash
+
+```
+uvx mlflow@latest agent setup
+```
+
+Prefer to set things up manually? Read on below.
+
 This quickstart guide will walk you through setting up a simple LLM application with MLflow Tracing. In less than 10 minutes, you'll enable tracing, run a basic application, and explore the generated traces in the MLflow UI.
 
 ## Prerequisites[​](#prerequisites "Direct link to Prerequisites")
@@ -321,7 +333,7 @@ def chat_completion(message: list[dict], user_id: str, session_id: str):
 
     # Your chat logic here
 
-    return generate_response(message)
+    return f"Echo: {message[-1]['content'] if message else ''}"
 ```
 
 typescript

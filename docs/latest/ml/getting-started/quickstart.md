@@ -129,6 +129,10 @@ bash
 mlflow server --port 5000
 ```
 
+Running on Google Colab?
+
+If you are running this quickstart on Google Colab, the `mlflow server` command will start but the UI at `localhost:5000` will **not** be accessible in your browser. This is a Colab limitation — your experiment data is still being tracked. You can safely skip to Step 5 and return to the UI later when running locally.
+
 When opening the site, you will see a screen similar to the following:
 
 ![MLflow UI Home page](/docs/latest/images/tutorials/introductory/quickstart-tracking/quickstart-ui-home.png)

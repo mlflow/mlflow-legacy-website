@@ -41,21 +41,15 @@ The in-Claude `/plugin marketplace add` command clones the full `mlflow/mlflow` 
 
 ### Step 2. Install the plugin[​](#step-2-install-the-plugin "Direct link to Step 2. Install the plugin")
 
-Launch Claude Code in the same repo, then install the plugin from inside Claude Code:
+From your terminal:
 
 bash
 
 ```
-claude
+claude plugin install mlflow-tracing@mlflow-plugins
 ```
 
-text
-
-```
-/plugin install mlflow-tracing@mlflow-plugins
-```
-
-Restart Claude Code so the plugin is loaded.
+Run `claude` to launch Claude Code (or restart it if it's already running) so the plugin is loaded.
 
 ### Step 3. Run the setup command[​](#step-3-run-the-setup-command "Direct link to Step 3. Run the setup command")
 

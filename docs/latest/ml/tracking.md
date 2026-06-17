@@ -146,7 +146,13 @@ best_run = client.search_runs(experiment_id, order_by=["metrics.val_loss ASC"], 
 
 print(best_run.info)
 
-# {'run_id': '...', 'metrics': {'val_loss': 0.123}, ...}
+# <RunInfo: run_id='...', experiment_id='0', status='FINISHED', start_time=...>
+
+
+
+print(best_run.data.metrics)
+
+# {'val_loss': 0.123}
 ```
 
 ## Tracking Models[​](#tracking-models "Direct link to Tracking Models")

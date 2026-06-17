@@ -1,0 +1,613 @@
+
+
+<!DOCTYPE html>
+<!-- source: docs/source/_modules/mlflow/genai/review_queues/review_queues -->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mlflow.genai.review_queues.review_queues</title>
+  
+   
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="canonical" href="https://mlflow.org/docs/latest/_modules/mlflow/genai/review_queues/review_queues.html">
+  
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+  
+
+  
+
+  
+    
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer',"GTM-N6WMTTJ");</script>
+        <!-- End Google Tag Manager -->
+    
+  
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16857946923"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-16857946923');
+  </script>
+  <!-- Eng gtag -->
+
+  
+
+  
+  <meta name="docsearch:docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_version" content="current" data-rh="true">
+  <meta name="docsearch:version" content="current" data-rh="true">
+  <meta name="docusaurus_locale" content="en" data-rh="true">
+  <meta name="docsearch:language" content="en" data-rh="true">
+
+  
+  
+    
+
+  
+
+  
+  
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600" rel="stylesheet">
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/css/custom.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/css/cards.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/css/grids.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/css/mobile.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/css/simple-cards.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/css/tabs.css" type="text/css" />
+    
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="MLflow 3.14.0 documentation" href="../../../../index.html"/>
+        <link rel="up" title="mlflow.genai.review_queues" href="../review_queues.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+<script type="text/javascript" src="../../../../_static/documentation_options.js"></script>
+<script type="text/javascript" src="../../../../_static/jquery.js"></script>
+<script type="text/javascript" src="../../../../_static/underscore.js"></script>
+<script type="text/javascript" src="../../../../_static/doctools.js"></script>
+<script type="text/javascript" src="../../../../_static/tabs.js"></script>
+<script type="text/javascript" src="../../../../_static/languagesections.js"></script>
+<script type="text/javascript" src="../../../../_static/runllm.js"></script>
+
+<body class="wy-body-for-nav" role="document">
+  
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6WMTTJ"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  
+  <nav class="wy-nav-top header" role="navigation" aria-label="top navigation">
+    <div class="header-container">
+  <style scoped>
+    .header-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
+    }
+
+    .logo-container {
+      display: flex;
+      gap: 12px;
+      flex-direction: row;
+      white-space: nowrap;
+      align-items: center;
+      justify-content: center;
+    }
+
+    a:hover {
+      text-decoration: none;
+      color: #0194e2;
+    }
+  </style>
+  <div class="logo-container">
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
+    <a href="../../../../index.html" class="wy-nav-top-logo">
+      <img
+        src="../../../../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
+    </a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
+  </div>
+  <span class="header-link version">3.14.0</span>
+</div>
+  </nav>
+  <page>
+    
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side relative">
+      <div class="wy-side-scroll">
+  <div class="wy-side-nav-search">
+    
+
+    
+
+    
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+    
+  </div>
+
+  <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+    
+      <a href="../../../../index.html">Home</a>
+    
+
+    
+      
+
+      
+        <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../python_api/index.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../typescript_api/index.html">TypeScript API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cli.html">Command-Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../auth/python-api.html">MLflow Authentication Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../auth/rest-api.html">MLflow Authentication REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../R-api.html">R API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../java_api/index.html">Java API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rest-api.html">REST API</a></li>
+</ul>
+
+      
+    
+  </div>
+
+  <div role="contentinfo">
+    
+
+    <p>
+      <a id='feedbacklink' href="https://github.com/mlflow/mlflow/blob/master/CONTRIBUTING.md" target="_blank">Contribute</a>
+    </p>
+  </div>
+</div>
+    </nav>
+
+    <main class="wy-grid-for-nav">
+      <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+        <div class="wy-nav-content">
+          <div class="rst-content">
+            
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Documentation</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+        <li><a href="../../../index.html">Module code</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+        <li><a href="../review_queues.html">mlflow.genai.review_queues</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+    
+      <li>mlflow.genai.review_queues.review_queues</li>
+    
+    
+    <!-- <li class="wy-breadcrumbs-aside">
+      <a href="https://github.com/mlflow/mlflow/blob/master/docs/source/_modules/mlflow/genai/review_queues/review_queues" class="fa fa-github"> Edit on GitHub</a>
+    </li> -->
+    
+  </ul>
+</div>
+            <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+              <div itemprop="articleBody">
+                
+  <h1>Source code for mlflow.genai.review_queues.review_queues</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.utils.enum_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">StrEnum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.protos</span><span class="w"> </span><span class="kn">import</span> <span class="n">review_queues_pb2</span> <span class="k">as</span> <span class="n">_rq_pb</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.protos.databricks_pb2</span><span class="w"> </span><span class="kn">import</span> <span class="n">INVALID_PARAMETER_VALUE</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">experimental</span>
+
+
+<div class="viewcode-block" id="ReviewItemType"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewItemType">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.14.0&quot;</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ReviewItemType</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;What kind of object a queue item points at.</span>
+
+<span class="sd">    v1 ships ``trace`` only; the column is kept wide enough for</span>
+<span class="sd">    ``session`` / ``span`` to land later without a migration.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">TRACE</span> <span class="o">=</span> <span class="s2">&quot;trace&quot;</span>
+
+<div class="viewcode-block" id="ReviewItemType.to_proto"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewItemType.to_proto">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_rq_pb</span><span class="o">.</span><span class="n">TRACE</span></div>
+
+<div class="viewcode-block" id="ReviewItemType.from_proto"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewItemType.from_proto">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ReviewItemType&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">proto</span> <span class="o">==</span> <span class="n">_rq_pb</span><span class="o">.</span><span class="n">TRACE</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">TRACE</span>
+        <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;`item_type` must be TRACE; got proto enum value </span><span class="si">{</span><span class="n">proto</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">,</span>
+            <span class="n">error_code</span><span class="o">=</span><span class="n">INVALID_PARAMETER_VALUE</span><span class="p">,</span>
+        <span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ReviewQueueType"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewQueueType">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.14.0&quot;</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ReviewQueueType</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The flavor of a review queue.</span>
+
+<span class="sd">    ``USER`` — ``name`` equals a user identifier and the queue has exactly</span>
+<span class="sd">        one assigned user (that user). It is the reviewer&#39;s personal</span>
+<span class="sd">        worklist and inherits *all* of the experiment&#39;s label schemas as</span>
+<span class="sd">        its questions (no chooser, resolved live at read time), so creating</span>
+<span class="sd">        one is just &quot;assign these traces to this person&quot;.</span>
+<span class="sd">    ``CUSTOM`` — an arbitrary, non-reserved ``name`` with 0..N assigned</span>
+<span class="sd">        users and an explicitly-attached subset of label schemas. The</span>
+<span class="sd">        analog of a Databricks ``LabelingSession``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">USER</span> <span class="o">=</span> <span class="s2">&quot;user&quot;</span>
+    <span class="n">CUSTOM</span> <span class="o">=</span> <span class="s2">&quot;custom&quot;</span>
+
+<div class="viewcode-block" id="ReviewQueueType.to_proto"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewQueueType.to_proto">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span> <span class="ow">is</span> <span class="n">ReviewQueueType</span><span class="o">.</span><span class="n">USER</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_rq_pb</span><span class="o">.</span><span class="n">USER</span>
+        <span class="k">return</span> <span class="n">_rq_pb</span><span class="o">.</span><span class="n">CUSTOM</span></div>
+
+<div class="viewcode-block" id="ReviewQueueType.from_proto"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewQueueType.from_proto">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ReviewQueueType&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">proto</span> <span class="o">==</span> <span class="n">_rq_pb</span><span class="o">.</span><span class="n">USER</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">USER</span>
+        <span class="k">if</span> <span class="n">proto</span> <span class="o">==</span> <span class="n">_rq_pb</span><span class="o">.</span><span class="n">CUSTOM</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">CUSTOM</span>
+        <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;`queue_type` must be one of USER or CUSTOM; got proto enum value </span><span class="si">{</span><span class="n">proto</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">,</span>
+            <span class="n">error_code</span><span class="o">=</span><span class="n">INVALID_PARAMETER_VALUE</span><span class="p">,</span>
+        <span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ReviewStatus"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewStatus">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.14.0&quot;</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ReviewStatus</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Shared-pool workflow status of a single attached item.</span>
+
+<span class="sd">    Status is per-``(queue, item)`` — NOT per-user. The queue&#39;s assigned</span>
+<span class="sd">    users are a *pool*: an item is addressed when **any** assigned user acts</span>
+<span class="sd">    on it, not when every user does. ``completed_by`` records who that was.</span>
+
+<span class="sd">    Transitions are always explicit reviewer actions; writing an assessment</span>
+<span class="sd">    against the item does NOT advance the status:</span>
+
+<span class="sd">        - ``PENDING`` -&gt; ``COMPLETE``: any user marks it done (sets</span>
+<span class="sd">          ``completed_by`` + ``completed_time_ms``).</span>
+<span class="sd">        - ``PENDING`` -&gt; ``DECLINED``: an explicit &quot;this item will not be</span>
+<span class="sd">          reviewed in this queue&quot; (out of scope / can&#39;t judge) — distinct</span>
+<span class="sd">          from a temporary defer, and also records who declined it.</span>
+<span class="sd">        - ``COMPLETE`` / ``DECLINED`` -&gt; ``PENDING``: reopen, clearing the</span>
+<span class="sd">          ``completed_by`` / ``completed_time_ms`` attribution.</span>
+
+<span class="sd">    There is no ``in_progress`` state and no auto-flip.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">PENDING</span> <span class="o">=</span> <span class="s2">&quot;pending&quot;</span>
+    <span class="n">COMPLETE</span> <span class="o">=</span> <span class="s2">&quot;complete&quot;</span>
+    <span class="n">DECLINED</span> <span class="o">=</span> <span class="s2">&quot;declined&quot;</span>
+
+<div class="viewcode-block" id="ReviewStatus.to_proto"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewStatus.to_proto">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="n">ReviewStatus</span><span class="o">.</span><span class="n">PENDING</span><span class="p">:</span> <span class="n">_rq_pb</span><span class="o">.</span><span class="n">PENDING</span><span class="p">,</span>
+            <span class="n">ReviewStatus</span><span class="o">.</span><span class="n">COMPLETE</span><span class="p">:</span> <span class="n">_rq_pb</span><span class="o">.</span><span class="n">COMPLETE</span><span class="p">,</span>
+            <span class="n">ReviewStatus</span><span class="o">.</span><span class="n">DECLINED</span><span class="p">:</span> <span class="n">_rq_pb</span><span class="o">.</span><span class="n">DECLINED</span><span class="p">,</span>
+        <span class="p">}[</span><span class="bp">self</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="ReviewStatus.from_proto"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewStatus.from_proto">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ReviewStatus&quot;</span><span class="p">:</span>
+        <span class="n">mapping</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">_rq_pb</span><span class="o">.</span><span class="n">PENDING</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">PENDING</span><span class="p">,</span>
+            <span class="n">_rq_pb</span><span class="o">.</span><span class="n">COMPLETE</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">COMPLETE</span><span class="p">,</span>
+            <span class="n">_rq_pb</span><span class="o">.</span><span class="n">DECLINED</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">DECLINED</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="n">proto</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">mapping</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;`status` must be one of PENDING, COMPLETE, or DECLINED; &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;got proto enum value </span><span class="si">{</span><span class="n">proto</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">,</span>
+                <span class="n">error_code</span><span class="o">=</span><span class="n">INVALID_PARAMETER_VALUE</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">mapping</span><span class="p">[</span><span class="n">proto</span><span class="p">]</span></div></div>
+
+
+<div class="viewcode-block" id="ReviewQueueItem"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewQueueItem">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.14.0&quot;</span><span class="p">)</span>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ReviewQueueItem</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;One item attached to a queue plus its shared-pool workflow status.</span>
+
+<span class="sd">    A row of the ``review_queue_items`` table. The same item attached to</span>
+<span class="sd">    two different queues has an independent :class:`ReviewQueueItem` (and</span>
+<span class="sd">    therefore an independent status) in each — intentional, since the</span>
+<span class="sd">    review contexts differ.</span>
+
+<span class="sd">    ``completed_by`` / ``completed_time_ms`` are populated only in the</span>
+<span class="sd">    ``COMPLETE`` and ``DECLINED`` terminal states and cleared on reopen.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">queue_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">item_type</span><span class="p">:</span> <span class="n">ReviewItemType</span>
+    <span class="n">item_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">status</span><span class="p">:</span> <span class="n">ReviewStatus</span>
+    <span class="n">creation_time_ms</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">last_update_time_ms</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">completed_by</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">completed_time_ms</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="ReviewQueueItem.to_proto"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewQueueItem.to_proto">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;_rq_pb.ReviewQueueItem&quot;</span><span class="p">:</span>
+        <span class="n">proto</span> <span class="o">=</span> <span class="n">_rq_pb</span><span class="o">.</span><span class="n">ReviewQueueItem</span><span class="p">(</span>
+            <span class="n">queue_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">queue_id</span><span class="p">,</span>
+            <span class="n">item_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">item_type</span><span class="o">.</span><span class="n">to_proto</span><span class="p">(),</span>
+            <span class="n">item_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">item_id</span><span class="p">,</span>
+            <span class="n">status</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">to_proto</span><span class="p">(),</span>
+            <span class="n">creation_time_ms</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">creation_time_ms</span><span class="p">,</span>
+            <span class="n">last_update_time_ms</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">last_update_time_ms</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">completed_by</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">proto</span><span class="o">.</span><span class="n">completed_by</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">completed_by</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">completed_time_ms</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">proto</span><span class="o">.</span><span class="n">completed_time_ms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">completed_time_ms</span>
+        <span class="k">return</span> <span class="n">proto</span></div>
+
+<div class="viewcode-block" id="ReviewQueueItem.from_proto"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewQueueItem.from_proto">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">:</span> <span class="s2">&quot;_rq_pb.ReviewQueueItem&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ReviewQueueItem&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">queue_id</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">queue_id</span><span class="p">,</span>
+            <span class="n">item_type</span><span class="o">=</span><span class="n">ReviewItemType</span><span class="o">.</span><span class="n">from_proto</span><span class="p">(</span><span class="n">proto</span><span class="o">.</span><span class="n">item_type</span><span class="p">),</span>
+            <span class="n">item_id</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">item_id</span><span class="p">,</span>
+            <span class="n">status</span><span class="o">=</span><span class="n">ReviewStatus</span><span class="o">.</span><span class="n">from_proto</span><span class="p">(</span><span class="n">proto</span><span class="o">.</span><span class="n">status</span><span class="p">),</span>
+            <span class="n">creation_time_ms</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">creation_time_ms</span><span class="p">,</span>
+            <span class="n">last_update_time_ms</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">last_update_time_ms</span><span class="p">,</span>
+            <span class="n">completed_by</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">completed_by</span> <span class="k">if</span> <span class="n">proto</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span><span class="s2">&quot;completed_by&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">completed_time_ms</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">proto</span><span class="o">.</span><span class="n">completed_time_ms</span> <span class="k">if</span> <span class="n">proto</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span><span class="s2">&quot;completed_time_ms&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">),</span>
+        <span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ReviewQueue"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewQueue">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.14.0&quot;</span><span class="p">)</span>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ReviewQueue</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A named bundle of attached items, questions, and assigned users.</span>
+
+<span class="sd">    Scoped to an experiment and keyed on ``(experiment_id, name)``. The</span>
+<span class="sd">    attached items are paged separately (they can be many) via</span>
+<span class="sd">    ``list_review_queue_items``; the small association sets — assigned</span>
+<span class="sd">    ``users`` and attached label-schema ids — are hydrated inline here.</span>
+
+<span class="sd">    ``schema_ids`` reflects the literal ``review_queue_label_schemas`` rows:</span>
+<span class="sd">    it is the chosen subset for a ``CUSTOM`` queue and **empty** for a</span>
+<span class="sd">    ``USER`` queue (which resolves to all of the experiment&#39;s schemas live</span>
+<span class="sd">    at read time, a concern of the read/handler layer, not storage).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">queue_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">queue_type</span><span class="p">:</span> <span class="n">ReviewQueueType</span>
+    <span class="n">created_by</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">creation_time_ms</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">last_update_time_ms</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">users</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">schema_ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ReviewQueue.to_proto"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewQueue.to_proto">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;_rq_pb.ReviewQueue&quot;</span><span class="p">:</span>
+        <span class="n">proto</span> <span class="o">=</span> <span class="n">_rq_pb</span><span class="o">.</span><span class="n">ReviewQueue</span><span class="p">(</span>
+            <span class="n">queue_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">queue_id</span><span class="p">,</span>
+            <span class="n">experiment_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">experiment_id</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">queue_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">queue_type</span><span class="o">.</span><span class="n">to_proto</span><span class="p">(),</span>
+            <span class="n">creation_time_ms</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">creation_time_ms</span><span class="p">,</span>
+            <span class="n">last_update_time_ms</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">last_update_time_ms</span><span class="p">,</span>
+            <span class="n">users</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">users</span><span class="p">,</span>
+            <span class="n">schema_ids</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">schema_ids</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">created_by</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">proto</span><span class="o">.</span><span class="n">created_by</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">created_by</span>
+        <span class="k">return</span> <span class="n">proto</span></div>
+
+<div class="viewcode-block" id="ReviewQueue.from_proto"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewQueue.from_proto">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">:</span> <span class="s2">&quot;_rq_pb.ReviewQueue&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ReviewQueue&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">queue_id</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">queue_id</span><span class="p">,</span>
+            <span class="n">experiment_id</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">experiment_id</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">queue_type</span><span class="o">=</span><span class="n">ReviewQueueType</span><span class="o">.</span><span class="n">from_proto</span><span class="p">(</span><span class="n">proto</span><span class="o">.</span><span class="n">queue_type</span><span class="p">),</span>
+            <span class="n">created_by</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">created_by</span> <span class="k">if</span> <span class="n">proto</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span><span class="s2">&quot;created_by&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">creation_time_ms</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">creation_time_ms</span><span class="p">,</span>
+            <span class="n">last_update_time_ms</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">last_update_time_ms</span><span class="p">,</span>
+            <span class="n">users</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">proto</span><span class="o">.</span><span class="n">users</span><span class="p">),</span>
+            <span class="n">schema_ids</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">proto</span><span class="o">.</span><span class="n">schema_ids</span><span class="p">),</span>
+        <span class="p">)</span></div></div>
+</pre></div>
+
+              </div>
+            </div>
+            <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+      <p class="copyright">
+          &copy; MLflow Project, a Series of LF Projects, LLC. All rights reserved.
+      </p>
+
+  </div> 
+
+</footer>
+          </div>
+        </div>
+      </section>
+    </main>
+  </page>
+
+  
+
+
+  
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:'../../../../',
+      VERSION:'3.14.0',
+      COLLAPSE_INDEX:false,
+      FILE_SUFFIX:'.html',
+      LINK_SUFFIX: '.html',
+      HAS_SOURCE:  true
+    };
+  </script>
+
+  
+
+  <script type="text/javascript" src="../../../../_static/js/clipboard.min.js"></script>
+  <script type="text/javascript" src="../../../../_static/js/jquery.waypoints.min.js"></script>
+
+  
+  
+  
+  <script type="text/javascript">var CLIPPY_SVG_PATH = "../../../../_static/clippy.svg";</script>
+  <script type="text/javascript" src="../../../../_static/js/custom.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+    jQuery(function () {
+      SphinxRtdTheme.StickyNav.enable();
+    });
+
+  </script>
+  
+
+  
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
+        // Get the code block designator class entries
+        const allHighlights = document.querySelectorAll('.highlight');
+        // Disable copyable links for notebook cell numbering and for cell outputs
+        const highlights = Array.from(allHighlights).filter(highlight => !highlight.closest('.highlight-none') && 
+            !highlight.closest('.nboutput'));
+    
+        highlights.forEach(function(highlight) {
+            const copyIcon = document.createElement('span');
+            copyIcon.classList.add('copy-icon');
+            copyIcon.innerHTML = '&#xf0ea;';
+
+            copyIcon.addEventListener('click', function() {
+                const code = highlight.querySelector('pre').textContent;
+                copyToClipboard(code);
+
+                // Flash effect on click
+                this.style.color = '#0194E2';
+                setTimeout(() => {
+                    this.style.color = ''; 
+                }, 100);
+
+                // Display "Code copied to clipboard" near the clicked icon
+                const message = document.createElement('span');
+                message.textContent = "Copied!";
+                message.classList.add('copy-message'); 
+
+                // Append the message to the icon
+                this.appendChild(message);
+
+                setTimeout(() => {
+                    this.removeChild(message);
+                }, 500);
+            });
+
+            highlight.appendChild(copyIcon);
+        });
+    });
+  </script>
+
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        // Force download for notebook-download-btn
+        const downloadButtons = document.querySelectorAll('.notebook-download-btn');
+        downloadButtons.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default behavior
+
+                // Fetch the raw content of the notebook from GitHub
+                fetch(button.href)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const url = window.URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.style.display = 'none';
+                        link.href = url;
+                        const filename = button.href.split('/').pop();
+                        link.download = filename; 
+
+                        document.body.appendChild(link);
+                        link.click();
+
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(link);
+                    })
+                    .catch(err => console.error('Error fetching the notebook:', err));
+            });
+        });
+    });
+</script> 
+</body>
+</html>

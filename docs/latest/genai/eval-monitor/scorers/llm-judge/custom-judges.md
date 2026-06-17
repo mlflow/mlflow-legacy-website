@@ -15,7 +15,7 @@ Version Requirements
 
 ## Prompts and template variables[​](#prompts-and-template-variables "Direct link to Prompts and template variables")
 
-To create a judge, you provide a prompt with natural language instructions on how to assess the quality of your agent. [`make_judge()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.judges.make_jduge) accepts template variables to access the agent's inputs, outputs, expected outputs or behaviors, and even complete traces.
+To create a judge, you provide a prompt with natural language instructions on how to assess the quality of your agent. [`make_judge()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.judges.make_judge) accepts template variables to access the agent's inputs, outputs, expected outputs or behaviors, and even complete traces.
 
 Your instructions must include at least one template variable, but you don't need to use all of them.
 
