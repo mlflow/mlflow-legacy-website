@@ -329,7 +329,7 @@ It can be beneficial to introduce retry logic for certain errors, particularly t
 
 The process of deploying an LLM application or AI agent can take a significant amount of time. When an implementation is finally ready to be submitted to a serving environment, the last thing that you want to deal with is a model that is incapable of being served due to some issue with a decoded JSON payload being submitted to your model's `predict()` method.
 
-MLflow offers the [`mlflow.models.validate_serving_input()`](/docs/latest/api_reference/python_api/mlflow.models.html#mlflow.models.validate_serving_input) API to ensure that the model that you have logged is capable of being interacted with by emulating the data processing that occurs with a deployed model.
+MLflow offers the [`mlflow.models.predict()`](/docs/latest/api_reference/python_api/mlflow.models.html#mlflow.models.predict) API to ensure that the model that you have logged is capable of being interacted with by emulating the data processing that occurs with a deployed model.
 
 To use this API, simply navigate to your logged model with the MLflow UI's artifact viewer. The model display pane on the right side of the artifact viewer contains the code snippet that you can execute in an interactive environment to ensure that your model is ready to deploy.
 
@@ -338,7 +338,7 @@ For the example in this tutorial, this is the generated code that is copied from
 python
 
 ```
-from mlflow.models import validate_serving_input
+import mlflow.models
 
 
 
@@ -376,9 +376,19 @@ serving_payload = """{
 
 
 
-# Validate the serving payload works on the model
+# Validate the serving payload works on the model by running prediction
 
-validate_serving_input(model_uri, serving_payload)
+# in an isolated environment that mirrors the serving environment.
+
+mlflow.models.predict(
+
+    model_uri=model_uri,
+
+    input_data=serving_payload,
+
+    env_manager="uv",
+
+)
 ```
 
 ## Key Classes and Methods in our example[​](#key-classes-and-methods-in-our-example "Direct link to Key Classes and Methods in our example")
@@ -979,7 +989,7 @@ Key takeaways from this tutorial include:
 * **Flexible Configuration Management**: Decoupling configurations from your model code ensures that you can rapidly test and iterate without modifying source code. This approach not only streamlines experimentation but also enhances reproducibility and scalability as your application evolves.
 * **Standardized Input and Output Structures**: Leveraging the static signatures of `ChatModel` simplifies the complexities of deploying and serving LLM and AI agent models. By adhering to established standards, you reduce the friction typically associated with integrating and validating input/output formats.
 * **Avoiding Common Pitfalls**: Throughout the implementation, we highlighted best practices to avoid common issues, such as proper handling of secrets, validating input examples, and understanding the nuances of loading context. Following these practices ensures that your model remains secure, robust, and reliable in production environments.
-* **Validation and Deployment Readiness**: The importance of validating your model before deployment cannot be overstated. By using tools like [`mlflow.models.validate_serving_input()`](/docs/latest/api_reference/python_api/mlflow.models.html#mlflow.models.validate_serving_input), you can catch and resolve potential deployment issues early, saving time and effort during the production deployment process.
+* **Validation and Deployment Readiness**: The importance of validating your model before deployment cannot be overstated. By using tools like [`mlflow.models.predict()`](/docs/latest/api_reference/python_api/mlflow.models.html#mlflow.models.predict), you can catch and resolve potential deployment issues early, saving time and effort during the production deployment process.
 
 As the landscape of LLM applications and AI agents continues to evolve, building adaptable and standardized models will be crucial to leveraging the exciting and powerful capabilities that will be unlocked in the months and years ahead. The approach covered in this tutorial equips you with a robust framework for integrating and managing LLM and AI agent technologies within MLflow, empowering you to develop, track, and deploy sophisticated AI solutions with ease.
 

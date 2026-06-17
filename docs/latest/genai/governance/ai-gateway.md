@@ -107,3 +107,9 @@ uvx mlflow demo
 [Benchmark results and how to measure gateway overhead in your own environment](/docs/latest/genai/governance/ai-gateway/benchmarks.md)
 
 [View benchmarks →](/docs/latest/genai/governance/ai-gateway/benchmarks.md)
+
+### [LLM Playground](/docs/latest/genai/prompt-registry/playground.md)
+
+[Test endpoints interactively from the MLflow UI with multi-turn chat, sampling parameters, tools, and structured output](/docs/latest/genai/prompt-registry/playground.md)
+
+[Open Playground →](/docs/latest/genai/prompt-registry/playground.md)

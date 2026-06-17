@@ -72,7 +72,7 @@ def chat_completion(message: list[dict], user_id: str, session_id: str):
 
     # Your chat logic here
 
-    return generate_response(message)
+    return f"Echo: {message[-1]['content'] if message else ''}"
 ```
 
 typescript

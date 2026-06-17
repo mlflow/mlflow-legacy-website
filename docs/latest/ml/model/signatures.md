@@ -1971,7 +1971,7 @@ python
 ```
 from mlflow.models.utils import load_serving_example
 
-from mlflow.models import validate_serving_input
+import mlflow.models
 
 
 
@@ -1981,11 +1981,19 @@ serving_example = load_serving_example(model_info.model_uri)
 
 
 
-# Validate it works
+# Validate it works by running prediction in an isolated environment
 
-result = validate_serving_input(model_info.model_uri, serving_example)
+# that mirrors the serving environment.
 
-print(f"Validation result: {result}")
+mlflow.models.predict(
+
+    model_uri=model_info.model_uri,
+
+    input_data=serving_example,
+
+    env_manager="uv",
+
+)
 
 
 
