@@ -2219,6 +2219,18 @@
       "main"
     ]
   },
+  "/docs/3.14.0/genai/tracing/integrations/listing/omnigent/": {
+    "shouldDisplay": true,
+    "hasMarkdown": true,
+    "contentSelectors": [
+      ".theme-doc-markdown",
+      "main .container .col",
+      "main .theme-doc-wrapper",
+      "article",
+      "main .container",
+      "main"
+    ]
+  },
   "/docs/3.14.0/genai/tracing/integrations/listing/open-webui/": {
     "shouldDisplay": true,
     "hasMarkdown": true,
