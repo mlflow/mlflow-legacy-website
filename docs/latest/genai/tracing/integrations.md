@@ -177,6 +177,10 @@ Click any integration below to get started with detailed setup instructions.
 
 [Hermes Agent](/docs/latest/genai/tracing/integrations/listing/hermes_agent.md)
 
+[![Omnigent Logo](/docs/latest/images/logos/omnigent-logo.png)](/docs/latest/genai/tracing/integrations/listing/omnigent.md)
+
+[Omnigent](/docs/latest/genai/tracing/integrations/listing/omnigent.md)
+
 [![Qwen Code Logo](/docs/latest/images/logos/qwen-logo.jpg)](/docs/latest/genai/tracing/integrations/listing/qwen_code.md)
 
 [Qwen Code](/docs/latest/genai/tracing/integrations/listing/qwen_code.md)

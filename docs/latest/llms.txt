@@ -186,6 +186,7 @@
 - [Tracing n8n](/docs/latest/genai/tracing/integrations/listing/n8n.md): Add MLflow tracing to n8n AI workflows using the n8n-nodes-mlflow community node for full observability into every LLM call and multi-turn chat session.
 - [Tracing Novita AI](/docs/latest/genai/tracing/integrations/listing/novitaai.md): Trace Novita AI LLM API calls with MLflow using OpenAI-compatible auto-tracing for full observability into model interactions.
 - [Tracing Ollama](/docs/latest/genai/tracing/integrations/listing/ollama.md): Trace Ollama local model interactions with MLflow via OpenAI-compatible auto-tracing for full observability into locally hosted LLM inference.
+- [Tracing Omnigent](/docs/latest/genai/tracing/integrations/listing/omnigent.md): Trace Omnigent agent sessions with MLflow for full observability into multi-harness AI agent orchestration workflows.
 - [Tracing Open WebUI](/docs/latest/genai/tracing/integrations/listing/open-webui.md): Add MLflow tracing to Open WebUI multi-turn chat sessions via a filter pipeline for full observability into conversations, token usage, and user activity.
 - [Tracing OpenAI](/docs/latest/genai/tracing/integrations/listing/openai.md): Trace OpenAI API calls including chat completions, embeddings, and tool use with MLflow for full observability into LLM interactions.
 - [Tracing OpenAI Agent🤖](/docs/latest/genai/tracing/integrations/listing/openai-agent.md): Trace OpenAI Agents SDK multi-agent workflows with MLflow for full observability into agent orchestration, tool usage, and handoffs.
