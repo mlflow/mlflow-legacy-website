@@ -1,6 +1,6 @@
 # Live Demo
 
-**[demo.mlflow.org](https://demo.mlflow.org/#/experiments/1/overview)** is a publicly hosted MLflow instance pre-loaded with sample data. It's the fastest way to explore the MLflow UI without any local setup.
+**[demo.mlflow.org](https://demo.mlflow.org/#/experiments/1)** is a publicly hosted MLflow instance pre-loaded with sample data. It's the fastest way to explore the MLflow UI without any local setup.
 
 [](/docs/latest/images/genai/live-mlflow-ui-demo.mp4)
 
@@ -8,23 +8,23 @@
 
 The demo environment includes sample data across four areas:
 
-[Observability](https://demo.mlflow.org/#/experiments/1/overview)
+[Observability](https://demo.mlflow.org/#/experiments/1)
 
 ***
 
-[Explore dashboard, traces and sessions from a sample LLM application. Inspect spans, inputs/outputs, latency, token usage, and nested call hierarchies.](https://demo.mlflow.org/#/experiments/1/overview)
+[Explore dashboard, traces and sessions from a sample LLM application. Inspect spans, inputs/outputs, latency, token usage, and nested call hierarchies.](https://demo.mlflow.org/#/experiments/1)
 
-[Evaluation](https://demo.mlflow.org/#/experiments/1/evaluation-runs?selectedRunUuid=4bacc57345684766ac7371c523a97fa7)
-
-***
-
-[Browse pre-configured judges, datasets, and evaluation runs with judge-scored quality metrics across sample traces.](https://demo.mlflow.org/#/experiments/1/evaluation-runs?selectedRunUuid=4bacc57345684766ac7371c523a97fa7)
-
-[Issue Detection](https://demo.mlflow.org/#/experiments/1/evaluation-runs/e50e393c385c4c9cb8b30e09cbb6f141/issues)
+[Evaluation](https://demo.mlflow.org/#/experiments/1/evaluation-runs)
 
 ***
 
-[See automatically detected issues surfaced from trace data and an issue detection run, showing how MLflow flags quality and reliability problems in production.](https://demo.mlflow.org/#/experiments/1/evaluation-runs/e50e393c385c4c9cb8b30e09cbb6f141/issues)
+[Browse pre-configured judges, datasets, and evaluation runs with judge-scored quality metrics across sample traces.](https://demo.mlflow.org/#/experiments/1/evaluation-runs)
+
+[Issue Detection](https://demo.mlflow.org/#/experiments/1/evaluation-runs/1e66d099f5f34d4db3a34aa6537782a3/issues)
+
+***
+
+[See automatically detected issues surfaced from trace data and an issue detection run, showing how MLflow flags quality and reliability problems in production.](https://demo.mlflow.org/#/experiments/1/evaluation-runs/1e66d099f5f34d4db3a34aa6537782a3/issues)
 
 [Prompts](https://demo.mlflow.org/#/experiments/1/prompts)
 

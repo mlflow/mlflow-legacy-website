@@ -336,4 +336,4 @@ The downgrade leaves the legacy tables in place and removes the `role_permission
 The full list of role/permission/user-assignment methods and their signatures lives in the auto-generated API docs:
 
 * [`AuthServiceClient` Python API](/docs/latest/api_reference/auth/python-api.html#mlflow.server.auth.client.AuthServiceClient)
-* [Authentication REST API](/docs/latest/api_reference/auth/rest-api.html/)
+* [Authentication REST API](https://mlflow.org/docs/latest/api_reference/auth/rest-api.html)

@@ -28,6 +28,14 @@ export OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://localhost:5000/v1/traces
 export OTEL_EXPORTER_OTLP_TRACES_HEADERS=x-mlflow-experiment-id=123
 ```
 
+When [workspaces](/docs/latest/self-hosting/workspaces/getting-started.md) are enabled on your MLflow server, OTLP clients can also send the `X-MLFLOW-WORKSPACE` header to override the default workspace for a request.
+
+bash
+
+```
+export OTEL_EXPORTER_OTLP_TRACES_HEADERS=x-mlflow-experiment-id=123,X-MLFLOW-WORKSPACE=team-a
+```
+
 note
 
 Currently, MLflow Server supports only the OTLP/HTTP endpoint, and the OTLP/gRPC endpoint is not yet supported.
@@ -55,11 +63,21 @@ MLFLOW_TRACKING_URI = "http://localhost:5000"
 
 MLFLOW_EXPERIMENT_ID = "123"
 
+MLFLOW_WORKSPACE = "team-a"  # Optional: only needed to override the default workspace.
+
 
 
 os.environ["OTEL_EXPORTER_OTLP_TRACES_ENDPOINT"] = f"{MLFLOW_TRACKING_URI}/v1/traces"
 
-os.environ["OTEL_EXPORTER_OTLP_TRACES_HEADERS"] = f"x-mlflow-experiment-id={MLFLOW_EXPERIMENT_ID}"
+os.environ["OTEL_EXPORTER_OTLP_TRACES_HEADERS"] = (
+
+    f"x-mlflow-experiment-id={MLFLOW_EXPERIMENT_ID},"
+
+    # Optional: include only when workspaces are enabled and you want to override the default workspace.
+
+    f"X-MLFLOW-WORKSPACE={MLFLOW_WORKSPACE}"
+
+)
 
 
 
@@ -98,6 +116,10 @@ bash
 export MLFLOW_TRACKING_URI=http://localhost:5000
 
 export MLFLOW_EXPERIMENT_ID=123
+
+# Optional: only needed to override the default workspace.
+
+export MLFLOW_WORKSPACE=team-a
 ```
 
 opentelemetry-collector.yaml
@@ -130,6 +152,10 @@ exporters:
     headers:
 
       x-mlflow-experiment-id: ${MLFLOW_EXPERIMENT_ID}
+
+      # Optional: include only when workspaces are enabled and you want to override the default workspace.
+
+      X-MLFLOW-WORKSPACE: ${MLFLOW_WORKSPACE}
 
 
 
@@ -169,7 +195,9 @@ bash
 ```
 export OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://localhost:5000/v1/traces
 
-export OTEL_EXPORTER_OTLP_TRACES_HEADERS=x-mlflow-experiment-id=123
+# Optional: include X-MLFLOW-WORKSPACE only to override the default workspace.
+
+export OTEL_EXPORTER_OTLP_TRACES_HEADERS=x-mlflow-experiment-id=123,X-MLFLOW-WORKSPACE=team-a
 
 export OTEL_EXPORTER_OTLP_TRACES_COMPRESSION=gzip
 ```
@@ -188,6 +216,10 @@ exporters:
     headers:
 
       x-mlflow-experiment-id: ${MLFLOW_EXPERIMENT_ID}
+
+      # Optional: include only when workspaces are enabled and you want to override the default workspace.
+
+      X-MLFLOW-WORKSPACE: ${MLFLOW_WORKSPACE}
 
     compression: gzip
 ```

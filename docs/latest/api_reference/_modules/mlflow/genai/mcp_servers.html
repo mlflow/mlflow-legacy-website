@@ -1,0 +1,1175 @@
+
+
+<!DOCTYPE html>
+<!-- source: docs/source/_modules/mlflow/genai/mcp_servers -->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mlflow.genai.mcp_servers</title>
+  
+   
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="canonical" href="https://mlflow.org/docs/latest/_modules/mlflow/genai/mcp_servers.html">
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+  
+
+  
+
+  
+    
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer',"GTM-N6WMTTJ");</script>
+        <!-- End Google Tag Manager -->
+    
+  
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16857946923"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-16857946923');
+  </script>
+  <!-- Eng gtag -->
+
+  
+
+  
+  <meta name="docsearch:docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_version" content="current" data-rh="true">
+  <meta name="docsearch:version" content="current" data-rh="true">
+  <meta name="docusaurus_locale" content="en" data-rh="true">
+  <meta name="docsearch:language" content="en" data-rh="true">
+
+  
+  
+    
+
+  
+
+  
+  
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600" rel="stylesheet">
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/cards.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/grids.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/mobile.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/simple-cards.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/tabs.css" type="text/css" />
+    
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="MLflow 3.15.0 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+<script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+<script type="text/javascript" src="../../../_static/jquery.js"></script>
+<script type="text/javascript" src="../../../_static/underscore.js"></script>
+<script type="text/javascript" src="../../../_static/doctools.js"></script>
+<script type="text/javascript" src="../../../_static/tabs.js"></script>
+<script type="text/javascript" src="../../../_static/languagesections.js"></script>
+<script type="text/javascript" src="../../../_static/runllm.js"></script>
+
+<body class="wy-body-for-nav" role="document">
+  
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6WMTTJ"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  
+  <nav class="wy-nav-top header" role="navigation" aria-label="top navigation">
+    <div class="header-container">
+  <style scoped>
+    .header-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
+    }
+
+    .logo-container {
+      display: flex;
+      gap: 12px;
+      flex-direction: row;
+      white-space: nowrap;
+      align-items: center;
+      justify-content: center;
+    }
+
+    a:hover {
+      text-decoration: none;
+      color: #0194e2;
+    }
+  </style>
+  <div class="logo-container">
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
+    <a href="../../../index.html" class="wy-nav-top-logo">
+      <img
+        src="../../../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
+    </a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
+  </div>
+  <span class="header-link version">3.15.0</span>
+</div>
+  </nav>
+  <page>
+    
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side relative">
+      <div class="wy-side-scroll">
+  <div class="wy-side-nav-search">
+    
+
+    
+
+    
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+    
+  </div>
+
+  <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+    
+      <a href="../../../index.html">Home</a>
+    
+
+    
+      
+
+      
+        <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../python_api/index.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../typescript_api/index.html">TypeScript API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli.html">Command-Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auth/python-api.html">MLflow Authentication Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auth/rest-api.html">MLflow Authentication REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../R-api.html">R API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../java_api/index.html">Java API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rest-api.html">REST API</a></li>
+</ul>
+
+      
+    
+  </div>
+
+  <div role="contentinfo">
+    
+
+    <p>
+      <a id='feedbacklink' href="https://github.com/mlflow/mlflow/blob/master/CONTRIBUTING.md" target="_blank">Contribute</a>
+    </p>
+  </div>
+</div>
+    </nav>
+
+    <main class="wy-grid-for-nav">
+      <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+        <div class="wy-nav-content">
+          <div class="rst-content">
+            
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Documentation</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+        <li><a href="../../index.html">Module code</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+    
+      <li>mlflow.genai.mcp_servers</li>
+    
+    
+    <!-- <li class="wy-breadcrumbs-aside">
+      <a href="https://github.com/mlflow/mlflow/blob/master/docs/source/_modules/mlflow/genai/mcp_servers" class="fa fa-github"> Edit on GitHub</a>
+    </li> -->
+    
+  </ul>
+</div>
+            <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+              <div itemprop="articleBody">
+                
+  <h1>Source code for mlflow.genai.mcp_servers</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">urllib.error</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">urllib.parse</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">urllib.request</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Mapping</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.mcp_server</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">MCPRemoteTransportType</span><span class="p">,</span>
+    <span class="n">MCPStatus</span><span class="p">,</span>
+    <span class="n">MCPTool</span><span class="p">,</span>
+    <span class="n">validate_mcp_server_name</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.mcp_server_version</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConnectOptionSettings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.environment_variables</span><span class="w"> </span><span class="kn">import</span> <span class="n">MLFLOW_ENABLE_MCP_TOOL_DISCOVERY</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.mcp_tool_discovery</span><span class="w"> </span><span class="kn">import</span> <span class="n">resolve_tools_for_create</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.protos.databricks_pb2</span><span class="w"> </span><span class="kn">import</span> <span class="n">RESOURCE_ALREADY_EXISTS</span><span class="p">,</span> <span class="n">RESOURCE_DOES_NOT_EXIST</span><span class="p">,</span> <span class="n">ErrorCode</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.store.entities.paged_list</span><span class="w"> </span><span class="kn">import</span> <span class="n">PagedList</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.store.tracking</span><span class="w"> </span><span class="kn">import</span> <span class="n">SEARCH_MAX_RESULTS_DEFAULT</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.store.tracking.mcp_server_registry.abstract_mixin</span><span class="w"> </span><span class="kn">import</span> <span class="n">NOT_SET</span><span class="p">,</span> <span class="n">MCPIcon</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.telemetry.events</span><span class="w"> </span><span class="kn">import</span> <span class="n">McpRegistryRegisterServerFromUrlEvent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.telemetry.track</span><span class="w"> </span><span class="kn">import</span> <span class="n">record_usage_event</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracking.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowClient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">experimental</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.file_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">local_file_uri_to_path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.semver_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_semver</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.uri</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_uri_scheme</span><span class="p">,</span> <span class="n">is_local_uri</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.validation</span><span class="w"> </span><span class="kn">import</span> <span class="n">_validate_mcp_icon_payloads</span><span class="p">,</span> <span class="n">_validate_mcp_initial_status</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.mcp_access_endpoint</span><span class="w"> </span><span class="kn">import</span> <span class="n">MCPAccessEndpoint</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.mcp_server</span><span class="w"> </span><span class="kn">import</span> <span class="n">MCPServer</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.mcp_server_version</span><span class="w"> </span><span class="kn">import</span> <span class="n">MCPServerVersion</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_parse_enum</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">enum_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">Enum</span><span class="p">],</span> <span class="n">param_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="n">NOT_SET</span> <span class="ow">or</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">value</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">enum_cls</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="n">valid</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">enum_cls</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Invalid </span><span class="si">{</span><span class="n">param_name</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">value</span><span class="si">!r}</span><span class="s2">. Valid values are: </span><span class="si">{</span><span class="n">valid</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="kc">None</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_validate_endpoint_remotes</span><span class="p">(</span>
+    <span class="n">server_json</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">MCPRemoteTransportType</span><span class="p">]]:</span>
+    <span class="n">remotes</span> <span class="o">=</span> <span class="n">server_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;remotes&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">remotes</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+            <span class="s2">&quot;Invalid server_json.remotes. Expected a list of remote objects.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="n">validated_remotes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">remote</span> <span class="ow">in</span> <span class="n">remotes</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">remote</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+                <span class="s2">&quot;Invalid server_json.remotes entry. Expected each remote to be an object.&quot;</span>
+            <span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">remote</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;url&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">url</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">url</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+                <span class="s2">&quot;Invalid server_json.remotes entry. Expected remote.url to be a non-empty string.&quot;</span>
+            <span class="p">)</span>
+        <span class="n">transport_str</span> <span class="o">=</span> <span class="s2">&quot;streamable-http&quot;</span> <span class="k">if</span> <span class="n">remote</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">remote</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)</span>
+        <span class="n">transport</span> <span class="o">=</span> <span class="n">_parse_enum</span><span class="p">(</span><span class="n">transport_str</span><span class="p">,</span> <span class="n">MCPRemoteTransportType</span><span class="p">,</span> <span class="s2">&quot;transport_type&quot;</span><span class="p">)</span>
+        <span class="n">validated_remotes</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">url</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">transport</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">validated_remotes</span>
+
+
+<div class="viewcode-block" id="register_mcp_server"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.register_mcp_server">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.15.0&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">register_mcp_server</span><span class="p">(</span>
+    <span class="n">server_json</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+    <span class="n">source</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">status</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;draft&quot;</span><span class="p">,</span> <span class="s2">&quot;active&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;draft&quot;</span><span class="p">,</span>
+    <span class="n">tools</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">MCPTool</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">NOT_SET</span><span class="p">,</span>
+    <span class="n">create_access_endpoints_from_remotes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">mcp_server_access_headers</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MCPServerVersion</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Register an MCP server from a ``server_json`` payload.</span>
+
+<span class="sd">    If the parent ``MCPServer`` does not exist, it is created automatically.</span>
+<span class="sd">    If the version already exists, a ``MlflowException`` is raised.</span>
+
+<span class="sd">    When ``tools`` is omitted, MLflow attempts best-effort auto-discovery by</span>
+<span class="sd">    querying the first usable remote URL in ``server_json.remotes[]`` (requires</span>
+<span class="sd">    ``mlflow[mcp]``), unless ``MLFLOW_ENABLE_MCP_TOOL_DISCOVERY`` is ``false``</span>
+<span class="sd">    in the current Python client process. Discovered tools are a one-time</span>
+<span class="sd">    snapshot stored on the version; they are not kept in sync with the live</span>
+<span class="sd">    server. Pass ``tools=None`` or ``tools=[]`` to disable discovery for a</span>
+<span class="sd">    single call, or pass an explicit tool list to store those definitions</span>
+<span class="sd">    instead.</span>
+
+<span class="sd">    Discovery failure (network, auth, protocol, timeout, or missing</span>
+<span class="sd">    ``mlflow[mcp]``) does **not** abort registration: the version is created</span>
+<span class="sd">    with ``tools=None``. Discovery is bounded by a short default timeout (see</span>
+<span class="sd">    ``mlflow.genai.mcp_tool_discovery.DEFAULT_MCP_TOOL_DISCOVER_TIMEOUT_SECONDS``).</span>
+<span class="sd">    Live scrape does not failover to later remotes. Auth headers for create-time</span>
+<span class="sd">    discovery are only supported here via ``mcp_server_access_headers``; REST /</span>
+<span class="sd">    ``MlflowClient.create_mcp_server_version`` omit→discover has no header path</span>
+<span class="sd">    and will soft-fail to ``tools=None`` against authenticated remotes.</span>
+<span class="sd">    Access endpoints are not used for discovery (they are typically created</span>
+<span class="sd">    after the version).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        server_json: The canonical MCP ``server.json`` payload. Must contain ``name``</span>
+<span class="sd">            and ``version`` at the top level.</span>
+<span class="sd">        source: Provenance URI (e.g., a git repository URL).</span>
+<span class="sd">        status: Initial status. Only ``&quot;draft&quot;`` and ``&quot;active&quot;`` are supported</span>
+<span class="sd">            during registration.</span>
+<span class="sd">        tools: Declared tool definitions for this version. Omit for best-effort</span>
+<span class="sd">            auto-discover from a deployed remote when available (failure stores</span>
+<span class="sd">            ``None``). Pass ``None`` or ``[]`` to skip discovery.</span>
+<span class="sd">        create_access_endpoints_from_remotes: When ``True``, create one direct-access</span>
+<span class="sd">            endpoint per ``remotes[]`` entry in ``server_json``. This requires</span>
+<span class="sd">            ``status=&quot;active&quot;``. Independent of tool discovery.</span>
+<span class="sd">        mcp_server_access_headers: Optional HTTP headers used when auto-discovering</span>
+<span class="sd">            tools from a remote MCP server (for example auth headers). Tool lists</span>
+<span class="sd">            may vary by credentials. Ignored when discovery is not performed.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The created :py:class:`MCPServerVersion &lt;mlflow.entities.MCPServerVersion&gt;`.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        import mlflow</span>
+
+<span class="sd">        version = mlflow.genai.register_mcp_server(</span>
+<span class="sd">            server_json={</span>
+<span class="sd">                &quot;name&quot;: &quot;io.github.anthropic/brave-search&quot;,</span>
+<span class="sd">                &quot;version&quot;: &quot;1.0.0&quot;,</span>
+<span class="sd">                &quot;description&quot;: &quot;Brave Search MCP server&quot;,</span>
+<span class="sd">            },</span>
+<span class="sd">        )</span>
+<span class="sd">        assert version.status == MCPStatus.DRAFT</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">MlflowClient</span><span class="p">()</span>
+    <span class="n">parsed_status</span> <span class="o">=</span> <span class="n">_parse_enum</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">MCPStatus</span><span class="p">,</span> <span class="s2">&quot;status&quot;</span><span class="p">)</span>
+    <span class="n">_validate_mcp_initial_status</span><span class="p">(</span><span class="n">parsed_status</span> <span class="ow">or</span> <span class="n">MCPStatus</span><span class="o">.</span><span class="n">DRAFT</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">create_access_endpoints_from_remotes</span> <span class="ow">and</span> <span class="n">parsed_status</span> <span class="o">!=</span> <span class="n">MCPStatus</span><span class="o">.</span><span class="n">ACTIVE</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+            <span class="s2">&quot;create_access_endpoints_from_remotes=True requires status=&#39;active&#39;.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="c1"># Validate payload before omit→discover so invalid creates never scrape</span>
+    <span class="c1"># remotes (or forward mcp_server_access_headers). Store create validates</span>
+    <span class="c1"># again; this covers the fluent path that resolves tools first.</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">server_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="n">server_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;version&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">version</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+            <span class="s2">&quot;server_json must contain &#39;name&#39; and &#39;version&#39; keys&quot;</span>
+        <span class="p">)</span>
+    <span class="n">validate_mcp_server_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">parse_semver</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">param_name</span><span class="o">=</span><span class="s2">&quot;server_json.version&quot;</span><span class="p">)</span>
+    <span class="n">_validate_mcp_icon_payloads</span><span class="p">(</span><span class="n">server_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;icons&quot;</span><span class="p">),</span> <span class="s2">&quot;server_json.icons&quot;</span><span class="p">)</span>
+
+    <span class="c1"># When omit-&gt;discover would scrape, reject an existing live version first so</span>
+    <span class="c1"># retries do not hit the remote before create. Store create remains</span>
+    <span class="c1"># authoritative for deleted rows and races.</span>
+    <span class="k">if</span> <span class="n">tools</span> <span class="ow">is</span> <span class="n">NOT_SET</span> <span class="ow">and</span> <span class="n">MLFLOW_ENABLE_MCP_TOOL_DISCOVERY</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">get_mcp_server_version</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">MlflowException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">error_code</span> <span class="o">!=</span> <span class="n">ErrorCode</span><span class="o">.</span><span class="n">Name</span><span class="p">(</span><span class="n">RESOURCE_DOES_NOT_EXIST</span><span class="p">):</span>
+                <span class="k">raise</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;MCP server version &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; version &#39;</span><span class="si">{</span><span class="n">version</span><span class="si">}</span><span class="s2">&#39; already exists&quot;</span><span class="p">,</span>
+                <span class="n">error_code</span><span class="o">=</span><span class="n">RESOURCE_ALREADY_EXISTS</span><span class="p">,</span>
+            <span class="p">)</span>
+
+    <span class="c1"># Resolve here so mcp_server_access_headers apply (create store/REST paths</span>
+    <span class="c1"># discover without custom headers). Passing a concrete value also avoids a</span>
+    <span class="c1"># second scrape when the tracking store is local.</span>
+    <span class="n">resolved_tools</span> <span class="o">=</span> <span class="n">resolve_tools_for_create</span><span class="p">(</span>
+        <span class="n">server_json</span><span class="o">=</span><span class="n">server_json</span><span class="p">,</span>
+        <span class="n">tools</span><span class="o">=</span><span class="n">tools</span><span class="p">,</span>
+        <span class="n">headers</span><span class="o">=</span><span class="n">mcp_server_access_headers</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">validated_remotes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">MCPRemoteTransportType</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">create_access_endpoints_from_remotes</span><span class="p">:</span>
+        <span class="n">validated_remotes</span> <span class="o">=</span> <span class="n">_validate_endpoint_remotes</span><span class="p">(</span><span class="n">server_json</span><span class="p">)</span>
+
+    <span class="n">version</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_mcp_server_version</span><span class="p">(</span>
+        <span class="n">server_json</span><span class="o">=</span><span class="n">server_json</span><span class="p">,</span>
+        <span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">,</span>
+        <span class="n">status</span><span class="o">=</span><span class="n">parsed_status</span><span class="p">,</span>
+        <span class="n">tools</span><span class="o">=</span><span class="n">resolved_tools</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">url</span><span class="p">,</span> <span class="n">transport</span> <span class="ow">in</span> <span class="n">validated_remotes</span><span class="p">:</span>
+        <span class="n">client</span><span class="o">.</span><span class="n">create_mcp_access_endpoint</span><span class="p">(</span>
+            <span class="n">server_name</span><span class="o">=</span><span class="n">version</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span>
+            <span class="n">transport_type</span><span class="o">=</span><span class="n">transport</span><span class="p">,</span>
+            <span class="n">server_version</span><span class="o">=</span><span class="n">version</span><span class="o">.</span><span class="n">version</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">version</span></div>
+
+
+<span class="n">_MAX_SERVER_JSON_BYTES</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span>  <span class="c1"># 10 MiB</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_sanitize_url</span><span class="p">(</span><span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">parsed</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">host</span> <span class="o">=</span> <span class="n">parsed</span><span class="o">.</span><span class="n">hostname</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">if</span> <span class="s2">&quot;:&quot;</span> <span class="ow">in</span> <span class="n">host</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">host</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;[&quot;</span><span class="p">):</span>
+        <span class="n">host</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2">]&quot;</span>
+    <span class="k">if</span> <span class="n">parsed</span><span class="o">.</span><span class="n">port</span><span class="p">:</span>
+        <span class="n">host</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">parsed</span><span class="o">.</span><span class="n">port</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">return</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">urlunparse</span><span class="p">((</span><span class="n">parsed</span><span class="o">.</span><span class="n">scheme</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">parsed</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_read_server_json_local</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="n">file_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">file_path</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Local server.json not found: </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">file_path</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">_MAX_SERVER_JSON_BYTES</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;server.json exceeds </span><span class="si">{</span><span class="n">_MAX_SERVER_JSON_BYTES</span><span class="si">}</span><span class="s2"> byte limit&quot;</span>
+        <span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;File </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2"> does not contain valid JSON: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_read_server_json_remote</span><span class="p">(</span><span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="n">safe_url</span> <span class="o">=</span> <span class="n">_sanitize_url</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">_MAX_SERVER_JSON_BYTES</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">urllib</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">HTTPError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Failed to fetch server.json from </span><span class="si">{</span><span class="n">safe_url</span><span class="si">}</span><span class="s2">: HTTP </span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">code</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+    <span class="k">except</span> <span class="n">urllib</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">URLError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Failed to fetch server.json from </span><span class="si">{</span><span class="n">safe_url</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">reason</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">_MAX_SERVER_JSON_BYTES</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;server.json response exceeds </span><span class="si">{</span><span class="n">_MAX_SERVER_JSON_BYTES</span><span class="si">}</span><span class="s2"> byte limit&quot;</span>
+        <span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;URL </span><span class="si">{</span><span class="n">safe_url</span><span class="si">}</span><span class="s2"> did not return valid JSON: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+
+
+<div class="viewcode-block" id="register_mcp_server_from_url"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.register_mcp_server_from_url">[docs]</a><span class="nd">@record_usage_event</span><span class="p">(</span><span class="n">McpRegistryRegisterServerFromUrlEvent</span><span class="p">)</span>
+<span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.15.0&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">register_mcp_server_from_url</span><span class="p">(</span>
+    <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">source</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">status</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;draft&quot;</span><span class="p">,</span> <span class="s2">&quot;active&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;draft&quot;</span><span class="p">,</span>
+    <span class="n">tools</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">MCPTool</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">NOT_SET</span><span class="p">,</span>
+    <span class="n">create_access_endpoints_from_remotes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">mcp_server_access_headers</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MCPServerVersion</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fetch a ``server.json`` from a URL or local file path and register the MCP server.</span>
+
+<span class="sd">    When ``tools`` is omitted, MLflow attempts best-effort auto-discovery from</span>
+<span class="sd">    the first usable remote in the fetched ``server.json``. See</span>
+<span class="sd">    :func:`register_mcp_server` for discovery semantics (snapshot storage,</span>
+<span class="sd">    soft-fail on errors, and opt-out).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        url: HTTP/HTTPS URL or local file path (absolute path or ``file://`` URI)</span>
+<span class="sd">            pointing to a ``server.json`` document.</span>
+<span class="sd">        source: Provenance URI; defaults to ``url`` when not provided.</span>
+<span class="sd">        status: Initial status. Only ``&quot;draft&quot;`` and ``&quot;active&quot;`` are supported</span>
+<span class="sd">            during registration.</span>
+<span class="sd">        tools: Declared tool definitions for this version. Omit for best-effort</span>
+<span class="sd">            auto-discover from a deployed remote when available. Pass ``None``</span>
+<span class="sd">            or ``[]`` to skip discovery.</span>
+<span class="sd">        create_access_endpoints_from_remotes: When ``True``, create one direct-access</span>
+<span class="sd">            endpoint per ``remotes[]`` entry in ``server_json``. This requires</span>
+<span class="sd">            ``status=&quot;active&quot;``. Independent of tool discovery.</span>
+<span class="sd">        mcp_server_access_headers: Optional HTTP headers used when auto-discovering</span>
+<span class="sd">            tools from a remote MCP server. Tool lists may vary by credentials.</span>
+<span class="sd">            Ignored when discovery is not performed.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The created :py:class:`MCPServerVersion &lt;mlflow.entities.MCPServerVersion&gt;`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">is_local_uri</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+        <span class="n">server_json</span> <span class="o">=</span> <span class="n">_read_server_json_local</span><span class="p">(</span><span class="n">local_file_uri_to_path</span><span class="p">(</span><span class="n">url</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">scheme</span> <span class="o">=</span> <span class="n">get_uri_scheme</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="k">match</span> <span class="n">scheme</span><span class="p">:</span>
+            <span class="k">case</span> <span class="s2">&quot;http&quot;</span> <span class="o">|</span> <span class="s2">&quot;https&quot;</span><span class="p">:</span>
+                <span class="n">server_json</span> <span class="o">=</span> <span class="n">_read_server_json_remote</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+            <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;URL must use http, https, or file scheme, got: </span><span class="si">{</span><span class="n">scheme</span><span class="si">!r}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">register_mcp_server</span><span class="p">(</span>
+        <span class="n">server_json</span><span class="o">=</span><span class="n">server_json</span><span class="p">,</span>
+        <span class="n">source</span><span class="o">=</span><span class="n">source</span> <span class="ow">or</span> <span class="n">_sanitize_url</span><span class="p">(</span><span class="n">url</span><span class="p">),</span>
+        <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="p">,</span>
+        <span class="n">tools</span><span class="o">=</span><span class="n">tools</span><span class="p">,</span>
+        <span class="n">create_access_endpoints_from_remotes</span><span class="o">=</span><span class="n">create_access_endpoints_from_remotes</span><span class="p">,</span>
+        <span class="n">mcp_server_access_headers</span><span class="o">=</span><span class="n">mcp_server_access_headers</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<span class="c1"># --- MCPServer CRUD ---</span>
+
+
+<div class="viewcode-block" id="get_mcp_server"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.get_mcp_server">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.15.0&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_mcp_server</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MCPServer</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get an MCP server by name.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name: Server name.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The :py:class:`MCPServer &lt;mlflow.entities.MCPServer&gt;` with tags, aliases, and</span>
+<span class="sd">        access endpoints populated.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">get_mcp_server</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="search_mcp_servers"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.search_mcp_servers">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.15.0&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">search_mcp_servers</span><span class="p">(</span>
+    <span class="n">filter_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">max_results</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">SEARCH_MAX_RESULTS_DEFAULT</span><span class="p">,</span>
+    <span class="n">order_by</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">page_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PagedList</span><span class="p">[</span><span class="n">MCPServer</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Search MCP servers with optional filtering and pagination.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        filter_string: SQL-like filter expression (e.g., ``&quot;status = &#39;active&#39;&quot;``,</span>
+<span class="sd">            ``&quot;tags.team = &#39;platform&#39;&quot;``, ``&quot;has_access_endpoints = &#39;true&#39;&quot;``).</span>
+<span class="sd">            See</span>
+<span class="sd">            ``https://mlflow.org/docs/latest/ml/search/search-runs/#search-query-syntax-deep-dive``</span>
+<span class="sd">            for the filter syntax guide.</span>
+<span class="sd">        max_results: Maximum number of results to return.</span>
+<span class="sd">        order_by: List of columns to order by.</span>
+<span class="sd">        page_token: Token for retrieving the next page of results.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A :py:class:`PagedList &lt;mlflow.store.entities.PagedList&gt;` of</span>
+<span class="sd">        :py:class:`MCPServer &lt;mlflow.entities.MCPServer&gt;` objects.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        import mlflow</span>
+
+<span class="sd">        servers = mlflow.genai.search_mcp_servers(filter_string=&quot;status = &#39;active&#39;&quot;)</span>
+<span class="sd">        for server in servers:</span>
+<span class="sd">            print(server.name, server.status)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">search_mcp_servers</span><span class="p">(</span>
+        <span class="n">filter_string</span><span class="o">=</span><span class="n">filter_string</span><span class="p">,</span>
+        <span class="n">max_results</span><span class="o">=</span><span class="n">max_results</span><span class="p">,</span>
+        <span class="n">order_by</span><span class="o">=</span><span class="n">order_by</span><span class="p">,</span>
+        <span class="n">page_token</span><span class="o">=</span><span class="n">page_token</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="update_mcp_server"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.update_mcp_server">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.15.0&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">update_mcp_server</span><span class="p">(</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">display_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">NOT_SET</span><span class="p">,</span>
+    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">NOT_SET</span><span class="p">,</span>
+    <span class="n">icons</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">MCPIcon</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">NOT_SET</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MCPServer</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Update mutable fields of an MCP server.</span>
+
+<span class="sd">    Only fields that are explicitly passed are updated; omitted fields are left</span>
+<span class="sd">    unchanged. Pass ``None`` to clear a field.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name: Server name.</span>
+<span class="sd">        display_name: New human-readable label. Pass ``None`` to clear.</span>
+<span class="sd">        description: New description. Pass ``None`` to clear.</span>
+<span class="sd">        icons: New icon variants. Pass ``None`` to clear.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The updated :py:class:`MCPServer &lt;mlflow.entities.MCPServer&gt;`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">update_mcp_server</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+        <span class="n">display_name</span><span class="o">=</span><span class="n">display_name</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+        <span class="n">icons</span><span class="o">=</span><span class="n">icons</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="delete_mcp_server"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.delete_mcp_server">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.15.0&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">delete_mcp_server</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Delete an MCP server and all its child entities.</span>
+
+<span class="sd">    Deletion is rejected while any version of the server is still ``ACTIVE``.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name: Server name.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">delete_mcp_server</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span></div>
+
+
+<span class="c1"># --- MCPServerVersion CRUD ---</span>
+
+
+<div class="viewcode-block" id="get_mcp_server_version"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.get_mcp_server_version">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.15.0&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_mcp_server_version</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MCPServerVersion</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">get_mcp_server_version</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_mcp_server_version_by_alias"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.get_mcp_server_version_by_alias">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.15.0&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_mcp_server_version_by_alias</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MCPServerVersion</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Resolve an alias to an MCP server version.</span>
+
+<span class="sd">    The reserved alias ``&quot;latest&quot;`` delegates to latest-version resolution logic.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name: Server name.</span>
+<span class="sd">        alias: Alias name (e.g., ``&quot;production&quot;``).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The :py:class:`MCPServerVersion &lt;mlflow.entities.MCPServerVersion&gt;`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">get_mcp_server_version_by_alias</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">alias</span><span class="o">=</span><span class="n">alias</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_latest_mcp_server_version"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.get_latest_mcp_server_version">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.15.0&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_latest_mcp_server_version</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MCPServerVersion</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the latest version of an MCP server.</span>
+
+<span class="sd">    Resolves using semantic-version ordering: highest semver among ACTIVE versions</span>
+<span class="sd">    if one exists, otherwise highest semver among non-DELETED versions.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name: Server name.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The latest :py:class:`MCPServerVersion &lt;mlflow.entities.MCPServerVersion&gt;`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">get_latest_mcp_server_version</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="search_mcp_server_versions"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.search_mcp_server_versions">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.15.0&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">search_mcp_server_versions</span><span class="p">(</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">filter_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">max_results</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">SEARCH_MAX_RESULTS_DEFAULT</span><span class="p">,</span>
+    <span class="n">order_by</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">page_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PagedList</span><span class="p">[</span><span class="n">MCPServerVersion</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Search versions of a specific MCP server.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name: Server name.</span>
+<span class="sd">        filter_string: SQL-like filter (e.g., ``&quot;status = &#39;active&#39;&quot;``). See</span>
+<span class="sd">            ``https://mlflow.org/docs/latest/ml/search/search-runs/#search-query-syntax-deep-dive``</span>
+<span class="sd">            for the filter syntax guide.</span>
+<span class="sd">        max_results: Maximum number of results.</span>
+<span class="sd">        order_by: List of columns to order by.</span>
+<span class="sd">        page_token: Token for the next page.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A :py:class:`PagedList &lt;mlflow.store.entities.PagedList&gt;` of</span>
+<span class="sd">        :py:class:`MCPServerVersion &lt;mlflow.entities.MCPServerVersion&gt;` objects.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">search_mcp_server_versions</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+        <span class="n">filter_string</span><span class="o">=</span><span class="n">filter_string</span><span class="p">,</span>
+        <span class="n">max_results</span><span class="o">=</span><span class="n">max_results</span><span class="p">,</span>
+        <span class="n">order_by</span><span class="o">=</span><span class="n">order_by</span><span class="p">,</span>
+        <span class="n">page_token</span><span class="o">=</span><span class="n">page_token</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="update_mcp_server_version"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.update_mcp_server_version">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.15.0&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">update_mcp_server_version</span><span class="p">(</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">version</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">status</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;draft&quot;</span><span class="p">,</span> <span class="s2">&quot;active&quot;</span><span class="p">,</span> <span class="s2">&quot;deprecated&quot;</span><span class="p">,</span> <span class="s2">&quot;deleted&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">NOT_SET</span><span class="p">,</span>
+    <span class="n">tools</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">MCPTool</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">NOT_SET</span><span class="p">,</span>
+    <span class="n">connect_options</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ConnectOptionSettings</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">NOT_SET</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MCPServerVersion</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Update mutable fields of an MCP server version.</span>
+
+<span class="sd">    Only fields that are explicitly passed are updated; omitted fields are left</span>
+<span class="sd">    unchanged. Pass ``None`` to clear a field.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name: Server name.</span>
+<span class="sd">        version: Version string.</span>
+<span class="sd">        status: New status (``&quot;draft&quot;``, ``&quot;active&quot;``, ``&quot;deprecated&quot;``,</span>
+<span class="sd">            ``&quot;deleted&quot;``). Transition rules are enforced.</span>
+<span class="sd">        tools: New tool definitions. Pass ``None`` to clear. Does not</span>
+<span class="sd">            auto-discover tools from remotes; pass an explicit list (or clear).</span>
+<span class="sd">        connect_options: Per-key settings for connect options (e.g. visibility).</span>
+<span class="sd">            Pass ``None`` to clear.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The updated :py:class:`MCPServerVersion &lt;mlflow.entities.MCPServerVersion&gt;`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">update_mcp_server_version</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+        <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">,</span>
+        <span class="n">status</span><span class="o">=</span><span class="n">_parse_enum</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">MCPStatus</span><span class="p">,</span> <span class="s2">&quot;status&quot;</span><span class="p">),</span>
+        <span class="n">tools</span><span class="o">=</span><span class="n">tools</span><span class="p">,</span>
+        <span class="n">connect_options</span><span class="o">=</span><span class="n">connect_options</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="refresh_mcp_server_version_tools"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.refresh_mcp_server_version_tools">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.15.0&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">refresh_mcp_server_version_tools</span><span class="p">(</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">version</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">mcp_server_access_headers</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">dry_run</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MCPServerVersion</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Re-discover tools for an MCP server version and store the new snapshot.</span>
+
+<span class="sd">    This fetches the version&#39;s stored ``server_json``, scrapes the first usable</span>
+<span class="sd">    remote in ``server_json.remotes[]``, and updates ``tools`` on the version</span>
+<span class="sd">    with the discovered definitions. When ``dry_run=True``, the discovered tools</span>
+<span class="sd">    are only applied to the returned object and are not persisted.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name: Server name.</span>
+<span class="sd">        version: Version string.</span>
+<span class="sd">        mcp_server_access_headers: Optional HTTP headers used for the discovery</span>
+<span class="sd">            request (for example auth headers).</span>
+<span class="sd">        dry_run: If ``True``, return the version with discovered tools applied</span>
+<span class="sd">            locally without persisting the update.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The updated :py:class:`MCPServerVersion &lt;mlflow.entities.MCPServerVersion&gt;`,</span>
+<span class="sd">        or a non-persisted preview when ``dry_run=True``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">refresh_mcp_server_version_tools</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+        <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">,</span>
+        <span class="n">mcp_server_access_headers</span><span class="o">=</span><span class="n">mcp_server_access_headers</span><span class="p">,</span>
+        <span class="n">dry_run</span><span class="o">=</span><span class="n">dry_run</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="delete_mcp_server_version"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.delete_mcp_server_version">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.15.0&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">delete_mcp_server_version</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">delete_mcp_server_version</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">)</span></div>
+
+
+<span class="c1"># --- MCPAccessEndpoint CRUD ---</span>
+
+
+<div class="viewcode-block" id="create_mcp_access_endpoint"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.create_mcp_access_endpoint">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.15.0&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_mcp_access_endpoint</span><span class="p">(</span>
+    <span class="n">server_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">transport_type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;streamable-http&quot;</span><span class="p">,</span> <span class="s2">&quot;sse&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;streamable-http&quot;</span><span class="p">,</span>
+    <span class="n">server_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">server_alias</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MCPAccessEndpoint</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Record an approved direct-access endpoint for an MCP server.</span>
+
+<span class="sd">    Exactly one of ``server_version`` or ``server_alias`` must be provided.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        server_name: Server name.</span>
+<span class="sd">        url: URL of the remote MCP endpoint.</span>
+<span class="sd">        transport_type: Transport protocol — ``&quot;streamable-http&quot;`` (default) or ``&quot;sse&quot;``.</span>
+<span class="sd">        server_version: Pin the endpoint to a specific version string.</span>
+<span class="sd">        server_alias: Pin the endpoint to an alias.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The created :py:class:`MCPAccessEndpoint &lt;mlflow.entities.MCPAccessEndpoint&gt;`.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        import mlflow</span>
+
+<span class="sd">        endpoint = mlflow.genai.create_mcp_access_endpoint(</span>
+<span class="sd">            server_name=&quot;io.github.anthropic/brave-search&quot;,</span>
+<span class="sd">            url=&quot;https://mcp.acme.internal/brave-search&quot;,</span>
+<span class="sd">            transport_type=&quot;streamable-http&quot;,</span>
+<span class="sd">            server_alias=&quot;production&quot;,</span>
+<span class="sd">        )</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">create_mcp_access_endpoint</span><span class="p">(</span>
+        <span class="n">server_name</span><span class="o">=</span><span class="n">server_name</span><span class="p">,</span>
+        <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span>
+        <span class="n">transport_type</span><span class="o">=</span><span class="n">_parse_enum</span><span class="p">(</span><span class="n">transport_type</span><span class="p">,</span> <span class="n">MCPRemoteTransportType</span><span class="p">,</span> <span class="s2">&quot;transport_type&quot;</span><span class="p">),</span>
+        <span class="n">server_version</span><span class="o">=</span><span class="n">server_version</span><span class="p">,</span>
+        <span class="n">server_alias</span><span class="o">=</span><span class="n">server_alias</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_mcp_access_endpoint"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.get_mcp_access_endpoint">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.15.0&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_mcp_access_endpoint</span><span class="p">(</span><span class="n">server_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">endpoint_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MCPAccessEndpoint</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">get_mcp_access_endpoint</span><span class="p">(</span><span class="n">server_name</span><span class="o">=</span><span class="n">server_name</span><span class="p">,</span> <span class="n">endpoint_id</span><span class="o">=</span><span class="n">endpoint_id</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="search_mcp_access_endpoints"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.search_mcp_access_endpoints">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.15.0&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">search_mcp_access_endpoints</span><span class="p">(</span>
+    <span class="n">server_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">server_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">server_alias</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">filter_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">max_results</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">SEARCH_MAX_RESULTS_DEFAULT</span><span class="p">,</span>
+    <span class="n">order_by</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">page_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PagedList</span><span class="p">[</span><span class="n">MCPAccessEndpoint</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Search access endpoints across the workspace.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        server_name: If provided, limit results to this server.</span>
+<span class="sd">        server_version: If provided, limit results to endpoints targeting this version.</span>
+<span class="sd">        server_alias: If provided, limit results to endpoints targeting this alias.</span>
+<span class="sd">        filter_string: SQL-like filter. See</span>
+<span class="sd">            ``https://mlflow.org/docs/latest/ml/search/search-runs/#search-query-syntax-deep-dive``</span>
+<span class="sd">            for the filter syntax guide.</span>
+<span class="sd">        max_results: Maximum number of results.</span>
+<span class="sd">        order_by: List of columns to order by.</span>
+<span class="sd">        page_token: Token for the next page.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A :py:class:`PagedList &lt;mlflow.store.entities.PagedList&gt;` of</span>
+<span class="sd">        :py:class:`MCPAccessEndpoint &lt;mlflow.entities.MCPAccessEndpoint&gt;` objects.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">search_mcp_access_endpoints</span><span class="p">(</span>
+        <span class="n">server_name</span><span class="o">=</span><span class="n">server_name</span><span class="p">,</span>
+        <span class="n">server_version</span><span class="o">=</span><span class="n">server_version</span><span class="p">,</span>
+        <span class="n">server_alias</span><span class="o">=</span><span class="n">server_alias</span><span class="p">,</span>
+        <span class="n">filter_string</span><span class="o">=</span><span class="n">filter_string</span><span class="p">,</span>
+        <span class="n">max_results</span><span class="o">=</span><span class="n">max_results</span><span class="p">,</span>
+        <span class="n">order_by</span><span class="o">=</span><span class="n">order_by</span><span class="p">,</span>
+        <span class="n">page_token</span><span class="o">=</span><span class="n">page_token</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="update_mcp_access_endpoint"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.update_mcp_access_endpoint">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.15.0&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">update_mcp_access_endpoint</span><span class="p">(</span>
+    <span class="n">server_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">endpoint_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">NOT_SET</span><span class="p">,</span>
+    <span class="n">transport_type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;streamable-http&quot;</span><span class="p">,</span> <span class="s2">&quot;sse&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">NOT_SET</span><span class="p">,</span>
+    <span class="n">server_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">NOT_SET</span><span class="p">,</span>
+    <span class="n">server_alias</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">NOT_SET</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MCPAccessEndpoint</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Update an existing access endpoint.</span>
+
+<span class="sd">    Only fields that are explicitly passed are updated; omitted fields are left</span>
+<span class="sd">    unchanged. Pass ``None`` to clear a field.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        server_name: Server name.</span>
+<span class="sd">        endpoint_id: Endpoint ID.</span>
+<span class="sd">        url: New endpoint URL. Pass ``None`` to clear.</span>
+<span class="sd">        transport_type: New transport type. Pass ``None`` to clear.</span>
+<span class="sd">        server_version: New version target. Pass ``None`` to clear.</span>
+<span class="sd">        server_alias: New alias target. Pass ``None`` to clear.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The updated :py:class:`MCPAccessEndpoint &lt;mlflow.entities.MCPAccessEndpoint&gt;`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">update_mcp_access_endpoint</span><span class="p">(</span>
+        <span class="n">server_name</span><span class="o">=</span><span class="n">server_name</span><span class="p">,</span>
+        <span class="n">endpoint_id</span><span class="o">=</span><span class="n">endpoint_id</span><span class="p">,</span>
+        <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span>
+        <span class="n">transport_type</span><span class="o">=</span><span class="n">_parse_enum</span><span class="p">(</span><span class="n">transport_type</span><span class="p">,</span> <span class="n">MCPRemoteTransportType</span><span class="p">,</span> <span class="s2">&quot;transport_type&quot;</span><span class="p">),</span>
+        <span class="n">server_version</span><span class="o">=</span><span class="n">server_version</span><span class="p">,</span>
+        <span class="n">server_alias</span><span class="o">=</span><span class="n">server_alias</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="delete_mcp_access_endpoint"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.delete_mcp_access_endpoint">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.15.0&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">delete_mcp_access_endpoint</span><span class="p">(</span><span class="n">server_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">endpoint_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">delete_mcp_access_endpoint</span><span class="p">(</span><span class="n">server_name</span><span class="o">=</span><span class="n">server_name</span><span class="p">,</span> <span class="n">endpoint_id</span><span class="o">=</span><span class="n">endpoint_id</span><span class="p">)</span></div>
+
+
+<span class="c1"># --- Tag operations ---</span>
+
+
+<div class="viewcode-block" id="set_mcp_server_tag"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.set_mcp_server_tag">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.15.0&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">set_mcp_server_tag</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Set a tag on an MCP server (upsert).</span>
+
+<span class="sd">    Tags are the API term for these user-defined metadata entries. Some UI</span>
+<span class="sd">    surfaces may label the same concept as metadata.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name: Server name.</span>
+<span class="sd">        key: Tag key.</span>
+<span class="sd">        value: Tag value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">set_mcp_server_tag</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="delete_mcp_server_tag"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.delete_mcp_server_tag">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.15.0&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">delete_mcp_server_tag</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">delete_mcp_server_tag</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="set_mcp_server_version_tag"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.set_mcp_server_version_tag">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.15.0&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">set_mcp_server_version_tag</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Set a tag on an MCP server version (upsert).</span>
+
+<span class="sd">    Tags are the API term for these user-defined metadata entries. Some UI</span>
+<span class="sd">    surfaces may label the same concept as metadata.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name: Server name.</span>
+<span class="sd">        version: Version string.</span>
+<span class="sd">        key: Tag key.</span>
+<span class="sd">        value: Tag value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">set_mcp_server_version_tag</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="delete_mcp_server_version_tag"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.delete_mcp_server_version_tag">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.15.0&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">delete_mcp_server_version_tag</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">delete_mcp_server_version_tag</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">)</span></div>
+
+
+<span class="c1"># --- Alias operations ---</span>
+
+
+<div class="viewcode-block" id="set_mcp_server_alias"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.set_mcp_server_alias">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.15.0&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">set_mcp_server_alias</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Set an alias on an MCP server pointing to a specific version (upsert).</span>
+
+<span class="sd">    The alias name ``&quot;latest&quot;`` is reserved and cannot be set here.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name: Server name.</span>
+<span class="sd">        alias: Alias name (e.g., ``&quot;production&quot;``).</span>
+<span class="sd">        version: Target version string.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">set_mcp_server_alias</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">alias</span><span class="o">=</span><span class="n">alias</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="delete_mcp_server_alias"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.delete_mcp_server_alias">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.15.0&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">delete_mcp_server_alias</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">delete_mcp_server_alias</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">alias</span><span class="o">=</span><span class="n">alias</span><span class="p">)</span></div>
+</pre></div>
+
+              </div>
+            </div>
+            <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+      <p class="copyright">
+          &copy; MLflow Project, a Series of LF Projects, LLC. All rights reserved.
+      </p>
+
+  </div> 
+
+</footer>
+          </div>
+        </div>
+      </section>
+    </main>
+  </page>
+
+  
+
+
+  
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:'../../../',
+      VERSION:'3.15.0',
+      COLLAPSE_INDEX:false,
+      FILE_SUFFIX:'.html',
+      LINK_SUFFIX: '.html',
+      HAS_SOURCE:  true
+    };
+  </script>
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/clipboard.min.js"></script>
+  <script type="text/javascript" src="../../../_static/js/jquery.waypoints.min.js"></script>
+
+  
+  
+  
+  <script type="text/javascript">var CLIPPY_SVG_PATH = "../../../_static/clippy.svg";</script>
+  <script type="text/javascript" src="../../../_static/js/custom.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+    jQuery(function () {
+      SphinxRtdTheme.StickyNav.enable();
+    });
+
+  </script>
+  
+
+  
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
+        // Get the code block designator class entries
+        const allHighlights = document.querySelectorAll('.highlight');
+        // Disable copyable links for notebook cell numbering and for cell outputs
+        const highlights = Array.from(allHighlights).filter(highlight => !highlight.closest('.highlight-none') && 
+            !highlight.closest('.nboutput'));
+    
+        highlights.forEach(function(highlight) {
+            const copyIcon = document.createElement('span');
+            copyIcon.classList.add('copy-icon');
+            copyIcon.innerHTML = '&#xf0ea;';
+
+            copyIcon.addEventListener('click', function() {
+                const code = highlight.querySelector('pre').textContent;
+                copyToClipboard(code);
+
+                // Flash effect on click
+                this.style.color = '#0194E2';
+                setTimeout(() => {
+                    this.style.color = ''; 
+                }, 100);
+
+                // Display "Code copied to clipboard" near the clicked icon
+                const message = document.createElement('span');
+                message.textContent = "Copied!";
+                message.classList.add('copy-message'); 
+
+                // Append the message to the icon
+                this.appendChild(message);
+
+                setTimeout(() => {
+                    this.removeChild(message);
+                }, 500);
+            });
+
+            highlight.appendChild(copyIcon);
+        });
+    });
+  </script>
+
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        // Force download for notebook-download-btn
+        const downloadButtons = document.querySelectorAll('.notebook-download-btn');
+        downloadButtons.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default behavior
+
+                // Fetch the raw content of the notebook from GitHub
+                fetch(button.href)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const url = window.URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.style.display = 'none';
+                        link.href = url;
+                        const filename = button.href.split('/').pop();
+                        link.download = filename; 
+
+                        document.body.appendChild(link);
+                        link.click();
+
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(link);
+                    })
+                    .catch(err => console.error('Error fetching the notebook:', err));
+            });
+        });
+    });
+</script> 
+</body>
+</html>

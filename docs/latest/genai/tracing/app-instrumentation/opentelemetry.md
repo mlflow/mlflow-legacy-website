@@ -38,6 +38,8 @@ export OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://localhost:5000/v1/traces
 export OTEL_EXPORTER_OTLP_TRACES_HEADERS=x-mlflow-experiment-id=123
 ```
 
+When [workspaces](/docs/latest/self-hosting/workspaces/getting-started.md) are enabled on your MLflow server, OTLP clients can also send `X-MLFLOW-WORKSPACE` to override the default workspace for a request.
+
 For more details about the MLflow OpenTelemetry integration, see [Collect OpenTelemetry Traces into MLflow](/docs/latest/genai/tracing/opentelemetry/ingest.md).
 
 ## Combining the OpenTelemetry SDK and the MLflow Tracing SDK[​](#combining-the-opentelemetry-sdk-and-the-mlflow-tracing-sdk "Direct link to Combining the OpenTelemetry SDK and the MLflow Tracing SDK")
