@@ -144,7 +144,15 @@ mlflow.set_tracking_uri("http://localhost:5000")
 
 # Specify the experiment you just created for your LLM application or AI agent.
 
+# The positional argument is the experiment name. To attach to an existing
+
+# experiment by its numeric ID, pass it with the experiment_id keyword (a numeric
+
+# value passed positionally is treated as a name, not an ID):
+
 mlflow.set_experiment("My Application")
+
+# mlflow.set_experiment(experiment_id="1234567890123456")
 
 
 

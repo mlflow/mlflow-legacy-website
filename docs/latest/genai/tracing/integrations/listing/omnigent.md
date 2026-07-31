@@ -1,6 +1,6 @@
 # Tracing Omnigent
 
-![Omnigent Traces in MLflow UI](/docs/latest/images/llms/tracing/omnigent-tracing.png)
+![Omnigent Trace Detail in MLflow UI](/docs/latest/images/llms/tracing/omnigent-trace-detail.png)
 
 [MLflow Tracing](/docs/latest/genai/tracing.md) provides automatic tracing for [Omnigent](https://omnigent.ai/), a multi-harness AI agent orchestration platform. Omnigent natively emits [OpenTelemetry](https://opentelemetry.io/) traces via MLflow's tracing SDK, so after setup MLflow will automatically capture traces of your Omnigent agent sessions including:
 
@@ -15,19 +15,17 @@ Omnigent is an agent orchestration platform that supports multiple execution har
 
 ## Setup[​](#setup "Direct link to Setup")
 
-Omnigent ships MLflow as an optional dependency. Install the tracing extra and configure your export target.
+Install Omnigent and MLflow, then configure your export target.
 
 1
 
-### Install the Tracing Extra
+### Install Omnigent and MLflow
 
 bash
 
 ```
-pip install 'omnigent[tracing]'
+uv pip install omnigent mlflow
 ```
-
-This installs `mlflow` and `opentelemetry` SDK packages. If the tracing extra is not installed, Omnigent degrades gracefully to a no-op — the server continues to run without emitting traces.
 
 2
 
@@ -53,28 +51,29 @@ docker compose up -d
 
 ### Configure Environment Variables
 
-* OTLP Export (Recommended)
-* MLflow Tracking Server
-
-Point Omnigent at any OTLP-compatible collector (MLflow tracking server, Jaeger, Grafana Tempo, etc.):
+Set the following environment variables on the **host machine** (the machine running `omnigent run` or `omnigent host`):
 
 bash
 
 ```
+export OMNIGENT_TELEMETRY_ENABLED=true
+
 export OTEL_EXPORTER_OTLP_ENDPOINT="http://localhost:5000"
 
-export OTEL_EXPORTER_OTLP_PROTOCOL="http/protobuf"  # or "grpc" (default)
+export OTEL_EXPORTER_OTLP_PROTOCOL="http/protobuf"
+
+export OTEL_EXPORTER_OTLP_TRACES_HEADERS="x-mlflow-experiment-id=1"
+
+
+
+# Optional: suppress internal HTTP call spans
+
+export OMNIGENT_OTEL_HTTP_CLIENT_INSTRUMENTATION=false
 ```
 
-Alternatively, point directly at an MLflow tracking server:
+note
 
-bash
-
-```
-export MLFLOW_TRACKING_URI="http://localhost:5000"
-```
-
-Omnigent's `telemetry.init()` runs automatically at server startup and configures MLflow based on these environment variables. No code changes are needed.
+Tracing runs in the runner/harness process on the **host** side, not the server. Set these variables where you run `omnigent run` or `omnigent host`, not where the server is deployed.
 
 4
 
@@ -89,8 +88,6 @@ omnigent run
 ```
 
 ## How It Works[​](#how-it-works "Direct link to How It Works")
-
-![Omnigent Trace Detail in MLflow UI](/docs/latest/images/llms/tracing/omnigent-trace-detail.png)
 
 Omnigent uses MLflow's tracing SDK to emit structured spans in a hierarchy that mirrors the agent execution:
 
@@ -110,17 +107,15 @@ agent:<name>         (AGENT)       — user message, response, token usage
 
 Omnigent response IDs use the format `resp_<32-char hex>`. The hex suffix is reused as the W3C trace ID, so operators can look up a trace by its response ID — just strip the `resp_` prefix and paste the hex into any trace backend's search UI. No lookup table needed.
 
-### Unified Provider Mode[​](#unified-provider-mode "Direct link to Unified Provider Mode")
-
-Omnigent sets `MLFLOW_USE_DEFAULT_TRACER_PROVIDER=false` so MLflow shares the global OpenTelemetry `TracerProvider` with raw OTel instrumentation (e.g., FastAPI auto-instrumentation). This means MLflow spans and raw OTel spans appear in the same trace tree.
-
 ## Configuration Reference[​](#configuration-reference "Direct link to Configuration Reference")
 
-| Variable                      | Purpose                                                 | Default |
-| ----------------------------- | ------------------------------------------------------- | ------- |
-| `OTEL_EXPORTER_OTLP_ENDPOINT` | OTLP collector endpoint (e.g. your MLflow server URL)   | unset   |
-| `OTEL_EXPORTER_OTLP_PROTOCOL` | OTLP transport (`grpc` or `http/protobuf`)              | `grpc`  |
-| `MLFLOW_TRACKING_URI`         | MLflow tracking server (fallback when no OTLP endpoint) | unset   |
+| Variable                                    | Purpose                                                                                                    | Default |
+| ------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ------- |
+| `OMNIGENT_TELEMETRY_ENABLED`                | Master opt-in — must be `true` to enable any tracing                                                       | `false` |
+| `OTEL_EXPORTER_OTLP_ENDPOINT`               | OTLP collector endpoint (e.g. your MLflow server URL)                                                      | unset   |
+| `OTEL_EXPORTER_OTLP_PROTOCOL`               | OTLP transport (`grpc` or `http/protobuf`)                                                                 | `grpc`  |
+| `OTEL_EXPORTER_OTLP_TRACES_HEADERS`         | Headers for trace OTLP requests (e.g. `x-mlflow-experiment-id=1` to route to a specific MLflow experiment) | unset   |
+| `OMNIGENT_OTEL_HTTP_CLIENT_INSTRUMENTATION` | Set to `false` to suppress internal HTTP call spans from appearing alongside agent traces                  | `true`  |
 
 ## Monitoring Token Usage[​](#monitoring-token-usage "Direct link to Monitoring Token Usage")
 
@@ -132,9 +127,10 @@ See [Token Usage and Cost Tracking](/docs/latest/genai/tracing/token-usage-cost.
 
 **Tracing not working:**
 
-* Verify that `omnigent[tracing]` is installed: `python -c "import mlflow; print(mlflow.__version__)"`
-* Check that `OTEL_EXPORTER_OTLP_ENDPOINT` or `MLFLOW_TRACKING_URI` is set in the environment that starts the Omnigent server
-* Confirm the MLflow tracking server or OTLP collector is reachable
+* Verify `OMNIGENT_TELEMETRY_ENABLED=true` is set — tracing is off by default
+* Check that `OTEL_EXPORTER_OTLP_ENDPOINT` is set on the **host machine** (not the server)
+* Confirm the MLflow tracking server is reachable from the host machine
+* Check host logs (`~/.omnigent/logs/host-runner/`) for `omnigent telemetry initialized` to confirm the OTel provider started
 
 **Missing traces:**
 

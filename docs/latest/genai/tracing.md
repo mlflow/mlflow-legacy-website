@@ -10,7 +10,7 @@ MLflow Tracing is a fully **OpenTelemetry-compatible** [LLM observability](https
 
 #### **Public Demo**[​](#public-demo "Direct link to public-demo")
 
-Visit **[demo.mlflow.org](https://demo.mlflow.org/#/experiments/1/overview)** to explore a publicly hosted MLflow instance pre-loaded with sample data.
+Visit **[demo.mlflow.org](https://demo.mlflow.org/#/experiments/1)** to explore a publicly hosted MLflow instance pre-loaded with sample data.
 
 #### **Starting from UI**[​](#starting-from-ui "Direct link to starting-from-ui")
 

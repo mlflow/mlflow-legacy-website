@@ -28,10 +28,34 @@ For a persistent setup, add the same value to `~/.codex/config.toml`:
 toml
 
 ```
-openai_base_url = "http://localhost:5000/gateway/proxy/codex/v1
+openai_base_url = "http://localhost:5000/gateway/proxy/codex/v1"
 ```
 
 Note that you need to authenticate with your API key instead of ChatGPT subscription.
+
+## Authenticated Gateways (RBAC / basic auth)[​](#authenticated-gateways-rbac--basic-auth "Direct link to Authenticated Gateways (RBAC / basic auth)")
+
+If your MLflow server has [authentication](/docs/latest/self-hosting/security/basic-http-auth.md) enabled, Codex must also send your MLflow credentials. Codex already uses the `Authorization` header for your own OpenAI key (which the gateway forwards upstream), so MLflow reads its credentials from a dedicated `X-MLflow-Authorization` header instead. Set it via Codex's `env_http_headers`:
+
+\~/.codex/config.toml
+
+toml
+
+```
+openai_base_url = "http://localhost:5000/gateway/proxy/codex/v1"
+
+env_http_headers = { "X-MLflow-Authorization" = "MLFLOW_AUTH" }
+```
+
+bash
+
+```
+# Base64-encode your MLflow "username:password" as an HTTP Basic credential.
+
+export MLFLOW_AUTH="Basic $(printf '%s' 'my-user:my-password' | base64 | tr -d '\n')"
+```
+
+MLflow honors `X-MLflow-Authorization` only on `/gateway/` routes and never forwards it to the upstream provider.
 
 ## What You Get[​](#what-you-get "Direct link to What You Get")
 

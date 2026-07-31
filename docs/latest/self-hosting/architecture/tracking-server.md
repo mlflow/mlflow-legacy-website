@@ -8,51 +8,39 @@ MLflow tracking server is a stand-alone HTTP server that serves multiple REST AP
 
 ## Start the Tracking Server[​](#start-the-tracking-server "Direct link to Start the Tracking Server")
 
-Starting the tracking server is as simple as running the following command:
+Starting the tracking server is as simple as running:
 
 bash
 
 ```
-mlflow server --host 127.0.0.1 --port 8080
+mlflow server
 ```
 
-Once the server starts running, you should see the following output:
+This serves both the Tracking UI and the REST API at `http://127.0.0.1:5000`, storing metadata in a local SQLite database (`sqlite:///mlflow.db` by default). For backward compatibility, if a `./mlruns` file store with existing experiment data is present, that store is reused instead. You should see output like:
 
 text
 
 ```
-INFO:     Started server process [28550]
+Backend store URI not provided. Using sqlite:///mlflow.db
 
-INFO:     Waiting for application startup.
+Registry store URI not provided. Using backend store URI.
+
+[MLflow] Security middleware enabled with default settings (localhost-only). To allow connections from other hosts, use --host 0.0.0.0 and configure --allowed-hosts and --cors-allowed-origins.
 
 INFO:     Application startup complete.
 
-INFO:     Uvicorn running on http://127.0.0.1:8080 (Press CTRL+C to quit)
+INFO:     Uvicorn running on http://127.0.0.1:5000 (Press CTRL+C to quit)
 ```
 
-There are many options to configure the server, refer to [Configure Server](#configure-server) for more details.
-
-important
-
-The server listens on <http://localhost:5000> by default and only accepts connections from the local machine. To let the server accept connections from other machines, you will need to pass `--host 0.0.0.0` to listen on all network interfaces (or a specific interface address). This is typically required configuration when running the server **in a Kubernetes pod or a Docker container**.
-
-MLflow 3.5.0+ includes built-in security middleware to protect against DNS rebinding and CORS attacks. When using `--host 0.0.0.0`, configure the `--allowed-hosts` option to specify which domains can access your server. See [Security Configuration](/docs/latest/self-hosting/security/network.md) for details.
-
-Read-only Filesystems
-
-When running in containers with read-only root filesystems (common in Kubernetes with `securityContext.readOnlyRootFilesystem: true`), configure remote artifact storage using `--artifacts-destination` (artifact serving is enabled by default). The tracking server does not create local directories at startup when using remote artifact storage, making it compatible with read-only environments.
+Then point your client code at the server so your runs and traces land there:
 
 bash
 
 ```
-mlflow server \
-
-    --host 0.0.0.0 \
-
-    --backend-store-uri postgresql://user:pass@host/db \
-
-    --artifacts-destination s3://my-bucket
+export MLFLOW_TRACKING_URI=http://127.0.0.1:5000
 ```
+
+That covers local use. When you're ready to use a different backend, store artifacts remotely, or expose the server to your team, see [Configure Server](#configure-server) below.
 
 ## Logging to a Tracking Server[​](#logging_to_a_tracking_server "Direct link to Logging to a Tracking Server")
 
@@ -175,6 +163,18 @@ client.logParam(run.getRunId(), "a", "1")
 
 This section describes how to configure the tracking server for some common use cases. The section requires you to have a basic knowledge about the tracking server architecture, please visit [Architecture Overview](/docs/latest/self-hosting/architecture/overview.md) if you are not familiar with it yet.
 
+Start from what you want to do, then jump to the relevant section:
+
+| What do you want to do?                  | Flag(s)                                                 | Section                                                                                    |
+| ---------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| Use PostgreSQL/MySQL instead of SQLite   | `--backend-store-uri`                                   | [Backend Store](#backend-store)                                                            |
+| Store artifacts in the cloud             | `--artifacts-destination` / `--default-artifact-root`   | [Remote artifacts store](#tracking-server-artifact-store)                                  |
+| Open the server to your team (securely)  | `--host` + `--allowed-hosts` / `--cors-allowed-origins` | [Secure Tracking Server](#tracking-auth)                                                   |
+| Archive old trace payloads               | `--trace-archival-config`                               | [Trace Archival](#trace-archival)                                                          |
+| Isolate experiments, models, and prompts | `--enable-workspaces`                                   | [Getting Started with Workspaces](/docs/latest/self-hosting/workspaces/getting-started.md) |
+
+For the exhaustive list of flags, run `mlflow server --help` or see the [CLI reference](https://mlflow.org/docs/latest/api_reference/cli.html#mlflow-server).
+
 ### Backend Store[​](#backend-store "Direct link to Backend Store")
 
 By default, the tracking server uses SQLite database (`sqlite:///mlflow.db`) to store runs metadata. You can configure a different backend store by adding the `--backend-store-uri` option:
@@ -196,7 +196,7 @@ mlflow server --backend-store-uri postgresql://username:password@host:port/datab
 
 
 
-# File-based (legacy): use local filesystem under ./mlruns directory
+# File-based: use local filesystem under ./mlruns directory
 
 mlflow server --backend-store-uri ./mlruns
 ```
@@ -317,6 +317,22 @@ important
 
 If you are using remote storage, you have to configure the credentials for the server to access the artifacts. Be aware of that The MLflow artifact proxied access service enables users to have an *assumed role of access to all artifacts* that are accessible to the Tracking Server. Refer [Manage Access](/docs/latest/self-hosting/architecture/artifact-store.md#artifacts-stores-manage-access) for further details.
 
+Read-only Filesystems
+
+When running in containers with read-only root filesystems (common in Kubernetes with `securityContext.readOnlyRootFilesystem: true`), configure remote artifact storage using `--artifacts-destination` (artifact serving is enabled by default). The tracking server does not create local directories at startup when using remote artifact storage, making it compatible with read-only environments.
+
+bash
+
+```
+mlflow server \
+
+    --host 0.0.0.0 \
+
+    --backend-store-uri postgresql://user:pass@host/db \
+
+    --artifacts-destination s3://my-bucket
+```
+
 The tracking server resolves the uri `mlflow-artifacts:/` in tracking request from the client to an otherwise explicit object store destination (e.g., "s3:/my\_bucket/mlartifacts") for interfacing with artifacts. The following patterns will all resolve to the configured proxied object store location (in above example, `s3://my-root-bucket/mlartifacts`):
 
 * `https://<host>:<port>/mlartifacts`
@@ -328,6 +344,10 @@ The tracking server resolves the uri `mlflow-artifacts:/` in tracking request fr
 important
 
 The MLflow client caches artifact location information on a per-run basis. It is therefore not recommended to alter a run's artifact location before it has terminated.
+
+note
+
+With proxied artifact access, artifact downloads from the MLflow UI also stream through the tracking server. Since MLflow 3.15.0, when run artifacts are instead stored directly on supported storage (currently Amazon S3, as with [non-proxied artifact access](#tracking-server-no-proxy)), the MLflow UI downloads artifacts directly from the storage via presigned URLs, bypassing the tracking server. See [Presigned URLs for direct artifact downloads](/docs/latest/self-hosting/architecture/artifact-store.md#presigned-download-urls) for details.
 
 #### Use tracking server w/o proxying artifacts access[​](#tracking-server-no-proxy "Direct link to Use tracking server w/o proxying artifacts access")
 
@@ -374,6 +394,24 @@ bash
 mlflow server --artifacts-only ...
 ```
 
+When workspaces are enabled, the artifact-only server must use the same logical workspace provider as the tracking server so it can validate `X-MLFLOW-WORKSPACE` before accessing storage. Configure the provider explicitly with `--workspace-store-uri`:
+
+bash
+
+```
+mlflow server \
+
+  --artifacts-only \
+
+  --enable-workspaces \
+
+  --workspace-store-uri postgresql://user:pass@host/mlflow \
+
+  --artifacts-destination s3://mlflow-artifacts
+```
+
+In this mode, MLflow initializes the workspace provider for request validation but does not initialize the tracking or model registry stores. Tracking and workspace-management APIs remain disabled. If the workspace header is omitted, the provider's default workspace is used; unknown workspaces and requests without a resolvable default are rejected.
+
 python
 
 ```
@@ -401,6 +439,12 @@ note
 If an MLflow server is running with the `--artifacts-only` flag, the client should interact with this server explicitly by including either a `host` or `host:port` definition for uri location references for artifacts. Otherwise, all artifact requests will route to the MLflow Tracking server, defeating the purpose of running a distinct artifact server.
 
 ## Secure Tracking Server[​](#tracking-auth "Direct link to Secure Tracking Server")
+
+important
+
+The server listens on `http://127.0.0.1:5000` by default and only accepts connections from the local machine. To let the server accept connections from other machines, you will need to pass `--host 0.0.0.0` to listen on all network interfaces (or a specific interface address). This is typically required configuration when running the server **in a Kubernetes pod or a Docker container**.
+
+MLflow 3.5.0+ includes built-in security middleware to protect against DNS rebinding and CORS attacks. When using `--host 0.0.0.0`, configure the `--allowed-hosts` option to specify which domains can access your server. See [Security Configuration](/docs/latest/self-hosting/security/network.md) for details.
 
 ### Built-in Security Middleware[​](#built-in-security-middleware "Direct link to Built-in Security Middleware")
 
@@ -560,27 +604,13 @@ note
 * The regular expression is applied using Python's `re.search()` function.
 * Use standard regular expression syntax for pattern matching.
 
-## Fetching Server Version[​](#fetching-server-version "Direct link to Fetching Server Version")
-
-The version of MLflow running on the server can be found by querying the `/version` endpoint. This can be used to check that the client-side version of MLflow is up-to-date with a remote tracking server prior to running experiments. For example:
-
-python
-
-```
-import requests
-
-import mlflow
-
-
-
-response = requests.get("http://<mlflow-host>:<mlflow-port>/version")
-
-assert response.text == mlflow.__version__  # Checking for a strict version match
-```
-
 ## Handling timeout when uploading/downloading large artifacts[​](#handling-timeout-when-uploadingdownloading-large-artifacts "Direct link to Handling timeout when uploading/downloading large artifacts")
 
 When uploading or downloading large artifacts through the tracking server with the artifact proxy enabled, the server may take a long time to process the request. If it exceeds the timeout limit, the server will terminate the request, resulting in a request failure on the client side.
+
+note
+
+Since MLflow 3.15.0, when run artifacts are stored directly on supported storage (currently Amazon S3), the MLflow UI downloads them via presigned URLs instead of streaming them through the tracking server, avoiding these timeouts for UI downloads. See [Presigned URLs for direct artifact downloads](/docs/latest/self-hosting/architecture/artifact-store.md#presigned-download-urls) for details.
 
 Example client code:
 
