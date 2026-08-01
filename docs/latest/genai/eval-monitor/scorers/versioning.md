@@ -2,6 +2,18 @@
 
 Scorers can be registered to MLflow experiments for version control and team collaboration.
 
+A scorer's version history is identified by its experiment and registered name. The first registration creates version 1, and registering another scorer with the same name in the same experiment creates the next version. Existing versions remain available until you delete them.
+
+## How scorer versioning works[​](#how-scorer-versioning-works "Direct link to How scorer versioning works")
+
+| Action                                                         | Version behavior                      |
+| -------------------------------------------------------------- | ------------------------------------- |
+| Register a name for the first time in an experiment            | Creates version 1                     |
+| Register the same name again in the same experiment            | Creates the next version              |
+| Register the same name in a different experiment               | Starts an independent version history |
+| Call `get_scorer()` without a version or call `list_scorers()` | Returns the latest version            |
+| Call `get_scorer(version=...)`                                 | Returns a specific version            |
+
 ## Supported Scorers[​](#supported-scorers "Direct link to Supported Scorers")
 
 | Scorer Type                                                                             | Supported                                                                        |
@@ -32,7 +44,7 @@ When you create a judge using the [Judge Builder UI](/docs/latest/genai/eval-mon
 
 ### Prerequisite[​](#prerequisite "Direct link to Prerequisite")
 
-Judges are registered to an **MLflow Experiment** (not Run-level).
+Judges are registered to an **MLflow Experiment** (not Run-level). Set an active experiment or pass its ID to each scorer registry API.
 
 python
 
@@ -43,7 +55,9 @@ import mlflow
 
 mlflow.set_tracking_uri("your-tracking-uri")
 
-mlflow.create_experiment("evaluation-judges")
+experiment = mlflow.set_experiment("evaluation-judges")
+
+experiment_id = experiment.experiment_id
 ```
 
 Define a sample template-based LLM scorer:
@@ -70,18 +84,12 @@ quality_judge = make_judge(
 
 ### Registering a Scorer[​](#registering-a-scorer-1 "Direct link to Registering a Scorer")
 
-To register a judge to the experiment, call the `register` method on the judge instance.
+To register a judge to the experiment, call the [`register()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Scorer.register) method on the judge instance. The first registration creates version 1.
 
 python
 
 ```
-# Register the judge
-
-registered = quality_judge.register()
-
-# You can pass experiment_id to register the judge to a specific experiment
-
-# registered = quality_judge.register(experiment_id=experiment_id)
+registered_v1 = quality_judge.register(experiment_id=experiment_id)
 ```
 
 ### Updating a Scorer[​](#updating-a-scorer-1 "Direct link to Updating a Scorer")
@@ -120,7 +128,7 @@ registered_v2 = quality_judge_v2.register(experiment_id=experiment_id)
 
 ### Loading a Scorer[​](#loading-a-scorer "Direct link to Loading a Scorer")
 
-To load a registered scorer, use the `get_scorer` function.
+Use [`get_scorer()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.get_scorer) without `version` to load the highest available version, or specify a version number to load that exact definition.
 
 python
 
@@ -129,18 +137,36 @@ from mlflow.genai import get_scorer
 
 
 
-# Get the latest version
+# Load the latest version
 
-latest_judge = get_scorer(name="response_quality")
+latest_judge = get_scorer(
 
-# or specify experiment_id to get a scorer from a specific experiment
+    name="response_quality",
 
-# latest_judge = get_scorer(name="response_quality", experiment_id=experiment_id)
+    experiment_id=experiment_id,
+
+)
+
+
+
+# Load version 1
+
+v1_judge = get_scorer(
+
+    name="response_quality",
+
+    experiment_id=experiment_id,
+
+    version=1,
+
+)
 ```
+
+Pin a specific version for regression tests and other workflows that must remain reproducible. Load the latest version when the workflow should automatically adopt scorer updates.
 
 ### Listing Scorers[​](#listing-scorers "Direct link to Listing Scorers")
 
-The `list_scorers` function returns a list of the scorers registered in the experiment.
+Use [`list_scorers()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.list_scorers) to retrieve the latest version of each registered scorer.
 
 python
 
@@ -154,4 +180,42 @@ all_scorers = list_scorers(experiment_id=experiment_id)
 for scorer in all_scorers:
 
     print(f"Scorer: {scorer.name}, Model: {scorer.model}")
+```
+
+### Deleting Scorer Versions[​](#deleting-scorer-versions "Direct link to Deleting Scorer Versions")
+
+Use [`delete_scorer()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.delete_scorer) with an explicit version number to delete one version, or pass `version="all"` to delete the scorer and its complete version history.
+
+python
+
+```
+from mlflow.genai import delete_scorer
+
+
+
+# Delete only version 1.
+
+delete_scorer(
+
+    name="response_quality",
+
+    experiment_id=experiment_id,
+
+    version=1,
+
+)
+
+
+
+# Delete every remaining version.
+
+delete_scorer(
+
+    name="response_quality",
+
+    experiment_id=experiment_id,
+
+    version="all",
+
+)
 ```
