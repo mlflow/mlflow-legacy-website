@@ -27,6 +27,7 @@ MLflow's Span object is designed to be compatible with the [OpenTelemetry Span s
 | `outputs`       | `Optional[Any]`   | The output data that is passed out of the particular stage of your application. May contain [Attachment](/docs/latest/genai/tracing/observe-with-traces/multimodal.md#trace-attachments) objects for binary content, which are automatically replaced with reference URIs. |
 | `attributes`    | `Dict[str, Any]`  | Attributes are metadata that are associated with a given step within your application. These are key-value pairs that provide insight into behavioral modifications for function and method calls.                                                                         |
 | `events`        | `List[SpanEvent]` | Events are a system-level property that is optionally applied to a span only if there was an issue during the execution of the span. These events contain information about exceptions that were thrown in the instrumented call, as well as the stack trace.              |
+| `links`         | `List[Link]`      | Links to related spans, within the same trace or across different traces. Links represent relationships beyond parent-child hierarchy. See [Span Links](#span-links).                                                                                                      |
 
 ## Span Attributes[​](#span-attributes "Direct link to Span Attributes")
 
@@ -241,3 +242,75 @@ user_query = "MLflow Tracing benefits"
 
 retrieved_docs = retrieve_relevant_documents(user_query)
 ```
+
+## Span Links[​](#span-links "Direct link to Span Links")
+
+[Span Links](https://opentelemetry.io/docs/concepts/signals/traces/#span-links) are an OpenTelemetry concept for connecting spans that have a causal relationship but don't share a parent-child hierarchy — for example, spans in different traces. This is useful for:
+
+* **Multi-agent handoffs** — when one agent triggers another and each has its own trace, e.g. a chat agent handing a task to a long-running research agent
+* **Async workflow continuations** — a background job that was triggered by an earlier request
+* **Retry chains** — linking a retry span to the original failed span
+
+### Link Object Schema[​](#link-object-schema "Direct link to Link Object Schema")
+
+Each link references a related span, either in the same trace or a different one:
+
+| Field        | Type                       | Description                                                  |
+| ------------ | -------------------------- | ------------------------------------------------------------ |
+| `trace_id`   | `str`                      | The MLflow trace ID of the linked span (e.g. `tr-abc123...`) |
+| `span_id`    | `str`                      | The span ID within that trace (16-character hex string)      |
+| `attributes` | `Optional[Dict[str, Any]]` | Optional metadata describing the relationship                |
+
+### Example[​](#example "Direct link to Example")
+
+python
+
+```
+import mlflow
+
+from mlflow.entities import Link
+
+
+
+# Suppose agent_a produced a trace and span that we want to reference
+
+agent_a_trace_id = "tr-abc123def456"
+
+agent_a_span_id = "aabbccddeeff0011"
+
+
+
+with mlflow.start_span(name="agent-b-handler") as span:
+
+    # Link back to agent A's span
+
+    span.add_link(
+
+        Link(
+
+            trace_id=agent_a_trace_id,
+
+            span_id=agent_a_span_id,
+
+            attributes={"relationship": "triggered_by"},
+
+        )
+
+    )
+
+    span.set_inputs({"message": "process this"})
+
+    result = "done"
+
+    span.set_outputs(result)
+```
+
+Links appear in the **Links** tab of the trace explorer UI, where each linked trace ID is a clickable hyperlink that navigates to the referenced trace.
+
+![Span links shown in the trace explorer Links tab](/docs/latest/assets/images/span-links-tab-2f28f4c635cb0b8b550c0cf85f50780c.png)
+
+For detailed usage patterns and examples, see [Manual Tracing — Span Links](/docs/latest/genai/tracing/app-instrumentation/manual-tracing.md#span-links).
+
+note
+
+Span links are not currently supported for [Unity Catalog traces](https://docs.databricks.com/aws/en/mlflow3/genai/tracing/trace-unity-catalog).

@@ -2,6 +2,10 @@
 
 In addition to the [Auto Tracing](/docs/latest/genai/tracing/app-instrumentation/automatic.md) integrations, you can instrument your LLM application or AI agent by using MLflow's manual tracing APIs.
 
+Prefer autolog when your framework is supported
+
+If your app is built on a [supported framework](/docs/latest/genai/tracing/integrations.md) (LangChain, LangGraph, OpenAI, LlamaIndex, and 40+ others), call that framework's `autolog()` once instead of decorating individual functions by hand. Autolog captures the framework's internal calls as a single connected trace. Hand-decorating each function separately produces one independent root trace per function rather than a unified trace, and misses the internal spans autolog records. Use manual tracing to add detail that autolog does not capture, or to instrument code that no integration covers.
+
 ## Decorator[​](#decorator "Direct link to Decorator")
 
 The `mlflow.trace` decorator allows you to create a span for any function. This approach provides a simple yet effective way to add tracing to your code with minimal effort:
@@ -271,6 +275,10 @@ class MyClass {
 
 Alternatively, you can update the span dynamically inside the function.
 
+Use span attributes, not `mlflow.log_metric`, to attach data to a trace
+
+`mlflow.log_metric()` writes to an **MLflow Run**, not to the current span. Calling it inside a traced function will not add that value to the trace or make it visible in the Traces tab. Use `span.set_attribute(key, value)` or `span.set_attributes({...})` to attach data to a span.
+
 * Python
 * TypeScript
 
@@ -329,6 +337,12 @@ class MyClass {
 
 }
 ```
+
+:::note Overriding auto-captured inputs and outputs inside a decorated function
+
+`span.set_inputs()` / `span.set_outputs()` (Python) and `span.setInputs()` / `span.setOutputs()` (TypeScript) called inside a decorated function override the values the decorator captures automatically. If you set the outputs explicitly, the decorator keeps your value. If you leave them unset, it records the function's return value as before. Inputs behave the same way.
+
+To change only what appears in the `Response` column of the Traces UI without changing the stored span output, use `mlflow.update_current_trace(response_preview=...)` in Python or `updateCurrentTrace(...)` in TypeScript (see [Customizing Request and Response Previews in the UI](#customizing-request-and-response-previews-in-the-ui)). :::
 
 ## Adding Trace Tags[​](#adding-trace-tags "Direct link to Adding Trace Tags")
 
@@ -813,6 +827,188 @@ const myClass = new MyClass();
 
 myClass.startSession();
 ```
+
+## Span Links[​](#span-links "Direct link to Span Links")
+
+[Span Links](/docs/latest/genai/concepts/span.md#span-links) connect related spans — within the same trace or across different traces — without establishing a parent-child relationship. This is useful for tracking causal relationships in multi-agent systems, async workflows, and retry chains.
+
+### Attaching Links at Span Creation[​](#attaching-links-at-span-creation "Direct link to Attaching Links at Span Creation")
+
+You can pass links when creating a span via the `links` parameter. When the link target is known upfront, prefer this approach:
+
+* Python
+* TypeScript
+
+python
+
+```
+import mlflow
+
+from mlflow.entities import Link
+
+
+
+
+
+# Using the decorator
+
+@mlflow.trace(
+
+    links=[
+
+        Link(
+
+            trace_id="tr-abc123def456",
+
+            span_id="aabbccddeeff0011",
+
+            attributes={"relationship": "triggered_by"},
+
+        )
+
+    ]
+
+)
+
+def handle_request(message: str):
+
+    return f"Processed: {message}"
+
+
+
+
+
+# Using the context manager
+
+with mlflow.start_span(
+
+    name="process-task",
+
+    links=[Link(trace_id="tr-abc123def456", span_id="aabbccddeeff0011")],
+
+) as span:
+
+    span.set_inputs({"task": "summarize"})
+
+    result = "summary"
+
+    span.set_outputs(result)
+```
+
+typescript
+
+```
+import * as mlflow from "@mlflow/core";
+
+
+
+// Using startSpan
+
+const span = mlflow.startSpan({
+
+  name: "process-task",
+
+  links: [
+
+    {
+
+      traceId: "tr-abc123def456",
+
+      spanId: "aabbccddeeff0011",
+
+      attributes: { relationship: "triggered_by" },
+
+    },
+
+  ],
+
+});
+
+span.end();
+```
+
+### Adding Links After Span Creation[​](#adding-links-after-span-creation "Direct link to Adding Links After Span Creation")
+
+You can also add links to an active span dynamically after it has been created. Use this for cases where the target isn't known until runtime, such as when it arrives in a message payload from another agent:
+
+* Python
+* TypeScript
+
+python
+
+```
+import mlflow
+
+from mlflow.entities import Link
+
+
+
+
+
+@mlflow.trace
+
+def agent_b(message: dict):
+
+    span = mlflow.get_current_active_span()
+
+
+
+    # Link back to the span that triggered this agent
+
+    span.add_link(
+
+        Link(
+
+            trace_id=message["source_trace_id"],
+
+            span_id=message["source_span_id"],
+
+            attributes={"relationship": "triggered_by"},
+
+        )
+
+    )
+
+
+
+    return f"Handled: {message['content']}"
+```
+
+typescript
+
+```
+import * as mlflow from "@mlflow/core";
+
+
+
+const result = await mlflow.withSpan(
+
+  async (span: mlflow.Span) => {
+
+    span.addLink({
+
+      traceId: message.sourceTraceId,
+
+      spanId: message.sourceSpanId,
+
+      attributes: { relationship: "triggered_by" },
+
+    });
+
+
+
+    return `Handled: ${message.content}`;
+
+  },
+
+  { name: "agent-b" }
+
+);
+```
+
+note
+
+Span links are not currently supported for [Unity Catalog traces](https://docs.databricks.com/aws/en/mlflow3/genai/tracing/trace-unity-catalog).
 
 ## Automatic Exception Handling[​](#automatic-exception-handling "Direct link to Automatic Exception Handling")
 

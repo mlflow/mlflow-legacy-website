@@ -293,6 +293,16 @@ Troubleshooting:
 
 See [Archive Traces](/docs/latest/genai/tracing/observe-with-traces/archive-traces.md) for the end-user workflow and archival failure / retry behavior, and [Getting Started with Workspaces](/docs/latest/self-hosting/workspaces/getting-started.md) for workspace-level examples.
 
+### Server Jobs And Redis[​](#server-jobs-and-redis "Direct link to Server Jobs And Redis")
+
+MLflow server jobs use local SQLite-backed Huey queues by default. To use a shared Redis-backed queue, set `MLFLOW_SERVER_JOB_HUEY_REDIS_URL` on every server instance.
+
+Each job queue and the periodic-task queue use separate Huey namespaces, so they can share a Redis database without consuming one another's tasks.
+
+In a multi-replica deployment, enable periodic task scheduling on exactly one instance with `MLFLOW_SERVER_JOB_ENABLE_PERIODIC_TASKS=true`; set it to `false` on the other replicas.
+
+Periodic-task locks are flushed at startup for SQLite by default, but not for Redis because Redis may be shared by live replicas. Operators can explicitly override this with `MLFLOW_SERVER_JOB_FLUSH_PERIODIC_LOCKS_ON_STARTUP=true` only after confirming that no other replica owns the locks.
+
 ### Remote artifacts store[​](#tracking-server-artifact-store "Direct link to Remote artifacts store")
 
 #### Using the Tracking Server for proxied artifact access (default)[​](#using-the-tracking-server-for-proxied-artifact-access-default "Direct link to Using the Tracking Server for proxied artifact access (default)")

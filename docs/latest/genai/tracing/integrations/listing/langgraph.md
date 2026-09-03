@@ -37,7 +37,7 @@ Start the MLflow server following the [Self-Hosting Guide](/docs/latest/self-hos
 bash
 
 ```
-pip install langgraph langchain-openai mlflow
+pip install langchain langgraph langchain-openai mlflow
 ```
 
 ### 3. Enable tracing[​](#3-enable-tracing "Direct link to 3. Enable tracing")
@@ -75,15 +75,11 @@ import mlflow
 
 
 
-from langchain_core.messages import AIMessage, ToolCall
-
-from langchain_core.outputs import ChatGeneration, ChatResult
+from langchain.agents import create_agent
 
 from langchain_core.tools import tool
 
 from langchain_openai import ChatOpenAI
-
-from langgraph.prebuilt import create_react_agent
 
 
 
@@ -125,7 +121,7 @@ llm = ChatOpenAI(model="gpt-4o-mini")
 
 tools = [get_weather]
 
-graph = create_react_agent(llm, tools)
+graph = create_agent(llm, tools)
 
 
 

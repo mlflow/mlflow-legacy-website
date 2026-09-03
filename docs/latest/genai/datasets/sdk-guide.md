@@ -219,7 +219,7 @@ The following fields are used in both the evaluation dataset abstraction or if y
 | Column         | Data Type        | Description                                                                              | Required |
 | -------------- | ---------------- | ---------------------------------------------------------------------------------------- | -------- |
 | `inputs`       | `dict[Any, Any]` | Inputs for your app (e.g., user question, context), stored as a JSON-seralizable `dict`. | Yes      |
-| `expectations` | `dict[Str, Any]` | Ground truth labels, stored as a JSON-seralizable `dict`.                                | Optional |
+| `expectations` | `dict[str, Any]` | Ground truth labels, stored as a JSON-seralizable `dict`.                                | Optional |
 
 #### `expectations` reserved keys[​](#expectations-reserved-keys "Direct link to expectations-reserved-keys")
 
@@ -569,13 +569,13 @@ from mlflow.genai.datasets import EvaluationDataset
 dataset = EvaluationDataset.from_dict(dataset_dict)
 ```
 
-***
-
 ## Advanced Topics[​](#advanced-topics "Direct link to Advanced Topics")
 
 ### Understanding Input Uniqueness[​](#understanding-input-uniqueness "Direct link to Understanding Input Uniqueness")
 
-Records are considered unique based on their **entire inputs dictionary**. Even small differences create separate records:
+Records are considered unique based on their **entire `inputs` dictionary**.
+
+Even small differences create separate records (like different **temperature**s in the example records below):
 
 python
 
