@@ -65,11 +65,13 @@ Inputs and outputs can also be extracted from span events:
 
 **Token Usage:**
 
-| Source Attribute                   | MLflow Token Field |
-| ---------------------------------- | ------------------ |
-| `gen_ai.usage.input_tokens`        | `input_tokens`     |
-| `gen_ai.usage.output_tokens`       | `output_tokens`    |
-| *(calculated from input + output)* | `total_tokens`     |
+| Source Attribute                           | MLflow Token Field            |
+| ------------------------------------------ | ----------------------------- |
+| `gen_ai.usage.input_tokens`                | `input_tokens`                |
+| `gen_ai.usage.output_tokens`               | `output_tokens`               |
+| *(calculated from input + output)*         | `total_tokens`                |
+| `gen_ai.usage.cache_read.input_tokens`     | `cache_read_input_tokens`     |
+| `gen_ai.usage.cache_creation.input_tokens` | `cache_creation_input_tokens` |
 
 **Model:**
 
@@ -96,11 +98,13 @@ Based on the [OpenInference semantic conventions](https://github.com/Arize-ai/op
 
 **Token Usage:**
 
-| Source Attribute             | MLflow Token Field |
-| ---------------------------- | ------------------ |
-| `llm.token_count.prompt`     | `input_tokens`     |
-| `llm.token_count.completion` | `output_tokens`    |
-| `llm.token_count.total`      | `total_tokens`     |
+| Source Attribute                             | MLflow Token Field            |
+| -------------------------------------------- | ----------------------------- |
+| `llm.token_count.prompt`                     | `input_tokens`                |
+| `llm.token_count.completion`                 | `output_tokens`               |
+| `llm.token_count.total`                      | `total_tokens`                |
+| `llm.token_count.prompt_details.cache_read`  | `cache_read_input_tokens`     |
+| `llm.token_count.prompt_details.cache_write` | `cache_creation_input_tokens` |
 
 **Model:**
 

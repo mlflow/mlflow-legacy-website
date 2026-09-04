@@ -268,7 +268,7 @@ Correctness(model="anthropic:/claude-sonnet-4-20250514")
 
 # Bedrock (Anthropic on Bedrock)
 
-Correctness(model="bedrock:/anthropic.claude-sonnet-4-20250514")
+Correctness(model="bedrock:/anthropic.claude-sonnet-4-20250514-v1:0")
 
 
 

@@ -50,6 +50,19 @@ def my_function(input_data):
 
 MLflow provides automatic tracing (autolog) for 40+ popular libraries. See the complete list at [Automatic Tracing Integrations](/docs/latest/genai/tracing/integrations.md).
 
+### Q: My Traces tab is empty. Why don't my traces show up?[​](#q-my-traces-tab-is-empty-why-dont-my-traces-show-up "Direct link to Q: My Traces tab is empty. Why don't my traces show up?")
+
+Traces come from tracing calls, not from logging. `mlflow.log_metric()`, `mlflow.log_param()`, and `mlflow.start_run()` create **MLflow Runs**, a different concept from **MLflow Traces**. Runs appear in the **Runs** tab of an experiment. Traces appear in the **Traces** tab. They are independent. Logging a metric does not create a trace, and tracing does not require a run context.
+
+To generate a trace, use automatic tracing (e.g. `mlflow.openai.autolog()`, `mlflow.langchain.autolog()`) or manual tracing (e.g. `@mlflow.trace`, `mlflow.start_span()`). The Traces tab stays empty until one of these is called and the instrumented code runs.
+
+| What you called                                 | Where it appears |
+| ----------------------------------------------- | ---------------- |
+| `mlflow.log_metric()`                           | Runs tab         |
+| `mlflow.openai.autolog()` + OpenAI call         | Traces tab       |
+| `mlflow.langchain.autolog()` + LangGraph invoke | Traces tab       |
+| `@mlflow.trace` decorator                       | Traces tab       |
+
 ## User Interface and Jupyter Integration[​](#user-interface-and-jupyter-integration "Direct link to User Interface and Jupyter Integration")
 
 ### Q: Can I view traces directly in Jupyter notebooks?[​](#q-can-i-view-traces-directly-in-jupyter-notebooks "Direct link to Q: Can I view traces directly in Jupyter notebooks?")

@@ -156,7 +156,7 @@ judge.stop()  # Or, disable the judge
 
 ## Viewing Results[​](#viewing-results "Direct link to Viewing Results")
 
-Assessments from automatic evaluation appear directly in the MLflow UI. For traces, assessments typically appear within a minute or two of logging. Multi-turn sessions are evaluated after 5 minutes of inactivity (no new traces have been added to the session) by default—this is [configurable](/docs/latest/api_reference/python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_ONLINE_SCORING_DEFAULT_SESSION_COMPLETION_BUFFER_SECONDS).
+Assessments from automatic evaluation appear directly in the MLflow UI after scheduling and evaluation complete.
 
 Navigate to your experiment in the MLflow UI to see results.
 
@@ -198,6 +198,12 @@ filter_string = "metadata.environment = 'production'"
 note
 
 For session-level evaluation, filters apply to the **first trace** in the session.
+
+### Trace-Level Evaluation[​](#trace-level-evaluation "Direct link to Trace-Level Evaluation")
+
+Automatic evaluation can assess individual traces.
+
+* **Trace completion**: A trace becomes eligible for automatic evaluation 5 minutes after it starts by default. Configure the [trace completion buffer](/docs/latest/api_reference/python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_ONLINE_SCORING_DEFAULT_TRACE_COMPLETION_BUFFER_SECONDS) to exceed the expected trace duration; traces that remain in progress longer than the buffer can be skipped
 
 ### Session-Level Evaluation[​](#session-level-evaluation "Direct link to Session-Level Evaluation")
 

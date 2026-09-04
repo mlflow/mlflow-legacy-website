@@ -70,11 +70,9 @@ python
 ```
 import mlflow
 
-import os
 
 
-
-from langchain.prompts import PromptTemplate
+from langchain_core.prompts import PromptTemplate
 
 from langchain_core.output_parsers import StrOutputParser
 
@@ -344,7 +342,7 @@ This example above has been confirmed working with the following requirement ver
 shell
 
 ```
-pip install openai==1.30.5 langchain==0.2.1 langchain-openai==0.1.8 langchain-community==0.2.1 mlflow==2.14.0 tiktoken==0.7.0
+pip install openai==3.3.1 langchain==1.3.17 langchain-openai==1.6.0 mlflow==3.15.1 tiktoken==0.14.0
 ```
 
 Image Support for LangChain Traces
