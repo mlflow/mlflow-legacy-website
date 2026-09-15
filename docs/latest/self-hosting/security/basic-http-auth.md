@@ -32,6 +32,18 @@ export MLFLOW_FLASK_SERVER_SECRET_KEY="my-secret-key"
 
 If your setup uses multiple servers, please make sure that this key is consistent between them. Otherwise, you may run into unexpected validation errors.
 
+note
+
+MLflow ships no default admin password. The first time the server starts with authentication enabled, it creates the admin user with the password from the `MLFLOW_AUTH_ADMIN_PASSWORD` environment variable (or `admin_password` in a custom [configuration file](#configuration)) and refuses to start if neither is set. Passwords must be at least 12 characters.
+
+text
+
+```
+export MLFLOW_AUTH_ADMIN_PASSWORD="<strong-password>"
+```
+
+See [Admin Users](#admin-users) for details.
+
 To enable MLflow authentication, launch the MLflow UI with the following command:
 
 bash
@@ -222,17 +234,13 @@ python -m mlflow.server.auth db upgrade --url <database_url>
 
 Admin users have unrestricted access to all MLflow resources, **including creating or deleting users, updating password and admin status of other users, granting or revoking permissions from other users, and managing permissions for all MLflow resources,** even if `NO_PERMISSIONS` is explicitly set to that admin account.
 
-MLflow has a built-in admin user that will be created the first time that the MLflow authentication feature is enabled.
+MLflow has a built-in admin user that is created the first time the server starts with authentication enabled against an empty user store. Its username defaults to `admin` and can be changed with `admin_username` in the configuration file or the `MLFLOW_AUTH_ADMIN_USERNAME` environment variable.
 
-note
+There is no default admin password. Set one with the `MLFLOW_AUTH_ADMIN_PASSWORD` environment variable or with `admin_password` in the configuration file before the first start; the server refuses to start otherwise. Both settings are only used to create the admin user (and to replace its password if it is still the legacy default described below) and are ignored otherwise. After the first successful start, unset `MLFLOW_AUTH_ADMIN_PASSWORD` (or remove `admin_password` from the file) so the secret does not linger in the server's environment or configuration, and rotate the password with the `2.0/mlflow/users/update-password` endpoint.
 
-It is recommended that you update the default admin password as soon as possible after creation.
+warning
 
-The default admin user credentials are as follows:
-
-| Username | Password       |
-| -------- | -------------- |
-| `admin`  | `password1234` |
+Earlier MLflow versions shipped the admin password `password1234` in `basic_auth.ini` ([GHSA-gq3w-7jj3-x7gr](https://github.com/advisories/GHSA-gq3w-7jj3-x7gr)). That password is no longer accepted: the server rejects logins by admin users that present it, never uses it to create an admin user, and logs a warning at startup while an admin user still has it. If you upgraded an existing deployment whose admin user still has that password, set `MLFLOW_AUTH_ADMIN_PASSWORD` (or `admin_password`) to a new password and restart the server once; the stored password is replaced and the setting can be unset again. Alternatively, another admin can update or delete the user.
 
 Multiple admin users can exist by promoting other users to admin, using the `2.0/mlflow/users/update-admin` endpoint.
 
@@ -482,14 +490,14 @@ auth_client.create_user(username="username", password="password")
 
 Authentication configuration is located at `mlflow/server/auth/basic_auth.ini`:
 
-| Variable                         | Description                                                                                                                                                                                                                                         |
-| -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `default_permission`             | Default permission on all resources                                                                                                                                                                                                                 |
-| `grant_default_workspace_access` | When workspaces are enabled: if `false`, the `default` workspace ignores `default_permission` and new users need explicit workspace ACLs; if `true`, the `default` workspace inherits `default_permission` for all users (pre-workspaces behavior). |
-| `database_uri`                   | Database location to store permission and user data                                                                                                                                                                                                 |
-| `admin_username`                 | Default admin username if the admin is not already created                                                                                                                                                                                          |
-| `admin_password`                 | Default admin password if the admin is not already created                                                                                                                                                                                          |
-| `authorization_function`         | Function to authenticate requests                                                                                                                                                                                                                   |
+| Variable                         | Description                                                                                                                                                                                                                                                     |
+| -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `default_permission`             | Default permission on all resources                                                                                                                                                                                                                             |
+| `grant_default_workspace_access` | When workspaces are enabled: if `false`, the `default` workspace ignores `default_permission` and new users need explicit workspace ACLs; if `true`, the `default` workspace inherits `default_permission` for all users (pre-workspaces behavior).             |
+| `database_uri`                   | Database location to store permission and user data                                                                                                                                                                                                             |
+| `admin_username`                 | Username of the admin user created on first start. Overridden by `MLFLOW_AUTH_ADMIN_USERNAME`.                                                                                                                                                                  |
+| `admin_password`                 | Password of the admin user created on first start; also replaces that user's password on upgrade while it is still the legacy default. Overridden by `MLFLOW_AUTH_ADMIN_PASSWORD`. There is no default; one of the two must be set until the admin user exists. |
+| `authorization_function`         | Function to authenticate requests                                                                                                                                                                                                                               |
 
 Alternatively, assign the environment variable `MLFLOW_AUTH_CONFIG_PATH` to point to your custom configuration file.
 
