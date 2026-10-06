@@ -62,7 +62,7 @@ The best regression suites are not written up front, they are grown from real fa
 
 #### Set up
 
-Run \`mlflow agent setup\` to install the MLflow skills into your coding agent and wire up tracing, so every agent run is captured.
+Run the MLflow setup wizard to connect to MLflow and launch your coding agent to add tracing, so every agent run is captured.
 
 #### Run & observe
 
@@ -84,13 +84,15 @@ Run the suite on every pull request so the regression can never come back unnoti
 
 Let your coding agent set things up
 
-Run `mlflow agent setup` once from inside your project to install the **MLflow skills** into your coding agent (Claude Code, Codex, and more). The skills teach the agent how MLflow tracing, scorers, and `@mlflow.test` work, so it can wire up tracing and write regression tests for you.
+From inside your project's Git repository, run the MLflow setup wizard to connect to an MLflow server or Databricks workspace and launch your coding agent to add tracing. Have Claude Code, Codex, or OpenCode installed before running it.
 
 bash
 
 ```
-uvx mlflow@latest agent setup
+curl -LsSf https://mlflow.org/wizard/setup.sh | sh
 ```
+
+For help writing regression tests, install the **MLflow skills** separately using the [installation instructions](https://github.com/mlflow/skills#installation). These skills provide your coding agent with MLflow tracing and evaluation guidance. The tracing wizard does not install skills or write evaluation code.
 
 ### Step 1: Enable the pytest plugin[​](#step-1-enable-the-pytest-plugin "Direct link to Step 1: Enable the pytest plugin")
 
@@ -278,6 +280,6 @@ A failing assertion fails the pytest job, which fails the check, which blocks th
 
 ### [MLflow skills for coding agents](https://github.com/mlflow/skills)
 
-[Install the MLflow skills with \`mlflow agent setup\` so your coding agent can write regression tests from your failures.](https://github.com/mlflow/skills)
+[Install the MLflow skills separately to give your coding agent MLflow tracing and evaluation guidance.](https://github.com/mlflow/skills)
 
 [Browse the skills →](https://github.com/mlflow/skills)

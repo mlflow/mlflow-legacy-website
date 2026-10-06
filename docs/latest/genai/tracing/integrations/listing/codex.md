@@ -7,7 +7,8 @@
 * User prompts and assistant responses
 * Tool usage (shell commands, file operations, etc.)
 * Token usage (input, output, and total tokens)
-* Session metadata including working directory and user
+* Session and user metadata
+* Git repository provenance
 
 Traces are created after each conversation turn — no need to wait for the session to end.
 
@@ -145,6 +146,8 @@ json
 
 }
 ```
+
+When Codex runs inside a Git repository, MLflow automatically records the repository URL, commit, and branch using the standard `mlflow.source.git.*` trace metadata fields. The root span identifies the agent with the OpenTelemetry `service.name` attribute set to `codex`.
 
 Per-run overrides via environment variables (take precedence over the config file):
 

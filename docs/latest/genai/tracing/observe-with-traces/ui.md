@@ -53,6 +53,10 @@ Multimodal Content and Attachments
 
 MLflow renders images, audio, and supported attachment types inline in the trace viewer. For supported formats, framework examples, and how to use the `Attachment` class for binary content, see [Multimodal Content and Attachments in Traces](/docs/latest/genai/tracing/observe-with-traces/multimodal.md).
 
+Custom Trace Views
+
+You can also ask the MLflow AI Assistant to build a view of the trace laid out the way you want, and save it for everyone in the experiment. See [Custom Trace Views](/docs/latest/genai/tracing/observe-with-traces/custom-views.md).
+
 ## Performing Actions[​](#performing-actions "Direct link to Performing Actions")
 
 From this page, you can also perform a few actions to manage your traces.

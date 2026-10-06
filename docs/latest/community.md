@@ -12,11 +12,11 @@ Join the conversation and get help from our vibrant community:
 
 [Visit GitHub →](https://github.com/mlflow/mlflow)
 
-### [Slack](https://mlflow.org/slack)
+### [Slack](https://go.mlflow.org/slack)
 
-[Connect with MLflow users and contributors in real-time](https://mlflow.org/slack)
+[Connect with MLflow users and contributors in real-time](https://go.mlflow.org/slack)
 
-[Join Slack →](https://mlflow.org/slack)
+[Join Slack →](https://go.mlflow.org/slack)
 
 [![X](/docs/latest/images/logos/x-logo-black.png)![X](/docs/latest/images/logos/x-logo-white.png)](https://x.com/mlflow)
 
@@ -86,4 +86,4 @@ Stay informed about MLflow updates, releases, and community news:
 
 **Join thousands of ML practitioners building with MLflow!**
 
-Have questions? Start with our [Slack community](https://mlflow.org/slack) or check out the [GitHub repository](https://github.com/mlflow/mlflow).
+Have questions? Start with our [Slack community](https://go.mlflow.org/slack) or check out the [GitHub repository](https://github.com/mlflow/mlflow).

@@ -52,7 +52,7 @@ To learn more about a specific model version, navigate to the details page for t
 
 ![](/docs/latest/assets/images/oss_registry_5_version-9292e6f469bcd5a9f2ed7d20b047d612.png)
 
-In this page, you can inspect model version details like the model signature, MLflow source run, and creation timestamp. You can also view and configure the version's aliases, tags, and description.
+In this page, you can inspect model version details like the model signature, MLflow source run, source logged model, and creation timestamp. You can also view and configure the version's aliases, tags, and description.
 
 ## API Workflow[​](#api-workflow "Direct link to API Workflow")
 

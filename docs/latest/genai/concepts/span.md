@@ -63,18 +63,22 @@ Span types are a way to categorize spans within a trace. MLflow provides a set o
 * Setting Span Types
 * Search Spans by Type
 
-| **Span Type**  | **Description**                                                                        |
-| -------------- | -------------------------------------------------------------------------------------- |
-| `"CHAT_MODEL"` | Represents a query to a chat model. This is a special case of an LLM interaction.      |
-| `"CHAIN"`      | Represents a chain of operations.                                                      |
-| `"AGENT"`      | Represents an autonomous agent operation.                                              |
-| `"TOOL"`       | Represents a tool execution (typically by an agent), such as querying a search engine. |
-| `"EMBEDDING"`  | Represents a text embedding operation.                                                 |
-| `"RETRIEVER"`  | Represents a context retrieval operation, such as querying a vector database.          |
-| `"PARSER"`     | Represents a parsing operation, transforming text into a structured format.            |
-| `"RERANKER"`   | Represents a re-ranking operation, ordering the retrieved contexts based on relevance. |
-| `"MEMORY"`     | Represents a memory operation, such as persisting context in a long-term memory db.    |
-| `"UNKNOWN"`    | A default span type that is used when no other span type is specified.                 |
+| **Span Type**  | **Description**                                                                                                         |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `"CHAT_MODEL"` | Represents a query to a chat model. This is a special case of an LLM interaction.                                       |
+| `"CHAIN"`      | Represents a chain of operations.                                                                                       |
+| `"AGENT"`      | Represents an autonomous agent operation.                                                                               |
+| `"TOOL"`       | Represents a tool execution (typically by an agent), such as querying a search engine.                                  |
+| `"EMBEDDING"`  | Represents a text embedding operation.                                                                                  |
+| `"RETRIEVER"`  | Represents a context retrieval operation, such as querying a vector database.                                           |
+| `"PARSER"`     | Represents a parsing operation, transforming text into a structured format.                                             |
+| `"RERANKER"`   | Represents a re-ranking operation, ordering the retrieved contexts based on relevance.                                  |
+| `"MEMORY"`     | Represents a memory operation, such as persisting context in a long-term memory db.                                     |
+| `"WORKFLOW"`   | Represents a broader multi-step workflow that groups related operations together, such as top-level pipeline execution. |
+| `"TASK"`       | Represents a discrete unit of work within a larger workflow.                                                            |
+| `"GUARDRAIL"`  | Represents a guardrail check, such as validating or filtering inputs/outputs against a safety or policy rule.           |
+| `"EVALUATOR"`  | Represents an evaluation operation, such as a judge scoring a response for quality or compliance.                       |
+| `"UNKNOWN"`    | A default span type that is used when no other span type is specified.                                                  |
 
 When you are using [automatic tracing](/docs/latest/genai/tracing/app-instrumentation/automatic.md), the span type is automatically set by MLflow. To set a span type for manually created spans, you can pass the `span_type` parameter to the [`mlflow.trace()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.trace) decorator or [`mlflow.start_span()`](/docs/latest/api_reference/python_api/mlflow.html#mlflow.start_span) context manager. When you are using [automatic tracing](/docs/latest/genai/tracing/app-instrumentation/automatic.md), the span type is automatically set by MLflow.
 

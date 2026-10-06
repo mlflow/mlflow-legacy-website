@@ -1,0 +1,223 @@
+# Backend Stores
+
+The backend store is a core component in MLflow that stores metadata for Runs, models, traces, and experiments such as:
+
+* Run ID
+* Model ID
+* Trace ID
+* Tags
+* Start & end time
+* Parameters
+* Metrics
+
+Large model artifacts such as model weight files are stored in the [artifact store](/docs/3.17.0/self-hosting/architecture/artifact-store.md).
+
+## Types of Backend Stores[​](#types-of-backend-stores "Direct link to Types of Backend Stores")
+
+### Relational Database (**Default**)[​](#relational-database-default "Direct link to relational-database-default")
+
+MLflow supports different databases through SQLAlchemy, including `sqlite`, `postgresql`, `mysql`, and `mssql`. This option provides better performance through indexing and is easier to scale to larger volumes of data than the file system backend.
+
+**SQLite is the default backend store**. When you start MLflow without specifying a backend, it automatically creates and uses `sqlite:///mlflow.db` in the current directory. To use a different database such as PostgreSQL, specify `--backend-store-uri` when starting MLflow (e.g., `--backend-store-uri postgresql://...`).
+
+### Local File System (**Legacy**)[​](#local-file-system-legacy "Direct link to local-file-system-legacy")
+
+The file-based backend stores metadata in local files in the `./mlruns` directory. This was the default backend in earlier versions of MLflow, but is still supported for backward compatibility.
+
+To use file-based storage, specify `--backend-store-uri ./mlruns` when starting the server, or set `MLFLOW_TRACKING_URI=./mlruns`.
+
+TO BE DEPRECATED SOON
+
+File system backend is in maintenance mode and will not receive further updates. We strongly recommend using the database backend (now the default) for better performance and reliability. See [Migrate from File Store](/docs/3.17.0/self-hosting/migrate-from-file-store.md) for how to migrate existing data.
+
+## Configure Backend Store[​](#configure-backend-store "Direct link to Configure Backend Store")
+
+You can configure a different backend store by passing the desired **tracking URI** to MLflow, via either of the following methods:
+
+* Set the `MLFLOW_TRACKING_URI` environment variable.
+* Call [`mlflow.set_tracking_uri()`](/docs/3.17.0/api_reference/python_api/mlflow.html#mlflow.set_tracking_uri) in your code.
+* If you are running a [Tracking Server](/docs/3.17.0/self-hosting/architecture/tracking-server.md), you can set the `--backend-store-uri` option when starting the server, like `mlflow server --backend-store-uri postgresql://...`
+
+Continue to the next section for the supported format of tracking URLs. Also visit [this guidance](/docs/3.17.0/self-hosting/architecture/tracking-server.md) for how to set up the backend store properly for your workflow.
+
+## Supported Store Types[​](#supported-store-types "Direct link to Supported Store Types")
+
+MLflow supports the following types of tracking URI for backend stores:
+
+* Local file path (specified as `file:/my/local/dir`), where data is just directly stored locally to a system disk where your code is executing.
+* A Database, encoded as `<dialect>+<driver>://<username>:<password>@<host>:<port>/<database>`. MLflow supports the dialects `mysql`, `mssql`, `sqlite`, and `postgresql`. For more details, see [SQLAlchemy database uri](https://docs.sqlalchemy.org/en/latest/core/engines.html#database-urls).
+* HTTP server (specified as `https://my-server:5000`), which is a server hosting an [MLflow tracking server](/docs/3.17.0/self-hosting/architecture/tracking-server.md).
+* Databricks workspace (specified as `databricks` or as `databricks://<profileName>`, a [Databricks CLI profile](https://github.com/databricks/databricks-cli#installation)). Refer to Access the MLflow tracking server from outside Databricks [\[AWS\]](http://docs.databricks.com/applications/mlflow/access-hosted-tracking-server.html) [\[Azure\]](http://docs.microsoft.com/azure/databricks/applications/mlflow/access-hosted-tracking-server).
+
+database-requirements
+
+**Database-Backed Store Requirements**
+
+When using database-backed stores, please note:
+
+* **Model Registry Integration**: [Model Registry](/docs/3.17.0/ml/model-registry.md) functionality requires a database-backed store. See [this FAQ](/docs/3.17.0/ml/tracking.md#tracking-with-model-registry) for more information.
+
+* **Schema Migrations**: `mlflow server` will fail against a database with an out-of-date schema. Always run `mlflow db upgrade [db_uri]` to upgrade your database schema before starting the server. Schema migrations can result in database downtime and may take longer on larger databases. **Always backup your database before running migrations.**
+
+parameter-limits
+
+In Sep 2023, we increased the max length for params recorded in a Run from 500 to 8k (but we limit param value max length to 6000 internally). [mlflow/2d6e25af4d3e\_increase\_max\_param\_val\_length](https://github.com/mlflow/mlflow/blob/master/mlflow/store/db_migrations/versions/2d6e25af4d3e_increase_max_param_val_length.py) is a non-invertible migration script that increases the cap in existing database to 8k. Please be careful if you want to upgrade and backup your database before upgrading.
+
+## Deletion Behavior[​](#deletion-behavior "Direct link to Deletion Behavior")
+
+In order to allow MLflow Runs to be restored, Run metadata and artifacts are not automatically removed from the backend store or artifact store when a Run is deleted. The [mlflow gc](/docs/3.17.0/api_reference/cli.html#mlflow-gc) CLI is provided for permanently removing Run metadata and artifacts for deleted runs.
+
+## SQLAlchemy Options[​](#sqlalchemy-options "Direct link to SQLAlchemy Options")
+
+You can inject some [SQLAlchemy connection pooling options](https://docs.sqlalchemy.org/en/latest/core/pooling.html) using environment variables.
+
+| MLflow Environment Variable           | SQLAlchemy QueuePool Option |
+| ------------------------------------- | --------------------------- |
+| `MLFLOW_SQLALCHEMYSTORE_POOL_SIZE`    | `pool_size`                 |
+| `MLFLOW_SQLALCHEMYSTORE_POOL_RECYCLE` | `pool_recycle`              |
+| `MLFLOW_SQLALCHEMYSTORE_MAX_OVERFLOW` | `max_overflow`              |
+
+## Trace Analytics Daily Rollups[​](#trace-analytics-daily-rollups "Direct link to Trace Analytics Daily Rollups")
+
+Trace analytics queries (used by the traces dashboards) aggregate metrics such as trace counts, latency, token usage, and assessment values over a time range. On large trace tables these queries scan a lot of rows. MLflow can serve the whole-day portions of such queries from precomputed daily rollup tables, which is much faster than scanning raw traces and spans.
+
+Rollups are an **opt-in read acceleration**. They never change query results: any day that is not yet rolled up, and any partial day at the edges of a requested range, is served from the raw path, so enabling rollups only changes query speed. This feature requires a database backend (it is not available for the file store).
+
+Configure rollup reads and maintenance with the following environment variables on the tracking server:
+
+| MLflow Environment Variable                   | Description                                                                                                                                                                                                                 | Default     |
+| --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `MLFLOW_SQL_TRACE_ROLLUPS_ENABLED`            | When `true`, the server maintains daily rollups and trace analytics queries serve eligible whole days from them. When `false`, maintenance is a no-op and all queries use the raw path.                                     | `false`     |
+| `MLFLOW_TRACE_ROLLUPS_SCHEDULE`               | Five-field UTC cron expression for the server-owned maintenance task.                                                                                                                                                       | `0 2 * * *` |
+| `MLFLOW_TRACE_ROLLUPS_MAX_PARTITIONS_PER_RUN` | Maximum number of daily partitions successfully built or emptied by one maintenance run. Deferred partitions (for example, partitions with active traces that are not yet eligible) do not consume this publication budget. | `1000`      |
+| `MLFLOW_TRACE_ROLLUPS_MAX_WORKERS`            | Maximum number of experiments maintained concurrently during each maintenance run. Days within an experiment are processed serially to preserve ordering.                                                                   | `4`         |
+
+When job execution is available, MLflow registers the scheduled maintenance task automatically. The task builds only complete UTC-day partitions after the end of the day has been older than the 24-hour eligibility cutoff and all contributing traces are complete or inactive. Until a day has valid rollup coverage, queries for that day transparently use the raw path.
+
+The built-in Huey scheduler is supported only when periodic rollup tasks are enabled on exactly one MLflow replica. In a multi-replica deployment, disable local periodic rollup tasks on the tracking server replicas and run rollup maintenance through the remote job service. All replicas may read rollups and enqueue rebuild work.
+
+Each maintenance pass rebuilds stale partitions before discovering new days. If rebuild work repeatedly prevents new partitions from being discovered, increase `MLFLOW_TRACE_ROLLUPS_MAX_PARTITIONS_PER_RUN` so each pass can publish more partitions. Increasing `MLFLOW_TRACE_ROLLUPS_MAX_WORKERS` can shorten a pass by processing different experiments concurrently, but does not increase the number of partitions it can publish. SQLite always uses one worker because it permits only one concurrent writer.
+
+Initial rollup bootstrap
+
+When rollups are first enabled, maintenance must create partitions for eligible historical data. Depending on the amount of existing data and `MLFLOW_TRACE_ROLLUPS_MAX_PARTITIONS_PER_RUN`, this initial bootstrap can take multiple scheduled runs before coverage is complete. Subsequent maintenance runs generally have less work because they process only new partitions and queued rebuilds. MLflow logs when the bootstrap starts and separate results for trace metrics, span costs, and assessments after every maintenance run.
+
+### Disabling or recovering SQL trace rollups[​](#disabling-or-recovering-sql-trace-rollups "Direct link to Disabling or recovering SQL trace rollups")
+
+Before disabling SQL trace rollups and restarting MLflow, stop every MLflow server that uses the database and delete the derived rollup state. Otherwise, MLflow rejects startup while materialized rollup rows remain:
+
+bash
+
+```
+mlflow db delete-trace-rollups <database-url>
+```
+
+Use the same recovery command if the derived rollup state becomes stale. It deletes only the daily rollup rows and rebuild queue; authoritative traces, spans, and assessments are preserved. The command prompts for confirmation by default. For unattended administration after the servers have stopped, pass `--yes`:
+
+bash
+
+```
+mlflow db delete-trace-rollups --yes <database-url>
+```
+
+If rollups are enabled again later, maintenance rebuilds them from the authoritative tables.
+
+`MLFLOW_SQL_TRACE_ROLLUPS_ENABLED` is not a hot-disable switch after rollups have been populated. Disabling it requires the coordinated stop, deletion, and restart procedure above. Rolling upgrades that mix MLflow versions are not supported for this schema transition.
+
+### Upgrading a database with trace analytics data[​](#upgrading-a-database-with-trace-analytics-data "Direct link to Upgrading a database with trace analytics data")
+
+Take a database backup before beginning. Stop every MLflow writer before the final schema upgrade; the migration promotes denormalized values to authoritative columns and removes their legacy representations.
+
+For large databases, the optional prepopulation command can reduce final migration downtime. It must run while the database is at the migration's immediate predecessor revision `b7e2c1a4d9f3`:
+
+bash
+
+```
+mlflow db prepopulate-trace-analytics <database-url>
+```
+
+The command is non-destructive and safe to resume. It does not advance the Alembic revision or remove legacy rows. After it completes:
+
+1. Stop all MLflow servers and other writers that use the database.
+2. Take or verify a restorable database backup.
+3. Run `mlflow db upgrade <database-url>`.
+4. Start all replicas on the new MLflow version. Do not mix old and new versions.
+5. If using built-in Huey scheduling, enable periodic rollup tasks on one replica only. For a multi-replica deployment, use the remote rollup job instead.
+6. Enable `MLFLOW_SQL_TRACE_ROLLUPS_ENABLED` and monitor maintenance logs until historical partitions have been built.
+
+Large cleanup operations can leave PostgreSQL statistics or table bloat temporarily stale. Allow normal autovacuum to catch up, or schedule `VACUUM (ANALYZE)` according to the database's operating procedures.
+
+To downgrade, stop all writers and take a backup before running the schema downgrade. The downgrade reconstructs reserved token metrics, token and cost metadata, span cost metrics, trace-name tags, session metadata, and model/provider dimension attributes before removing the denormalized columns. Deploy the older MLflow version only after the downgrade completes.
+
+Backend-specific behavior
+
+* **Percentiles** (p50/p90/p99) are served from rollups for trace metrics such as latency and token usage, and only on PostgreSQL. On other backends, and for assessment percentiles, percentile aggregations fall back to the raw path.
+* **Grouping** supports whole-experiment daily aggregates, trace-count breakdowns by trace status, and span-cost breakdowns by model and provider. Other dimension groupings use the raw path.
+* **Span cost** metrics use rollups for global, model, provider, and model/provider grouping sets. Both raw and rollup span-cost ranges use the span start timestamp so results remain identical.
+* **Unbucketed aggregates** such as whole-range trace counts and span-cost breakdowns combine daily rollup counts and sums with any raw partial-day contributions. Unbucketed percentiles remain on the exact raw path because daily percentiles are not composable.
+
+## MySQL SSL Options[​](#mysql-ssl-options "Direct link to MySQL SSL Options")
+
+When connecting to a MySQL database that requires SSL certificates, you can set the following environment variables:
+
+bash
+
+```
+# Path to SSL CA certificate file
+
+export MLFLOW_MYSQL_SSL_CA=/path/to/ca.pem
+
+
+
+# Path to SSL client certificate file (if needed)
+
+export MLFLOW_MYSQL_SSL_CERT=/path/to/client-cert.pem
+
+
+
+# Path to SSL client key file (if needed)
+
+export MLFLOW_MYSQL_SSL_KEY=/path/to/client-key.pem
+```
+
+Then start the MLflow server with your MySQL URI:
+
+bash
+
+```
+mlflow server --backend-store-uri="mysql+pymysql://username@hostname:port/database" --default-artifact-root=s3://your-bucket --host=0.0.0.0 --port=5000
+```
+
+These environment variables will be used to configure the SSL connection to the MySQL server.
+
+## File Store Performance[​](#file-store-performance "Direct link to File Store Performance")
+
+MLflow will automatically try to use [LibYAML](https://pyyaml.org/wiki/LibYAML) bindings if they are already installed. However, if you notice any performance issues when using *file store* backend, it could mean LibYAML is not installed on your system. On Linux or Mac you can easily install it using your system package manager:
+
+bash
+
+```
+# On Ubuntu/Debian
+
+apt-get install libyaml-cpp-dev libyaml-dev
+
+
+
+# On macOS using Homebrew
+
+brew install yaml-cpp libyaml
+```
+
+After installing LibYAML, you need to reinstall PyYAML:
+
+bash
+
+```
+# Reinstall PyYAML
+
+pip --no-cache-dir install --force-reinstall -I pyyaml
+```
+
+note
+
+We generally recommend using a database backend to get better performance.
