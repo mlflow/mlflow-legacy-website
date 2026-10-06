@@ -8,14 +8,14 @@ The AI Gateway supports providers across these categories:
 
 ### Major Cloud Providers[​](#major-cloud-providers "Direct link to Major Cloud Providers")
 
-| Provider          | Chat | Embeddings | Passthrough API              |
-| ----------------- | ---- | ---------- | ---------------------------- |
-| **OpenAI**        | Yes  | Yes        | `/gateway/openai/v1/...`     |
-| **Anthropic**     | Yes  | No         | `/gateway/anthropic/v1/...`  |
-| **Google Gemini** | Yes  | Yes        | `/gateway/gemini/v1beta/...` |
-| **Azure OpenAI**  | Yes  | Yes        | Via OpenAI passthrough       |
-| **AWS Bedrock**   | Yes  | Yes        | -                            |
-| **Vertex AI**     | Yes  | Yes        | -                            |
+| Provider          | Chat | Embeddings | Passthrough API                                    |
+| ----------------- | ---- | ---------- | -------------------------------------------------- |
+| **OpenAI**        | Yes  | Yes        | `/gateway/openai/v1/...`                           |
+| **Anthropic**     | Yes  | No         | `/gateway/anthropic/v1/...`                        |
+| **Google Gemini** | Yes  | Yes        | `/gateway/gemini/v1beta/...`                       |
+| **Azure OpenAI**  | Yes  | Yes        | Via OpenAI passthrough                             |
+| **AWS Bedrock**   | Yes  | Yes        | Anthropic passthrough (Claude, API key auth)       |
+| **Vertex AI**     | Yes  | Yes        | Anthropic, Gemini, or OpenAI passthrough, by model |
 
 ### Additional Providers[​](#additional-providers "Direct link to Additional Providers")
 
@@ -31,6 +31,15 @@ The AI Gateway supports providers across these categories:
 | **Portkey**      | Yes  | Yes        | Unified gateway for any LLM provider |
 
 For a complete list of supported providers, view the provider dropdown when creating an endpoint or see the [LiteLLM documentation](https://docs.litellm.ai/docs/providers).
+
+### Evaluation Providers[​](#evaluation-providers "Direct link to Evaluation Providers")
+
+| Provider       | Model family        | Passthrough API                  |
+| -------------- | ------------------- | -------------------------------- |
+| **TypeSafe**   | Jev                 | `/gateway/typesafe/v1/systemone` |
+| **OpenRouter** | Jev decision models | `/gateway/typesafe/v1/systemone` |
+
+TypeSafe and OpenRouter Jev decision endpoints support structured System One evaluation requests. They do not support the gateway's chat, embeddings, OpenAI-compatible, or streaming APIs. OpenRouter `typesafe/jev-router` is a chat model and uses normal chat routes.
 
 ## Provider-Specific Passthrough APIs[​](#provider-specific-passthrough-apis "Direct link to Provider-Specific Passthrough APIs")
 
@@ -258,6 +267,18 @@ curl -X POST http://localhost:5000/gateway/gemini/v1beta/models/my-endpoint:gene
 
 See [Google Gemini API Reference](https://ai.google.dev/gemini-api/docs) for complete documentation.
 
+### Vertex AI[​](#vertex-ai "Direct link to Vertex AI")
+
+Vertex AI endpoints use the passthrough API of the model family they serve: Claude models take the [Anthropic](#anthropic) routes, Gemini models take the [Google Gemini](#google-gemini) routes, and partner MaaS models (Llama, Mistral, DeepSeek, and others) take the [OpenAI](#openai) routes. Requests are authenticated server-side with the endpoint's Google Cloud credentials.
+
+Vertex AI validates the `anthropic-beta` header against the betas it supports, which lag behind the Anthropic API, and rejects the whole request when it sees a value it does not know. The `vertex_anthropic_betas` option on a Claude endpoint controls which client-supplied beta values are forwarded:
+
+* Unset (default): the header is forwarded unchanged.
+* An empty list: the header is dropped.
+* A list of values, for example `["web-search-2025-03-05"]`: only those values are kept, and the header is dropped if none remain.
+
+The option is part of the model's Vertex AI configuration, alongside `vertex_project` and `vertex_location`. Through the API, `auth_config` values are strings, so pass the betas as a comma-separated string such as `"web-search-2025-03-05,interleaved-thinking-2025-05-14"`; an empty string drops the header.
+
 ### Azure OpenAI[​](#azure-openai "Direct link to Azure OpenAI")
 
 Azure OpenAI uses the same passthrough as OpenAI with additional configuration:
@@ -335,6 +356,54 @@ response = client.chat.completions.create(
 
 )
 ```
+
+### TypeSafe[​](#typesafe "Direct link to TypeSafe")
+
+The TypeSafe passthrough exposes TypeSafe's System One API through the MLflow Gateway. The gateway endpoint name goes in the request body's `model` field; the gateway forwards the request to the configured TypeSafe model with its server-side TypeSafe API key.
+
+Requests are sent to `https://api.typesafe.ai/v1` by default. To use a proxy or another System One host, set **API Base URL** (`api_base`) on the TypeSafe LLM connection. Private or non-HTTPS connection URLs require the settings described in [custom base URL validation](/docs/latest/genai/governance/ai-gateway/api-keys/create-and-manage.md#custom-base-url-validation). When constructing `TypeSafeConfig` directly, use `typesafe_api_base` instead.
+
+**Base URL:** `http://localhost:5000/gateway/typesafe/v1`
+
+**Supported Endpoints:**
+
+* `POST /systemone` - System One structured evaluation
+
+bash
+
+```
+curl -X POST http://localhost:5000/gateway/typesafe/v1/systemone \
+
+  -H "Content-Type: application/json" \
+
+  -d '{
+
+    "model": "jev-evaluator",
+
+    "state": {
+
+      "inputs": {"question": "How do I reset my password?"},
+
+      "outputs": "Select Forgot password on the sign-in page."
+
+    },
+
+    "questions": {
+
+      "evaluation": {
+
+        "type": "noul",
+
+        "instructions": "Does state.outputs answer the question in state.inputs?"
+
+      }
+
+    }
+
+  }'
+```
+
+TypeSafe gateway endpoints are raw System One endpoints, not chat endpoints. Use them for direct System One requests through Gateway-managed credentials. They are separate from MLflow judges that use `make_judge(model="typesafe:/...")`; do not pass a TypeSafe gateway endpoint as `model="gateway:/..."` to `make_judge()`.
 
 ### Portkey[​](#portkey "Direct link to Portkey")
 

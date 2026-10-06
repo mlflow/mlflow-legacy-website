@@ -1,0 +1,149 @@
+# Supported Models
+
+When no model is specified, MLflow uses a default based on your environment:
+
+* **Databricks**: `"databricks"` (a [Databricks-hosted model](https://docs.databricks.com/aws/en/mlflow3/genai/eval-monitor/concepts/scorers#select-the-llm-that-powers-the-judge) designed for LLM and AI agent quality assessments)
+* **Other environments**: `"openai:/gpt-4o-mini"`
+
+You can also explicitly specify a model from any of the following sources:
+
+## AI Gateway Endpoints[​](#ai-gateway-endpoints "Direct link to AI Gateway Endpoints")
+
+[AI Gateway](/docs/3.17.0/genai/governance/ai-gateway.md) endpoints are the recommended way to configure judge models, especially when creating judges from the UI. Benefits include:
+
+* **Run judges directly from the UI** - Test and execute judges without leaving the browser
+* **Centralized API key management** - No need to configure API keys locally
+* **Traffic routing and fallbacks** - Configure load balancing and provider fallbacks
+
+To use AI Gateway endpoints, select the endpoint from the UI dropdown or specify the endpoint name from the SDK with the `gateway:/` prefix, e.g., `gateway:/my-chat-endpoint`.
+
+## Direct Model Providers[​](#direct-model-providers "Direct link to Direct Model Providers")
+
+MLflow supports calling model providers directly using the format `provider:/model-name`. Each provider may require specific credentials set as environment variables:
+
+| Provider       | URI Format                                                      | Environment Variables                                                                                                                                                                   |
+| -------------- | --------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| OpenAI         | `openai:/gpt-5.4-mini`                                          | `OPENAI_API_KEY`                                                                                                                                                                        |
+| Azure OpenAI   | `azure:/my-deployment`                                          | `AZURE_API_KEY`, `AZURE_API_BASE`, `AZURE_API_VERSION`                                                                                                                                  |
+| Anthropic      | `anthropic:/claude-sonnet-4-5`                                  | `ANTHROPIC_API_KEY`                                                                                                                                                                     |
+| Amazon Bedrock | `bedrock:/google.gemma-3-4b-it`                                 | `AWS_REGION`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_SESSION_TOKEN` (optional). Alternatively: `AWS_BEARER_TOKEN_BEDROCK` for API key auth, or `AWS_ROLE_ARN` for IAM role. |
+| Google Gemini  | `gemini:/gemini-3.1-pro-preview`                                | `GEMINI_API_KEY`                                                                                                                                                                        |
+| Mistral        | `mistral:/mistral-small-2603`                                   | `MISTRAL_API_KEY`                                                                                                                                                                       |
+| xAI            | `xai:/grok-4.20-0309-reasoning`                                 | `XAI_API_KEY`                                                                                                                                                                           |
+| Vertex AI      | `vertex_ai:/gemini-3-flash-preview`                             | `VERTEX_PROJECT`, `VERTEX_LOCATION` (optional), `VERTEX_CREDENTIALS` (optional)                                                                                                         |
+| Groq           | `groq:/llama-3.3-70b-versatile`                                 | `GROQ_API_KEY`                                                                                                                                                                          |
+| DeepSeek       | `deepseek:/deepseek-chat`                                       | `DEEPSEEK_API_KEY`                                                                                                                                                                      |
+| OpenRouter     | `openrouter:/openai/gpt-5.4-nano`                               | `OPENROUTER_API_KEY`. See [OpenRouter model list](https://openrouter.ai/models) for model names.                                                                                        |
+| Together AI    | `togetherai:/meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8` | `TOGETHERAI_API_KEY`                                                                                                                                                                    |
+| TypeSafe       | `typesafe:/jev-latest`                                          | `TYPESAFE_API_KEY`                                                                                                                                                                      |
+| Ollama         | `ollama:/llama3.2`                                              | None (local)                                                                                                                                                                            |
+| Databricks     | `databricks:/databricks-claude-sonnet-4-5`                      | [Databricks SDK authentication](https://docs.databricks.com/aws/en/dev-tools/auth/index.html) (e.g. `DATABRICKS_HOST` + `DATABRICKS_TOKEN`, or other supported methods)                 |
+
+warning
+
+Judges configured with direct model providers require credentials to be available locally (typically via environment variables) and **cannot be run from the UI**. For supported chat-completion providers, use AI Gateway endpoints if you want to run judges from the UI.
+
+TypeSafe judge models use TypeSafe's System One evaluation API rather than a chat-completion API. Use `typesafe:/` model URIs only with the supported `bool` and finite `Literal[...]` outputs described in [TypeSafe Judge Models](/docs/3.17.0/genai/eval-monitor/scorers/llm-judge/custom-judges/typesafe.md).
+
+Gateway endpoints backed by TypeSafe provider models or OpenRouter Jev decision models (such as `typesafe/jev-1.13`) can also back structured MLflow judges. OpenRouter `typesafe/jev-router` is a chat model and remains on normal chat routes. Do not send Jev decision models to chat-completion APIs.
+
+### Using TypeSafe and Jev in the UI[​](#using-typesafe-and-jev-in-the-ui "Direct link to Using TypeSafe and Jev in the UI")
+
+In the custom judge creation flow:
+
+1. Choose the evaluation scope and judge name in **General**.
+2. In **Evaluation criteria**, choose the judge, write instructions, and select **Boolean** or **Categorical** output. For **Categorical**, add at least one category option — the judge cannot run without one.
+3. Select a Gateway endpoint in **Model**. TypeSafe and OpenRouter Jev endpoints remain visible in the dropdown.
+
+Use a Gateway endpoint whose model mappings all support System One. If the output type is incompatible, the UI shows the required fix before submission; if the Gateway rejects the request, the error banner explains the next action.
+
+### Using TypeSafe and Jev in the SDK[​](#using-typesafe-and-jev-in-the-sdk "Direct link to Using TypeSafe and Jev in the SDK")
+
+Use a direct model or a Gateway endpoint:
+
+python
+
+```
+from mlflow.genai.judges import make_judge
+
+
+
+# Direct TypeSafe model: resolved client-side, needs TYPESAFE_API_KEY locally, cannot run from the UI.
+
+direct_judge = make_judge(
+
+    name="direct_jev_judge",
+
+    instructions="Answer yes or no: Does {{ outputs }} answer {{ inputs }}?",
+
+    model="typesafe:/jev-latest",
+
+    feedback_value_type=bool,
+
+)
+
+
+
+# Gateway endpoint: resolved by the Gateway using its stored credentials, and can run from the UI.
+
+gateway_judge = make_judge(
+
+    name="gateway_jev_judge",
+
+    instructions="Answer yes or no: Does {{ outputs }} answer {{ inputs }}?",
+
+    model="gateway:/jev-evaluator",
+
+    feedback_value_type=bool,
+
+)
+```
+
+For a direct TypeSafe model, set `TYPESAFE_API_KEY`. For a Gateway endpoint, MLflow uses the endpoint credentials and requires every model mapping to support System One.
+
+note
+
+A `gateway:/` judge remembers whether an endpoint uses System One for the life of the process; restart the client after switching an endpoint between System One and chat models.
+
+For any models that are not supported natively, it is also possible to use LiteLLM. Since LiteLLM is not a dependency of MLflow, you'll need to install it separately by running `pip install litellm`. After this, simply specify the provider and model name in the same format as natively supported providers.
+
+## Databricks-Hosted Models[​](#databricks-hosted-models "Direct link to Databricks-Hosted Models")
+
+When using MLflow in Databricks, you can use Databricks-hosted models using the following formats:
+
+* **`"databricks"`** (default): a [default Databricks-hosted model](https://docs.databricks.com/aws/en/mlflow3/genai/eval-monitor/concepts/scorers#select-the-llm-that-powers-the-judge) designed for LLM and AI agent quality assessments.
+* **`"databricks:/<model-name>"`**: Other Databricks-hosted models of your choice (e.g., `databricks:/databricks-gpt-5-mini`, `databricks:/databricks-claude-sonnet-4-5`). For a full list, see [LiteLLM Models](https://models.litellm.ai/) and select "databricks" as the provider.
+* **`"databricks:/<endpoint-name>"`** or **`"endpoints:/<endpoint-name>"`**: Custom model endpoints on Databricks (e.g., `databricks:/my-endpoint`).
+
+## Choosing the Right LLM for Your Judge[​](#choosing-the-right-llm-for-your-judge "Direct link to Choosing the Right LLM for Your Judge")
+
+The choice of LLM model significantly impacts judge performance and cost. Here's guidance based on your development stage and use case:
+
+### Early Development Stage (Inner Loop)[​](#early-development-stage-inner-loop "Direct link to Early Development Stage (Inner Loop)")
+
+* **Recommended**: Start with powerful models like GPT-4o or Claude Opus
+
+* **Why**: When you're beginning your agent development journey, you typically lack:
+
+  <!-- -->
+
+  * Use-case-specific grading criteria
+  * Labeled data for optimization
+
+* **Benefits**: More intelligent models can deeply explore traces, identify patterns, and help you understand common issues in your system
+
+* **Trade-off**: Higher cost, but lower evaluation volume during development makes this acceptable
+
+### Production & Scaling Stage[​](#production--scaling-stage "Direct link to Production & Scaling Stage")
+
+* **Recommended**: Transition to smaller models (GPT-4o-mini, Claude Haiku) with smarter optimizers
+
+* **Why**: As you move toward production:
+
+  <!-- -->
+
+  * You've collected labeled data and established grading criteria
+  * Cost becomes a critical factor at scale
+  * You can align smaller judges using more powerful optimizers
+
+* **Approach**: Use a smaller judge model paired with a powerful optimizer model (e.g., GPT-4o-mini judge aligned using Claude Opus optimizer)

@@ -23,6 +23,8 @@ To use the MLflow model registry, you need to add your MLflow models to it. This
 
 MLflow has lots of model flavors. In the below example, we'll leverage scikit-learn's RandomForestRegressor to demonstrate the simplest way to register a model, but note that you can leverage any [supported model flavor](/docs/latest/ml/model.md#models_built-in-model-flavors). In the code snippet below, we start an mlflow run and train a random forest model. We then log some relevant hyper-parameters, the model mean-squared-error (MSE), and finally log and register the model itself.
 
+The default scikit-learn serialization format is `skops`. This random forest uses the `sklearn.tree._tree.Tree` type, so the example explicitly trusts it. Only trust types you have reviewed; see the [Pickle-Free Model format](/docs/latest/ml/tracking/pickle-free-models.md) documentation for more information.
+
 python
 
 ```
@@ -78,9 +80,11 @@ with mlflow.start_run() as run:
 
         name="sklearn-model",
 
-        input_example=X_train,
+        input_example=X_train[:2],
 
         registered_model_name="sk-learn-random-forest-reg-model",
+
+        skops_trusted_types=["sklearn.tree._tree.Tree"],
 
     )
 ```

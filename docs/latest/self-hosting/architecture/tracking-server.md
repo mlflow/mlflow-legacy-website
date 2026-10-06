@@ -295,6 +295,10 @@ See [Archive Traces](/docs/latest/genai/tracing/observe-with-traces/archive-trac
 
 ### Server Jobs And Redis[​](#server-jobs-and-redis "Direct link to Server Jobs And Redis")
 
+warning
+
+The opt-in executor engine currently supports only single-replica MLflow deployments; overlapping rolling restarts are also unsupported. Multi-replica coordination will be supported after scheduler leadership and stale-lease recovery are implemented.
+
 MLflow server jobs use local SQLite-backed Huey queues by default. To use a shared Redis-backed queue, set `MLFLOW_SERVER_JOB_HUEY_REDIS_URL` on every server instance.
 
 Each job queue and the periodic-task queue use separate Huey namespaces, so they can share a Redis database without consuming one another's tasks.

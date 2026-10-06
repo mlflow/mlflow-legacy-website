@@ -215,6 +215,10 @@ Click any integration below to get started with detailed setup instructions.
 
 [Mistral](/docs/latest/genai/tracing/integrations/listing/mistral.md)
 
+[![TypeSafe AI Logo](/docs/latest/images/logos/typesafe-ai-logo.png)](/docs/latest/genai/tracing/integrations/listing/typesafe.md)
+
+[TypeSafe AI](/docs/latest/genai/tracing/integrations/listing/typesafe.md)
+
 [![xAI / Grok Logo](/docs/latest/images/logos/grok-logo.png)](/docs/latest/genai/tracing/integrations/listing/xai-grok.md)
 
 [xAI / Grok](/docs/latest/genai/tracing/integrations/listing/xai-grok.md)

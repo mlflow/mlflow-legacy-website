@@ -1,0 +1,469 @@
+# Model Providers
+
+MLflow AI Gateway supports many model providers natively, without requiring any additional dependencies. For providers not listed here, you can optionally install [LiteLLM](https://docs.litellm.ai/docs/providers) to extend the gateway to use them. LiteLLM is not a dependency of MLflow AI Gateway—it is only used if you choose to install it in your environment. This page covers the major providers, their capabilities, and how to use their passthrough APIs.
+
+## Supported Providers[​](#supported-providers "Direct link to Supported Providers")
+
+The AI Gateway supports providers across these categories:
+
+### Major Cloud Providers[​](#major-cloud-providers "Direct link to Major Cloud Providers")
+
+| Provider          | Chat | Embeddings | Passthrough API                                    |
+| ----------------- | ---- | ---------- | -------------------------------------------------- |
+| **OpenAI**        | Yes  | Yes        | `/gateway/openai/v1/...`                           |
+| **Anthropic**     | Yes  | No         | `/gateway/anthropic/v1/...`                        |
+| **Google Gemini** | Yes  | Yes        | `/gateway/gemini/v1beta/...`                       |
+| **Azure OpenAI**  | Yes  | Yes        | Via OpenAI passthrough                             |
+| **AWS Bedrock**   | Yes  | Yes        | Anthropic passthrough (Claude, API key auth)       |
+| **Vertex AI**     | Yes  | Yes        | Anthropic, Gemini, or OpenAI passthrough, by model |
+
+### Additional Providers[​](#additional-providers "Direct link to Additional Providers")
+
+| Provider         | Chat | Embeddings | Notes                                |
+| ---------------- | ---- | ---------- | ------------------------------------ |
+| **Cohere**       | Yes  | Yes        | Command and Embed models             |
+| **Mistral**      | Yes  | Yes        | Mistral AI models                    |
+| **Groq**         | Yes  | No         | Open-source models                   |
+| **Together AI**  | Yes  | Yes        | Open-source models                   |
+| **Fireworks AI** | Yes  | Yes        | Open-source models                   |
+| **Ollama**       | Yes  | Yes        | Local models                         |
+| **Databricks**   | Yes  | Yes        | Foundation Model APIs                |
+| **Portkey**      | Yes  | Yes        | Unified gateway for any LLM provider |
+
+For a complete list of supported providers, view the provider dropdown when creating an endpoint or see the [LiteLLM documentation](https://docs.litellm.ai/docs/providers).
+
+### Evaluation Providers[​](#evaluation-providers "Direct link to Evaluation Providers")
+
+| Provider       | Model family        | Passthrough API                  |
+| -------------- | ------------------- | -------------------------------- |
+| **TypeSafe**   | Jev                 | `/gateway/typesafe/v1/systemone` |
+| **OpenRouter** | Jev decision models | `/gateway/typesafe/v1/systemone` |
+
+TypeSafe and OpenRouter Jev decision endpoints support structured System One evaluation requests. They do not support the gateway's chat, embeddings, OpenAI-compatible, or streaming APIs. OpenRouter `typesafe/jev-router` is a chat model and uses normal chat routes.
+
+## Provider-Specific Passthrough APIs[​](#provider-specific-passthrough-apis "Direct link to Provider-Specific Passthrough APIs")
+
+### OpenAI[​](#openai "Direct link to OpenAI")
+
+The OpenAI passthrough exposes the full OpenAI API:
+
+**Base URL:** `http://localhost:5000/gateway/openai/v1`
+
+**Supported Endpoints:**
+
+* `POST /chat/completions` - Chat completions
+* `POST /embeddings` - Text embeddings
+* `POST /responses` - Responses API (multi-turn conversations)
+
+- Python SDK
+- cURL
+
+python
+
+```
+from openai import OpenAI
+
+
+
+client = OpenAI(
+
+    base_url="http://localhost:5000/gateway/openai/v1",
+
+    api_key="dummy",  # Not needed, configured server-side
+
+)
+
+
+
+# Chat completion
+
+response = client.chat.completions.create(
+
+    model="my-endpoint",
+
+    messages=[{"role": "user", "content": "Hello!"}],
+
+)
+
+
+
+# Embeddings
+
+embeddings = client.embeddings.create(
+
+    model="my-embeddings-endpoint",
+
+    input="Text to embed",
+
+)
+
+
+
+# Responses API
+
+response = client.responses.create(
+
+    model="my-endpoint",
+
+    input="Hello!",
+
+)
+```
+
+bash
+
+```
+# Chat completion
+
+curl -X POST http://localhost:5000/gateway/openai/v1/chat/completions \
+
+  -H "Content-Type: application/json" \
+
+  -d '{"model": "my-endpoint", "messages": [{"role": "user", "content": "Hello!"}]}'
+
+
+
+# Embeddings
+
+curl -X POST http://localhost:5000/gateway/openai/v1/embeddings \
+
+  -H "Content-Type: application/json" \
+
+  -d '{"model": "my-embeddings-endpoint", "input": "Text to embed"}'
+
+
+
+# Responses API
+
+curl -X POST http://localhost:5000/gateway/openai/v1/responses \
+
+  -H "Content-Type: application/json" \
+
+  -d '{"model": "my-endpoint", "input": "Hello!"}'
+```
+
+See [OpenAI API Reference](https://platform.openai.com/docs/api-reference) for complete documentation.
+
+### Anthropic[​](#anthropic "Direct link to Anthropic")
+
+Access Claude models through the Anthropic passthrough:
+
+**Base URL:** `http://localhost:5000/gateway/anthropic`
+
+**Supported Endpoints:**
+
+* `POST /v1/messages` - Messages API
+
+- Python SDK
+- cURL
+
+python
+
+```
+import anthropic
+
+
+
+client = anthropic.Anthropic(
+
+    base_url="http://localhost:5000/gateway/anthropic",
+
+    api_key="dummy",  # Not needed, configured server-side
+
+)
+
+
+
+response = client.messages.create(
+
+    model="my-endpoint",
+
+    max_tokens=1024,
+
+    messages=[{"role": "user", "content": "Hello!"}],
+
+)
+
+print(response.content[0].text)
+```
+
+bash
+
+```
+curl -X POST http://localhost:5000/gateway/anthropic/v1/messages \
+
+  -H "Content-Type: application/json" \
+
+  -d '{
+
+    "model": "my-endpoint",
+
+    "max_tokens": 1024,
+
+    "messages": [{"role": "user", "content": "Hello!"}]
+
+  }'
+```
+
+See [Anthropic API Reference](https://docs.anthropic.com/en/api) for complete documentation.
+
+### Google Gemini[​](#google-gemini "Direct link to Google Gemini")
+
+Access Gemini models through Google's API format:
+
+**Base URL:** `http://localhost:5000/gateway/gemini`
+
+**Supported Endpoints:**
+
+* `POST /v1beta/models/{model}:generateContent` - Content generation
+* `POST /v1beta/models/{model}:streamGenerateContent` - Streaming generation
+
+- Python SDK
+- cURL
+
+python
+
+```
+from google import genai
+
+
+
+client = genai.Client(
+
+    api_key="dummy",
+
+    http_options={
+
+        "base_url": "http://localhost:5000/gateway/gemini",
+
+    },
+
+)
+
+
+
+response = client.models.generate_content(
+
+    model="my-endpoint",
+
+    contents={"text": "Hello!"},
+
+)
+
+client.close()
+
+print(response.candidates[0].content.parts[0].text)
+```
+
+bash
+
+```
+curl -X POST http://localhost:5000/gateway/gemini/v1beta/models/my-endpoint:generateContent \
+
+  -H "Content-Type: application/json" \
+
+  -d '{"contents": [{"parts": [{"text": "Hello!"}]}]}'
+```
+
+See [Google Gemini API Reference](https://ai.google.dev/gemini-api/docs) for complete documentation.
+
+### Vertex AI[​](#vertex-ai "Direct link to Vertex AI")
+
+Vertex AI endpoints use the passthrough API of the model family they serve: Claude models take the [Anthropic](#anthropic) routes, Gemini models take the [Google Gemini](#google-gemini) routes, and partner MaaS models (Llama, Mistral, DeepSeek, and others) take the [OpenAI](#openai) routes. Requests are authenticated server-side with the endpoint's Google Cloud credentials.
+
+Vertex AI validates the `anthropic-beta` header against the betas it supports, which lag behind the Anthropic API, and rejects the whole request when it sees a value it does not know. The `vertex_anthropic_betas` option on a Claude endpoint controls which client-supplied beta values are forwarded:
+
+* Unset (default): the header is forwarded unchanged.
+* An empty list: the header is dropped.
+* A list of values, for example `["web-search-2025-03-05"]`: only those values are kept, and the header is dropped if none remain.
+
+The option is part of the model's Vertex AI configuration, alongside `vertex_project` and `vertex_location`. Through the API, `auth_config` values are strings, so pass the betas as a comma-separated string such as `"web-search-2025-03-05,interleaved-thinking-2025-05-14"`; an empty string drops the header.
+
+### Azure OpenAI[​](#azure-openai "Direct link to Azure OpenAI")
+
+Azure OpenAI uses the same passthrough as OpenAI with additional configuration:
+
+**Base URL:** `http://localhost:5000/gateway/openai/v1`
+
+When creating an Azure OpenAI endpoint:
+
+1. Select **Azure OpenAI** as the provider
+2. Enter your Azure endpoint URL
+3. Enter your Azure API key
+4. Specify your deployment name
+
+python
+
+```
+from openai import OpenAI
+
+
+
+client = OpenAI(
+
+    base_url="http://localhost:5000/gateway/openai/v1",
+
+    api_key="dummy",
+
+)
+
+
+
+response = client.chat.completions.create(
+
+    model="my-azure-endpoint",
+
+    messages=[{"role": "user", "content": "Hello!"}],
+
+)
+```
+
+### Databricks Foundation Models[​](#databricks-foundation-models "Direct link to Databricks Foundation Models")
+
+Databricks Foundation Models APIs are OpenAI-compatible:
+
+**Base URL:** `http://localhost:5000/gateway/openai/v1`
+
+When creating a Databricks endpoint:
+
+1. Select **Databricks** as the provider
+2. Enter your Databricks workspace URL
+3. Enter your Databricks personal access token
+4. Specify the model endpoint name
+
+python
+
+```
+from openai import OpenAI
+
+
+
+client = OpenAI(
+
+    base_url="http://localhost:5000/gateway/openai/v1",
+
+    api_key="dummy",
+
+)
+
+
+
+response = client.chat.completions.create(
+
+    model="my-databricks-endpoint",
+
+    messages=[{"role": "user", "content": "Hello!"}],
+
+)
+```
+
+### TypeSafe[​](#typesafe "Direct link to TypeSafe")
+
+The TypeSafe passthrough exposes TypeSafe's System One API through the MLflow Gateway. The gateway endpoint name goes in the request body's `model` field; the gateway forwards the request to the configured TypeSafe model with its server-side TypeSafe API key.
+
+Requests are sent to `https://api.typesafe.ai/v1` by default. To use a proxy or another System One host, set **API Base URL** (`api_base`) on the TypeSafe LLM connection. Private or non-HTTPS connection URLs require the settings described in [custom base URL validation](/docs/3.17.0/genai/governance/ai-gateway/api-keys/create-and-manage.md#custom-base-url-validation). When constructing `TypeSafeConfig` directly, use `typesafe_api_base` instead.
+
+**Base URL:** `http://localhost:5000/gateway/typesafe/v1`
+
+**Supported Endpoints:**
+
+* `POST /systemone` - System One structured evaluation
+
+bash
+
+```
+curl -X POST http://localhost:5000/gateway/typesafe/v1/systemone \
+
+  -H "Content-Type: application/json" \
+
+  -d '{
+
+    "model": "jev-evaluator",
+
+    "state": {
+
+      "inputs": {"question": "How do I reset my password?"},
+
+      "outputs": "Select Forgot password on the sign-in page."
+
+    },
+
+    "questions": {
+
+      "evaluation": {
+
+        "type": "noul",
+
+        "instructions": "Does state.outputs answer the question in state.inputs?"
+
+      }
+
+    }
+
+  }'
+```
+
+TypeSafe gateway endpoints are raw System One endpoints, not chat endpoints. Use them for direct System One requests through Gateway-managed credentials. They are separate from MLflow judges that use `make_judge(model="typesafe:/...")`; do not pass a TypeSafe gateway endpoint as `model="gateway:/..."` to `make_judge()`.
+
+### Portkey[​](#portkey "Direct link to Portkey")
+
+[Portkey](https://portkey.ai) provides a single OpenAI-compatible API.
+
+In addition to your Portkey API key, Portkey needs to know which upstream provider to route each request to. Configure one of the following when creating the endpoint:
+
+* **Provider Slug**: a [Model Catalog](https://portkey.ai/docs/product/model-catalog) integration slug prefixed with `@` (e.g. `@openai-prod`), or a bare provider slug (e.g. `openai`) together with a **Provider API Key** for that provider
+* **Config ID or JSON**: a saved Portkey config ID (e.g. `pc-xxxx`) or a raw JSON config. This is stored as a secret, since a raw JSON config may embed upstream credentials
+* Neither, if your model name already embeds the routing target (e.g. `@openai-prod/gpt-4o`) or your Portkey API key has a default config attached
+
+When creating a Portkey endpoint:
+
+1. Select **Portkey** as the provider
+2. Enter your Portkey API key and a routing target as described above
+3. Enter your Portkey base URL (e.g. `https://api.portkey.ai/v1`)
+4. Enter the model name as per your Portkey configuration (e.g. `gpt-4o`, `@openai-prod/gpt-4o`, or a custom alias)
+
+python
+
+```
+from openai import OpenAI
+
+
+
+client = OpenAI(
+
+    base_url="http://localhost:5000/gateway/openai/v1",
+
+    api_key="dummy",  # Not needed, configured server-side
+
+)
+
+
+
+response = client.chat.completions.create(
+
+    model="my-portkey-endpoint",
+
+    messages=[{"role": "user", "content": "Hello!"}],
+
+)
+
+print(response.choices[0].message.content)
+```
+
+See [Portkey documentation](https://portkey.ai/docs) for the full list of supported models and configuration options.
+
+## Model Capabilities[​](#model-capabilities "Direct link to Model Capabilities")
+
+When creating endpoints, the model selector shows capability badges:
+
+| Badge         | Description                                  |
+| ------------- | -------------------------------------------- |
+| **Tools**     | Model supports function/tool calling         |
+| **Reasoning** | Model has enhanced reasoning capabilities    |
+| **Caching**   | Model supports prompt caching for efficiency |
+| **Vision**    | Model can process images                     |
+
+Additional information displayed:
+
+* **Context window**: Maximum tokens the model can process
+* **Token costs**: Input and output pricing per million tokens
