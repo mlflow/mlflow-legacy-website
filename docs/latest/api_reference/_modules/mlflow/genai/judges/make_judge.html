@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="MLflow 3.17.0 documentation" href="../../../../index.html"/>
+    <link rel="top" title="MLflow 3.17.1 documentation" href="../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../index.html"/> 
 
   
@@ -148,7 +148,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.0</span>
+  <span class="header-link version">3.17.1</span>
 </div>
   </nav>
   <page>
@@ -248,6 +248,7 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.judges.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">Judge</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.judges.instructions_judge</span><span class="w"> </span><span class="kn">import</span> <span class="n">InstructionsJudge</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.judges.model_api</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModelAPI</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.telemetry.events</span><span class="w"> </span><span class="kn">import</span> <span class="n">MakeJudgeEvent</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.telemetry.track</span><span class="w"> </span><span class="kn">import</span> <span class="n">record_usage_event</span>
 
@@ -366,6 +367,7 @@
     <span class="n">extra_headers</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">include_timing_in_conversation</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">generate_rationale_first</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">model_api</span><span class="p">:</span> <span class="n">ModelAPI</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ModelAPI</span><span class="o">.</span><span class="n">DEFAULT</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Judge</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Create a custom MLflow judge instance.</span>
@@ -426,6 +428,14 @@
 <span class="sd">                        (the default, for backward compatibility), the result value is emitted</span>
 <span class="sd">                        first. Setting this to True can produce more consistent results by</span>
 <span class="sd">                        preventing the value from contradicting its own rationale.</span>
+<span class="sd">        model_api: API route for the judge model. ``ModelAPI.DEFAULT`` uses Chat Completions</span>
+<span class="sd">                        for OpenAI and other chat providers, TypeSafe's System One API for</span>
+<span class="sd">                        ``typesafe:/`` models, and endpoint detection for ``gateway:/`` models.</span>
+<span class="sd">                        ``ModelAPI.DECISIONS`` explicitly selects OpenAI's Decision API or</span>
+<span class="sd">                        TypeSafe's System One API, according to the provider. Decision models</span>
+<span class="sd">                        return probabilities but no rationale and do not support</span>
+<span class="sd">                        ``{{ trace }}`` tool calling. ``ModelAPI.CHAT_COMPLETIONS`` requires</span>
+<span class="sd">                        the chat route. String values are also accepted.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        An InstructionsJudge instance configured with the provided parameters</span>
@@ -536,6 +546,7 @@
         <span class="n">inference_params</span><span class="o">=</span><span class="n">inference_params</span><span class="p">,</span>
         <span class="n">base_url</span><span class="o">=</span><span class="n">base_url</span><span class="p">,</span>
         <span class="n">extra_headers</span><span class="o">=</span><span class="n">extra_headers</span><span class="p">,</span>
+        <span class="n">model_api</span><span class="o">=</span><span class="n">model_api</span><span class="p">,</span>
     <span class="p">)</span></div>
 </pre></div>
 
@@ -567,7 +578,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../../',
-      VERSION:'3.17.0',
+      VERSION:'3.17.1',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

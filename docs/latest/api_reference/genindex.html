@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="#"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="MLflow 3.17.0 documentation" href="index.html"/> 
+    <link rel="top" title="MLflow 3.17.1 documentation" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -147,7 +147,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.0</span>
+  <span class="header-link version">3.17.1</span>
 </div>
   </nav>
   <page>
@@ -2292,7 +2292,13 @@
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.NoOpSpan.add_link">(mlflow.entities.NoOpSpan method)</a>
 </li>
       </ul></li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.add_review_queue_items">add_review_queue_items() (in module mlflow.genai.databricks.review_queues)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.add_review_queue_member">add_review_queue_member() (in module mlflow.genai.databricks.review_queues)</a>
+</li>
       <li><a href="auth/python-api.html#mlflow.server.auth.client.AuthServiceClient.add_role_permission">add_role_permission() (mlflow.server.auth.client.AuthServiceClient method)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueueMember.add_time_ms">add_time_ms (mlflow.genai.databricks.review_queues.ReviewQueueMember attribute)</a>
 </li>
       <li><a href="python_api/mlflow.pyfunc.html#mlflow.pyfunc.add_to_model">add_to_model() (in module mlflow.pyfunc)</a>
 </li>
@@ -2300,6 +2306,12 @@
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.LabelingSession.add_traces">add_traces() (mlflow.genai.LabelingSession method)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueueItem.added_by">added_by (mlflow.genai.databricks.review_queues.ReviewQueueItem attribute)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueueMember.added_by">(mlflow.genai.databricks.review_queues.ReviewQueueMember attribute)</a>
+</li>
+      </ul></li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.GuardrailStage.AFTER">AFTER (mlflow.entities.GuardrailStage attribute)</a>
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.Agent">Agent (class in mlflow.genai)</a>
@@ -2408,6 +2420,8 @@
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.trulens.AnswerRelevance">AnswerRelevance (class in mlflow.genai.scorers.trulens)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.AnswerRelevancy">AnswerRelevancy (class in mlflow.genai.scorers.deepeval)</a>
 
       <ul>
@@ -2416,8 +2430,6 @@
       </ul></li>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.Provider.ANTHROPIC">ANTHROPIC (mlflow.gateway.config.Provider attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.AnthropicConfig.anthropic_api_base">anthropic_api_base (mlflow.gateway.config.AnthropicConfig attribute)</a>
 </li>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.AnthropicConfig.anthropic_api_key">anthropic_api_key (mlflow.gateway.config.AnthropicConfig attribute)</a>
@@ -2680,6 +2692,8 @@
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.SpanType.CHAIN">CHAIN (mlflow.entities.SpanType attribute)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.judges.ModelAPI.CHAT_COMPLETIONS">CHAT_COMPLETIONS (mlflow.genai.judges.ModelAPI attribute)</a>
+</li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.SpanType.CHAT_MODEL">CHAT_MODEL (mlflow.entities.SpanType attribute)</a>
 </li>
       <li><a href="python_api/mlflow.pyfunc.html#mlflow.pyfunc.ChatAgent">ChatAgent (class in mlflow.pyfunc)</a>
@@ -2784,10 +2798,20 @@
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.PromptVersion.commit_message">commit_message (mlflow.entities.model_registry.PromptVersion property)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewStatus.COMPLETE">COMPLETE (mlflow.genai.review_queues.ReviewStatus attribute)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewStatus.COMPLETE">COMPLETE (mlflow.genai.databricks.review_queues.ReviewStatus attribute)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewStatus.COMPLETE">(mlflow.genai.review_queues.ReviewStatus attribute)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewQueueItem.completed_by">completed_by (mlflow.genai.review_queues.ReviewQueueItem attribute)</a>
+      </ul></li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueueItem.complete_time_ms">complete_time_ms (mlflow.genai.databricks.review_queues.ReviewQueueItem attribute)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueueItem.completed_by">completed_by (mlflow.genai.databricks.review_queues.ReviewQueueItem attribute)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewQueueItem.completed_by">(mlflow.genai.review_queues.ReviewQueueItem attribute)</a>
+</li>
+      </ul></li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewQueueItem.completed_time_ms">completed_time_ms (mlflow.genai.review_queues.ReviewQueueItem attribute)</a>
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.Completeness">Completeness (class in mlflow.genai.scorers)</a>
@@ -2862,12 +2886,12 @@
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.PromptVersion.convert_response_format_to_dict">convert_response_format_to_dict() (mlflow.entities.model_registry.PromptVersion static method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.optimize.OptimizerConfig.convert_to_single_text">convert_to_single_text (mlflow.genai.optimize.OptimizerConfig attribute)</a>
 </li>
       <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.copy_model_version">copy_model_version() (mlflow.client.MlflowClient method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.Correctness">Correctness (class in mlflow.genai.scorers)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfo.cost">cost (mlflow.entities.TraceInfo property)</a>
@@ -2944,8 +2968,14 @@
 </li>
       <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.create_registered_model">create_registered_model() (mlflow.client.MlflowClient method)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.create_review_queue">create_review_queue() (in module mlflow.genai.review_queues)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.create_review_question">create_review_question() (in module mlflow.genai.databricks.review_queues)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.create_review_queue">create_review_queue() (in module mlflow.genai.databricks.review_queues)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.create_review_queue">(in module mlflow.genai.review_queues)</a>
+</li>
+      </ul></li>
       <li><a href="auth/python-api.html#mlflow.server.auth.client.AuthServiceClient.create_role">create_role() (mlflow.server.auth.client.AuthServiceClient method)</a>
 </li>
       <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.create_run">create_run() (mlflow.client.MlflowClient method)</a>
@@ -2957,7 +2987,15 @@
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset.create_time">create_time (mlflow.genai.datasets.EvaluationDataset property)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.Assessment.create_time_ms">create_time_ms (mlflow.entities.Assessment attribute)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQuestion.create_time_ms">(mlflow.genai.databricks.review_queues.ReviewQuestion attribute)</a>
 </li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueue.create_time_ms">(mlflow.genai.databricks.review_queues.ReviewQueue attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueueItem.create_time_ms">(mlflow.genai.databricks.review_queues.ReviewQueueItem attribute)</a>
+</li>
+      </ul></li>
       <li><a href="auth/python-api.html#mlflow.server.auth.client.AuthServiceClient.create_user">create_user() (mlflow.server.auth.client.AuthServiceClient method)</a>
 </li>
       <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.create_webhook">create_webhook() (mlflow.client.MlflowClient method)</a>
@@ -3017,6 +3055,10 @@
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.MCPServerVersion.created_by">(mlflow.entities.MCPServerVersion attribute)</a>
 </li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQuestion.created_by">(mlflow.genai.databricks.review_queues.ReviewQuestion attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueue.created_by">(mlflow.genai.databricks.review_queues.ReviewQueue attribute)</a>
+</li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.EvaluationDatasetVersion.created_by">(mlflow.genai.EvaluationDatasetVersion attribute)</a>
 </li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.LabelSchema.created_by">(mlflow.genai.label_schemas.LabelSchema attribute)</a>
@@ -3072,8 +3114,12 @@
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.ModelVersionDeploymentJobState.current_task_name">current_task_name (mlflow.entities.model_registry.ModelVersionDeploymentJobState property)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewQueueType.CUSTOM">CUSTOM (mlflow.genai.review_queues.ReviewQueueType attribute)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueueType.CUSTOM">CUSTOM (mlflow.genai.databricks.review_queues.ReviewQueueType attribute)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewQueueType.CUSTOM">(mlflow.genai.review_queues.ReviewQueueType attribute)</a>
 </li>
+      </ul></li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.LabelingSession.custom_inputs">custom_inputs (mlflow.genai.LabelingSession property)</a>
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.judges.custom_prompt_judge">custom_prompt_judge() (in module mlflow.genai.judges)</a>
@@ -3113,6 +3159,8 @@
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.DatasetRecord.dataset_id">dataset_id (mlflow.entities.DatasetRecord attribute)</a>
 
       <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueueItem.dataset_id">(mlflow.genai.databricks.review_queues.ReviewQueueItem attribute)</a>
+</li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset.dataset_id">(mlflow.genai.datasets.EvaluationDataset property)</a>
 </li>
       </ul></li>
@@ -3120,8 +3168,14 @@
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.Metric.dataset_name">dataset_name (mlflow.entities.Metric property)</a>
 </li>
-      <li><a href="python_api/mlflow.entities.html#mlflow.entities.DatasetRecord.dataset_record_id">dataset_record_id (mlflow.entities.DatasetRecord attribute)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ItemKind.DATASET_RECORD">DATASET_RECORD (mlflow.genai.databricks.review_queues.ItemKind attribute)</a>
 </li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.DatasetRecord.dataset_record_id">dataset_record_id (mlflow.entities.DatasetRecord attribute)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueueItem.dataset_record_id">(mlflow.genai.databricks.review_queues.ReviewQueueItem attribute)</a>
+</li>
+      </ul></li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.DatasetInput">DatasetInput (class in mlflow.entities)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.DatasetRecord">DatasetRecord (class in mlflow.entities)</a>
@@ -3140,9 +3194,17 @@
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.SpanLogLevel.DEBUG">DEBUG (mlflow.entities.SpanLogLevel attribute)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewStatus.DECLINED">DECLINED (mlflow.genai.review_queues.ReviewStatus attribute)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.judges.ModelAPI.DECISIONS">DECISIONS (mlflow.genai.judges.ModelAPI attribute)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewStatus.DECLINED">DECLINED (mlflow.genai.databricks.review_queues.ReviewStatus attribute)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewStatus.DECLINED">(mlflow.genai.review_queues.ReviewStatus attribute)</a>
+</li>
+      </ul></li>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.Provider.DEEPSEEK">DEEPSEEK (mlflow.gateway.config.Provider attribute)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.judges.ModelAPI.DEFAULT">DEFAULT (mlflow.genai.judges.ModelAPI attribute)</a>
 </li>
       <li><a href="python_api/mlflow.types.html#mlflow.types.ParamSpec.default">default (mlflow.types.ParamSpec property)</a>
 </li>
@@ -3288,8 +3350,14 @@
 </li>
       <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.delete_registered_model_tag">delete_registered_model_tag() (mlflow.client.MlflowClient method)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.delete_review_queue">delete_review_queue() (in module mlflow.genai.review_queues)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.delete_review_question">delete_review_question() (in module mlflow.genai.databricks.review_queues)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.delete_review_queue">delete_review_queue() (in module mlflow.genai.databricks.review_queues)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.delete_review_queue">(in module mlflow.genai.review_queues)</a>
+</li>
+      </ul></li>
       <li><a href="auth/python-api.html#mlflow.server.auth.client.AuthServiceClient.delete_role">delete_role() (mlflow.server.auth.client.AuthServiceClient method)</a>
 </li>
       <li><a href="python_api/mlflow.html#mlflow.delete_run">delete_run() (in module mlflow)</a>
@@ -3304,6 +3372,8 @@
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.delete_scorer">(in module mlflow.genai.scorers)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.html#mlflow.delete_tag">delete_tag() (in module mlflow)</a>
 
       <ul>
@@ -3316,8 +3386,6 @@
         <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.delete_trace_tag">(mlflow.client.MlflowClient method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.delete_traces">delete_traces() (mlflow.client.MlflowClient method)</a>
 </li>
       <li><a href="auth/python-api.html#mlflow.server.auth.client.AuthServiceClient.delete_user">delete_user() (mlflow.server.auth.client.AuthServiceClient method)</a>
@@ -3495,6 +3563,8 @@
       <ul>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.MCPServer.display_name">(mlflow.entities.MCPServer attribute)</a>
 </li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueue.display_name">(mlflow.genai.databricks.review_queues.ReviewQueue attribute)</a>
+</li>
       </ul></li>
       <li><a href="python_api/mlflow.html#mlflow.doctor">doctor() (in module mlflow)</a>
 </li>
@@ -3538,8 +3608,12 @@
 </li>
       <li><a href="python_api/mlflow.config.html#mlflow.config.enable_async_logging">enable_async_logging() (in module mlflow.config)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.LabelSchema.enable_comment">enable_comment (mlflow.genai.label_schemas.LabelSchema attribute)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQuestion.enable_comment">enable_comment (mlflow.genai.databricks.review_queues.ReviewQuestion attribute)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.LabelSchema.enable_comment">(mlflow.genai.label_schemas.LabelSchema attribute)</a>
 </li>
+      </ul></li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.enable_git_model_versioning">enable_git_model_versioning() (in module mlflow.genai)</a>
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.LabelingSession.enable_multi_turn_chat">enable_multi_turn_chat (mlflow.genai.LabelingSession property)</a>
@@ -3660,14 +3734,14 @@
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.SpanType.EVALUATOR">EVALUATOR (mlflow.entities.SpanType attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.Span.events">events (mlflow.entities.Span property)</a>
 
       <ul>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.Webhook.events">(mlflow.entities.Webhook property)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.metrics.html#mlflow.metrics.exact_match">exact_match() (in module mlflow.metrics)</a>
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.ExactMatch">ExactMatch (class in mlflow.genai.scorers.deepeval)</a>
@@ -3722,8 +3796,12 @@
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.Assessment.expectation">expectation (mlflow.entities.Assessment attribute)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.LabelSchemaType.EXPECTATION">EXPECTATION (mlflow.genai.label_schemas.LabelSchemaType attribute)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.QuestionType.EXPECTATION">EXPECTATION (mlflow.genai.databricks.review_queues.QuestionType attribute)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.LabelSchemaType.EXPECTATION">(mlflow.genai.label_schemas.LabelSchemaType attribute)</a>
 </li>
+      </ul></li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.DatasetRecord.expectations">expectations (mlflow.entities.DatasetRecord attribute)</a>
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ExpectationsGuidelines">ExpectationsGuidelines (class in mlflow.genai.scorers)</a>
@@ -3748,6 +3826,12 @@
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.ScorerVersion.experiment_id">(mlflow.entities.ScorerVersion property)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfo.experiment_id">(mlflow.entities.TraceInfo property)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQuestion.experiment_id">(mlflow.genai.databricks.review_queues.ReviewQuestion attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueue.experiment_id">(mlflow.genai.databricks.review_queues.ReviewQueue attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueueItem.experiment_id">(mlflow.genai.databricks.review_queues.ReviewQueueItem attribute)</a>
 </li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.LabelSchema.experiment_id">(mlflow.genai.label_schemas.LabelSchema attribute)</a>
 </li>
@@ -3834,8 +3918,12 @@
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.Assessment.feedback">feedback (mlflow.entities.Assessment attribute)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.LabelSchemaType.FEEDBACK">FEEDBACK (mlflow.genai.label_schemas.LabelSchemaType attribute)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.QuestionType.FEEDBACK">FEEDBACK (mlflow.genai.databricks.review_queues.QuestionType attribute)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.LabelSchemaType.FEEDBACK">(mlflow.genai.label_schemas.LabelSchemaType attribute)</a>
 </li>
+      </ul></li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.judges.Judge.feedback_value_type">feedback_value_type (mlflow.genai.judges.Judge property)</a>
 
       <ul>
@@ -3998,6 +4086,14 @@
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.UnityCatalog.from_dict">(mlflow.entities.UnityCatalog class method)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.Workspace.from_dict">(mlflow.entities.Workspace class method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQuestion.from_dict">(mlflow.genai.databricks.review_queues.ReviewQuestion class method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueue.from_dict">(mlflow.genai.databricks.review_queues.ReviewQueue class method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueueItem.from_dict">(mlflow.genai.databricks.review_queues.ReviewQueueItem class method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueueMember.from_dict">(mlflow.genai.databricks.review_queues.ReviewQueueMember class method)</a>
 </li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset.from_dict">(mlflow.genai.datasets.EvaluationDataset class method)</a>
 </li>
@@ -4710,8 +4806,14 @@
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.get_review_app">get_review_app() (in module mlflow.genai)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.get_review_queue">get_review_queue() (in module mlflow.genai.review_queues)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.get_review_question">get_review_question() (in module mlflow.genai.databricks.review_queues)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.get_review_queue">get_review_queue() (in module mlflow.genai.databricks.review_queues)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.get_review_queue">(in module mlflow.genai.review_queues)</a>
+</li>
+      </ul></li>
       <li><a href="auth/python-api.html#mlflow.server.auth.client.AuthServiceClient.get_role">get_role() (mlflow.server.auth.client.AuthServiceClient method)</a>
 </li>
       <li><a href="python_api/mlflow.html#mlflow.get_run">get_run() (in module mlflow)</a>
@@ -4936,8 +5038,12 @@
       </ul></li>
       <li><a href="python_api/mlflow.html#mlflow.initialize_logged_model">initialize_logged_model() (in module mlflow)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.LabelSchema.input">input (mlflow.genai.label_schemas.LabelSchema attribute)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQuestion.input">input (mlflow.genai.databricks.review_queues.ReviewQuestion attribute)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.LabelSchema.input">(mlflow.genai.label_schemas.LabelSchema attribute)</a>
 </li>
+      </ul></li>
       <li><a href="python_api/mlflow.types.html#mlflow.types.Schema.input_dict">input_dict() (mlflow.types.Schema method)</a>
 </li>
       <li><a href="python_api/mlflow.pyfunc.html#mlflow.pyfunc.PyFuncModel.input_example">input_example (mlflow.pyfunc.PyFuncModel property)</a>
@@ -4952,14 +5058,26 @@
 </li>
       <li><a href="python_api/mlflow.types.html#mlflow.types.chat.InputAudio">InputAudio (class in mlflow.types.chat)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputCategorical">InputCategorical (class in mlflow.genai.label_schemas)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.InputCategorical">InputCategorical (class in mlflow.genai.databricks.review_queues)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputCategorical">(class in mlflow.genai.label_schemas)</a>
 </li>
+      </ul></li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputCategoricalList">InputCategoricalList (class in mlflow.genai.label_schemas)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputNumeric">InputNumeric (class in mlflow.genai.label_schemas)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.InputNumeric">InputNumeric (class in mlflow.genai.databricks.review_queues)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputNumeric">(class in mlflow.genai.label_schemas)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputPassFail">InputPassFail (class in mlflow.genai.label_schemas)</a>
+      </ul></li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.InputPassFail">InputPassFail (class in mlflow.genai.databricks.review_queues)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputPassFail">(class in mlflow.genai.label_schemas)</a>
 </li>
+      </ul></li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.DatasetRecord.inputs">inputs (mlflow.entities.DatasetRecord attribute)</a>
 
       <ul>
@@ -4972,16 +5090,24 @@
       </ul></li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.InputTag">InputTag (class in mlflow.entities)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputText">InputText (class in mlflow.genai.label_schemas)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.InputText">InputText (class in mlflow.genai.databricks.review_queues)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputText">(class in mlflow.genai.label_schemas)</a>
 </li>
+      </ul></li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputTextList">InputTextList (class in mlflow.genai.label_schemas)</a>
 </li>
       <li><a href="python_api/mlflow.types.html#mlflow.types.responses_helpers.InputTokensDetails">InputTokensDetails (class in mlflow.types.responses_helpers)</a>
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.InstanceSpecificRubrics">InstanceSpecificRubrics (class in mlflow.genai.scorers.ragas)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.LabelSchema.instruction">instruction (mlflow.genai.label_schemas.LabelSchema attribute)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQuestion.instruction">instruction (mlflow.genai.databricks.review_queues.ReviewQuestion attribute)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.LabelSchema.instruction">(mlflow.genai.label_schemas.LabelSchema attribute)</a>
 </li>
+      </ul></li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.judges.Judge.instructions">instructions (mlflow.genai.judges.Judge property)</a>
 
       <ul>
@@ -5056,8 +5182,12 @@
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.judges.is_correct">is_correct() (in module mlflow.genai.judges)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.LabelSchema.is_default">is_default (mlflow.genai.label_schemas.LabelSchema attribute)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQuestion.is_default">is_default (mlflow.genai.databricks.review_queues.ReviewQuestion attribute)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.LabelSchema.is_default">(mlflow.genai.label_schemas.LabelSchema attribute)</a>
 </li>
+      </ul></li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.FileInfo.is_dir">is_dir (mlflow.entities.FileInfo property)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.LoggedModelStatus.is_finalized">is_finalized() (mlflow.entities.LoggedModelStatus static method)</a>
@@ -5106,9 +5236,15 @@
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueStatus">IssueStatus (class in mlflow.entities)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewQueueItem.item_id">item_id (mlflow.genai.review_queues.ReviewQueueItem attribute)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueueItem.item_id">item_id (mlflow.genai.databricks.review_queues.ReviewQueueItem attribute)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewQueueItem.item_id">(mlflow.genai.review_queues.ReviewQueueItem attribute)</a>
 </li>
+      </ul></li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewQueueItem.item_type">item_type (mlflow.genai.review_queues.ReviewQueueItem attribute)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ItemKind">ItemKind (class in mlflow.genai.databricks.review_queues)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -5191,9 +5327,11 @@
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.RunStatus.KILLED">KILLED (mlflow.entities.RunStatus attribute)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.judges.Judge.kind">kind (mlflow.genai.judges.Judge property)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueueItem.kind">kind (mlflow.genai.databricks.review_queues.ReviewQueueItem attribute)</a>
 
       <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.judges.Judge.kind">(mlflow.genai.judges.Judge property)</a>
+</li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.Scorer.kind">(mlflow.genai.Scorer property)</a>
 </li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.Guidelines.kind">(mlflow.genai.scorers.Guidelines property)</a>
@@ -5283,6 +5421,10 @@
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.MCPServer.last_updated_by">(mlflow.entities.MCPServer attribute)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.MCPServerVersion.last_updated_by">(mlflow.entities.MCPServerVersion attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQuestion.last_updated_by">(mlflow.genai.databricks.review_queues.ReviewQuestion attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueue.last_updated_by">(mlflow.genai.databricks.review_queues.ReviewQueue attribute)</a>
 </li>
       </ul></li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.Issue.last_updated_timestamp">last_updated_timestamp (mlflow.entities.Issue attribute)</a>
@@ -5385,10 +5527,22 @@
 </li>
       <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.list_logged_prompts">list_logged_prompts() (mlflow.client.MlflowClient method)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.list_review_queue_items">list_review_queue_items() (in module mlflow.genai.review_queues)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.list_review_questions">list_review_questions() (in module mlflow.genai.databricks.review_queues)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.list_review_queues">list_review_queues() (in module mlflow.genai.review_queues)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.list_review_queue_items">list_review_queue_items() (in module mlflow.genai.databricks.review_queues)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.list_review_queue_items">(in module mlflow.genai.review_queues)</a>
 </li>
+      </ul></li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.list_review_queue_members">list_review_queue_members() (in module mlflow.genai.databricks.review_queues)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.list_review_queues">list_review_queues() (in module mlflow.genai.databricks.review_queues)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.list_review_queues">(in module mlflow.genai.review_queues)</a>
+</li>
+      </ul></li>
       <li><a href="auth/python-api.html#mlflow.server.auth.client.AuthServiceClient.list_role_permissions">list_role_permissions() (mlflow.server.auth.client.AuthServiceClient method)</a>
 </li>
       <li><a href="auth/python-api.html#mlflow.server.auth.client.AuthServiceClient.list_role_users">list_role_users() (mlflow.server.auth.client.AuthServiceClient method)</a>
@@ -5455,6 +5609,8 @@
         <li><a href="python_api/mlflow.models.html#mlflow.models.Model.load">(mlflow.models.Model class method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.pytorch.html#mlflow.pytorch.load_checkpoint">load_checkpoint() (in module mlflow.pytorch)</a>
 
       <ul>
@@ -5463,8 +5619,6 @@
       </ul></li>
       <li><a href="python_api/mlflow.pyfunc.html#mlflow.pyfunc.PythonModel.load_context">load_context() (mlflow.pyfunc.PythonModel method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.data.html#mlflow.data.load_delta">load_delta() (in module mlflow.data)</a>
 </li>
       <li><a href="python_api/mlflow.artifacts.html#mlflow.artifacts.load_dict">load_dict() (in module mlflow.artifacts)</a>
@@ -5775,9 +5929,11 @@
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.optimize.OptimizerConfig.max_few_shot_examples">max_few_shot_examples (mlflow.genai.optimize.OptimizerConfig attribute)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputText.max_length">max_length (mlflow.genai.label_schemas.InputText attribute)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.InputText.max_length">max_length (mlflow.genai.databricks.review_queues.InputText attribute)</a>
 
       <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputText.max_length">(mlflow.genai.label_schemas.InputText attribute)</a>
+</li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ResponseLength.max_length">(mlflow.genai.scorers.ResponseLength attribute)</a>
 </li>
       </ul></li>
@@ -5785,8 +5941,12 @@
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.PromptModelConfig.max_tokens">max_tokens (mlflow.entities.model_registry.PromptModelConfig attribute)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputNumeric.max_value">max_value (mlflow.genai.label_schemas.InputNumeric attribute)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.InputNumeric.max_value">max_value (mlflow.genai.databricks.review_queues.InputNumeric attribute)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputNumeric.max_value">(mlflow.genai.label_schemas.InputNumeric attribute)</a>
 </li>
+      </ul></li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.maximum">maximum() (in module mlflow.genai.scorers)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.MCPAccessEndpoint">MCPAccessEndpoint (class in mlflow.entities)</a>
@@ -6009,8 +6169,12 @@
 </li>
       <li><a href="python_api/mlflow.models.html#mlflow.models.MetricThreshold.min_relative_change">min_relative_change (mlflow.models.MetricThreshold property)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputNumeric.min_value">min_value (mlflow.genai.label_schemas.InputNumeric attribute)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.InputNumeric.min_value">min_value (mlflow.genai.databricks.review_queues.InputNumeric attribute)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputNumeric.min_value">(mlflow.genai.label_schemas.InputNumeric attribute)</a>
 </li>
+      </ul></li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.minimum">minimum() (in module mlflow.genai.scorers)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.BudgetDurationUnit.MINUTES">MINUTES (mlflow.entities.BudgetDurationUnit attribute)</a>
@@ -7529,6 +7693,13 @@
 
       <ul>
         <li><a href="python_api/mlflow.genai.html#module-mlflow.genai.agent_server">module</a>
+</li>
+      </ul></li>
+      <li>
+    mlflow.genai.databricks.review_queues
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#module-mlflow.genai.databricks.review_queues">module</a>
 </li>
       </ul></li>
       <li>
@@ -9124,6 +9295,8 @@
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.Scorer.model_validate_json">model_validate_json() (mlflow.genai.Scorer class method)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.judges.ModelAPI">ModelAPI (class in mlflow.genai.judges)</a>
+</li>
       <li><a href="python_api/mlflow.models.html#mlflow.models.ModelConfig">ModelConfig (class in mlflow.models)</a>
 </li>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.ModelInfo">ModelInfo (class in mlflow.gateway.config)</a>
@@ -9201,6 +9374,8 @@
         <li><a href="python_api/mlflow.genai.html#module-mlflow.genai">mlflow.genai</a>
 </li>
         <li><a href="python_api/mlflow.genai.html#module-mlflow.genai.agent_server">mlflow.genai.agent_server</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#module-mlflow.genai.databricks.review_queues">mlflow.genai.databricks.review_queues</a>
 </li>
         <li><a href="python_api/mlflow.genai.html#module-mlflow.genai.datasets">mlflow.genai.datasets</a>
 </li>
@@ -9349,8 +9524,12 @@
 </li>
       <li><a href="python_api/mlflow.metrics.html#mlflow.metrics.mse">mse() (in module mlflow.metrics)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputCategorical.multi_select">multi_select (mlflow.genai.label_schemas.InputCategorical attribute)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.InputCategorical.multi_select">multi_select (mlflow.genai.databricks.review_queues.InputCategorical attribute)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputCategorical.multi_select">(mlflow.genai.label_schemas.InputCategorical attribute)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -9525,8 +9704,12 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.metrics.html#mlflow.metrics.ndcg_at_k">ndcg_at_k() (in module mlflow.metrics)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputPassFail.negative_label">negative_label (mlflow.genai.label_schemas.InputPassFail attribute)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.InputPassFail.negative_label">negative_label (mlflow.genai.databricks.review_queues.InputPassFail attribute)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputPassFail.negative_label">(mlflow.genai.label_schemas.InputPassFail attribute)</a>
 </li>
+      </ul></li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.judges.CategoricalRating.NO">NO (mlflow.genai.judges.CategoricalRating attribute)</a>
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.NoiseSensitivity">NoiseSensitivity (class in mlflow.genai.scorers.ragas)</a>
@@ -9637,8 +9820,6 @@
 </li>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.Provider.OPENROUTER">OPENROUTER (mlflow.gateway.config.Provider attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     OPERATION
 
@@ -9646,6 +9827,8 @@
         <li><a href="cli.html#cmdoption-mlflow-models-update-pip-requirements-arg-OPERATION">mlflow-models-update-pip-requirements command line option</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.EvaluationDatasetVersion.operation">operation (mlflow.genai.EvaluationDatasetVersion attribute)</a>
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.optimize.BasePromptOptimizer.optimize">optimize() (mlflow.genai.optimize.BasePromptOptimizer method)</a>
@@ -9682,9 +9865,11 @@
 </li>
       <li><a href="python_api/mlflow.types.html#mlflow.types.Schema.optional_input_names">optional_input_names() (mlflow.types.Schema method)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputCategorical.options">options (mlflow.genai.label_schemas.InputCategorical attribute)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.InputCategorical.options">options (mlflow.genai.databricks.review_queues.InputCategorical attribute)</a>
 
       <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputCategorical.options">(mlflow.genai.label_schemas.InputCategorical attribute)</a>
+</li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputCategoricalList.options">(mlflow.genai.label_schemas.InputCategoricalList attribute)</a>
 </li>
       </ul></li>
@@ -9709,6 +9894,8 @@
       <li><a href="python_api/mlflow.html#mlflow.override_feedback">override_feedback() (in module mlflow)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.Assessment.overrides">overrides (mlflow.entities.Assessment attribute)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueue.owner">owner (mlflow.genai.databricks.review_queues.ReviewQueue attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -9809,9 +9996,13 @@
       <ul>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.LoggedModelStatus.PENDING">(mlflow.entities.LoggedModelStatus attribute)</a>
 </li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewStatus.PENDING">(mlflow.genai.databricks.review_queues.ReviewStatus attribute)</a>
+</li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewStatus.PENDING">(mlflow.genai.review_queues.ReviewStatus attribute)</a>
 </li>
       </ul></li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueue.pending_item_count">pending_item_count (mlflow.genai.databricks.review_queues.ReviewQueue attribute)</a>
+</li>
       <li><a href="auth/python-api.html#mlflow.server.auth.entities.ExperimentPermission.permission">permission (mlflow.server.auth.entities.ExperimentPermission property)</a>
 
       <ul>
@@ -9870,10 +10061,18 @@
 </li>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.PortkeyConfig">PortkeyConfig (class in mlflow.gateway.config)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputPassFail.positive_label">positive_label (mlflow.genai.label_schemas.InputPassFail attribute)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQuestion.position">position (mlflow.genai.databricks.review_queues.ReviewQuestion attribute)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.InputPassFail.positive_label">positive_label (mlflow.genai.databricks.review_queues.InputPassFail attribute)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputPassFail.positive_label">(mlflow.genai.label_schemas.InputPassFail attribute)</a>
+</li>
+      </ul></li>
       <li><a href="python_api/mlflow.metrics.html#mlflow.metrics.precision_at_k">precision_at_k() (in module mlflow.metrics)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.metrics.html#mlflow.metrics.precision_score">precision_score() (in module mlflow.metrics)</a>
 </li>
       <li><a href="python_api/mlflow.models.html#mlflow.models.predict">predict() (in module mlflow.models)</a>
@@ -9904,8 +10103,6 @@
         <li><a href="python_api/mlflow.sagemaker.html#mlflow.sagemaker.SageMakerDeploymentClient.predict">(mlflow.sagemaker.SageMakerDeploymentClient method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.deployments.html#mlflow.deployments.BaseDeploymentClient.predict_stream">predict_stream() (mlflow.deployments.BaseDeploymentClient method)</a>
 
       <ul>
@@ -10044,16 +10241,28 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.phoenix.QA">QA (class in mlflow.genai.scorers.phoenix)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewQueue.queue_id">queue_id (mlflow.genai.review_queues.ReviewQueue attribute)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQuestion.question_id">question_id (mlflow.genai.databricks.review_queues.ReviewQuestion attribute)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.QuestionType">QuestionType (class in mlflow.genai.databricks.review_queues)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueue.queue_id">queue_id (mlflow.genai.databricks.review_queues.ReviewQueue attribute)</a>
 
       <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueueItem.queue_id">(mlflow.genai.databricks.review_queues.ReviewQueueItem attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewQueue.queue_id">(mlflow.genai.review_queues.ReviewQueue attribute)</a>
+</li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewQueueItem.queue_id">(mlflow.genai.review_queues.ReviewQueueItem attribute)</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewQueue.queue_type">queue_type (mlflow.genai.review_queues.ReviewQueue attribute)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueue.queue_type">queue_type (mlflow.genai.databricks.review_queues.ReviewQueue attribute)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewQueue.queue_type">(mlflow.genai.review_queues.ReviewQueue attribute)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -10144,6 +10353,10 @@
       </ul></li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.remove_items_from_review_queue">remove_items_from_review_queue() (in module mlflow.genai.review_queues)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.remove_review_queue_items">remove_review_queue_items() (in module mlflow.genai.databricks.review_queues)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.remove_review_queue_member">remove_review_queue_member() (in module mlflow.genai.databricks.review_queues)</a>
+</li>
       <li><a href="auth/python-api.html#mlflow.server.auth.client.AuthServiceClient.remove_role_permission">remove_role_permission() (mlflow.server.auth.client.AuthServiceClient method)</a>
 </li>
       <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.rename_experiment">rename_experiment() (mlflow.client.MlflowClient method)</a>
@@ -10229,6 +10442,8 @@
 </li>
       <li><a href="python_api/mlflow.html#mlflow.Image.resize">resize() (mlflow.Image method)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.resolve_effective_review_questions">resolve_effective_review_questions() (in module mlflow.genai.databricks.review_queues)</a>
+</li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueStatus.RESOLVED">RESOLVED (mlflow.entities.IssueStatus attribute)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.MCPAccessEndpoint.resolved_version">resolved_version (mlflow.entities.MCPAccessEndpoint attribute)</a>
@@ -10259,10 +10474,10 @@
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfo.response_preview">response_preview (mlflow.entities.TraceInfo attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.WebhookTestResult.response_status">response_status (mlflow.entities.WebhookTestResult property)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.types.html#mlflow.types.responses_helpers.ResponseCompletedEvent">ResponseCompletedEvent (class in mlflow.types.responses_helpers)</a>
 </li>
       <li><a href="python_api/mlflow.types.html#mlflow.types.responses_helpers.ResponseError">ResponseError (class in mlflow.types.responses_helpers)</a>
@@ -10343,14 +10558,34 @@
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewItemType">ReviewItemType (class in mlflow.genai.review_queues)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewQueue">ReviewQueue (class in mlflow.genai.review_queues)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQuestion">ReviewQuestion (class in mlflow.genai.databricks.review_queues)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewQueueItem">ReviewQueueItem (class in mlflow.genai.review_queues)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueue">ReviewQueue (class in mlflow.genai.databricks.review_queues)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewQueue">(class in mlflow.genai.review_queues)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewQueueType">ReviewQueueType (class in mlflow.genai.review_queues)</a>
+      </ul></li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueueItem">ReviewQueueItem (class in mlflow.genai.databricks.review_queues)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewQueueItem">(class in mlflow.genai.review_queues)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewStatus">ReviewStatus (class in mlflow.genai.review_queues)</a>
+      </ul></li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueueMember">ReviewQueueMember (class in mlflow.genai.databricks.review_queues)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueueType">ReviewQueueType (class in mlflow.genai.databricks.review_queues)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewQueueType">(class in mlflow.genai.review_queues)</a>
+</li>
+      </ul></li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewStatus">ReviewStatus (class in mlflow.genai.databricks.review_queues)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewStatus">(class in mlflow.genai.review_queues)</a>
+</li>
+      </ul></li>
       <li><a href="auth/python-api.html#mlflow.server.auth.client.AuthServiceClient.revoke_user_permission">revoke_user_permission() (mlflow.server.auth.client.AuthServiceClient method)</a>
 </li>
       <li><a href="python_api/mlflow.metrics.html#mlflow.metrics.rmse">rmse() (in module mlflow.metrics)</a>
@@ -10833,10 +11068,10 @@
         <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.set_mcp_server_version_tag">(mlflow.client.MlflowClient method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.models.html#mlflow.models.set_model">set_model() (in module mlflow.models)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.html#mlflow.set_model_version_tag">set_model_version_tag() (in module mlflow)</a>
 
       <ul>
@@ -10885,8 +11120,12 @@
 </li>
       <li><a href="python_api/mlflow.models.html#mlflow.models.set_retriever_schema">set_retriever_schema() (in module mlflow.models)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.set_review_queue_item_status">set_review_queue_item_status() (in module mlflow.genai.review_queues)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.set_review_queue_item_status">set_review_queue_item_status() (in module mlflow.genai.databricks.review_queues)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.set_review_queue_item_status">(in module mlflow.genai.review_queues)</a>
 </li>
+      </ul></li>
       <li><a href="python_api/mlflow.models.html#mlflow.models.set_signature">set_signature() (in module mlflow.models)</a>
 </li>
       <li><a href="python_api/mlflow.tracing.html#mlflow.tracing.set_span_chat_tools">set_span_chat_tools() (in module mlflow.tracing)</a>
@@ -11137,6 +11376,8 @@
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.Webhook.status">(mlflow.entities.Webhook property)</a>
 </li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueueItem.status">(mlflow.genai.databricks.review_queues.ReviewQueueItem attribute)</a>
+</li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewQueueItem.status">(mlflow.genai.review_queues.ReviewQueueItem attribute)</a>
 </li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.Scorer.status">(mlflow.genai.Scorer property)</a>
@@ -11319,7 +11560,11 @@
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfo.timestamp_ms">timestamp_ms (mlflow.entities.TraceInfo property)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.MCPTool.title">title (mlflow.entities.MCPTool attribute)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQuestion.title">(mlflow.genai.databricks.review_queues.ReviewQuestion attribute)</a>
 </li>
+      </ul></li>
       <li><a href="python_api/mlflow.html#mlflow.Image.to_array">to_array() (mlflow.Image method)</a>
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset.to_df">to_df() (mlflow.genai.datasets.EvaluationDataset method)</a>
@@ -11382,6 +11627,14 @@
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.UnityCatalog.to_dict">(mlflow.entities.UnityCatalog method)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.Workspace.to_dict">(mlflow.entities.Workspace method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.InputCategorical.to_dict">(mlflow.genai.databricks.review_queues.InputCategorical method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.InputNumeric.to_dict">(mlflow.genai.databricks.review_queues.InputNumeric method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.InputPassFail.to_dict">(mlflow.genai.databricks.review_queues.InputPassFail method)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.InputText.to_dict">(mlflow.genai.databricks.review_queues.InputText method)</a>
 </li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset.to_dict">(mlflow.genai.datasets.EvaluationDataset method)</a>
 </li>
@@ -11768,6 +12021,8 @@
       </ul></li>
       <li><a href="python_api/mlflow.types.html#mlflow.types.llm.TopTokenLogProb">TopTokenLogProb (class in mlflow.types.llm)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueue.total_item_count">total_item_count (mlflow.genai.databricks.review_queues.ReviewQueue attribute)</a>
+</li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.Toxicity">Toxicity (class in mlflow.genai.scorers.deepeval)</a>
 
       <ul>
@@ -11808,6 +12063,8 @@
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.Trace.trace_id">(mlflow.entities.Trace property)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfo.trace_id">(mlflow.entities.TraceInfo attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueueItem.trace_id">(mlflow.genai.databricks.review_queues.ReviewQueueItem attribute)</a>
 </li>
       </ul></li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.Experiment.trace_location">trace_location (mlflow.entities.Experiment property)</a>
@@ -11851,6 +12108,8 @@
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceLocation.type">type (mlflow.entities.TraceLocation attribute)</a>
 
       <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQuestion.type">(mlflow.genai.databricks.review_queues.ReviewQuestion attribute)</a>
+</li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.LabelSchema.type">(mlflow.genai.label_schemas.LabelSchema attribute)</a>
 </li>
         <li><a href="python_api/mlflow.models.html#mlflow.models.Resource.type">(mlflow.models.Resource property)</a>
@@ -11988,18 +12247,32 @@
 </li>
       <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.update_registered_model">update_registered_model() (mlflow.client.MlflowClient method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.update_review_queue">update_review_queue() (in module mlflow.genai.review_queues)</a>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.update_review_question">update_review_question() (in module mlflow.genai.databricks.review_queues)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.update_review_queue">update_review_queue() (in module mlflow.genai.databricks.review_queues)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.update_review_queue">(in module mlflow.genai.review_queues)</a>
+</li>
+      </ul></li>
       <li><a href="auth/python-api.html#mlflow.server.auth.client.AuthServiceClient.update_role">update_role() (mlflow.server.auth.client.AuthServiceClient method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="auth/python-api.html#mlflow.server.auth.client.AuthServiceClient.update_role_permission">update_role_permission() (mlflow.server.auth.client.AuthServiceClient method)</a>
 </li>
       <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.update_run">update_run() (mlflow.client.MlflowClient method)</a>
 </li>
       <li><a href="python_api/mlflow.pyfunc.html#mlflow.pyfunc.update_signature_for_type_hint_from_example">update_signature_for_type_hint_from_example() (in module mlflow.pyfunc)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQuestion.update_time_ms">update_time_ms (mlflow.genai.databricks.review_queues.ReviewQuestion attribute)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueue.update_time_ms">(mlflow.genai.databricks.review_queues.ReviewQueue attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueueItem.update_time_ms">(mlflow.genai.databricks.review_queues.ReviewQueueItem attribute)</a>
+</li>
+      </ul></li>
       <li><a href="auth/python-api.html#mlflow.server.auth.client.AuthServiceClient.update_user_admin">update_user_admin() (mlflow.server.auth.client.AuthServiceClient method)</a>
 </li>
       <li><a href="auth/python-api.html#mlflow.server.auth.client.AuthServiceClient.update_user_password">update_user_password() (mlflow.server.auth.client.AuthServiceClient method)</a>
@@ -12065,6 +12338,10 @@
       <li><a href="auth/python-api.html#mlflow.server.auth.entities.User">User (class in mlflow.server.auth.entities)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.BudgetTargetScope.USER">USER (mlflow.entities.BudgetTargetScope attribute)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueueMember.user">user (mlflow.genai.databricks.review_queues.ReviewQueueMember attribute)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueueType.USER">USER (mlflow.genai.databricks.review_queues.ReviewQueueType attribute)</a>
 
       <ul>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.ReviewQueueType.USER">(mlflow.genai.review_queues.ReviewQueueType attribute)</a>
@@ -12112,6 +12389,8 @@
 <h2 id="V">V</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ItemKind.V4_TRACE">V4_TRACE (mlflow.genai.databricks.review_queues.ItemKind attribute)</a>
+</li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.Assessment.valid">valid (mlflow.entities.Assessment attribute)</a>
 </li>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.AI21LabsConfig.validate_ai21labs_api_key">validate_ai21labs_api_key() (mlflow.gateway.config.AI21LabsConfig class method)</a>
@@ -12413,7 +12692,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'./',
-      VERSION:'3.17.0',
+      VERSION:'3.17.1',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',
