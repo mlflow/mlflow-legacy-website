@@ -1,0 +1,1239 @@
+
+
+<!DOCTYPE html>
+<!-- source: docs/source/_modules/mlflow/deployments/databricks -->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mlflow.deployments.databricks</title>
+  
+   
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="canonical" href="https://mlflow.org/docs/latest/_modules/mlflow/deployments/databricks.html">
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+  
+
+  
+
+  
+    
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer',"GTM-N6WMTTJ");</script>
+        <!-- End Google Tag Manager -->
+    
+  
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16857946923"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-16857946923');
+  </script>
+  <!-- Eng gtag -->
+
+  
+
+  
+  <meta name="docsearch:docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_version" content="current" data-rh="true">
+  <meta name="docsearch:version" content="current" data-rh="true">
+  <meta name="docusaurus_locale" content="en" data-rh="true">
+  <meta name="docsearch:language" content="en" data-rh="true">
+
+  
+  
+    
+
+  
+
+  
+  
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600" rel="stylesheet">
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/cards.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/grids.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/mobile.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/simple-cards.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/tabs.css" type="text/css" />
+    
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="MLflow 3.17.1 documentation" href="../../../index.html"/>
+        <link rel="up" title="mlflow.deployments" href="../deployments.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+<script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+<script type="text/javascript" src="../../../_static/jquery.js"></script>
+<script type="text/javascript" src="../../../_static/underscore.js"></script>
+<script type="text/javascript" src="../../../_static/doctools.js"></script>
+<script type="text/javascript" src="../../../_static/tabs.js"></script>
+<script type="text/javascript" src="../../../_static/languagesections.js"></script>
+<script type="text/javascript" src="../../../_static/runllm.js"></script>
+
+<body class="wy-body-for-nav" role="document">
+  
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6WMTTJ"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  
+  <nav class="wy-nav-top header" role="navigation" aria-label="top navigation">
+    <div class="header-container">
+  <style scoped>
+    .header-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
+    }
+
+    .logo-container {
+      display: flex;
+      gap: 12px;
+      flex-direction: row;
+      white-space: nowrap;
+      align-items: center;
+      justify-content: center;
+    }
+
+    a:hover {
+      text-decoration: none;
+      color: #0194e2;
+    }
+  </style>
+  <div class="logo-container">
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
+    <a href="../../../index.html" class="wy-nav-top-logo">
+      <img
+        src="../../../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
+    </a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
+  </div>
+  <span class="header-link version">3.17.1</span>
+</div>
+  </nav>
+  <page>
+    
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side relative">
+      <div class="wy-side-scroll">
+  <div class="wy-side-nav-search">
+    
+
+    
+
+    
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+    
+  </div>
+
+  <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+    
+      <a href="../../../index.html">Home</a>
+    
+
+    
+      
+
+      
+        <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../python_api/index.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../typescript_api/index.html">TypeScript API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli.html">Command-Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auth/python-api.html">MLflow Authentication Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auth/rest-api.html">MLflow Authentication REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../R-api.html">R API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../java_api/index.html">Java API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rest-api.html">REST API</a></li>
+</ul>
+
+      
+    
+  </div>
+
+  <div role="contentinfo">
+    
+
+    <p>
+      <a id='feedbacklink' href="https://github.com/mlflow/mlflow/blob/master/CONTRIBUTING.md" target="_blank">Contribute</a>
+    </p>
+  </div>
+</div>
+    </nav>
+
+    <main class="wy-grid-for-nav">
+      <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+        <div class="wy-nav-content">
+          <div class="rst-content">
+            
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Documentation</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+        <li><a href="../../index.html">Module code</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+        <li><a href="../deployments.html">mlflow.deployments</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+    
+      <li>mlflow.deployments.databricks</li>
+    
+    
+    <!-- <li class="wy-breadcrumbs-aside">
+      <a href="https://github.com/mlflow/mlflow/blob/master/docs/source/_modules/mlflow/deployments/databricks" class="fa fa-github"> Edit on GitHub</a>
+    </li> -->
+    
+  </ul>
+</div>
+            <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+              <div itemprop="articleBody">
+                
+  <h1>Source code for mlflow.deployments.databricks</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">posixpath</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Iterator</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseDeploymentClient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.deployments.constants</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">MLFLOW_DEPLOYMENT_CLIENT_REQUEST_RETRY_CODES</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.environment_variables</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">MLFLOW_DEPLOYMENT_PREDICT_TIMEOUT</span><span class="p">,</span>
+    <span class="n">MLFLOW_DEPLOYMENT_PREDICT_TOTAL_TIMEOUT</span><span class="p">,</span>
+    <span class="n">MLFLOW_HTTP_REQUEST_TIMEOUT</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">AttrDict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">deprecated</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.databricks_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_databricks_host_creds</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.rest_utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">augmented_raise_for_status</span><span class="p">,</span>
+    <span class="n">http_request</span><span class="p">,</span>
+    <span class="n">validate_deployment_timeout_config</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="DatabricksEndpoint"><a class="viewcode-back" href="../../../python_api/mlflow.deployments.html#mlflow.deployments.DatabricksEndpoint">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">DatabricksEndpoint</span><span class="p">(</span><span class="n">AttrDict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    A dictionary-like object representing a Databricks serving endpoint.</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        endpoint = DatabricksEndpoint({</span>
+<span class="sd">            "name": "chat",</span>
+<span class="sd">            "creator": "alice@company.com",</span>
+<span class="sd">            "creation_timestamp": 0,</span>
+<span class="sd">            "last_updated_timestamp": 0,</span>
+<span class="sd">            "state": {...},</span>
+<span class="sd">            "config": {...},</span>
+<span class="sd">            "tags": [...],</span>
+<span class="sd">            "id": "88fd3f75a0d24b0380ddc40484d7a31b",</span>
+<span class="sd">        })</span>
+<span class="sd">        assert endpoint.name == "chat"</span>
+<span class="sd">    """</span></div>
+
+
+<div class="viewcode-block" id="DatabricksDeploymentClient"><a class="viewcode-back" href="../../../python_api/mlflow.deployments.html#mlflow.deployments.DatabricksDeploymentClient">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">DatabricksDeploymentClient</span><span class="p">(</span><span class="n">BaseDeploymentClient</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Client for interacting with Databricks serving endpoints.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    First, set up credentials for authentication:</span>
+
+<span class="sd">    .. code-block:: bash</span>
+
+<span class="sd">        export DATABRICKS_HOST=...</span>
+<span class="sd">        export DATABRICKS_TOKEN=...</span>
+
+<span class="sd">    .. seealso::</span>
+
+<span class="sd">        See https://docs.databricks.com/en/dev-tools/auth.html for other authentication methods.</span>
+
+<span class="sd">    Then, create a deployment client and use it to interact with Databricks serving endpoints:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        from mlflow.deployments import get_deploy_client</span>
+
+<span class="sd">        client = get_deploy_client("databricks")</span>
+<span class="sd">        endpoints = client.list_endpoints()</span>
+<span class="sd">        assert endpoints == [</span>
+<span class="sd">            {</span>
+<span class="sd">                "name": "chat",</span>
+<span class="sd">                "creator": "alice@company.com",</span>
+<span class="sd">                "creation_timestamp": 0,</span>
+<span class="sd">                "last_updated_timestamp": 0,</span>
+<span class="sd">                "state": {...},</span>
+<span class="sd">                "config": {...},</span>
+<span class="sd">                "tags": [...],</span>
+<span class="sd">                "id": "88fd3f75a0d24b0380ddc40484d7a31b",</span>
+<span class="sd">            },</span>
+<span class="sd">        ]</span>
+<span class="sd">    """</span>
+
+<div class="viewcode-block" id="DatabricksDeploymentClient.create_deployment"><a class="viewcode-back" href="../../../python_api/mlflow.deployments.html#mlflow.deployments.DatabricksDeploymentClient.create_deployment">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">create_deployment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">model_uri</span><span class="p">,</span> <span class="n">flavor</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            This method is not implemented for `DatabricksDeploymentClient`.</span>
+<span class="sd">        """</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="DatabricksDeploymentClient.update_deployment"><a class="viewcode-back" href="../../../python_api/mlflow.deployments.html#mlflow.deployments.DatabricksDeploymentClient.update_deployment">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">update_deployment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">model_uri</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">flavor</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            This method is not implemented for `DatabricksDeploymentClient`.</span>
+<span class="sd">        """</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="DatabricksDeploymentClient.delete_deployment"><a class="viewcode-back" href="../../../python_api/mlflow.deployments.html#mlflow.deployments.DatabricksDeploymentClient.delete_deployment">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">delete_deployment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            This method is not implemented for `DatabricksDeploymentClient`.</span>
+<span class="sd">        """</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="DatabricksDeploymentClient.list_deployments"><a class="viewcode-back" href="../../../python_api/mlflow.deployments.html#mlflow.deployments.DatabricksDeploymentClient.list_deployments">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">list_deployments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            This method is not implemented for `DatabricksDeploymentClient`.</span>
+<span class="sd">        """</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="DatabricksDeploymentClient.get_deployment"><a class="viewcode-back" href="../../../python_api/mlflow.deployments.html#mlflow.deployments.DatabricksDeploymentClient.get_deployment">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_deployment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            This method is not implemented for `DatabricksDeploymentClient`.</span>
+<span class="sd">        """</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_call_endpoint</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">method</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"/api/2.0"</span><span class="p">,</span>
+        <span class="n">route</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">json_body</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">retry_timeout_seconds</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Args:</span>
+<span class="sd">            method: HTTP method (GET, POST, etc.).</span>
+<span class="sd">            prefix: API prefix path.</span>
+<span class="sd">            route: Endpoint route.</span>
+<span class="sd">            json_body: Request payload.</span>
+<span class="sd">            timeout: Maximum time (in seconds) for a single HTTP request.</span>
+<span class="sd">            retry_timeout_seconds: Maximum time (in seconds) for all retry attempts combined.</span>
+<span class="sd">        """</span>
+        <span class="n">validate_deployment_timeout_config</span><span class="p">(</span><span class="n">timeout</span><span class="p">,</span> <span class="n">retry_timeout_seconds</span><span class="p">)</span>
+
+        <span class="n">call_kwargs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">method</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"get"</span><span class="p">:</span>
+            <span class="n">call_kwargs</span><span class="p">[</span><span class="s2">"params"</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_body</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">call_kwargs</span><span class="p">[</span><span class="s2">"json"</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_body</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="n">http_request</span><span class="p">(</span>
+            <span class="n">host_creds</span><span class="o">=</span><span class="n">get_databricks_host_creds</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target_uri</span><span class="p">),</span>
+            <span class="n">endpoint</span><span class="o">=</span><span class="n">posixpath</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="s2">"serving-endpoints"</span><span class="p">,</span> <span class="n">route</span> <span class="ow">or</span> <span class="s2">""</span><span class="p">),</span>
+            <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
+            <span class="n">timeout</span><span class="o">=</span><span class="n">MLFLOW_HTTP_REQUEST_TIMEOUT</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">timeout</span><span class="p">,</span>
+            <span class="n">retry_timeout_seconds</span><span class="o">=</span><span class="n">retry_timeout_seconds</span><span class="p">,</span>
+            <span class="n">raise_on_status</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">retry_codes</span><span class="o">=</span><span class="n">MLFLOW_DEPLOYMENT_CLIENT_REQUEST_RETRY_CODES</span><span class="p">,</span>
+            <span class="n">extra_headers</span><span class="o">=</span><span class="p">{</span><span class="s2">"X-Databricks-Endpoints-API-Client"</span><span class="p">:</span> <span class="s2">"Databricks Deployment Client"</span><span class="p">},</span>
+            <span class="o">**</span><span class="n">call_kwargs</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">augmented_raise_for_status</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">DatabricksEndpoint</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_call_endpoint_stream</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">method</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"/api/2.0"</span><span class="p">,</span>
+        <span class="n">route</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">json_body</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">retry_timeout_seconds</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="n">validate_deployment_timeout_config</span><span class="p">(</span><span class="n">timeout</span><span class="p">,</span> <span class="n">retry_timeout_seconds</span><span class="p">)</span>
+
+        <span class="n">call_kwargs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">method</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"get"</span><span class="p">:</span>
+            <span class="n">call_kwargs</span><span class="p">[</span><span class="s2">"params"</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_body</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">call_kwargs</span><span class="p">[</span><span class="s2">"json"</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_body</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="n">http_request</span><span class="p">(</span>
+            <span class="n">host_creds</span><span class="o">=</span><span class="n">get_databricks_host_creds</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target_uri</span><span class="p">),</span>
+            <span class="n">endpoint</span><span class="o">=</span><span class="n">posixpath</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="s2">"serving-endpoints"</span><span class="p">,</span> <span class="n">route</span> <span class="ow">or</span> <span class="s2">""</span><span class="p">),</span>
+            <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
+            <span class="n">timeout</span><span class="o">=</span><span class="n">MLFLOW_HTTP_REQUEST_TIMEOUT</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">timeout</span><span class="p">,</span>
+            <span class="n">retry_timeout_seconds</span><span class="o">=</span><span class="n">retry_timeout_seconds</span><span class="p">,</span>
+            <span class="n">raise_on_status</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">retry_codes</span><span class="o">=</span><span class="n">MLFLOW_DEPLOYMENT_CLIENT_REQUEST_RETRY_CODES</span><span class="p">,</span>
+            <span class="n">extra_headers</span><span class="o">=</span><span class="p">{</span><span class="s2">"X-Databricks-Endpoints-API-Client"</span><span class="p">:</span> <span class="s2">"Databricks Deployment Client"</span><span class="p">},</span>
+            <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># Receive response content in streaming way.</span>
+            <span class="o">**</span><span class="n">call_kwargs</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">augmented_raise_for_status</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+        <span class="c1"># Streaming response content are composed of multiple lines.</span>
+        <span class="c1"># Each line format depends on specific endpoint</span>
+        <span class="c1"># Explicitly set the encoding to `utf-8` so the `decode_unicode` in the next line</span>
+        <span class="c1"># will decode correctly</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">encoding</span> <span class="o">=</span> <span class="s2">"utf-8"</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">iter_lines</span><span class="p">(</span><span class="n">decode_unicode</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>  <span class="c1"># filter out keep-alive new lines</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="DatabricksDeploymentClient.predict"><a class="viewcode-back" href="../../../python_api/mlflow.deployments.html#mlflow.deployments.DatabricksDeploymentClient.predict">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">deployment_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Query a serving endpoint with the provided model inputs.</span>
+<span class="sd">        See https://docs.databricks.com/api/workspace/servingendpoints/query for request/response</span>
+<span class="sd">        schema.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            deployment_name: Unused.</span>
+<span class="sd">            inputs: A dictionary containing the model inputs to query.</span>
+<span class="sd">            endpoint: The name of the serving endpoint to query.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A :py:class:`DatabricksEndpoint` object containing the query response.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            from mlflow.deployments import get_deploy_client</span>
+
+<span class="sd">            client = get_deploy_client("databricks")</span>
+<span class="sd">            response = client.predict(</span>
+<span class="sd">                endpoint="chat",</span>
+<span class="sd">                inputs={</span>
+<span class="sd">                    "messages": [</span>
+<span class="sd">                        {"role": "user", "content": "Hello!"},</span>
+<span class="sd">                    ],</span>
+<span class="sd">                },</span>
+<span class="sd">            )</span>
+<span class="sd">            assert response == {</span>
+<span class="sd">                "id": "chatcmpl-8OLm5kfqBAJD8CpsMANESWKpLSLXY",</span>
+<span class="sd">                "object": "chat.completion",</span>
+<span class="sd">                "created": 1700814265,</span>
+<span class="sd">                "model": "gpt-4-0613",</span>
+<span class="sd">                "choices": [</span>
+<span class="sd">                    {</span>
+<span class="sd">                        "index": 0,</span>
+<span class="sd">                        "message": {</span>
+<span class="sd">                            "role": "assistant",</span>
+<span class="sd">                            "content": "Hello! How can I assist you today?",</span>
+<span class="sd">                        },</span>
+<span class="sd">                        "finish_reason": "stop",</span>
+<span class="sd">                    }</span>
+<span class="sd">                ],</span>
+<span class="sd">                "usage": {</span>
+<span class="sd">                    "prompt_tokens": 9,</span>
+<span class="sd">                    "completion_tokens": 9,</span>
+<span class="sd">                    "total_tokens": 18,</span>
+<span class="sd">                },</span>
+<span class="sd">            }</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_call_endpoint</span><span class="p">(</span>
+            <span class="n">method</span><span class="o">=</span><span class="s2">"POST"</span><span class="p">,</span>
+            <span class="n">prefix</span><span class="o">=</span><span class="s2">"/"</span><span class="p">,</span>
+            <span class="n">route</span><span class="o">=</span><span class="n">posixpath</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="s2">"invocations"</span><span class="p">),</span>
+            <span class="n">json_body</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span>
+            <span class="n">timeout</span><span class="o">=</span><span class="n">MLFLOW_DEPLOYMENT_PREDICT_TIMEOUT</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+            <span class="n">retry_timeout_seconds</span><span class="o">=</span><span class="n">MLFLOW_DEPLOYMENT_PREDICT_TOTAL_TIMEOUT</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="DatabricksDeploymentClient.predict_stream"><a class="viewcode-back" href="../../../python_api/mlflow.deployments.html#mlflow.deployments.DatabricksDeploymentClient.predict_stream">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">predict_stream</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">deployment_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Submit a query to a configured provider endpoint, and get streaming response</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            deployment_name: Unused.</span>
+<span class="sd">            inputs: The inputs to the query, as a dictionary.</span>
+<span class="sd">            endpoint: The name of the endpoint to query.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            An iterator of dictionary containing the response from the endpoint.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            from mlflow.deployments import get_deploy_client</span>
+
+<span class="sd">            client = get_deploy_client("databricks")</span>
+<span class="sd">            chunk_iter = client.predict_stream(</span>
+<span class="sd">                endpoint="databricks-llama-2-70b-chat",</span>
+<span class="sd">                inputs={</span>
+<span class="sd">                    "messages": [{"role": "user", "content": "Hello!"}],</span>
+<span class="sd">                    "temperature": 0.0,</span>
+<span class="sd">                    "n": 1,</span>
+<span class="sd">                    "max_tokens": 500,</span>
+<span class="sd">                },</span>
+<span class="sd">            )</span>
+<span class="sd">            for chunk in chunk_iter:</span>
+<span class="sd">                print(chunk)</span>
+<span class="sd">                # Example:</span>
+<span class="sd">                # {</span>
+<span class="sd">                #     "id": "82a834f5-089d-4fc0-ad6c-db5c7d6a6129",</span>
+<span class="sd">                #     "object": "chat.completion.chunk",</span>
+<span class="sd">                #     "created": 1712133837,</span>
+<span class="sd">                #     "model": "llama-2-70b-chat-030424",</span>
+<span class="sd">                #     "choices": [</span>
+<span class="sd">                #         {</span>
+<span class="sd">                #             "index": 0, "delta": {"role": "assistant", "content": "Hello"},</span>
+<span class="sd">                #             "finish_reason": None,</span>
+<span class="sd">                #         }</span>
+<span class="sd">                #     ],</span>
+<span class="sd">                #     "usage": {"prompt_tokens": 11, "completion_tokens": 1, "total_tokens": 12},</span>
+<span class="sd">                # }</span>
+<span class="sd">        """</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="n">inputs</span> <span class="ow">or</span> <span class="p">{}</span>
+
+        <span class="c1"># Add stream=True param in request body to get streaming response</span>
+        <span class="c1"># See https://docs.databricks.com/api/workspace/servingendpoints/query#stream</span>
+        <span class="n">chunk_line_iter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_call_endpoint_stream</span><span class="p">(</span>
+            <span class="n">method</span><span class="o">=</span><span class="s2">"POST"</span><span class="p">,</span>
+            <span class="n">prefix</span><span class="o">=</span><span class="s2">"/"</span><span class="p">,</span>
+            <span class="n">route</span><span class="o">=</span><span class="n">posixpath</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="s2">"invocations"</span><span class="p">),</span>
+            <span class="n">json_body</span><span class="o">=</span><span class="p">{</span><span class="o">**</span><span class="n">inputs</span><span class="p">,</span> <span class="s2">"stream"</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+            <span class="n">timeout</span><span class="o">=</span><span class="n">MLFLOW_DEPLOYMENT_PREDICT_TIMEOUT</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+            <span class="n">retry_timeout_seconds</span><span class="o">=</span><span class="n">MLFLOW_DEPLOYMENT_PREDICT_TOTAL_TIMEOUT</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+        <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">chunk_line_iter</span><span class="p">:</span>
+            <span class="n">splits</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">splits</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">"Unknown response format: '</span><span class="si">{</span><span class="n">line</span><span class="si">}</span><span class="s2">', "</span>
+                    <span class="s2">"expected 'data: &lt;value&gt;' for streaming response."</span>
+                <span class="p">)</span>
+            <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">splits</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="o">!=</span> <span class="s2">"data"</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">"Unknown response format with key '</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">'. "</span>
+                    <span class="sa">f</span><span class="s2">"Expected 'data: &lt;value&gt;' for streaming response, got '</span><span class="si">{</span><span class="n">line</span><span class="si">}</span><span class="s2">'."</span>
+                <span class="p">)</span>
+
+            <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="s2">"[DONE]"</span><span class="p">:</span>
+                <span class="c1"># Databricks endpoint streaming response ends with</span>
+                <span class="c1"># a line of "data: [DONE]"</span>
+                <span class="k">return</span>
+
+            <span class="k">yield</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DatabricksDeploymentClient.create_endpoint"><a class="viewcode-back" href="../../../python_api/mlflow.deployments.html#mlflow.deployments.DatabricksDeploymentClient.create_endpoint">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">create_endpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">route_optimized</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Create a new serving endpoint with the provided name and configuration.</span>
+
+<span class="sd">        See https://docs.databricks.com/api/workspace/servingendpoints/create for request/response</span>
+<span class="sd">        schema.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name: The name of the serving endpoint to create.</span>
+
+<span class="sd">                .. warning::</span>
+<span class="sd">                    Deprecated. Include `name` in `config` instead.</span>
+
+<span class="sd">            config: A dictionary containing either the full API request payload</span>
+<span class="sd">                or the configuration of the serving endpoint to create.</span>
+<span class="sd">            route_optimized: A boolean which defines whether databricks serving endpoint</span>
+<span class="sd">                is optimized for routing traffic. Only used in the deprecated approach.</span>
+
+<span class="sd">                .. warning::</span>
+<span class="sd">                    Deprecated. Include `route_optimized` in `config` instead.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A :py:class:`DatabricksEndpoint` object containing the request response.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            from mlflow.deployments import get_deploy_client</span>
+
+<span class="sd">            client = get_deploy_client("databricks")</span>
+<span class="sd">            endpoint = client.create_endpoint(</span>
+<span class="sd">                config={</span>
+<span class="sd">                    "name": "test",</span>
+<span class="sd">                    "config": {</span>
+<span class="sd">                        "served_entities": [</span>
+<span class="sd">                            {</span>
+<span class="sd">                                "external_model": {</span>
+<span class="sd">                                    "name": "gpt-4",</span>
+<span class="sd">                                    "provider": "openai",</span>
+<span class="sd">                                    "task": "llm/v1/chat",</span>
+<span class="sd">                                    "openai_config": {</span>
+<span class="sd">                                        "openai_api_key": "{{secrets/scope/key}}",</span>
+<span class="sd">                                    },</span>
+<span class="sd">                                },</span>
+<span class="sd">                            }</span>
+<span class="sd">                        ],</span>
+<span class="sd">                        "route_optimized": True,</span>
+<span class="sd">                    },</span>
+<span class="sd">                },</span>
+<span class="sd">            )</span>
+<span class="sd">            assert endpoint == {</span>
+<span class="sd">                "name": "test",</span>
+<span class="sd">                "creator": "alice@company.com",</span>
+<span class="sd">                "creation_timestamp": 0,</span>
+<span class="sd">                "last_updated_timestamp": 0,</span>
+<span class="sd">                "state": {...},</span>
+<span class="sd">                "config": {...},</span>
+<span class="sd">                "tags": [...],</span>
+<span class="sd">                "id": "88fd3f75a0d24b0380ddc40484d7a31b",</span>
+<span class="sd">                "permission_level": "CAN_MANAGE",</span>
+<span class="sd">                "route_optimized": False,</span>
+<span class="sd">                "task": "llm/v1/chat",</span>
+<span class="sd">                "endpoint_type": "EXTERNAL_MODEL",</span>
+<span class="sd">                "creator_display_name": "Alice",</span>
+<span class="sd">                "creator_kind": "User",</span>
+<span class="sd">            }</span>
+
+<span class="sd">        """</span>
+        <span class="n">warnings_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">if</span> <span class="n">config</span> <span class="ow">and</span> <span class="s2">"config"</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
+            <span class="c1"># Using new style: full API request payload</span>
+            <span class="n">payload</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+            <span class="c1"># Validate name conflicts</span>
+            <span class="k">if</span> <span class="s2">"name"</span> <span class="ow">in</span> <span class="n">payload</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">payload</span><span class="p">[</span><span class="s2">"name"</span><span class="p">]</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+                        <span class="n">warnings_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                            <span class="s2">"Passing 'name' as a parameter is deprecated. "</span>
+                            <span class="s2">"Please specify 'name' only within the config dictionary."</span>
+                        <span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">"Name mismatch. Found '</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">' as parameter and '</span><span class="si">{</span><span class="n">payload</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]</span><span class="si">}</span><span class="s2">' "</span>
+                            <span class="s2">"in config. Please specify 'name' only within the config dictionary "</span>
+                            <span class="s2">"as this parameter is deprecated."</span>
+                        <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
+                        <span class="s2">"The 'name' field is required. Please specify it within the config "</span>
+                        <span class="s2">"dictionary."</span>
+                    <span class="p">)</span>
+                <span class="n">payload</span><span class="p">[</span><span class="s2">"name"</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
+                <span class="n">warnings_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="s2">"Passing 'name' as a parameter is deprecated. "</span>
+                    <span class="s2">"Please specify 'name' within the config dictionary."</span>
+                <span class="p">)</span>
+
+            <span class="c1"># Validate route_optimized conflicts</span>
+            <span class="k">if</span> <span class="s2">"route_optimized"</span> <span class="ow">in</span> <span class="n">payload</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">route_optimized</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">payload</span><span class="p">[</span><span class="s2">"route_optimized"</span><span class="p">]</span> <span class="o">!=</span> <span class="n">route_optimized</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
+                            <span class="s2">"Conflicting 'route_optimized' values found. "</span>
+                            <span class="s2">"Please specify 'route_optimized' only within the config dictionary "</span>
+                            <span class="s2">"as this parameter is deprecated."</span>
+                        <span class="p">)</span>
+                    <span class="n">warnings_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="s2">"Passing 'route_optimized' as a parameter is deprecated. "</span>
+                        <span class="s2">"Please specify 'route_optimized' only within the config dictionary."</span>
+                    <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">route_optimized</span><span class="p">:</span>
+                    <span class="n">payload</span><span class="p">[</span><span class="s2">"route_optimized"</span><span class="p">]</span> <span class="o">=</span> <span class="n">route_optimized</span>
+                    <span class="n">warnings_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="s2">"Passing 'route_optimized' as a parameter is deprecated. "</span>
+                        <span class="s2">"Please specify 'route_optimized' within the config dictionary."</span>
+                    <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Handle legacy format (backwards compatibility)</span>
+            <span class="n">warnings_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="s2">"Passing 'name', 'config', and 'route_optimized' as separate parameters is "</span>
+                <span class="s2">"deprecated. Please pass the full API request payload as a single dictionary "</span>
+                <span class="s2">"in the 'config' parameter."</span>
+            <span class="p">)</span>
+            <span class="n">config</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="k">if</span> <span class="n">config</span> <span class="k">else</span> <span class="p">{}</span>  <span class="c1"># avoid mutating config</span>
+            <span class="n">extras</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"tags"</span><span class="p">,</span> <span class="s2">"rate_limits"</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">tags</span> <span class="o">:=</span> <span class="n">config</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+                    <span class="n">extras</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">tags</span>
+            <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"name"</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span> <span class="s2">"config"</span><span class="p">:</span> <span class="n">config</span><span class="p">,</span> <span class="s2">"route_optimized"</span><span class="p">:</span> <span class="n">route_optimized</span><span class="p">,</span> <span class="o">**</span><span class="n">extras</span><span class="p">}</span>
+
+        <span class="k">if</span> <span class="n">warnings_list</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">warnings_list</span><span class="p">),</span> <span class="ne">UserWarning</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_call_endpoint</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">"POST"</span><span class="p">,</span> <span class="n">json_body</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DatabricksDeploymentClient.update_endpoint"><a class="viewcode-back" href="../../../python_api/mlflow.deployments.html#mlflow.deployments.DatabricksDeploymentClient.update_endpoint">[docs]</a>    <span class="nd">@deprecated</span><span class="p">(</span>
+        <span class="n">alternative</span><span class="o">=</span><span class="p">(</span>
+            <span class="s2">"update_endpoint_config, update_endpoint_tags, update_endpoint_rate_limits, "</span>
+            <span class="s2">"or update_endpoint_ai_gateway"</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_endpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Update a specified serving endpoint with the provided configuration.</span>
+<span class="sd">        See https://docs.databricks.com/api/workspace/servingendpoints/updateconfig for</span>
+<span class="sd">        request/response schema.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            endpoint: The name of the serving endpoint to update.</span>
+<span class="sd">            config: A dictionary containing the configuration of the serving endpoint to update.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A :py:class:`DatabricksEndpoint` object containing the request response.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            from mlflow.deployments import get_deploy_client</span>
+
+<span class="sd">            client = get_deploy_client("databricks")</span>
+<span class="sd">            endpoint = client.update_endpoint(</span>
+<span class="sd">                endpoint="chat",</span>
+<span class="sd">                config={</span>
+<span class="sd">                    "served_entities": [</span>
+<span class="sd">                        {</span>
+<span class="sd">                            "name": "test",</span>
+<span class="sd">                            "external_model": {</span>
+<span class="sd">                                "name": "gpt-4",</span>
+<span class="sd">                                "provider": "openai",</span>
+<span class="sd">                                "task": "llm/v1/chat",</span>
+<span class="sd">                                "openai_config": {</span>
+<span class="sd">                                    "openai_api_key": "{{secrets/scope/key}}",</span>
+<span class="sd">                                },</span>
+<span class="sd">                            },</span>
+<span class="sd">                        }</span>
+<span class="sd">                    ],</span>
+<span class="sd">                },</span>
+<span class="sd">            )</span>
+<span class="sd">            assert endpoint == {</span>
+<span class="sd">                "name": "chat",</span>
+<span class="sd">                "creator": "alice@company.com",</span>
+<span class="sd">                "creation_timestamp": 0,</span>
+<span class="sd">                "last_updated_timestamp": 0,</span>
+<span class="sd">                "state": {...},</span>
+<span class="sd">                "config": {...},</span>
+<span class="sd">                "tags": [...],</span>
+<span class="sd">                "id": "88fd3f75a0d24b0380ddc40484d7a31b",</span>
+<span class="sd">            }</span>
+
+<span class="sd">            rate_limits = client.update_endpoint(</span>
+<span class="sd">                endpoint="chat",</span>
+<span class="sd">                config={</span>
+<span class="sd">                    "rate_limits": [</span>
+<span class="sd">                        {</span>
+<span class="sd">                            "key": "user",</span>
+<span class="sd">                            "renewal_period": "minute",</span>
+<span class="sd">                            "calls": 10,</span>
+<span class="sd">                        }</span>
+<span class="sd">                    ],</span>
+<span class="sd">                },</span>
+<span class="sd">            )</span>
+<span class="sd">            assert rate_limits == {</span>
+<span class="sd">                "rate_limits": [</span>
+<span class="sd">                    {</span>
+<span class="sd">                        "key": "user",</span>
+<span class="sd">                        "renewal_period": "minute",</span>
+<span class="sd">                        "calls": 10,</span>
+<span class="sd">                    }</span>
+<span class="sd">                ],</span>
+<span class="sd">            }</span>
+<span class="sd">        """</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+            <span class="s2">"The `update_endpoint` method is deprecated. Use the specific update methods—"</span>
+            <span class="s2">"`update_endpoint_config`, `update_endpoint_tags`, `update_endpoint_rate_limits`, "</span>
+            <span class="s2">"`update_endpoint_ai_gateway`—instead."</span><span class="p">,</span>
+            <span class="ne">UserWarning</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">list</span><span class="p">(</span><span class="n">config</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="s2">"rate_limits"</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_call_endpoint</span><span class="p">(</span>
+                <span class="n">method</span><span class="o">=</span><span class="s2">"PUT"</span><span class="p">,</span> <span class="n">route</span><span class="o">=</span><span class="n">posixpath</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="s2">"rate-limits"</span><span class="p">),</span> <span class="n">json_body</span><span class="o">=</span><span class="n">config</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_call_endpoint</span><span class="p">(</span>
+                <span class="n">method</span><span class="o">=</span><span class="s2">"PUT"</span><span class="p">,</span> <span class="n">route</span><span class="o">=</span><span class="n">posixpath</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="s2">"config"</span><span class="p">),</span> <span class="n">json_body</span><span class="o">=</span><span class="n">config</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="DatabricksDeploymentClient.update_endpoint_config"><a class="viewcode-back" href="../../../python_api/mlflow.deployments.html#mlflow.deployments.DatabricksDeploymentClient.update_endpoint_config">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">update_endpoint_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Update the configuration of a specified serving endpoint. See</span>
+<span class="sd">        https://docs.databricks.com/api/workspace/servingendpoints/updateconfig for request/response</span>
+<span class="sd">        request/response schema.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            endpoint: The name of the serving endpoint to update.</span>
+<span class="sd">            config: A dictionary containing the configuration of the serving endpoint to update.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A :py:class:`DatabricksEndpoint` object containing the request response.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            from mlflow.deployments import get_deploy_client</span>
+
+<span class="sd">            client = get_deploy_client("databricks")</span>
+<span class="sd">            updated_endpoint = client.update_endpoint_config(</span>
+<span class="sd">                endpoint="test",</span>
+<span class="sd">                config={</span>
+<span class="sd">                    "served_entities": [</span>
+<span class="sd">                        {</span>
+<span class="sd">                            "name": "gpt-4o-mini",</span>
+<span class="sd">                            "external_model": {</span>
+<span class="sd">                                "name": "gpt-4o-mini",</span>
+<span class="sd">                                "provider": "openai",</span>
+<span class="sd">                                "task": "llm/v1/chat",</span>
+<span class="sd">                                "openai_config": {</span>
+<span class="sd">                                    "openai_api_key": "{{secrets/scope/key}}",</span>
+<span class="sd">                                },</span>
+<span class="sd">                            },</span>
+<span class="sd">                        }</span>
+<span class="sd">                    ]</span>
+<span class="sd">                },</span>
+<span class="sd">            )</span>
+<span class="sd">            assert updated_endpoint == {</span>
+<span class="sd">                "name": "test",</span>
+<span class="sd">                "creator": "alice@company.com",</span>
+<span class="sd">                "creation_timestamp": 1729527763000,</span>
+<span class="sd">                "last_updated_timestamp": 1729530896000,</span>
+<span class="sd">                "state": {"ready": "READY", "config_update": "NOT_UPDATING"},</span>
+<span class="sd">                "config": {...},</span>
+<span class="sd">                "id": "44b258fb39804564b37603d8d14b853e",</span>
+<span class="sd">                "permission_level": "CAN_MANAGE",</span>
+<span class="sd">                "route_optimized": False,</span>
+<span class="sd">                "task": "llm/v1/chat",</span>
+<span class="sd">                "endpoint_type": "EXTERNAL_MODEL",</span>
+<span class="sd">                "creator_display_name": "Alice",</span>
+<span class="sd">                "creator_kind": "User",</span>
+<span class="sd">            }</span>
+<span class="sd">        """</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_call_endpoint</span><span class="p">(</span>
+            <span class="n">method</span><span class="o">=</span><span class="s2">"PUT"</span><span class="p">,</span> <span class="n">route</span><span class="o">=</span><span class="n">posixpath</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="s2">"config"</span><span class="p">),</span> <span class="n">json_body</span><span class="o">=</span><span class="n">config</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="DatabricksDeploymentClient.update_endpoint_tags"><a class="viewcode-back" href="../../../python_api/mlflow.deployments.html#mlflow.deployments.DatabricksDeploymentClient.update_endpoint_tags">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">update_endpoint_tags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Update the tags of a specified serving endpoint. See</span>
+<span class="sd">        https://docs.databricks.com/api/workspace/servingendpoints/patch for request/response</span>
+<span class="sd">        schema.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            endpoint: The name of the serving endpoint to update.</span>
+<span class="sd">            config: A dictionary containing tags to add and/or remove.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A :py:class:`DatabricksEndpoint` object containing the request response.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            from mlflow.deployments import get_deploy_client</span>
+
+<span class="sd">            client = get_deploy_client("databricks")</span>
+<span class="sd">            updated_tags = client.update_endpoint_tags(</span>
+<span class="sd">                endpoint="test", config={"add_tags": [{"key": "project", "value": "test"}]}</span>
+<span class="sd">            )</span>
+<span class="sd">            assert updated_tags == {"tags": [{"key": "project", "value": "test"}]}</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_call_endpoint</span><span class="p">(</span>
+            <span class="n">method</span><span class="o">=</span><span class="s2">"PATCH"</span><span class="p">,</span> <span class="n">route</span><span class="o">=</span><span class="n">posixpath</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="s2">"tags"</span><span class="p">),</span> <span class="n">json_body</span><span class="o">=</span><span class="n">config</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="DatabricksDeploymentClient.update_endpoint_rate_limits"><a class="viewcode-back" href="../../../python_api/mlflow.deployments.html#mlflow.deployments.DatabricksDeploymentClient.update_endpoint_rate_limits">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">update_endpoint_rate_limits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Update the rate limits of a specified serving endpoint.</span>
+<span class="sd">        See https://docs.databricks.com/api/workspace/servingendpoints/put for request/response</span>
+<span class="sd">        schema.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            endpoint: The name of the serving endpoint to update.</span>
+<span class="sd">            config: A dictionary containing the updated rate limit configuration.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A :py:class:`DatabricksEndpoint` object containing the updated rate limits.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            from mlflow.deployments import get_deploy_client</span>
+
+<span class="sd">            client = get_deploy_client("databricks")</span>
+<span class="sd">            name = "databricks-dbrx-instruct"</span>
+<span class="sd">            rate_limits = {</span>
+<span class="sd">                "rate_limits": [{"calls": 10, "key": "endpoint", "renewal_period": "minute"}]</span>
+<span class="sd">            }</span>
+<span class="sd">            updated_rate_limits = client.update_endpoint_rate_limits(</span>
+<span class="sd">                endpoint=name, config=rate_limits</span>
+<span class="sd">            )</span>
+<span class="sd">            assert updated_rate_limits == {</span>
+<span class="sd">                "rate_limits": [{"calls": 10, "key": "endpoint", "renewal_period": "minute"}]</span>
+<span class="sd">            }</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_call_endpoint</span><span class="p">(</span>
+            <span class="n">method</span><span class="o">=</span><span class="s2">"PUT"</span><span class="p">,</span> <span class="n">route</span><span class="o">=</span><span class="n">posixpath</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="s2">"rate-limits"</span><span class="p">),</span> <span class="n">json_body</span><span class="o">=</span><span class="n">config</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="DatabricksDeploymentClient.update_endpoint_ai_gateway"><a class="viewcode-back" href="../../../python_api/mlflow.deployments.html#mlflow.deployments.DatabricksDeploymentClient.update_endpoint_ai_gateway">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">update_endpoint_ai_gateway</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Update the AI Gateway configuration of a specified serving endpoint.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            endpoint (str): The name of the serving endpoint to update.</span>
+<span class="sd">            config (dict): A dictionary containing the AI Gateway configuration to update.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing the updated AI Gateway configuration.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            from mlflow.deployments import get_deploy_client</span>
+
+<span class="sd">            client = get_deploy_client("databricks")</span>
+<span class="sd">            name = "test"</span>
+
+<span class="sd">            gateway_config = {</span>
+<span class="sd">                "usage_tracking_config": {"enabled": True},</span>
+<span class="sd">                "inference_table_config": {</span>
+<span class="sd">                    "enabled": True,</span>
+<span class="sd">                    "catalog_name": "my_catalog",</span>
+<span class="sd">                    "schema_name": "my_schema",</span>
+<span class="sd">                },</span>
+<span class="sd">            }</span>
+
+<span class="sd">            updated_gateway = client.update_endpoint_ai_gateway(</span>
+<span class="sd">                endpoint=name, config=gateway_config</span>
+<span class="sd">            )</span>
+<span class="sd">            assert updated_gateway == {</span>
+<span class="sd">                "usage_tracking_config": {"enabled": True},</span>
+<span class="sd">                "inference_table_config": {</span>
+<span class="sd">                    "catalog_name": "my_catalog",</span>
+<span class="sd">                    "schema_name": "my_schema",</span>
+<span class="sd">                    "table_name_prefix": "test",</span>
+<span class="sd">                    "enabled": True,</span>
+<span class="sd">                },</span>
+<span class="sd">            }</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_call_endpoint</span><span class="p">(</span>
+            <span class="n">method</span><span class="o">=</span><span class="s2">"PUT"</span><span class="p">,</span> <span class="n">route</span><span class="o">=</span><span class="n">posixpath</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="s2">"ai-gateway"</span><span class="p">),</span> <span class="n">json_body</span><span class="o">=</span><span class="n">config</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="DatabricksDeploymentClient.delete_endpoint"><a class="viewcode-back" href="../../../python_api/mlflow.deployments.html#mlflow.deployments.DatabricksDeploymentClient.delete_endpoint">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">delete_endpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Delete a specified serving endpoint.</span>
+<span class="sd">        See https://docs.databricks.com/api/workspace/servingendpoints/delete for request/response</span>
+<span class="sd">        schema.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            endpoint: The name of the serving endpoint to delete.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A DatabricksEndpoint object containing the request response.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            from mlflow.deployments import get_deploy_client</span>
+
+<span class="sd">            client = get_deploy_client("databricks")</span>
+<span class="sd">            client.delete_endpoint(endpoint="chat")</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_call_endpoint</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">"DELETE"</span><span class="p">,</span> <span class="n">route</span><span class="o">=</span><span class="n">endpoint</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DatabricksDeploymentClient.list_endpoints"><a class="viewcode-back" href="../../../python_api/mlflow.deployments.html#mlflow.deployments.DatabricksDeploymentClient.list_endpoints">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">list_endpoints</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Retrieve all serving endpoints.</span>
+
+<span class="sd">        See https://docs.databricks.com/api/workspace/servingendpoints/list for request/response</span>
+<span class="sd">        schema.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A list of :py:class:`DatabricksEndpoint` objects containing the request response.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            from mlflow.deployments import get_deploy_client</span>
+
+<span class="sd">            client = get_deploy_client("databricks")</span>
+<span class="sd">            endpoints = client.list_endpoints()</span>
+<span class="sd">            assert endpoints == [</span>
+<span class="sd">                {</span>
+<span class="sd">                    "name": "chat",</span>
+<span class="sd">                    "creator": "alice@company.com",</span>
+<span class="sd">                    "creation_timestamp": 0,</span>
+<span class="sd">                    "last_updated_timestamp": 0,</span>
+<span class="sd">                    "state": {...},</span>
+<span class="sd">                    "config": {...},</span>
+<span class="sd">                    "tags": [...],</span>
+<span class="sd">                    "id": "88fd3f75a0d24b0380ddc40484d7a31b",</span>
+<span class="sd">                },</span>
+<span class="sd">            ]</span>
+
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_call_endpoint</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">"GET"</span><span class="p">)</span><span class="o">.</span><span class="n">endpoints</span></div>
+
+<div class="viewcode-block" id="DatabricksDeploymentClient.get_endpoint"><a class="viewcode-back" href="../../../python_api/mlflow.deployments.html#mlflow.deployments.DatabricksDeploymentClient.get_endpoint">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_endpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Get a specified serving endpoint.</span>
+<span class="sd">        See https://docs.databricks.com/api/workspace/servingendpoints/get for request/response</span>
+<span class="sd">        schema.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            endpoint: The name of the serving endpoint to get.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A DatabricksEndpoint object containing the request response.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            from mlflow.deployments import get_deploy_client</span>
+
+<span class="sd">            client = get_deploy_client("databricks")</span>
+<span class="sd">            endpoint = client.get_endpoint(endpoint="chat")</span>
+<span class="sd">            assert endpoint == {</span>
+<span class="sd">                "name": "chat",</span>
+<span class="sd">                "creator": "alice@company.com",</span>
+<span class="sd">                "creation_timestamp": 0,</span>
+<span class="sd">                "last_updated_timestamp": 0,</span>
+<span class="sd">                "state": {...},</span>
+<span class="sd">                "config": {...},</span>
+<span class="sd">                "tags": [...],</span>
+<span class="sd">                "id": "88fd3f75a0d24b0380ddc40484d7a31b",</span>
+<span class="sd">            }</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_call_endpoint</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">"GET"</span><span class="p">,</span> <span class="n">route</span><span class="o">=</span><span class="n">endpoint</span><span class="p">)</span></div></div>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">run_local</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">model_uri</span><span class="p">,</span> <span class="n">flavor</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">target_help</span><span class="p">():</span>
+    <span class="k">pass</span>
+</pre></div>
+
+              </div>
+            </div>
+            <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+      <p class="copyright">
+          &copy; MLflow Project, a Series of LF Projects, LLC. All rights reserved.
+      </p>
+
+  </div> 
+
+</footer>
+          </div>
+        </div>
+      </section>
+    </main>
+  </page>
+
+  
+
+
+  
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:'../../../',
+      VERSION:'3.17.1',
+      COLLAPSE_INDEX:false,
+      FILE_SUFFIX:'.html',
+      LINK_SUFFIX: '.html',
+      HAS_SOURCE:  true
+    };
+  </script>
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/clipboard.min.js"></script>
+  <script type="text/javascript" src="../../../_static/js/jquery.waypoints.min.js"></script>
+
+  
+  
+  
+  <script type="text/javascript">var CLIPPY_SVG_PATH = "../../../_static/clippy.svg";</script>
+  <script type="text/javascript" src="../../../_static/js/custom.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+    jQuery(function () {
+      SphinxRtdTheme.StickyNav.enable();
+    });
+
+  </script>
+  
+
+  
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
+        // Get the code block designator class entries
+        const allHighlights = document.querySelectorAll('.highlight');
+        // Disable copyable links for notebook cell numbering and for cell outputs
+        const highlights = Array.from(allHighlights).filter(highlight => !highlight.closest('.highlight-none') && 
+            !highlight.closest('.nboutput'));
+    
+        highlights.forEach(function(highlight) {
+            const copyIcon = document.createElement('span');
+            copyIcon.classList.add('copy-icon');
+            copyIcon.innerHTML = '&#xf0ea;';
+
+            copyIcon.addEventListener('click', function() {
+                const code = highlight.querySelector('pre').textContent;
+                copyToClipboard(code);
+
+                // Flash effect on click
+                this.style.color = '#0194E2';
+                setTimeout(() => {
+                    this.style.color = ''; 
+                }, 100);
+
+                // Display "Code copied to clipboard" near the clicked icon
+                const message = document.createElement('span');
+                message.textContent = "Copied!";
+                message.classList.add('copy-message'); 
+
+                // Append the message to the icon
+                this.appendChild(message);
+
+                setTimeout(() => {
+                    this.removeChild(message);
+                }, 500);
+            });
+
+            highlight.appendChild(copyIcon);
+        });
+    });
+  </script>
+
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        // Force download for notebook-download-btn
+        const downloadButtons = document.querySelectorAll('.notebook-download-btn');
+        downloadButtons.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default behavior
+
+                // Fetch the raw content of the notebook from GitHub
+                fetch(button.href)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const url = window.URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.style.display = 'none';
+                        link.href = url;
+                        const filename = button.href.split('/').pop();
+                        link.download = filename; 
+
+                        document.body.appendChild(link);
+                        link.click();
+
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(link);
+                    })
+                    .catch(err => console.error('Error fetching the notebook:', err));
+            });
+        });
+    });
+</script> 
+</body>
+</html>

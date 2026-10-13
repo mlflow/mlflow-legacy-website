@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 3.17.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="MLflow 3.17.1 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -148,7 +148,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.0</span>
+  <span class="header-link version">3.17.1</span>
 </div>
   </nav>
   <page>
@@ -898,13 +898,21 @@
 
         <span class="c1"># Convert links to OTLP proto format</span>
         <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">links</span><span class="p">:</span>
-            <span class="n">proto_link</span> <span class="o">=</span> <span class="n">otel_span</span><span class="o">.</span><span class="n">links</span><span class="o">.</span><span class="n">add</span><span class="p">()</span>
             <span class="c1"># Convert MLflow trace ID (tr-xxx or trace:/loc/xxx) back to OTel bytes</span>
             <span class="n">link_trace_id_hex</span> <span class="o">=</span> <span class="n">parse_trace_id_v4</span><span class="p">(</span><span class="n">link</span><span class="o">.</span><span class="n">trace_id</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">removeprefix</span><span class="p">(</span>
                 <span class="n">TRACE_REQUEST_ID_PREFIX</span>
             <span class="p">)</span>
-            <span class="n">proto_link</span><span class="o">.</span><span class="n">trace_id</span> <span class="o">=</span> <span class="n">decode_id</span><span class="p">(</span><span class="n">link_trace_id_hex</span><span class="p">)</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="s2">"big"</span><span class="p">)</span>
-            <span class="n">proto_link</span><span class="o">.</span><span class="n">span_id</span> <span class="o">=</span> <span class="n">decode_id</span><span class="p">(</span><span class="n">link</span><span class="o">.</span><span class="n">span_id</span><span class="p">)</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="s2">"big"</span><span class="p">)</span>
+            <span class="n">link_trace_id</span> <span class="o">=</span> <span class="n">decode_id</span><span class="p">(</span><span class="n">link_trace_id_hex</span><span class="p">)</span>
+            <span class="n">link_span_id</span> <span class="o">=</span> <span class="n">decode_id</span><span class="p">(</span><span class="n">link</span><span class="o">.</span><span class="n">span_id</span><span class="p">)</span>
+            <span class="c1"># Some producers (e.g. Claude Code detailed beta tracing) emit IDs wider than the</span>
+            <span class="c1"># 16-byte trace / 8-byte span IDs OTLP allows. Drop such links rather than failing</span>
+            <span class="c1"># the whole trace.</span>
+            <span class="k">if</span> <span class="n">link_trace_id</span><span class="o">.</span><span class="n">bit_length</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">128</span> <span class="ow">or</span> <span class="n">link_span_id</span><span class="o">.</span><span class="n">bit_length</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">64</span><span class="p">:</span>
+                <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"Skipping link with out-of-range IDs on span '</span><span class="si">%s</span><span class="s2">'."</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="n">proto_link</span> <span class="o">=</span> <span class="n">otel_span</span><span class="o">.</span><span class="n">links</span><span class="o">.</span><span class="n">add</span><span class="p">()</span>
+            <span class="n">proto_link</span><span class="o">.</span><span class="n">trace_id</span> <span class="o">=</span> <span class="n">link_trace_id</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="s2">"big"</span><span class="p">)</span>
+            <span class="n">proto_link</span><span class="o">.</span><span class="n">span_id</span> <span class="o">=</span> <span class="n">link_span_id</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="s2">"big"</span><span class="p">)</span>
 
             <span class="c1"># Add link attributes</span>
             <span class="k">if</span> <span class="n">link</span><span class="o">.</span><span class="n">attributes</span><span class="p">:</span>
@@ -1923,7 +1931,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'3.17.0',
+      VERSION:'3.17.1',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',
