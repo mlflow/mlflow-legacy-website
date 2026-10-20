@@ -1,0 +1,854 @@
+
+
+<!DOCTYPE html>
+<!-- source: docs/source/_modules/mlflow/genai/label_schemas/label_schemas -->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mlflow.genai.label_schemas.label_schemas</title>
+  
+   
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="canonical" href="https://mlflow.org/docs/latest/_modules/mlflow/genai/label_schemas/label_schemas.html">
+  
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+  
+
+  
+
+  
+    
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer',"GTM-N6WMTTJ");</script>
+        <!-- End Google Tag Manager -->
+    
+  
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16857946923"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-16857946923');
+  </script>
+  <!-- Eng gtag -->
+
+  
+
+  
+  <meta name="docsearch:docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_version" content="current" data-rh="true">
+  <meta name="docsearch:version" content="current" data-rh="true">
+  <meta name="docusaurus_locale" content="en" data-rh="true">
+  <meta name="docsearch:language" content="en" data-rh="true">
+
+  
+  
+    
+
+  
+
+  
+  
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600" rel="stylesheet">
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/css/custom.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/css/cards.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/css/grids.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/css/mobile.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/css/simple-cards.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/css/tabs.css" type="text/css" />
+    
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="MLflow 3.17.2 documentation" href="../../../../index.html"/>
+        <link rel="up" title="mlflow.genai.label_schemas" href="../label_schemas.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+<script type="text/javascript" src="../../../../_static/documentation_options.js"></script>
+<script type="text/javascript" src="../../../../_static/jquery.js"></script>
+<script type="text/javascript" src="../../../../_static/underscore.js"></script>
+<script type="text/javascript" src="../../../../_static/doctools.js"></script>
+<script type="text/javascript" src="../../../../_static/tabs.js"></script>
+<script type="text/javascript" src="../../../../_static/languagesections.js"></script>
+<script type="text/javascript" src="../../../../_static/runllm.js"></script>
+
+<body class="wy-body-for-nav" role="document">
+  
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6WMTTJ"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  
+  <nav class="wy-nav-top header" role="navigation" aria-label="top navigation">
+    <div class="header-container">
+  <style scoped>
+    .header-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
+    }
+
+    .logo-container {
+      display: flex;
+      gap: 12px;
+      flex-direction: row;
+      white-space: nowrap;
+      align-items: center;
+      justify-content: center;
+    }
+
+    a:hover {
+      text-decoration: none;
+      color: #0194e2;
+    }
+  </style>
+  <div class="logo-container">
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
+    <a href="../../../../index.html" class="wy-nav-top-logo">
+      <img
+        src="../../../../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
+    </a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
+  </div>
+  <span class="header-link version">3.17.2</span>
+</div>
+  </nav>
+  <page>
+    
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side relative">
+      <div class="wy-side-scroll">
+  <div class="wy-side-nav-search">
+    
+
+    
+
+    
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+    
+  </div>
+
+  <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+    
+      <a href="../../../../index.html">Home</a>
+    
+
+    
+      
+
+      
+        <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../python_api/index.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../typescript_api/index.html">TypeScript API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cli.html">Command-Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../auth/python-api.html">MLflow Authentication Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../auth/rest-api.html">MLflow Authentication REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../R-api.html">R API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../java_api/index.html">Java API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rest-api.html">REST API</a></li>
+</ul>
+
+      
+    
+  </div>
+
+  <div role="contentinfo">
+    
+
+    <p>
+      <a id='feedbacklink' href="https://github.com/mlflow/mlflow/blob/master/CONTRIBUTING.md" target="_blank">Contribute</a>
+    </p>
+  </div>
+</div>
+    </nav>
+
+    <main class="wy-grid-for-nav">
+      <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+        <div class="wy-nav-content">
+          <div class="rst-content">
+            
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Documentation</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+        <li><a href="../../../index.html">Module code</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+        <li><a href="../label_schemas.html">mlflow.genai.label_schemas</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+    
+      <li>mlflow.genai.label_schemas.label_schemas</li>
+    
+    
+    <!-- <li class="wy-breadcrumbs-aside">
+      <a href="https://github.com/mlflow/mlflow/blob/master/docs/source/_modules/mlflow/genai/label_schemas/label_schemas" class="fa fa-github"> Edit on GitHub</a>
+    </li> -->
+    
+  </ul>
+</div>
+            <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+              <div itemprop="articleBody">
+                
+  <h1>Source code for mlflow.genai.label_schemas.label_schemas</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">TypeVar</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.utils.enum_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">StrEnum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.protos</span><span class="w"> </span><span class="kn">import</span> <span class="n">label_schemas_pb2</span> <span class="k">as</span> <span class="n">_ls_pb</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.protos.databricks_pb2</span><span class="w"> </span><span class="kn">import</span> <span class="n">INVALID_PARAMETER_VALUE</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">databricks.agents.review_app</span><span class="w"> </span><span class="kn">import</span> <span class="n">label_schemas</span> <span class="k">as</span> <span class="n">_label_schemas</span>
+
+    <span class="n">_InputCategorical</span> <span class="o">=</span> <span class="n">_label_schemas</span><span class="o">.</span><span class="n">InputCategorical</span>
+    <span class="n">_InputCategoricalList</span> <span class="o">=</span> <span class="n">_label_schemas</span><span class="o">.</span><span class="n">InputCategoricalList</span>
+    <span class="n">_InputNumeric</span> <span class="o">=</span> <span class="n">_label_schemas</span><span class="o">.</span><span class="n">InputNumeric</span>
+    <span class="n">_InputText</span> <span class="o">=</span> <span class="n">_label_schemas</span><span class="o">.</span><span class="n">InputText</span>
+    <span class="n">_InputTextList</span> <span class="o">=</span> <span class="n">_label_schemas</span><span class="o">.</span><span class="n">InputTextList</span>
+    <span class="n">_LabelSchema</span> <span class="o">=</span> <span class="n">_label_schemas</span><span class="o">.</span><span class="n">LabelSchema</span>
+
+<span class="n">DatabricksInputType</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">"DatabricksInputType"</span><span class="p">)</span>
+<span class="n">_InputType</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">"_InputType"</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">"InputType"</span><span class="p">)</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">InputType</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Base class for all input types."""</span>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_to_databricks_input</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DatabricksInputType</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Convert to the internal Databricks input type."""</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_from_databricks_input</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">input_obj</span><span class="p">:</span> <span class="n">DatabricksInputType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_InputType</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Create from the internal Databricks input type."""</span>
+
+
+<div class="viewcode-block" id="InputCategorical"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputCategorical">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">InputCategorical</span><span class="p">(</span><span class="n">InputType</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""A categorical input for collecting assessments from stakeholders.</span>
+
+<span class="sd">    Renders as a single-select dropdown by default; set ``multi_select=True``</span>
+<span class="sd">    to render as a multi-select. The author controls option ordering</span>
+<span class="sd">    directly, so there is no separate polarity hint.</span>
+<span class="sd">    """</span>
+
+    <span class="n">options</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">"""List of available options for the categorical selection."""</span>
+
+    <span class="n">multi_select</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="w">    </span><span class="sd">"""When ``True``, the widget allows multiple options to be selected and</span>
+<span class="sd">    the assessment value becomes a list of strings. Defaults to ``False``</span>
+<span class="sd">    (single-select)."""</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_to_databricks_input</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"_InputCategorical"</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Convert to the internal Databricks input type.</span>
+
+<span class="sd">        The ``multi_select`` field has no Databricks equivalent and is</span>
+<span class="sd">        dropped when routing to Databricks. A warning is emitted when a</span>
+<span class="sd">        non-default value is silently discarded so callers can detect</span>
+<span class="sd">        intent loss.</span>
+<span class="sd">        """</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">databricks.agents.review_app</span><span class="w"> </span><span class="kn">import</span> <span class="n">label_schemas</span> <span class="k">as</span> <span class="n">_label_schemas</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">multi_select</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">"InputCategorical field `multi_select` has no Databricks "</span>
+                <span class="s2">"equivalent and is being dropped when routing this schema to "</span>
+                <span class="s2">"Databricks. Set `multi_select=False` (the default) for "</span>
+                <span class="s2">"Databricks-routed schemas, or use the MLflow tracking store."</span><span class="p">,</span>
+                <span class="ne">UserWarning</span><span class="p">,</span>
+                <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">_label_schemas</span><span class="o">.</span><span class="n">InputCategorical</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_from_databricks_input</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">input_obj</span><span class="p">:</span> <span class="s2">"_InputCategorical"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"InputCategorical"</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Create from the internal Databricks input type."""</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="n">input_obj</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
+
+<div class="viewcode-block" id="InputCategorical.to_proto"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputCategorical.to_proto">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_ls_pb</span><span class="o">.</span><span class="n">InputCategorical</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_ls_pb</span><span class="o">.</span><span class="n">InputCategorical</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">),</span> <span class="n">multi_select</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">multi_select</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="InputCategorical.from_proto"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputCategorical.from_proto">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">:</span> <span class="n">_ls_pb</span><span class="o">.</span><span class="n">InputCategorical</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"InputCategorical"</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">proto</span><span class="o">.</span><span class="n">options</span><span class="p">),</span> <span class="n">multi_select</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">multi_select</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="InputCategoricalList"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputCategoricalList">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">InputCategoricalList</span><span class="p">(</span><span class="n">InputType</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""A multi-select dropdown for collecting assessments from stakeholders.</span>
+
+<span class="sd">    .. note::</span>
+<span class="sd">        This functionality is only available in Databricks. Please run</span>
+<span class="sd">        `pip install mlflow[databricks]` to use it.</span>
+<span class="sd">    """</span>
+
+    <span class="n">options</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">"""List of available options for the multi-select categorical (dropdown)."""</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_to_databricks_input</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"_InputCategoricalList"</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Convert to the internal Databricks input type."""</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">databricks.agents.review_app</span><span class="w"> </span><span class="kn">import</span> <span class="n">label_schemas</span> <span class="k">as</span> <span class="n">_label_schemas</span>
+
+        <span class="k">return</span> <span class="n">_label_schemas</span><span class="o">.</span><span class="n">InputCategoricalList</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_from_databricks_input</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">input_obj</span><span class="p">:</span> <span class="s2">"_InputCategoricalList"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"InputCategoricalList"</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Create from the internal Databricks input type."""</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="n">input_obj</span><span class="o">.</span><span class="n">options</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="InputTextList"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputTextList">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">InputTextList</span><span class="p">(</span><span class="n">InputType</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Like `Text`, but allows multiple entries.</span>
+
+<span class="sd">    .. note::</span>
+<span class="sd">        This functionality is only available in Databricks. Please run</span>
+<span class="sd">        `pip install mlflow[databricks]` to use it.</span>
+<span class="sd">    """</span>
+
+    <span class="n">max_length_each</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">"""Maximum character length for each individual text entry. None means no limit."""</span>
+
+    <span class="n">max_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">"""Maximum number of text entries allowed. None means no limit."""</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_to_databricks_input</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"_InputTextList"</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Convert to the internal Databricks input type."""</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">databricks.agents.review_app</span><span class="w"> </span><span class="kn">import</span> <span class="n">label_schemas</span> <span class="k">as</span> <span class="n">_label_schemas</span>
+
+        <span class="k">return</span> <span class="n">_label_schemas</span><span class="o">.</span><span class="n">InputTextList</span><span class="p">(</span>
+            <span class="n">max_length_each</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_length_each</span><span class="p">,</span> <span class="n">max_count</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_count</span>
+        <span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_from_databricks_input</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">input_obj</span><span class="p">:</span> <span class="s2">"_InputTextList"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"InputTextList"</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Create from the internal Databricks input type."""</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">max_length_each</span><span class="o">=</span><span class="n">input_obj</span><span class="o">.</span><span class="n">max_length_each</span><span class="p">,</span> <span class="n">max_count</span><span class="o">=</span><span class="n">input_obj</span><span class="o">.</span><span class="n">max_count</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="InputText"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputText">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">InputText</span><span class="p">(</span><span class="n">InputType</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""A free-form text box for collecting assessments from stakeholders.</span>
+
+<span class="sd">    Supported by both feedback and expectation schemas; use it to capture</span>
+<span class="sd">    free-form rationale or ground-truth text from reviewers.</span>
+<span class="sd">    """</span>
+
+    <span class="n">max_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">"""Maximum character length for the text input. None means no limit."""</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_to_databricks_input</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"_InputText"</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Convert to the internal Databricks input type."""</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">databricks.agents.review_app</span><span class="w"> </span><span class="kn">import</span> <span class="n">label_schemas</span> <span class="k">as</span> <span class="n">_label_schemas</span>
+
+        <span class="k">return</span> <span class="n">_label_schemas</span><span class="o">.</span><span class="n">InputText</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_length</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_from_databricks_input</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">input_obj</span><span class="p">:</span> <span class="s2">"_InputText"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"InputText"</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Create from the internal Databricks input type."""</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="n">input_obj</span><span class="o">.</span><span class="n">max_length</span><span class="p">)</span>
+
+<div class="viewcode-block" id="InputText.to_proto"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputText.to_proto">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_ls_pb</span><span class="o">.</span><span class="n">InputText</span><span class="p">:</span>
+        <span class="n">proto</span> <span class="o">=</span> <span class="n">_ls_pb</span><span class="o">.</span><span class="n">InputText</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">proto</span><span class="o">.</span><span class="n">max_length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_length</span>
+        <span class="k">return</span> <span class="n">proto</span></div>
+
+<div class="viewcode-block" id="InputText.from_proto"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputText.from_proto">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">:</span> <span class="n">_ls_pb</span><span class="o">.</span><span class="n">InputText</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"InputText"</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">max_length</span> <span class="k">if</span> <span class="n">proto</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span><span class="s2">"max_length"</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="InputNumeric"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputNumeric">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">InputNumeric</span><span class="p">(</span><span class="n">InputType</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""A numeric input for collecting assessments from stakeholders.</span>
+
+<span class="sd">    .. note::</span>
+<span class="sd">        This functionality is only available in Databricks. Please run</span>
+<span class="sd">        `pip install mlflow[databricks]` to use it.</span>
+<span class="sd">    """</span>
+
+    <span class="n">min_value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">"""Minimum allowed numeric value. None means no minimum limit."""</span>
+
+    <span class="n">max_value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">"""Maximum allowed numeric value. None means no maximum limit."""</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_to_databricks_input</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"_InputNumeric"</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Convert to the internal Databricks input type."""</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">databricks.agents.review_app</span><span class="w"> </span><span class="kn">import</span> <span class="n">label_schemas</span> <span class="k">as</span> <span class="n">_label_schemas</span>
+
+        <span class="k">return</span> <span class="n">_label_schemas</span><span class="o">.</span><span class="n">InputNumeric</span><span class="p">(</span><span class="n">min_value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">min_value</span><span class="p">,</span> <span class="n">max_value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_value</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_from_databricks_input</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">input_obj</span><span class="p">:</span> <span class="s2">"_InputNumeric"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"InputNumeric"</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Create from the internal Databricks input type."""</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">min_value</span><span class="o">=</span><span class="n">input_obj</span><span class="o">.</span><span class="n">min_value</span><span class="p">,</span> <span class="n">max_value</span><span class="o">=</span><span class="n">input_obj</span><span class="o">.</span><span class="n">max_value</span><span class="p">)</span>
+
+<div class="viewcode-block" id="InputNumeric.to_proto"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputNumeric.to_proto">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_ls_pb</span><span class="o">.</span><span class="n">InputNumeric</span><span class="p">:</span>
+        <span class="n">proto</span> <span class="o">=</span> <span class="n">_ls_pb</span><span class="o">.</span><span class="n">InputNumeric</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">proto</span><span class="o">.</span><span class="n">min_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_value</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">proto</span><span class="o">.</span><span class="n">max_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_value</span>
+        <span class="k">return</span> <span class="n">proto</span></div>
+
+<div class="viewcode-block" id="InputNumeric.from_proto"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputNumeric.from_proto">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">:</span> <span class="n">_ls_pb</span><span class="o">.</span><span class="n">InputNumeric</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"InputNumeric"</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">min_value</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">min_value</span> <span class="k">if</span> <span class="n">proto</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span><span class="s2">"min_value"</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">max_value</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">max_value</span> <span class="k">if</span> <span class="n">proto</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span><span class="s2">"max_value"</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="InputPassFail"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputPassFail">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">InputPassFail</span><span class="p">(</span><span class="n">InputType</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""A Pass/Fail input for collecting feedback from stakeholders.</span>
+
+<span class="sd">    Renders as a thumbs-up / thumbs-down toggle in the review UI. The</span>
+<span class="sd">    ``positive_label`` and ``negative_label`` fields carry the</span>
+<span class="sd">    positive/negative meaning directly so the UI never has to infer</span>
+<span class="sd">    "good" vs "bad" from option strings.</span>
+
+<span class="sd">    For example, a correctness schema sets</span>
+<span class="sd">    ``InputPassFail(positive_label="Correct", negative_label="Incorrect")``;</span>
+<span class="sd">    a hallucination schema sets</span>
+<span class="sd">    ``InputPassFail(positive_label="Hallucinated", negative_label="Grounded")``.</span>
+<span class="sd">    The stored assessment value is a ``bool``; ``True`` corresponds to the</span>
+<span class="sd">    ``positive_label``.</span>
+
+<span class="sd">    This input type has no Databricks ReviewApp equivalent. Databricks-routed</span>
+<span class="sd">    schemas should use :py:class:`InputCategorical` instead; the Databricks</span>
+<span class="sd">    conversion methods raise ``NotImplementedError``.</span>
+<span class="sd">    """</span>
+
+    <span class="n">positive_label</span><span class="p">:</span> <span class="nb">str</span>
+<span class="w">    </span><span class="sd">"""Label shown next to the thumbs-up button (e.g., "Correct", "Pass")."""</span>
+
+    <span class="n">negative_label</span><span class="p">:</span> <span class="nb">str</span>
+<span class="w">    </span><span class="sd">"""Label shown next to the thumbs-down button (e.g., "Incorrect", "Fail")."""</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_to_databricks_input</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DatabricksInputType</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s2">"InputPassFail has no Databricks counterpart; Databricks-routed "</span>
+            <span class="s2">"schemas should use InputCategorical with explicit positive/negative options."</span>
+        <span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_from_databricks_input</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">input_obj</span><span class="p">:</span> <span class="n">DatabricksInputType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"InputPassFail"</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s2">"InputPassFail has no Databricks counterpart; Databricks-routed schemas "</span>
+            <span class="s2">"use InputCategorical."</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="InputPassFail.to_proto"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputPassFail.to_proto">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_ls_pb</span><span class="o">.</span><span class="n">InputPassFail</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_ls_pb</span><span class="o">.</span><span class="n">InputPassFail</span><span class="p">(</span>
+            <span class="n">positive_label</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">positive_label</span><span class="p">,</span> <span class="n">negative_label</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">negative_label</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="InputPassFail.from_proto"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputPassFail.from_proto">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">:</span> <span class="n">_ls_pb</span><span class="o">.</span><span class="n">InputPassFail</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"InputPassFail"</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">positive_label</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">positive_label</span><span class="p">,</span> <span class="n">negative_label</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">negative_label</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="LabelSchemaType"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.label_schemas.LabelSchemaType">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">LabelSchemaType</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Type of label schema."""</span>
+
+    <span class="n">FEEDBACK</span> <span class="o">=</span> <span class="s2">"feedback"</span>
+    <span class="n">EXPECTATION</span> <span class="o">=</span> <span class="s2">"expectation"</span>
+
+<div class="viewcode-block" id="LabelSchemaType.to_proto"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.label_schemas.LabelSchemaType.to_proto">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span> <span class="ow">is</span> <span class="n">LabelSchemaType</span><span class="o">.</span><span class="n">FEEDBACK</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_ls_pb</span><span class="o">.</span><span class="n">FEEDBACK</span>
+        <span class="k">return</span> <span class="n">_ls_pb</span><span class="o">.</span><span class="n">EXPECTATION</span></div>
+
+<div class="viewcode-block" id="LabelSchemaType.from_proto"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.label_schemas.LabelSchemaType.from_proto">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"LabelSchemaType"</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">proto</span> <span class="o">==</span> <span class="n">_ls_pb</span><span class="o">.</span><span class="n">FEEDBACK</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">FEEDBACK</span>
+        <span class="k">if</span> <span class="n">proto</span> <span class="o">==</span> <span class="n">_ls_pb</span><span class="o">.</span><span class="n">EXPECTATION</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">EXPECTATION</span>
+        <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"Label schema `type` must be one of FEEDBACK or EXPECTATION; "</span>
+            <span class="sa">f</span><span class="s2">"got proto enum value </span><span class="si">{</span><span class="n">proto</span><span class="si">}</span><span class="s2">."</span><span class="p">,</span>
+            <span class="n">error_code</span><span class="o">=</span><span class="n">INVALID_PARAMETER_VALUE</span><span class="p">,</span>
+        <span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="LabelSchema"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.label_schemas.LabelSchema">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">LabelSchema</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""A label schema for collecting input from stakeholders.</span>
+
+<span class="sd">    Identity is ``(experiment_id, name)``. The tracking-store identification</span>
+<span class="sd">    fields (``schema_id``, ``experiment_id``, audit timestamps) are</span>
+<span class="sd">    populated by the backend when the schema is created via the SDK; they</span>
+<span class="sd">    are ``None`` for Databricks-routed schemas where identity lives on the</span>
+<span class="sd">    parent ReviewApp.</span>
+<span class="sd">    """</span>
+
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+<span class="w">    </span><span class="sd">"""Unique name identifier for the label schema within an experiment."""</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">LabelSchemaType</span>
+<span class="w">    </span><span class="sd">"""Type of the label schema, either 'feedback' or 'expectation'."""</span>
+
+    <span class="nb">input</span><span class="p">:</span> <span class="p">(</span>
+        <span class="n">InputPassFail</span>
+        <span class="o">|</span> <span class="n">InputCategorical</span>
+        <span class="o">|</span> <span class="n">InputCategoricalList</span>
+        <span class="o">|</span> <span class="n">InputText</span>
+        <span class="o">|</span> <span class="n">InputTextList</span>
+        <span class="o">|</span> <span class="n">InputNumeric</span>
+    <span class="p">)</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Input type specification that defines how stakeholders will provide their assessment</span>
+<span class="sd">    (e.g., Pass/Fail toggle, categorical dropdown, text box, numeric input).</span>
+<span class="sd">    """</span>
+
+    <span class="n">instruction</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">"""Optional detailed instructions shown to stakeholders for guidance."""</span>
+
+    <span class="n">enable_comment</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="w">    </span><span class="sd">"""Whether to enable additional comment functionality for reviewers."""</span>
+
+    <span class="n">schema_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">"""Server-generated identifier, set when the schema is created through</span>
+<span class="sd">    the MLflow tracking store. ``None`` for Databricks-routed schemas</span>
+<span class="sd">    (identity there is `(review_app_id, name)`)."""</span>
+
+    <span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">"""Parent experiment. ``None`` for Databricks-routed schemas."""</span>
+
+    <span class="n">created_by</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">"""User who created the schema. ``None`` for Databricks-routed schemas."""</span>
+
+    <span class="n">created_at</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">"""Creation timestamp in milliseconds. ``None`` for Databricks-routed schemas."""</span>
+
+    <span class="n">updated_at</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">"""Last update timestamp in milliseconds. ``None`` for Databricks-routed schemas."""</span>
+
+    <span class="n">is_default</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="w">    </span><span class="sd">"""Whether this is the experiment's protected default question (server-seeded,</span>
+<span class="sd">    undeletable, uneditable). Read-only; ignored on create/update."""</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_convert_databricks_input</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">input_obj</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Convert a Databricks input type to the corresponding MLflow input type."""</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">databricks.agents.review_app</span><span class="w"> </span><span class="kn">import</span> <span class="n">label_schemas</span> <span class="k">as</span> <span class="n">_label_schemas</span>
+
+        <span class="n">input_type_mapping</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">_label_schemas</span><span class="o">.</span><span class="n">InputCategorical</span><span class="p">:</span> <span class="n">InputCategorical</span><span class="p">,</span>
+            <span class="n">_label_schemas</span><span class="o">.</span><span class="n">InputCategoricalList</span><span class="p">:</span> <span class="n">InputCategoricalList</span><span class="p">,</span>
+            <span class="n">_label_schemas</span><span class="o">.</span><span class="n">InputText</span><span class="p">:</span> <span class="n">InputText</span><span class="p">,</span>
+            <span class="n">_label_schemas</span><span class="o">.</span><span class="n">InputTextList</span><span class="p">:</span> <span class="n">InputTextList</span><span class="p">,</span>
+            <span class="n">_label_schemas</span><span class="o">.</span><span class="n">InputNumeric</span><span class="p">:</span> <span class="n">InputNumeric</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="n">input_class</span> <span class="o">=</span> <span class="n">input_type_mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">input_obj</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">input_class</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unknown input type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">input_obj</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">input_class</span><span class="o">.</span><span class="n">_from_databricks_input</span><span class="p">(</span><span class="n">input_obj</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_from_databricks_label_schema</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">schema</span><span class="p">:</span> <span class="s2">"_LabelSchema"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"LabelSchema"</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Convert from the internal Databricks label schema type."""</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">schema</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="n">schema</span><span class="o">.</span><span class="n">type</span><span class="p">,</span>
+            <span class="nb">input</span><span class="o">=</span><span class="bp">cls</span><span class="o">.</span><span class="n">_convert_databricks_input</span><span class="p">(</span><span class="n">schema</span><span class="o">.</span><span class="n">input</span><span class="p">),</span>
+            <span class="n">instruction</span><span class="o">=</span><span class="n">schema</span><span class="o">.</span><span class="n">instruction</span><span class="p">,</span>
+            <span class="n">enable_comment</span><span class="o">=</span><span class="n">schema</span><span class="o">.</span><span class="n">enable_comment</span><span class="p">,</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="LabelSchema.to_proto"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.label_schemas.LabelSchema.to_proto">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_ls_pb</span><span class="o">.</span><span class="n">LabelSchema</span><span class="p">:</span>
+        <span class="n">proto</span> <span class="o">=</span> <span class="n">_ls_pb</span><span class="o">.</span><span class="n">LabelSchema</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">to_proto</span><span class="p">(),</span>
+            <span class="n">enable_comment</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">enable_comment</span><span class="p">,</span>
+            <span class="nb">input</span><span class="o">=</span><span class="n">_input_to_proto</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">proto</span><span class="o">.</span><span class="n">schema_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema_id</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">experiment_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">proto</span><span class="o">.</span><span class="n">experiment_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">experiment_id</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">instruction</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">proto</span><span class="o">.</span><span class="n">instruction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">instruction</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">created_by</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">proto</span><span class="o">.</span><span class="n">created_by</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">created_by</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">created_at</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">proto</span><span class="o">.</span><span class="n">created_at</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">created_at</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">updated_at</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># Entity field is `updated_at`; proto field is `last_updated_at`</span>
+            <span class="c1"># (matches Databricks RPC convention); SQL column is</span>
+            <span class="c1"># `last_update_time` (matches existing SqlExperiment / SqlRun).</span>
+            <span class="n">proto</span><span class="o">.</span><span class="n">last_updated_at</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">updated_at</span>
+        <span class="n">proto</span><span class="o">.</span><span class="n">is_default</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_default</span>
+        <span class="k">return</span> <span class="n">proto</span></div>
+
+<div class="viewcode-block" id="LabelSchema.from_proto"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.label_schemas.LabelSchema.from_proto">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_proto</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proto</span><span class="p">:</span> <span class="n">_ls_pb</span><span class="o">.</span><span class="n">LabelSchema</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"LabelSchema"</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="n">LabelSchemaType</span><span class="o">.</span><span class="n">from_proto</span><span class="p">(</span><span class="n">proto</span><span class="o">.</span><span class="n">type</span><span class="p">),</span>
+            <span class="nb">input</span><span class="o">=</span><span class="n">_input_from_proto</span><span class="p">(</span><span class="n">proto</span><span class="o">.</span><span class="n">input</span><span class="p">),</span>
+            <span class="n">instruction</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">instruction</span> <span class="k">if</span> <span class="n">proto</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span><span class="s2">"instruction"</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">enable_comment</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">enable_comment</span><span class="p">,</span>
+            <span class="n">schema_id</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">schema_id</span> <span class="k">if</span> <span class="n">proto</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span><span class="s2">"schema_id"</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">experiment_id</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">experiment_id</span> <span class="k">if</span> <span class="n">proto</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span><span class="s2">"experiment_id"</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">created_by</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">created_by</span> <span class="k">if</span> <span class="n">proto</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span><span class="s2">"created_by"</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">created_at</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">created_at</span> <span class="k">if</span> <span class="n">proto</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span><span class="s2">"created_at"</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">updated_at</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">last_updated_at</span> <span class="k">if</span> <span class="n">proto</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span><span class="s2">"last_updated_at"</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">is_default</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">is_default</span><span class="p">,</span>
+        <span class="p">)</span></div></div>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_input_to_proto</span><span class="p">(</span><span class="n">input_obj</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_ls_pb</span><span class="o">.</span><span class="n">LabelSchemaInput</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Wrap a tracking-store input dataclass in a LabelSchemaInput oneof.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        MlflowException: if `input_obj` is a Databricks-only type</span>
+<span class="sd">            (InputTextList / InputCategoricalList). These have no wire</span>
+<span class="sd">            representation and are rejected during validation.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_obj</span><span class="p">,</span> <span class="n">InputPassFail</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_ls_pb</span><span class="o">.</span><span class="n">LabelSchemaInput</span><span class="p">(</span><span class="n">pass_fail</span><span class="o">=</span><span class="n">input_obj</span><span class="o">.</span><span class="n">to_proto</span><span class="p">())</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_obj</span><span class="p">,</span> <span class="n">InputCategorical</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_ls_pb</span><span class="o">.</span><span class="n">LabelSchemaInput</span><span class="p">(</span><span class="n">categorical</span><span class="o">=</span><span class="n">input_obj</span><span class="o">.</span><span class="n">to_proto</span><span class="p">())</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_obj</span><span class="p">,</span> <span class="n">InputNumeric</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_ls_pb</span><span class="o">.</span><span class="n">LabelSchemaInput</span><span class="p">(</span><span class="n">numeric</span><span class="o">=</span><span class="n">input_obj</span><span class="o">.</span><span class="n">to_proto</span><span class="p">())</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_obj</span><span class="p">,</span> <span class="n">InputText</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_ls_pb</span><span class="o">.</span><span class="n">LabelSchemaInput</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">input_obj</span><span class="o">.</span><span class="n">to_proto</span><span class="p">())</span>
+    <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">"Label schema input of type </span><span class="si">{</span><span class="n">input_obj</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">!r}</span><span class="s2"> cannot be "</span>
+        <span class="s2">"serialized to proto. Supported types are InputPassFail, InputCategorical, "</span>
+        <span class="s2">"InputNumeric, InputText."</span><span class="p">,</span>
+        <span class="n">error_code</span><span class="o">=</span><span class="n">INVALID_PARAMETER_VALUE</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_input_from_proto</span><span class="p">(</span><span class="n">proto</span><span class="p">:</span> <span class="n">_ls_pb</span><span class="o">.</span><span class="n">LabelSchemaInput</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Unwrap a LabelSchemaInput oneof to the matching input dataclass.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        MlflowException: if no oneof variant is set.</span>
+<span class="sd">    """</span>
+    <span class="n">variant</span> <span class="o">=</span> <span class="n">proto</span><span class="o">.</span><span class="n">WhichOneof</span><span class="p">(</span><span class="s2">"input"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">variant</span> <span class="o">==</span> <span class="s2">"pass_fail"</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">InputPassFail</span><span class="o">.</span><span class="n">from_proto</span><span class="p">(</span><span class="n">proto</span><span class="o">.</span><span class="n">pass_fail</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">variant</span> <span class="o">==</span> <span class="s2">"categorical"</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">InputCategorical</span><span class="o">.</span><span class="n">from_proto</span><span class="p">(</span><span class="n">proto</span><span class="o">.</span><span class="n">categorical</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">variant</span> <span class="o">==</span> <span class="s2">"numeric"</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">InputNumeric</span><span class="o">.</span><span class="n">from_proto</span><span class="p">(</span><span class="n">proto</span><span class="o">.</span><span class="n">numeric</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">variant</span> <span class="o">==</span> <span class="s2">"text"</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">InputText</span><span class="o">.</span><span class="n">from_proto</span><span class="p">(</span><span class="n">proto</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
+        <span class="s2">"Label schema `input` must have exactly one of `pass_fail`, `categorical`, "</span>
+        <span class="s2">"`numeric`, or `text` set; got an empty oneof."</span><span class="p">,</span>
+        <span class="n">error_code</span><span class="o">=</span><span class="n">INVALID_PARAMETER_VALUE</span><span class="p">,</span>
+    <span class="p">)</span>
+</pre></div>
+
+              </div>
+            </div>
+            <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+      <p class="copyright">
+          &copy; MLflow Project, a Series of LF Projects, LLC. All rights reserved.
+      </p>
+
+  </div> 
+
+</footer>
+          </div>
+        </div>
+      </section>
+    </main>
+  </page>
+
+  
+
+
+  
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:'../../../../',
+      VERSION:'3.17.2',
+      COLLAPSE_INDEX:false,
+      FILE_SUFFIX:'.html',
+      LINK_SUFFIX: '.html',
+      HAS_SOURCE:  true
+    };
+  </script>
+
+  
+
+  <script type="text/javascript" src="../../../../_static/js/clipboard.min.js"></script>
+  <script type="text/javascript" src="../../../../_static/js/jquery.waypoints.min.js"></script>
+
+  
+  
+  
+  <script type="text/javascript">var CLIPPY_SVG_PATH = "../../../../_static/clippy.svg";</script>
+  <script type="text/javascript" src="../../../../_static/js/custom.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+    jQuery(function () {
+      SphinxRtdTheme.StickyNav.enable();
+    });
+
+  </script>
+  
+
+  
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
+        // Get the code block designator class entries
+        const allHighlights = document.querySelectorAll('.highlight');
+        // Disable copyable links for notebook cell numbering and for cell outputs
+        const highlights = Array.from(allHighlights).filter(highlight => !highlight.closest('.highlight-none') && 
+            !highlight.closest('.nboutput'));
+    
+        highlights.forEach(function(highlight) {
+            const copyIcon = document.createElement('span');
+            copyIcon.classList.add('copy-icon');
+            copyIcon.innerHTML = '&#xf0ea;';
+
+            copyIcon.addEventListener('click', function() {
+                const code = highlight.querySelector('pre').textContent;
+                copyToClipboard(code);
+
+                // Flash effect on click
+                this.style.color = '#0194E2';
+                setTimeout(() => {
+                    this.style.color = ''; 
+                }, 100);
+
+                // Display "Code copied to clipboard" near the clicked icon
+                const message = document.createElement('span');
+                message.textContent = "Copied!";
+                message.classList.add('copy-message'); 
+
+                // Append the message to the icon
+                this.appendChild(message);
+
+                setTimeout(() => {
+                    this.removeChild(message);
+                }, 500);
+            });
+
+            highlight.appendChild(copyIcon);
+        });
+    });
+  </script>
+
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        // Force download for notebook-download-btn
+        const downloadButtons = document.querySelectorAll('.notebook-download-btn');
+        downloadButtons.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default behavior
+
+                // Fetch the raw content of the notebook from GitHub
+                fetch(button.href)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const url = window.URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.style.display = 'none';
+                        link.href = url;
+                        const filename = button.href.split('/').pop();
+                        link.download = filename; 
+
+                        document.body.appendChild(link);
+                        link.click();
+
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(link);
+                    })
+                    .catch(err => console.error('Error fetching the notebook:', err));
+            });
+        });
+    });
+</script> 
+</body>
+</html>

@@ -1,0 +1,961 @@
+
+
+<!DOCTYPE html>
+<!-- source: docs/source/_modules/mlflow/genai/databricks/review_queues/api -->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mlflow.genai.databricks.review_queues.api</title>
+  
+   
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="canonical" href="https://mlflow.org/docs/latest/_modules/mlflow/genai/databricks/review_queues/api.html">
+  
+  
+    <link rel="shortcut icon" href="../../../../../_static/favicon.ico"/>
+  
+
+  
+
+  
+    
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer',"GTM-N6WMTTJ");</script>
+        <!-- End Google Tag Manager -->
+    
+  
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16857946923"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-16857946923');
+  </script>
+  <!-- Eng gtag -->
+
+  
+
+  
+  <meta name="docsearch:docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_version" content="current" data-rh="true">
+  <meta name="docsearch:version" content="current" data-rh="true">
+  <meta name="docusaurus_locale" content="en" data-rh="true">
+  <meta name="docsearch:language" content="en" data-rh="true">
+
+  
+  
+    
+
+  
+
+  
+  
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600" rel="stylesheet">
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/css/custom.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/css/cards.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/css/grids.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/css/mobile.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/css/simple-cards.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/css/tabs.css" type="text/css" />
+    
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="MLflow 3.17.2 documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+<script type="text/javascript" src="../../../../../_static/documentation_options.js"></script>
+<script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+<script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+<script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+<script type="text/javascript" src="../../../../../_static/tabs.js"></script>
+<script type="text/javascript" src="../../../../../_static/languagesections.js"></script>
+<script type="text/javascript" src="../../../../../_static/runllm.js"></script>
+
+<body class="wy-body-for-nav" role="document">
+  
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6WMTTJ"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  
+  <nav class="wy-nav-top header" role="navigation" aria-label="top navigation">
+    <div class="header-container">
+  <style scoped>
+    .header-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
+    }
+
+    .logo-container {
+      display: flex;
+      gap: 12px;
+      flex-direction: row;
+      white-space: nowrap;
+      align-items: center;
+      justify-content: center;
+    }
+
+    a:hover {
+      text-decoration: none;
+      color: #0194e2;
+    }
+  </style>
+  <div class="logo-container">
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
+    <a href="../../../../../index.html" class="wy-nav-top-logo">
+      <img
+        src="../../../../../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
+    </a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
+  </div>
+  <span class="header-link version">3.17.2</span>
+</div>
+  </nav>
+  <page>
+    
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side relative">
+      <div class="wy-side-scroll">
+  <div class="wy-side-nav-search">
+    
+
+    
+
+    
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+    
+  </div>
+
+  <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+    
+      <a href="../../../../../index.html">Home</a>
+    
+
+    
+      
+
+      
+        <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../python_api/index.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../typescript_api/index.html">TypeScript API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../cli.html">Command-Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../auth/python-api.html">MLflow Authentication Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../auth/rest-api.html">MLflow Authentication REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../R-api.html">R API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../java_api/index.html">Java API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../rest-api.html">REST API</a></li>
+</ul>
+
+      
+    
+  </div>
+
+  <div role="contentinfo">
+    
+
+    <p>
+      <a id='feedbacklink' href="https://github.com/mlflow/mlflow/blob/master/CONTRIBUTING.md" target="_blank">Contribute</a>
+    </p>
+  </div>
+</div>
+    </nav>
+
+    <main class="wy-grid-for-nav">
+      <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+        <div class="wy-nav-content">
+          <div class="rst-content">
+            
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Documentation</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+        <li><a href="../../../../index.html">Module code</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+    
+      <li>mlflow.genai.databricks.review_queues.api</li>
+    
+    
+    <!-- <li class="wy-breadcrumbs-aside">
+      <a href="https://github.com/mlflow/mlflow/blob/master/docs/source/_modules/mlflow/genai/databricks/review_queues/api" class="fa fa-github"> Edit on GitHub</a>
+    </li> -->
+    
+  </ul>
+</div>
+            <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+              <div itemprop="articleBody">
+                
+  <h1>Source code for mlflow.genai.databricks.review_queues.api</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""Review queues on Databricks.</span>
+
+<span class="sd">A Databricks-native client for review queues. Unlike :mod:`mlflow.genai.review_queues`</span>
+<span class="sd">(which targets the MLflow tracking server), the functions here mirror the Databricks</span>
+<span class="sd">review queue REST API one-to-one: questions, queues, members, and items are separate</span>
+<span class="sd">resources nested under an experiment, and every function takes the ``experiment_id``</span>
+<span class="sd">explicitly. They require a Databricks tracking URI.</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Literal</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">urllib.parse</span><span class="w"> </span><span class="kn">import</span> <span class="n">quote</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.databricks.review_queues</span><span class="w"> </span><span class="kn">import</span> <span class="n">_client</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.databricks.review_queues.entities</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ItemKind</span><span class="p">,</span>
+    <span class="n">QuestionInput</span><span class="p">,</span>
+    <span class="n">QuestionType</span><span class="p">,</span>
+    <span class="n">ReviewQuestion</span><span class="p">,</span>
+    <span class="n">ReviewQueue</span><span class="p">,</span>
+    <span class="n">ReviewQueueItem</span><span class="p">,</span>
+    <span class="n">ReviewQueueMember</span><span class="p">,</span>
+    <span class="n">ReviewQueueType</span><span class="p">,</span>
+    <span class="n">ReviewStatus</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.store.entities.paged_list</span><span class="w"> </span><span class="kn">import</span> <span class="n">PagedList</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_trace_id_v4</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">experimental</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_experiment</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">"experiments/</span><span class="si">{</span><span class="n">experiment_id</span><span class="si">}</span><span class="s2">"</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_question</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">question_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">_experiment</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">)</span><span class="si">}</span><span class="s2">/reviewQuestions/</span><span class="si">{</span><span class="n">question_id</span><span class="si">}</span><span class="s2">"</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_queue</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">queue_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">_experiment</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">)</span><span class="si">}</span><span class="s2">/reviewQueues/</span><span class="si">{</span><span class="n">queue_id</span><span class="si">}</span><span class="s2">"</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_set_if_not_none</span><span class="p">(</span><span class="n">body</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">mask</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">body</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="n">mask</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_require_update</span><span class="p">(</span><span class="n">mask</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">mask</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span><span class="s2">"Specify at least one field to update."</span><span class="p">)</span>
+
+
+<span class="c1"># ---- Review questions ----</span>
+
+
+<div class="viewcode-block" id="create_review_question"><a class="viewcode-back" href="../../../../../python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.create_review_question">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">"3.17.1"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_review_question</span><span class="p">(</span>
+    <span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">QuestionType</span> <span class="o">|</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"FEEDBACK"</span><span class="p">,</span> <span class="s2">"EXPECTATION"</span><span class="p">],</span>
+    <span class="nb">input</span><span class="p">:</span> <span class="n">QuestionInput</span><span class="p">,</span>
+    <span class="n">instruction</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">enable_comment</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">is_default</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ReviewQuestion</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Create a review question in an experiment.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        experiment_id: The experiment that owns the question.</span>
+<span class="sd">        title: Short prompt shown to reviewers.</span>
+<span class="sd">        type: ``"FEEDBACK"`` or ``"EXPECTATION"``.</span>
+<span class="sd">        input: The answer input, e.g. ``InputCategorical(options=["yes", "no"])``.</span>
+<span class="sd">        instruction: Longer guidance shown alongside the question.</span>
+<span class="sd">        enable_comment: Whether reviewers may add a free-text comment.</span>
+<span class="sd">        is_default: Whether this is the experiment's default question.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The created :py:class:`ReviewQuestion`.</span>
+<span class="sd">    """</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">"title"</span><span class="p">:</span> <span class="n">title</span><span class="p">,</span>
+        <span class="s2">"type"</span><span class="p">:</span> <span class="n">QuestionType</span><span class="p">(</span><span class="nb">type</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+        <span class="nb">input</span><span class="o">.</span><span class="n">_FIELD</span><span class="p">:</span> <span class="nb">input</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(),</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="p">{</span>
+        <span class="s2">"instruction"</span><span class="p">:</span> <span class="n">instruction</span><span class="p">,</span>
+        <span class="s2">"enable_comment"</span><span class="p">:</span> <span class="n">enable_comment</span><span class="p">,</span>
+        <span class="s2">"is_default"</span><span class="p">:</span> <span class="n">is_default</span><span class="p">,</span>
+    <span class="p">}</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">body</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">_client</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"POST"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">_experiment</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">)</span><span class="si">}</span><span class="s2">/reviewQuestions"</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">body</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ReviewQuestion</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_review_question"><a class="viewcode-back" href="../../../../../python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.get_review_question">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">"3.17.1"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_review_question</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">question_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ReviewQuestion</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Get a review question by ID.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        experiment_id: The experiment that owns the question.</span>
+<span class="sd">        question_id: The question to get.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The :py:class:`ReviewQuestion`.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">ReviewQuestion</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">_client</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"GET"</span><span class="p">,</span> <span class="n">_question</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">,</span> <span class="n">question_id</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="list_review_questions"><a class="viewcode-back" href="../../../../../python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.list_review_questions">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">"3.17.1"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_review_questions</span><span class="p">(</span>
+    <span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">max_results</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">page_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PagedList</span><span class="p">[</span><span class="n">ReviewQuestion</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    List an experiment's review questions.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        experiment_id: The experiment to list.</span>
+<span class="sd">        max_results: Page size.</span>
+<span class="sd">        page_token: Continuation token from a previous call.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A :py:class:`PagedList` of :py:class:`ReviewQuestion`.</span>
+<span class="sd">    """</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">_client</span><span class="o">.</span><span class="n">call</span><span class="p">(</span>
+        <span class="s2">"GET"</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">_experiment</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">)</span><span class="si">}</span><span class="s2">/reviewQuestions"</span><span class="p">,</span>
+        <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">"page_size"</span><span class="p">:</span> <span class="n">max_results</span><span class="p">,</span> <span class="s2">"page_token"</span><span class="p">:</span> <span class="n">page_token</span><span class="p">},</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">PagedList</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">ReviewQuestion</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">resp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"review_questions"</span><span class="p">,</span> <span class="p">[])],</span>
+        <span class="n">resp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"next_page_token"</span><span class="p">),</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="update_review_question"><a class="viewcode-back" href="../../../../../python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.update_review_question">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">"3.17.1"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">update_review_question</span><span class="p">(</span>
+    <span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">question_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">instruction</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="nb">input</span><span class="p">:</span> <span class="n">QuestionInput</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">enable_comment</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">is_default</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ReviewQuestion</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Update a review question. Only the fields that are passed are changed.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        experiment_id: The experiment that owns the question.</span>
+<span class="sd">        question_id: The question to update.</span>
+<span class="sd">        title: New short prompt shown to reviewers.</span>
+<span class="sd">        instruction: New guidance shown alongside the question.</span>
+<span class="sd">        input: New answer input. Replaces the existing input.</span>
+<span class="sd">        enable_comment: Whether reviewers may add a free-text comment.</span>
+<span class="sd">        is_default: Whether this is the experiment's default question.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The updated :py:class:`ReviewQuestion`.</span>
+<span class="sd">    """</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">_question</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">,</span> <span class="n">question_id</span><span class="p">)</span>
+    <span class="n">body</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"name"</span><span class="p">:</span> <span class="n">name</span><span class="p">}</span>
+    <span class="n">mask</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">_set_if_not_none</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="s2">"title"</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span>
+    <span class="n">_set_if_not_none</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="s2">"instruction"</span><span class="p">,</span> <span class="n">instruction</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">input</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">_set_if_not_none</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="nb">input</span><span class="o">.</span><span class="n">_FIELD</span><span class="p">,</span> <span class="nb">input</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
+    <span class="n">_set_if_not_none</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="s2">"enable_comment"</span><span class="p">,</span> <span class="n">enable_comment</span><span class="p">)</span>
+    <span class="n">_set_if_not_none</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="s2">"is_default"</span><span class="p">,</span> <span class="n">is_default</span><span class="p">)</span>
+    <span class="n">_require_update</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">_client</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"PATCH"</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">"update_mask"</span><span class="p">:</span> <span class="s2">","</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">mask</span><span class="p">)})</span>
+    <span class="k">return</span> <span class="n">ReviewQuestion</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="delete_review_question"><a class="viewcode-back" href="../../../../../python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.delete_review_question">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">"3.17.1"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">delete_review_question</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">question_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Delete a review question.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        experiment_id: The experiment that owns the question.</span>
+<span class="sd">        question_id: The question to delete.</span>
+<span class="sd">    """</span>
+    <span class="n">_client</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"DELETE"</span><span class="p">,</span> <span class="n">_question</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">,</span> <span class="n">question_id</span><span class="p">))</span></div>
+
+
+<span class="c1"># ---- Review queues ----</span>
+
+
+<div class="viewcode-block" id="create_review_queue"><a class="viewcode-back" href="../../../../../python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.create_review_queue">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">"3.17.1"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_review_queue</span><span class="p">(</span>
+    <span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">display_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">queue_type</span><span class="p">:</span> <span class="n">ReviewQueueType</span> <span class="o">|</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"USER"</span><span class="p">,</span> <span class="s2">"CUSTOM"</span><span class="p">]</span> <span class="o">=</span> <span class="n">ReviewQueueType</span><span class="o">.</span><span class="n">CUSTOM</span><span class="p">,</span>
+    <span class="n">question_ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ReviewQueue</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Create a review queue in an experiment.</span>
+
+<span class="sd">    Creating a ``USER`` queue is idempotent: if the user's queue already exists, it is</span>
+<span class="sd">    returned.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        experiment_id: The experiment that owns the queue.</span>
+<span class="sd">        display_name: Human-readable name. For a ``USER`` queue, the reviewer.</span>
+<span class="sd">        queue_type: ``"USER"`` or ``"CUSTOM"`` (default).</span>
+<span class="sd">        question_ids: For a ``CUSTOM`` queue, the questions to pin. A ``USER`` queue</span>
+<span class="sd">            uses all of the experiment's questions.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The created :py:class:`ReviewQueue`.</span>
+<span class="sd">    """</span>
+    <span class="n">body</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">"display_name"</span><span class="p">:</span> <span class="n">display_name</span><span class="p">,</span>
+        <span class="s2">"queue_type"</span><span class="p">:</span> <span class="n">ReviewQueueType</span><span class="p">(</span><span class="n">queue_type</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="n">question_ids</span><span class="p">:</span>
+        <span class="n">body</span><span class="p">[</span><span class="s2">"question_names"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">_question</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">question_ids</span><span class="p">]</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">_client</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"POST"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">_experiment</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">)</span><span class="si">}</span><span class="s2">/reviewQueues"</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">body</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ReviewQueue</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_review_queue"><a class="viewcode-back" href="../../../../../python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.get_review_queue">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">"3.17.1"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_review_queue</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">queue_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ReviewQueue</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Get a review queue by ID.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        experiment_id: The experiment that owns the queue.</span>
+<span class="sd">        queue_id: The queue to get.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The :py:class:`ReviewQueue`.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">ReviewQueue</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">_client</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"GET"</span><span class="p">,</span> <span class="n">_queue</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">,</span> <span class="n">queue_id</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="list_review_queues"><a class="viewcode-back" href="../../../../../python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.list_review_queues">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">"3.17.1"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_review_queues</span><span class="p">(</span>
+    <span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">filter_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">max_results</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">page_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PagedList</span><span class="p">[</span><span class="n">ReviewQueue</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    List an experiment's review queues.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        experiment_id: The experiment to list.</span>
+<span class="sd">        filter_string: Optional filter, e.g. ``"queue_type=USER"``.</span>
+<span class="sd">        max_results: Page size.</span>
+<span class="sd">        page_token: Continuation token from a previous call.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A :py:class:`PagedList` of :py:class:`ReviewQueue`.</span>
+<span class="sd">    """</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">_client</span><span class="o">.</span><span class="n">call</span><span class="p">(</span>
+        <span class="s2">"GET"</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">_experiment</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">)</span><span class="si">}</span><span class="s2">/reviewQueues"</span><span class="p">,</span>
+        <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">"filter"</span><span class="p">:</span> <span class="n">filter_string</span><span class="p">,</span> <span class="s2">"page_size"</span><span class="p">:</span> <span class="n">max_results</span><span class="p">,</span> <span class="s2">"page_token"</span><span class="p">:</span> <span class="n">page_token</span><span class="p">},</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">PagedList</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">ReviewQueue</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">resp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"review_queues"</span><span class="p">,</span> <span class="p">[])],</span>
+        <span class="n">resp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"next_page_token"</span><span class="p">),</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="update_review_queue"><a class="viewcode-back" href="../../../../../python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.update_review_queue">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">"3.17.1"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">update_review_queue</span><span class="p">(</span>
+    <span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">queue_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">display_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">owner</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">question_ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ReviewQueue</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Update a review queue. Only the fields that are passed are changed.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        experiment_id: The experiment that owns the queue.</span>
+<span class="sd">        queue_id: The queue to update.</span>
+<span class="sd">        display_name: New human-readable name.</span>
+<span class="sd">        owner: New owner. Requires MANAGE permission on the experiment.</span>
+<span class="sd">        question_ids: For a ``CUSTOM`` queue, the questions to pin. Replaces the</span>
+<span class="sd">            current set.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The updated :py:class:`ReviewQueue`.</span>
+<span class="sd">    """</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">_queue</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">,</span> <span class="n">queue_id</span><span class="p">)</span>
+    <span class="n">body</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"name"</span><span class="p">:</span> <span class="n">name</span><span class="p">}</span>
+    <span class="n">mask</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">_set_if_not_none</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="s2">"display_name"</span><span class="p">,</span> <span class="n">display_name</span><span class="p">)</span>
+    <span class="n">_set_if_not_none</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="s2">"owner"</span><span class="p">,</span> <span class="n">owner</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">question_ids</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">_set_if_not_none</span><span class="p">(</span>
+            <span class="n">body</span><span class="p">,</span>
+            <span class="n">mask</span><span class="p">,</span>
+            <span class="s2">"question_names"</span><span class="p">,</span>
+            <span class="p">[</span><span class="n">_question</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">question_ids</span><span class="p">],</span>
+        <span class="p">)</span>
+    <span class="n">_require_update</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">_client</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"PATCH"</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">"update_mask"</span><span class="p">:</span> <span class="s2">","</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">mask</span><span class="p">)})</span>
+    <span class="k">return</span> <span class="n">ReviewQueue</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="delete_review_queue"><a class="viewcode-back" href="../../../../../python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.delete_review_queue">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">"3.17.1"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">delete_review_queue</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">queue_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Delete a review queue. Answers already recorded on its items are unaffected.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        experiment_id: The experiment that owns the queue.</span>
+<span class="sd">        queue_id: The queue to delete.</span>
+<span class="sd">    """</span>
+    <span class="n">_client</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"DELETE"</span><span class="p">,</span> <span class="n">_queue</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">,</span> <span class="n">queue_id</span><span class="p">))</span></div>
+
+
+<span class="c1"># ---- Members ----</span>
+
+
+<div class="viewcode-block" id="add_review_queue_member"><a class="viewcode-back" href="../../../../../python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.add_review_queue_member">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">"3.17.1"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_review_queue_member</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">queue_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">user</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ReviewQueueMember</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Assign a reviewer to a queue.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        experiment_id: The experiment that owns the queue.</span>
+<span class="sd">        queue_id: The queue to assign the reviewer to.</span>
+<span class="sd">        user: The reviewer, e.g. an email address.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The added :py:class:`ReviewQueueMember`.</span>
+<span class="sd">    """</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">_client</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"POST"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">_queue</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">,</span><span class="w"> </span><span class="n">queue_id</span><span class="p">)</span><span class="si">}</span><span class="s2">/members"</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s2">"user"</span><span class="p">:</span> <span class="n">user</span><span class="p">})</span>
+    <span class="k">return</span> <span class="n">ReviewQueueMember</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="remove_review_queue_member"><a class="viewcode-back" href="../../../../../python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.remove_review_queue_member">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">"3.17.1"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">remove_review_queue_member</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">queue_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">user</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Unassign a reviewer from a queue.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        experiment_id: The experiment that owns the queue.</span>
+<span class="sd">        queue_id: The queue to unassign the reviewer from.</span>
+<span class="sd">        user: The reviewer to unassign.</span>
+<span class="sd">    """</span>
+    <span class="n">_client</span><span class="o">.</span><span class="n">call</span><span class="p">(</span>
+        <span class="s2">"DELETE"</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">_queue</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">,</span><span class="w"> </span><span class="n">queue_id</span><span class="p">)</span><span class="si">}</span><span class="s2">/members/</span><span class="si">{</span><span class="n">quote</span><span class="p">(</span><span class="n">user</span><span class="p">,</span><span class="w"> </span><span class="n">safe</span><span class="o">=</span><span class="s1">'@'</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+        <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">"parent"</span><span class="p">:</span> <span class="n">_queue</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">,</span> <span class="n">queue_id</span><span class="p">)},</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="list_review_queue_members"><a class="viewcode-back" href="../../../../../python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.list_review_queue_members">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">"3.17.1"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_review_queue_members</span><span class="p">(</span>
+    <span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">queue_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">max_results</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">page_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PagedList</span><span class="p">[</span><span class="n">ReviewQueueMember</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    List the reviewers assigned to a queue.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        experiment_id: The experiment that owns the queue.</span>
+<span class="sd">        queue_id: The queue to list.</span>
+<span class="sd">        max_results: Page size.</span>
+<span class="sd">        page_token: Continuation token from a previous call.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A :py:class:`PagedList` of :py:class:`ReviewQueueMember`.</span>
+<span class="sd">    """</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">_client</span><span class="o">.</span><span class="n">call</span><span class="p">(</span>
+        <span class="s2">"GET"</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">_queue</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">,</span><span class="w"> </span><span class="n">queue_id</span><span class="p">)</span><span class="si">}</span><span class="s2">/members"</span><span class="p">,</span>
+        <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">"page_size"</span><span class="p">:</span> <span class="n">max_results</span><span class="p">,</span> <span class="s2">"page_token"</span><span class="p">:</span> <span class="n">page_token</span><span class="p">},</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">PagedList</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">ReviewQueueMember</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">resp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"review_queue_members"</span><span class="p">,</span> <span class="p">[])],</span>
+        <span class="n">resp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"next_page_token"</span><span class="p">),</span>
+    <span class="p">)</span></div>
+
+
+<span class="c1"># ---- Items ----</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_trace_item</span><span class="p">(</span><span class="n">trace_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="c1"># Send only the bare trace ID: the server resolves the trace location from the</span>
+    <span class="c1"># experiment, and including it would make the item distinct from the same trace</span>
+    <span class="c1"># attached without one (e.g. from the UI).</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">tid</span> <span class="o">=</span> <span class="n">parse_trace_id_v4</span><span class="p">(</span><span class="n">trace_id</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">"kind"</span><span class="p">:</span> <span class="n">ItemKind</span><span class="o">.</span><span class="n">V4_TRACE</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="s2">"v4_trace"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"trace_id"</span><span class="p">:</span> <span class="n">tid</span><span class="p">}}</span>
+
+
+<div class="viewcode-block" id="add_review_queue_items"><a class="viewcode-back" href="../../../../../python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.add_review_queue_items">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">"3.17.1"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_review_queue_items</span><span class="p">(</span>
+    <span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">queue_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">trace_ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">dataset_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">dataset_record_ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">ReviewQueueItem</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Attach traces and/or dataset records to a queue.</span>
+
+<span class="sd">    Idempotent per item: re-attaching an item keeps its existing status.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        experiment_id: The experiment that owns the queue.</span>
+<span class="sd">        queue_id: The queue to attach to.</span>
+<span class="sd">        trace_ids: Trace IDs to attach, either ``tr-&lt;id&gt;`` or, for traces stored in</span>
+<span class="sd">            Unity Catalog, ``trace:/&lt;location&gt;/&lt;id&gt;``.</span>
+<span class="sd">        dataset_id: Unity Catalog table ID of the dataset that owns ``dataset_record_ids``.</span>
+<span class="sd">        dataset_record_ids: Dataset record IDs to attach. Requires ``dataset_id``.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The resulting list of :py:class:`ReviewQueueItem`.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">dataset_record_ids</span> <span class="ow">and</span> <span class="n">dataset_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+            <span class="s2">"`dataset_id` is required when `dataset_record_ids` is set."</span>
+        <span class="p">)</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="n">_trace_item</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">trace_ids</span> <span class="ow">or</span> <span class="p">[]]</span>
+    <span class="n">items</span> <span class="o">+=</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">"kind"</span><span class="p">:</span> <span class="n">ItemKind</span><span class="o">.</span><span class="n">DATASET_RECORD</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="s2">"dataset_record"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"dataset_id"</span><span class="p">:</span> <span class="n">dataset_id</span><span class="p">,</span> <span class="s2">"dataset_record_id"</span><span class="p">:</span> <span class="n">r</span><span class="p">},</span>
+        <span class="p">}</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">dataset_record_ids</span> <span class="ow">or</span> <span class="p">[]</span>
+    <span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">items</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+            <span class="s2">"Specify `trace_ids` and/or `dataset_record_ids`."</span>
+        <span class="p">)</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">_queue</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">,</span> <span class="n">queue_id</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">_client</span><span class="o">.</span><span class="n">call</span><span class="p">(</span>
+        <span class="s2">"POST"</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">parent</span><span class="si">}</span><span class="s2">/items:batchCreate"</span><span class="p">,</span>
+        <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s2">"requests"</span><span class="p">:</span> <span class="p">[{</span><span class="s2">"parent"</span><span class="p">:</span> <span class="n">parent</span><span class="p">,</span> <span class="s2">"review_queue_item"</span><span class="p">:</span> <span class="n">i</span><span class="p">}</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">items</span><span class="p">]},</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">ReviewQueueItem</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">resp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"review_queue_items"</span><span class="p">,</span> <span class="p">[])]</span></div>
+
+
+<div class="viewcode-block" id="remove_review_queue_items"><a class="viewcode-back" href="../../../../../python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.remove_review_queue_items">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">"3.17.1"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">remove_review_queue_items</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">queue_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">item_ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Detach items from a queue. Items that are not attached are ignored.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        experiment_id: The experiment that owns the queue.</span>
+<span class="sd">        queue_id: The queue to detach from.</span>
+<span class="sd">        item_ids: The item IDs (``ReviewQueueItem.item_id``) to detach.</span>
+<span class="sd">    """</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">_queue</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">,</span> <span class="n">queue_id</span><span class="p">)</span>
+    <span class="n">_client</span><span class="o">.</span><span class="n">call</span><span class="p">(</span>
+        <span class="s2">"POST"</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">parent</span><span class="si">}</span><span class="s2">/items:batchDelete"</span><span class="p">,</span>
+        <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s2">"names"</span><span class="p">:</span> <span class="p">[</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">parent</span><span class="si">}</span><span class="s2">/items/</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">item_ids</span><span class="p">]},</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="list_review_queue_items"><a class="viewcode-back" href="../../../../../python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.list_review_queue_items">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">"3.17.1"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_review_queue_items</span><span class="p">(</span>
+    <span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">queue_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">status</span><span class="p">:</span> <span class="n">ReviewStatus</span> <span class="o">|</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"PENDING"</span><span class="p">,</span> <span class="s2">"COMPLETE"</span><span class="p">,</span> <span class="s2">"DECLINED"</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">max_results</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">page_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PagedList</span><span class="p">[</span><span class="n">ReviewQueueItem</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    List a queue's items.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        experiment_id: The experiment that owns the queue.</span>
+<span class="sd">        queue_id: The queue to list.</span>
+<span class="sd">        status: Optional status filter.</span>
+<span class="sd">        max_results: Page size.</span>
+<span class="sd">        page_token: Continuation token from a previous call. Reuse the same ``status``.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A :py:class:`PagedList` of :py:class:`ReviewQueueItem`.</span>
+<span class="sd">    """</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">_client</span><span class="o">.</span><span class="n">call</span><span class="p">(</span>
+        <span class="s2">"GET"</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">_queue</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">,</span><span class="w"> </span><span class="n">queue_id</span><span class="p">)</span><span class="si">}</span><span class="s2">/items"</span><span class="p">,</span>
+        <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">"filter"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"status=</span><span class="si">{</span><span class="n">ReviewStatus</span><span class="p">(</span><span class="n">status</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">"</span> <span class="k">if</span> <span class="n">status</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">"page_size"</span><span class="p">:</span> <span class="n">max_results</span><span class="p">,</span>
+            <span class="s2">"page_token"</span><span class="p">:</span> <span class="n">page_token</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">PagedList</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">ReviewQueueItem</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">resp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"review_queue_items"</span><span class="p">,</span> <span class="p">[])],</span>
+        <span class="n">resp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"next_page_token"</span><span class="p">),</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="set_review_queue_item_status"><a class="viewcode-back" href="../../../../../python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.set_review_queue_item_status">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">"3.17.1"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">set_review_queue_item_status</span><span class="p">(</span>
+    <span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">queue_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">item_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">status</span><span class="p">:</span> <span class="n">ReviewStatus</span> <span class="o">|</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"PENDING"</span><span class="p">,</span> <span class="s2">"COMPLETE"</span><span class="p">,</span> <span class="s2">"DECLINED"</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ReviewQueueItem</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Set an item's review status.</span>
+
+<span class="sd">    ``completed_by`` is recorded by the server from the caller when moving to</span>
+<span class="sd">    ``COMPLETE`` or ``DECLINED``, and cleared when moving back to ``PENDING``.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        experiment_id: The experiment that owns the queue.</span>
+<span class="sd">        queue_id: The queue that contains the item.</span>
+<span class="sd">        item_id: The item to update.</span>
+<span class="sd">        status: ``"PENDING"``, ``"COMPLETE"``, or ``"DECLINED"``.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The updated :py:class:`ReviewQueueItem`.</span>
+<span class="sd">    """</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">_queue</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">,</span><span class="w"> </span><span class="n">queue_id</span><span class="p">)</span><span class="si">}</span><span class="s2">/items/</span><span class="si">{</span><span class="n">item_id</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">_client</span><span class="o">.</span><span class="n">call</span><span class="p">(</span>
+        <span class="s2">"PATCH"</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">,</span>
+        <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s2">"name"</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span> <span class="s2">"status"</span><span class="p">:</span> <span class="n">ReviewStatus</span><span class="p">(</span><span class="n">status</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">},</span>
+        <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">"update_mask"</span><span class="p">:</span> <span class="s2">"status"</span><span class="p">},</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">ReviewQueueItem</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="resolve_effective_review_questions"><a class="viewcode-back" href="../../../../../python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.resolve_effective_review_questions">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">"3.17.1"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">resolve_effective_review_questions</span><span class="p">(</span>
+    <span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">queue_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">item_kind</span><span class="p">:</span> <span class="n">ItemKind</span> <span class="o">|</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"V4_TRACE"</span><span class="p">,</span> <span class="s2">"DATASET_RECORD"</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">ReviewQuestion</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Return the questions reviewers answer in a queue.</span>
+
+<span class="sd">    A ``USER`` queue uses all of the experiment's questions; a ``CUSTOM`` queue uses its</span>
+<span class="sd">    pinned questions.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        experiment_id: The experiment that owns the queue.</span>
+<span class="sd">        queue_id: The queue to resolve.</span>
+<span class="sd">        item_kind: Optional item kind. Narrows the result to questions that apply to</span>
+<span class="sd">            that kind of item.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A list of :py:class:`ReviewQuestion`.</span>
+<span class="sd">    """</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">_client</span><span class="o">.</span><span class="n">call</span><span class="p">(</span>
+        <span class="s2">"GET"</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">_queue</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">,</span><span class="w"> </span><span class="n">queue_id</span><span class="p">)</span><span class="si">}</span><span class="s2">/effectiveQuestions:resolve"</span><span class="p">,</span>
+        <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">"item_kind"</span><span class="p">:</span> <span class="n">ItemKind</span><span class="p">(</span><span class="n">item_kind</span><span class="p">)</span><span class="o">.</span><span class="n">value</span> <span class="k">if</span> <span class="n">item_kind</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span><span class="p">},</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">ReviewQuestion</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">resp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"review_questions"</span><span class="p">,</span> <span class="p">[])]</span></div>
+</pre></div>
+
+              </div>
+            </div>
+            <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+      <p class="copyright">
+          &copy; MLflow Project, a Series of LF Projects, LLC. All rights reserved.
+      </p>
+
+  </div> 
+
+</footer>
+          </div>
+        </div>
+      </section>
+    </main>
+  </page>
+
+  
+
+
+  
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:'../../../../../',
+      VERSION:'3.17.2',
+      COLLAPSE_INDEX:false,
+      FILE_SUFFIX:'.html',
+      LINK_SUFFIX: '.html',
+      HAS_SOURCE:  true
+    };
+  </script>
+
+  
+
+  <script type="text/javascript" src="../../../../../_static/js/clipboard.min.js"></script>
+  <script type="text/javascript" src="../../../../../_static/js/jquery.waypoints.min.js"></script>
+
+  
+  
+  
+  <script type="text/javascript">var CLIPPY_SVG_PATH = "../../../../../_static/clippy.svg";</script>
+  <script type="text/javascript" src="../../../../../_static/js/custom.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+    jQuery(function () {
+      SphinxRtdTheme.StickyNav.enable();
+    });
+
+  </script>
+  
+
+  
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
+        // Get the code block designator class entries
+        const allHighlights = document.querySelectorAll('.highlight');
+        // Disable copyable links for notebook cell numbering and for cell outputs
+        const highlights = Array.from(allHighlights).filter(highlight => !highlight.closest('.highlight-none') && 
+            !highlight.closest('.nboutput'));
+    
+        highlights.forEach(function(highlight) {
+            const copyIcon = document.createElement('span');
+            copyIcon.classList.add('copy-icon');
+            copyIcon.innerHTML = '&#xf0ea;';
+
+            copyIcon.addEventListener('click', function() {
+                const code = highlight.querySelector('pre').textContent;
+                copyToClipboard(code);
+
+                // Flash effect on click
+                this.style.color = '#0194E2';
+                setTimeout(() => {
+                    this.style.color = ''; 
+                }, 100);
+
+                // Display "Code copied to clipboard" near the clicked icon
+                const message = document.createElement('span');
+                message.textContent = "Copied!";
+                message.classList.add('copy-message'); 
+
+                // Append the message to the icon
+                this.appendChild(message);
+
+                setTimeout(() => {
+                    this.removeChild(message);
+                }, 500);
+            });
+
+            highlight.appendChild(copyIcon);
+        });
+    });
+  </script>
+
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        // Force download for notebook-download-btn
+        const downloadButtons = document.querySelectorAll('.notebook-download-btn');
+        downloadButtons.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default behavior
+
+                // Fetch the raw content of the notebook from GitHub
+                fetch(button.href)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const url = window.URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.style.display = 'none';
+                        link.href = url;
+                        const filename = button.href.split('/').pop();
+                        link.download = filename; 
+
+                        document.body.appendChild(link);
+                        link.click();
+
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(link);
+                    })
+                    .catch(err => console.error('Error fetching the notebook:', err));
+            });
+        });
+    });
+</script> 
+</body>
+</html>

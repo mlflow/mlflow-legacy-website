@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="MLflow 3.17.1 documentation" href="../../../../index.html"/>
+    <link rel="top" title="MLflow 3.17.2 documentation" href="../../../../index.html"/>
         <link rel="up" title="mlflow.genai.datasets" href="../datasets.html"/> 
 
   
@@ -148,7 +148,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.1</span>
+  <span class="header-link version">3.17.2</span>
 </div>
   </nav>
   <page>
@@ -245,7 +245,10 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.genai.datasets.evaluation_dataset</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dataset</span>
@@ -257,10 +260,22 @@
     <span class="n">DatabricksEvaluationDatasetSource</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.datasets.entities</span><span class="w"> </span><span class="kn">import</span> <span class="n">EvaluationDatasetVersion</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.mlflow_tags</span><span class="w"> </span><span class="kn">import</span> <span class="n">MLFLOW_GENAI_EVALUATE_DATASET_IDENTITY</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">pyspark.sql</span>
+
+<span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_records_sha256</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="s2">"pd.DataFrame"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="c1"># `compute_pandas_digest` skips dict columns such as `inputs`, so hash every record instead.</span>
+    <span class="c1"># `json.dumps` keeps full float precision and tells None from NaN, unlike `DataFrame.to_json`,</span>
+    <span class="c1"># and `sort_keys` makes the hash independent of the column order. `repr` keeps the type of a</span>
+    <span class="c1"># non-JSON value, so a datetime doesn't hash the same as its string form.</span>
+    <span class="n">records</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s2">"records"</span><span class="p">),</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="nb">repr</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">records</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_parse_datetime</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
@@ -329,6 +344,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_databricks_dataset</span> <span class="o">=</span> <span class="n">dataset</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_mlflow_dataset</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_df</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_latest_version</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_latest_version_resolved</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">"""Check equality with another dataset."""</span>
@@ -408,8 +425,23 @@
         <span class="k">return</span> <span class="n">DatabricksEvaluationDatasetSource</span><span class="p">(</span>
             <span class="n">table_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
             <span class="n">dataset_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_id</span><span class="p">,</span>
-            <span class="n">version</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">version</span><span class="p">,</span>
+            <span class="n">version</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_resolve_version</span><span class="p">(),</span>
         <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_resolve_version</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Return the pinned version, or the newest version for a latest Databricks handle."""</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mlflow_dataset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_latest_version_resolved</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_latest_version_resolved</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="c1"># The newest version is looked up after the records are read, so a write in between</span>
+            <span class="c1"># can label this handle with a newer version than the records it read. This is</span>
+            <span class="c1"># accepted to avoid a backend change.</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_latest_version</span> <span class="o">=</span> <span class="nb">max</span><span class="p">((</span><span class="n">v</span><span class="o">.</span><span class="n">version</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_versions</span><span class="p">()),</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"Failed to resolve the latest dataset version"</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_latest_version</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">source_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
@@ -514,14 +546,35 @@
 <div class="viewcode-block" id="EvaluationDataset.to_df"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset.to_df">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_df</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"pd.DataFrame"</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""Convert the dataset to a pandas DataFrame."""</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mlflow_dataset</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mlflow_dataset</span><span class="o">.</span><span class="n">to_df</span><span class="p">()</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attach_identity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mlflow_dataset</span><span class="o">.</span><span class="n">to_df</span><span class="p">())</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">_databricks_profile_env</span>
 
             <span class="k">with</span> <span class="n">_databricks_profile_env</span><span class="p">():</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_databricks_dataset</span><span class="o">.</span><span class="n">to_df</span><span class="p">()</span>
+            <span class="c1"># Resolve the latest version again now that the records are read.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_latest_version</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_latest_version_resolved</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="c1"># Attach after `self._df` is set: the digest fallback calls `to_df()`.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_attach_identity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_df</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span></div>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_attach_identity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="s2">"pd.DataFrame"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"pd.DataFrame"</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">entity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_mlflow_entity</span><span class="p">()</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="n">MLFLOW_GENAI_EVALUATE_DATASET_IDENTITY</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">"name"</span><span class="p">:</span> <span class="n">entity</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="s2">"digest"</span><span class="p">:</span> <span class="n">entity</span><span class="o">.</span><span class="n">digest</span><span class="p">,</span>
+                <span class="s2">"source_type"</span><span class="p">:</span> <span class="n">entity</span><span class="o">.</span><span class="n">source_type</span><span class="p">,</span>
+                <span class="s2">"source"</span><span class="p">:</span> <span class="n">entity</span><span class="o">.</span><span class="n">source</span><span class="p">,</span>
+                <span class="s2">"schema"</span><span class="p">:</span> <span class="n">entity</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span>
+                <span class="s2">"profile"</span><span class="p">:</span> <span class="n">entity</span><span class="o">.</span><span class="n">profile</span><span class="p">,</span>
+                <span class="s2">"records_sha256"</span><span class="p">:</span> <span class="n">compute_records_sha256</span><span class="p">(</span><span class="n">df</span><span class="p">),</span>
+            <span class="p">}</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"Failed to attach the dataset identity to the DataFrame"</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df</span>
 
 <div class="viewcode-block" id="EvaluationDataset.has_records"><a class="viewcode-back" href="../../../../python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset.has_records">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">has_records</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""Check if dataset records are loaded without triggering a load."""</span>
@@ -634,7 +687,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../../',
-      VERSION:'3.17.1',
+      VERSION:'3.17.2',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',
