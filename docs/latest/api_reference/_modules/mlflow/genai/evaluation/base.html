@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="MLflow 3.17.1 documentation" href="../../../../index.html"/>
+    <link rel="top" title="MLflow 3.17.2 documentation" href="../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../index.html"/> 
 
   
@@ -148,7 +148,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.1</span>
+  <span class="header-link version">3.17.2</span>
 </div>
   </nav>
   <page>
@@ -252,6 +252,7 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">mlflow</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.data.dataset</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dataset</span> <span class="k">as</span> <span class="n">DatasetEntity</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.dataset_input</span><span class="w"> </span><span class="kn">import</span> <span class="n">DatasetInput</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.evaluation_dataset</span><span class="w"> </span><span class="kn">import</span> <span class="n">EvaluationDataset</span> <span class="k">as</span> <span class="n">EntityEvaluationDataset</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.logged_model_input</span><span class="w"> </span><span class="kn">import</span> <span class="n">LoggedModelInput</span>
@@ -259,6 +260,11 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.datasets.evaluation_dataset</span><span class="w"> </span><span class="kn">import</span> <span class="n">EvaluationDataset</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.evaluation.constant</span><span class="w"> </span><span class="kn">import</span> <span class="n">InputDatasetColumn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.evaluation.lineage</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AGENT_URI_ATTR</span><span class="p">,</span>
+    <span class="n">get_dataset_entity_from_attrs</span><span class="p">,</span>
+    <span class="n">log_lineage_tags</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.evaluation.session_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">validate_session_level_evaluation_inputs</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.evaluation.utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">_convert_to_eval_set</span><span class="p">,</span>
@@ -558,6 +564,8 @@
     <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.evaluation</span><span class="w"> </span><span class="kn">import</span> <span class="n">harness</span>
 
     <span class="n">scorers</span> <span class="o">=</span> <span class="n">validate_scorers</span><span class="p">(</span><span class="n">scorers</span><span class="p">)</span>
+    <span class="c1"># Lineage records the user's function; `predict_fn` is wrapped or cleared for simulation below.</span>
+    <span class="n">original_predict_fn</span> <span class="o">=</span> <span class="n">predict_fn</span>
 
     <span class="c1"># Handle ConversationSimulator: prepare for simulation, but run it inside the run context</span>
     <span class="c1"># so that traces are logged to the correct run.</span>
@@ -614,6 +622,8 @@
         <span class="c1"># Validate session-level input if session-level scorers are present</span>
         <span class="n">validate_session_level_evaluation_inputs</span><span class="p">(</span><span class="n">scorers</span><span class="p">,</span> <span class="n">predict_fn</span><span class="p">)</span>
 
+        <span class="c1"># A DataFrame from `EvaluationDataset.to_df()` keeps the dataset identity if unchanged.</span>
+        <span class="n">dataset_entity</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">is_managed_dataset</span> <span class="k">else</span> <span class="n">get_dataset_entity_from_attrs</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">_convert_to_eval_set</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
         <span class="n">builtin_scorers</span> <span class="o">=</span> <span class="p">[</span>
@@ -650,6 +660,9 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="n">EvaluationDataset</span><span class="p">,</span> <span class="n">EntityEvaluationDataset</span><span class="p">)):</span>
             <span class="n">mlflow_dataset</span> <span class="o">=</span> <span class="n">data</span>
             <span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">to_df</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">dataset_entity</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">mlflow_dataset</span> <span class="o">=</span> <span class="n">dataset_entity</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">data</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># Use precomputed name from ConversationSimulator, or default "dataset" for</span>
             <span class="c1"># other sources. Pass precomputed_digest if available (from ConversationSimulator).</span>
@@ -671,13 +684,14 @@
         <span class="c1"># NB: Set this tag before run finishes to suppress the generic run URL printing.</span>
         <span class="k">if</span> <span class="n">run</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">MLFLOW_RUN_TYPE</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">set_tag</span><span class="p">(</span><span class="n">run_id</span><span class="p">,</span> <span class="n">MLFLOW_RUN_TYPE</span><span class="p">,</span> <span class="n">MLFLOW_RUN_TYPE_GENAI_EVALUATE</span><span class="p">)</span>
+        <span class="n">log_lineage_tags</span><span class="p">(</span><span class="n">run_id</span><span class="p">,</span> <span class="n">scorers</span><span class="p">,</span> <span class="n">original_predict_fn</span><span class="p">)</span>
 
         <span class="n">result</span> <span class="o">=</span> <span class="n">harness</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
             <span class="n">predict_fn</span><span class="o">=</span><span class="n">predict_fn</span><span class="p">,</span>
             <span class="n">eval_df</span><span class="o">=</span><span class="n">df</span><span class="p">,</span>
             <span class="n">scorers</span><span class="o">=</span><span class="n">scorers</span><span class="p">,</span>
             <span class="n">run_id</span><span class="o">=</span><span class="n">run_id</span><span class="p">,</span>
-            <span class="n">dataset</span><span class="o">=</span><span class="n">mlflow_dataset</span> <span class="k">if</span> <span class="n">is_managed_dataset</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">dataset</span><span class="o">=</span><span class="n">mlflow_dataset</span> <span class="k">if</span> <span class="n">is_managed_dataset</span> <span class="ow">or</span> <span class="n">dataset_entity</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
         <span class="p">)</span>
 
     <span class="k">try</span><span class="p">:</span>
@@ -689,12 +703,13 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_log_dataset_input</span><span class="p">(</span>
-    <span class="n">data</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">,</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">Dataset</span> <span class="o">|</span> <span class="n">DatasetEntity</span><span class="p">,</span>
     <span class="n">run_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">model_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="n">client</span> <span class="o">=</span> <span class="n">MlflowClient</span><span class="p">()</span>
-    <span class="n">dataset_input</span> <span class="o">=</span> <span class="n">DatasetInput</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">_to_mlflow_entity</span><span class="p">())</span>
+    <span class="n">entity</span> <span class="o">=</span> <span class="n">data</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">DatasetEntity</span><span class="p">)</span> <span class="k">else</span> <span class="n">data</span><span class="o">.</span><span class="n">_to_mlflow_entity</span><span class="p">()</span>
+    <span class="n">dataset_input</span> <span class="o">=</span> <span class="n">DatasetInput</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">entity</span><span class="p">)</span>
     <span class="n">client</span><span class="o">.</span><span class="n">log_inputs</span><span class="p">(</span>
         <span class="n">run_id</span><span class="o">=</span><span class="n">run_id</span><span class="p">,</span>
         <span class="n">datasets</span><span class="o">=</span><span class="p">[</span><span class="n">dataset_input</span><span class="p">],</span>
@@ -860,13 +875,15 @@
     <span class="k">match</span> <span class="n">schema</span><span class="p">:</span>
         <span class="k">case</span> <span class="s2">"apps"</span><span class="p">:</span>
             <span class="n">app_config</span> <span class="o">=</span> <span class="n">_setup_databricks_app_client</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">_create_app_predict_fn</span><span class="p">(</span><span class="n">app_config</span><span class="o">.</span><span class="n">app_invocation_url</span><span class="p">,</span> <span class="n">app_config</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+            <span class="n">predict_fn</span> <span class="o">=</span> <span class="n">_create_app_predict_fn</span><span class="p">(</span><span class="n">app_config</span><span class="o">.</span><span class="n">app_invocation_url</span><span class="p">,</span> <span class="n">app_config</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
         <span class="k">case</span> <span class="s2">"endpoints"</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">_create_endpoint_predict_fn</span><span class="p">(</span><span class="n">endpoint_uri</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+            <span class="n">predict_fn</span> <span class="o">=</span> <span class="n">_create_endpoint_predict_fn</span><span class="p">(</span><span class="n">endpoint_uri</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
         <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">"Unsupported endpoint schema: </span><span class="si">{</span><span class="n">schema</span><span class="si">}</span><span class="s2">. Expected 'endpoints' or 'apps'."</span>
-            <span class="p">)</span></div>
+            <span class="p">)</span>
+    <span class="nb">setattr</span><span class="p">(</span><span class="n">predict_fn</span><span class="p">,</span> <span class="n">AGENT_URI_ATTR</span><span class="p">,</span> <span class="n">endpoint_uri</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">predict_fn</span></div>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_create_endpoint_predict_fn</span><span class="p">(</span><span class="n">endpoint_uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
@@ -988,7 +1005,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../../',
-      VERSION:'3.17.1',
+      VERSION:'3.17.2',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',
