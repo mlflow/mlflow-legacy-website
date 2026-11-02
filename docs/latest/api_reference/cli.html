@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="MLflow 3.17.2 documentation" href="index.html"/>
+    <link rel="top" title="MLflow 3.18.0 documentation" href="index.html"/>
         <link rel="next" title="MLflow Authentication Python API" href="/auth/python-api.html"/>
         <link rel="prev" title="TypeScript API" href="/typescript_api/index.html"/> 
 
@@ -148,7 +148,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.2</span>
+  <span class="header-link version">3.18.0</span>
 </div>
   </nav>
   <page>
@@ -299,7 +299,23 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#mlflow-server">server</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#mlflow-skills">skills</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mlflow-skills-delete-alias">delete-alias</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mlflow-skills-delete-tag">delete-tag</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mlflow-skills-delete-version">delete-version</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mlflow-skills-delete-version-tag">delete-version-tag</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mlflow-skills-get">get</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mlflow-skills-get-version">get-version</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mlflow-skills-import">import</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#mlflow-skills-list">list</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mlflow-skills-pull">pull</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mlflow-skills-register">register</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mlflow-skills-search">search</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mlflow-skills-search-versions">search-versions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mlflow-skills-set-alias">set-alias</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mlflow-skills-set-tag">set-tag</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mlflow-skills-set-version-tag">set-version-tag</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mlflow-skills-update">update</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mlflow-skills-update-version">update-version</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#mlflow-skills-view">view</a></li>
 </ul>
 </li>
@@ -978,10 +994,10 @@ Always take a backup of your database before running this command.</p>
 or tag filter (mutually exclusive). When neither –name nor –tag is
 specified, all resources of the given type in the source workspace are moved.</p>
 <p>The –resource-type value is the database table name (e.g. experiments,
-registered_models, evaluation_datasets, webhooks, jobs).</p>
-<p>Tag filtering (–tag) is supported for experiments and registered_models
-only. When multiple –tag flags are given, only resources matching ALL tags
-are included (AND logic).</p>
+registered_models, skills, evaluation_datasets, webhooks, jobs).</p>
+<p>Tag filtering (–tag) is supported for experiments, registered_models,
+mcp_servers, and skills only. When multiple –tag flags are given, only resources matching
+ALL tags are included (AND logic).</p>
 <div class="line-block">
 <div class="line">Examples:</div>
 <div class="line-block">
@@ -1001,6 +1017,12 @@ are included (AND logic).</p>
 <div class="line">mlflow db move-resources sqlite:///mlflow.db </div>
 <div class="line-block">
 <div class="line">–from default –to team-a –resource-type registered_models</div>
+</div>
+<div class="line"># Move specific skills by name (standalone or &#64;organization/name)</div>
+<div class="line">mlflow db move-resources sqlite:///mlflow.db </div>
+<div class="line-block">
+<div class="line">–from default –to team-a –resource-type skills </div>
+<div class="line">–name my-skill –name &#64;acme/team-skill</div>
 </div>
 <div class="line"># Move experiments and repoint their artifact roots to the target</div>
 <div class="line"># workspace’s artifact root (new runs land there, existing artifact</div>
@@ -1225,7 +1247,7 @@ mlflow demo –tracking-uri <a class="reference external" href="http://localhost
 <p>Deploy MLflow models to custom targets.
 Run <cite>mlflow deployments help –target-name &lt;target-name&gt;</cite> for
 more details on the supported URI format and config options for a given target.
-Support is currently installed for deployment to: faketarget, databricks, http, https, openai, sagemaker</p>
+Support is currently installed for deployment to: databricks, http, https, openai, faketarget, sagemaker</p>
 <p>See all supported deployment targets and installation instructions in
 <a class="reference external" href="https://mlflow.org/docs/latest/plugins.html#community-plugins">https://mlflow.org/docs/latest/plugins.html#community-plugins</a></p>
 <p>You can also write your own plugin for deployment to a custom target. For instructions on
@@ -1269,7 +1291,7 @@ writing and distributing a plugin, see
 <cite>mlflow deployments help –target-name &lt;target-name&gt;</cite> for
 more details on the supported URI format and config options
 for a given target.
-Support is currently installed for deployment to: faketarget, databricks, http, https, openai, sagemaker</p>
+Support is currently installed for deployment to: databricks, http, https, openai, faketarget, sagemaker</p>
 <p>See all supported deployment targets and installation
 instructions at
 <a class="reference external" href="https://mlflow.org/docs/latest/plugins.html#community-plugins">https://mlflow.org/docs/latest/plugins.html#community-plugins</a></p>
@@ -1316,7 +1338,7 @@ instructions at
 <cite>mlflow deployments help –target-name &lt;target-name&gt;</cite> for
 more details on the supported URI format and config options
 for a given target.
-Support is currently installed for deployment to: faketarget, databricks, http, https, openai, sagemaker</p>
+Support is currently installed for deployment to: databricks, http, https, openai, faketarget, sagemaker</p>
 <p>See all supported deployment targets and installation
 instructions at
 <a class="reference external" href="https://mlflow.org/docs/latest/plugins.html#community-plugins">https://mlflow.org/docs/latest/plugins.html#community-plugins</a></p>
@@ -1356,7 +1378,7 @@ instructions at
 <cite>mlflow deployments help –target-name &lt;target-name&gt;</cite> for
 more details on the supported URI format and config options
 for a given target.
-Support is currently installed for deployment to: faketarget, databricks, http, https, openai, sagemaker</p>
+Support is currently installed for deployment to: databricks, http, https, openai, faketarget, sagemaker</p>
 <p>See all supported deployment targets and installation
 instructions at
 <a class="reference external" href="https://mlflow.org/docs/latest/plugins.html#community-plugins">https://mlflow.org/docs/latest/plugins.html#community-plugins</a></p>
@@ -1384,7 +1406,7 @@ instructions at
 <cite>mlflow deployments help –target-name &lt;target-name&gt;</cite> for
 more details on the supported URI format and config options
 for a given target.
-Support is currently installed for deployment to: faketarget, databricks, http, https, openai, sagemaker</p>
+Support is currently installed for deployment to: databricks, http, https, openai, faketarget, sagemaker</p>
 <p>See all supported deployment targets and installation
 instructions at
 <a class="reference external" href="https://mlflow.org/docs/latest/plugins.html#community-plugins">https://mlflow.org/docs/latest/plugins.html#community-plugins</a></p>
@@ -1425,7 +1447,7 @@ see the following documentation:
 <cite>mlflow deployments help –target-name &lt;target-name&gt;</cite> for
 more details on the supported URI format and config options
 for a given target.
-Support is currently installed for deployment to: faketarget, databricks, http, https, openai, sagemaker</p>
+Support is currently installed for deployment to: databricks, http, https, openai, faketarget, sagemaker</p>
 <p>See all supported deployment targets and installation
 instructions at
 <a class="reference external" href="https://mlflow.org/docs/latest/plugins.html#community-plugins">https://mlflow.org/docs/latest/plugins.html#community-plugins</a></p>
@@ -1472,7 +1494,7 @@ target.</p>
 <cite>mlflow deployments help –target-name &lt;target-name&gt;</cite> for
 more details on the supported URI format and config options
 for a given target.
-Support is currently installed for deployment to: faketarget, databricks, http, https, openai, sagemaker</p>
+Support is currently installed for deployment to: databricks, http, https, openai, faketarget, sagemaker</p>
 <p>See all supported deployment targets and installation
 instructions at
 <a class="reference external" href="https://mlflow.org/docs/latest/plugins.html#community-plugins">https://mlflow.org/docs/latest/plugins.html#community-plugins</a></p>
@@ -1500,7 +1522,7 @@ instructions at
 <cite>mlflow deployments help –target-name &lt;target-name&gt;</cite> for
 more details on the supported URI format and config options
 for a given target.
-Support is currently installed for deployment to: faketarget, databricks, http, https, openai, sagemaker</p>
+Support is currently installed for deployment to: databricks, http, https, openai, faketarget, sagemaker</p>
 <p>See all supported deployment targets and installation
 instructions at
 <a class="reference external" href="https://mlflow.org/docs/latest/plugins.html#community-plugins">https://mlflow.org/docs/latest/plugins.html#community-plugins</a></p>
@@ -1523,7 +1545,7 @@ options and the target’s URI format.</p>
 <cite>mlflow deployments help –target-name &lt;target-name&gt;</cite> for
 more details on the supported URI format and config options
 for a given target.
-Support is currently installed for deployment to: faketarget, databricks, http, https, openai, sagemaker</p>
+Support is currently installed for deployment to: databricks, http, https, openai, faketarget, sagemaker</p>
 <p>See all supported deployment targets and installation
 instructions at
 <a class="reference external" href="https://mlflow.org/docs/latest/plugins.html#community-plugins">https://mlflow.org/docs/latest/plugins.html#community-plugins</a></p>
@@ -1552,7 +1574,7 @@ the <cite>delete</cite>, <cite>update</cite>, and <cite>get</cite> commands.</p>
 <cite>mlflow deployments help –target-name &lt;target-name&gt;</cite> for
 more details on the supported URI format and config options
 for a given target.
-Support is currently installed for deployment to: faketarget, databricks, http, https, openai, sagemaker</p>
+Support is currently installed for deployment to: databricks, http, https, openai, faketarget, sagemaker</p>
 <p>See all supported deployment targets and installation
 instructions at
 <a class="reference external" href="https://mlflow.org/docs/latest/plugins.html#community-plugins">https://mlflow.org/docs/latest/plugins.html#community-plugins</a></p>
@@ -1574,7 +1596,7 @@ instructions at
 <cite>mlflow deployments help –target-name &lt;target-name&gt;</cite> for
 more details on the supported URI format and config options
 for a given target.
-Support is currently installed for deployment to: faketarget, databricks, http, https, openai, sagemaker</p>
+Support is currently installed for deployment to: databricks, http, https, openai, faketarget, sagemaker</p>
 <p>See all supported deployment targets and installation
 instructions at
 <a class="reference external" href="https://mlflow.org/docs/latest/plugins.html#community-plugins">https://mlflow.org/docs/latest/plugins.html#community-plugins</a></p>
@@ -1608,7 +1630,7 @@ instructions at
 <cite>mlflow deployments help –target-name &lt;target-name&gt;</cite> for
 more details on the supported URI format and config options
 for a given target.
-Support is currently installed for deployment to: faketarget, databricks, http, https, openai, sagemaker</p>
+Support is currently installed for deployment to: databricks, http, https, openai, faketarget, sagemaker</p>
 <p>See all supported deployment targets and installation
 instructions at
 <a class="reference external" href="https://mlflow.org/docs/latest/plugins.html#community-plugins">https://mlflow.org/docs/latest/plugins.html#community-plugins</a></p>
@@ -1654,7 +1676,7 @@ instructions at
 <cite>mlflow deployments help –target-name &lt;target-name&gt;</cite> for
 more details on the supported URI format and config options
 for a given target.
-Support is currently installed for deployment to: faketarget, databricks, http, https, openai, sagemaker</p>
+Support is currently installed for deployment to: databricks, http, https, openai, faketarget, sagemaker</p>
 <p>See all supported deployment targets and installation
 instructions at
 <a class="reference external" href="https://mlflow.org/docs/latest/plugins.html#community-plugins">https://mlflow.org/docs/latest/plugins.html#community-plugins</a></p>
@@ -1709,7 +1731,7 @@ model URI must also be specified).</p>
 <cite>mlflow deployments help –target-name &lt;target-name&gt;</cite> for
 more details on the supported URI format and config options
 for a given target.
-Support is currently installed for deployment to: faketarget, databricks, http, https, openai, sagemaker</p>
+Support is currently installed for deployment to: databricks, http, https, openai, faketarget, sagemaker</p>
 <p>See all supported deployment targets and installation
 instructions at
 <a class="reference external" href="https://mlflow.org/docs/latest/plugins.html#community-plugins">https://mlflow.org/docs/latest/plugins.html#community-plugins</a></p>
@@ -1756,7 +1778,7 @@ instructions at
 <cite>mlflow deployments help –target-name &lt;target-name&gt;</cite> for
 more details on the supported URI format and config options
 for a given target.
-Support is currently installed for deployment to: faketarget, databricks, http, https, openai, sagemaker</p>
+Support is currently installed for deployment to: databricks, http, https, openai, faketarget, sagemaker</p>
 <p>See all supported deployment targets and installation
 instructions at
 <a class="reference external" href="https://mlflow.org/docs/latest/plugins.html#community-plugins">https://mlflow.org/docs/latest/plugins.html#community-plugins</a></p>
@@ -3626,6 +3648,12 @@ same. Pick your setup by how you’re deploying:</p>
 </dd></dl>
 
 <dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-server-artifacts-presigned-only">
+<span class="sig-name descname"><span class="pre">--artifacts-presigned-only</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-mlflow-server-artifacts-presigned-only" title="Permalink to this definition"> </a></dt>
+<dd><p>Require direct-to-storage transfers for run and model artifacts using presigned URLs. Trace attachments and artifact-backed trace data may still pass through the server. Default: False</p>
+</dd></dl>
+
+<dl class="std option">
 <dt class="sig sig-object std" id="cmdoption-mlflow-server-artifacts-destination">
 <span class="sig-name descname"><span class="pre">--artifacts-destination</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;URI&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-server-artifacts-destination" title="Permalink to this definition"> </a></dt>
 <dd><p>The base artifact location from which to resolve artifact upload/download/list requests (e.g. ‘s3://my-bucket’). Defaults to a local ‘./mlartifacts’ directory. This option only applies when the tracking server is configured to stream artifacts and the experiment’s artifact root location is http or mlflow-artifacts URI.</p>
@@ -3720,7 +3748,7 @@ same. Pick your setup by how you’re deploying:</p>
 <dd><p>Application name to be used for the tracking server. If not specified, ‘mlflow.server:app’ will be used.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Options</dt>
-<dd class="field-odd"><p>custom_app | basic-auth</p>
+<dd class="field-odd"><p>basic-auth | custom_app</p>
 </dd>
 </dl>
 </dd></dl>
@@ -3816,6 +3844,14 @@ same. Pick your setup by how you’re deploying:</p>
 <span class="sig-name descname"><span class="pre">MLFLOW_ARTIFACTS_ONLY</span></span></dt>
 <dd><blockquote>
 <div><p>Provide a default for <a class="reference internal" href="#cmdoption-mlflow-server-artifacts-only"><code class="xref std std-option docutils literal notranslate"><span class="pre">--artifacts-only</span></code></a></p>
+</div></blockquote>
+</dd></dl>
+
+<span class="target" id="mlflow-server-artifacts-presigned-only-mlflow-artifacts-presigned-only"></span><dl class="std envvar">
+<dt class="sig sig-object std">
+<span class="sig-name descname"><span class="pre">MLFLOW_ARTIFACTS_PRESIGNED_ONLY</span></span></dt>
+<dd><blockquote>
+<div><p>Provide a default for <a class="reference internal" href="#cmdoption-mlflow-server-artifacts-presigned-only"><code class="xref std std-option docutils literal notranslate"><span class="pre">--artifacts-presigned-only</span></code></a></p>
 </div></blockquote>
 </dd></dl>
 
@@ -3934,10 +3970,299 @@ same. Pick your setup by how you’re deploying:</p>
 </div>
 <div class="section" id="mlflow-skills">
 <h3><a class="toc-backref" href="#id24">skills</a><a class="headerlink" href="#mlflow-skills" title="Permalink to this headline"> </a></h3>
-<p>Inspect the MLflow skills bundled with this installation.</p>
+<p>Inspect bundled MLflow skills and pull skills from the skill registry.</p>
 <p class="rubric">Usage</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mlflow<span class="w"> </span>skills<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>COMMAND<span class="w"> </span><span class="o">[</span>ARGS<span class="o">]</span>...
 </pre></div>
+</div>
+<div class="section" id="mlflow-skills-delete-alias">
+<h4>delete-alias<a class="headerlink" href="#mlflow-skills-delete-alias" title="Permalink to this headline"> </a></h4>
+<p>Delete an alias from a parent Skill.</p>
+<p class="rubric">Usage</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mlflow<span class="w"> </span>skills<span class="w"> </span>delete-alias<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span><span class="o">[</span>SKILL_URI<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-delete-alias-skill-uri">
+<span class="sig-name descname"><span class="pre">--skill-uri</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;skill_uri_option&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-delete-alias-skill-uri" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-delete-alias-alias">
+<span class="sig-name descname"><span class="pre">--alias</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;alias&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-delete-alias-alias" title="Permalink to this definition"> </a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-delete-alias-output">
+<span class="sig-name descname"><span class="pre">--output</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;output&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-delete-alias-output" title="Permalink to this definition"> </a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'table'</span></code></p>
+</dd>
+<dt class="field-even">Options</dt>
+<dd class="field-even"><p>table | json</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-delete-alias-arg-SKILL_URI">
+<span id="cmdoption-mlflow-skills-delete-alias-arg-skill-uri"></span><span class="sig-name descname"><span class="pre">SKILL_URI</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-mlflow-skills-delete-alias-arg-SKILL_URI" title="Permalink to this definition"> </a></dt>
+<dd><p>Optional argument</p>
+</dd></dl>
+
+</div>
+<div class="section" id="mlflow-skills-delete-tag">
+<h4>delete-tag<a class="headerlink" href="#mlflow-skills-delete-tag" title="Permalink to this headline"> </a></h4>
+<p>Delete a tag from a parent Skill.</p>
+<p class="rubric">Usage</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mlflow<span class="w"> </span>skills<span class="w"> </span>delete-tag<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span><span class="o">[</span>SKILL_URI<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-delete-tag-skill-uri">
+<span class="sig-name descname"><span class="pre">--skill-uri</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;skill_uri_option&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-delete-tag-skill-uri" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-delete-tag-key">
+<span class="sig-name descname"><span class="pre">--key</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;key&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-delete-tag-key" title="Permalink to this definition"> </a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-delete-tag-output">
+<span class="sig-name descname"><span class="pre">--output</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;output&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-delete-tag-output" title="Permalink to this definition"> </a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'table'</span></code></p>
+</dd>
+<dt class="field-even">Options</dt>
+<dd class="field-even"><p>table | json</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-delete-tag-arg-SKILL_URI">
+<span id="cmdoption-mlflow-skills-delete-tag-arg-skill-uri"></span><span class="sig-name descname"><span class="pre">SKILL_URI</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-mlflow-skills-delete-tag-arg-SKILL_URI" title="Permalink to this definition"> </a></dt>
+<dd><p>Optional argument</p>
+</dd></dl>
+
+</div>
+<div class="section" id="mlflow-skills-delete-version">
+<h4>delete-version<a class="headerlink" href="#mlflow-skills-delete-version" title="Permalink to this headline"> </a></h4>
+<p>Soft-delete an exact Skill version.</p>
+<p class="rubric">Usage</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mlflow<span class="w"> </span>skills<span class="w"> </span>delete-version<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span><span class="o">[</span>SKILL_URI<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-delete-version-skill-uri">
+<span class="sig-name descname"><span class="pre">--skill-uri</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;skill_uri_option&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-delete-version-skill-uri" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-delete-version-output">
+<span class="sig-name descname"><span class="pre">--output</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;output&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-delete-version-output" title="Permalink to this definition"> </a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'table'</span></code></p>
+</dd>
+<dt class="field-even">Options</dt>
+<dd class="field-even"><p>table | json</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-delete-version-arg-SKILL_URI">
+<span id="cmdoption-mlflow-skills-delete-version-arg-skill-uri"></span><span class="sig-name descname"><span class="pre">SKILL_URI</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-mlflow-skills-delete-version-arg-SKILL_URI" title="Permalink to this definition"> </a></dt>
+<dd><p>Optional argument</p>
+</dd></dl>
+
+</div>
+<div class="section" id="mlflow-skills-delete-version-tag">
+<h4>delete-version-tag<a class="headerlink" href="#mlflow-skills-delete-version-tag" title="Permalink to this headline"> </a></h4>
+<p>Delete a tag from an exact Skill version.</p>
+<p class="rubric">Usage</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mlflow<span class="w"> </span>skills<span class="w"> </span>delete-version-tag<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span><span class="o">[</span>SKILL_URI<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-delete-version-tag-skill-uri">
+<span class="sig-name descname"><span class="pre">--skill-uri</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;skill_uri_option&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-delete-version-tag-skill-uri" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-delete-version-tag-key">
+<span class="sig-name descname"><span class="pre">--key</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;key&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-delete-version-tag-key" title="Permalink to this definition"> </a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-delete-version-tag-output">
+<span class="sig-name descname"><span class="pre">--output</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;output&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-delete-version-tag-output" title="Permalink to this definition"> </a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'table'</span></code></p>
+</dd>
+<dt class="field-even">Options</dt>
+<dd class="field-even"><p>table | json</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-delete-version-tag-arg-SKILL_URI">
+<span id="cmdoption-mlflow-skills-delete-version-tag-arg-skill-uri"></span><span class="sig-name descname"><span class="pre">SKILL_URI</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-mlflow-skills-delete-version-tag-arg-SKILL_URI" title="Permalink to this definition"> </a></dt>
+<dd><p>Optional argument</p>
+</dd></dl>
+
+</div>
+<div class="section" id="mlflow-skills-get">
+<h4>get<a class="headerlink" href="#mlflow-skills-get" title="Permalink to this headline"> </a></h4>
+<p>Get metadata for a registered parent Skill.</p>
+<p class="rubric">Usage</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mlflow<span class="w"> </span>skills<span class="w"> </span>get<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span><span class="o">[</span>SKILL_URI<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-get-skill-uri">
+<span class="sig-name descname"><span class="pre">--skill-uri</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;skill_uri_option&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-get-skill-uri" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-get-output">
+<span class="sig-name descname"><span class="pre">--output</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;output&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-get-output" title="Permalink to this definition"> </a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'table'</span></code></p>
+</dd>
+<dt class="field-even">Options</dt>
+<dd class="field-even"><p>table | json</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-get-arg-SKILL_URI">
+<span id="cmdoption-mlflow-skills-get-arg-skill-uri"></span><span class="sig-name descname"><span class="pre">SKILL_URI</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-mlflow-skills-get-arg-SKILL_URI" title="Permalink to this definition"> </a></dt>
+<dd><p>Optional argument</p>
+</dd></dl>
+
+</div>
+<div class="section" id="mlflow-skills-get-version">
+<h4>get-version<a class="headerlink" href="#mlflow-skills-get-version" title="Permalink to this headline"> </a></h4>
+<p>Get a Skill version by exact version, alias, or latest resolved version.</p>
+<p class="rubric">Usage</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mlflow<span class="w"> </span>skills<span class="w"> </span>get-version<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span><span class="o">[</span>SKILL_URI<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-get-version-skill-uri">
+<span class="sig-name descname"><span class="pre">--skill-uri</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;skill_uri_option&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-get-version-skill-uri" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-get-version-output">
+<span class="sig-name descname"><span class="pre">--output</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;output&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-get-version-output" title="Permalink to this definition"> </a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'table'</span></code></p>
+</dd>
+<dt class="field-even">Options</dt>
+<dd class="field-even"><p>table | json</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-get-version-arg-SKILL_URI">
+<span id="cmdoption-mlflow-skills-get-version-arg-skill-uri"></span><span class="sig-name descname"><span class="pre">SKILL_URI</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-mlflow-skills-get-version-arg-SKILL_URI" title="Permalink to this definition"> </a></dt>
+<dd><p>Optional argument</p>
+</dd></dl>
+
+</div>
+<div class="section" id="mlflow-skills-import">
+<h4>import<a class="headerlink" href="#mlflow-skills-import" title="Permalink to this headline"> </a></h4>
+<p>Discover and atomically register Skills from a Git repository.</p>
+<p class="rubric">Usage</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mlflow<span class="w"> </span>skills<span class="w"> </span>import<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-import-source">
+<span class="sig-name descname"><span class="pre">--source</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;source&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-import-source" title="Permalink to this definition"> </a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-import-ref">
+<span class="sig-name descname"><span class="pre">--ref</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;ref&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-import-ref" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-import-subpath">
+<span class="sig-name descname"><span class="pre">--subpath</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;subpath&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-import-subpath" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-import-skill-name">
+<span class="sig-name descname"><span class="pre">--skill-name</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;skill_name&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-import-skill-name" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-import-organization">
+<span class="sig-name descname"><span class="pre">--organization</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;organization&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-import-organization" title="Permalink to this definition"> </a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">''</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-import-status">
+<span class="sig-name descname"><span class="pre">--status</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;status&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-import-status" title="Permalink to this definition"> </a></dt>
+<dd><p>Status for new versions; exact existing matches keep their current status.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'active'</span></code></p>
+</dd>
+<dt class="field-even">Options</dt>
+<dd class="field-even"><p>active | draft</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-import-output">
+<span class="sig-name descname"><span class="pre">--output</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;output&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-import-output" title="Permalink to this definition"> </a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'table'</span></code></p>
+</dd>
+<dt class="field-even">Options</dt>
+<dd class="field-even"><p>table | json</p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 <div class="section" id="mlflow-skills-list">
 <h4>list<a class="headerlink" href="#mlflow-skills-list" title="Permalink to this headline"> </a></h4>
@@ -3946,6 +4271,616 @@ same. Pick your setup by how you’re deploying:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mlflow<span class="w"> </span>skills<span class="w"> </span>list<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="mlflow-skills-pull">
+<h4>pull<a class="headerlink" href="#mlflow-skills-pull" title="Permalink to this headline"> </a></h4>
+<p>Pull a registered skill’s content to a local directory.</p>
+<p>URI is skills:/&lt;name&gt;/&lt;version&gt;, skills:/&lt;name&gt;&#64;&lt;alias&gt;, or skills:/&lt;name&gt; for the latest
+version, with an organization written as skills:/&#64;&lt;organization&gt;/&lt;name&gt;. Content is fetched
+from the version’s source with your own credentials and verified against its recorded
+digest before anything is written to the destination.</p>
+<p class="rubric">Usage</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mlflow<span class="w"> </span>skills<span class="w"> </span>pull<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span><span class="o">[</span>URI<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-pull-skill-uri">
+<span class="sig-name descname"><span class="pre">--skill-uri</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;skill_uri&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-pull-skill-uri" title="Permalink to this definition"> </a></dt>
+<dd><p>Skill URI to pull, equivalent to the positional URI argument.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-pull-d">
+<span id="cmdoption-mlflow-skills-pull-destination"></span><span class="sig-name descname"><span class="pre">-d</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--destination</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;destination&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-pull-d" title="Permalink to this definition"> </a></dt>
+<dd><p>Directory to write the skill into. It must not exist or must be empty. Defaults to a directory named after the skill in the current working directory.</p>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-pull-arg-URI">
+<span id="cmdoption-mlflow-skills-pull-arg-uri"></span><span class="sig-name descname"><span class="pre">URI</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-mlflow-skills-pull-arg-URI" title="Permalink to this definition"> </a></dt>
+<dd><p>Optional argument</p>
+</dd></dl>
+
+</div>
+<div class="section" id="mlflow-skills-register">
+<h4>register<a class="headerlink" href="#mlflow-skills-register" title="Permalink to this headline"> </a></h4>
+<p>Register a Skill from a local directory or a typed remote source.</p>
+<p class="rubric">Usage</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mlflow<span class="w"> </span>skills<span class="w"> </span>register<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span><span class="o">[</span>COMMAND<span class="o">]</span><span class="w"> </span><span class="o">[</span>ARGS<span class="o">]</span>...
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-register-source">
+<span class="sig-name descname"><span class="pre">--source</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;local_source&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-register-source" title="Permalink to this definition"> </a></dt>
+<dd><p>Local skill directory to upload.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-register-name">
+<span class="sig-name descname"><span class="pre">--name</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;name&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-register-name" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-register-organization">
+<span class="sig-name descname"><span class="pre">--organization</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;organization&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-register-organization" title="Permalink to this definition"> </a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">''</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-register-status">
+<span class="sig-name descname"><span class="pre">--status</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;status&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-register-status" title="Permalink to this definition"> </a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'active'</span></code></p>
+</dd>
+<dt class="field-even">Options</dt>
+<dd class="field-even"><p>active | draft</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-register-output">
+<span class="sig-name descname"><span class="pre">--output</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;output&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-register-output" title="Permalink to this definition"> </a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'table'</span></code></p>
+</dd>
+<dt class="field-even">Options</dt>
+<dd class="field-even"><p>table | json</p>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="section" id="mlflow-skills-register-git">
+<h5>git<a class="headerlink" href="#mlflow-skills-register-git" title="Permalink to this headline"> </a></h5>
+<p>Register a Skill from a Git repository.</p>
+<p class="rubric">Usage</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mlflow<span class="w"> </span>skills<span class="w"> </span>register<span class="w"> </span>git<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-register-git-url">
+<span class="sig-name descname"><span class="pre">--url</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;url&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-register-git-url" title="Permalink to this definition"> </a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-register-git-ref">
+<span class="sig-name descname"><span class="pre">--ref</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;ref&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-register-git-ref" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-register-git-subpath">
+<span class="sig-name descname"><span class="pre">--subpath</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;subpath&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-register-git-subpath" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-register-git-name">
+<span class="sig-name descname"><span class="pre">--name</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;name&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-register-git-name" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-register-git-organization">
+<span class="sig-name descname"><span class="pre">--organization</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;organization&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-register-git-organization" title="Permalink to this definition"> </a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">''</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-register-git-status">
+<span class="sig-name descname"><span class="pre">--status</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;status&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-register-git-status" title="Permalink to this definition"> </a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'active'</span></code></p>
+</dd>
+<dt class="field-even">Options</dt>
+<dd class="field-even"><p>active | draft</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-register-git-output">
+<span class="sig-name descname"><span class="pre">--output</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;output&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-register-git-output" title="Permalink to this definition"> </a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'table'</span></code></p>
+</dd>
+<dt class="field-even">Options</dt>
+<dd class="field-even"><p>table | json</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="mlflow-skills-register-oci">
+<h5>oci<a class="headerlink" href="#mlflow-skills-register-oci" title="Permalink to this headline"> </a></h5>
+<p>Register a Skill from an OCI image.</p>
+<p class="rubric">Usage</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mlflow<span class="w"> </span>skills<span class="w"> </span>register<span class="w"> </span>oci<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-register-oci-image">
+<span class="sig-name descname"><span class="pre">--image</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;image&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-register-oci-image" title="Permalink to this definition"> </a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-register-oci-subpath">
+<span class="sig-name descname"><span class="pre">--subpath</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;subpath&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-register-oci-subpath" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-register-oci-name">
+<span class="sig-name descname"><span class="pre">--name</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;name&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-register-oci-name" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-register-oci-organization">
+<span class="sig-name descname"><span class="pre">--organization</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;organization&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-register-oci-organization" title="Permalink to this definition"> </a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">''</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-register-oci-status">
+<span class="sig-name descname"><span class="pre">--status</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;status&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-register-oci-status" title="Permalink to this definition"> </a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'active'</span></code></p>
+</dd>
+<dt class="field-even">Options</dt>
+<dd class="field-even"><p>active | draft</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-register-oci-output">
+<span class="sig-name descname"><span class="pre">--output</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;output&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-register-oci-output" title="Permalink to this definition"> </a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'table'</span></code></p>
+</dd>
+<dt class="field-even">Options</dt>
+<dd class="field-even"><p>table | json</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="mlflow-skills-register-zip">
+<h5>zip<a class="headerlink" href="#mlflow-skills-register-zip" title="Permalink to this headline"> </a></h5>
+<p>Register a Skill from a ZIP archive.</p>
+<p class="rubric">Usage</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mlflow<span class="w"> </span>skills<span class="w"> </span>register<span class="w"> </span>zip<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-register-zip-url">
+<span class="sig-name descname"><span class="pre">--url</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;url&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-register-zip-url" title="Permalink to this definition"> </a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-register-zip-subpath">
+<span class="sig-name descname"><span class="pre">--subpath</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;subpath&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-register-zip-subpath" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-register-zip-name">
+<span class="sig-name descname"><span class="pre">--name</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;name&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-register-zip-name" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-register-zip-organization">
+<span class="sig-name descname"><span class="pre">--organization</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;organization&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-register-zip-organization" title="Permalink to this definition"> </a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">''</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-register-zip-status">
+<span class="sig-name descname"><span class="pre">--status</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;status&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-register-zip-status" title="Permalink to this definition"> </a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'active'</span></code></p>
+</dd>
+<dt class="field-even">Options</dt>
+<dd class="field-even"><p>active | draft</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-register-zip-output">
+<span class="sig-name descname"><span class="pre">--output</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;output&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-register-zip-output" title="Permalink to this definition"> </a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'table'</span></code></p>
+</dd>
+<dt class="field-even">Options</dt>
+<dd class="field-even"><p>table | json</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="mlflow-skills-search">
+<h4>search<a class="headerlink" href="#mlflow-skills-search" title="Permalink to this headline"> </a></h4>
+<p>Search Skills registered on the tracking server.</p>
+<p class="rubric">Usage</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mlflow<span class="w"> </span>skills<span class="w"> </span>search<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-search-filter-string">
+<span class="sig-name descname"><span class="pre">--filter-string</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;filter_string&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-search-filter-string" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-search-max-results">
+<span class="sig-name descname"><span class="pre">--max-results</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;max_results&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-search-max-results" title="Permalink to this definition"> </a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">100</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-search-order-by">
+<span class="sig-name descname"><span class="pre">--order-by</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;order_by&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-search-order-by" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-search-page-token">
+<span class="sig-name descname"><span class="pre">--page-token</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;page_token&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-search-page-token" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-search-output">
+<span class="sig-name descname"><span class="pre">--output</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;output&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-search-output" title="Permalink to this definition"> </a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'table'</span></code></p>
+</dd>
+<dt class="field-even">Options</dt>
+<dd class="field-even"><p>table | json</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="mlflow-skills-search-versions">
+<h4>search-versions<a class="headerlink" href="#mlflow-skills-search-versions" title="Permalink to this headline"> </a></h4>
+<p>Search versions belonging to a parent Skill.</p>
+<p class="rubric">Usage</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mlflow<span class="w"> </span>skills<span class="w"> </span>search-versions<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span><span class="o">[</span>SKILL_URI<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-search-versions-skill-uri">
+<span class="sig-name descname"><span class="pre">--skill-uri</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;skill_uri_option&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-search-versions-skill-uri" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-search-versions-filter-string">
+<span class="sig-name descname"><span class="pre">--filter-string</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;filter_string&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-search-versions-filter-string" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-search-versions-max-results">
+<span class="sig-name descname"><span class="pre">--max-results</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;max_results&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-search-versions-max-results" title="Permalink to this definition"> </a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">100</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-search-versions-order-by">
+<span class="sig-name descname"><span class="pre">--order-by</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;order_by&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-search-versions-order-by" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-search-versions-page-token">
+<span class="sig-name descname"><span class="pre">--page-token</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;page_token&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-search-versions-page-token" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-search-versions-output">
+<span class="sig-name descname"><span class="pre">--output</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;output&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-search-versions-output" title="Permalink to this definition"> </a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'table'</span></code></p>
+</dd>
+<dt class="field-even">Options</dt>
+<dd class="field-even"><p>table | json</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-search-versions-arg-SKILL_URI">
+<span id="cmdoption-mlflow-skills-search-versions-arg-skill-uri"></span><span class="sig-name descname"><span class="pre">SKILL_URI</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-mlflow-skills-search-versions-arg-SKILL_URI" title="Permalink to this definition"> </a></dt>
+<dd><p>Optional argument</p>
+</dd></dl>
+
+</div>
+<div class="section" id="mlflow-skills-set-alias">
+<h4>set-alias<a class="headerlink" href="#mlflow-skills-set-alias" title="Permalink to this headline"> </a></h4>
+<p>Set an alias to a Skill version.</p>
+<p class="rubric">Usage</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mlflow<span class="w"> </span>skills<span class="w"> </span>set-alias<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span><span class="o">[</span>SKILL_URI<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-set-alias-skill-uri">
+<span class="sig-name descname"><span class="pre">--skill-uri</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;skill_uri_option&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-set-alias-skill-uri" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-set-alias-alias">
+<span class="sig-name descname"><span class="pre">--alias</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;alias&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-set-alias-alias" title="Permalink to this definition"> </a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-set-alias-version">
+<span class="sig-name descname"><span class="pre">--version</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;version&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-set-alias-version" title="Permalink to this definition"> </a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-set-alias-output">
+<span class="sig-name descname"><span class="pre">--output</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;output&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-set-alias-output" title="Permalink to this definition"> </a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'table'</span></code></p>
+</dd>
+<dt class="field-even">Options</dt>
+<dd class="field-even"><p>table | json</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-set-alias-arg-SKILL_URI">
+<span id="cmdoption-mlflow-skills-set-alias-arg-skill-uri"></span><span class="sig-name descname"><span class="pre">SKILL_URI</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-mlflow-skills-set-alias-arg-SKILL_URI" title="Permalink to this definition"> </a></dt>
+<dd><p>Optional argument</p>
+</dd></dl>
+
+</div>
+<div class="section" id="mlflow-skills-set-tag">
+<h4>set-tag<a class="headerlink" href="#mlflow-skills-set-tag" title="Permalink to this headline"> </a></h4>
+<p>Set a tag on a parent Skill.</p>
+<p class="rubric">Usage</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mlflow<span class="w"> </span>skills<span class="w"> </span>set-tag<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span><span class="o">[</span>SKILL_URI<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-set-tag-skill-uri">
+<span class="sig-name descname"><span class="pre">--skill-uri</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;skill_uri_option&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-set-tag-skill-uri" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-set-tag-key">
+<span class="sig-name descname"><span class="pre">--key</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;key&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-set-tag-key" title="Permalink to this definition"> </a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-set-tag-value">
+<span class="sig-name descname"><span class="pre">--value</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;value&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-set-tag-value" title="Permalink to this definition"> </a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-set-tag-output">
+<span class="sig-name descname"><span class="pre">--output</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;output&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-set-tag-output" title="Permalink to this definition"> </a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'table'</span></code></p>
+</dd>
+<dt class="field-even">Options</dt>
+<dd class="field-even"><p>table | json</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-set-tag-arg-SKILL_URI">
+<span id="cmdoption-mlflow-skills-set-tag-arg-skill-uri"></span><span class="sig-name descname"><span class="pre">SKILL_URI</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-mlflow-skills-set-tag-arg-SKILL_URI" title="Permalink to this definition"> </a></dt>
+<dd><p>Optional argument</p>
+</dd></dl>
+
+</div>
+<div class="section" id="mlflow-skills-set-version-tag">
+<h4>set-version-tag<a class="headerlink" href="#mlflow-skills-set-version-tag" title="Permalink to this headline"> </a></h4>
+<p>Set a tag on an exact Skill version.</p>
+<p class="rubric">Usage</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mlflow<span class="w"> </span>skills<span class="w"> </span>set-version-tag<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span><span class="o">[</span>SKILL_URI<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-set-version-tag-skill-uri">
+<span class="sig-name descname"><span class="pre">--skill-uri</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;skill_uri_option&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-set-version-tag-skill-uri" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-set-version-tag-key">
+<span class="sig-name descname"><span class="pre">--key</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;key&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-set-version-tag-key" title="Permalink to this definition"> </a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-set-version-tag-value">
+<span class="sig-name descname"><span class="pre">--value</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;value&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-set-version-tag-value" title="Permalink to this definition"> </a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-set-version-tag-output">
+<span class="sig-name descname"><span class="pre">--output</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;output&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-set-version-tag-output" title="Permalink to this definition"> </a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'table'</span></code></p>
+</dd>
+<dt class="field-even">Options</dt>
+<dd class="field-even"><p>table | json</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-set-version-tag-arg-SKILL_URI">
+<span id="cmdoption-mlflow-skills-set-version-tag-arg-skill-uri"></span><span class="sig-name descname"><span class="pre">SKILL_URI</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-mlflow-skills-set-version-tag-arg-SKILL_URI" title="Permalink to this definition"> </a></dt>
+<dd><p>Optional argument</p>
+</dd></dl>
+
+</div>
+<div class="section" id="mlflow-skills-update">
+<h4>update<a class="headerlink" href="#mlflow-skills-update" title="Permalink to this headline"> </a></h4>
+<p>Update presentation metadata for a registered parent Skill.</p>
+<p class="rubric">Usage</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mlflow<span class="w"> </span>skills<span class="w"> </span>update<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span><span class="o">[</span>SKILL_URI<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-update-skill-uri">
+<span class="sig-name descname"><span class="pre">--skill-uri</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;skill_uri_option&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-update-skill-uri" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-update-description">
+<span class="sig-name descname"><span class="pre">--description</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;description&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-update-description" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-update-icons">
+<span class="sig-name descname"><span class="pre">--icons</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;icons&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-update-icons" title="Permalink to this definition"> </a></dt>
+<dd><p>JSON list of icon descriptors.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-update-output">
+<span class="sig-name descname"><span class="pre">--output</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;output&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-update-output" title="Permalink to this definition"> </a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'table'</span></code></p>
+</dd>
+<dt class="field-even">Options</dt>
+<dd class="field-even"><p>table | json</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-update-arg-SKILL_URI">
+<span id="cmdoption-mlflow-skills-update-arg-skill-uri"></span><span class="sig-name descname"><span class="pre">SKILL_URI</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-mlflow-skills-update-arg-SKILL_URI" title="Permalink to this definition"> </a></dt>
+<dd><p>Optional argument</p>
+</dd></dl>
+
+</div>
+<div class="section" id="mlflow-skills-update-version">
+<h4>update-version<a class="headerlink" href="#mlflow-skills-update-version" title="Permalink to this headline"> </a></h4>
+<p>Update the lifecycle status of an exact Skill version.</p>
+<p class="rubric">Usage</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mlflow<span class="w"> </span>skills<span class="w"> </span>update-version<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span><span class="o">[</span>SKILL_URI<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-update-version-skill-uri">
+<span class="sig-name descname"><span class="pre">--skill-uri</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;skill_uri_option&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-update-version-skill-uri" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-update-version-status">
+<span class="sig-name descname"><span class="pre">--status</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;status&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-update-version-status" title="Permalink to this definition"> </a></dt>
+<dd><p><strong>Required</strong></p>
+<dl class="field-list simple">
+<dt class="field-odd">Options</dt>
+<dd class="field-odd"><p>active | draft | deprecated</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-update-version-output">
+<span class="sig-name descname"><span class="pre">--output</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;output&gt;</span></span><a class="headerlink" href="#cmdoption-mlflow-skills-update-version-output" title="Permalink to this definition"> </a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'table'</span></code></p>
+</dd>
+<dt class="field-even">Options</dt>
+<dd class="field-even"><p>table | json</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-mlflow-skills-update-version-arg-SKILL_URI">
+<span id="cmdoption-mlflow-skills-update-version-arg-skill-uri"></span><span class="sig-name descname"><span class="pre">SKILL_URI</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-mlflow-skills-update-version-arg-SKILL_URI" title="Permalink to this definition"> </a></dt>
+<dd><p>Optional argument</p>
+</dd></dl>
+
 </div>
 <div class="section" id="mlflow-skills-view">
 <h4>view<a class="headerlink" href="#mlflow-skills-view" title="Permalink to this headline"> </a></h4>
@@ -4740,7 +5675,7 @@ and metadata can be updated.</p>
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'./',
-      VERSION:'3.17.2',
+      VERSION:'3.18.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

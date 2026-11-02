@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 3.17.2 documentation" href="../../../index.html"/>
+    <link rel="top" title="MLflow 3.18.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -148,7 +148,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.2</span>
+  <span class="header-link version">3.18.0</span>
 </div>
   </nav>
   <page>
@@ -264,6 +264,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">replace</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
@@ -299,6 +300,9 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.model_registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModelVersion</span><span class="p">,</span> <span class="n">Prompt</span><span class="p">,</span> <span class="n">PromptVersion</span><span class="p">,</span> <span class="n">RegisteredModel</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.model_registry.model_version_stages</span><span class="w"> </span><span class="kn">import</span> <span class="n">ALL_STAGES</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.model_registry.prompt_version</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptModelConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.skill</span><span class="w"> </span><span class="kn">import</span> <span class="n">RegistryIcon</span><span class="p">,</span> <span class="n">Skill</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.skill_source</span><span class="w"> </span><span class="kn">import</span> <span class="n">GitSource</span><span class="p">,</span> <span class="n">OCISource</span><span class="p">,</span> <span class="n">SkillSourceType</span><span class="p">,</span> <span class="n">ZipSource</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.skill_version</span><span class="w"> </span><span class="kn">import</span> <span class="n">SkillVersion</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.span</span><span class="w"> </span><span class="kn">import</span> <span class="n">NO_OP_SPAN_TRACE_ID</span><span class="p">,</span> <span class="n">NoOpSpan</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.trace_status</span><span class="w"> </span><span class="kn">import</span> <span class="n">TraceStatus</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.webhook</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
@@ -341,6 +345,7 @@
     <span class="n">FEATURE_DISABLED</span><span class="p">,</span>
     <span class="n">INVALID_PARAMETER_VALUE</span><span class="p">,</span>
     <span class="n">NOT_FOUND</span><span class="p">,</span>
+    <span class="n">NOT_IMPLEMENTED</span><span class="p">,</span>
     <span class="n">RESOURCE_DOES_NOT_EXIST</span><span class="p">,</span>
     <span class="n">ErrorCode</span><span class="p">,</span>
 <span class="p">)</span>
@@ -354,11 +359,13 @@
     <span class="n">SEARCH_REGISTERED_MODEL_MAX_RESULTS_DEFAULT</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.store.tracking</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">NOT_SET</span><span class="p">,</span>
     <span class="n">SEARCH_EVALUATION_DATASETS_MAX_RESULTS</span><span class="p">,</span>
     <span class="n">SEARCH_MAX_RESULTS_DEFAULT</span><span class="p">,</span>
     <span class="n">SEARCH_TRACES_DEFAULT_MAX_RESULTS</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.store.tracking.mcp_server_registry.abstract_mixin</span><span class="w"> </span><span class="kn">import</span> <span class="n">NOT_SET</span><span class="p">,</span> <span class="n">MCPIcon</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.store.tracking.mcp_server_registry.abstract_mixin</span><span class="w"> </span><span class="kn">import</span> <span class="n">MCPIcon</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.store.tracking.rest_store</span><span class="w"> </span><span class="kn">import</span> <span class="n">RestStore</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">TracingClient</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.constant</span><span class="w"> </span><span class="kn">import</span> <span class="n">TRACE_REQUEST_ID_PREFIX</span><span class="p">,</span> <span class="n">TraceMetadataKey</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_display_handler</span>
@@ -375,7 +382,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracking.artifact_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">_upload_artifacts_to_databricks</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracking.multimedia</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span><span class="p">,</span> <span class="n">compress_image_size</span><span class="p">,</span> <span class="n">convert_to_pil_image</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracking.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">UnsupportedModelRegistryStoreURIException</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_uuid</span><span class="p">,</span> <span class="n">workspace_utils</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_results_from_paginated_fn</span><span class="p">,</span> <span class="n">is_uuid</span><span class="p">,</span> <span class="n">workspace_utils</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">deprecated</span><span class="p">,</span> <span class="n">deprecated_parameter</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.async_logging.run_operations</span><span class="w"> </span><span class="kn">import</span> <span class="n">RunOperations</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.databricks_utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
@@ -393,11 +400,17 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.time</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_current_time_millis</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.uri</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_databricks_unity_catalog_uri</span><span class="p">,</span> <span class="n">is_databricks_uri</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.validation</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">_parse_skill_identities</span><span class="p">,</span>
+    <span class="n">_validate_alias_name</span><span class="p">,</span>
     <span class="n">_validate_list_param</span><span class="p">,</span>
-    <span class="n">_validate_model_alias_name</span><span class="p">,</span>
     <span class="n">_validate_model_name</span><span class="p">,</span>
     <span class="n">_validate_model_version</span><span class="p">,</span>
     <span class="n">_validate_model_version_or_stage_exists</span><span class="p">,</span>
+    <span class="n">_validate_organization_name</span><span class="p">,</span>
+    <span class="n">_validate_skill_alias</span><span class="p">,</span>
+    <span class="n">_validate_skill_name</span><span class="p">,</span>
+    <span class="n">_validate_skill_tag</span><span class="p">,</span>
+    <span class="n">_validate_skill_version</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
@@ -422,6 +435,14 @@
         <span class="sa">f</span><span class="s2">"Registered Model with name=</span><span class="si">{</span><span class="n">name</span><span class="si">!r}</span><span class="s2"> not found."</span><span class="p">,</span>
         <span class="n">RESOURCE_DOES_NOT_EXIST</span><span class="p">,</span>
     <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_validate_skill_string_parameters</span><span class="p">(</span><span class="o">**</span><span class="n">parameters</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"Skill </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> must be a string, got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">."</span>
+            <span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_validate_model_id_specified</span><span class="p">(</span><span class="n">model_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -3254,8 +3275,8 @@
 
 <span class="sd">            # If the file extension doesn't exist or match any of [".json", ".yaml", ".yml"],</span>
 <span class="sd">            # JSON format is used.</span>
-<span class="sd">            mlflow.log_dict(run_id, dictionary, "data")</span>
-<span class="sd">            mlflow.log_dict(run_id, dictionary, "data.txt")</span>
+<span class="sd">            client.log_dict(run_id, dictionary, "data")</span>
+<span class="sd">            client.log_dict(run_id, dictionary, "data.txt")</span>
 
 <span class="sd">        """</span>
         <span class="n">extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">artifact_file</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
@@ -3569,7 +3590,7 @@
                 <span class="p">)</span>
 
             <span class="n">step</span> <span class="o">=</span> <span class="n">step</span> <span class="ow">or</span> <span class="mi">0</span>
-            <span class="n">timestamp</span> <span class="o">=</span> <span class="n">timestamp</span> <span class="ow">or</span> <span class="n">get_current_time_millis</span><span class="p">()</span>
+            <span class="n">timestamp</span> <span class="o">=</span> <span class="n">timestamp</span> <span class="k">if</span> <span class="n">timestamp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">get_current_time_millis</span><span class="p">()</span>
 
             <span class="c1"># Sanitize key to use in filename (replace / with ~ to avoid subdirectories).</span>
             <span class="c1"># '#' was previously used here but is rejected by validate_path_is_safe(),</span>
@@ -3620,11 +3641,15 @@
             <span class="k">if</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">artifact_file</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The artifact_file contains forbidden character: </span><span class="si">{</span><span class="n">char</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_read_from_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">artifact_path</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_read_from_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">artifact_path</span><span class="p">,</span> <span class="n">infer_dtypes</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
         <span class="k">if</span> <span class="n">artifact_path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">".json"</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">artifact_path</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s2">"split"</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">infer_dtypes</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">artifact_path</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s2">"split"</span><span class="p">)</span>
+            <span class="c1"># Keep the stored JSON values as-is so that rewriting the table doesn't alter them</span>
+            <span class="c1"># (e.g. "02108" -&gt; 2108)</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">artifact_path</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s2">"split"</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">convert_dates</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">artifact_path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">".parquet"</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">artifact_path</span><span class="p">)</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unsupported file type in </span><span class="si">{</span><span class="n">artifact_path</span><span class="si">}</span><span class="s2">. Expected .json or .parquet"</span><span class="p">)</span>
@@ -3721,6 +3746,8 @@
             <span class="c1"># for data like {"inputs": "What is MLflow?"}</span>
             <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
                 <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">data</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
         <span class="c1"># Check if the column is a `PIL.Image.Image` or `mlflow.Image` object</span>
         <span class="c1"># and save filepath</span>
@@ -3784,7 +3811,9 @@
                 <span class="n">downloaded_artifact_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">download_artifacts</span><span class="p">(</span>
                     <span class="n">run_id</span><span class="o">=</span><span class="n">run_id</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">artifact_file</span><span class="p">,</span> <span class="n">dst_path</span><span class="o">=</span><span class="n">tmpdir</span>
                 <span class="p">)</span>
-                <span class="n">existing_predictions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_from_file</span><span class="p">(</span><span class="n">downloaded_artifact_path</span><span class="p">)</span>
+                <span class="n">existing_predictions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_from_file</span><span class="p">(</span>
+                    <span class="n">downloaded_artifact_path</span><span class="p">,</span> <span class="n">infer_dtypes</span><span class="o">=</span><span class="kc">False</span>
+                <span class="p">)</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">existing_predictions</span><span class="p">,</span> <span class="n">data</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
                 <span class="s2">"Appending new table to already existing artifact "</span>
@@ -3902,7 +3931,25 @@
             <span class="n">list_run_ids</span> <span class="o">=</span> <span class="s2">","</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">repr</span><span class="p">,</span> <span class="n">run_ids</span><span class="p">))</span>
             <span class="n">filter_string</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">" and attributes.run_id IN (</span><span class="si">{</span><span class="n">list_run_ids</span><span class="si">}</span><span class="s2">)"</span>
 
-        <span class="n">runs</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">search_runs</span><span class="p">(</span><span class="n">experiment_ids</span><span class="o">=</span><span class="p">[</span><span class="n">experiment_id</span><span class="p">],</span> <span class="n">filter_string</span><span class="o">=</span><span class="n">filter_string</span><span class="p">)</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracking.fluent</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+            <span class="n">NUM_RUNS_PER_PAGE_PANDAS</span><span class="p">,</span>
+            <span class="n">SEARCH_MAX_RESULTS_PANDAS</span><span class="p">,</span>
+            <span class="n">_runs_to_pandas</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">pagination_wrapper_func</span><span class="p">(</span><span class="n">number_to_get</span><span class="p">,</span> <span class="n">next_page_token</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_runs</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">experiment_id</span><span class="p">],</span>
+                <span class="n">filter_string</span><span class="p">,</span>
+                <span class="n">max_results</span><span class="o">=</span><span class="n">number_to_get</span><span class="p">,</span>
+                <span class="n">page_token</span><span class="o">=</span><span class="n">next_page_token</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="n">runs</span> <span class="o">=</span> <span class="n">_runs_to_pandas</span><span class="p">(</span>
+            <span class="n">get_results_from_paginated_fn</span><span class="p">(</span>
+                <span class="n">pagination_wrapper_func</span><span class="p">,</span> <span class="n">NUM_RUNS_PER_PAGE_PANDAS</span><span class="p">,</span> <span class="n">SEARCH_MAX_RESULTS_PANDAS</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
         <span class="k">if</span> <span class="n">run_ids</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">run_ids</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">runs</span><span class="p">):</span>
             <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
                 <span class="s2">"Not all runs have the specified table artifact. Some runs will be skipped."</span>
@@ -5875,7 +5922,7 @@
 <span class="sd">            Aliases: ["test-alias"]</span>
 <span class="sd">        """</span>
         <span class="n">_validate_model_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-        <span class="n">_validate_model_alias_name</span><span class="p">(</span><span class="n">alias</span><span class="p">)</span>
+        <span class="n">_validate_alias_name</span><span class="p">(</span><span class="n">alias</span><span class="p">)</span>
         <span class="n">_validate_model_version</span><span class="p">(</span><span class="n">version</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_raise_if_prompt</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_get_registry_client</span><span class="p">()</span><span class="o">.</span><span class="n">set_registered_model_alias</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">alias</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span></div>
@@ -5973,7 +6020,7 @@
 <span class="sd">            Aliases: []</span>
 <span class="sd">        """</span>
         <span class="n">_validate_model_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-        <span class="n">_validate_model_alias_name</span><span class="p">(</span><span class="n">alias</span><span class="p">)</span>
+        <span class="n">_validate_alias_name</span><span class="p">(</span><span class="n">alias</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_raise_if_prompt</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_get_registry_client</span><span class="p">()</span><span class="o">.</span><span class="n">delete_registered_model_alias</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">alias</span><span class="p">)</span></div>
 
@@ -6651,12 +6698,13 @@
 
 <span class="sd">        .. code-block:: python</span>
 
+<span class="sd">            import mlflow</span>
 <span class="sd">            from mlflow import MlflowClient</span>
 
 <span class="sd">            client = MlflowClient()</span>
 
 <span class="sd">            # For Unity Catalog, delete all versions first</span>
-<span class="sd">            if client.get_registry_uri().startswith("databricks-uc"):</span>
+<span class="sd">            if mlflow.get_registry_uri().startswith("databricks-uc"):</span>
 <span class="sd">                versions = client.search_prompt_versions("my_prompt")</span>
 <span class="sd">                for version in versions:</span>
 <span class="sd">                    client.delete_prompt_version("my_prompt", version.version)</span>
@@ -7183,16 +7231,29 @@
         <span class="n">mcp_server_access_headers</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">dry_run</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MCPServerVersion</span><span class="p">:</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.mcp_tool_discovery</span><span class="w"> </span><span class="kn">import</span> <span class="n">discover_tools_for_server_json</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.mcp_tool_discovery</span><span class="w"> </span><span class="kn">import</span> <span class="n">discover_tools_for_version</span>
 
         <span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_mcp_server_version</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">)</span>
-        <span class="n">discovered_tools</span> <span class="o">=</span> <span class="n">discover_tools_for_server_json</span><span class="p">(</span>
+        <span class="n">discovered_tools</span> <span class="o">=</span> <span class="n">discover_tools_for_version</span><span class="p">(</span>
             <span class="n">server_json</span><span class="o">=</span><span class="n">current</span><span class="o">.</span><span class="n">server_json</span><span class="p">,</span>
+            <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">,</span>
+            <span class="n">access_endpoints</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_search_all_mcp_access_endpoints</span><span class="p">(</span><span class="n">server_name</span><span class="o">=</span><span class="n">name</span><span class="p">),</span>
             <span class="n">headers</span><span class="o">=</span><span class="n">mcp_server_access_headers</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">dry_run</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">replace</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="n">tools</span><span class="o">=</span><span class="n">discovered_tools</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_mcp_server_version</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">,</span> <span class="n">tools</span><span class="o">=</span><span class="n">discovered_tools</span><span class="p">)</span></div>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_search_all_mcp_access_endpoints</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">server_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">MCPAccessEndpoint</span><span class="p">]:</span>
+        <span class="n">endpoints</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">MCPAccessEndpoint</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">page_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">queried_tokens</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">while</span> <span class="n">page_token</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">queried_tokens</span><span class="p">:</span>
+            <span class="n">queried_tokens</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">page_token</span><span class="p">)</span>
+            <span class="n">page</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_mcp_access_endpoints</span><span class="p">(</span><span class="n">server_name</span><span class="o">=</span><span class="n">server_name</span><span class="p">,</span> <span class="n">page_token</span><span class="o">=</span><span class="n">page_token</span><span class="p">)</span>
+            <span class="n">endpoints</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">page</span><span class="p">)</span>
+            <span class="n">page_token</span> <span class="o">=</span> <span class="n">page</span><span class="o">.</span><span class="n">token</span> <span class="ow">or</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">endpoints</span>
 
 <div class="viewcode-block" id="MlflowClient.delete_mcp_server_version"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.delete_mcp_server_version">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">delete_mcp_server_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_tracking_client</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">delete_mcp_server_version</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">)</span></div>
@@ -7281,7 +7342,280 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_tracking_client</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">set_mcp_server_alias</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">alias</span><span class="o">=</span><span class="n">alias</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="MlflowClient.delete_mcp_server_alias"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.delete_mcp_server_alias">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">delete_mcp_server_alias</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_tracking_client</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">delete_mcp_server_alias</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">alias</span><span class="o">=</span><span class="n">alias</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tracking_client</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">delete_mcp_server_alias</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">alias</span><span class="o">=</span><span class="n">alias</span><span class="p">)</span></div>
+
+    <span class="c1"># ---------------------------------------------------------------------------</span>
+    <span class="c1"># Skill Registry</span>
+    <span class="c1"># ---------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="MlflowClient.create_skill"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.create_skill">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">create_skill</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">organization</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span><span class="p">,</span>
+        <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">icons</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">RegistryIcon</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Skill</span><span class="p">:</span>
+        <span class="n">_validate_skill_string_parameters</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">_validate_skill_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">_validate_organization_name</span><span class="p">(</span><span class="n">organization</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tracking_client</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">create_skill</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">organization</span><span class="o">=</span><span class="n">organization</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span> <span class="n">icons</span><span class="o">=</span><span class="n">icons</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MlflowClient.get_skill"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.get_skill">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_skill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">organization</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Skill</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tracking_client</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_skill</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">organization</span><span class="o">=</span><span class="n">organization</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MlflowClient.search_skills"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.search_skills">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">search_skills</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">filter_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">max_results</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="n">order_by</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">page_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">include_skill_identities</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PagedList</span><span class="p">[</span><span class="n">Skill</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Search Skills, optionally selecting ``reviewer`` or ``@acme/reviewer`` identities.</span>
+
+<span class="sd">        ``None`` leaves the selection unrestricted; an empty list selects no Skills.</span>
+<span class="sd">        Use the same filter and ordering when continuing with a page token. Identity selectors</span>
+<span class="sd">        may change between pages; pagination is best effort when the result set changes.</span>
+<span class="sd">        Results are also restricted by the caller's current permissions.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tracking_client</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">search_skills</span><span class="p">(</span>
+            <span class="n">filter_string</span><span class="o">=</span><span class="n">filter_string</span><span class="p">,</span>
+            <span class="n">max_results</span><span class="o">=</span><span class="n">max_results</span><span class="p">,</span>
+            <span class="n">order_by</span><span class="o">=</span><span class="n">order_by</span><span class="p">,</span>
+            <span class="n">page_token</span><span class="o">=</span><span class="n">page_token</span><span class="p">,</span>
+            <span class="n">include_skill_identities</span><span class="o">=</span><span class="n">_parse_skill_identities</span><span class="p">(</span><span class="n">include_skill_identities</span><span class="p">),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MlflowClient.update_skill"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.update_skill">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">update_skill</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">organization</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span><span class="p">,</span>
+        <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">NOT_SET</span><span class="p">,</span>
+        <span class="n">icons</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">RegistryIcon</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">NOT_SET</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Skill</span><span class="p">:</span>
+        <span class="n">_validate_skill_string_parameters</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">_validate_skill_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">_validate_organization_name</span><span class="p">(</span><span class="n">organization</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tracking_client</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">update_skill</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">organization</span><span class="o">=</span><span class="n">organization</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span> <span class="n">icons</span><span class="o">=</span><span class="n">icons</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MlflowClient.delete_skill"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.delete_skill">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">delete_skill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">organization</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tracking_client</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">delete_skill</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">organization</span><span class="o">=</span><span class="n">organization</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MlflowClient.create_skill_version"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.create_skill_version">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">create_skill_version</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">organization</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span><span class="p">,</span>
+        <span class="n">source</span><span class="p">:</span> <span class="n">GitSource</span> <span class="o">|</span> <span class="n">OCISource</span> <span class="o">|</span> <span class="n">ZipSource</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">digest</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">status</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"active"</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SkillVersion</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Create a skill version from an external source or upload a prepared local archive.</span>
+
+<span class="sd">        Local uploads require an HTTP tracking server serving artifacts. The server chooses</span>
+<span class="sd">        the artifact location; caller-supplied MLflow artifact sources are rejected. A local</span>
+<span class="sd">        source must be a gzip-compressed tar archive, which is validated before uploading.</span>
+<span class="sd">        The optional digest describes the unpacked skill tree and is forwarded unchanged;</span>
+<span class="sd">        omitting it leaves the digest unset. Use ``mlflow.genai.register_skill`` to inspect,</span>
+<span class="sd">        digest, and package a directory, with optional name inference.</span>
+<span class="sd">        An omitted or ``None`` source is passed to the store; the backend determines</span>
+<span class="sd">        whether it is accepted.</span>
+<span class="sd">        """</span>
+        <span class="c1"># mlflow.genai imports MlflowClient, so source resolution must be imported lazily.</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.skill_content.sources</span><span class="w"> </span><span class="kn">import</span> <span class="n">resolve_source_type</span>
+
+        <span class="n">_validate_skill_string_parameters</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">_validate_skill_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">_validate_organization_name</span><span class="p">(</span><span class="n">organization</span><span class="p">)</span>
+        <span class="n">resolved</span> <span class="o">=</span> <span class="n">resolve_source_type</span><span class="p">(</span><span class="n">source</span><span class="p">)</span> <span class="k">if</span> <span class="n">source</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">resolved</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">resolved</span><span class="o">.</span><span class="n">is_local</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_register_local_skill</span><span class="p">(</span>
+                <span class="n">archive</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="n">resolved</span><span class="o">.</span><span class="n">source</span><span class="p">),</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                <span class="n">organization</span><span class="o">=</span><span class="n">organization</span><span class="p">,</span>
+                <span class="n">digest</span><span class="o">=</span><span class="n">digest</span><span class="p">,</span>
+                <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">resolved</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">resolved</span><span class="o">.</span><span class="n">source_type</span> <span class="o">==</span> <span class="n">SkillSourceType</span><span class="o">.</span><span class="n">MLFLOW</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+                <span class="s2">"MLflow artifact locations are chosen by the server. "</span>
+                <span class="s2">"Pass a local gzip-compressed tar archive to upload skill content."</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tracking_client</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">create_skill_version</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">organization</span><span class="o">=</span><span class="n">organization</span><span class="p">,</span>
+            <span class="n">source_type</span><span class="o">=</span><span class="n">resolved</span><span class="o">.</span><span class="n">source_type</span><span class="o">.</span><span class="n">value</span> <span class="k">if</span> <span class="n">resolved</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">source</span><span class="o">=</span><span class="n">resolved</span><span class="o">.</span><span class="n">source</span> <span class="k">if</span> <span class="n">resolved</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">ref</span><span class="o">=</span><span class="n">resolved</span><span class="o">.</span><span class="n">ref</span> <span class="k">if</span> <span class="n">resolved</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">subpath</span><span class="o">=</span><span class="n">resolved</span><span class="o">.</span><span class="n">subpath</span> <span class="k">if</span> <span class="n">resolved</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">digest</span><span class="o">=</span><span class="n">digest</span><span class="p">,</span>
+            <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_register_local_skill</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">archive</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">digest</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">organization</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span><span class="p">,</span>
+        <span class="n">status</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"active"</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SkillVersion</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Validate and upload a prepared gzip-compressed tar, preserving its optional digest."""</span>
+        <span class="c1"># mlflow.genai imports MlflowClient, so content helpers must be imported lazily.</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.skill_content.archive</span><span class="w"> </span><span class="kn">import</span> <span class="n">validate_skill_archive</span>
+
+        <span class="n">store</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tracking_client</span><span class="o">.</span><span class="n">store</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="n">RestStore</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
+                <span class="s2">"Local skill uploads require an HTTP tracking server with --serve-artifacts."</span><span class="p">,</span>
+                <span class="n">error_code</span><span class="o">=</span><span class="n">NOT_IMPLEMENTED</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">archive</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+                <span class="s2">"Local skill source must be a gzip-compressed tar archive file. "</span>
+                <span class="s2">"Use mlflow.genai.register_skill() to package a directory."</span>
+            <span class="p">)</span>
+
+        <span class="n">validate_skill_archive</span><span class="p">(</span><span class="n">archive</span><span class="p">,</span> <span class="n">compressed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">archive</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">"rb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">content</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">store</span><span class="o">.</span><span class="n">_register_skill</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">organization</span><span class="o">=</span><span class="n">organization</span><span class="p">,</span> <span class="n">digest</span><span class="o">=</span><span class="n">digest</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">content</span>
+            <span class="p">)</span>
+
+<div class="viewcode-block" id="MlflowClient.bulk_register_skills"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.bulk_register_skills">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">bulk_register_skills</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">skill_definitions</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+        <span class="n">organization</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">SkillVersion</span><span class="p">]:</span>
+
+        <span class="n">_validate_organization_name</span><span class="p">(</span><span class="n">organization</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">skill_definitions</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span><span class="s2">"Skill definitions must be a list."</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">definition</span> <span class="ow">in</span> <span class="n">skill_definitions</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">definition</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+                    <span class="s2">"Each skill definition must be a dictionary."</span>
+                <span class="p">)</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">definition</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"name"</span><span class="p">)</span>
+            <span class="n">_validate_skill_string_parameters</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">_validate_skill_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tracking_client</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">bulk_register_skills</span><span class="p">(</span>
+            <span class="n">skill_definitions</span><span class="o">=</span><span class="n">skill_definitions</span><span class="p">,</span> <span class="n">organization</span><span class="o">=</span><span class="n">organization</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MlflowClient.get_skill_version"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.get_skill_version">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_skill_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">organization</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SkillVersion</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tracking_client</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_skill_version</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">,</span> <span class="n">organization</span><span class="o">=</span><span class="n">organization</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MlflowClient.get_skill_version_by_alias"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.get_skill_version_by_alias">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_skill_version_by_alias</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">organization</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SkillVersion</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tracking_client</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_skill_version_by_alias</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">alias</span><span class="o">=</span><span class="n">alias</span><span class="p">,</span> <span class="n">organization</span><span class="o">=</span><span class="n">organization</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MlflowClient.get_latest_skill_version"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.get_latest_skill_version">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_latest_skill_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">organization</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SkillVersion</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tracking_client</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_latest_skill_version</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">organization</span><span class="o">=</span><span class="n">organization</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MlflowClient.search_skill_versions"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.search_skill_versions">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">search_skill_versions</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">organization</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span><span class="p">,</span>
+        <span class="n">filter_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">max_results</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="n">order_by</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">page_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PagedList</span><span class="p">[</span><span class="n">SkillVersion</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tracking_client</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">search_skill_versions</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">organization</span><span class="o">=</span><span class="n">organization</span><span class="p">,</span>
+            <span class="n">filter_string</span><span class="o">=</span><span class="n">filter_string</span><span class="p">,</span>
+            <span class="n">max_results</span><span class="o">=</span><span class="n">max_results</span><span class="p">,</span>
+            <span class="n">order_by</span><span class="o">=</span><span class="n">order_by</span><span class="p">,</span>
+            <span class="n">page_token</span><span class="o">=</span><span class="n">page_token</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MlflowClient.update_skill_version"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.update_skill_version">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">update_skill_version</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">organization</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">NOT_SET</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SkillVersion</span><span class="p">:</span>
+        <span class="n">_validate_skill_string_parameters</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">_validate_skill_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">_validate_organization_name</span><span class="p">(</span><span class="n">organization</span><span class="p">)</span>
+        <span class="n">_validate_skill_version</span><span class="p">(</span><span class="n">version</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tracking_client</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">update_skill_version</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">,</span> <span class="n">organization</span><span class="o">=</span><span class="n">organization</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MlflowClient.delete_skill_version"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.delete_skill_version">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">delete_skill_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">organization</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tracking_client</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">delete_skill_version</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">,</span> <span class="n">organization</span><span class="o">=</span><span class="n">organization</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MlflowClient.set_skill_tag"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.set_skill_tag">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">set_skill_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">organization</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">_validate_skill_string_parameters</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">_validate_skill_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">_validate_organization_name</span><span class="p">(</span><span class="n">organization</span><span class="p">)</span>
+        <span class="n">_validate_skill_tag</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tracking_client</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">set_skill_tag</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">organization</span><span class="o">=</span><span class="n">organization</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MlflowClient.delete_skill_tag"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.delete_skill_tag">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">delete_skill_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">organization</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tracking_client</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">delete_skill_tag</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">organization</span><span class="o">=</span><span class="n">organization</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MlflowClient.set_skill_version_tag"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.set_skill_version_tag">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">set_skill_version_tag</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">organization</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">_validate_skill_string_parameters</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">_validate_skill_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">_validate_organization_name</span><span class="p">(</span><span class="n">organization</span><span class="p">)</span>
+        <span class="n">_validate_skill_version</span><span class="p">(</span><span class="n">version</span><span class="p">)</span>
+        <span class="n">_validate_skill_tag</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tracking_client</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">set_skill_version_tag</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">organization</span><span class="o">=</span><span class="n">organization</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MlflowClient.delete_skill_version_tag"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.delete_skill_version_tag">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">delete_skill_version_tag</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">organization</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tracking_client</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">delete_skill_version_tag</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">organization</span><span class="o">=</span><span class="n">organization</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MlflowClient.set_skill_alias"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.set_skill_alias">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">set_skill_alias</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">organization</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">_validate_skill_string_parameters</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">alias</span><span class="o">=</span><span class="n">alias</span><span class="p">)</span>
+        <span class="n">_validate_skill_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">_validate_organization_name</span><span class="p">(</span><span class="n">organization</span><span class="p">)</span>
+        <span class="n">_validate_skill_alias</span><span class="p">(</span><span class="n">alias</span><span class="p">)</span>
+        <span class="n">_validate_skill_version</span><span class="p">(</span><span class="n">version</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tracking_client</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">set_skill_alias</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">alias</span><span class="o">=</span><span class="n">alias</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">,</span> <span class="n">organization</span><span class="o">=</span><span class="n">organization</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MlflowClient.delete_skill_alias"><a class="viewcode-back" href="../../../python_api/mlflow.client.html#mlflow.client.MlflowClient.delete_skill_alias">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">delete_skill_alias</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">organization</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tracking_client</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">delete_skill_alias</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">alias</span><span class="o">=</span><span class="n">alias</span><span class="p">,</span> <span class="n">organization</span><span class="o">=</span><span class="n">organization</span>
+        <span class="p">)</span></div></div>
 </pre></div>
 
               </div>
@@ -7312,7 +7646,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'3.17.2',
+      VERSION:'3.18.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

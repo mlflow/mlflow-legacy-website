@@ -138,6 +138,14 @@ Each integration automatically captures your application's logic and intermediat
 
 [Claude Agent SDK (TS)](/docs/latest/genai/tracing/integrations/listing/claude_agent_sdk_typescript.md)
 
+[![Cloudflare Agents Logo](/docs/latest/images/logos/cloudflare-logo.svg)](/docs/latest/genai/tracing/integrations/listing/cloudflare-agents.md)
+
+[Cloudflare Agents](/docs/latest/genai/tracing/integrations/listing/cloudflare-agents.md)
+
+[![Flue Logo](/docs/latest/images/logos/flue-logo.svg)](/docs/latest/genai/tracing/integrations/listing/flue.md)
+
+[Flue](/docs/latest/genai/tracing/integrations/listing/flue.md)
+
 ### Model Providers[​](#model-providers "Direct link to Model Providers")
 
 [![OpenAI Logo](/docs/latest/images/logos/openai-logo-only.png)](/docs/latest/genai/tracing/integrations/listing/openai.md)

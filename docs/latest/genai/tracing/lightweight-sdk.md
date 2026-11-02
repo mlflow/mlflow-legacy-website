@@ -325,7 +325,7 @@ import mlflow
 
 import mlflow.openai
 
-from mlflow.tracing import trace
+from mlflow import trace
 
 
 

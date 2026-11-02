@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 3.17.2 documentation" href="../../../index.html"/>
+    <link rel="top" title="MLflow 3.18.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -148,7 +148,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.2</span>
+  <span class="header-link version">3.18.0</span>
 </div>
   </nav>
   <page>
@@ -255,8 +255,10 @@
     <span class="n">IssueReference</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.assessment_source</span><span class="w"> </span><span class="kn">import</span> <span class="n">AssessmentSource</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.issue_evidence</span><span class="w"> </span><span class="kn">import</span> <span class="n">IssueEvidence</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">TracingClient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.trace_manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">InMemoryTraceManager</span>
 
 
 <div class="viewcode-block" id="get_assessment"><a class="viewcode-back" href="../../../python_api/mlflow.html#mlflow.get_assessment">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">get_assessment</span><span class="p">(</span><span class="n">trace_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">assessment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Assessment</span><span class="p">:</span>
@@ -574,6 +576,26 @@
     <span class="k">return</span> <span class="n">TracingClient</span><span class="p">()</span><span class="o">.</span><span class="n">log_assessment</span><span class="p">(</span><span class="n">trace_id</span><span class="p">,</span> <span class="n">assessment</span><span class="p">)</span></div>
 
 
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_trace_span_ids</span><span class="p">(</span><span class="n">trace_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Every span ID the trace carries, read from the in-progress trace when there is one.</span>
+
+<span class="sd">    An issue can be logged from inside the traced call, before anything has been exported, which</span>
+<span class="sd">    is why the active trace is consulted first -- the same order ``get_trace_info`` uses. A trace</span>
+<span class="sd">    recorded elsewhere, or already finished, is read from the store.</span>
+
+<span class="sd">    An in-progress trace is a complete view of itself: spans are only added to it and the whole</span>
+<span class="sd">    trace is popped once its root span ends, so spans that incremental export has already written</span>
+<span class="sd">    to the store are still listed here. The exception is a process that joins a distributed trace,</span>
+<span class="sd">    which registers it locally holding only the spans that process created; evidence logged there</span>
+<span class="sd">    can cite only those spans, the same ones ``get_trace`` returns in that process.</span>
+<span class="sd">    """</span>
+    <span class="k">with</span> <span class="n">InMemoryTraceManager</span><span class="o">.</span><span class="n">get_instance</span><span class="p">()</span><span class="o">.</span><span class="n">get_trace</span><span class="p">(</span><span class="n">trace_id</span><span class="p">)</span> <span class="k">as</span> <span class="n">trace</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">trace</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">trace</span><span class="o">.</span><span class="n">span_dict</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">span</span><span class="o">.</span><span class="n">span_id</span> <span class="k">for</span> <span class="n">span</span> <span class="ow">in</span> <span class="n">TracingClient</span><span class="p">()</span><span class="o">.</span><span class="n">get_trace</span><span class="p">(</span><span class="n">trace_id</span><span class="p">)</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">spans</span><span class="p">]</span>
+
+
 <div class="viewcode-block" id="log_issue"><a class="viewcode-back" href="../../../python_api/mlflow.html#mlflow.log_issue">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">log_issue</span><span class="p">(</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">trace_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -584,6 +606,7 @@
     <span class="n">rationale</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">metadata</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">span_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">evidence</span><span class="p">:</span> <span class="n">IssueEvidence</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Assessment</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Logs an issue reference to a Trace. This links a trace to a discovered issue.</span>
@@ -602,7 +625,13 @@
 <span class="sd">        rationale: The rationale / justification for the issue reference.</span>
 <span class="sd">        metadata: Additional metadata for the issue reference.</span>
 <span class="sd">        span_id: The ID of the span associated with the issue, if it needs to be</span>
-<span class="sd">                associated with a specific span in the trace.</span>
+<span class="sd">                associated with a specific span in the trace. Defaults to the evidence's</span>
+<span class="sd">                primary span when ``evidence`` names one.</span>
+<span class="sd">        evidence: Optional :py:class:`~mlflow.entities.IssueEvidence` (or its dictionary form)</span>
+<span class="sd">                explaining the issue on this trace as an ordered walkthrough of its spans. Its</span>
+<span class="sd">                summary is stored as the reference's rationale and its steps as versioned</span>
+<span class="sd">                metadata, so clients that predate structured evidence still read the summary.</span>
+<span class="sd">                Every cited span must belong to the trace.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        :py:class:`~mlflow.entities.Assessment`: The created issue reference assessment.</span>
@@ -632,6 +661,24 @@
             <span class="sa">f</span><span class="s2">"Provided issue name </span><span class="si">{</span><span class="n">issue_name</span><span class="si">!r}</span><span class="s2"> does not match the issue name "</span>
             <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">fetched_issue_name</span><span class="si">!r}</span><span class="s2"> with issue ID </span><span class="si">{</span><span class="n">issue_id</span><span class="si">}</span><span class="s2">."</span>
         <span class="p">)</span>
+    <span class="k">if</span> <span class="n">evidence</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">evidence</span> <span class="o">=</span> <span class="n">evidence</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">evidence</span><span class="p">,</span> <span class="n">IssueEvidence</span><span class="p">)</span> <span class="k">else</span> <span class="n">IssueEvidence</span><span class="p">(</span><span class="o">**</span><span class="n">evidence</span><span class="p">)</span>
+        <span class="c1"># Validate the cited spans against the trace itself: a fabricated locator would render a</span>
+        <span class="c1"># step that opens nothing, and only the trace can say which spans exist.</span>
+        <span class="n">evidence</span><span class="o">.</span><span class="n">validate_spans</span><span class="p">(</span><span class="n">_get_trace_span_ids</span><span class="p">(</span><span class="n">trace_id</span><span class="p">))</span>
+        <span class="c1"># The reference's span is what the UI opens from the card, so it has to be a span the</span>
+        <span class="c1"># walkthrough actually explains. An override that isn't cited would send the reader to a</span>
+        <span class="c1"># span nothing on the card describes.</span>
+        <span class="k">if</span> <span class="n">span_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">span_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">evidence</span><span class="o">.</span><span class="n">span_ids</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"span_id </span><span class="si">{</span><span class="n">span_id</span><span class="si">!r}</span><span class="s2"> is not cited by any evidence step. Pass a span the evidence "</span>
+                <span class="s2">"explains, or leave span_id unset to use the evidence's primary span."</span>
+            <span class="p">)</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">evidence</span><span class="o">.</span><span class="n">to_metadata</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span>
+        <span class="c1"># The summary is the rationale, so a reader without this schema still explains the issue.</span>
+        <span class="n">rationale</span> <span class="o">=</span> <span class="n">rationale</span> <span class="ow">or</span> <span class="n">evidence</span><span class="o">.</span><span class="n">summary</span>
+        <span class="n">span_id</span> <span class="o">=</span> <span class="n">span_id</span> <span class="ow">or</span> <span class="n">evidence</span><span class="o">.</span><span class="n">primary_span_id</span>
+
     <span class="n">assessment</span> <span class="o">=</span> <span class="n">IssueReference</span><span class="p">(</span>
         <span class="n">issue_id</span><span class="o">=</span><span class="n">issue_id</span><span class="p">,</span>
         <span class="n">issue_name</span><span class="o">=</span><span class="n">issue_name</span><span class="p">,</span>
@@ -754,7 +801,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'3.17.2',
+      VERSION:'3.18.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

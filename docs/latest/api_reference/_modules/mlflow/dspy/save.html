@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 3.17.2 documentation" href="../../../index.html"/>
+    <link rel="top" title="MLflow 3.18.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -148,7 +148,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.2</span>
+  <span class="header-link version">3.18.0</span>
 </div>
   </nav>
   <page>
@@ -385,8 +385,8 @@
             <span class="p">)</span>
     <span class="k">if</span> <span class="n">task</span> <span class="ow">and</span> <span class="n">task</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">SIGNATURE_FOR_LLM_INFERENCE_TASK</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
-            <span class="s2">"Invalid task: </span><span class="si">{task}</span><span class="s2"> at `mlflow.dspy.save_model()` call. The task must be None or one "</span>
-            <span class="sa">f</span><span class="s2">"of: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">SIGNATURE_FOR_LLM_INFERENCE_TASK</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">"Invalid task: </span><span class="si">{</span><span class="n">task</span><span class="si">}</span><span class="s2"> at `mlflow.dspy.save_model()` call. The task must be None or "</span>
+            <span class="sa">f</span><span class="s2">"one of: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">SIGNATURE_FOR_LLM_INFERENCE_TASK</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
             <span class="n">error_code</span><span class="o">=</span><span class="n">INVALID_PARAMETER_VALUE</span><span class="p">,</span>
         <span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">use_dspy_model_save</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">is_in_databricks_runtime</span><span class="p">():</span>
@@ -710,7 +710,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'3.17.2',
+      VERSION:'3.18.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

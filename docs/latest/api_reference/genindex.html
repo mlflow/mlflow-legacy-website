@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="#"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="MLflow 3.17.2 documentation" href="index.html"/> 
+    <link rel="top" title="MLflow 3.18.0 documentation" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -147,7 +147,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.2</span>
+  <span class="header-link version">3.18.0</span>
 </div>
   </nav>
   <page>
@@ -269,6 +269,7 @@
  | <a href="#W"><strong>W</strong></a>
  | <a href="#X"><strong>X</strong></a>
  | <a href="#Y"><strong>Y</strong></a>
+ | <a href="#Z"><strong>Z</strong></a>
  
 </div>
 <h2 id="Symbols">Symbols</h2>
@@ -286,6 +287,15 @@
 
       <ul>
         <li><a href="cli.html#cmdoption-mlflow-agent-setup-agent">mlflow-agent-setup command line option</a>
+</li>
+      </ul></li>
+      <li>
+    --alias &lt;alias&gt;
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-delete-alias-alias">mlflow-skills-delete-alias command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-set-alias-alias">mlflow-skills-set-alias command line option</a>
 </li>
       </ul></li>
       <li>
@@ -366,6 +376,13 @@
 
       <ul>
         <li><a href="cli.html#cmdoption-mlflow-server-artifacts-only">mlflow-server command line option</a>
+</li>
+      </ul></li>
+      <li>
+    --artifacts-presigned-only
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-server-artifacts-presigned-only">mlflow-server command line option</a>
 </li>
       </ul></li>
       <li>
@@ -572,6 +589,15 @@
         <li><a href="cli.html#cmdoption-mlflow-runs-create-description">mlflow-runs-create command line option</a>
 </li>
         <li><a href="cli.html#cmdoption-mlflow-scorers-register-llm-judge-d">mlflow-scorers-register-llm-judge command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-update-description">mlflow-skills-update command line option</a>
+</li>
+      </ul></li>
+      <li>
+    --destination &lt;destination&gt;
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-pull-d">mlflow-skills-pull command line option</a>
 </li>
       </ul></li>
       <li>
@@ -810,6 +836,10 @@
       <ul>
         <li><a href="cli.html#cmdoption-mlflow-datasets-list-filter-string">mlflow-datasets-list command line option</a>
 </li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-search-filter-string">mlflow-skills-search command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-search-versions-filter-string">mlflow-skills-search-versions command line option</a>
+</li>
         <li><a href="cli.html#cmdoption-mlflow-traces-search-filter-string">mlflow-traces-search command line option</a>
 </li>
       </ul></li>
@@ -856,6 +886,20 @@
 
       <ul>
         <li><a href="cli.html#cmdoption-mlflow-gateway-start-host">mlflow-gateway-start command line option</a>
+</li>
+      </ul></li>
+      <li>
+    --icons &lt;icons&gt;
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-update-icons">mlflow-skills-update command line option</a>
+</li>
+      </ul></li>
+      <li>
+    --image &lt;image&gt;
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-oci-image">mlflow-skills-register-oci command line option</a>
 </li>
       </ul></li>
       <li>
@@ -987,6 +1031,14 @@
     --key &lt;key&gt;
 
       <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-delete-tag-key">mlflow-skills-delete-tag command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-delete-version-tag-key">mlflow-skills-delete-version-tag command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-set-tag-key">mlflow-skills-set-tag command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-set-version-tag-key">mlflow-skills-set-version-tag command line option</a>
+</li>
         <li><a href="cli.html#cmdoption-mlflow-traces-delete-tag-key">mlflow-traces-delete-tag command line option</a>
 </li>
         <li><a href="cli.html#cmdoption-mlflow-traces-set-tag-key">mlflow-traces-set-tag command line option</a>
@@ -1034,6 +1086,10 @@
         <li><a href="cli.html#cmdoption-mlflow-datasets-list-max-results">mlflow-datasets-list command line option</a>
 </li>
         <li><a href="cli.html#cmdoption-mlflow-experiments-search-max-results">mlflow-experiments-search command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-search-max-results">mlflow-skills-search command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-search-versions-max-results">mlflow-skills-search-versions command line option</a>
 </li>
         <li><a href="cli.html#cmdoption-mlflow-traces-search-max-results">mlflow-traces-search command line option</a>
 </li>
@@ -1153,6 +1209,14 @@
 </li>
         <li><a href="cli.html#cmdoption-mlflow-scorers-register-llm-judge-n">mlflow-scorers-register-llm-judge command line option</a>
 </li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-name">mlflow-skills-register command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-git-name">mlflow-skills-register-git command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-oci-name">mlflow-skills-register-oci command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-zip-name">mlflow-skills-register-zip command line option</a>
+</li>
         <li><a href="cli.html#cmdoption-mlflow-traces-log-expectation-name">mlflow-traces-log-expectation command line option</a>
 </li>
         <li><a href="cli.html#cmdoption-mlflow-traces-log-feedback-name">mlflow-traces-log-feedback command line option</a>
@@ -1264,7 +1328,26 @@
       <ul>
         <li><a href="cli.html#cmdoption-mlflow-datasets-list-order-by">mlflow-datasets-list command line option</a>
 </li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-search-order-by">mlflow-skills-search command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-search-versions-order-by">mlflow-skills-search-versions command line option</a>
+</li>
         <li><a href="cli.html#cmdoption-mlflow-traces-search-order-by">mlflow-traces-search command line option</a>
+</li>
+      </ul></li>
+      <li>
+    --organization &lt;organization&gt;
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-import-organization">mlflow-skills-import command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-organization">mlflow-skills-register command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-git-organization">mlflow-skills-register-git command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-oci-organization">mlflow-skills-register-oci command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-zip-organization">mlflow-skills-register-zip command line option</a>
 </li>
       </ul></li>
       <li>
@@ -1277,6 +1360,42 @@
 </li>
         <li><a href="cli.html#cmdoption-mlflow-scorers-list-output">mlflow-scorers-list command line option</a>
 </li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-delete-alias-output">mlflow-skills-delete-alias command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-delete-tag-output">mlflow-skills-delete-tag command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-delete-version-output">mlflow-skills-delete-version command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-delete-version-tag-output">mlflow-skills-delete-version-tag command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-get-output">mlflow-skills-get command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-get-version-output">mlflow-skills-get-version command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-import-output">mlflow-skills-import command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-output">mlflow-skills-register command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-git-output">mlflow-skills-register-git command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-oci-output">mlflow-skills-register-oci command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-zip-output">mlflow-skills-register-zip command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-search-output">mlflow-skills-search command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-search-versions-output">mlflow-skills-search-versions command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-set-alias-output">mlflow-skills-set-alias command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-set-tag-output">mlflow-skills-set-tag command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-set-version-tag-output">mlflow-skills-set-version-tag command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-update-output">mlflow-skills-update command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-update-version-output">mlflow-skills-update-version command line option</a>
+</li>
         <li><a href="cli.html#cmdoption-mlflow-traces-search-output">mlflow-traces-search command line option</a>
 </li>
       </ul></li>
@@ -1287,6 +1406,8 @@
         <li><a href="cli.html#cmdoption-mlflow-traces-evaluate-output">mlflow-traces-evaluate command line option</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     --output-directory &lt;output_directory&gt;
 
@@ -1294,8 +1415,6 @@
         <li><a href="cli.html#cmdoption-mlflow-models-generate-dockerfile-d">mlflow-models-generate-dockerfile command line option</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     --output-filter &lt;output_filter&gt;
 
@@ -1321,6 +1440,10 @@
 
       <ul>
         <li><a href="cli.html#cmdoption-mlflow-datasets-list-page-token">mlflow-datasets-list command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-search-page-token">mlflow-skills-search command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-search-versions-page-token">mlflow-skills-search-versions command line option</a>
 </li>
         <li><a href="cli.html#cmdoption-mlflow-traces-search-page-token">mlflow-traces-search command line option</a>
 </li>
@@ -1394,6 +1517,15 @@
 
       <ul>
         <li><a href="cli.html#cmdoption-mlflow-server-read-replica-backend-store-uri">mlflow-server command line option</a>
+</li>
+      </ul></li>
+      <li>
+    --ref &lt;ref&gt;
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-import-ref">mlflow-skills-import command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-git-ref">mlflow-skills-register-git command line option</a>
 </li>
       </ul></li>
       <li>
@@ -1508,10 +1640,62 @@
 </li>
       </ul></li>
       <li>
+    --skill-name &lt;skill_name&gt;
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-import-skill-name">mlflow-skills-import command line option</a>
+</li>
+      </ul></li>
+      <li>
+    --skill-uri &lt;skill_uri&gt;
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-pull-skill-uri">mlflow-skills-pull command line option</a>
+</li>
+      </ul></li>
+      <li>
+    --skill-uri &lt;skill_uri_option&gt;
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-delete-alias-skill-uri">mlflow-skills-delete-alias command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-delete-tag-skill-uri">mlflow-skills-delete-tag command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-delete-version-skill-uri">mlflow-skills-delete-version command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-delete-version-tag-skill-uri">mlflow-skills-delete-version-tag command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-get-skill-uri">mlflow-skills-get command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-get-version-skill-uri">mlflow-skills-get-version command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-search-versions-skill-uri">mlflow-skills-search-versions command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-set-alias-skill-uri">mlflow-skills-set-alias command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-set-tag-skill-uri">mlflow-skills-set-tag command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-set-version-tag-skill-uri">mlflow-skills-set-version-tag command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-update-skill-uri">mlflow-skills-update command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-update-version-skill-uri">mlflow-skills-update-version command line option</a>
+</li>
+      </ul></li>
+      <li>
+    --source &lt;local_source&gt;
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-source">mlflow-skills-register command line option</a>
+</li>
+      </ul></li>
+      <li>
     --source &lt;source&gt;
 
       <ul>
         <li><a href="cli.html#cmdoption-mlflow-migrate-filestore-source">mlflow-migrate-filestore command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-import-source">mlflow-skills-import command line option</a>
 </li>
       </ul></li>
       <li>
@@ -1575,12 +1759,37 @@
       <ul>
         <li><a href="cli.html#cmdoption-mlflow-runs-create-status">mlflow-runs-create command line option</a>
 </li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-import-status">mlflow-skills-import command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-status">mlflow-skills-register command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-git-status">mlflow-skills-register-git command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-oci-status">mlflow-skills-register-oci command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-zip-status">mlflow-skills-register-zip command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-update-version-status">mlflow-skills-update-version command line option</a>
+</li>
       </ul></li>
       <li>
     --storage-dir &lt;storage_dir&gt;
 
       <ul>
         <li><a href="cli.html#cmdoption-mlflow-run-storage-dir">mlflow-run command line option</a>
+</li>
+      </ul></li>
+      <li>
+    --subpath &lt;subpath&gt;
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-import-subpath">mlflow-skills-import command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-git-subpath">mlflow-skills-register-git command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-oci-subpath">mlflow-skills-register-oci command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-zip-subpath">mlflow-skills-register-zip command line option</a>
 </li>
       </ul></li>
       <li>
@@ -1729,6 +1938,15 @@
 </li>
       </ul></li>
       <li>
+    --url &lt;url&gt;
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-git-url">mlflow-skills-register-git command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-zip-url">mlflow-skills-register-zip command line option</a>
+</li>
+      </ul></li>
+      <li>
     --uvicorn-opts &lt;uvicorn_opts&gt;
 
       <ul>
@@ -1739,6 +1957,10 @@
     --value &lt;value&gt;
 
       <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-set-tag-value">mlflow-skills-set-tag command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-set-version-tag-value">mlflow-skills-set-version-tag command line option</a>
+</li>
         <li><a href="cli.html#cmdoption-mlflow-traces-log-expectation-value">mlflow-traces-log-expectation command line option</a>
 </li>
         <li><a href="cli.html#cmdoption-mlflow-traces-log-feedback-value">mlflow-traces-log-feedback command line option</a>
@@ -1773,6 +1995,13 @@
 
       <ul>
         <li><a href="cli.html#cmdoption-mlflow-run-v">mlflow-run command line option</a>
+</li>
+      </ul></li>
+      <li>
+    --version &lt;version&gt;
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-set-alias-version">mlflow-skills-set-alias command line option</a>
 </li>
       </ul></li>
       <li>
@@ -1919,6 +2148,8 @@
         <li><a href="cli.html#cmdoption-mlflow-models-generate-dockerfile-d">mlflow-models-generate-dockerfile command line option</a>
 </li>
         <li><a href="cli.html#cmdoption-mlflow-scorers-register-llm-judge-d">mlflow-scorers-register-llm-judge command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-pull-d">mlflow-skills-pull command line option</a>
 </li>
       </ul></li>
       <li>
@@ -2253,6 +2484,8 @@
       <ul>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.MCPStatus.ACTIVE">(mlflow.entities.MCPStatus attribute)</a>
 </li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.SkillStatus.ACTIVE">(mlflow.entities.SkillStatus attribute)</a>
+</li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.WebhookStatus.ACTIVE">(mlflow.entities.WebhookStatus attribute)</a>
 </li>
       </ul></li>
@@ -2312,6 +2545,8 @@
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueueMember.added_by">(mlflow.genai.databricks.review_queues.ReviewQueueMember attribute)</a>
 </li>
       </ul></li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueCategory.ADHERENCE">ADHERENCE (mlflow.entities.IssueCategory attribute)</a>
+</li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.GuardrailStage.AFTER">AFTER (mlflow.entities.GuardrailStage attribute)</a>
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.Agent">Agent (class in mlflow.genai)</a>
@@ -2373,6 +2608,10 @@
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.RegisteredModel.aliases">(mlflow.entities.model_registry.RegisteredModel property)</a>
 </li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.Skill.aliases">(mlflow.entities.Skill attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.SkillVersion.aliases">(mlflow.entities.SkillVersion attribute)</a>
+</li>
       </ul></li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.ModelVersionSearch.aliases">aliases() (mlflow.entities.model_registry.ModelVersionSearch method)</a>
 
@@ -2418,10 +2657,10 @@
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.AnswerAccuracy">AnswerAccuracy (class in mlflow.genai.scorers.ragas)</a>
 </li>
-      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.trulens.AnswerRelevance">AnswerRelevance (class in mlflow.genai.scorers.trulens)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.trulens.AnswerRelevance">AnswerRelevance (class in mlflow.genai.scorers.trulens)</a>
+</li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.AnswerRelevancy">AnswerRelevancy (class in mlflow.genai.scorers.deepeval)</a>
 
       <ul>
@@ -2454,8 +2693,12 @@
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.LoggedModel.artifact_location">(mlflow.entities.LoggedModel property)</a>
 </li>
       </ul></li>
-      <li><a href="python_api/mlflow.models.html#mlflow.models.model.ModelInfo.artifact_path">artifact_path (mlflow.models.model.ModelInfo property)</a>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.MlflowSource.artifact_path">artifact_path (mlflow.entities.MlflowSource attribute)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.models.html#mlflow.models.model.ModelInfo.artifact_path">(mlflow.models.model.ModelInfo property)</a>
 </li>
+      </ul></li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.RunInfo.artifact_uri">artifact_uri (mlflow.entities.RunInfo property)</a>
 </li>
       <li><a href="python_api/mlflow.models.html#mlflow.models.EvaluationResult.artifacts">artifacts (mlflow.models.EvaluationResult property)</a>
@@ -2656,6 +2899,8 @@
 </li>
       <li><a href="python_api/mlflow.pyfunc.html#mlflow.pyfunc.build_model_env">build_model_env() (in module mlflow.pyfunc)</a>
 </li>
+      <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.bulk_register_skills">bulk_register_skills() (mlflow.client.MlflowClient method)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -2798,6 +3043,8 @@
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.PromptVersion.commit_message">commit_message (mlflow.entities.model_registry.PromptVersion property)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.compare_evaluations">compare_evaluations() (in module mlflow.genai)</a>
+</li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewStatus.COMPLETE">COMPLETE (mlflow.genai.databricks.review_queues.ReviewStatus attribute)</a>
 
       <ul>
@@ -2890,12 +3137,16 @@
 </li>
       <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.copy_model_version">copy_model_version() (mlflow.client.MlflowClient method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.Correctness">Correctness (class in mlflow.genai.scorers)</a>
+</li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueCategory.CORRECTNESS">CORRECTNESS (mlflow.entities.IssueCategory attribute)</a>
+</li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueCategory.COST">COST (mlflow.entities.IssueCategory attribute)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfo.cost">cost (mlflow.entities.TraceInfo property)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent.create_annotation_added">create_annotation_added() (mlflow.pyfunc.ResponsesAgent static method)</a>
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.create_dataset">create_dataset() (in module mlflow.genai)</a>
@@ -2942,6 +3193,8 @@
 </li>
       <li><a href="python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent.create_function_call_output_item">create_function_call_output_item() (mlflow.pyfunc.ResponsesAgent static method)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.create_issue">create_issue() (in module mlflow.genai)</a>
+</li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.create_label_schema">create_label_schema() (in module mlflow.genai.label_schemas)</a>
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.create_labeling_session">create_labeling_session() (in module mlflow.genai)</a>
@@ -2979,6 +3232,10 @@
       <li><a href="auth/python-api.html#mlflow.server.auth.client.AuthServiceClient.create_role">create_role() (mlflow.server.auth.client.AuthServiceClient method)</a>
 </li>
       <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.create_run">create_run() (mlflow.client.MlflowClient method)</a>
+</li>
+      <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.create_skill">create_skill() (mlflow.client.MlflowClient method)</a>
+</li>
+      <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.create_skill_version">create_skill_version() (mlflow.client.MlflowClient method)</a>
 </li>
       <li><a href="python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent.create_text_delta">create_text_delta() (mlflow.pyfunc.ResponsesAgent static method)</a>
 </li>
@@ -3055,6 +3312,10 @@
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.MCPServerVersion.created_by">(mlflow.entities.MCPServerVersion attribute)</a>
 </li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.Skill.created_by">(mlflow.entities.Skill attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.SkillVersion.created_by">(mlflow.entities.SkillVersion attribute)</a>
+</li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQuestion.created_by">(mlflow.genai.databricks.review_queues.ReviewQuestion attribute)</a>
 </li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQueue.created_by">(mlflow.genai.databricks.review_queues.ReviewQueue attribute)</a>
@@ -3102,6 +3363,10 @@
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.RegisteredModel.creation_timestamp">(mlflow.entities.model_registry.RegisteredModel property)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.Prompt.creation_timestamp">(mlflow.entities.Prompt property)</a>
+</li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.Skill.creation_timestamp">(mlflow.entities.Skill attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.SkillVersion.creation_timestamp">(mlflow.entities.SkillVersion attribute)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.Webhook.creation_timestamp">(mlflow.entities.Webhook property)</a>
 </li>
@@ -3372,6 +3637,16 @@
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.delete_scorer">(in module mlflow.genai.scorers)</a>
 </li>
       </ul></li>
+      <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.delete_skill">delete_skill() (mlflow.client.MlflowClient method)</a>
+</li>
+      <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.delete_skill_alias">delete_skill_alias() (mlflow.client.MlflowClient method)</a>
+</li>
+      <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.delete_skill_tag">delete_skill_tag() (mlflow.client.MlflowClient method)</a>
+</li>
+      <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.delete_skill_version">delete_skill_version() (mlflow.client.MlflowClient method)</a>
+</li>
+      <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.delete_skill_version_tag">delete_skill_version_tag() (mlflow.client.MlflowClient method)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.html#mlflow.delete_tag">delete_tag() (in module mlflow)</a>
@@ -3403,6 +3678,8 @@
       <ul>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.MCPStatus.DELETED">(mlflow.entities.MCPStatus attribute)</a>
 </li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.SkillStatus.DELETED">(mlflow.entities.SkillStatus attribute)</a>
+</li>
       </ul></li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.ViewType.DELETED_ONLY">DELETED_ONLY (mlflow.entities.ViewType attribute)</a>
 </li>
@@ -3425,7 +3702,11 @@
 </li>
       </ul></li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.MCPStatus.DEPRECATED">DEPRECATED (mlflow.entities.MCPStatus attribute)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.SkillStatus.DEPRECATED">(mlflow.entities.SkillStatus attribute)</a>
 </li>
+      </ul></li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.Issue.description">description (mlflow.entities.Issue attribute)</a>
 
       <ul>
@@ -3440,6 +3721,8 @@
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.RegisteredModel.description">(mlflow.entities.model_registry.RegisteredModel property)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.Prompt.description">(mlflow.entities.Prompt property)</a>
+</li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.Skill.description">(mlflow.entities.Skill attribute)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.Span.description">(mlflow.entities.Span property)</a>
 </li>
@@ -3537,6 +3820,8 @@
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.Dataset.digest">(mlflow.entities.Dataset property)</a>
 </li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.SkillVersion.digest">(mlflow.entities.SkillVersion attribute)</a>
+</li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset.digest">(mlflow.genai.datasets.EvaluationDataset property)</a>
 </li>
       </ul></li>
@@ -3581,7 +3866,11 @@
 </li>
       </ul></li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.MCPStatus.DRAFT">DRAFT (mlflow.entities.MCPStatus attribute)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.SkillStatus.DRAFT">(mlflow.entities.SkillStatus attribute)</a>
 </li>
+      </ul></li>
       <li><a href="python_api/mlflow.data.html#mlflow.data.huggingface_dataset.HuggingFaceDataset.ds">ds (mlflow.data.huggingface_dataset.HuggingFaceDataset property)</a>
 </li>
       <li><a href="python_api/mlflow.types.html#mlflow.types.ParamSpec.dtype">dtype (mlflow.types.ParamSpec property)</a>
@@ -3780,6 +4069,8 @@
         <li><a href="python_api/mlflow.webhooks.html#mlflow.webhooks.RegisteredModelCreatedPayload.example">(mlflow.webhooks.RegisteredModelCreatedPayload class method)</a>
 </li>
       </ul></li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueCategory.EXECUTION">EXECUTION (mlflow.entities.IssueCategory attribute)</a>
+</li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.MCPTool.execution">execution (mlflow.entities.MCPTool attribute)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfo.execution_duration">execution_duration (mlflow.entities.TraceInfo attribute)</a>
@@ -4030,6 +4321,8 @@
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.PromptModelConfig.frequency_penalty">frequency_penalty (mlflow.entities.model_registry.PromptModelConfig attribute)</a>
 </li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueEvidence.from_assessment">from_assessment() (mlflow.entities.IssueEvidence class method)</a>
+</li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceLocation.from_databricks_uc_schema">from_databricks_uc_schema() (mlflow.entities.TraceLocation class method)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceLocation.from_databricks_uc_table_prefix">from_databricks_uc_table_prefix() (mlflow.entities.TraceLocation class method)</a>
@@ -4051,7 +4344,11 @@
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.DatasetRecordSource.from_dict">(mlflow.entities.DatasetRecordSource class method)</a>
 </li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.GitSource.from_dict">(mlflow.entities.GitSource class method)</a>
+</li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.InferenceTableLocation.from_dict">(mlflow.entities.InferenceTableLocation class method)</a>
+</li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueEvidenceStep.from_dict">(mlflow.entities.IssueEvidenceStep class method)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.Link.from_dict">(mlflow.entities.Link class method)</a>
 </li>
@@ -4067,7 +4364,15 @@
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.MlflowExperimentLocation.from_dict">(mlflow.entities.MlflowExperimentLocation class method)</a>
 </li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.MlflowSource.from_dict">(mlflow.entities.MlflowSource class method)</a>
+</li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.PromptModelConfig.from_dict">(mlflow.entities.model_registry.PromptModelConfig class method)</a>
+</li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.OCISource.from_dict">(mlflow.entities.OCISource class method)</a>
+</li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.Skill.from_dict">(mlflow.entities.Skill class method)</a>
+</li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.SkillVersion.from_dict">(mlflow.entities.SkillVersion class method)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.Span.from_dict">(mlflow.entities.Span class method)</a>
 </li>
@@ -4086,6 +4391,8 @@
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.UnityCatalog.from_dict">(mlflow.entities.UnityCatalog class method)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.Workspace.from_dict">(mlflow.entities.Workspace class method)</a>
+</li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.ZipSource.from_dict">(mlflow.entities.ZipSource class method)</a>
 </li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQuestion.from_dict">(mlflow.genai.databricks.review_queues.ReviewQuestion class method)</a>
 </li>
@@ -4191,6 +4498,8 @@
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.Document.from_langchain_document">from_langchain_document() (mlflow.entities.Document class method)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.Document.from_llama_index_node_with_score">from_llama_index_node_with_score() (mlflow.entities.Document class method)</a>
+</li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueEvidence.from_metadata_value">from_metadata_value() (mlflow.entities.IssueEvidence class method)</a>
 </li>
       <li><a href="python_api/mlflow.data.html#mlflow.data.from_numpy">from_numpy() (in module mlflow.data)</a>
 </li>
@@ -4478,6 +4787,8 @@
 </li>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.Provider.GEMINI">GEMINI (mlflow.gateway.config.Provider attribute)</a>
 </li>
+      <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.GeminiConfig.gemini_api_base">gemini_api_base (mlflow.gateway.config.GeminiConfig attribute)</a>
+</li>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.GeminiConfig.gemini_api_key">gemini_api_key (mlflow.gateway.config.GeminiConfig attribute)</a>
 </li>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.GeminiConfig">GeminiConfig (class in mlflow.gateway.config)</a>
@@ -4696,6 +5007,8 @@
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.agent_server.get_invoke_function">get_invoke_function() (in module mlflow.genai.agent_server)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.get_issue">get_issue() (in module mlflow.genai)</a>
+</li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.get_label_schema">get_label_schema() (in module mlflow.genai.label_schemas)</a>
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.get_labeling_session">get_labeling_session() (in module mlflow.genai)</a>
@@ -4710,6 +5023,8 @@
         <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.get_latest_mcp_server_version">(mlflow.client.MlflowClient method)</a>
 </li>
       </ul></li>
+      <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.get_latest_skill_version">get_latest_skill_version() (mlflow.client.MlflowClient method)</a>
+</li>
       <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.get_latest_versions">get_latest_versions() (mlflow.client.MlflowClient method)</a>
 </li>
       <li><a href="python_api/mlflow.html#mlflow.get_logged_model">get_logged_model() (in module mlflow)</a>
@@ -4842,6 +5157,12 @@
 </li>
       <li><a href="python_api/mlflow.models.html#mlflow.models.Model.get_serving_input">get_serving_input() (mlflow.models.Model method)</a>
 </li>
+      <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.get_skill">get_skill() (mlflow.client.MlflowClient method)</a>
+</li>
+      <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.get_skill_version">get_skill_version() (mlflow.client.MlflowClient method)</a>
+</li>
+      <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.get_skill_version_by_alias">get_skill_version_by_alias() (mlflow.client.MlflowClient method)</a>
+</li>
       <li><a href="python_api/mlflow.data.html#mlflow.data.get_source">get_source() (in module mlflow.data)</a>
 </li>
       <li><a href="python_api/mlflow.projects.html#mlflow.projects.SubmittedRun.get_status">get_status() (mlflow.projects.SubmittedRun method)</a>
@@ -4883,6 +5204,10 @@
       <li><a href="auth/python-api.html#mlflow.server.auth.entities.GetUserPermissionResult">GetUserPermissionResult (class in mlflow.server.auth.entities)</a>
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.guardrails.GibberishText">GibberishText (class in mlflow.genai.scorers.guardrails)</a>
+</li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.SkillSourceType.GIT">GIT (mlflow.entities.SkillSourceType attribute)</a>
+</li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.GitSource">GitSource (class in mlflow.entities)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.BudgetTargetScope.GLOBAL">GLOBAL (mlflow.entities.BudgetTargetScope attribute)</a>
 </li>
@@ -4944,9 +5269,13 @@
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.ConnectOptionSettings.hidden">hidden (mlflow.entities.ConnectOptionSettings attribute)</a>
 </li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueSeverity.HIGH">HIGH (mlflow.entities.IssueSeverity attribute)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueSeverity.HIGH">HIGH (mlflow.entities.IssueSeverity attribute)</a>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueEvidenceStep.highlight_tone">highlight_tone (mlflow.entities.IssueEvidenceStep attribute)</a>
+</li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueEvidenceStep.highlights">highlights (mlflow.entities.IssueEvidenceStep attribute)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.BudgetDurationUnit.HOURS">HOURS (mlflow.entities.BudgetDurationUnit attribute)</a>
 </li>
@@ -4977,6 +5306,8 @@
       <ul>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.MCPTool.icons">(mlflow.entities.MCPTool attribute)</a>
 </li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.Skill.icons">(mlflow.entities.Skill attribute)</a>
+</li>
       </ul></li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.Document.id">id (mlflow.entities.Document attribute)</a>
 
@@ -4998,11 +5329,15 @@
       </ul></li>
       <li><a href="python_api/mlflow.html#mlflow.Image">Image (class in mlflow)</a>
 </li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.OCISource.image">image (mlflow.entities.OCISource attribute)</a>
+</li>
       <li><a href="python_api/mlflow.types.html#mlflow.types.chat.ImageContentPart">ImageContentPart (class in mlflow.types.chat)</a>
 </li>
       <li><a href="python_api/mlflow.types.html#mlflow.types.chat.ImageUrl">ImageUrl (class in mlflow.types.chat)</a>
 </li>
       <li><a href="python_api/mlflow.html#mlflow.import_checkpoints">import_checkpoints() (in module mlflow)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.import_skills">import_skills() (in module mlflow.genai)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceState.IN_PROGRESS">IN_PROGRESS (mlflow.entities.TraceState attribute)</a>
 </li>
@@ -5230,6 +5565,12 @@
       </ul></li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueReference.issue_name">issue_name (mlflow.entities.IssueReference property)</a>
 </li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueCategory">IssueCategory (class in mlflow.entities)</a>
+</li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueEvidence">IssueEvidence (class in mlflow.entities)</a>
+</li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueEvidenceStep">IssueEvidenceStep (class in mlflow.entities)</a>
+</li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueReference">IssueReference (class in mlflow.entities)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueSeverity">IssueSeverity (class in mlflow.entities)</a>
@@ -5371,6 +5712,8 @@
 </li>
       <li><a href="python_api/mlflow.html#mlflow.last_logged_model">last_logged_model() (in module mlflow)</a>
 </li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.Issue.last_seen_timestamp">last_seen_timestamp (mlflow.entities.Issue attribute)</a>
+</li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.KnowledgeRetention.last_turn_scorer">last_turn_scorer (mlflow.genai.scorers.KnowledgeRetention attribute)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.DatasetRecord.last_update_time">last_update_time (mlflow.entities.DatasetRecord attribute)</a>
@@ -5416,11 +5759,17 @@
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.GatewaySecretInfo.last_updated_by">(mlflow.entities.GatewaySecretInfo attribute)</a>
 </li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.Issue.last_updated_by">(mlflow.entities.Issue attribute)</a>
+</li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.MCPAccessEndpoint.last_updated_by">(mlflow.entities.MCPAccessEndpoint attribute)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.MCPServer.last_updated_by">(mlflow.entities.MCPServer attribute)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.MCPServerVersion.last_updated_by">(mlflow.entities.MCPServerVersion attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.Skill.last_updated_by">(mlflow.entities.Skill attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.SkillVersion.last_updated_by">(mlflow.entities.SkillVersion attribute)</a>
 </li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQuestion.last_updated_by">(mlflow.genai.databricks.review_queues.ReviewQuestion attribute)</a>
 </li>
@@ -5444,13 +5793,23 @@
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.RegisteredModel.last_updated_timestamp">(mlflow.entities.model_registry.RegisteredModel property)</a>
 </li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.Skill.last_updated_timestamp">(mlflow.entities.Skill attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.SkillVersion.last_updated_timestamp">(mlflow.entities.SkillVersion attribute)</a>
+</li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.Webhook.last_updated_timestamp">(mlflow.entities.Webhook property)</a>
 </li>
       </ul></li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueCategory.LATENCY">LATENCY (mlflow.entities.IssueCategory attribute)</a>
+</li>
       <li><a href="python_api/mlflow.metrics.html#mlflow.metrics.latency">latency() (in module mlflow.metrics)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.MCPServer.latest_version">latest_version (mlflow.entities.MCPServer attribute)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.Skill.latest_version">(mlflow.entities.Skill attribute)</a>
 </li>
+      </ul></li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.RegisteredModel.latest_versions">latest_versions (mlflow.entities.model_registry.RegisteredModel property)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.Experiment.lifecycle_stage">lifecycle_stage (mlflow.entities.Experiment property)</a>
@@ -5984,6 +6343,8 @@
       <ul>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.Document.metadata">(mlflow.entities.Document attribute)</a>
 </li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.Issue.metadata">(mlflow.entities.Issue attribute)</a>
+</li>
         <li><a href="python_api/mlflow.models.html#mlflow.models.Model.metadata">(mlflow.models.Model property)</a>
 </li>
         <li><a href="python_api/mlflow.models.html#mlflow.models.model.ModelInfo.metadata">(mlflow.models.model.ModelInfo property)</a>
@@ -6196,6 +6557,8 @@
         <li><a href="python_api/mlflow.html#module-mlflow">module</a>
 </li>
       </ul></li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.SkillSourceType.MLFLOW">MLFLOW (mlflow.entities.SkillSourceType attribute)</a>
+</li>
       <li>
     mlflow command line option
 
@@ -7310,6 +7673,8 @@
 </li>
         <li><a href="cli.html#cmdoption-mlflow-server-artifacts-only">--artifacts-only</a>
 </li>
+        <li><a href="cli.html#cmdoption-mlflow-server-artifacts-presigned-only">--artifacts-presigned-only</a>
+</li>
         <li><a href="cli.html#cmdoption-mlflow-server-backend-store-uri">--backend-store-uri &lt;PATH&gt;</a>
 </li>
         <li><a href="cli.html#cmdoption-mlflow-server-cors-allowed-origins">--cors-allowed-origins &lt;cors_allowed_origins&gt;</a>
@@ -7363,6 +7728,285 @@
         <li><a href="cli.html#cmdoption-mlflow-server-p">-p</a>
 </li>
         <li><a href="cli.html#cmdoption-mlflow-server-w">-w</a>
+</li>
+      </ul></li>
+      <li>
+    mlflow-skills-delete-alias command line option
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-delete-alias-alias">--alias &lt;alias&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-delete-alias-output">--output &lt;output&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-delete-alias-skill-uri">--skill-uri &lt;skill_uri_option&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-delete-alias-arg-SKILL_URI">SKILL_URI</a>
+</li>
+      </ul></li>
+      <li>
+    mlflow-skills-delete-tag command line option
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-delete-tag-key">--key &lt;key&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-delete-tag-output">--output &lt;output&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-delete-tag-skill-uri">--skill-uri &lt;skill_uri_option&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-delete-tag-arg-SKILL_URI">SKILL_URI</a>
+</li>
+      </ul></li>
+      <li>
+    mlflow-skills-delete-version command line option
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-delete-version-output">--output &lt;output&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-delete-version-skill-uri">--skill-uri &lt;skill_uri_option&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-delete-version-arg-SKILL_URI">SKILL_URI</a>
+</li>
+      </ul></li>
+      <li>
+    mlflow-skills-delete-version-tag command line option
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-delete-version-tag-key">--key &lt;key&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-delete-version-tag-output">--output &lt;output&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-delete-version-tag-skill-uri">--skill-uri &lt;skill_uri_option&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-delete-version-tag-arg-SKILL_URI">SKILL_URI</a>
+</li>
+      </ul></li>
+      <li>
+    mlflow-skills-get command line option
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-get-output">--output &lt;output&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-get-skill-uri">--skill-uri &lt;skill_uri_option&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-get-arg-SKILL_URI">SKILL_URI</a>
+</li>
+      </ul></li>
+      <li>
+    mlflow-skills-get-version command line option
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-get-version-output">--output &lt;output&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-get-version-skill-uri">--skill-uri &lt;skill_uri_option&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-get-version-arg-SKILL_URI">SKILL_URI</a>
+</li>
+      </ul></li>
+      <li>
+    mlflow-skills-import command line option
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-import-organization">--organization &lt;organization&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-import-output">--output &lt;output&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-import-ref">--ref &lt;ref&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-import-skill-name">--skill-name &lt;skill_name&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-import-source">--source &lt;source&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-import-status">--status &lt;status&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-import-subpath">--subpath &lt;subpath&gt;</a>
+</li>
+      </ul></li>
+      <li>
+    mlflow-skills-pull command line option
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-pull-d">--destination &lt;destination&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-pull-skill-uri">--skill-uri &lt;skill_uri&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-pull-d">-d</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-pull-arg-URI">URI</a>
+</li>
+      </ul></li>
+      <li>
+    mlflow-skills-register command line option
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-name">--name &lt;name&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-organization">--organization &lt;organization&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-output">--output &lt;output&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-source">--source &lt;local_source&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-status">--status &lt;status&gt;</a>
+</li>
+      </ul></li>
+      <li>
+    mlflow-skills-register-git command line option
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-git-name">--name &lt;name&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-git-organization">--organization &lt;organization&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-git-output">--output &lt;output&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-git-ref">--ref &lt;ref&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-git-status">--status &lt;status&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-git-subpath">--subpath &lt;subpath&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-git-url">--url &lt;url&gt;</a>
+</li>
+      </ul></li>
+      <li>
+    mlflow-skills-register-oci command line option
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-oci-image">--image &lt;image&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-oci-name">--name &lt;name&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-oci-organization">--organization &lt;organization&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-oci-output">--output &lt;output&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-oci-status">--status &lt;status&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-oci-subpath">--subpath &lt;subpath&gt;</a>
+</li>
+      </ul></li>
+      <li>
+    mlflow-skills-register-zip command line option
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-zip-name">--name &lt;name&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-zip-organization">--organization &lt;organization&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-zip-output">--output &lt;output&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-zip-status">--status &lt;status&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-zip-subpath">--subpath &lt;subpath&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-register-zip-url">--url &lt;url&gt;</a>
+</li>
+      </ul></li>
+      <li>
+    mlflow-skills-search command line option
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-search-filter-string">--filter-string &lt;filter_string&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-search-max-results">--max-results &lt;max_results&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-search-order-by">--order-by &lt;order_by&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-search-output">--output &lt;output&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-search-page-token">--page-token &lt;page_token&gt;</a>
+</li>
+      </ul></li>
+      <li>
+    mlflow-skills-search-versions command line option
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-search-versions-filter-string">--filter-string &lt;filter_string&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-search-versions-max-results">--max-results &lt;max_results&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-search-versions-order-by">--order-by &lt;order_by&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-search-versions-output">--output &lt;output&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-search-versions-page-token">--page-token &lt;page_token&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-search-versions-skill-uri">--skill-uri &lt;skill_uri_option&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-search-versions-arg-SKILL_URI">SKILL_URI</a>
+</li>
+      </ul></li>
+      <li>
+    mlflow-skills-set-alias command line option
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-set-alias-alias">--alias &lt;alias&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-set-alias-output">--output &lt;output&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-set-alias-skill-uri">--skill-uri &lt;skill_uri_option&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-set-alias-version">--version &lt;version&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-set-alias-arg-SKILL_URI">SKILL_URI</a>
+</li>
+      </ul></li>
+      <li>
+    mlflow-skills-set-tag command line option
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-set-tag-key">--key &lt;key&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-set-tag-output">--output &lt;output&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-set-tag-skill-uri">--skill-uri &lt;skill_uri_option&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-set-tag-value">--value &lt;value&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-set-tag-arg-SKILL_URI">SKILL_URI</a>
+</li>
+      </ul></li>
+      <li>
+    mlflow-skills-set-version-tag command line option
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-set-version-tag-key">--key &lt;key&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-set-version-tag-output">--output &lt;output&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-set-version-tag-skill-uri">--skill-uri &lt;skill_uri_option&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-set-version-tag-value">--value &lt;value&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-set-version-tag-arg-SKILL_URI">SKILL_URI</a>
+</li>
+      </ul></li>
+      <li>
+    mlflow-skills-update command line option
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-update-description">--description &lt;description&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-update-icons">--icons &lt;icons&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-update-output">--output &lt;output&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-update-skill-uri">--skill-uri &lt;skill_uri_option&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-update-arg-SKILL_URI">SKILL_URI</a>
+</li>
+      </ul></li>
+      <li>
+    mlflow-skills-update-version command line option
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-update-version-output">--output &lt;output&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-update-version-skill-uri">--skill-uri &lt;skill_uri_option&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-update-version-status">--status &lt;status&gt;</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-update-version-arg-SKILL_URI">SKILL_URI</a>
 </li>
       </ul></li>
       <li>
@@ -7616,6 +8260,8 @@
         <li><a href="python_api/mlflow.deployments.html#module-mlflow.deployments">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     mlflow.dspy
 
@@ -7793,8 +8439,6 @@
         <li><a href="python_api/mlflow.h2o.html#module-mlflow.h2o">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     mlflow.haystack
 
@@ -8181,6 +8825,8 @@
 </li>
       <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_ALLOW_HTTP_REDIRECTS">MLFLOW_ALLOW_HTTP_REDIRECTS (in module mlflow.environment_variables)</a>
 </li>
+      <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_ALLOW_MODEL_CODE_EXECUTION">MLFLOW_ALLOW_MODEL_CODE_EXECUTION (in module mlflow.environment_variables)</a>
+</li>
       <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_ALLOW_PICKLE_DESERIALIZATION">MLFLOW_ALLOW_PICKLE_DESERIALIZATION (in module mlflow.environment_variables)</a>
 </li>
       <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_ALLOWED_HOST_ADDRESSED_ARTIFACT_SCHEMES">MLFLOW_ALLOWED_HOST_ADDRESSED_ARTIFACT_SCHEMES (in module mlflow.environment_variables)</a>
@@ -8188,6 +8834,8 @@
       <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_ARTIFACT_LOCATION_MAX_LENGTH">MLFLOW_ARTIFACT_LOCATION_MAX_LENGTH (in module mlflow.environment_variables)</a>
 </li>
       <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_ARTIFACT_UPLOAD_DOWNLOAD_TIMEOUT">MLFLOW_ARTIFACT_UPLOAD_DOWNLOAD_TIMEOUT (in module mlflow.environment_variables)</a>
+</li>
+      <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_ARTIFACTS_PRESIGNED_ONLY">MLFLOW_ARTIFACTS_PRESIGNED_ONLY (in module mlflow.environment_variables)</a>
 </li>
       <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_ASSISTANT_SANDBOX_CLI_IMAGE">MLFLOW_ASSISTANT_SANDBOX_CLI_IMAGE (in module mlflow.environment_variables)</a>
 </li>
@@ -8405,6 +9053,12 @@
 </li>
       <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_JOB_DEFAULT_EXECUTOR_BACKEND">MLFLOW_JOB_DEFAULT_EXECUTOR_BACKEND (in module mlflow.environment_variables)</a>
 </li>
+      <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_JOB_EXTRA_LABELS">MLFLOW_JOB_EXTRA_LABELS (in module mlflow.environment_variables)</a>
+</li>
+      <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_JOB_IMAGE">MLFLOW_JOB_IMAGE (in module mlflow.environment_variables)</a>
+</li>
+      <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_JOBS_DOCKER_HOST">MLFLOW_JOBS_DOCKER_HOST (in module mlflow.environment_variables)</a>
+</li>
       <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_JUDGE_MAX_ITERATIONS">MLFLOW_JUDGE_MAX_ITERATIONS (in module mlflow.environment_variables)</a>
 </li>
       <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_KERBEROS_TICKET_CACHE">MLFLOW_KERBEROS_TICKET_CACHE (in module mlflow.environment_variables)</a>
@@ -8507,6 +9161,8 @@
 </li>
       <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_SERVER_GRAPHQL_MAX_ROOT_FIELDS">MLFLOW_SERVER_GRAPHQL_MAX_ROOT_FIELDS (in module mlflow.environment_variables)</a>
 </li>
+      <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_SERVER_INFO_TRACKING_AUTH">MLFLOW_SERVER_INFO_TRACKING_AUTH (in module mlflow.environment_variables)</a>
+</li>
       <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_SERVER_JOB_DEFAULT_TIMEOUT">MLFLOW_SERVER_JOB_DEFAULT_TIMEOUT (in module mlflow.environment_variables)</a>
 </li>
       <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_SERVER_JOB_ENABLE_PERIODIC_TASKS">MLFLOW_SERVER_JOB_ENABLE_PERIODIC_TASKS (in module mlflow.environment_variables)</a>
@@ -8529,9 +9185,13 @@
 </li>
       <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_SERVER_ONLINE_SCORING_MAX_WORKERS">MLFLOW_SERVER_ONLINE_SCORING_MAX_WORKERS (in module mlflow.environment_variables)</a>
 </li>
+      <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_SERVER_SCHEDULED_ISSUE_DETECTION_MAX_WORKERS">MLFLOW_SERVER_SCHEDULED_ISSUE_DETECTION_MAX_WORKERS (in module mlflow.environment_variables)</a>
+</li>
       <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_SERVER_SCORER_INVOKE_BATCH_SIZE">MLFLOW_SERVER_SCORER_INVOKE_BATCH_SIZE (in module mlflow.environment_variables)</a>
 </li>
       <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_SERVER_X_FRAME_OPTIONS">MLFLOW_SERVER_X_FRAME_OPTIONS (in module mlflow.environment_variables)</a>
+</li>
+      <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_SKILL_CONTENT_MAX_DECOMPRESSED_SIZE">MLFLOW_SKILL_CONTENT_MAX_DECOMPRESSED_SIZE (in module mlflow.environment_variables)</a>
 </li>
       <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_SKIP_PIP_REQUIREMENTS_CHECK">MLFLOW_SKIP_PIP_REQUIREMENTS_CHECK (in module mlflow.environment_variables)</a>
 </li>
@@ -8562,6 +9222,8 @@
       <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_SYSTEM_METRICS_SAMPLING_INTERVAL">MLFLOW_SYSTEM_METRICS_SAMPLING_INTERVAL (in module mlflow.environment_variables)</a>
 </li>
       <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_TRACE_ARCHIVAL_CONFIG">MLFLOW_TRACE_ARCHIVAL_CONFIG (in module mlflow.environment_variables)</a>
+</li>
+      <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_TRACE_DELETE_MAX_WORKERS">MLFLOW_TRACE_DELETE_MAX_WORKERS (in module mlflow.environment_variables)</a>
 </li>
       <li><a href="python_api/mlflow.environment_variables.html#mlflow.environment_variables.MLFLOW_TRACE_ENABLE_OTLP_DUAL_EXPORT">MLFLOW_TRACE_ENABLE_OTLP_DUAL_EXPORT (in module mlflow.environment_variables)</a>
 </li>
@@ -8665,6 +9327,8 @@
 </li>
       <li><a href="python_api/exceptions/mlflow.exceptions.html#mlflow.exceptions.MlflowNotImplementedException">MlflowNotImplementedException</a>
 </li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.MlflowSource">MlflowSource (class in mlflow.entities)</a>
+</li>
       <li><a href="python_api/exceptions/mlflow.exceptions.html#mlflow.exceptions.MlflowTraceArchivalMalformedTrace">MlflowTraceArchivalMalformedTrace</a>
 </li>
       <li><a href="python_api/exceptions/mlflow.exceptions.html#mlflow.exceptions.MlflowTraceDataCorrupted">MlflowTraceDataCorrupted</a>
@@ -8727,6 +9391,12 @@
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ToolCallEfficiency.model">(mlflow.genai.scorers.ToolCallEfficiency attribute)</a>
 </li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.UserFrustration.model">(mlflow.genai.scorers.UserFrustration attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ExpectationsGuidelines.model_api">model_api (mlflow.genai.scorers.ExpectationsGuidelines attribute)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.Guidelines.model_api">(mlflow.genai.scorers.Guidelines attribute)</a>
 </li>
       </ul></li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.PromptModelConfig.model_config">model_config (mlflow.entities.model_registry.PromptModelConfig attribute)</a>
@@ -9512,6 +10182,8 @@
         <li><a href="python_api/mlflow.xgboost.html#module-mlflow.xgboost">mlflow.xgboost</a>
 </li>
       </ul></li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueEvidenceStep.mono">mono (mlflow.entities.IssueEvidenceStep attribute)</a>
+</li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.BudgetDurationUnit.MONTHS">MONTHS (mlflow.entities.BudgetDurationUnit attribute)</a>
 </li>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.Provider.MOSAICML">MOSAICML (mlflow.gateway.config.Provider attribute)</a>
@@ -9574,6 +10246,10 @@
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.NoOpSpan.name">(mlflow.entities.NoOpSpan property)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.Prompt.name">(mlflow.entities.Prompt property)</a>
+</li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.Skill.name">(mlflow.entities.Skill attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.SkillVersion.name">(mlflow.entities.SkillVersion attribute)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.Span.name">(mlflow.entities.Span property)</a>
 </li>
@@ -9756,6 +10432,10 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.types.html#mlflow.types.schema.Object">Object (class in mlflow.types.schema)</a>
 </li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.SkillSourceType.OCI">OCI (mlflow.entities.SkillSourceType attribute)</a>
+</li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.OCISource">OCISource (class in mlflow.entities)</a>
+</li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.SpanStatusCode.OK">OK (mlflow.entities.SpanStatusCode attribute)</a>
 
       <ul>
@@ -9871,6 +10551,12 @@
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputCategorical.options">(mlflow.genai.label_schemas.InputCategorical attribute)</a>
 </li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.InputCategoricalList.options">(mlflow.genai.label_schemas.InputCategoricalList attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.Skill.organization">organization (mlflow.entities.Skill attribute)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.SkillVersion.organization">(mlflow.entities.SkillVersion attribute)</a>
 </li>
       </ul></li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.MCPTool.output_schema">output_schema (mlflow.entities.MCPTool attribute)</a>
@@ -10071,10 +10757,10 @@
       </ul></li>
       <li><a href="python_api/mlflow.metrics.html#mlflow.metrics.precision_at_k">precision_at_k() (in module mlflow.metrics)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.metrics.html#mlflow.metrics.precision_score">precision_score() (in module mlflow.metrics)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.models.html#mlflow.models.predict">predict() (in module mlflow.models)</a>
 
       <ul>
@@ -10142,6 +10828,8 @@
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.PromptModelConfig.presence_penalty">presence_penalty (mlflow.entities.model_registry.PromptModelConfig attribute)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.GatewayModelLinkageType.PRIMARY">PRIMARY (mlflow.entities.GatewayModelLinkageType attribute)</a>
+</li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueEvidence.primary_span_id">primary_span_id (mlflow.entities.IssueEvidence attribute)</a>
 </li>
       <li><a href="python_api/mlflow.data.html#mlflow.data.dataset.Dataset.profile">profile (mlflow.data.dataset.Dataset property)</a>
 
@@ -10223,6 +10911,8 @@
       </ul></li>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.PortkeyConfig.provider_api_key">provider_api_key (mlflow.gateway.config.PortkeyConfig attribute)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.pull">pull() (in module mlflow.genai)</a>
+</li>
       <li><a href="python_api/mlflow.sagemaker.html#mlflow.sagemaker.push_image_to_ecr">push_image_to_ecr() (in module mlflow.sagemaker)</a>
 </li>
       <li><a href="python_api/mlflow.sagemaker.html#mlflow.sagemaker.push_model_to_sagemaker">push_model_to_sagemaker() (in module mlflow.sagemaker)</a>
@@ -10293,6 +10983,8 @@
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.NoOpSpan.record_exception">(mlflow.entities.NoOpSpan method)</a>
 </li>
       </ul></li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.GitSource.ref">ref (mlflow.entities.GitSource attribute)</a>
+</li>
       <li><a href="python_api/mlflow.tracing.html#mlflow.tracing.attachments.Attachment.ref">ref() (mlflow.tracing.attachments.Attachment method)</a>
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.refresh_mcp_server_version_tools">refresh_mcp_server_version_tools() (in module mlflow.genai)</a>
@@ -10317,6 +11009,8 @@
         <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.register_prompt">(mlflow.client.MlflowClient method)</a>
 </li>
       </ul></li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.register_skill">register_skill() (in module mlflow.genai)</a>
+</li>
       <li><a href="python_api/mlflow.models.html#mlflow.models.model.ModelInfo.registered_model_version">registered_model_version (mlflow.models.model.ModelInfo property)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.RegisteredModel">RegisteredModel (class in mlflow.entities.model_registry)</a>
@@ -10338,6 +11032,8 @@
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueStatus.REJECTED">REJECTED (mlflow.entities.IssueStatus attribute)</a>
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.phoenix.Relevance">Relevance (class in mlflow.genai.scorers.phoenix)</a>
+</li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueCategory.RELEVANCE">RELEVANCE (mlflow.entities.IssueCategory attribute)</a>
 </li>
       <li><a href="python_api/mlflow.metrics.html#mlflow.metrics.genai.relevance">relevance() (in module mlflow.metrics.genai)</a>
 </li>
@@ -10474,10 +11170,10 @@
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfo.response_preview">response_preview (mlflow.entities.TraceInfo attribute)</a>
 </li>
-      <li><a href="python_api/mlflow.entities.html#mlflow.entities.WebhookTestResult.response_status">response_status (mlflow.entities.WebhookTestResult property)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.WebhookTestResult.response_status">response_status (mlflow.entities.WebhookTestResult property)</a>
+</li>
       <li><a href="python_api/mlflow.types.html#mlflow.types.responses_helpers.ResponseCompletedEvent">ResponseCompletedEvent (class in mlflow.types.responses_helpers)</a>
 </li>
       <li><a href="python_api/mlflow.types.html#mlflow.types.responses_helpers.ResponseError">ResponseError (class in mlflow.types.responses_helpers)</a>
@@ -10700,6 +11396,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.Safety">Safety (class in mlflow.genai.scorers)</a>
 </li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueCategory.SAFETY">SAFETY (mlflow.entities.IssueCategory attribute)</a>
+</li>
       <li><a href="python_api/mlflow.sagemaker.html#mlflow.sagemaker.SageMakerDeploymentClient">SageMakerDeploymentClient (class in mlflow.sagemaker)</a>
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.Scorer.sample_rate">sample_rate (mlflow.genai.Scorer property)</a>
@@ -10878,6 +11576,8 @@
         <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.search_experiments">(mlflow.client.MlflowClient method)</a>
 </li>
       </ul></li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.search_issues">search_issues() (in module mlflow.genai)</a>
+</li>
       <li><a href="python_api/mlflow.html#mlflow.search_logged_models">search_logged_models() (in module mlflow)</a>
 
       <ul>
@@ -10930,6 +11630,14 @@
       </ul></li>
       <li><a href="python_api/mlflow.html#mlflow.search_sessions">search_sessions() (in module mlflow)</a>
 </li>
+      <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.search_skill_versions">search_skill_versions() (mlflow.client.MlflowClient method)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.search_skills">search_skills() (in module mlflow.genai)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.search_skills">(mlflow.client.MlflowClient method)</a>
+</li>
+      </ul></li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.Trace.search_spans">search_spans() (mlflow.entities.Trace method)</a>
 </li>
       <li><a href="python_api/mlflow.html#mlflow.search_traces">search_traces() (in module mlflow)</a>
@@ -10979,6 +11687,8 @@
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.Session">Session (class in mlflow.entities)</a>
 </li>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.AWSRole.session_length_seconds">session_length_seconds (mlflow.gateway.config.AWSRole attribute)</a>
+</li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.Scorer.session_level">session_level (mlflow.genai.Scorer attribute)</a>
 </li>
       <li><a href="python_api/mlflow.html#mlflow.set_active_model">set_active_model() (in module mlflow)</a>
 </li>
@@ -11070,8 +11780,6 @@
       </ul></li>
       <li><a href="python_api/mlflow.models.html#mlflow.models.set_model">set_model() (in module mlflow.models)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.html#mlflow.set_model_version_tag">set_model_version_tag() (in module mlflow)</a>
 
       <ul>
@@ -11110,6 +11818,8 @@
 </li>
       <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.set_registered_model_tag">set_registered_model_tag() (mlflow.client.MlflowClient method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.html#mlflow.set_registry_uri">set_registry_uri() (in module mlflow)</a>
 
       <ul>
@@ -11126,7 +11836,15 @@
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.review_queues.set_review_queue_item_status">(in module mlflow.genai.review_queues)</a>
 </li>
       </ul></li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.set_session_hierarchy">set_session_hierarchy() (in module mlflow.genai)</a>
+</li>
       <li><a href="python_api/mlflow.models.html#mlflow.models.set_signature">set_signature() (in module mlflow.models)</a>
+</li>
+      <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.set_skill_alias">set_skill_alias() (mlflow.client.MlflowClient method)</a>
+</li>
+      <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.set_skill_tag">set_skill_tag() (mlflow.client.MlflowClient method)</a>
+</li>
+      <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.set_skill_version_tag">set_skill_version_tag() (mlflow.client.MlflowClient method)</a>
 </li>
       <li><a href="python_api/mlflow.tracing.html#mlflow.tracing.set_span_chat_tools">set_span_chat_tools() (in module mlflow.tracing)</a>
 </li>
@@ -11212,6 +11930,8 @@
       </ul></li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.ConversationSimulator.simulate">simulate() (mlflow.genai.ConversationSimulator method)</a>
 </li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.Skill">Skill (class in mlflow.entities)</a>
+</li>
       <li>
     SKILL_NAME
 
@@ -11219,6 +11939,41 @@
         <li><a href="cli.html#cmdoption-mlflow-skills-view-arg-SKILL_NAME">mlflow-skills-view command line option</a>
 </li>
       </ul></li>
+      <li>
+    SKILL_URI
+
+      <ul>
+        <li><a href="cli.html#cmdoption-mlflow-skills-delete-alias-arg-SKILL_URI">mlflow-skills-delete-alias command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-delete-tag-arg-SKILL_URI">mlflow-skills-delete-tag command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-delete-version-arg-SKILL_URI">mlflow-skills-delete-version command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-delete-version-tag-arg-SKILL_URI">mlflow-skills-delete-version-tag command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-get-arg-SKILL_URI">mlflow-skills-get command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-get-version-arg-SKILL_URI">mlflow-skills-get-version command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-search-versions-arg-SKILL_URI">mlflow-skills-search-versions command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-set-alias-arg-SKILL_URI">mlflow-skills-set-alias command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-set-tag-arg-SKILL_URI">mlflow-skills-set-tag command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-set-version-tag-arg-SKILL_URI">mlflow-skills-set-version-tag command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-update-arg-SKILL_URI">mlflow-skills-update command line option</a>
+</li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-update-version-arg-SKILL_URI">mlflow-skills-update-version command line option</a>
+</li>
+      </ul></li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.SkillSourceType">SkillSourceType (class in mlflow.entities)</a>
+</li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.SkillStatus">SkillStatus (class in mlflow.entities)</a>
+</li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.SkillVersion">SkillVersion (class in mlflow.entities)</a>
+</li>
       <li><a href="python_api/mlflow.data.html#mlflow.data.dataset.Dataset.source">source (mlflow.data.dataset.Dataset property)</a>
 
       <ul>
@@ -11245,6 +12000,8 @@
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.MCPServerVersion.source">(mlflow.entities.MCPServerVersion attribute)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.ModelVersion.source">(mlflow.entities.model_registry.ModelVersion property)</a>
+</li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.SkillVersion.source">(mlflow.entities.SkillVersion attribute)</a>
 </li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset.source">(mlflow.genai.datasets.EvaluationDataset property)</a>
 </li>
@@ -11276,6 +12033,10 @@
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.DatasetRecordSource.source_type">(mlflow.entities.DatasetRecordSource attribute)</a>
 </li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.Skill.source_type">(mlflow.entities.Skill attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.SkillVersion.source_type">(mlflow.entities.SkillVersion attribute)</a>
+</li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset.source_type">(mlflow.genai.datasets.EvaluationDataset property)</a>
 </li>
       </ul></li>
@@ -11290,6 +12051,8 @@
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.Assessment.span_id">span_id (mlflow.entities.Assessment attribute)</a>
 
       <ul>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueEvidenceStep.span_id">(mlflow.entities.IssueEvidenceStep attribute)</a>
+</li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.Link.span_id">(mlflow.entities.Link attribute)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.NoOpSpan.span_id">(mlflow.entities.NoOpSpan property)</a>
@@ -11297,6 +12060,8 @@
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.Span.span_id">(mlflow.entities.Span property)</a>
 </li>
       </ul></li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueEvidence.span_ids">span_ids (mlflow.entities.IssueEvidence property)</a>
+</li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.Span.span_type">span_type (mlflow.entities.Span property)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.SpanEvent">SpanEvent (class in mlflow.entities)</a>
@@ -11370,6 +12135,10 @@
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.RunInfo.status">(mlflow.entities.RunInfo property)</a>
 </li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.Skill.status">(mlflow.entities.Skill attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.SkillVersion.status">(mlflow.entities.SkillVersion attribute)</a>
+</li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.Span.status">(mlflow.entities.Span property)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfo.status">(mlflow.entities.TraceInfo property)</a>
@@ -11399,6 +12168,8 @@
       </ul></li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.deepeval.StepEfficiency">StepEfficiency (class in mlflow.genai.scorers.deepeval)</a>
 </li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueEvidence.steps">steps (mlflow.entities.IssueEvidence attribute)</a>
+</li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.Scorer.stop">stop() (mlflow.genai.Scorer method)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.PromptModelConfig.stop_sequences">stop_sequences (mlflow.entities.model_registry.PromptModelConfig attribute)</a>
@@ -11417,6 +12188,16 @@
 </li>
       <li><a href="python_api/mlflow.projects.html#mlflow.projects.SubmittedRun">SubmittedRun (class in mlflow.projects)</a>
 </li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.GitSource.subpath">subpath (mlflow.entities.GitSource attribute)</a>
+
+      <ul>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.MlflowSource.subpath">(mlflow.entities.MlflowSource attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.OCISource.subpath">(mlflow.entities.OCISource attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.ZipSource.subpath">(mlflow.entities.ZipSource attribute)</a>
+</li>
+      </ul></li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.WebhookTestResult.success">success (mlflow.entities.WebhookTestResult property)</a>
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.Summarization">Summarization (class in mlflow.genai.scorers)</a>
@@ -11430,6 +12211,8 @@
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.scorers.ragas.SummarizationScore">SummarizationScore (class in mlflow.genai.scorers.ragas)</a>
 </li>
       <li><a href="python_api/mlflow.types.html#mlflow.types.responses_helpers.Summary">Summary (class in mlflow.types.responses_helpers)</a>
+</li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueEvidence.summary">summary (mlflow.entities.IssueEvidence attribute)</a>
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.LabelingSession.sync">sync() (mlflow.genai.LabelingSession method)</a>
 </li>
@@ -11469,6 +12252,10 @@
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.Prompt.tags">(mlflow.entities.Prompt property)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.RunData.tags">(mlflow.entities.RunData property)</a>
+</li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.Skill.tags">(mlflow.entities.Skill attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.SkillVersion.tags">(mlflow.entities.SkillVersion attribute)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.TraceInfo.tags">(mlflow.entities.TraceInfo attribute)</a>
 </li>
@@ -11545,6 +12332,8 @@
 </li>
       <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.test_webhook">test_webhook() (mlflow.client.MlflowClient method)</a>
 </li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueEvidenceStep.text">text (mlflow.entities.IssueEvidenceStep attribute)</a>
+</li>
       <li><a href="python_api/mlflow.types.html#mlflow.types.chat.TextContentPart">TextContentPart (class in mlflow.types.chat)</a>
 </li>
       <li><a href="python_api/mlflow.models.html#mlflow.models.MetricThreshold.threshold">threshold (mlflow.models.MetricThreshold property)</a>
@@ -11602,7 +12391,11 @@
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.Document.to_dict">(mlflow.entities.Document method)</a>
 </li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.GitSource.to_dict">(mlflow.entities.GitSource method)</a>
+</li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.InferenceTableLocation.to_dict">(mlflow.entities.InferenceTableLocation method)</a>
+</li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueEvidenceStep.to_dict">(mlflow.entities.IssueEvidenceStep method)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.Link.to_dict">(mlflow.entities.Link method)</a>
 </li>
@@ -11610,7 +12403,11 @@
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.MlflowExperimentLocation.to_dict">(mlflow.entities.MlflowExperimentLocation method)</a>
 </li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.MlflowSource.to_dict">(mlflow.entities.MlflowSource method)</a>
+</li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.PromptModelConfig.to_dict">(mlflow.entities.model_registry.PromptModelConfig method)</a>
+</li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.OCISource.to_dict">(mlflow.entities.OCISource method)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.Span.to_dict">(mlflow.entities.Span method)</a>
 </li>
@@ -11627,6 +12424,8 @@
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.UnityCatalog.to_dict">(mlflow.entities.UnityCatalog method)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.Workspace.to_dict">(mlflow.entities.Workspace method)</a>
+</li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.ZipSource.to_dict">(mlflow.entities.ZipSource method)</a>
 </li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.InputCategorical.to_dict">(mlflow.genai.databricks.review_queues.InputCategorical method)</a>
 </li>
@@ -11751,6 +12550,10 @@
         <li><a href="python_api/mlflow.entities.html#mlflow.store.entities.PagedList.to_list">(mlflow.store.entities.PagedList method)</a>
 </li>
       </ul></li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueEvidence.to_metadata">to_metadata() (mlflow.entities.IssueEvidence method)</a>
+</li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueEvidence.to_metadata_value">to_metadata_value() (mlflow.entities.IssueEvidence method)</a>
+</li>
       <li><a href="python_api/mlflow.types.html#mlflow.types.DataType.to_numpy">to_numpy() (mlflow.types.DataType method)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.Span.to_otel_proto">to_otel_proto() (mlflow.entities.Span method)</a>
@@ -12221,6 +13024,8 @@
 </li>
       <li><a href="python_api/mlflow.deployments.html#mlflow.deployments.DatabricksDeploymentClient.update_endpoint_tags">update_endpoint_tags() (mlflow.deployments.DatabricksDeploymentClient method)</a>
 </li>
+      <li><a href="python_api/mlflow.genai.html#mlflow.genai.update_issue">update_issue() (in module mlflow.genai)</a>
+</li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.label_schemas.update_label_schema">update_label_schema() (in module mlflow.genai.label_schemas)</a>
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.update_mcp_access_endpoint">update_mcp_access_endpoint() (in module mlflow.genai)</a>
@@ -12257,13 +13062,17 @@
       </ul></li>
       <li><a href="auth/python-api.html#mlflow.server.auth.client.AuthServiceClient.update_role">update_role() (mlflow.server.auth.client.AuthServiceClient method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="auth/python-api.html#mlflow.server.auth.client.AuthServiceClient.update_role_permission">update_role_permission() (mlflow.server.auth.client.AuthServiceClient method)</a>
 </li>
       <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.update_run">update_run() (mlflow.client.MlflowClient method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_api/mlflow.pyfunc.html#mlflow.pyfunc.update_signature_for_type_hint_from_example">update_signature_for_type_hint_from_example() (in module mlflow.pyfunc)</a>
+</li>
+      <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.update_skill">update_skill() (mlflow.client.MlflowClient method)</a>
+</li>
+      <li><a href="python_api/mlflow.client.html#mlflow.client.MlflowClient.update_skill_version">update_skill_version() (mlflow.client.MlflowClient method)</a>
 </li>
       <li><a href="python_api/mlflow.genai.html#mlflow.genai.databricks.review_queues.ReviewQuestion.update_time_ms">update_time_ms (mlflow.genai.databricks.review_queues.ReviewQuestion attribute)</a>
 
@@ -12293,6 +13102,8 @@
       <ul>
         <li><a href="cli.html#cmdoption-mlflow-run-arg-URI">mlflow-run command line option</a>
 </li>
+        <li><a href="cli.html#cmdoption-mlflow-skills-pull-arg-URI">mlflow-skills-pull command line option</a>
+</li>
       </ul></li>
       <li><a href="python_api/mlflow.data.html#mlflow.data.filesystem_dataset_source.FileSystemDatasetSource.uri">uri (mlflow.data.filesystem_dataset_source.FileSystemDatasetSource property)</a>
 
@@ -12320,9 +13131,13 @@
       <li><a href="python_api/mlflow.data.html#mlflow.data.http_dataset_source.HTTPDatasetSource.url">url (mlflow.data.http_dataset_source.HTTPDatasetSource property)</a>
 
       <ul>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.GitSource.url">(mlflow.entities.GitSource attribute)</a>
+</li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.MCPAccessEndpoint.url">(mlflow.entities.MCPAccessEndpoint attribute)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.Webhook.url">(mlflow.entities.Webhook property)</a>
+</li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.ZipSource.url">(mlflow.entities.ZipSource attribute)</a>
 </li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.LabelingSession.url">(mlflow.genai.LabelingSession property)</a>
 </li>
@@ -12419,6 +13234,8 @@
 </li>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.OpenAIConfig.validate_field_compatibility">validate_field_compatibility() (mlflow.gateway.config.OpenAIConfig class method)</a>
 </li>
+      <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.GeminiConfig.validate_gemini_api_base">validate_gemini_api_base() (mlflow.gateway.config.GeminiConfig class method)</a>
+</li>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.GeminiConfig.validate_gemini_api_key">validate_gemini_api_key() (mlflow.gateway.config.GeminiConfig class method)</a>
 </li>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.EndpointConfig.validate_limit">validate_limit() (mlflow.gateway.config.EndpointConfig class method)</a>
@@ -12447,6 +13264,8 @@
 </li>
       <li><a href="python_api/mlflow.models.html#mlflow.models.validate_serving_input">validate_serving_input() (in module mlflow.models)</a>
 </li>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.IssueEvidence.validate_spans">validate_spans() (mlflow.entities.IssueEvidence method)</a>
+</li>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.TogetherAIConfig.validate_togetherai_api_key">validate_togetherai_api_key() (mlflow.gateway.config.TogetherAIConfig class method)</a>
 </li>
       <li><a href="python_api/mlflow.types.html#mlflow.types.ParamSpec.validate_type_and_shape">validate_type_and_shape() (mlflow.types.ParamSpec class method)</a>
@@ -12454,6 +13273,8 @@
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.TypeSafeConfig.validate_typesafe_api_key">validate_typesafe_api_key() (mlflow.gateway.config.TypeSafeConfig class method)</a>
 </li>
       <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.VertexAIConfig.validate_vertex_anthropic_betas">validate_vertex_anthropic_betas() (mlflow.gateway.config.VertexAIConfig class method)</a>
+</li>
+      <li><a href="python_api/mlflow.gateway.html#mlflow.gateway.config.VertexAIConfig.validate_vertex_location">validate_vertex_location() (mlflow.gateway.config.VertexAIConfig class method)</a>
 </li>
       <li><a href="python_api/mlflow.entities.html#mlflow.entities.GuardrailAction.VALIDATION">VALIDATION (mlflow.entities.GuardrailAction attribute)</a>
 </li>
@@ -12525,6 +13346,8 @@
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.PromptVersion.version">(mlflow.entities.model_registry.PromptVersion property)</a>
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.RegisteredModelAlias.version">(mlflow.entities.model_registry.RegisteredModelAlias property)</a>
+</li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.SkillVersion.version">(mlflow.entities.SkillVersion attribute)</a>
 </li>
         <li><a href="python_api/mlflow.genai.html#mlflow.genai.datasets.EvaluationDataset.version">(mlflow.genai.datasets.EvaluationDataset property)</a>
 </li>
@@ -12628,6 +13451,10 @@
 </li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.model_registry.RegisteredModel.workspace">(mlflow.entities.model_registry.RegisteredModel property)</a>
 </li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.Skill.workspace">(mlflow.entities.Skill attribute)</a>
+</li>
+        <li><a href="python_api/mlflow.entities.html#mlflow.entities.SkillVersion.workspace">(mlflow.entities.SkillVersion attribute)</a>
+</li>
         <li><a href="python_api/mlflow.entities.html#mlflow.entities.Webhook.workspace">(mlflow.entities.Webhook property)</a>
 </li>
         <li><a href="auth/python-api.html#mlflow.server.auth.entities.RegisteredModelPermission.workspace">(mlflow.server.auth.entities.RegisteredModelPermission property)</a>
@@ -12662,6 +13489,18 @@
   </ul></td>
 </tr></table>
 
+<h2 id="Z">Z</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.SkillSourceType.ZIP">ZIP (mlflow.entities.SkillSourceType attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python_api/mlflow.entities.html#mlflow.entities.ZipSource">ZipSource (class in mlflow.entities)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 
 
               </div>
@@ -12692,7 +13531,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'./',
-      VERSION:'3.17.2',
+      VERSION:'3.18.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

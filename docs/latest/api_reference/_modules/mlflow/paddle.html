@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="MLflow 3.17.2 documentation" href="../../index.html"/>
+    <link rel="top" title="MLflow 3.18.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -148,7 +148,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.2</span>
+  <span class="header-link version">3.18.0</span>
 </div>
   </nav>
   <page>
@@ -264,7 +264,6 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">mlflow</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyfunc</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.environment_variables</span><span class="w"> </span><span class="kn">import</span> <span class="n">MLFLOW_ALLOW_PICKLE_DESERIALIZATION</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">ModelInputExample</span><span class="p">,</span> <span class="n">ModelSignature</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.models.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">MLMODEL_FILE_NAME</span>
@@ -273,10 +272,6 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracking._model_registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">DEFAULT_AWAIT_MAX_SLEEP_SECONDS</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracking.artifact_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">_download_artifact_from_uri</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.autologging_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">autologging_integration</span><span class="p">,</span> <span class="n">safe_patch</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.databricks_utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">is_in_databricks_model_serving_environment</span><span class="p">,</span>
-    <span class="n">is_in_databricks_runtime</span><span class="p">,</span>
-<span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.docstring_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">LOG_MODEL_PARAM_DOCS</span><span class="p">,</span> <span class="n">format_docstring</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.environment</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">_CONDA_ENV_FILE_NAME</span><span class="p">,</span>
@@ -293,7 +288,9 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.model_utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">_add_code_from_conf_to_system_path</span><span class="p">,</span>
     <span class="n">_copy_extra_files</span><span class="p">,</span>
+    <span class="n">_deprecated_pickle_variable_hint</span><span class="p">,</span>
     <span class="n">_get_flavor_configuration</span><span class="p">,</span>
+    <span class="n">_is_pickle_loading_allowed</span><span class="p">,</span>
     <span class="n">_validate_and_copy_code_paths</span><span class="p">,</span>
     <span class="n">_validate_and_prepare_target_save_path</span><span class="p">,</span>
 <span class="p">)</span>
@@ -561,15 +558,11 @@
 <span class="sd">    """</span>
     <span class="c1"># Both `paddle.jit.load` (legacy IR format) and `paddle.Model.load` unpickle</span>
     <span class="c1"># files from the model artifact.</span>
-    <span class="k">if</span> <span class="p">(</span>
-        <span class="ow">not</span> <span class="n">MLFLOW_ALLOW_PICKLE_DESERIALIZATION</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-        <span class="ow">and</span> <span class="ow">not</span> <span class="n">is_in_databricks_runtime</span><span class="p">()</span>
-        <span class="ow">and</span> <span class="ow">not</span> <span class="n">is_in_databricks_model_serving_environment</span><span class="p">()</span>
-    <span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">_is_pickle_loading_allowed</span><span class="p">():</span>
         <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
             <span class="s2">"Deserializing model using pickle is disallowed, but loading a paddle model "</span>
             <span class="s2">"may deserialize pickle data. The workaround is to set environment variable "</span>
-            <span class="s2">"'MLFLOW_ALLOW_PICKLE_DESERIALIZATION' to 'true'."</span>
+            <span class="s2">"'MLFLOW_ALLOW_MODEL_CODE_EXECUTION' to 'true'."</span> <span class="o">+</span> <span class="n">_deprecated_pickle_variable_hint</span><span class="p">()</span>
         <span class="p">)</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">paddle</span>
 
@@ -908,7 +901,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../',
-      VERSION:'3.17.2',
+      VERSION:'3.18.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

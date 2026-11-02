@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 3.17.2 documentation" href="../../../index.html"/>
+    <link rel="top" title="MLflow 3.18.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -148,7 +148,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.2</span>
+  <span class="header-link version">3.18.0</span>
 </div>
   </nav>
   <page>
@@ -259,6 +259,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">opentelemetry.sdk.trace</span><span class="w"> </span><span class="kn">import</span> <span class="n">ReadableSpan</span> <span class="k">as</span> <span class="n">OTelReadableSpan</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">opentelemetry.trace</span><span class="w"> </span><span class="kn">import</span> <span class="n">NonRecordingSpan</span><span class="p">,</span> <span class="n">SpanContext</span><span class="p">,</span> <span class="n">TraceFlags</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">opentelemetry.trace</span><span class="w"> </span><span class="kn">import</span> <span class="n">Span</span> <span class="k">as</span> <span class="n">OTelSpan</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">opentelemetry.trace</span><span class="w"> </span><span class="kn">import</span> <span class="n">SpanKind</span> <span class="k">as</span> <span class="n">OTelSpanKind</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">opentelemetry.trace</span><span class="w"> </span><span class="kn">import</span> <span class="n">Status</span> <span class="k">as</span> <span class="n">OTelStatus</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">opentelemetry.trace</span><span class="w"> </span><span class="kn">import</span> <span class="n">StatusCode</span> <span class="k">as</span> <span class="n">OTelStatusCode</span>
 
@@ -303,6 +304,19 @@
     <span class="k">if</span> <span class="n">link_location</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">link_trace_id</span> <span class="k">if</span> <span class="n">link_location</span> <span class="o">==</span> <span class="n">source_location</span> <span class="k">else</span> <span class="kc">None</span>
     <span class="k">return</span> <span class="n">construct_trace_id_v4</span><span class="p">(</span><span class="n">source_location</span><span class="p">,</span> <span class="n">trace_id</span><span class="p">)</span> <span class="k">if</span> <span class="n">source_location</span> <span class="k">else</span> <span class="n">link_trace_id</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_otel_proto_kind_to_sdk_kind</span><span class="p">(</span><span class="n">proto_kind</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OTelSpanKind</span><span class="p">:</span>
+    <span class="c1"># OTLP span kinds are the SDK span kinds plus one, with 0 reserved for SPAN_KIND_UNSPECIFIED.</span>
+    <span class="c1"># Unspecified and unknown values fall back to INTERNAL, the SDK default.</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">OTelSpanKind</span><span class="p">(</span><span class="n">proto_kind</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">OTelSpanKind</span><span class="o">.</span><span class="n">INTERNAL</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_sdk_kind_to_otel_proto_kind</span><span class="p">(</span><span class="n">kind</span><span class="p">:</span> <span class="n">OTelSpanKind</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">kind</span><span class="o">.</span><span class="n">value</span> <span class="o">+</span> <span class="mi">1</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_link_from_otel_link</span><span class="p">(</span><span class="n">otel_link</span><span class="p">,</span> <span class="n">source_trace_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Link</span><span class="p">:</span>
@@ -611,6 +625,7 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_span</span><span class="o">.</span><span class="n">parent</span>
             <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
             <span class="s2">"name"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="s2">"kind"</span><span class="p">:</span> <span class="n">OTelProtoSpan</span><span class="o">.</span><span class="n">SpanKind</span><span class="o">.</span><span class="n">Name</span><span class="p">(</span><span class="n">_sdk_kind_to_otel_proto_kind</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_span</span><span class="o">.</span><span class="n">kind</span><span class="p">)),</span>
             <span class="s2">"start_time_unix_nano"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_time_ns</span><span class="p">,</span>
             <span class="s2">"end_time_unix_nano"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_time_ns</span><span class="p">,</span>
             <span class="s2">"events"</span><span class="p">:</span> <span class="p">[</span>
@@ -694,10 +709,20 @@
             <span class="n">end_time_ns</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"end_time_unix_nano"</span><span class="p">)</span>
             <span class="n">end_time_ns</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">end_time_ns</span><span class="p">)</span> <span class="k">if</span> <span class="n">end_time_ns</span> <span class="k">else</span> <span class="kc">None</span>
 
+            <span class="c1"># Spans stored before the kind was serialized, and spans logged by the TypeScript</span>
+            <span class="c1"># SDK, have no "kind" key.</span>
+            <span class="n">kind_name</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"kind"</span><span class="p">)</span>
+            <span class="n">kind</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">_otel_proto_kind_to_sdk_kind</span><span class="p">(</span><span class="n">OTelProtoSpan</span><span class="o">.</span><span class="n">SpanKind</span><span class="o">.</span><span class="n">Value</span><span class="p">(</span><span class="n">kind_name</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">kind_name</span>
+                <span class="k">else</span> <span class="n">OTelSpanKind</span><span class="o">.</span><span class="n">INTERNAL</span>
+            <span class="p">)</span>
+
             <span class="n">otel_span</span> <span class="o">=</span> <span class="n">OTelReadableSpan</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">"name"</span><span class="p">],</span>
                 <span class="n">context</span><span class="o">=</span><span class="n">build_otel_context</span><span class="p">(</span><span class="n">otel_trace_id</span><span class="p">,</span> <span class="n">span_id</span><span class="p">),</span>
                 <span class="n">parent</span><span class="o">=</span><span class="n">build_otel_context</span><span class="p">(</span><span class="n">otel_trace_id</span><span class="p">,</span> <span class="n">parent_id</span><span class="p">)</span> <span class="k">if</span> <span class="n">parent_id</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">kind</span><span class="o">=</span><span class="n">kind</span><span class="p">,</span>
                 <span class="n">start_time</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"start_time_unix_nano"</span><span class="p">]),</span>
                 <span class="n">end_time</span><span class="o">=</span><span class="n">end_time_ns</span><span class="p">,</span>
                 <span class="n">attributes</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">"attributes"</span><span class="p">],</span>
@@ -839,6 +864,7 @@
             <span class="n">name</span><span class="o">=</span><span class="n">otel_proto_span</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
             <span class="n">context</span><span class="o">=</span><span class="n">build_otel_context</span><span class="p">(</span><span class="n">trace_id</span><span class="p">,</span> <span class="n">span_id</span><span class="p">),</span>
             <span class="n">parent</span><span class="o">=</span><span class="n">build_otel_context</span><span class="p">(</span><span class="n">trace_id</span><span class="p">,</span> <span class="n">parent_id</span><span class="p">)</span> <span class="k">if</span> <span class="n">parent_id</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">kind</span><span class="o">=</span><span class="n">_otel_proto_kind_to_sdk_kind</span><span class="p">(</span><span class="n">otel_proto_span</span><span class="o">.</span><span class="n">kind</span><span class="p">),</span>
             <span class="n">start_time</span><span class="o">=</span><span class="n">otel_proto_span</span><span class="o">.</span><span class="n">start_time_unix_nano</span><span class="p">,</span>
             <span class="n">end_time</span><span class="o">=</span><span class="n">otel_proto_span</span><span class="o">.</span><span class="n">end_time_unix_nano</span><span class="p">,</span>
             <span class="c1"># we need to dump the attribute value to be consistent with span.set_attribute behavior</span>
@@ -878,6 +904,7 @@
         <span class="n">otel_span</span><span class="o">.</span><span class="n">span_id</span> <span class="o">=</span> <span class="nb">bytes</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">span_id</span><span class="p">)</span>
 
         <span class="n">otel_span</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">otel_span</span><span class="o">.</span><span class="n">kind</span> <span class="o">=</span> <span class="n">_sdk_kind_to_otel_proto_kind</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_span</span><span class="o">.</span><span class="n">kind</span><span class="p">)</span>
         <span class="n">otel_span</span><span class="o">.</span><span class="n">start_time_unix_nano</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_time_ns</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_time_ns</span><span class="p">:</span>
             <span class="n">otel_span</span><span class="o">.</span><span class="n">end_time_unix_nano</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_time_ns</span>
@@ -1931,7 +1958,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'3.17.2',
+      VERSION:'3.18.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

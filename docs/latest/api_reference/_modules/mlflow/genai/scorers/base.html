@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="MLflow 3.17.2 documentation" href="../../../../index.html"/>
+    <link rel="top" title="MLflow 3.18.0 documentation" href="../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../index.html"/> 
 
   
@@ -148,7 +148,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.2</span>
+  <span class="header-link version">3.18.0</span>
 </div>
   </nav>
   <page>
@@ -252,13 +252,14 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tokenize</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">contextmanager</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">contextvars</span><span class="w"> </span><span class="kn">import</span> <span class="n">ContextVar</span><span class="p">,</span> <span class="n">copy_context</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">asdict</span><span class="p">,</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">fields</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">ClassVar</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">TypeAlias</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">overload</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">PrivateAttr</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">PrivateAttr</span><span class="p">,</span> <span class="n">field_validator</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">mlflow</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities</span><span class="w"> </span><span class="kn">import</span> <span class="n">Assessment</span><span class="p">,</span> <span class="n">Feedback</span>
@@ -270,6 +271,7 @@
     <span class="n">MLFLOW_SERVER_ENABLE_CUSTOM_SCORERS</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.scorers._scorer_execution</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_scorer_execution</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.scorers.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">BOOL_ENSEMBLES</span><span class="p">,</span>
     <span class="n">BUILTIN_ENSEMBLES</span><span class="p">,</span>
@@ -283,6 +285,8 @@
     <span class="n">THIRD_PARTY_SCORER_REGISTRATION_NOT_SUPPORTED_ON_DATABRICKS_ERROR</span><span class="p">,</span>
     <span class="n">_obj_has_call_source</span><span class="p">,</span>
     <span class="n">_parse_serialized_scorer</span><span class="p">,</span>
+    <span class="n">custom_scorer_without_source_error_message</span><span class="p">,</span>
+    <span class="n">extract_function_body</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.telemetry.events</span><span class="w"> </span><span class="kn">import</span> <span class="n">ScorerCallEvent</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.telemetry.track</span><span class="w"> </span><span class="kn">import</span> <span class="n">record_usage_event</span>
@@ -310,6 +314,25 @@
 
 <span class="c1"># Serialization version for tracking changes to the serialization format</span>
 <span class="n">_SERIALIZATION_VERSION</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c1"># Scorer names already warned that session_level is unsupported online; online scoring</span>
+<span class="c1"># runs repeatedly (every job tick), so the warning fires once per name per process.</span>
+<span class="n">_SESSION_LEVEL_ONLINE_WARNED</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+<span class="n">_SESSION_LEVEL_ONLINE_WARNED_LOCK</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">warn_session_level_unsupported_online</span><span class="p">(</span><span class="n">scorer_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Warn once per scorer name that `session_level` is not supported by online scoring."""</span>
+    <span class="k">with</span> <span class="n">_SESSION_LEVEL_ONLINE_WARNED_LOCK</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">scorer_name</span> <span class="ow">in</span> <span class="n">_SESSION_LEVEL_ONLINE_WARNED</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">_SESSION_LEVEL_ONLINE_WARNED</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">scorer_name</span><span class="p">)</span>
+    <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+        <span class="s2">"session_level is not yet supported for online scoring; scorer '</span><span class="si">%s</span><span class="s2">' will score "</span>
+        <span class="s2">"full sessions grouped by the complete 'mlflow.trace.session' value."</span><span class="p">,</span>
+        <span class="n">scorer_name</span><span class="p">,</span>
+    <span class="p">)</span>
+
 
 <span class="c1"># Default per-invocation timeout (seconds) for @scorer scorers that don't set an explicit timeout.</span>
 <span class="n">DEFAULT_SCORER_TIMEOUT</span> <span class="o">=</span> <span class="mi">300</span>
@@ -362,6 +385,18 @@
 
 
 <span class="n">AggregationFunc</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]],</span> <span class="nb">float</span><span class="p">]</span>  <span class="c1"># List of per-row value -&gt; aggregated value</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_to_python_scalar</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Convert a NumPy scalar (e.g. ``np.bool_``, ``np.int64``), which is not a subclass of the</span>
+<span class="sd">    matching Python primitive, to that primitive. NumPy is looked up lazily so this module</span>
+<span class="sd">    stays importable without it.</span>
+<span class="sd">    """</span>
+    <span class="n">np</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"numpy"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">np</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">generic</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">value</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_extract_scorer_value</span><span class="p">(</span><span class="n">result</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
@@ -434,6 +469,10 @@
     <span class="c1"># Per-invocation timeout (seconds). Defaults to `0` (no timeout) so scorers serialized before</span>
     <span class="c1"># this field existed (legacy scorers) stay unbounded; a fresh scorer serializes `None`.</span>
     <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># Session-hierarchy level name the scorer groups traces by. `None` (also the legacy</span>
+    <span class="c1"># default for scorers serialized before this field existed) groups by the full</span>
+    <span class="c1"># `mlflow.trace.session` value.</span>
+    <span class="n">session_level</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="c1"># Version metadata</span>
     <span class="n">mlflow_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">__version__</span>
@@ -608,6 +647,15 @@
             <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="n">_MLFLOW_IN_JOB_EXECUTOR</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">previous</span>
 
 
+<span class="k">def</span><span class="w"> </span><span class="nf">_is_decorator_scorer</span><span class="p">(</span><span class="n">serialized</span><span class="p">:</span> <span class="n">SerializedScorer</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Whether a serialized scorer is a single custom ``@scorer``, not, for example, an ensemble</span>
+<span class="sd">    that includes one.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span>
+        <span class="n">serialized</span><span class="o">.</span><span class="n">call_source</span> <span class="ow">and</span> <span class="n">serialized</span><span class="o">.</span><span class="n">call_signature</span> <span class="ow">and</span> <span class="n">serialized</span><span class="o">.</span><span class="n">original_func_name</span>
+    <span class="p">)</span>
+
+
 <span class="k">def</span><span class="w"> </span><span class="nf">_serialized_scorer_is_custom_code</span><span class="p">(</span>
     <span class="n">serialized_scorer</span><span class="p">:</span> <span class="s2">"str | dict[str, Any] | SerializedScorer"</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
@@ -634,6 +682,10 @@
     <span class="c1"># Per-invocation timeout (seconds) enforced by `run()`. `None` (default) uses</span>
     <span class="c1"># DEFAULT_SCORER_TIMEOUT; `0` disables the timeout.</span>
     <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="c1"># Name of a session-hierarchy level (e.g. "episode") to group traces by when</span>
+    <span class="c1"># evaluating, instead of the full `mlflow.trace.session` value. Only meaningful</span>
+    <span class="c1"># for session-level scorers.</span>
+    <span class="n">session_level</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="n">_cached_dump</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">PrivateAttr</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="n">_sampling_config</span><span class="p">:</span> <span class="n">ScorerSamplingConfig</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">PrivateAttr</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
@@ -673,6 +725,30 @@
 <span class="sd">        or compute the value dynamically based on their configuration.</span>
 <span class="sd">        """</span>
         <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="nd">@field_validator</span><span class="p">(</span><span class="s2">"session_level"</span><span class="p">)</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_session_level_must_be_named</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">value</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"`session_level` must be a non-empty level name or None, got </span><span class="si">{</span><span class="n">value</span><span class="si">!r}</span><span class="s2">."</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_validate_session_level</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Enforce that `session_level` is only set on session-level scorers.</span>
+
+<span class="sd">        Checked lazily (at registration and evaluation time) rather than at</span>
+<span class="sd">        construction, because subclasses like InstructionsJudge only compute</span>
+<span class="sd">        `is_session_level_scorer` after the base class has been initialized.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_level</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_session_level_scorer</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"Scorer '</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">' sets session_level=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">session_level</span><span class="si">!r}</span><span class="s2"> but is not a "</span>
+                <span class="s2">"session-level scorer. `session_level` is only supported for session-level "</span>
+                <span class="s2">"scorers, e.g. a @scorer function with a `session` parameter or a judge with a "</span>
+                <span class="s2">"{{ conversation }} template variable."</span>
+            <span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">pass_if</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
@@ -759,6 +835,7 @@
                 <span class="n">description</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
                 <span class="n">aggregations</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">aggregations</span><span class="p">,</span>
                 <span class="n">is_session_level_scorer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">is_session_level_scorer</span><span class="p">,</span>
+                <span class="n">session_level</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">session_level</span><span class="p">,</span>
                 <span class="n">mlflow_version</span><span class="o">=</span><span class="n">mlflow</span><span class="o">.</span><span class="n">__version__</span><span class="p">,</span>
                 <span class="n">serialization_version</span><span class="o">=</span><span class="n">_SERIALIZATION_VERSION</span><span class="p">,</span>
                 <span class="n">third_party_scorer_data</span><span class="o">=</span><span class="p">{</span>
@@ -795,6 +872,7 @@
             <span class="n">aggregations</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">aggregations</span><span class="p">,</span>
             <span class="n">is_session_level_scorer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">is_session_level_scorer</span><span class="p">,</span>
             <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span>
+            <span class="n">session_level</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">session_level</span><span class="p">,</span>
             <span class="n">mlflow_version</span><span class="o">=</span><span class="n">mlflow</span><span class="o">.</span><span class="n">__version__</span><span class="p">,</span>
             <span class="n">serialization_version</span><span class="o">=</span><span class="n">_SERIALIZATION_VERSION</span><span class="p">,</span>
             <span class="n">call_source</span><span class="o">=</span><span class="n">source_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"call_source"</span><span class="p">),</span>
@@ -856,7 +934,7 @@
             <span class="k">return</span> <span class="n">BuiltInScorer</span><span class="o">.</span><span class="n">model_validate</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
 
         <span class="c1"># Handle decorator scorers</span>
-        <span class="k">elif</span> <span class="n">serialized</span><span class="o">.</span><span class="n">call_source</span> <span class="ow">and</span> <span class="n">serialized</span><span class="o">.</span><span class="n">call_signature</span> <span class="ow">and</span> <span class="n">serialized</span><span class="o">.</span><span class="n">original_func_name</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">_is_decorator_scorer</span><span class="p">(</span><span class="n">serialized</span><span class="p">):</span>
             <span class="c1"># Reconstructing a custom scorer executes its stored source via exec(). The tracking</span>
             <span class="c1"># server must never do that: it returns a non-executing handle that carries the</span>
             <span class="c1"># scorer's metadata and serialized form and forwards it to the job executor, which</span>
@@ -909,6 +987,7 @@
                     <span class="n">inference_params</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"inference_params"</span><span class="p">),</span>
                     <span class="n">model_api</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"model_api"</span><span class="p">),</span>
                     <span class="n">aggregations</span><span class="o">=</span><span class="n">serialized</span><span class="o">.</span><span class="n">aggregations</span><span class="p">,</span>
+                    <span class="n">session_level</span><span class="o">=</span><span class="n">serialized</span><span class="o">.</span><span class="n">session_level</span><span class="p">,</span>
                 <span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
@@ -1002,6 +1081,8 @@
                 <span class="n">scorer_instance</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">serialized</span><span class="o">.</span><span class="n">description</span>
             <span class="k">if</span> <span class="n">serialized</span><span class="o">.</span><span class="n">aggregations</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">scorer_instance</span><span class="o">.</span><span class="n">aggregations</span> <span class="o">=</span> <span class="n">serialized</span><span class="o">.</span><span class="n">aggregations</span>
+            <span class="k">if</span> <span class="n">serialized</span><span class="o">.</span><span class="n">session_level</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">scorer_instance</span><span class="o">.</span><span class="n">session_level</span> <span class="o">=</span> <span class="n">serialized</span><span class="o">.</span><span class="n">session_level</span>
             <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">scorer_instance</span><span class="p">,</span> <span class="s2">"_cached_dump"</span><span class="p">,</span> <span class="n">asdict</span><span class="p">(</span><span class="n">serialized</span><span class="p">))</span>
             <span class="k">return</span> <span class="n">scorer_instance</span>
 
@@ -1120,6 +1201,7 @@
             <span class="n">description</span><span class="o">=</span><span class="n">serialized</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
             <span class="n">aggregations</span><span class="o">=</span><span class="n">serialized</span><span class="o">.</span><span class="n">aggregations</span><span class="p">,</span>
             <span class="n">timeout</span><span class="o">=</span><span class="n">serialized</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span>
+            <span class="n">session_level</span><span class="o">=</span><span class="n">serialized</span><span class="o">.</span><span class="n">session_level</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="c1"># Cache the serialized data to prevent re-serialization issues with dynamic functions</span>
         <span class="n">original_serialized_data</span> <span class="o">=</span> <span class="n">asdict</span><span class="p">(</span><span class="n">serialized</span><span class="p">)</span>
@@ -1140,6 +1222,7 @@
             <span class="n">aggregations</span><span class="o">=</span><span class="n">serialized</span><span class="o">.</span><span class="n">aggregations</span><span class="p">,</span>
             <span class="n">description</span><span class="o">=</span><span class="n">serialized</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
             <span class="n">timeout</span><span class="o">=</span><span class="n">serialized</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span>
+            <span class="n">session_level</span><span class="o">=</span><span class="n">serialized</span><span class="o">.</span><span class="n">session_level</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="s2">"_is_session_level"</span><span class="p">,</span> <span class="n">serialized</span><span class="o">.</span><span class="n">is_session_level_scorer</span><span class="p">)</span>
         <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="s2">"_cached_dump"</span><span class="p">,</span> <span class="n">asdict</span><span class="p">(</span><span class="n">serialized</span><span class="p">))</span>
@@ -1169,7 +1252,11 @@
         <span class="c1"># Filter to only the parameters the function actually expects</span>
         <span class="n">sig</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="fm">__call__</span><span class="p">)</span>
         <span class="n">filtered</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">merged</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">sig</span><span class="o">.</span><span class="n">parameters</span><span class="p">}</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="p">(</span><span class="o">**</span><span class="n">filtered</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">_to_python_scalar</span><span class="p">(</span><span class="bp">self</span><span class="p">(</span><span class="o">**</span><span class="n">filtered</span><span class="p">))</span>
+        <span class="c1"># Feedback values are JSON-serialized when logged, which fails for NumPy scalars</span>
+        <span class="k">for</span> <span class="n">feedback</span> <span class="ow">in</span> <span class="n">result</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">result</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">feedback</span><span class="p">,</span> <span class="n">Feedback</span><span class="p">):</span>
+                <span class="n">feedback</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">_to_python_scalar</span><span class="p">(</span><span class="n">feedback</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span>
             <span class="c1"># TODO: Replace 'Assessment' with 'Feedback' once we migrate from the agent eval harness</span>
             <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">Assessment</span><span class="p">,</span> <span class="n">LegacyAssessment</span><span class="p">))</span>
@@ -1215,6 +1302,10 @@
         <span class="c1"># scorer directly, so a Scorer.run frame stays on its stack for telemetry callsite lookup.</span>
         <span class="n">ctx</span> <span class="o">=</span> <span class="n">copy_context</span><span class="p">()</span>
         <span class="n">outcome</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">execution</span> <span class="o">=</span> <span class="n">get_scorer_execution</span><span class="p">()</span>
+        <span class="n">done</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span> <span class="k">if</span> <span class="n">execution</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">execution</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">execution</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">_target</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">_in_scorer_timeout</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
@@ -1222,14 +1313,22 @@
                 <span class="n">outcome</span><span class="p">[</span><span class="s2">"value"</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">BaseException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  <span class="c1"># re-surface whatever the scorer raised on the caller</span>
                 <span class="n">outcome</span><span class="p">[</span><span class="s2">"error"</span><span class="p">]</span> <span class="o">=</span> <span class="n">e</span>
+            <span class="k">finally</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">execution</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">done</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+                    <span class="n">execution</span><span class="o">.</span><span class="n">notify_completion</span><span class="p">()</span>
 
         <span class="n">thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span>
             <span class="n">target</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">ctx</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">_target</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">"MlflowScorer-</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">daemon</span><span class="o">=</span><span class="kc">True</span>
         <span class="p">)</span>
         <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
         <span class="c1"># Thread.join rejects values above TIMEOUT_MAX; clamp so a huge timeout just means "wait".</span>
-        <span class="n">thread</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">timeout</span><span class="p">,</span> <span class="n">threading</span><span class="o">.</span><span class="n">TIMEOUT_MAX</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">thread</span><span class="o">.</span><span class="n">is_alive</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">execution</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">thread</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">timeout</span><span class="p">,</span> <span class="n">threading</span><span class="o">.</span><span class="n">TIMEOUT_MAX</span><span class="p">))</span>
+            <span class="n">completed</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">thread</span><span class="o">.</span><span class="n">is_alive</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">completed</span> <span class="o">=</span> <span class="n">execution</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">done</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">completed</span><span class="p">:</span>
             <span class="c1"># Warn so a climbing thread count from timed-out scorers is diagnosable.</span>
             <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">"Scorer '</span><span class="si">%s</span><span class="s2">' timed out after </span><span class="si">%s</span><span class="s2"> seconds."</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
             <span class="k">raise</span> <span class="n">MlflowTimeoutError</span><span class="p">(</span>
@@ -1394,6 +1493,7 @@
         <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.scorers.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">DatabricksStore</span><span class="p">,</span> <span class="n">_get_scorer_store</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_can_be_registered</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_has_source_code</span><span class="p">()</span>
         <span class="n">store</span> <span class="o">=</span> <span class="n">_get_scorer_store</span><span class="p">()</span>
         <span class="c1"># Create a new scorer instance</span>
         <span class="n">new_scorer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_copy</span><span class="p">()</span>
@@ -1464,6 +1564,7 @@
         <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_can_be_registered</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_has_source_code</span><span class="p">()</span>
 
         <span class="n">sample_rate</span> <span class="o">=</span> <span class="n">sampling_config</span><span class="o">.</span><span class="n">sample_rate</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sample_rate</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
@@ -1670,6 +1771,8 @@
                 <span class="n">copy</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aggregations</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">copy</span><span class="o">.</span><span class="n">aggregations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">aggregations</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_level</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">copy</span><span class="o">.</span><span class="n">session_level</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_level</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="n">ScorerKind</span><span class="o">.</span><span class="n">ENSEMBLE</span><span class="p">:</span>
             <span class="c1"># Copy each sub-scorer through its own _create_copy so kind-specific handling</span>
             <span class="c1"># still applies; a deepcopy of `_scorers` would recurse infinitely on a</span>
@@ -1688,8 +1791,38 @@
             <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">copy</span><span class="p">,</span> <span class="s2">"_cached_dump"</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cached_dump</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">copy</span>
 
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_has_source_code</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Reject a custom scorer whose function body is empty or cannot be read.</span>
+
+<span class="sd">        Such a scorer would be saved without source code, and could never run. This reads the</span>
+<span class="sd">        body without caching a serialized form on the scorer, so later changes to it still apply.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="n">ScorerKind</span><span class="o">.</span><span class="n">ENSEMBLE</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">sub_scorer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scorers</span><span class="p">:</span>
+                <span class="n">sub_scorer</span><span class="o">.</span><span class="n">_check_has_source_code</span><span class="p">()</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kind</span> <span class="o">!=</span> <span class="n">ScorerKind</span><span class="o">.</span><span class="n">DECORATOR</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cached_dump</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">call_source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cached_dump</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"call_source"</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">call_source</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">extract_function_body</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_original_func</span><span class="p">)</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">OSError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">SyntaxError</span><span class="p">,</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">TokenError</span><span class="p">):</span>
+                <span class="c1"># For example, a function defined with `exec` or in a REPL, or one whose file was</span>
+                <span class="c1"># changed after it was imported and no longer parses.</span>
+                <span class="n">call_source</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">call_source</span> <span class="ow">or</span> <span class="s2">""</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+                <span class="n">custom_scorer_without_source_error_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="p">)</span>
+
     <span class="k">def</span><span class="w"> </span><span class="nf">_check_can_be_registered</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error_message</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.scorers.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">DatabricksStore</span><span class="p">,</span> <span class="n">_get_scorer_store</span>
+
+        <span class="c1"># register/start/update/stop all funnel through here, so this is the earliest</span>
+        <span class="c1"># point where the lazily-validated session_level combination is rejected.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_session_level</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kind</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_ALLOWED_SCORERS_FOR_REGISTRATION</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">error_message</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -1777,6 +1910,7 @@
     <span class="n">aggregations</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">_AggregationType</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">pass_if</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">session_level</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Scorer</span><span class="p">:</span> <span class="o">...</span>
 
 
@@ -1789,6 +1923,7 @@
     <span class="n">aggregations</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">_AggregationType</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">pass_if</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">session_level</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">_F</span><span class="p">],</span> <span class="n">Scorer</span><span class="p">]:</span> <span class="o">...</span>
 
 
@@ -1800,6 +1935,7 @@
     <span class="n">aggregations</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">_AggregationType</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">pass_if</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">session_level</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Scorer</span> <span class="o">|</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">_F</span><span class="p">],</span> <span class="n">Scorer</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    A decorator to define a custom scorer that can be used in ``mlflow.genai.evaluate()``.</span>
@@ -1889,6 +2025,11 @@
 <span class="sd">        timeout: Maximum seconds a single scorer invocation may run during</span>
 <span class="sd">            ``mlflow.genai.evaluate`` and monitoring before it is recorded as a</span>
 <span class="sd">            ``SCORER_ERROR`` failure. Defaults to ``None`` (300 seconds); ``0`` disables it.</span>
+<span class="sd">        session_level: Name of a session-hierarchy level (e.g. ``"episode"``) to group</span>
+<span class="sd">            traces by during ``mlflow.genai.evaluate``, instead of the full</span>
+<span class="sd">            ``mlflow.trace.session`` value. Only valid for session-level scorers; the</span>
+<span class="sd">            experiment must declare the level in its ``mlflow.experiment.sessionHierarchy``</span>
+<span class="sd">            tag (see ``mlflow.genai.set_session_hierarchy``).</span>
 
 <span class="sd">    Example:</span>
 
@@ -1981,6 +2122,11 @@
             <span class="sa">f</span><span class="s2">"(use 0 to disable the timeout), got </span><span class="si">{</span><span class="n">timeout</span><span class="si">!r}</span><span class="s2">."</span>
         <span class="p">)</span>
 
+    <span class="k">if</span> <span class="n">session_level</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">session_level</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"`session_level` must be a non-empty level name or None, got </span><span class="si">{</span><span class="n">session_level</span><span class="si">!r}</span><span class="s2">."</span>
+        <span class="p">)</span>
+
     <span class="k">if</span> <span class="n">func</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span>
             <span class="n">scorer</span><span class="p">,</span>
@@ -1989,6 +2135,7 @@
             <span class="n">aggregations</span><span class="o">=</span><span class="n">aggregations</span><span class="p">,</span>
             <span class="n">pass_if</span><span class="o">=</span><span class="n">pass_if</span><span class="p">,</span>
             <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span>
+            <span class="n">session_level</span><span class="o">=</span><span class="n">session_level</span><span class="p">,</span>
         <span class="p">)</span>
 
     <span class="n">func_params</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">func</span><span class="p">)</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
@@ -2003,6 +2150,11 @@
                 <span class="sa">f</span><span class="s2">"of traces, so single-turn parameters are not available. "</span>
                 <span class="sa">f</span><span class="s2">"Use only `session` and optionally `expectations`."</span>
             <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">session_level</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"`session_level` is only supported for session-level scorers (functions with "</span>
+            <span class="sa">f</span><span class="s2">"a `session` parameter), but `</span><span class="si">{</span><span class="n">name</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">` is a single-turn scorer."</span>
+        <span class="p">)</span>
 
     <span class="k">class</span><span class="w"> </span><span class="nc">CustomScorer</span><span class="p">(</span><span class="n">Scorer</span><span class="p">):</span>
         <span class="c1"># Store reference to the original function</span>
@@ -2043,6 +2195,7 @@
         <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
         <span class="n">aggregations</span><span class="o">=</span><span class="n">aggregations</span><span class="p">,</span>
         <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span>
+        <span class="n">session_level</span><span class="o">=</span><span class="n">session_level</span><span class="p">,</span>
     <span class="p">)</span></div>
 
 
@@ -2066,6 +2219,7 @@
             <span class="n">description</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
             <span class="n">aggregations</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">aggregations</span><span class="p">,</span>
             <span class="n">is_session_level_scorer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">is_session_level_scorer</span><span class="p">,</span>
+            <span class="n">session_level</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">session_level</span><span class="p">,</span>
             <span class="n">mlflow_version</span><span class="o">=</span><span class="n">mlflow</span><span class="o">.</span><span class="n">__version__</span><span class="p">,</span>
             <span class="n">serialization_version</span><span class="o">=</span><span class="n">_SERIALIZATION_VERSION</span><span class="p">,</span>
             <span class="n">ensemble_scorer_data</span><span class="o">=</span><span class="p">{</span>
@@ -2195,7 +2349,8 @@
 <span class="sd">    Args:</span>
 <span class="sd">        name: Name of the ensemble scorer (and of the emitted Feedback).</span>
 <span class="sd">        scorers: Sub-scorers to run. Must be homogeneous in level — all session-level</span>
-<span class="sd">            or all single-turn. Each must return a bool, numeric, or categorical</span>
+<span class="sd">            or all single-turn, and all declaring the same ``session_level`` (which the</span>
+<span class="sd">            ensemble inherits). Each must return a bool, numeric, or categorical</span>
 <span class="sd">            (str) value.</span>
 <span class="sd">        ensemble_fn: A callable ``(values) -&gt; value|Feedback``, or a callable</span>
 <span class="sd">            ``(feedbacks) -&gt; value|Feedback`` to receive full Feedback objects, or the</span>
@@ -2221,6 +2376,17 @@
             <span class="s2">"either all session-level or all single-turn."</span>
         <span class="p">)</span>
     <span class="n">is_session_level</span> <span class="o">=</span> <span class="n">levels</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+
+    <span class="c1"># All members must group by the same session-hierarchy level, so the ensemble</span>
+    <span class="c1"># scores one coherent grouping; the common value is carried by the ensemble itself.</span>
+    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">scorers</span><span class="p">:</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">_validate_session_level</span><span class="p">()</span>
+    <span class="n">session_levels</span> <span class="o">=</span> <span class="p">{</span><span class="n">s</span><span class="o">.</span><span class="n">session_level</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">scorers</span><span class="p">}</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">session_levels</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+            <span class="s2">"All sub-scorers passed to make_scorer_ensemble must set the same "</span>
+            <span class="sa">f</span><span class="s2">"session_level, got </span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">repr</span><span class="p">,</span><span class="w"> </span><span class="n">session_levels</span><span class="p">))</span><span class="si">}</span><span class="s2">."</span>
+        <span class="p">)</span>
 
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ensemble_fn</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">ensemble_fn</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">BUILTIN_ENSEMBLES</span><span class="p">:</span>
@@ -2260,7 +2426,12 @@
                     <span class="sa">f</span><span class="s2">"categorical scorers."</span>
                 <span class="p">)</span>
 
-    <span class="n">agg</span> <span class="o">=</span> <span class="n">EnsembleScorer</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span> <span class="n">aggregations</span><span class="o">=</span><span class="n">aggregations</span><span class="p">)</span>
+    <span class="n">agg</span> <span class="o">=</span> <span class="n">EnsembleScorer</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+        <span class="n">aggregations</span><span class="o">=</span><span class="n">aggregations</span><span class="p">,</span>
+        <span class="n">session_level</span><span class="o">=</span><span class="n">session_levels</span><span class="o">.</span><span class="n">pop</span><span class="p">(),</span>
+    <span class="p">)</span>
     <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">agg</span><span class="p">,</span> <span class="s2">"_scorers"</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">scorers</span><span class="p">))</span>
     <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">agg</span><span class="p">,</span> <span class="s2">"_ensemble_fn"</span><span class="p">,</span> <span class="n">fn</span><span class="p">)</span>
     <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">agg</span><span class="p">,</span> <span class="s2">"_ensemble_fn_name"</span><span class="p">,</span> <span class="n">fn_name</span><span class="p">)</span>
@@ -2296,7 +2467,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../../',
-      VERSION:'3.17.2',
+      VERSION:'3.18.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

@@ -62,7 +62,7 @@ shell
 ```
 mkdir -p data
 
-curl -L https://raw.githubusercontent.com/run-llama/llama_index/main/docs/docs/examples/data/paul_graham/paul_graham_essay.txt -o ./data/paul_graham_essay.txt
+curl -L https://raw.githubusercontent.com/run-llama/llama_index/main/docs/examples/data/paul_graham/paul_graham_essay.txt -o ./data/paul_graham_essay.txt
 ```
 
 python
@@ -240,7 +240,7 @@ client = qdrant_client.QdrantClient(
 
 # a new one by following the official tutorial:
 
-# https://docs.llamaindex.ai/en/stable/examples/vector_stores/QdrantIndexDemo/
+# https://developers.llamaindex.ai/python/examples/vector_stores/qdrantindexdemo/
 
 vector_store = QdrantVectorStore(client=client, collection_name="my_collection")
 

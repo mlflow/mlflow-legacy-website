@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="MLflow 3.17.2 documentation" href="../../../../index.html"/>
+    <link rel="top" title="MLflow 3.18.0 documentation" href="../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../index.html"/> 
 
   
@@ -148,7 +148,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.2</span>
+  <span class="header-link version">3.18.0</span>
 </div>
   </nav>
   <page>
@@ -255,9 +255,10 @@
 <span class="sd">    elements, if any are available</span>
 <span class="sd">    """</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">token</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">token</span><span class="p">,</span> <span class="n">total_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">token</span> <span class="o">=</span> <span class="n">token</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_count</span> <span class="o">=</span> <span class="n">total_count</span>
 
 <div class="viewcode-block" id="PagedList.to_list"><a class="viewcode-back" href="../../../../python_api/mlflow.entities.html#mlflow.store.entities.PagedList.to_list">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div></div>
@@ -291,7 +292,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../../',
-      VERSION:'3.17.2',
+      VERSION:'3.18.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

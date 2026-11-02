@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="MLflow 3.17.2 documentation" href="../../../../index.html"/>
+    <link rel="top" title="MLflow 3.18.0 documentation" href="../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../index.html"/> 
 
   
@@ -148,7 +148,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.2</span>
+  <span class="header-link version">3.18.0</span>
 </div>
   </nav>
   <page>
@@ -269,6 +269,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.assessment</span><span class="w"> </span><span class="kn">import</span> <span class="n">Feedback</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.assessment_source</span><span class="w"> </span><span class="kn">import</span> <span class="n">AssessmentSource</span><span class="p">,</span> <span class="n">AssessmentSourceType</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.trace</span><span class="w"> </span><span class="kn">import</span> <span class="n">Trace</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.judges.builtin</span><span class="w"> </span><span class="kn">import</span> <span class="n">_MODEL_API_DOC</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.judges.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">CategoricalRating</span><span class="p">,</span> <span class="n">get_default_model</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.scorers</span><span class="w"> </span><span class="kn">import</span> <span class="n">FRAMEWORK_METADATA_KEY</span>
@@ -355,11 +356,19 @@
             <span class="n">score</span><span class="p">,</span> <span class="n">reasons</span> <span class="o">=</span> <span class="n">feedback_method</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span>
 
             <span class="n">rationale</span> <span class="o">=</span> <span class="n">format_rationale</span><span class="p">(</span><span class="n">reasons</span><span class="p">)</span>
-            <span class="n">value</span> <span class="o">=</span> <span class="n">CategoricalRating</span><span class="o">.</span><span class="n">YES</span> <span class="k">if</span> <span class="n">score</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_threshold</span> <span class="k">else</span> <span class="n">CategoricalRating</span><span class="o">.</span><span class="n">NO</span>
+            <span class="k">if</span> <span class="n">score</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="n">error</span> <span class="o">=</span> <span class="n">MlflowException</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">"TruLens metric </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> returned an unparsable judge score: </span><span class="si">{</span><span class="n">score</span><span class="si">}</span><span class="s2">"</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">CategoricalRating</span><span class="o">.</span><span class="n">YES</span> <span class="k">if</span> <span class="n">score</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_threshold</span> <span class="k">else</span> <span class="n">CategoricalRating</span><span class="o">.</span><span class="n">NO</span>
+                <span class="n">error</span> <span class="o">=</span> <span class="kc">None</span>
 
             <span class="k">return</span> <span class="n">Feedback</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                 <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span>
+                <span class="n">error</span><span class="o">=</span><span class="n">error</span><span class="p">,</span>
                 <span class="n">rationale</span><span class="o">=</span><span class="n">rationale</span><span class="p">,</span>
                 <span class="n">source</span><span class="o">=</span><span class="n">assessment_source</span><span class="p">,</span>
                 <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
@@ -566,7 +575,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../../',
-      VERSION:'3.17.2',
+      VERSION:'3.18.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

@@ -288,7 +288,7 @@ tip
 
 Some providers or models may not return token usage information. In these cases, the `token_usage` and `cost` fields will be `None`.
 
-Cost can also appear as $0.00 even when token counts are tracked correctly. This happens when the model name recorded on the span has no matching entry in LiteLLM's price table. Databricks serving-endpoint names (for example, `databricks-claude-opus-4-8`) are one such case: LiteLLM cannot infer the provider from the bare endpoint name, so it returns no price.
+Cost can also appear as $0.00 even when token counts are tracked correctly. This happens when the model name recorded on the span has no matching entry in the price table, such as a custom serving-endpoint name (for example, `my-claude-endpoint`) that doesn't name a model.
 
 In either case, you can [set the token and cost attributes directly on the span](#manually-setting-token-and-cost-information).
 

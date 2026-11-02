@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MLflow 3.17.2 documentation" href="../index.html"/>
+    <link rel="top" title="MLflow 3.18.0 documentation" href="../index.html"/>
         <link rel="next" title="R API" href="/../R-api.html"/>
         <link rel="prev" title="MLflow Authentication Python API" href="/python-api.html"/> 
 
@@ -148,7 +148,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.2</span>
+  <span class="header-link version">3.18.0</span>
 </div>
   </nav>
   <page>
@@ -302,6 +302,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#mlflowlistroleusersresponse">Response Structure</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#skill-registry-response-permissions">Skill Registry Response Permissions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#data-structures">Data Structures</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#user">User</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#permission">Permission</a></li>
@@ -402,7 +403,8 @@ a user on a tracking server hosted at <code class="docutils literal notranslate"
 <li><p><a class="reference internal" href="#update-role-permission" id="id59">Update Role Permission</a></p></li>
 <li><p><a class="reference internal" href="#list-user-roles" id="id60">List User Roles</a></p></li>
 <li><p><a class="reference internal" href="#list-role-users" id="id61">List Role Users</a></p></li>
-<li><p><a class="reference internal" href="#data-structures" id="id62">Data Structures</a></p></li>
+<li><p><a class="reference internal" href="#skill-registry-response-permissions" id="id62">Skill Registry Response Permissions</a></p></li>
+<li><p><a class="reference internal" href="#data-structures" id="id63">Data Structures</a></p></li>
 </ul>
 </div>
 <hr class="docutils" />
@@ -1866,8 +1868,52 @@ and user_id.</p></td>
 <hr class="docutils" />
 </div>
 </div>
+<div class="section" id="skill-registry-response-permissions">
+<span id="skill-registry-allowed-actions"></span><h2><a class="toc-backref" href="#id62">Skill Registry Response Permissions</a><a class="headerlink" href="#skill-registry-response-permissions" title="Permalink to this headline"> </a></h2>
+<p>When authentication is enabled, parent skill responses include an optional
+<code class="docutils literal notranslate"><span class="pre">allowed_actions</span></code> field for non-admin users. This array of strings contains the
+actions the current user can perform on that skill in its workspace.</p>
+<p>The field is included in responses from these endpoints. Paths are relative to
+<code class="docutils literal notranslate"><span class="pre">/api/3.0/mlflow/skills</span></code>.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Method</p></th>
+<th class="head"><p>Path</p></th>
+<th class="head"><p>Field location</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span></code></p></td>
+<td><p>Base path</p></td>
+<td><p>Parent skill object</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span></code></p></td>
+<td><p>Base path</p></td>
+<td><p>Each parent skill object in <code class="docutils literal notranslate"><span class="pre">skills</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span></code>, <code class="docutils literal notranslate"><span class="pre">PATCH</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/{name}</span></code> or <code class="docutils literal notranslate"><span class="pre">/&#64;{organization}/{name}</span></code></p></td>
+<td><p>Parent skill object</p></td>
+</tr>
+</tbody>
+</table>
+<p>Possible values are <code class="docutils literal notranslate"><span class="pre">USE</span></code>, <code class="docutils literal notranslate"><span class="pre">UPDATE</span></code>, <code class="docutils literal notranslate"><span class="pre">DELETE</span></code>, and <code class="docutils literal notranslate"><span class="pre">MANAGE</span></code>. For example,
+a user with <code class="docutils literal notranslate"><span class="pre">EDIT</span></code> permission receives <code class="docutils literal notranslate"><span class="pre">&quot;allowed_actions&quot;:</span> <span class="pre">[&quot;USE&quot;,</span> <span class="pre">&quot;UPDATE&quot;]</span></code>.
+A user with <code class="docutils literal notranslate"><span class="pre">READ</span></code> permission receives <code class="docutils literal notranslate"><span class="pre">&quot;allowed_actions&quot;:</span> <span class="pre">[]</span></code>. Read access
+is implicit in a successful response; there is no <code class="docutils literal notranslate"><span class="pre">READ</span></code> action in this array.</p>
+<p>The field is omitted for admins and when authentication is disabled. An omitted
+field is different from an empty array: an empty array indicates read-only access.
+Skill version responses do not include this field. The server continues to enforce
+permissions on each request.</p>
+<hr class="docutils" />
+</div>
 <div class="section" id="data-structures">
-<span id="auth-rest-struct"></span><h2><a class="toc-backref" href="#id62">Data Structures</a><a class="headerlink" href="#data-structures" title="Permalink to this headline"> </a></h2>
+<span id="auth-rest-struct"></span><h2><a class="toc-backref" href="#id63">Data Structures</a><a class="headerlink" href="#data-structures" title="Permalink to this headline"> </a></h2>
 <div class="section" id="user">
 <span id="mlflowuser"></span><h3>User<a class="headerlink" href="#user" title="Permalink to this headline"> </a></h3>
 <table class="docutils align-default">
@@ -2019,7 +2065,7 @@ associated with the role.</p></td>
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../',
-      VERSION:'3.17.2',
+      VERSION:'3.18.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

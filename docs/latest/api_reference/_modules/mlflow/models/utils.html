@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 3.17.2 documentation" href="../../../index.html"/>
+    <link rel="top" title="MLflow 3.18.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -148,7 +148,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.2</span>
+  <span class="header-link version">3.18.0</span>
 </div>
   </nav>
   <page>
@@ -1250,7 +1250,8 @@
             <span class="sa">f</span><span class="s2">"of </span><span class="si">{</span><span class="s1">'input '</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">'the unnamed input'</span><span class="si">}</span><span class="s2"> is </span><span class="si">{</span><span class="n">tensor_spec</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">."</span>
         <span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">pd_series</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">first_value</span> <span class="o">=</span> <span class="n">pd_series</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">first_value</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">shape</span> <span class="ow">in</span> <span class="p">[(</span><span class="o">-</span><span class="mi">1</span><span class="p">,),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]:</span>
             <span class="k">if</span> <span class="n">tensor_spec</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">shape</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">_enforce_tensor_spec</span><span class="p">(</span>
@@ -1262,7 +1263,7 @@
             <span class="sa">f</span><span class="s2">"shape of </span><span class="si">{</span><span class="n">tensor_spec</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">."</span><span class="p">,</span>
             <span class="n">error_code</span><span class="o">=</span><span class="n">INVALID_PARAMETER_VALUE</span><span class="p">,</span>
         <span class="p">)</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pd_series</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">pd_series</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">first_value</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">first_value</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
         <span class="c1"># If the pandas column contains list type values,</span>
         <span class="c1"># in this case, the shape and type information is lost,</span>
         <span class="c1"># so do not enforce the shape and type, instead,</span>
@@ -1284,7 +1285,7 @@
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">reshaped_numpy_arr</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pd_series</span><span class="p">):</span>
             <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span><span class="n">reshape_err_msg</span><span class="p">,</span> <span class="n">error_code</span><span class="o">=</span><span class="n">INVALID_PARAMETER_VALUE</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">reshaped_numpy_arr</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pd_series</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">first_value</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
         <span class="n">reshape_err_msg</span> <span class="o">=</span> <span class="p">(</span>
             <span class="sa">f</span><span class="s2">"The value in the Input DataFrame column '</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">' could not be converted to the "</span>
             <span class="sa">f</span><span class="s2">"expected shape of: '</span><span class="si">{</span><span class="n">tensor_spec</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">'. Ensure that each of the input numpy "</span>
@@ -1643,7 +1644,12 @@
         <span class="n">data_enforced</span> <span class="o">=</span> <span class="p">[</span><span class="n">_enforce_type</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">arr</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="n">required</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data_enforced</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-        <span class="n">data_enforced</span> <span class="o">=</span> <span class="n">data_enforced</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="c1"># NumPy's tolist() converts datetime64[ns] values to integers.</span>
+        <span class="n">data_enforced</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data_enforced</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">arr</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">DataType</span><span class="o">.</span><span class="n">datetime</span>
+            <span class="k">else</span> <span class="n">data_enforced</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="p">)</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data_enforced</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
         <span class="n">data_enforced</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data_enforced</span><span class="p">)</span>
 
@@ -2355,7 +2361,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'3.17.2',
+      VERSION:'3.18.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

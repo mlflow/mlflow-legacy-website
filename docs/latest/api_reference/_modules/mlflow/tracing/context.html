@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 3.17.2 documentation" href="../../../index.html"/>
+    <link rel="top" title="MLflow 3.18.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -148,7 +148,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.2</span>
+  <span class="header-link version">3.18.0</span>
 </div>
   </nav>
   <page>
@@ -251,6 +251,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Generator</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.constant</span><span class="w"> </span><span class="kn">import</span> <span class="n">TraceMetadataKey</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">serialize_session_id</span>
 
 
 <span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -285,7 +286,7 @@
     <span class="n">metadata</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">tags</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">session_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">session_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">user</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">"""</span>
@@ -341,14 +342,17 @@
 <span class="sd">            scope. This does not affect the global tracing state set by</span>
 <span class="sd">            :py:func:`mlflow.tracing.disable`.</span>
 <span class="sd">        session_id: Session ID to associate with traces created in this scope.</span>
-<span class="sd">            Internally stored as metadata under the ``mlflow.trace.session`` key.</span>
+<span class="sd">            Internally stored as metadata under the ``mlflow.trace.session`` key. Pass a list</span>
+<span class="sd">            of strings to identify the session at multiple hierarchy levels, outermost first,</span>
+<span class="sd">            e.g. ``session_id=["trip-2", "ep-2"]``; it is stored as a JSON array string,</span>
+<span class="sd">            which counts toward the 250-character session ID limit.</span>
 <span class="sd">        user: User identifier to associate with traces created in this scope.</span>
 <span class="sd">            Internally stored as metadata under the ``mlflow.trace.user`` key.</span>
 <span class="sd">    """</span>
     <span class="c1"># Inject session_id and user into metadata</span>
     <span class="n">metadata</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span> <span class="k">if</span> <span class="n">metadata</span> <span class="k">else</span> <span class="p">{}</span>
     <span class="k">if</span> <span class="n">session_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">metadata</span><span class="p">[</span><span class="n">TraceMetadataKey</span><span class="o">.</span><span class="n">TRACE_SESSION</span><span class="p">]</span> <span class="o">=</span> <span class="n">session_id</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="n">TraceMetadataKey</span><span class="o">.</span><span class="n">TRACE_SESSION</span><span class="p">]</span> <span class="o">=</span> <span class="n">serialize_session_id</span><span class="p">(</span><span class="n">session_id</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">metadata</span><span class="p">[</span><span class="n">TraceMetadataKey</span><span class="o">.</span><span class="n">TRACE_USER</span><span class="p">]</span> <span class="o">=</span> <span class="n">user</span>
 
@@ -396,7 +400,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'3.17.2',
+      VERSION:'3.18.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 3.17.2 documentation" href="../../../index.html"/>
+    <link rel="top" title="MLflow 3.18.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -148,7 +148,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.2</span>
+  <span class="header-link version">3.18.0</span>
 </div>
   </nav>
   <page>
@@ -390,6 +390,11 @@
         <span class="k">if</span> <span class="n">MLFLOW_USE_DEFAULT_TRACER_PROVIDER</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_isolated_tracer_provider_once</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_global_provider_init_once</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_initialized</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Whether MLflow's tracer provider has been initialized for the current provider mode."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">once</span><span class="o">.</span><span class="n">done</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TracerProvider</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">MLFLOW_USE_DEFAULT_TRACER_PROVIDER</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
@@ -837,6 +842,73 @@
 <span class="sd">    Other simultaneous calls to this function will block until the initialization is done.</span>
 <span class="sd">    """</span>
     <span class="k">return</span> <span class="n">provider</span><span class="o">.</span><span class="n">get_or_init_tracer</span><span class="p">(</span><span class="n">module_name</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_is_in_span_processor_chain</span><span class="p">(</span>
+    <span class="n">processor</span><span class="p">:</span> <span class="n">SpanProcessor</span><span class="p">,</span> <span class="n">span_processor</span><span class="p">:</span> <span class="n">SpanProcessor</span> <span class="o">|</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Whether ``span_processor`` is a composite that already contains ``processor``.</span>
+
+<span class="sd">    With a shared tracer provider (``MLFLOW_USE_DEFAULT_TRACER_PROVIDER=false``), an autolog</span>
+<span class="sd">    span processor and MLflow's own processors sit in the same composite, which dispatches to</span>
+<span class="sd">    each of them. Forwarding to that composite from the autolog processor would make MLflow's</span>
+<span class="sd">    processors handle the span twice.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">processor</span> <span class="ow">in</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">span_processor</span><span class="p">,</span> <span class="s2">"_span_processors"</span><span class="p">,</span> <span class="p">())</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_tracer_for_span_start</span><span class="p">(</span>
+    <span class="n">processor</span><span class="p">:</span> <span class="n">SpanProcessor</span><span class="p">,</span> <span class="n">module_name</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">trace</span><span class="o">.</span><span class="n">Tracer</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Get MLflow's tracer for an autolog span processor's ``on_start``, and whether the processor</span>
+<span class="sd">    should forward the span to the tracer's span processor.</span>
+
+<span class="sd">    With a shared tracer provider, the composite dispatching ``on_start`` to ``processor`` also</span>
+<span class="sd">    dispatches to MLflow's processors, so forwarding would make them handle the span twice. The</span>
+<span class="sd">    exception is when this call to ``_get_tracer`` registers MLflow's processors: the composite's</span>
+<span class="sd">    in-progress dispatch won't reach a processor added mid-iteration, so the span still has to be</span>
+<span class="sd">    forwarded.</span>
+<span class="sd">    """</span>
+    <span class="n">was_initialized</span> <span class="o">=</span> <span class="n">provider</span><span class="o">.</span><span class="n">is_initialized</span>
+    <span class="n">tracer</span> <span class="o">=</span> <span class="n">_get_tracer</span><span class="p">(</span><span class="n">module_name</span><span class="p">)</span>
+    <span class="n">span_processor</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">tracer</span><span class="p">,</span> <span class="s2">"span_processor"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">should_forward</span> <span class="o">=</span> <span class="ow">not</span> <span class="p">(</span>
+        <span class="n">was_initialized</span> <span class="ow">and</span> <span class="n">_is_in_span_processor_chain</span><span class="p">(</span><span class="n">processor</span><span class="p">,</span> <span class="n">span_processor</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">tracer</span><span class="p">,</span> <span class="n">should_forward</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_tracer_for_span_end</span><span class="p">(</span>
+    <span class="n">processor</span><span class="p">:</span> <span class="n">SpanProcessor</span><span class="p">,</span> <span class="n">module_name</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">trace</span><span class="o">.</span><span class="n">Tracer</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Get MLflow's tracer for an autolog span processor's ``on_end``, and whether the processor</span>
+<span class="sd">    should forward the span to the tracer's span processor.</span>
+
+<span class="sd">    With a shared tracer provider, the composite dispatching ``on_end`` to ``processor`` goes on</span>
+<span class="sd">    to call MLflow's processors itself, so forwarding would export the span a second time.</span>
+<span class="sd">    """</span>
+    <span class="n">tracer</span> <span class="o">=</span> <span class="n">_get_tracer</span><span class="p">(</span><span class="n">module_name</span><span class="p">)</span>
+    <span class="n">span_processor</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">tracer</span><span class="p">,</span> <span class="s2">"span_processor"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tracer</span><span class="p">,</span> <span class="ow">not</span> <span class="n">_is_in_span_processor_chain</span><span class="p">(</span><span class="n">processor</span><span class="p">,</span> <span class="n">span_processor</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_add_span_processor_first</span><span class="p">(</span><span class="n">tracer_provider</span><span class="p">:</span> <span class="n">TracerProvider</span><span class="p">,</span> <span class="n">processor</span><span class="p">:</span> <span class="n">SpanProcessor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Add ``processor`` so it runs before the provider's existing span processors, so an autolog</span>
+<span class="sd">    processor sets span attributes before MLflow's processors export the span.</span>
+<span class="sd">    """</span>
+    <span class="n">tracer_provider</span><span class="o">.</span><span class="n">add_span_processor</span><span class="p">(</span><span class="n">processor</span><span class="p">)</span>
+    <span class="n">active</span> <span class="o">=</span> <span class="n">tracer_provider</span><span class="o">.</span><span class="n">_active_span_processor</span>
+    <span class="c1"># Reorder under the composite's lock, which add_span_processor also takes, so a processor</span>
+    <span class="c1"># added concurrently (e.g. MLflow's, registered lazily on another thread) isn't dropped.</span>
+    <span class="k">with</span> <span class="n">active</span><span class="o">.</span><span class="n">_lock</span><span class="p">:</span>
+        <span class="n">active</span><span class="o">.</span><span class="n">_span_processors</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">processor</span><span class="p">,</span>
+            <span class="o">*</span><span class="p">(</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">active</span><span class="o">.</span><span class="n">_span_processors</span> <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">processor</span><span class="p">),</span>
+        <span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_get_span_processor</span><span class="p">():</span>
@@ -1392,7 +1464,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'3.17.2',
+      VERSION:'3.18.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

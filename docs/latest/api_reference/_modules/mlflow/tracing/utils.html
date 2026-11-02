@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 3.17.2 documentation" href="../../../index.html"/>
+    <link rel="top" title="MLflow 3.18.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -148,7 +148,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.2</span>
+  <span class="header-link version">3.18.0</span>
 </div>
   </nav>
   <page>
@@ -261,6 +261,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">opentelemetry.sdk.trace</span><span class="w"> </span><span class="kn">import</span> <span class="n">ReadableSpan</span> <span class="k">as</span> <span class="n">OTelReadableSpan</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">opentelemetry.sdk.trace</span><span class="w"> </span><span class="kn">import</span> <span class="n">Span</span> <span class="k">as</span> <span class="n">OTelSpan</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.environment_variables</span><span class="w"> </span><span class="kn">import</span> <span class="n">MLFLOW_MODEL_CATALOG_URI</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">BAD_REQUEST</span><span class="p">,</span> <span class="n">MlflowException</span><span class="p">,</span> <span class="n">MlflowTracingException</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.constant</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">ASSESSMENT_ID_PREFIX</span><span class="p">,</span>
@@ -275,6 +276,7 @@
     <span class="n">CostKey</span> <span class="k">as</span> <span class="n">CostKey</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.mlflow_tags</span><span class="w"> </span><span class="kn">import</span> <span class="n">IMMUTABLE_TAGS</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.providers</span><span class="w"> </span><span class="kn">import</span> <span class="n">_cost_per_token_from_custom_catalog</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.version</span><span class="w"> </span><span class="kn">import</span> <span class="n">IS_TRACING_SDK_ONLY</span>
 
 <span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
@@ -294,7 +296,7 @@
         <span class="n">bound_arguments</span><span class="o">.</span><span class="n">apply_defaults</span><span class="p">()</span>
 
         <span class="c1"># Remove `self` from bound arguments if it exists</span>
-        <span class="k">if</span> <span class="n">bound_arguments</span><span class="o">.</span><span class="n">arguments</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"self"</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s2">"self"</span> <span class="ow">in</span> <span class="n">bound_arguments</span><span class="o">.</span><span class="n">arguments</span><span class="p">:</span>
             <span class="k">del</span> <span class="n">bound_arguments</span><span class="o">.</span><span class="n">arguments</span><span class="p">[</span><span class="s2">"self"</span><span class="p">]</span>
 
         <span class="c1"># Remove `cls` from bound arguments if it's the first parameter and it's a type</span>
@@ -606,6 +608,14 @@
 <span class="n">_SKIP_COST_PREFIXES</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"gateway:/"</span><span class="p">,</span> <span class="s2">"endpoints:/"</span><span class="p">)</span>
 
 
+<span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_warn_model_catalog_error</span><span class="p">(</span><span class="n">uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">"Failed to read model prices from MLFLOW_MODEL_CATALOG_URI=</span><span class="si">{</span><span class="n">uri</span><span class="si">!r}</span><span class="s2">; using litellm prices."</span><span class="p">,</span>
+        <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
 <span class="k">def</span><span class="w"> </span><span class="nf">calculate_cost_by_model_and_token_usage</span><span class="p">(</span>
     <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">usage</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">model_provider</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
@@ -615,7 +625,9 @@
     <span class="k">if</span> <span class="n">model_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">_SKIP_COST_PREFIXES</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">None</span>
 
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">model_provider</span> <span class="ow">and</span> <span class="n">model_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">((</span><span class="s2">"databricks-"</span><span class="p">,</span> <span class="s2">"databricks/"</span><span class="p">)):</span>
+    <span class="c1"># Databricks endpoint names are priced from the Databricks catalog, even when the span</span>
+    <span class="c1"># names the upstream provider (e.g. Anthropic autolog calling the Databricks AI Gateway).</span>
+    <span class="k">if</span> <span class="n">model_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">((</span><span class="s2">"databricks-"</span><span class="p">,</span> <span class="s2">"databricks/"</span><span class="p">)):</span>
         <span class="n">model_provider</span> <span class="o">=</span> <span class="s2">"databricks"</span>
 
     <span class="n">prompt_tokens</span> <span class="o">=</span> <span class="n">usage</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">TokenUsageKey</span><span class="o">.</span><span class="n">INPUT_TOKENS</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
@@ -630,6 +642,12 @@
     <span class="k">if</span> <span class="p">(</span><span class="n">created</span> <span class="o">:=</span> <span class="n">usage</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">TokenUsageKey</span><span class="o">.</span><span class="n">CACHE_CREATION_INPUT_TOKENS</span><span class="p">))</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">cache_kwargs</span><span class="p">[</span><span class="s2">"cache_creation_input_tokens"</span><span class="p">]</span> <span class="o">=</span> <span class="n">created</span>
 
+    <span class="c1"># The 1-hour cache-creation breakdown is only understood by MLflow's builtin cost_per_token;</span>
+    <span class="c1"># litellm's signature does not accept it, so only pass it to the builtin.</span>
+    <span class="n">builtin_cache_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">cache_kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">above_1hr</span> <span class="o">:=</span> <span class="n">usage</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">TokenUsageKey</span><span class="o">.</span><span class="n">CACHE_CREATION_INPUT_TOKENS_ABOVE_1HR</span><span class="p">))</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">builtin_cache_kwargs</span><span class="p">[</span><span class="s2">"cache_creation_input_tokens_above_1hr"</span><span class="p">]</span> <span class="o">=</span> <span class="n">above_1hr</span>
+
     <span class="k">try</span><span class="p">:</span>
         <span class="kn">import</span><span class="w"> </span><span class="nn">litellm</span>
         <span class="kn">from</span><span class="w"> </span><span class="nn">litellm</span><span class="w"> </span><span class="kn">import</span> <span class="n">cost_per_token</span>
@@ -637,15 +655,23 @@
         <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.providers</span><span class="w"> </span><span class="kn">import</span> <span class="n">cost_per_token</span>
 
         <span class="n">litellm</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">cache_kwargs</span> <span class="o">=</span> <span class="n">builtin_cache_kwargs</span>
 
-    <span class="c1"># The 1-hour cache-creation breakdown is only understood by MLflow's builtin cost_per_token;</span>
-    <span class="c1"># litellm's signature does not accept it, so only pass it when falling back to the builtin.</span>
-    <span class="k">if</span> <span class="p">(</span>
-        <span class="n">litellm</span> <span class="ow">is</span> <span class="kc">None</span>
-        <span class="ow">and</span> <span class="p">(</span><span class="n">above_1hr</span> <span class="o">:=</span> <span class="n">usage</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">TokenUsageKey</span><span class="o">.</span><span class="n">CACHE_CREATION_INPUT_TOKENS_ABOVE_1HR</span><span class="p">))</span>
-        <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-    <span class="p">):</span>
-        <span class="n">cache_kwargs</span><span class="p">[</span><span class="s2">"cache_creation_input_tokens_above_1hr"</span><span class="p">]</span> <span class="o">=</span> <span class="n">above_1hr</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="c1"># litellm doesn't read MLFLOW_MODEL_CATALOG_URI and would otherwise shadow a catalog the user</span>
+    <span class="c1"># configured (e.g. by reporting unknown ollama models as free), so prices that catalog lists</span>
+    <span class="c1"># take precedence. Without litellm, the builtin lookup below already reads it.</span>
+    <span class="k">if</span> <span class="n">litellm</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">model_provider</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">_cost_per_token_from_custom_catalog</span><span class="p">(</span>
+                <span class="n">model</span><span class="o">=</span><span class="n">model_name</span><span class="p">,</span>
+                <span class="n">provider</span><span class="o">=</span><span class="n">model_provider</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span>
+                <span class="n">prompt_tokens</span><span class="o">=</span><span class="n">prompt_tokens</span><span class="p">,</span>
+                <span class="n">completion_tokens</span><span class="o">=</span><span class="n">completion_tokens</span><span class="p">,</span>
+                <span class="o">**</span><span class="n">builtin_cache_kwargs</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">_warn_model_catalog_error</span><span class="p">(</span><span class="n">MLFLOW_MODEL_CATALOG_URI</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
 
     <span class="k">if</span> <span class="n">litellm</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">original_suppress</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">litellm</span><span class="p">,</span> <span class="s2">"suppress_debug_info"</span><span class="p">)</span>
@@ -658,8 +684,7 @@
 
         <span class="c1"># When provider is known, try it first — this is a fast single-provider lookup</span>
         <span class="c1"># and avoids the slower all-provider scan.</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">if</span> <span class="n">model_provider</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">model_provider</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">result</span> <span class="o">=</span> <span class="n">cost_per_token</span><span class="p">(</span>
                     <span class="n">model</span><span class="o">=</span><span class="n">model_name</span><span class="p">,</span>
@@ -1159,6 +1184,22 @@
     <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="n">trace_id</span>
 
 
+<span class="k">def</span><span class="w"> </span><span class="nf">serialize_session_id</span><span class="p">(</span><span class="n">session_id</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Convert a session ID to its trace metadata form. A list identifies a hierarchical session</span>
+<span class="sd">    (outermost level first) and is stored as a compact JSON array string. Any other value is</span>
+<span class="sd">    returned unchanged to preserve the existing handling of non-list session IDs.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">session_id</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">session_id</span>
+    <span class="k">if</span> <span class="n">session_id</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">for</span> <span class="n">level</span> <span class="ow">in</span> <span class="n">session_id</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">session_id</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s2">","</span><span class="p">,</span> <span class="s2">":"</span><span class="p">),</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+        <span class="s2">"The `session_id` parameter must be a string or a non-empty list of strings, "</span>
+        <span class="sa">f</span><span class="s2">"but got </span><span class="si">{</span><span class="n">session_id</span><span class="si">!r}</span><span class="s2">."</span>
+    <span class="p">)</span>
+
+
 <span class="k">def</span><span class="w"> </span><span class="nf">construct_trace_id_v4</span><span class="p">(</span><span class="n">location</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">trace_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Construct a trace ID for the given location and trace ID.</span>
@@ -1241,7 +1282,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'3.17.2',
+      VERSION:'3.18.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

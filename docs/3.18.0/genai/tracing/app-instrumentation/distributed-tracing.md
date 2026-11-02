@@ -1,0 +1,315 @@
+# Distributed Tracing
+
+When a client calls a remotely hosted agent, the client and agent run in separate processes. **Distributed tracing** connects spans recorded in these processes into a single trace, so you can follow a request from the client through the agent's model and tool calls in the MLflow UI.
+
+![Distributed trace in the MLflow UI showing spans from both client and server](/docs/3.18.0/images/llms/tracing/distributed-tracing-sample.png)
+
+## How It Works[​](#how-it-works "Direct link to How It Works")
+
+MLflow is OpenTelemetry-compatible and propagates trace context using the HTTP `traceparent` header defined by the [W3C TraceContext](https://www.w3.org/TR/trace-context/) specification. For each request:
+
+1. The **client** starts a root span and calls [get\_tracing\_context\_headers\_for\_http\_request](/docs/3.18.0/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.get_tracing_context_headers_for_http_request) while that span is active. The returned headers contain the trace ID and current span ID.
+2. The client sends these headers with its HTTP request to the **agent service**.
+3. The service enters [set\_tracing\_context\_from\_http\_request\_headers](/docs/3.18.0/api_reference/python_api/mlflow.tracing.html#mlflow.tracing.set_tracing_context_from_http_request_headers) before invoking the instrumented agent. Spans created inside this context use the same trace ID and descend from the client's active span. This applies to both manually created spans and spans captured by [autologging](/docs/3.18.0/genai/tracing/app-instrumentation/automatic.md).
+
+Create a new root span for each independent request, and extract the incoming context inside each request handler. The context manager restores the previous context when the handler exits its scope.
+
+![Distributed tracing flow](/docs/3.18.0/assets/images/distributed-tracing-flow-be4470321832a938323b4a3f9960e3b0.png)
+
+## Prerequisites[​](#prerequisites "Direct link to Prerequisites")
+
+For distributed tracing to work, **both services must log traces to the same MLflow tracking server and the same experiment**:
+
+1. Ensure both services can reach the tracking server and authenticate to it if required. For Databricks, [traces must be stored in Unity Catalog](#databricks-tracking).
+2. In every service, set the tracking URI and experiment before creating spans. For example, set these environment variables in both processes:
+
+bash
+
+```
+export MLFLOW_TRACKING_URI="http://localhost:5000"
+
+export MLFLOW_EXPERIMENT_NAME="distributed-tracing-demo"
+```
+
+Alternatively, configure each service in Python:
+
+python
+
+```
+import mlflow
+
+
+
+mlflow.set_tracking_uri("http://localhost:5000")
+
+mlflow.set_experiment("distributed-tracing-demo")
+```
+
+The trace context identifies the parent span; it does not configure the tracking server or experiment. Configure the same destination in both services so their spans can be assembled into one trace.
+
+## Usage Example[​](#usage-example "Direct link to Usage Example")
+
+Below is a runnable two-service example using FastAPI. The **client** creates the root span and calls the **server**, which adds a nested span under the same trace. Install the dependencies first:
+
+bash
+
+```
+pip install mlflow fastapi uvicorn requests
+```
+
+Both scripts use the tracking server and experiment environment variables from the prerequisites.
+
+### Server (Callee Service)[​](#server-callee-service "Direct link to Server (Callee Service)")
+
+Create a `server.py` file with the following content:
+
+server.py
+
+python
+
+```
+from contextlib import nullcontext
+
+
+
+import mlflow
+
+import uvicorn
+
+from fastapi import FastAPI, Request
+
+from mlflow.tracing import set_tracing_context_from_http_request_headers
+
+
+
+app = FastAPI()
+
+
+
+
+
+@app.post("/handle")
+
+async def handle(request: Request):
+
+    headers = dict(request.headers)
+
+    body = await request.json()
+
+    # Ordinary requests, including evaluation's preliminary call, may have no parent.
+
+    parent_context = (
+
+        set_tracing_context_from_http_request_headers(headers)
+
+        if "traceparent" in headers
+
+        else nullcontext()
+
+    )
+
+    with parent_context:
+
+        # Create the service span after restoring the client's parent context.
+
+        with mlflow.start_span("server-handler") as span:
+
+            span.set_inputs(body)
+
+            result = {"response": f"Processed: {body.get('input', '')}"}
+
+            span.set_outputs(result)
+
+    return result
+
+
+
+
+
+if __name__ == "__main__":
+
+    uvicorn.run(app, host="0.0.0.0", port=5001)
+```
+
+### Client (Caller Service)[​](#client-caller-service "Direct link to Client (Caller Service)")
+
+Create a `client.py` file with the following content:
+
+client.py
+
+python
+
+```
+import mlflow
+
+import requests
+
+from mlflow.tracing import get_tracing_context_headers_for_http_request
+
+
+
+# Capture the context while the root span for this request is active.
+
+with mlflow.start_span("client-root") as span:
+
+    span.set_inputs({"input": "hello"})
+
+    headers = get_tracing_context_headers_for_http_request()
+
+    response = requests.post(
+
+        "http://localhost:5001/handle",
+
+        headers=headers,
+
+        json={"input": "hello"},
+
+        timeout=30,
+
+    )
+
+    response.raise_for_status()
+
+    span.set_outputs(response.json())
+```
+
+### Run it[​](#run-it "Direct link to Run it")
+
+bash
+
+```
+# Terminal 1 — start the tracking server, unless using an existing shared server
+
+mlflow server --host 127.0.0.1 --port 5000
+
+
+
+# Terminal 2 — start the service with the shared tracking configuration
+
+export MLFLOW_TRACKING_URI="http://localhost:5000"
+
+export MLFLOW_EXPERIMENT_NAME="distributed-tracing-demo"
+
+python server.py
+
+
+
+# Terminal 3 — run the client with the same tracking configuration
+
+export MLFLOW_TRACKING_URI="http://localhost:5000"
+
+export MLFLOW_EXPERIMENT_NAME="distributed-tracing-demo"
+
+python client.py
+```
+
+Open the MLflow UI at `http://localhost:5000` and navigate to the **distributed-tracing-demo** experiment. You will see a single trace containing `client-root` with `server-handler` as its child. Running the client again creates a new trace for the next request.
+
+### Instrument a Remote Agent[​](#instrument-a-remote-agent "Direct link to Instrument a Remote Agent")
+
+To apply the same pattern to an agent service, enable the agent framework's [tracing integration](/docs/3.18.0/genai/tracing/integrations.md) once at service startup, then invoke the agent inside the restored context. For example, for an existing [LangGraph agent](/docs/3.18.0/genai/tracing/integrations/listing/langgraph.md) named `agent`:
+
+python
+
+```
+from contextlib import nullcontext
+
+
+
+import mlflow
+
+from mlflow.tracing import set_tracing_context_from_http_request_headers
+
+
+
+# At service startup, after configuring the tracking destination:
+
+mlflow.langchain.autolog()
+
+
+
+# Inside the request handler:
+
+# Normalize names for frameworks that preserve the original header casing.
+
+headers = {key.lower(): value for key, value in headers.items()}
+
+parent_context = (
+
+    set_tracing_context_from_http_request_headers(headers)
+
+    if "traceparent" in headers
+
+    else nullcontext()
+
+)
+
+with parent_context:
+
+    with mlflow.start_span("server-handler") as span:
+
+        span.set_inputs(body)
+
+        result = agent.invoke({"messages": body["messages"]})
+
+        span.set_outputs(result)
+```
+
+The autologged agent, model, and tool spans become descendants of `server-handler` in the client's trace. Extracting the headers after invoking the agent is too late: its spans have already been created with their own trace context.
+
+## AI Gateway Integration[​](#ai-gateway-integration "Direct link to AI Gateway Integration")
+
+When an agent calls an [MLflow AI Gateway](/docs/3.18.0/genai/governance/ai-gateway.md) endpoint with usage tracking enabled, the gateway automatically creates a trace for each request. If the agent also sends a `traceparent` header, the gateway will create a lightweight span under the agent's trace that links to the full gateway trace and includes token usage.
+
+An important note for AI Gateway integration is that the gateway trace and the agent trace are stored in **different** experiments, while they are linked together through a span attribute. The gateway trace is a full trace with request/response payloads and token usage, while the agent trace includes a lightweight span `gateway/<endpoint_name>` that contains a link to the gateway trace and token usage in span attributes. This design allows aggregating gateway usage across experiments while avoiding storing duplicated payloads.
+
+* **Gateway experiment** — full trace with request/response payloads and token usage
+* **Agent experiment** — agent trace with a child `gateway/<endpoint_name>` span containing a link to the gateway trace and token usage (no duplicated payloads)
+
+To enable this, pass the `traceparent` header when calling the gateway from within an active span:
+
+python
+
+```
+import mlflow
+
+import requests
+
+from mlflow.tracing import get_tracing_context_headers_for_http_request
+
+from openai import OpenAI
+
+
+
+client = OpenAI(
+
+    base_url="http://localhost:5000/gateway/openai/v1",
+
+    api_key="dummy",
+
+)
+
+
+
+with mlflow.start_span("my-agent"):
+
+    headers = get_tracing_context_headers_for_http_request()
+
+    response = client.chat.completions.create(
+
+        model="my-endpoint",
+
+        messages=[{"role": "user", "content": "Hello!"}],
+
+        extra_headers=headers,
+
+    )
+```
+
+note
+
+The gateway endpoint must have [usage tracking](/docs/3.18.0/genai/governance/ai-gateway/usage-tracking.md) enabled for both the gateway trace and the distributed span to be created.
+
+## Databricks Tracking[​](#databricks-tracking "Direct link to Databricks Tracking")
+
+When using Databricks as the tracking server, distributed tracing requires a Unity Catalog trace destination. Configure both services to use the same destination. See [Store MLflow traces in Unity Catalog](https://docs.databricks.com/aws/en/mlflow3/genai/tracing/trace-unity-catalog) for setup instructions.

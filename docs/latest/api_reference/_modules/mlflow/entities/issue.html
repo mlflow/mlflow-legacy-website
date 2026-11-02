@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 3.17.2 documentation" href="../../../index.html"/>
+    <link rel="top" title="MLflow 3.18.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -148,7 +148,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.2</span>
+  <span class="header-link version">3.18.0</span>
 </div>
   </nav>
   <page>
@@ -254,6 +254,21 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.protos.issues_pb2</span><span class="w"> </span><span class="kn">import</span> <span class="n">Issue</span> <span class="k">as</span> <span class="n">ProtoIssue</span>
 
 
+<div class="viewcode-block" id="IssueCategory"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.IssueCategory">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">IssueCategory</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Built-in issue categories. Custom categories can be supplied as strings."""</span>
+
+    <span class="n">CORRECTNESS</span> <span class="o">=</span> <span class="s2">"correctness"</span>
+    <span class="n">LATENCY</span> <span class="o">=</span> <span class="s2">"latency"</span>
+    <span class="n">EXECUTION</span> <span class="o">=</span> <span class="s2">"execution"</span>
+    <span class="n">ADHERENCE</span> <span class="o">=</span> <span class="s2">"adherence"</span>
+    <span class="n">RELEVANCE</span> <span class="o">=</span> <span class="s2">"relevance"</span>
+    <span class="n">SAFETY</span> <span class="o">=</span> <span class="s2">"safety"</span>
+    <span class="n">COST</span> <span class="o">=</span> <span class="s2">"cost"</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span></div>
+
+
 <div class="viewcode-block" id="IssueStatus"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.IssueStatus">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">IssueStatus</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Enum for status of an :py:class:`mlflow.entities.Issue`."""</span>
 
@@ -333,12 +348,12 @@
 <span class="w">    </span><span class="sd">"""Severity level indicator."""</span>
 
     <span class="n">root_causes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="w">    </span><span class="sd">"""Analysis of the root causes of the issue."""</span>
+<span class="w">    </span><span class="sd">"""Deprecated: use description and trace evidence for causal explanation."""</span>
 
     <span class="n">source_run_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="w">    </span><span class="sd">"""MLflow run ID that discovered this issue."""</span>
 
-    <span class="n">categories</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">categories</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">IssueCategory</span> <span class="o">|</span> <span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="w">    </span><span class="sd">"""Categories of this issue."""</span>
 
     <span class="n">created_by</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
@@ -347,9 +362,18 @@
     <span class="n">trace_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="w">    </span><span class="sd">"""Number of traces impacted by this issue. Only populated when explicitly requested."""</span>
 
+    <span class="n">last_seen_timestamp</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">"""Most recent observation in milliseconds; user edits do not change it."""</span>
+
+    <span class="n">last_updated_by</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">"""Actor responsible for the last update."""</span>
+
+    <span class="n">metadata</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">"""Application metadata, updated per key."""</span>
+
 <div class="viewcode-block" id="Issue.to_dictionary"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.Issue.to_dictionary">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">"""Convert Issue to dictionary representation."""</span>
-        <span class="k">return</span> <span class="p">{</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">"issue_id"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">issue_id</span><span class="p">,</span>
             <span class="s2">"experiment_id"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">experiment_id</span><span class="p">,</span>
             <span class="s2">"name"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
@@ -363,7 +387,15 @@
             <span class="s2">"last_updated_timestamp"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_updated_timestamp</span><span class="p">,</span>
             <span class="s2">"created_by"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">created_by</span><span class="p">,</span>
             <span class="s2">"trace_count"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">trace_count</span><span class="p">,</span>
-        <span class="p">}</span></div>
+        <span class="p">}</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span>
+            <span class="s2">"last_seen_timestamp"</span><span class="p">,</span>
+            <span class="s2">"last_updated_by"</span><span class="p">,</span>
+            <span class="s2">"metadata"</span><span class="p">,</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="o">:=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">return</span> <span class="n">result</span></div>
 
 <div class="viewcode-block" id="Issue.from_dictionary"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.Issue.from_dictionary">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">from_dictionary</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">issue_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Issue</span><span class="p">:</span>
@@ -384,6 +416,9 @@
             <span class="n">categories</span><span class="o">=</span><span class="n">issue_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"categories"</span><span class="p">),</span>
             <span class="n">created_by</span><span class="o">=</span><span class="n">issue_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"created_by"</span><span class="p">),</span>
             <span class="n">trace_count</span><span class="o">=</span><span class="n">issue_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"trace_count"</span><span class="p">),</span>
+            <span class="n">last_seen_timestamp</span><span class="o">=</span><span class="n">issue_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"last_seen_timestamp"</span><span class="p">),</span>
+            <span class="n">last_updated_by</span><span class="o">=</span><span class="n">issue_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"last_updated_by"</span><span class="p">),</span>
+            <span class="n">metadata</span><span class="o">=</span><span class="n">issue_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"metadata"</span><span class="p">),</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="Issue.to_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.Issue.to_proto">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ProtoIssue</span><span class="p">:</span>
@@ -410,6 +445,10 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">trace_count</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">proto_issue</span><span class="o">.</span><span class="n">trace_count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trace_count</span>
 
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"last_seen_timestamp"</span><span class="p">,</span> <span class="s2">"last_updated_by"</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="o">:=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="n">proto_issue</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="n">proto_issue</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metadata</span> <span class="ow">or</span> <span class="p">{})</span>
         <span class="k">return</span> <span class="n">proto_issue</span></div>
 
 <div class="viewcode-block" id="Issue.from_proto"><a class="viewcode-back" href="../../../python_api/mlflow.entities.html#mlflow.entities.Issue.from_proto">[docs]</a>    <span class="nd">@classmethod</span>
@@ -429,6 +468,11 @@
             <span class="n">categories</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">proto</span><span class="o">.</span><span class="n">categories</span><span class="p">)</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">created_by</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">created_by</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">trace_count</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">trace_count</span> <span class="k">if</span> <span class="n">proto</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span><span class="s2">"trace_count"</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">last_seen_timestamp</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">proto</span><span class="o">.</span><span class="n">last_seen_timestamp</span> <span class="k">if</span> <span class="n">proto</span><span class="o">.</span><span class="n">HasField</span><span class="p">(</span><span class="s2">"last_seen_timestamp"</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">),</span>
+            <span class="n">last_updated_by</span><span class="o">=</span><span class="n">proto</span><span class="o">.</span><span class="n">last_updated_by</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">metadata</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">proto</span><span class="o">.</span><span class="n">metadata</span><span class="p">)</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">,</span>
         <span class="p">)</span></div></div>
 </pre></div>
 
@@ -460,7 +504,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'3.17.2',
+      VERSION:'3.18.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',
