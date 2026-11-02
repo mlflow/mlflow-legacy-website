@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 3.17.2 documentation" href="../../../index.html"/>
+    <link rel="top" title="MLflow 3.18.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -148,7 +148,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.2</span>
+  <span class="header-link version">3.18.0</span>
 </div>
   </nav>
   <page>
@@ -243,7 +243,8 @@
               <div itemprop="articleBody">
                 
   <h1>Source code for mlflow.openai.autolog</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">functools</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">AsyncIterator</span><span class="p">,</span> <span class="n">Iterator</span>
 
@@ -414,6 +415,22 @@
         <span class="n">safe_patch</span><span class="p">(</span><span class="n">FLAVOR_NAME</span><span class="p">,</span> <span class="n">AsyncResponses</span><span class="p">,</span> <span class="s2">"parse"</span><span class="p">,</span> <span class="n">async_patched_call</span><span class="p">)</span>
         <span class="n">safe_patch</span><span class="p">(</span><span class="n">FLAVOR_NAME</span><span class="p">,</span> <span class="n">Responses</span><span class="p">,</span> <span class="s2">"parse"</span><span class="p">,</span> <span class="n">patched_call</span><span class="p">)</span>
 
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">openai.resources.decisions</span><span class="w"> </span><span class="kn">import</span> <span class="n">AsyncDecisions</span><span class="p">,</span> <span class="n">Decisions</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">safe_patch</span><span class="p">(</span><span class="n">FLAVOR_NAME</span><span class="p">,</span> <span class="n">Decisions</span><span class="p">,</span> <span class="s2">"create"</span><span class="p">,</span> <span class="n">patched_call</span><span class="p">)</span>
+        <span class="n">safe_patch</span><span class="p">(</span><span class="n">FLAVOR_NAME</span><span class="p">,</span> <span class="n">AsyncDecisions</span><span class="p">,</span> <span class="s2">"create"</span><span class="p">,</span> <span class="n">async_patched_call</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_is_decisions_api</span><span class="p">(</span><span class="n">task</span><span class="p">:</span> <span class="nb">type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">openai.resources.decisions</span><span class="w"> </span><span class="kn">import</span> <span class="n">AsyncDecisions</span><span class="p">,</span> <span class="n">Decisions</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="p">(</span><span class="n">Decisions</span><span class="p">,</span> <span class="n">AsyncDecisions</span><span class="p">))</span>
+
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_get_span_type</span><span class="p">(</span><span class="n">task</span><span class="p">:</span> <span class="nb">type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">openai.resources.chat.completions</span><span class="w"> </span><span class="kn">import</span> <span class="n">AsyncCompletions</span> <span class="k">as</span> <span class="n">AsyncChatCompletions</span>
@@ -460,6 +477,9 @@
         <span class="n">span_type_mapping</span><span class="p">[</span><span class="n">AsyncResponses</span><span class="p">]</span> <span class="o">=</span> <span class="n">SpanType</span><span class="o">.</span><span class="n">CHAT_MODEL</span>
     <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
         <span class="k">pass</span>
+
+    <span class="k">if</span> <span class="n">_is_decisions_api</span><span class="p">(</span><span class="n">task</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">SpanType</span><span class="o">.</span><span class="n">LLM</span>
 
     <span class="c1"># Walk the MRO so subclasses (e.g. third-party wrappers like</span>
     <span class="c1"># `DatabricksOpenAI`'s `ChatCompletions`) resolve to the right type.</span>
@@ -553,7 +573,9 @@
     <span class="n">span_type</span> <span class="o">=</span> <span class="n">_get_span_type</span><span class="p">(</span><span class="n">instance</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span>
     <span class="c1"># Record input parameters to attributes</span>
     <span class="n">attributes</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">inputs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"messages"</span><span class="p">,</span> <span class="s2">"input"</span><span class="p">)}</span>
-    <span class="k">if</span> <span class="n">span_type</span> <span class="ow">in</span> <span class="p">(</span><span class="n">SpanType</span><span class="o">.</span><span class="n">CHAT_MODEL</span><span class="p">,</span> <span class="n">SpanType</span><span class="o">.</span><span class="n">LLM</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">_is_decisions_api</span><span class="p">(</span><span class="n">instance</span><span class="o">.</span><span class="vm">__class__</span><span class="p">):</span>
+        <span class="n">attributes</span><span class="p">[</span><span class="n">SpanAttributeKey</span><span class="o">.</span><span class="n">MESSAGE_FORMAT</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"openai_decisions"</span>
+    <span class="k">elif</span> <span class="n">span_type</span> <span class="ow">in</span> <span class="p">(</span><span class="n">SpanType</span><span class="o">.</span><span class="n">CHAT_MODEL</span><span class="p">,</span> <span class="n">SpanType</span><span class="o">.</span><span class="n">LLM</span><span class="p">):</span>
         <span class="n">attributes</span><span class="p">[</span><span class="n">SpanAttributeKey</span><span class="o">.</span><span class="n">MESSAGE_FORMAT</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"openai"</span>
 
     <span class="c1"># If there is an active span, create a child span under it, otherwise create a new trace</span>
@@ -584,12 +606,27 @@
 
     <span class="n">result</span> <span class="o">=</span> <span class="n">_try_parse_raw_response</span><span class="p">(</span><span class="n">raw_result</span><span class="p">)</span>
 
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="p">(</span><span class="n">Stream</span><span class="p">,</span> <span class="n">AsyncStream</span><span class="p">)):</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">finished</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">_finish_stream</span><span class="p">(</span><span class="n">error</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+            <span class="k">nonlocal</span> <span class="n">finished</span>
+            <span class="k">if</span> <span class="n">finished</span><span class="p">:</span>
+                <span class="k">return</span>
+            <span class="n">finished</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="n">error</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">_end_span_on_exception</span><span class="p">(</span><span class="n">span</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">chunk</span> <span class="o">=</span> <span class="n">output</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">output</span> <span class="k">else</span> <span class="kc">None</span>
+                <span class="n">_process_last_chunk</span><span class="p">(</span><span class="n">span</span><span class="p">,</span> <span class="n">chunk</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">is_responses_api</span><span class="p">)</span>
+
+        <span class="n">original_close</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">close</span>
+
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">Stream</span><span class="p">):</span>
         <span class="c1"># If the output is a stream, we add a hook to store the intermediate chunks</span>
         <span class="c1"># and then log the outputs as a single artifact when the stream ends</span>
         <span class="k">def</span><span class="w"> </span><span class="nf">_stream_output_logging_hook</span><span class="p">(</span><span class="n">stream</span><span class="p">:</span> <span class="n">Iterator</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">:</span>
-            <span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="n">chunk</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">stream</span><span class="p">):</span>
                     <span class="n">_add_span_event</span><span class="p">(</span><span class="n">span</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">chunk</span><span class="p">)</span>
@@ -598,27 +635,51 @@
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="c1"># The SDK raises mid-stream (e.g. an error event from the server). End the</span>
                 <span class="c1"># span with an error status, otherwise the trace is never exported.</span>
-                <span class="n">_end_span_on_exception</span><span class="p">(</span><span class="n">span</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+                <span class="n">_finish_stream</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
                 <span class="k">raise</span>
-            <span class="n">_process_last_chunk</span><span class="p">(</span><span class="n">span</span><span class="p">,</span> <span class="n">chunk</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">is_responses_api</span><span class="p">)</span>
+            <span class="k">finally</span><span class="p">:</span>
+                <span class="n">_finish_stream</span><span class="p">()</span>
+
+        <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">original_close</span><span class="p">)</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">_close</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">close_result</span> <span class="o">=</span> <span class="n">original_close</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">BaseException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">_finish_stream</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                <span class="k">raise</span>
+            <span class="n">_finish_stream</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">close_result</span>
 
         <span class="n">result</span><span class="o">.</span><span class="n">_iterator</span> <span class="o">=</span> <span class="n">_stream_output_logging_hook</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">_iterator</span><span class="p">)</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">close</span> <span class="o">=</span> <span class="n">_close</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">AsyncStream</span><span class="p">):</span>
 
         <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_stream_output_logging_hook</span><span class="p">(</span><span class="n">stream</span><span class="p">:</span> <span class="n">AsyncIterator</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">:</span>
-            <span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="n">chunk</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">async</span> <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">stream</span><span class="p">:</span>
                     <span class="n">_add_span_event</span><span class="p">(</span><span class="n">span</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">output</span><span class="p">),</span> <span class="n">chunk</span><span class="p">)</span>
                     <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
                     <span class="k">yield</span> <span class="n">chunk</span>
-            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="n">_end_span_on_exception</span><span class="p">(</span><span class="n">span</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">GeneratorExit</span><span class="p">:</span>
                 <span class="k">raise</span>
-            <span class="n">_process_last_chunk</span><span class="p">(</span><span class="n">span</span><span class="p">,</span> <span class="n">chunk</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">is_responses_api</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">BaseException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">_finish_stream</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                <span class="k">raise</span>
+            <span class="k">finally</span><span class="p">:</span>
+                <span class="n">_finish_stream</span><span class="p">()</span>
+
+        <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">original_close</span><span class="p">)</span>
+        <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_close</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">close_result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">original_close</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">BaseException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">_finish_stream</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                <span class="k">raise</span>
+            <span class="n">_finish_stream</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">close_result</span>
 
         <span class="n">result</span><span class="o">.</span><span class="n">_iterator</span> <span class="o">=</span> <span class="n">_stream_output_logging_hook</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">_iterator</span><span class="p">)</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">close</span> <span class="o">=</span> <span class="n">_close</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">set_span_chat_attributes</span><span class="p">(</span><span class="n">span</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
@@ -713,16 +774,36 @@
             <span class="k">return</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">text_parts</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">content</span>
 
+    <span class="n">tool_calls</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">finish_reason</span> <span class="o">=</span> <span class="s2">"stop"</span>
+    <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">chunks</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">chunk</span><span class="o">.</span><span class="n">choices</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">chunk_choice</span> <span class="o">=</span> <span class="n">chunk</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">chunk_choice</span><span class="o">.</span><span class="n">finish_reason</span><span class="p">:</span>
+            <span class="n">finish_reason</span> <span class="o">=</span> <span class="n">chunk_choice</span><span class="o">.</span><span class="n">finish_reason</span>
+        <span class="k">for</span> <span class="n">tool_call_delta</span> <span class="ow">in</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">chunk_choice</span><span class="o">.</span><span class="n">delta</span><span class="p">,</span> <span class="s2">"tool_calls"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[]:</span>
+            <span class="k">while</span> <span class="n">tool_call_delta</span><span class="o">.</span><span class="n">index</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tool_calls</span><span class="p">):</span>
+                <span class="n">tool_calls</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                    <span class="s2">"id"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
+                    <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"function"</span><span class="p">,</span>
+                    <span class="s2">"function"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">"arguments"</span><span class="p">:</span> <span class="s2">""</span><span class="p">},</span>
+                <span class="p">})</span>
+            <span class="n">tool_call</span> <span class="o">=</span> <span class="n">tool_calls</span><span class="p">[</span><span class="n">tool_call_delta</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">tool_call_delta</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+                <span class="n">tool_call</span><span class="p">[</span><span class="s2">"id"</span><span class="p">]</span> <span class="o">=</span> <span class="n">tool_call_delta</span><span class="o">.</span><span class="n">id</span>
+            <span class="k">if</span> <span class="n">function</span> <span class="o">:=</span> <span class="n">tool_call_delta</span><span class="o">.</span><span class="n">function</span><span class="p">:</span>
+                <span class="n">tool_call</span><span class="p">[</span><span class="s2">"function"</span><span class="p">][</span><span class="s2">"name"</span><span class="p">]</span> <span class="o">+=</span> <span class="n">function</span><span class="o">.</span><span class="n">name</span> <span class="ow">or</span> <span class="s2">""</span>
+                <span class="n">tool_call</span><span class="p">[</span><span class="s2">"function"</span><span class="p">][</span><span class="s2">"arguments"</span><span class="p">]</span> <span class="o">+=</span> <span class="n">function</span><span class="o">.</span><span class="n">arguments</span> <span class="ow">or</span> <span class="s2">""</span>
+
+    <span class="n">content</span> <span class="o">=</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">_extract_content</span><span class="p">,</span> <span class="n">chunks</span><span class="p">))</span>
     <span class="n">message</span> <span class="o">=</span> <span class="n">ChatCompletionMessage</span><span class="p">(</span>
-        <span class="n">role</span><span class="o">=</span><span class="s2">"assistant"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">_extract_content</span><span class="p">,</span> <span class="n">chunks</span><span class="p">))</span>
+        <span class="n">role</span><span class="o">=</span><span class="s2">"assistant"</span><span class="p">,</span>
+        <span class="n">content</span><span class="o">=</span><span class="kc">None</span> <span class="k">if</span> <span class="n">tool_calls</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">content</span> <span class="k">else</span> <span class="n">content</span><span class="p">,</span>
+        <span class="n">tool_calls</span><span class="o">=</span><span class="n">tool_calls</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="c1"># Extract metadata from the last chunk</span>
     <span class="n">last_chunk</span> <span class="o">=</span> <span class="n">chunks</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">finish_reason</span> <span class="o">=</span> <span class="s2">"stop"</span>
-    <span class="k">if</span> <span class="n">choices</span> <span class="o">:=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">last_chunk</span><span class="p">,</span> <span class="s2">"choices"</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">chunk_choice</span> <span class="o">:=</span> <span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-            <span class="n">finish_reason</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">chunk_choice</span><span class="p">,</span> <span class="s2">"finish_reason"</span><span class="p">)</span> <span class="ow">or</span> <span class="n">finish_reason</span>
 
     <span class="n">choice</span> <span class="o">=</span> <span class="n">Choice</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">,</span> <span class="n">finish_reason</span><span class="o">=</span><span class="n">finish_reason</span><span class="p">)</span>
 
@@ -752,9 +833,15 @@
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_is_responses_final_event</span><span class="p">(</span><span class="n">chunk</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">openai.types.responses</span><span class="w"> </span><span class="kn">import</span> <span class="n">ResponseCompletedEvent</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">openai.types.responses</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+            <span class="n">ResponseCompletedEvent</span><span class="p">,</span>
+            <span class="n">ResponseFailedEvent</span><span class="p">,</span>
+            <span class="n">ResponseIncompleteEvent</span><span class="p">,</span>
+        <span class="p">)</span>
 
-        <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span> <span class="n">ResponseCompletedEvent</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span>
+            <span class="n">chunk</span><span class="p">,</span> <span class="p">(</span><span class="n">ResponseCompletedEvent</span><span class="p">,</span> <span class="n">ResponseIncompleteEvent</span><span class="p">,</span> <span class="n">ResponseFailedEvent</span><span class="p">)</span>
+        <span class="p">)</span>
     <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">False</span>
 
@@ -823,7 +910,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'3.17.2',
+      VERSION:'3.18.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

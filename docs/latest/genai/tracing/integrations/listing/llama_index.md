@@ -29,7 +29,7 @@ text
 ```
 !mkdir -p data
 
-!curl -L https://raw.githubusercontent.com/run-llama/llama_index/main/docs/docs/examples/data/paul_graham/paul_graham_essay.txt -o ./data/paul_graham_essay.txt
+!curl -L https://raw.githubusercontent.com/run-llama/llama_index/main/docs/examples/data/paul_graham/paul_graham_essay.txt -o ./data/paul_graham_essay.txt
 ```
 
 Load them into a simple in-memory vector index:

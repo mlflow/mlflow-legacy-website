@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="MLflow 3.17.2 documentation" href="../../../../index.html"/>
+    <link rel="top" title="MLflow 3.18.0 documentation" href="../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../index.html"/> 
 
   
@@ -148,7 +148,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.2</span>
+  <span class="header-link version">3.18.0</span>
 </div>
   </nav>
   <page>
@@ -270,6 +270,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.judges.builtin</span><span class="w"> </span><span class="kn">import</span> <span class="n">_MODEL_API_DOC</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.judges.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">_AFFIRMATIVE_VALUES</span><span class="p">,</span> <span class="n">_NEGATIVE_VALUES</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.judges.instructions_judge</span><span class="w"> </span><span class="kn">import</span> <span class="n">InstructionsJudge</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.judges.model_api</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModelAPI</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.judges.prompts.completeness</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">COMPLETENESS_ASSESSMENT_NAME</span><span class="p">,</span>
     <span class="n">COMPLETENESS_PROMPT</span><span class="p">,</span>
@@ -590,6 +591,10 @@
             <span class="n">description</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
             <span class="n">aggregations</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">aggregations</span><span class="p">,</span>
             <span class="n">is_session_level_scorer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">is_session_level_scorer</span><span class="p">,</span>
+            <span class="c1"># Mirrors the value already inside `pydantic_model_data` so the top-level</span>
+            <span class="c1"># field stays consistent for consumers that read it; on deserialization</span>
+            <span class="c1"># the pydantic data wins.</span>
+            <span class="n">session_level</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">session_level</span><span class="p">,</span>
             <span class="n">mlflow_version</span><span class="o">=</span><span class="n">mlflow</span><span class="o">.</span><span class="n">__version__</span><span class="p">,</span>
             <span class="n">serialization_version</span><span class="o">=</span><span class="n">_SERIALIZATION_VERSION</span><span class="p">,</span>
             <span class="n">builtin_scorer_class</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
@@ -601,8 +606,6 @@
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">model_validate</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="n">SerializedScorer</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">"BuiltInScorer"</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""Override model_validate to handle builtin scorer deserialization."""</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.scorers</span><span class="w"> </span><span class="kn">import</span> <span class="n">builtin_scorers</span>
-
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">SerializedScorer</span><span class="p">):</span>
             <span class="n">serialized</span> <span class="o">=</span> <span class="n">obj</span>
         <span class="k">else</span><span class="p">:</span>
@@ -619,10 +622,9 @@
                     <span class="sa">f</span><span class="s2">"Failed to parse serialized scorer data: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span>
                 <span class="p">)</span>
 
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">scorer_class</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">builtin_scorers</span><span class="p">,</span> <span class="n">serialized</span><span class="o">.</span><span class="n">builtin_scorer_class</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-            <span class="c1"># error_code is INVALID_PARAMETER_VALUE but this is an attribute lookup failure</span>
+        <span class="n">scorer_class</span> <span class="o">=</span> <span class="n">_get_builtin_scorer_class</span><span class="p">(</span><span class="n">serialized</span><span class="o">.</span><span class="n">builtin_scorer_class</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">scorer_class</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># error_class is kept from when this was a plain attribute lookup.</span>
             <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">"Unknown builtin scorer class: </span><span class="si">{</span><span class="n">serialized</span><span class="o">.</span><span class="n">builtin_scorer_class</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
                 <span class="n">error_class</span><span class="o">=</span><span class="s2">"ATTRIBUTE_NOT_FOUND"</span><span class="p">,</span>
@@ -1433,6 +1435,8 @@
 <span class="sd">        name: The name of the scorer. Defaults to "guidelines".</span>
 <span class="sd">        guidelines: A single guideline text or a list of guidelines.</span>
 <span class="sd">        model: {{ model }}</span>
+<span class="sd">        model_api: Model API to use. Set to ``"decisions"`` for a Databricks System One</span>
+<span class="sd">            model service. Direct ``typesafe:/`` models select Decisions automatically.</span>
 
 <span class="sd">    Example (direct usage):</span>
 
@@ -1487,6 +1491,7 @@
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"guidelines"</span>
     <span class="n">guidelines</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
     <span class="n">model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">model_api</span><span class="p">:</span> <span class="n">ModelAPI</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">required_columns</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"inputs"</span><span class="p">,</span> <span class="s2">"outputs"</span><span class="p">}</span>
     <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="p">(</span>
         <span class="s2">"Evaluate whether the agent's response follows specific constraints or instructions "</span>
@@ -1566,6 +1571,7 @@
             <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
             <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
             <span class="n">extra_headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">extra_headers</span><span class="p">,</span>
+            <span class="o">**</span><span class="p">({</span><span class="s2">"model_api"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_api</span><span class="p">}</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_api</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{}),</span>
         <span class="p">)</span>
         <span class="n">sanitized</span> <span class="o">=</span> <span class="n">_sanitize_scorer_feedback</span><span class="p">(</span><span class="n">feedback</span><span class="p">)</span>
         <span class="c1"># Surface the guideline text in assessment metadata so the UI can show</span>
@@ -1591,6 +1597,8 @@
 <span class="sd">    Args:</span>
 <span class="sd">        name: The name of the scorer. Defaults to "expectations_guidelines".</span>
 <span class="sd">        model: {{ model }}</span>
+<span class="sd">        model_api: Model API to use. Set to ``"decisions"`` for a Databricks System One</span>
+<span class="sd">            model service. Direct ``typesafe:/`` models select Decisions automatically.</span>
 
 <span class="sd">    Example:</span>
 
@@ -1624,6 +1632,7 @@
 
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"expectations_guidelines"</span>
     <span class="n">model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">model_api</span><span class="p">:</span> <span class="n">ModelAPI</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">required_columns</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"inputs"</span><span class="p">,</span> <span class="s2">"outputs"</span><span class="p">}</span>
     <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="p">(</span>
         <span class="s2">"Evaluate whether the agent's response follows specific constraints or instructions "</span>
@@ -1732,6 +1741,7 @@
             <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
             <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
             <span class="n">extra_headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">extra_headers</span><span class="p">,</span>
+            <span class="o">**</span><span class="p">({</span><span class="s2">"model_api"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_api</span><span class="p">}</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_api</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{}),</span>
         <span class="p">)</span>
         <span class="n">sanitized</span> <span class="o">=</span> <span class="n">_sanitize_scorer_feedback</span><span class="p">(</span><span class="n">feedback</span><span class="p">)</span>
         <span class="c1"># Surface the guideline text in assessment metadata so the UI can show</span>
@@ -3878,6 +3888,18 @@
         <span class="p">)</span></div>
 
 
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_builtin_scorer_class</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">[</span><span class="n">BuiltInScorer</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""The concrete built-in scorer class named ``name``, or ``None``.</span>
+
+<span class="sd">    The module also holds imported helpers and abstract bases, so a plain ``getattr`` would</span>
+<span class="sd">    resolve names like ``invoke_judge_model`` that must never be called as a scorer.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="bp">cls</span> <span class="o">=</span> <span class="nb">globals</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">cls</span> <span class="k">if</span> <span class="bp">cls</span> <span class="ow">in</span> <span class="n">_get_all_concrete_builtin_scorers</span><span class="p">()</span> <span class="k">else</span> <span class="kc">None</span>
+
+
 <span class="k">def</span><span class="w"> </span><span class="nf">_get_all_concrete_builtin_scorers</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">type</span><span class="p">[</span><span class="n">BuiltInScorer</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Recursively discover all concrete (non-abstract) BuiltInScorer subclasses.</span>
@@ -3978,7 +4000,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../../',
-      VERSION:'3.17.2',
+      VERSION:'3.18.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

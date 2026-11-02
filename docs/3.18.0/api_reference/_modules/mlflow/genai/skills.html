@@ -1,0 +1,756 @@
+
+
+<!DOCTYPE html>
+<!-- source: docs/source/_modules/mlflow/genai/skills -->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mlflow.genai.skills</title>
+  
+   
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="canonical" href="https://mlflow.org/docs/latest/_modules/mlflow/genai/skills.html">
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+  
+
+  
+
+  
+    
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer',"GTM-N6WMTTJ");</script>
+        <!-- End Google Tag Manager -->
+    
+  
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16857946923"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-16857946923');
+  </script>
+  <!-- Eng gtag -->
+
+  
+
+  
+  <meta name="docsearch:docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_version" content="current" data-rh="true">
+  <meta name="docsearch:version" content="current" data-rh="true">
+  <meta name="docusaurus_locale" content="en" data-rh="true">
+  <meta name="docsearch:language" content="en" data-rh="true">
+
+  
+  
+    
+
+  
+
+  
+  
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600" rel="stylesheet">
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/cards.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/grids.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/mobile.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/simple-cards.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/tabs.css" type="text/css" />
+    
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="MLflow 3.18.0 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+<script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+<script type="text/javascript" src="../../../_static/jquery.js"></script>
+<script type="text/javascript" src="../../../_static/underscore.js"></script>
+<script type="text/javascript" src="../../../_static/doctools.js"></script>
+<script type="text/javascript" src="../../../_static/tabs.js"></script>
+<script type="text/javascript" src="../../../_static/languagesections.js"></script>
+<script type="text/javascript" src="../../../_static/runllm.js"></script>
+
+<body class="wy-body-for-nav" role="document">
+  
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6WMTTJ"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  
+  <nav class="wy-nav-top header" role="navigation" aria-label="top navigation">
+    <div class="header-container">
+  <style scoped>
+    .header-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
+    }
+
+    .logo-container {
+      display: flex;
+      gap: 12px;
+      flex-direction: row;
+      white-space: nowrap;
+      align-items: center;
+      justify-content: center;
+    }
+
+    a:hover {
+      text-decoration: none;
+      color: #0194e2;
+    }
+  </style>
+  <div class="logo-container">
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
+    <a href="../../../index.html" class="wy-nav-top-logo">
+      <img
+        src="../../../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
+    </a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
+  </div>
+  <span class="header-link version">3.18.0</span>
+</div>
+  </nav>
+  <page>
+    
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side relative">
+      <div class="wy-side-scroll">
+  <div class="wy-side-nav-search">
+    
+
+    
+
+    
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+    
+  </div>
+
+  <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+    
+      <a href="../../../index.html">Home</a>
+    
+
+    
+      
+
+      
+        <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../python_api/index.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../typescript_api/index.html">TypeScript API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli.html">Command-Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auth/python-api.html">MLflow Authentication Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auth/rest-api.html">MLflow Authentication REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../R-api.html">R API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../java_api/index.html">Java API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rest-api.html">REST API</a></li>
+</ul>
+
+      
+    
+  </div>
+
+  <div role="contentinfo">
+    
+
+    <p>
+      <a id='feedbacklink' href="https://github.com/mlflow/mlflow/blob/master/CONTRIBUTING.md" target="_blank">Contribute</a>
+    </p>
+  </div>
+</div>
+    </nav>
+
+    <main class="wy-grid-for-nav">
+      <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+        <div class="wy-nav-content">
+          <div class="rst-content">
+            
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Documentation</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+        <li><a href="../../index.html">Module code</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+    
+      <li>mlflow.genai.skills</li>
+    
+    
+    <!-- <li class="wy-breadcrumbs-aside">
+      <a href="https://github.com/mlflow/mlflow/blob/master/docs/source/_modules/mlflow/genai/skills" class="fa fa-github"> Edit on GitHub</a>
+    </li> -->
+    
+  </ul>
+</div>
+            <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+              <div itemprop="articleBody">
+                
+  <h1>Source code for mlflow.genai.skills</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span><span class="p">,</span> <span class="n">PurePosixPath</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tempfile</span><span class="w"> </span><span class="kn">import</span> <span class="n">TemporaryDirectory</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.skill</span><span class="w"> </span><span class="kn">import</span> <span class="n">Skill</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.skill_source</span><span class="w"> </span><span class="kn">import</span> <span class="n">GitSource</span><span class="p">,</span> <span class="n">OCISource</span><span class="p">,</span> <span class="n">SkillSourceType</span><span class="p">,</span> <span class="n">ZipSource</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.skill_version</span><span class="w"> </span><span class="kn">import</span> <span class="n">SkillVersion</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.skill_content.archive</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">extract_skill_archive</span><span class="p">,</span>
+    <span class="n">get_max_decompressed_size</span><span class="p">,</span>
+    <span class="n">package_skill_tree</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.skill_content.digest</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_tree_digest</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.skill_content.errors</span><span class="w"> </span><span class="kn">import</span> <span class="n">invalid_content</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.skill_content.fetchers</span><span class="w"> </span><span class="kn">import</span> <span class="n">FetchedContent</span><span class="p">,</span> <span class="n">fetch_source</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.skill_content.paths</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">_fail_on_walk_error</span><span class="p">,</span>
+    <span class="n">_is_link_like</span><span class="p">,</span>
+    <span class="n">normalize_subpath</span><span class="p">,</span>
+    <span class="n">tree_size</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.skill_content.pull</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">default_destination</span><span class="p">,</span>
+    <span class="n">pull_skill_version</span><span class="p">,</span>
+    <span class="n">resolve_skill_version</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.skill_content.skill_md</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">SKILL_MANIFEST_FILE</span><span class="p">,</span>
+    <span class="n">SkillManifest</span><span class="p">,</span>
+    <span class="n">inspect_skill_dir</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.skill_content.sources</span><span class="w"> </span><span class="kn">import</span> <span class="n">resolve_source_type</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.store.entities.paged_list</span><span class="w"> </span><span class="kn">import</span> <span class="n">PagedList</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracking.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowClient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">experimental</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.validation</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">_MAX_BULK_REGISTER_SKILLS</span><span class="p">,</span>
+    <span class="n">_validate_organization_name</span><span class="p">,</span>
+    <span class="n">_validate_skill_name</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="search_skills"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.search_skills">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">"3.18.0"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">search_skills</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">filter_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">max_results</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="n">order_by</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">page_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">include_skill_identities</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PagedList</span><span class="p">[</span><span class="n">Skill</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Search registered skills with optional filtering, ordering, and pagination.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        filter_string: SQL-like filter expression, such as ``"organization = 'acme'"``.</span>
+<span class="sd">        max_results: Maximum number of skills to return in one page. Defaults to 100.</span>
+<span class="sd">        order_by: Fields and optional sort directions, such as ``["name ASC"]``.</span>
+<span class="sd">        page_token: Token from a previous page's ``token`` attribute. Use the same</span>
+<span class="sd">            filter and ordering when requesting subsequent pages. Identity selection may</span>
+<span class="sd">            change between pages; pagination uses best-effort offsets.</span>
+<span class="sd">        include_skill_identities: Optional list of exact identities, such as</span>
+<span class="sd">            ``["reviewer", "@acme/reviewer"]``. ``None`` selects all readable Skills;</span>
+<span class="sd">            an empty list selects none. This selection never widens the caller's permissions.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A PagedList of Skill entities. Its ``token`` is ``None`` when no more results remain.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            import mlflow</span>
+
+<span class="sd">            skills = mlflow.genai.search_skills(</span>
+<span class="sd">                filter_string="organization = 'acme'", order_by=["name ASC"]</span>
+<span class="sd">            )</span>
+<span class="sd">            for skill in skills:</span>
+<span class="sd">                print(skill.name, skill.latest_version)</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">search_skills</span><span class="p">(</span>
+        <span class="n">filter_string</span><span class="o">=</span><span class="n">filter_string</span><span class="p">,</span>
+        <span class="n">max_results</span><span class="o">=</span><span class="n">max_results</span><span class="p">,</span>
+        <span class="n">order_by</span><span class="o">=</span><span class="n">order_by</span><span class="p">,</span>
+        <span class="n">page_token</span><span class="o">=</span><span class="n">page_token</span><span class="p">,</span>
+        <span class="n">include_skill_identities</span><span class="o">=</span><span class="n">include_skill_identities</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="register_skill"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.register_skill">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">"3.18.0"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">register_skill</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">source</span><span class="p">:</span> <span class="n">GitSource</span> <span class="o">|</span> <span class="n">OCISource</span> <span class="o">|</span> <span class="n">ZipSource</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">organization</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span><span class="p">,</span>
+    <span class="n">status</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"active"</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SkillVersion</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Inspect skill content and register a new version, creating the parent if needed.</span>
+
+<span class="sd">    An explicit name overrides the name declared in ``SKILL.md`` for registry identity,</span>
+<span class="sd">    without modifying the content. The manifest, including its declared name, is still</span>
+<span class="sd">    validated and the content digest is computed even when an explicit name is supplied.</span>
+<span class="sd">    The directory must have a root ``SKILL.md``. Nested manifests are included as supporting</span>
+<span class="sd">    content without being inspected or registered separately.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        source: Required Git, OCI, or ZIP source, or a local directory path. Must not be</span>
+<span class="sd">            ``None``; there is no implicit current-directory default. Remote content is</span>
+<span class="sd">            fetched using the caller's credentials (ZIP URLs must be public). Local</span>
+<span class="sd">            directories are uploaded atomically through an HTTP tracking server serving</span>
+<span class="sd">            artifacts; the server chooses their artifact location. ``MlflowSource`` and</span>
+<span class="sd">            existing MLflow artifact URIs are response-side values and cannot be registered.</span>
+<span class="sd">        name: The skill's name. Defaults to the name declared in ``SKILL.md``.</span>
+<span class="sd">        organization: An optional organization to scope the skill.</span>
+<span class="sd">        status: Initial version status, either ``active`` (default) or ``draft``.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The registered SkillVersion, including the server-assigned version and source.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            import mlflow</span>
+
+<span class="sd">            version = mlflow.genai.register_skill(source="./code-review", status="draft")</span>
+<span class="sd">    """</span>
+
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">_validate_skill_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="n">_validate_organization_name</span><span class="p">(</span><span class="n">organization</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">status</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"active"</span><span class="p">,</span> <span class="s2">"draft"</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"A skill version can be registered as 'active' or 'draft', got </span><span class="si">{</span><span class="n">status</span><span class="si">!r}</span><span class="s2">."</span>
+        <span class="p">)</span>
+
+    <span class="n">resolved</span> <span class="o">=</span> <span class="n">resolve_source_type</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">resolved</span><span class="o">.</span><span class="n">source_type</span> <span class="o">==</span> <span class="n">SkillSourceType</span><span class="o">.</span><span class="n">MLFLOW</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">resolved</span><span class="o">.</span><span class="n">is_local</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+            <span class="s2">"Register a local directory to upload content; MLflow artifact locations are "</span>
+            <span class="s2">"chosen by the server and cannot be supplied as a source."</span>
+        <span class="p">)</span>
+
+    <span class="n">client</span> <span class="o">=</span> <span class="n">MlflowClient</span><span class="p">()</span>
+    <span class="k">with</span> <span class="n">fetch_source</span><span class="p">(</span><span class="n">source</span><span class="p">)</span> <span class="k">as</span> <span class="n">fetched</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">resolved</span><span class="o">.</span><span class="n">is_local</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">TemporaryDirectory</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s2">"mlflow-skill-register-"</span><span class="p">)</span> <span class="k">as</span> <span class="n">tmp</span><span class="p">:</span>
+                <span class="n">archive</span> <span class="o">=</span> <span class="n">package_skill_tree</span><span class="p">(</span><span class="n">fetched</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="s2">"content.tar.gz"</span><span class="p">))</span>
+                <span class="c1"># Inspect and hash the archived content so edits to the original directory</span>
+                <span class="c1"># cannot change the uploaded tree after its metadata has been calculated.</span>
+                <span class="n">snapshot</span> <span class="o">=</span> <span class="n">extract_skill_archive</span><span class="p">(</span><span class="n">archive</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="s2">"snapshot"</span><span class="p">))</span>
+                <span class="n">manifest</span> <span class="o">=</span> <span class="n">inspect_skill_dir</span><span class="p">(</span><span class="n">snapshot</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">client</span><span class="o">.</span><span class="n">create_skill_version</span><span class="p">(</span>
+                    <span class="n">name</span><span class="o">=</span><span class="n">manifest</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">name</span><span class="p">,</span>
+                    <span class="n">organization</span><span class="o">=</span><span class="n">organization</span><span class="p">,</span>
+                    <span class="n">source</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">archive</span><span class="p">),</span>
+                    <span class="n">digest</span><span class="o">=</span><span class="n">compute_tree_digest</span><span class="p">(</span><span class="n">snapshot</span><span class="p">),</span>
+                    <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="p">,</span>
+                <span class="p">)</span>
+
+        <span class="n">manifest</span> <span class="o">=</span> <span class="n">inspect_skill_dir</span><span class="p">(</span><span class="n">fetched</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="n">digest</span> <span class="o">=</span> <span class="n">compute_tree_digest</span><span class="p">(</span><span class="n">fetched</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">client</span><span class="o">.</span><span class="n">create_skill_version</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">manifest</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">name</span><span class="p">,</span>
+        <span class="n">organization</span><span class="o">=</span><span class="n">organization</span><span class="p">,</span>
+        <span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">,</span>
+        <span class="n">digest</span><span class="o">=</span><span class="n">digest</span><span class="p">,</span>
+        <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_filter_and_validate_skill_directories</span><span class="p">(</span>
+    <span class="n">fetched</span><span class="p">:</span> <span class="n">FetchedContent</span><span class="p">,</span> <span class="n">requested_skills</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">SkillManifest</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Inspect discovered skills and return a validated selection in manifest-path order."""</span>
+    <span class="n">roots</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">dirpath</span><span class="p">,</span> <span class="n">dirnames</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span>
+        <span class="n">fetched</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">topdown</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">onerror</span><span class="o">=</span><span class="n">_fail_on_walk_error</span><span class="p">,</span> <span class="n">followlinks</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">):</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">dirpath</span><span class="p">)</span>
+        <span class="n">dirnames</span><span class="p">[:]</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">dirnames</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">_is_link_like</span><span class="p">(</span><span class="n">root</span> <span class="o">/</span> <span class="n">name</span><span class="p">))</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">root</span> <span class="o">/</span> <span class="n">SKILL_MANIFEST_FILE</span>
+        <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="n">invalid_content</span><span class="p">(</span><span class="sa">f</span><span class="s2">"'</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">' must be a file, not a directory."</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+            <span class="n">roots</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+            <span class="n">dirnames</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+    <span class="n">discovered</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">manifests</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">root</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">roots</span><span class="p">):</span>
+        <span class="n">manifest</span> <span class="o">=</span> <span class="n">inspect_skill_dir</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">manifest</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">discovered</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"Duplicate discovered Skill name: </span><span class="si">{</span><span class="n">manifest</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">."</span>
+            <span class="p">)</span>
+        <span class="n">discovered</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">requested_skills</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">manifest</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">requested_skills</span><span class="p">:</span>
+            <span class="n">manifests</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">manifest</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">manifests</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">_MAX_BULK_REGISTER_SKILLS</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"A skill import batch may contain at most </span><span class="si">{</span><span class="n">_MAX_BULK_REGISTER_SKILLS</span><span class="si">}</span><span class="s2"> skills. "</span>
+                <span class="s2">"Use skill_names or a source subpath to select a smaller batch."</span>
+            <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">requested_skills</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span><span class="n">missing</span> <span class="o">:=</span> <span class="n">requested_skills</span> <span class="o">-</span> <span class="n">discovered</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"Requested skills were not found: </span><span class="si">{</span><span class="s1">', '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">missing</span><span class="p">))</span><span class="si">}</span><span class="s2">."</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">manifests</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span><span class="s2">"No skills were selected for import."</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">manifests</span>
+
+
+<div class="viewcode-block" id="import_skills"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.import_skills">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">"3.18.0"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">import_skills</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">source</span><span class="p">:</span> <span class="n">GitSource</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">organization</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span><span class="p">,</span>
+    <span class="n">skill_names</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">status</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"active"</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">SkillVersion</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Import skills from a Git repository. If validation fails, no skills are registered.</span>
+
+<span class="sd">    Each directory where the search finds a ``SKILL.md`` file becomes a root skill. The search</span>
+<span class="sd">    skips directories inside that root skill, even if it is not selected, and continues</span>
+<span class="sd">    elsewhere. Nested skill manifests remain part of the root skill's content and are not</span>
+<span class="sd">    imported separately. Names come from the ``name`` field in each root skill's ``SKILL.md``</span>
+<span class="sd">    file. The import fails if names are duplicated or no skills are found.</span>
+
+<span class="sd">    Each selected skill has a size limit of 25 MiB by default. Set</span>
+<span class="sd">    ``MLFLOW_SKILL_CONTENT_MAX_DECOMPRESSED_SIZE`` to change this limit. The total content</span>
+<span class="sd">    searched, including unselected files, is limited to this size multiplied by the maximum</span>
+<span class="sd">    number of skills allowed in one import. Use a subpath to search a smaller directory.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        source: Git URL or ``GitSource``. Use ``GitSource`` to specify a branch, tag, or commit</span>
+<span class="sd">            and a subpath. Uses your Git credentials. Without a subpath, searches from the</span>
+<span class="sd">            repository root.</span>
+<span class="sd">        organization: An optional organization to scope the skills.</span>
+<span class="sd">        skill_names: Names to import, or ``None`` to import all skills found. The list must not</span>
+<span class="sd">            be empty, and each name must match a skill's ``name`` field. All ``SKILL.md`` files</span>
+<span class="sd">            found by the search are validated, including those for skills not selected.</span>
+<span class="sd">        status: Status for new versions: ``active`` (default) or ``draft``. Existing matching</span>
+<span class="sd">            versions are reused without changing their status.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Created or reused skill versions, sorted by the path to each ``SKILL.md`` file.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            import mlflow</span>
+<span class="sd">            from mlflow.genai import GitSource</span>
+
+<span class="sd">            versions = mlflow.genai.import_skills(</span>
+<span class="sd">                source=GitSource("https://github.com/acme/skills.git", ref="v1", subpath="skills"),</span>
+<span class="sd">                skill_names=["code-review", "test-coverage"],</span>
+<span class="sd">                status="draft",</span>
+<span class="sd">            )</span>
+<span class="sd">    """</span>
+
+    <span class="n">_validate_organization_name</span><span class="p">(</span><span class="n">organization</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">status</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"active"</span><span class="p">,</span> <span class="s2">"draft"</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"Skills can be imported as 'active' or 'draft', got </span><span class="si">{</span><span class="n">status</span><span class="si">!r}</span><span class="s2">."</span>
+        <span class="p">)</span>
+
+    <span class="n">requested_skills</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">skill_names</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">skill_names</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+            <span class="ow">or</span> <span class="ow">not</span> <span class="n">skill_names</span>
+            <span class="ow">or</span> <span class="nb">any</span><span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">skill_names</span><span class="p">)</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+                <span class="s2">"skill_names must be a nonempty list of strings."</span>
+            <span class="p">)</span>
+
+        <span class="n">requested_skills</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">skill_names</span><span class="p">:</span>
+            <span class="n">_validate_skill_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">requested_skills</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="n">resolved</span> <span class="o">=</span> <span class="n">resolve_source_type</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">resolved</span><span class="o">.</span><span class="n">source_type</span> <span class="o">!=</span> <span class="n">SkillSourceType</span><span class="o">.</span><span class="n">GIT</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span><span class="s2">"Skill import requires a Git source."</span><span class="p">)</span>
+
+    <span class="n">resolved_subpath</span> <span class="o">=</span> <span class="s2">""</span>
+    <span class="k">if</span> <span class="n">resolved</span><span class="o">.</span><span class="n">subpath</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">resolved_subpath</span> <span class="o">=</span> <span class="n">resolved</span><span class="o">.</span><span class="n">subpath</span>
+
+    <span class="n">max_skill_size_bytes</span> <span class="o">=</span> <span class="n">get_max_decompressed_size</span><span class="p">()</span>
+    <span class="n">max_discovery_budget</span> <span class="o">=</span> <span class="n">max_skill_size_bytes</span> <span class="o">*</span> <span class="n">_MAX_BULK_REGISTER_SKILLS</span>
+
+    <span class="k">with</span> <span class="n">fetch_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">max_bytes</span><span class="o">=</span><span class="n">max_discovery_budget</span><span class="p">)</span> <span class="k">as</span> <span class="n">fetched</span><span class="p">:</span>
+        <span class="n">manifests</span> <span class="o">=</span> <span class="n">_filter_and_validate_skill_directories</span><span class="p">(</span><span class="n">fetched</span><span class="p">,</span> <span class="n">requested_skills</span><span class="p">)</span>
+        <span class="n">definitions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">manifest</span> <span class="ow">in</span> <span class="n">manifests</span><span class="p">:</span>
+            <span class="n">skill_subpath</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relative_to</span><span class="p">(</span><span class="n">fetched</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+            <span class="n">subpath</span> <span class="o">=</span> <span class="n">PurePosixPath</span><span class="p">(</span><span class="n">resolved_subpath</span><span class="p">,</span> <span class="n">skill_subpath</span><span class="p">)</span><span class="o">.</span><span class="n">as_posix</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">subpath</span> <span class="o">==</span> <span class="s2">"."</span><span class="p">:</span>
+                <span class="n">subpath</span> <span class="o">=</span> <span class="kc">None</span>
+
+            <span class="k">if</span> <span class="n">normalize_subpath</span><span class="p">(</span><span class="n">subpath</span><span class="p">)</span> <span class="o">!=</span> <span class="n">subpath</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">"Discovered skill subpath </span><span class="si">{</span><span class="n">subpath</span><span class="si">!r}</span><span class="s2"> "</span>
+                    <span class="s2">"would change during source normalization."</span>
+                <span class="p">)</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">size</span> <span class="o">:=</span> <span class="n">tree_size</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">path</span><span class="p">))</span> <span class="o">&gt;</span> <span class="n">max_skill_size_bytes</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">invalid_content</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">"Skill </span><span class="si">{</span><span class="n">manifest</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2"> content is </span><span class="si">{</span><span class="n">size</span><span class="si">}</span><span class="s2"> bytes, which exceeds "</span>
+                    <span class="sa">f</span><span class="s2">"the size limit of </span><span class="si">{</span><span class="n">max_skill_size_bytes</span><span class="si">}</span><span class="s2"> bytes."</span>
+                <span class="p">)</span>
+
+            <span class="n">definitions</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                <span class="s2">"name"</span><span class="p">:</span> <span class="n">manifest</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="s2">"source_type"</span><span class="p">:</span> <span class="n">resolved</span><span class="o">.</span><span class="n">source_type</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                <span class="s2">"source"</span><span class="p">:</span> <span class="n">resolved</span><span class="o">.</span><span class="n">source</span><span class="p">,</span>
+                <span class="s2">"ref"</span><span class="p">:</span> <span class="n">resolved</span><span class="o">.</span><span class="n">ref</span><span class="p">,</span>
+                <span class="s2">"subpath"</span><span class="p">:</span> <span class="n">subpath</span><span class="p">,</span>
+                <span class="s2">"digest"</span><span class="p">:</span> <span class="n">compute_tree_digest</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">path</span><span class="p">),</span>
+                <span class="s2">"status"</span><span class="p">:</span> <span class="n">status</span><span class="p">,</span>
+            <span class="p">})</span>
+
+    <span class="k">return</span> <span class="n">MlflowClient</span><span class="p">()</span><span class="o">.</span><span class="n">bulk_register_skills</span><span class="p">(</span>
+        <span class="n">skill_definitions</span><span class="o">=</span><span class="n">definitions</span><span class="p">,</span> <span class="n">organization</span><span class="o">=</span><span class="n">organization</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="pull"><a class="viewcode-back" href="../../../python_api/mlflow.genai.html#mlflow.genai.pull">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">"3.18.0"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">pull</span><span class="p">(</span><span class="n">uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">destination</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">os</span><span class="o">.</span><span class="n">PathLike</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Download a registered skill version to a local directory.</span>
+
+<span class="sd">    The content is fetched from the skill's source (Git, OCI, ZIP, or MLflow artifacts) using</span>
+<span class="sd">    your own credentials, and checked against the version's recorded digest. Nothing is</span>
+<span class="sd">    written to ``destination`` unless the pull succeeds.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        uri: The skill to pull: ``skills:/name/3`` for a version, ``skills:/name@alias`` for an</span>
+<span class="sd">            alias, or ``skills:/name`` for the latest version. Prefix the name with</span>
+<span class="sd">            ``@organization/`` for a skill in an organization.</span>
+<span class="sd">        destination: Directory to write the skill into. It must not exist or must be empty.</span>
+<span class="sd">            Defaults to a directory named after the skill in the current working directory.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The path of the directory the skill was written to.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            import mlflow</span>
+
+<span class="sd">            path = mlflow.genai.pull("skills:/code-review@production", destination="./review")</span>
+<span class="sd">    """</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="n">resolve_skill_version</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="n">default_destination</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span> <span class="k">if</span> <span class="n">destination</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">destination</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">pull_skill_version</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">target</span><span class="p">))</span></div>
+</pre></div>
+
+              </div>
+            </div>
+            <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+      <p class="copyright">
+          &copy; MLflow Project, a Series of LF Projects, LLC. All rights reserved.
+      </p>
+
+  </div> 
+
+</footer>
+          </div>
+        </div>
+      </section>
+    </main>
+  </page>
+
+  
+
+
+  
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:'../../../',
+      VERSION:'3.18.0',
+      COLLAPSE_INDEX:false,
+      FILE_SUFFIX:'.html',
+      LINK_SUFFIX: '.html',
+      HAS_SOURCE:  true
+    };
+  </script>
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/clipboard.min.js"></script>
+  <script type="text/javascript" src="../../../_static/js/jquery.waypoints.min.js"></script>
+
+  
+  
+  
+  <script type="text/javascript">var CLIPPY_SVG_PATH = "../../../_static/clippy.svg";</script>
+  <script type="text/javascript" src="../../../_static/js/custom.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+    jQuery(function () {
+      SphinxRtdTheme.StickyNav.enable();
+    });
+
+  </script>
+  
+
+  
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
+        // Get the code block designator class entries
+        const allHighlights = document.querySelectorAll('.highlight');
+        // Disable copyable links for notebook cell numbering and for cell outputs
+        const highlights = Array.from(allHighlights).filter(highlight => !highlight.closest('.highlight-none') && 
+            !highlight.closest('.nboutput'));
+    
+        highlights.forEach(function(highlight) {
+            const copyIcon = document.createElement('span');
+            copyIcon.classList.add('copy-icon');
+            copyIcon.innerHTML = '&#xf0ea;';
+
+            copyIcon.addEventListener('click', function() {
+                const code = highlight.querySelector('pre').textContent;
+                copyToClipboard(code);
+
+                // Flash effect on click
+                this.style.color = '#0194E2';
+                setTimeout(() => {
+                    this.style.color = ''; 
+                }, 100);
+
+                // Display "Code copied to clipboard" near the clicked icon
+                const message = document.createElement('span');
+                message.textContent = "Copied!";
+                message.classList.add('copy-message'); 
+
+                // Append the message to the icon
+                this.appendChild(message);
+
+                setTimeout(() => {
+                    this.removeChild(message);
+                }, 500);
+            });
+
+            highlight.appendChild(copyIcon);
+        });
+    });
+  </script>
+
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        // Force download for notebook-download-btn
+        const downloadButtons = document.querySelectorAll('.notebook-download-btn');
+        downloadButtons.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default behavior
+
+                // Fetch the raw content of the notebook from GitHub
+                fetch(button.href)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const url = window.URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.style.display = 'none';
+                        link.href = url;
+                        const filename = button.href.split('/').pop();
+                        link.download = filename; 
+
+                        document.body.appendChild(link);
+                        link.click();
+
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(link);
+                    })
+                    .catch(err => console.error('Error fetching the notebook:', err));
+            });
+        });
+    });
+</script> 
+</body>
+</html>

@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 3.17.2 documentation" href="../../../index.html"/>
+    <link rel="top" title="MLflow 3.18.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -148,7 +148,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.2</span>
+  <span class="header-link version">3.18.0</span>
 </div>
   </nav>
   <page>
@@ -273,7 +273,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.file_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">local_file_uri_to_path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.semver_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_semver</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.uri</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_uri_scheme</span><span class="p">,</span> <span class="n">is_local_uri</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.validation</span><span class="w"> </span><span class="kn">import</span> <span class="n">_validate_mcp_icon_payloads</span><span class="p">,</span> <span class="n">_validate_mcp_initial_status</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.validation</span><span class="w"> </span><span class="kn">import</span> <span class="n">_validate_icon_payloads</span><span class="p">,</span> <span class="n">_validate_mcp_initial_status</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
@@ -413,7 +413,7 @@
         <span class="p">)</span>
     <span class="n">validate_mcp_server_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
     <span class="n">parse_semver</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">param_name</span><span class="o">=</span><span class="s2">"server_json.version"</span><span class="p">)</span>
-    <span class="n">_validate_mcp_icon_payloads</span><span class="p">(</span><span class="n">server_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"icons"</span><span class="p">),</span> <span class="s2">"server_json.icons"</span><span class="p">)</span>
+    <span class="n">_validate_icon_payloads</span><span class="p">(</span><span class="n">server_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"icons"</span><span class="p">),</span> <span class="s2">"server_json.icons"</span><span class="p">)</span>
 
     <span class="c1"># When omit-&gt;discover would scrape, reject an existing live version first so</span>
     <span class="c1"># retries do not hit the remote before create. Store create remains</span>
@@ -800,10 +800,16 @@
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Re-discover tools for an MCP server version and store the new snapshot.</span>
 
-<span class="sd">    This fetches the version's stored ``server_json``, scrapes the first usable</span>
-<span class="sd">    remote in ``server_json.remotes[]``, and updates ``tools`` on the version</span>
-<span class="sd">    with the discovered definitions. When ``dry_run=True``, the discovered tools</span>
-<span class="sd">    are only applied to the returned object and are not persisted.</span>
+<span class="sd">    This prefers access endpoints that resolve to the requested version through</span>
+<span class="sd">    a version pin or alias, using the selected endpoint's URL and transport. If</span>
+<span class="sd">    no access endpoints are configured, it uses the first remote in</span>
+<span class="sd">    ``server_json.remotes[]`` with a non-empty URL and supported transport. If</span>
+<span class="sd">    discovery from that remote fails, later remotes are not tried. If access</span>
+<span class="sd">    endpoints are configured but none resolves to the requested version, an</span>
+<span class="sd">    error is raised and ``server_json.remotes`` are not contacted. The supplied</span>
+<span class="sd">    headers are used for discovery in either case. When ``dry_run=True``, the</span>
+<span class="sd">    discovered tools are only applied to the returned object and are not</span>
+<span class="sd">    persisted.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        name: Server name.</span>
@@ -1060,7 +1066,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'3.17.2',
+      VERSION:'3.18.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

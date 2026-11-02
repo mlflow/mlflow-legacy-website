@@ -181,13 +181,15 @@ When creating AI Gateway resources, the creator automatically receives `MANAGE` 
 
 Required Permissions for accessing scorers:
 
-| API                  | Endpoint                           | Method | Required permission         |
-| -------------------- | ---------------------------------- | ------ | --------------------------- |
-| Register Scorer      | `3.0/mlflow/scorers/register`      | `POST` | can\_update (on experiment) |
-| List Scorers         | `3.0/mlflow/scorers/list`          | `GET`  | can\_read (on experiment)   |
-| Get Scorer           | `3.0/mlflow/scorers/get`           | `GET`  | can\_read                   |
-| Delete Scorer        | `3.0/mlflow/scorers/delete`        | `POST` | can\_delete                 |
-| List Scorer Versions | `3.0/mlflow/scorers/list-versions` | `GET`  | can\_read                   |
+| API                          | Endpoint                            | Method | Required permission                                                                  |
+| ---------------------------- | ----------------------------------- | ------ | ------------------------------------------------------------------------------------ |
+| Register Scorer              | `3.0/mlflow/scorers/register`       | `POST` | can\_update (on experiment), and no `DENY` on the scorer or its versions             |
+| List Scorers                 | `3.0/mlflow/scorers/list`           | `GET`  | can\_read (on experiment)                                                            |
+| Get Scorer                   | `3.0/mlflow/scorers/get`            | `GET`  | can\_read                                                                            |
+| Delete Scorer                | `3.0/mlflow/scorers/delete`         | `POST` | can\_delete                                                                          |
+| List Scorer Versions         | `3.0/mlflow/scorers/list-versions`  | `GET`  | can\_read                                                                            |
+| Get Online Scoring Configs   | `3.0/mlflow/scorers/online-configs` | `GET`  | can\_read (on each config's experiment), and no `DENY` on the scorer or its versions |
+| Update Online Scoring Config | `3.0/mlflow/scorers/online-config`  | `PUT`  | can\_update (on experiment), and no `DENY` on the scorer or its versions             |
 
 MLflow Authentication provides API endpoints to manage users and permissions.
 

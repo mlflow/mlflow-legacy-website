@@ -2,6 +2,54 @@
 
 AI Agents are an emerging pattern of LLM applications that can use tools, make decisions, and execute multi-step workflows. However, evaluating the performance of those complex agents is challenging. MLflow provides a powerful toolkit to systematically evaluate the agent behavior precisely using traces and scorers.
 
+Evaluating a remotely hosted agent?
+
+Create a trace for each evaluation task with `@mlflow.trace`, and use [distributed tracing](/docs/latest/genai/tracing/app-instrumentation/distributed-tracing.md) to connect it to the remote agent's spans. Pass the active context in the HTTP request:
+
+python
+
+```
+import os
+
+
+
+import mlflow
+
+import requests
+
+from mlflow.tracing import get_tracing_context_headers_for_http_request
+
+
+
+
+
+@mlflow.trace
+
+def predict_fn(question: str) -> str:
+
+    # Serialize the active trace and parent span into the traceparent header.
+
+    headers = get_tracing_context_headers_for_http_request()
+
+    response = requests.post(
+
+        os.environ["AGENT_URL"],
+
+        json={"question": question},
+
+        headers=headers,
+
+        timeout=120,
+
+    )
+
+    response.raise_for_status()
+
+    return response.json()["answer"]
+```
+
+Set `AGENT_URL` to your endpoint's full URL. The service must restore the incoming context **before** invoking the instrumented agent, and both processes must log to the same tracking server and experiment. It must also accept requests without trace headers: evaluation makes a preliminary prediction call with client tracing disabled. Pass this `predict_fn` to `mlflow.genai.evaluate()` with your dataset and scorers. See [Distributed Tracing](/docs/latest/genai/tracing/app-instrumentation/distributed-tracing.md) for the service code.
+
 ![Agent Evaluation](/docs/latest/images/mlflow-3/eval-monitor/agent-evaluation-hero.png)
 
 ## Workflow[​](#workflow "Direct link to Workflow")

@@ -92,7 +92,7 @@ mlflow db move-resources <database_uri> \
   --resource-type <table_name>
 ```
 
-The `--resource-type` value is the database table name (`experiments`, `registered_models`, `evaluation_datasets`, `webhooks`, `jobs`).
+The `--resource-type` value is the database table name (`experiments`, `registered_models`, `skills`, `evaluation_datasets`, `webhooks`, `jobs`).
 
 Gateway resources not supported
 
@@ -113,6 +113,16 @@ mlflow db move-resources <database_uri> \
 
 
 
+# Move specific skills by name (standalone or organization-scoped)
+
+mlflow db move-resources <database_uri> \
+
+  --from default --to team-a --resource-type skills \
+
+  --name code-reviewer --name @acme/pr-agent
+
+
+
 # Move experiments matching tags (AND logic when multiple tags are given)
 
 mlflow db move-resources <database_uri> \
@@ -122,7 +132,7 @@ mlflow db move-resources <database_uri> \
   --tag team=team-a --tag env=prod
 ```
 
-When neither `--name` nor `--tag` is specified, all resources of the given type in the source workspace are moved. Tag filtering is supported for `experiments` and `registered_models` only.
+When neither `--name` nor `--tag` is specified, all resources of the given type in the source workspace are moved. Tag filtering is supported for `experiments`, `registered_models`, `mcp_servers`, and `skills`.
 
 Use `--dry-run` to preview what would be moved without making changes, and `-y` to skip the confirmation prompt. The command aborts if any resource name would conflict with an existing resource in the target workspace.
 

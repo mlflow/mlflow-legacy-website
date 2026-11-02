@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="MLflow 3.17.2 documentation" href="../../index.html"/>
+    <link rel="top" title="MLflow 3.18.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -148,7 +148,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.2</span>
+  <span class="header-link version">3.18.0</span>
 </div>
   </nav>
   <page>
@@ -255,6 +255,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.crewai.autolog</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">patched_class_call</span><span class="p">,</span>
     <span class="n">patched_native_tool_call</span><span class="p">,</span>
+    <span class="n">patched_single_native_tool_call</span><span class="p">,</span>
     <span class="n">patched_standalone_call</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.telemetry.events</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutologgingEvent</span>
@@ -324,13 +325,22 @@
 
     <span class="c1"># Modern Tool calling support for CrewAI &gt;= 0.114.0</span>
     <span class="k">if</span> <span class="n">CREWAI_VERSION</span> <span class="o">&gt;=</span> <span class="n">Version</span><span class="p">(</span><span class="s2">"0.114.0"</span><span class="p">):</span>
-        <span class="n">standalone_method_map</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
-            <span class="s2">"crewai.agents.crew_agent_executor"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"execute_tool_and_check_finality"</span><span class="p">]</span>
-        <span class="p">})</span>
+        <span class="n">tool_module</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">"crewai.agents.agent_executor"</span>
+            <span class="k">if</span> <span class="n">CREWAI_VERSION</span> <span class="o">&gt;=</span> <span class="n">Version</span><span class="p">(</span><span class="s2">"1.15.29"</span><span class="p">)</span>
+            <span class="k">else</span> <span class="s2">"crewai.agents.crew_agent_executor"</span>
+        <span class="p">)</span>
+        <span class="n">standalone_method_map</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">tool_module</span><span class="p">:</span> <span class="p">[</span><span class="s2">"execute_tool_and_check_finality"</span><span class="p">]})</span>
 
     <span class="c1"># Native function calling support for CrewAI &gt;= 1.9.0</span>
     <span class="n">native_tool_method_map</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">if</span> <span class="n">CREWAI_VERSION</span> <span class="o">&gt;=</span> <span class="n">Version</span><span class="p">(</span><span class="s2">"1.9.0"</span><span class="p">):</span>
+    <span class="n">native_tool_patch</span> <span class="o">=</span> <span class="n">patched_native_tool_call</span>
+    <span class="k">if</span> <span class="n">CREWAI_VERSION</span> <span class="o">&gt;=</span> <span class="n">Version</span><span class="p">(</span><span class="s2">"1.15.29"</span><span class="p">):</span>
+        <span class="n">native_tool_method_map</span><span class="p">[</span><span class="s2">"crewai.agents.agent_executor.AgentExecutor"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">"_execute_single_native_tool_call"</span>
+        <span class="p">]</span>
+        <span class="n">native_tool_patch</span> <span class="o">=</span> <span class="n">patched_single_native_tool_call</span>
+    <span class="k">elif</span> <span class="n">CREWAI_VERSION</span> <span class="o">&gt;=</span> <span class="n">Version</span><span class="p">(</span><span class="s2">"1.9.0"</span><span class="p">):</span>
         <span class="n">native_tool_method_map</span><span class="p">[</span><span class="s2">"crewai.agents.crew_agent_executor.CrewAgentExecutor"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
             <span class="s2">"_handle_native_tool_calls"</span>
         <span class="p">]</span>
@@ -338,7 +348,7 @@
     <span class="k">try</span><span class="p">:</span>
         <span class="n">_apply_patches</span><span class="p">(</span><span class="n">standalone_method_map</span><span class="p">,</span> <span class="n">_import_module</span><span class="p">,</span> <span class="n">patched_standalone_call</span><span class="p">)</span>
         <span class="n">_apply_patches</span><span class="p">(</span><span class="n">class_method_map</span><span class="p">,</span> <span class="n">_import_class</span><span class="p">,</span> <span class="n">patched_class_call</span><span class="p">)</span>
-        <span class="n">_apply_patches</span><span class="p">(</span><span class="n">native_tool_method_map</span><span class="p">,</span> <span class="n">_import_class</span><span class="p">,</span> <span class="n">patched_native_tool_call</span><span class="p">)</span>
+        <span class="n">_apply_patches</span><span class="p">(</span><span class="n">native_tool_method_map</span><span class="p">,</span> <span class="n">_import_class</span><span class="p">,</span> <span class="n">native_tool_patch</span><span class="p">)</span>
     <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">ModuleNotFoundError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">"An exception happens when applying auto-tracing to crewai. Exception: </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
 
@@ -398,7 +408,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../',
-      VERSION:'3.17.2',
+      VERSION:'3.18.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

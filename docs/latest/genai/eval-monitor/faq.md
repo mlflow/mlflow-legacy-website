@@ -132,6 +132,12 @@ with mlflow.start_run(run_name="My Evaluation Run") as run:
     mlflow.genai.evaluate(...)
 ```
 
+## Can I evaluate a remotely hosted agent?[​](#can-i-evaluate-a-remotely-hosted-agent "Direct link to Can I evaluate a remotely hosted agent?")
+
+Yes. Use a traced HTTP `predict_fn` to call your endpoint and [distributed tracing](/docs/latest/genai/tracing/app-instrumentation/distributed-tracing.md) to connect the remote agent's spans to each evaluation task. The service must restore the incoming trace context before invoking the instrumented agent, and both processes must use the same tracking server and experiment. See the example in [Evaluating Agents](/docs/latest/genai/eval-monitor/running-evaluation/agents.md).
+
+Response-quality scorers can evaluate the returned answer without remote spans. Scorers that inspect tool calls need those spans in the evaluation trace. The client and service export spans independently, so an HTTP response does not guarantee that every span is available when scoring begins. If spans arrive after scoring, [evaluate the collected trace](/docs/latest/genai/eval-monitor/running-evaluation/traces.md) again after its remote spans have arrived.
+
 ## How do I use Databricks Model Serving endpoints as the predict function?[​](#how-do-i-use-databricks-model-serving-endpoints-as-the-predict-function "Direct link to How do I use Databricks Model Serving endpoints as the predict function?")
 
 MLflow provides [`mlflow.genai.to_predict_fn()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.to_predict_fn), which wraps a Databricks Model Serving endpoint so it behaves like a predict function compatible with the evaluation framework.

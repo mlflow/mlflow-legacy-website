@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 3.17.2 documentation" href="../../../index.html"/>
+    <link rel="top" title="MLflow 3.18.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -148,7 +148,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.2</span>
+  <span class="header-link version">3.18.0</span>
 </div>
   </nav>
   <page>
@@ -249,10 +249,11 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">posixpath</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">AsyncGenerator</span><span class="p">,</span> <span class="n">Iterator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">AsyncGenerator</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Literal</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">urllib.parse</span><span class="w"> </span><span class="kn">import</span> <span class="n">urlparse</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">HTTPException</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.environment_variables</span><span class="w"> </span><span class="kn">import</span> <span class="n">MLFLOW_GATEWAY_URI</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
@@ -609,6 +610,16 @@
     <span class="k">return</span> <span class="sa">f</span><span class="s2">"data: </span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">"</span>
 
 
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">to_sse_stream</span><span class="p">(</span><span class="n">stream</span><span class="p">:</span> <span class="n">AsyncGenerator</span><span class="p">[</span><span class="n">BaseModel</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">AsyncGenerator</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Serialize a stream of response chunks as SSE events, terminated by ``data: [DONE]`` as</span>
+<span class="sd">    OpenAI-compatible clients expect.</span>
+<span class="sd">    """</span>
+    <span class="k">async</span> <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">stream</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">to_sse_chunk</span><span class="p">(</span><span class="n">chunk</span><span class="o">.</span><span class="n">model_dump_json</span><span class="p">())</span>
+    <span class="k">yield</span> <span class="n">to_sse_chunk</span><span class="p">(</span><span class="s2">"[DONE]"</span><span class="p">)</span>
+
+
 <span class="k">def</span><span class="w"> </span><span class="nf">to_sse_error_chunk</span><span class="p">(</span><span class="n">error</span><span class="p">:</span> <span class="ne">Exception</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""Create an SSE-formatted error chunk."""</span>
     <span class="n">error_data</span> <span class="o">=</span> <span class="p">{</span>
@@ -620,9 +631,41 @@
     <span class="k">return</span> <span class="n">to_sse_chunk</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">error_data</span><span class="p">))</span>
 
 
+<span class="c1"># Anthropic error types by HTTP status: https://docs.claude.com/en/api/errors</span>
+<span class="n">_ANTHROPIC_ERROR_TYPES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">400</span><span class="p">:</span> <span class="s2">"invalid_request_error"</span><span class="p">,</span>
+    <span class="mi">401</span><span class="p">:</span> <span class="s2">"authentication_error"</span><span class="p">,</span>
+    <span class="mi">403</span><span class="p">:</span> <span class="s2">"permission_error"</span><span class="p">,</span>
+    <span class="mi">404</span><span class="p">:</span> <span class="s2">"not_found_error"</span><span class="p">,</span>
+    <span class="mi">413</span><span class="p">:</span> <span class="s2">"request_too_large"</span><span class="p">,</span>
+    <span class="mi">429</span><span class="p">:</span> <span class="s2">"rate_limit_error"</span><span class="p">,</span>
+    <span class="mi">500</span><span class="p">:</span> <span class="s2">"api_error"</span><span class="p">,</span>
+    <span class="mi">529</span><span class="p">:</span> <span class="s2">"overloaded_error"</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">to_anthropic_sse_error_chunk</span><span class="p">(</span><span class="n">error</span><span class="p">:</span> <span class="ne">Exception</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Create an SSE-formatted error chunk in Anthropic's shape.</span>
+
+<span class="sd">    Anthropic clients dispatch on the SSE event name and drop an event they cannot name, so a</span>
+<span class="sd">    streaming error only reaches them as a named ``error`` event.</span>
+<span class="sd">    """</span>
+    <span class="n">status_code</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="s2">"status_code"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">detail</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="s2">"detail"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">error_data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"error"</span><span class="p">,</span>
+        <span class="s2">"error"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">"type"</span><span class="p">:</span> <span class="n">_ANTHROPIC_ERROR_TYPES</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">status_code</span><span class="p">,</span> <span class="s2">"api_error"</span><span class="p">),</span>
+            <span class="s2">"message"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span> <span class="k">if</span> <span class="n">detail</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">detail</span><span class="p">),</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">"event: error</span><span class="se">\n</span><span class="si">{</span><span class="n">to_sse_chunk</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">error_data</span><span class="p">))</span><span class="si">}</span><span class="s2">"</span>
+
+
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">safe_stream</span><span class="p">(</span>
     <span class="n">stream</span><span class="p">:</span> <span class="n">AsyncGenerator</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
     <span class="n">as_bytes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">message_format</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"anthropic"</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncGenerator</span><span class="p">[</span><span class="nb">bytes</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Wrap a streaming generator with exception handling.</span>
@@ -636,6 +679,9 @@
 <span class="sd">        stream: The async generator to wrap.</span>
 <span class="sd">        as_bytes: If True, encode the error chunk as bytes. Use this when the</span>
 <span class="sd">            stream yields bytes (e.g., passthrough endpoints).</span>
+<span class="sd">        message_format: Wire format the stream speaks. ``"anthropic"`` emits the error as a</span>
+<span class="sd">            named ``error`` event, the only form Anthropic clients surface. ``None`` emits the</span>
+<span class="sd">            OpenAI-shaped chunk, which OpenAI and Gemini clients read.</span>
 
 <span class="sd">    Yields:</span>
 <span class="sd">        Chunks from the stream, or an error chunk if an exception occurs.</span>
@@ -645,7 +691,11 @@
             <span class="k">yield</span> <span class="n">chunk</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="n">_logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">"Error during streaming response"</span><span class="p">)</span>
-        <span class="n">error_chunk</span> <span class="o">=</span> <span class="n">to_sse_error_chunk</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="n">error_chunk</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">to_anthropic_sse_error_chunk</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">message_format</span> <span class="o">==</span> <span class="s2">"anthropic"</span>
+            <span class="k">else</span> <span class="n">to_sse_error_chunk</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="p">)</span>
         <span class="k">yield</span> <span class="n">error_chunk</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">)</span> <span class="k">if</span> <span class="n">as_bytes</span> <span class="k">else</span> <span class="n">error_chunk</span>
 
 
@@ -680,7 +730,7 @@
 
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="n">AsyncGenerator</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">StreamingResponse</span><span class="p">(</span>
-            <span class="p">(</span><span class="n">to_sse_chunk</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">model_dump_json</span><span class="p">())</span> <span class="k">async</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">resp</span><span class="p">),</span>
+            <span class="n">to_sse_stream</span><span class="p">(</span><span class="n">resp</span><span class="p">),</span>
             <span class="n">media_type</span><span class="o">=</span><span class="s2">"text/event-stream"</span><span class="p">,</span>
         <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
@@ -735,7 +785,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'3.17.2',
+      VERSION:'3.18.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

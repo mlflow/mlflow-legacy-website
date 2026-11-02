@@ -44,10 +44,11 @@ note
 
 `DENY` is available from MLflow 3.17. Earlier releases have no explicit-deny level; the only way to withhold access is to leave the grant out.
 
-Two limits are worth knowing before relying on it:
+Three limits are worth knowing before relying on it:
 
 * A **workspace administrator is not restrictable**. A `(workspace, *, MANAGE)` grant short-circuits resolution to `MANAGE` before `DENY` is considered, so it cannot be excepted this way. Remove the workspace grant instead.
 * `DENY` applies at the tier it is granted on. It does not cascade from a parent to an unrelated resource type; see [Permission resolution](#permission-resolution) for how a grant on one tier overrides another.
+* **Registered model and prompt grants are keyed by name.** Renaming a model or prompt does not rewrite grants that admin-created roles hold on it by exact name. To keep a `DENY` on the old name from silently lifting, and a grant on the new name from silently applying, the server rejects a rename while any role in the workspace has an exact-name grant (of any permission) on the old or new name, for every caller including admins. An admin must update or remove those role grants first, then retry the rename and re-add the grants under the new name if they should still apply. Only platform and workspace administrators see in the error which role grants blocked the rename. Wildcard (`*`) grants and direct grants on the old name (see [Direct grants without a role](#direct-grants-without-a-role)) do not block a rename; direct grants follow the model to its new name. The server also rejects a rename onto a name that has no model or prompt yet while any user has a direct grant on that name, since that grant would start applying to the renamed model. An admin must revoke those direct grants first. Only platform and workspace administrators see in the error which users hold them.
 
 ### Sub-resource tiers[​](#sub-resource-tiers "Direct link to Sub-resource tiers")
 

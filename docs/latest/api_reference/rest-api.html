@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="MLflow 3.17.2 documentation" href="index.html"/>
+    <link rel="top" title="MLflow 3.18.0 documentation" href="index.html"/>
         <link rel="prev" title="Java API" href="/java_api/index.html"/> 
 
   
@@ -147,7 +147,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.2</span>
+  <span class="header-link version">3.18.0</span>
 </div>
   </nav>
   <page>
@@ -8205,7 +8205,7 @@ All storage backends are guaranteed to support alias name values up to 256 bytes
 </tbody>
 </table>
 <p>Export trace spans to MLflow via the OpenTelemetry protocol.</p>
-<p>This endpoint accepts OTLP/HTTP protobuf trace export requests.
+<p>This endpoint accepts OTLP/HTTP protobuf and JSON trace export requests.
 Protobuf format reference: <a class="reference external" href="https://opentelemetry.io/docs/specs/otlp/#binary-protobuf-encoding">https://opentelemetry.io/docs/specs/otlp/#binary-protobuf-encoding</a></p>
 <p>Note: All spans in the batch are persisted in a single log_spans() call. If that
 call fails, the entire batch is rejected (all-or-nothing). Partial-success is not
@@ -8841,6 +8841,10 @@ than a <code class="docutils literal notranslate"><span class="pre">&quot;stream
 </tr>
 <tr class="row-odd"><td><p>last_updated_timestamp</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">INTEGER</span></code> OR <code class="docutils literal notranslate"><span class="pre">NULL</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>allowed_actions</p></td>
+<td><p>An array of <code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
 <td></td>
 </tr>
 </tbody>
@@ -10752,6 +10756,10 @@ list, or a list of tool definitions.</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">INTEGER</span></code> OR <code class="docutils literal notranslate"><span class="pre">NULL</span></code></p></td>
 <td></td>
 </tr>
+<tr class="row-even"><td><p>allowed_actions</p></td>
+<td><p>An array of <code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
+<td></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -10878,6 +10886,10 @@ list, or a list of tool definitions.</p></td>
 </tr>
 <tr class="row-odd"><td><p>last_updated_timestamp</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">INTEGER</span></code> OR <code class="docutils literal notranslate"><span class="pre">NULL</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>allowed_actions</p></td>
+<td><p>An array of <code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
 <td></td>
 </tr>
 </tbody>
@@ -17543,6 +17555,10 @@ list, or a list of tool definitions.</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">INTEGER</span></code> OR <code class="docutils literal notranslate"><span class="pre">NULL</span></code></p></td>
 <td></td>
 </tr>
+<tr class="row-even"><td><p>allowed_actions</p></td>
+<td><p>An array of <code class="docutils literal notranslate"><span class="pre">STRING</span></code></p></td>
+<td></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -19010,7 +19026,7 @@ contrast with when the full trace is logged only upon its completion.</p></td>
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'./',
-      VERSION:'3.17.2',
+      VERSION:'3.18.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

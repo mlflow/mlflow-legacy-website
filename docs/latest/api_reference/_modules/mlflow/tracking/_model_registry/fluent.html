@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="MLflow 3.17.2 documentation" href="../../../../index.html"/>
+    <link rel="top" title="MLflow 3.18.0 documentation" href="../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../index.html"/> 
 
   
@@ -148,7 +148,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.2</span>
+  <span class="header-link version">3.18.0</span>
 </div>
   </nav>
   <page>
@@ -264,6 +264,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.prompt.registry_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">require_prompt_registry</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.protos.databricks_pb2</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">ALREADY_EXISTS</span><span class="p">,</span>
+    <span class="n">INVALID_PARAMETER_VALUE</span><span class="p">,</span>
     <span class="n">NOT_FOUND</span><span class="p">,</span>
     <span class="n">RESOURCE_ALREADY_EXISTS</span><span class="p">,</span>
     <span class="n">RESOURCE_DOES_NOT_EXIST</span><span class="p">,</span>
@@ -577,6 +578,18 @@
                 <span class="n">model_version</span><span class="o">=</span><span class="n">create_version_response</span><span class="o">.</span><span class="n">version</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="c1"># INVALID_PARAMETER_VALUE means the model can't be served as logged (for example, an</span>
+            <span class="c1"># unsupported architecture), so retrying at deploy time won't help.</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">MlflowException</span><span class="p">)</span> <span class="ow">and</span> <span class="n">e</span><span class="o">.</span><span class="n">error_code</span> <span class="o">==</span> <span class="n">ErrorCode</span><span class="o">.</span><span class="n">Name</span><span class="p">(</span>
+                <span class="n">INVALID_PARAMETER_VALUE</span>
+            <span class="p">):</span>
+                <span class="n">reason</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="s2">"json"</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"message"</span><span class="p">)</span> <span class="ow">or</span> <span class="n">e</span><span class="o">.</span><span class="n">message</span>
+                <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">"Model '</span><span class="si">{</span><span class="n">create_version_response</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">' version "</span>
+                    <span class="sa">f</span><span class="s2">"'</span><span class="si">{</span><span class="n">create_version_response</span><span class="o">.</span><span class="n">version</span><span class="si">}</span><span class="s2">' was registered, but Databricks Model "</span>
+                    <span class="sa">f</span><span class="s2">"Serving rejected it: </span><span class="si">{</span><span class="n">reason</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+                    <span class="n">error_code</span><span class="o">=</span><span class="n">INVALID_PARAMETER_VALUE</span><span class="p">,</span>
+                <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
             <span class="n">eprint</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">"Failed to stage model for Databricks Model Serving: </span><span class="si">{</span><span class="n">e</span><span class="si">!s}</span><span class="s2">. "</span>
                 <span class="s2">"The model was registered successfully and is available for serving, but may take "</span>
@@ -1232,7 +1245,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../../',
-      VERSION:'3.17.2',
+      VERSION:'3.18.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

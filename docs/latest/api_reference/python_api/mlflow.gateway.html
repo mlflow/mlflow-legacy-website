@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MLflow 3.17.2 documentation" href="../index.html"/>
+    <link rel="top" title="MLflow 3.18.0 documentation" href="../index.html"/>
         <link rel="up" title="Python API" href="index.html"/>
         <link rel="next" title="mlflow.gemini" href="/mlflow.gemini.html"/>
         <link rel="prev" title="mlflow.environment_variables" href="/mlflow.environment_variables.html"/> 
@@ -149,7 +149,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.2</span>
+  <span class="header-link version">3.18.0</span>
 </div>
   </nav>
   <page>
@@ -445,7 +445,7 @@ route definition including route name, model name, API keys, etc.</p>
 <dd><p>Enables use of field aliases in a configuration model for backwards compatibility</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mlflow.gateway.config.AliasedConfigModel.model_config">
-<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="pre">:</span> <span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">{'extra':</span> <span class="pre">'ignore',</span> <span class="pre">'populate_by_name':</span> <span class="pre">True,</span> <span class="pre">'validate_by_alias':</span> <span class="pre">True,</span> <span class="pre">'validate_by_name':</span> <span class="pre">True}</span></em><a class="headerlink" href="#mlflow.gateway.config.AliasedConfigModel.model_config" title="Permalink to this definition"> </a></dt>
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="pre">:</span> <span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">{'extra':</span> <span class="pre">'ignore',</span> <span class="pre">'populate_by_name':</span> <span class="pre">True}</span></em><a class="headerlink" href="#mlflow.gateway.config.AliasedConfigModel.model_config" title="Permalink to this definition"> </a></dt>
 <dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
 </dd></dl>
 
@@ -539,7 +539,7 @@ route definition including route name, model name, API keys, etc.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mlflow.gateway.config.EndpointConfig.model_config">
-<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="pre">:</span> <span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">{'extra':</span> <span class="pre">'ignore',</span> <span class="pre">'populate_by_name':</span> <span class="pre">True,</span> <span class="pre">'validate_by_alias':</span> <span class="pre">True,</span> <span class="pre">'validate_by_name':</span> <span class="pre">True}</span></em><a class="headerlink" href="#mlflow.gateway.config.EndpointConfig.model_config" title="Permalink to this definition"> </a></dt>
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="pre">:</span> <span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">{'extra':</span> <span class="pre">'ignore',</span> <span class="pre">'populate_by_name':</span> <span class="pre">True}</span></em><a class="headerlink" href="#mlflow.gateway.config.EndpointConfig.model_config" title="Permalink to this definition"> </a></dt>
 <dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
 </dd></dl>
 
@@ -632,7 +632,7 @@ route definition including route name, model name, API keys, etc.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mlflow.gateway.config.GatewayConfig.model_config">
-<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="pre">:</span> <span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">{'extra':</span> <span class="pre">'ignore',</span> <span class="pre">'populate_by_name':</span> <span class="pre">True,</span> <span class="pre">'validate_by_alias':</span> <span class="pre">True,</span> <span class="pre">'validate_by_name':</span> <span class="pre">True}</span></em><a class="headerlink" href="#mlflow.gateway.config.GatewayConfig.model_config" title="Permalink to this definition"> </a></dt>
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="pre">:</span> <span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">{'extra':</span> <span class="pre">'ignore',</span> <span class="pre">'populate_by_name':</span> <span class="pre">True}</span></em><a class="headerlink" href="#mlflow.gateway.config.GatewayConfig.model_config" title="Permalink to this definition"> </a></dt>
 <dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
 </dd></dl>
 
@@ -696,8 +696,13 @@ route definition including route name, model name, API keys, etc.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="mlflow.gateway.config.GeminiConfig">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.gateway.config.</span></span><span class="sig-name descname"><span class="pre">GeminiConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gemini_api_key</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/gateway/config.html#GeminiConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.gateway.config.GeminiConfig" title="Permalink to this definition"> </a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mlflow.gateway.config.</span></span><span class="sig-name descname"><span class="pre">GeminiConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gemini_api_key</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gemini_api_base</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'https://generativelanguage.googleapis.com/v1beta/models'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/gateway/config.html#GeminiConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.gateway.config.GeminiConfig" title="Permalink to this definition"> </a></dt>
 <dd><dl class="py attribute">
+<dt class="sig sig-object py" id="mlflow.gateway.config.GeminiConfig.gemini_api_base">
+<span class="sig-name descname"><span class="pre">gemini_api_base</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.gateway.config.GeminiConfig.gemini_api_base" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="mlflow.gateway.config.GeminiConfig.gemini_api_key">
 <span class="sig-name descname"><span class="pre">gemini_api_key</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mlflow.gateway.config.GeminiConfig.gemini_api_key" title="Permalink to this definition"> </a></dt>
 <dd></dd></dl>
@@ -707,6 +712,11 @@ route definition including route name, model name, API keys, etc.</p>
 <span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="pre">:</span> <span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">{'extra':</span> <span class="pre">'ignore'}</span></em><a class="headerlink" href="#mlflow.gateway.config.GeminiConfig.model_config" title="Permalink to this definition"> </a></dt>
 <dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
 </dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.gateway.config.GeminiConfig.validate_gemini_api_base">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">validate_gemini_api_base</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/gateway/config.html#GeminiConfig.validate_gemini_api_base"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.gateway.config.GeminiConfig.validate_gemini_api_base" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlflow.gateway.config.GeminiConfig.validate_gemini_api_key">
@@ -1316,6 +1326,11 @@ provider slug whose credentials are not stored in Portkey.</p></li>
 <em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">validate_vertex_anthropic_betas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/gateway/config.html#VertexAIConfig.validate_vertex_anthropic_betas"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.gateway.config.VertexAIConfig.validate_vertex_anthropic_betas" title="Permalink to this definition"> </a></dt>
 <dd></dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="mlflow.gateway.config.VertexAIConfig.validate_vertex_location">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">validate_vertex_location</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlflow/gateway/config.html#VertexAIConfig.validate_vertex_location"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlflow.gateway.config.VertexAIConfig.validate_vertex_location" title="Permalink to this definition"> </a></dt>
+<dd></dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mlflow.gateway.config.VertexAIConfig.vertex_anthropic_betas">
 <span class="sig-name descname"><span class="pre">vertex_anthropic_betas</span></span><em class="property"><span class="pre">:</span> <span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span> <span class="p"><span class="pre">|</span></span> <span class="pre">None</span></em><a class="headerlink" href="#mlflow.gateway.config.VertexAIConfig.vertex_anthropic_betas" title="Permalink to this definition"> </a></dt>
@@ -1378,7 +1393,7 @@ provider slug whose credentials are not stored in Portkey.</p></li>
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../',
-      VERSION:'3.17.2',
+      VERSION:'3.18.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

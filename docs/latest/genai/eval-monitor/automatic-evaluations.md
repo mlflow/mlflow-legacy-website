@@ -35,7 +35,9 @@ These examples show how to set up LLM judges that automatically evaluate traces 
 
 note
 
-* Automatic evaluation only supports [LLM judges](/docs/latest/genai/eval-monitor/scorers.md#llms-as-judges). Code-based scorers (using the [`@scorer` decorator](/docs/latest/genai/eval-monitor/scorers/custom.md) or [`Scorer` class](/docs/latest/genai/eval-monitor/scorers/custom.md#define-scorers-with-the-scorer-class)) are not supported. Use [built-in judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md) or create custom judges with [`make_judge()`](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges/create-custom-judge.md).
+* Automatic evaluation supports [LLM judges](/docs/latest/genai/eval-monitor/scorers.md#llms-as-judges). Use [built-in judges](/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined.md) or create custom judges with [`make_judge()`](/docs/latest/genai/eval-monitor/scorers/llm-judge/custom-judges/create-custom-judge.md). Code-based scorers (using the [`@scorer` decorator](/docs/latest/genai/eval-monitor/scorers/custom.md) or [`Scorer` class](/docs/latest/genai/eval-monitor/scorers/custom.md#define-scorers-with-the-scorer-class)) are not supported.
+  <!-- -->
+  * The exception is a self-hosted server that its administrator has set up to [run code-based scorers in job containers](/docs/latest/self-hosting/job-containers.md) (experimental). It runs `@scorer` scorers in containers that have no network access, and you start them [the same way as LLM judges](/docs/latest/self-hosting/job-containers.md#turn-on-automatic-evaluation-for-a-code-based-scorer). The `Scorer` class is still not supported.
 * When a judge is created or enabled, it evaluates traces and sessions that are **at most one hour old**. Updating a judge's configuration does not trigger re-evaluation of previously assessed traces.
 
 - UI
@@ -76,7 +78,7 @@ note
 
    ![Edit LLM judge button](/docs/latest/assets/images/edit-llm-judge-button-20eae3b628d868a4c3f014c5e478701f.png)
 
-For more details about the APIs used in this example, see [`mlflow.genai.scorers.Scorer.start()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Scorer.start), [`mlflow.genai.scorers.Scorer.update()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Scorer.update), and [`mlflow.genai.scorers.Scorer.stop()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.scorers.Scorer.stop).
+For more details about the APIs used in this example, see [`mlflow.genai.Scorer.start()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.Scorer.start), [`mlflow.genai.Scorer.update()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.Scorer.update), and [`mlflow.genai.Scorer.stop()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.Scorer.stop).
 
 **1. Specify the experiment for automatic evaluation**
 

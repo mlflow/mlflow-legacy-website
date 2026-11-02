@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="MLflow 3.17.2 documentation" href="../../index.html"/>
+    <link rel="top" title="MLflow 3.18.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -148,7 +148,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.2</span>
+  <span class="header-link version">3.18.0</span>
 </div>
   </nav>
   <page>
@@ -275,7 +275,6 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">mlflow</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyfunc</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.environment_variables</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">MLFLOW_ALLOW_PICKLE_DESERIALIZATION</span><span class="p">,</span>
     <span class="n">MLFLOW_DEFAULT_PREDICTION_DEVICE</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
@@ -291,7 +290,6 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.autologging_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">autologging_integration</span><span class="p">,</span> <span class="n">safe_patch</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.checkpoint_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">download_checkpoint_artifact</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.databricks_utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">is_in_databricks_model_serving_environment</span><span class="p">,</span>
     <span class="n">is_in_databricks_runtime</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.docstring_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">LOG_MODEL_PARAM_DOCS</span><span class="p">,</span> <span class="n">format_docstring</span>
@@ -314,7 +312,9 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.model_utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">_add_code_from_conf_to_system_path</span><span class="p">,</span>
     <span class="n">_copy_extra_files</span><span class="p">,</span>
+    <span class="n">_deprecated_pickle_variable_hint</span><span class="p">,</span>
     <span class="n">_get_flavor_configuration</span><span class="p">,</span>
+    <span class="n">_is_pickle_loading_allowed</span><span class="p">,</span>
     <span class="n">_validate_and_copy_code_paths</span><span class="p">,</span>
     <span class="n">_validate_and_prepare_target_save_path</span><span class="p">,</span>
 <span class="p">)</span>
@@ -946,22 +946,14 @@
     <span class="n">_PythonEnv</span><span class="o">.</span><span class="n">current</span><span class="p">()</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">_PYTHON_ENV_FILE_NAME</span><span class="p">))</span></div>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_is_pickle_deserialization_allowed</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-    <span class="k">return</span> <span class="p">(</span>
-        <span class="n">MLFLOW_ALLOW_PICKLE_DESERIALIZATION</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-        <span class="ow">or</span> <span class="n">is_in_databricks_runtime</span><span class="p">()</span>
-        <span class="ow">or</span> <span class="n">is_in_databricks_model_serving_environment</span><span class="p">()</span>
-    <span class="p">)</span>
-
-
 <span class="k">def</span><span class="w"> </span><span class="nf">_load_by_pickle_check</span><span class="p">(</span><span class="n">is_loading_state_dict</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">_is_pickle_deserialization_allowed</span><span class="p">():</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">_is_pickle_loading_allowed</span><span class="p">():</span>
         <span class="k">if</span> <span class="n">is_loading_state_dict</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
                 <span class="s2">"Deserializing model using pickle is disallowed, but this state dict is saved "</span>
                 <span class="s2">"in pickle format. You can set environment variable "</span>
-                <span class="s2">"'MLFLOW_ALLOW_PICKLE_DESERIALIZATION' to 'true' to allow deserializing state "</span>
-                <span class="s2">"dict using pickle."</span>
+                <span class="s2">"'MLFLOW_ALLOW_MODEL_CODE_EXECUTION' to 'true' to allow deserializing state "</span>
+                <span class="s2">"dict using pickle."</span> <span class="o">+</span> <span class="n">_deprecated_pickle_variable_hint</span><span class="p">()</span>
             <span class="p">)</span>
         <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
             <span class="s2">"Deserializing model using pickle is disallowed, but this model is saved "</span>
@@ -969,8 +961,8 @@
             <span class="s2">"serialization_format='pt2' like "</span>
             <span class="s2">"`mlflow.pytorch.save_model(model, path, serialization_format='pt2')`, "</span>
             <span class="s2">"or you can set environment variable "</span>
-            <span class="s2">"'MLFLOW_ALLOW_PICKLE_DESERIALIZATION' to 'true' to allow deserializing model "</span>
-            <span class="s2">"using pickle."</span>
+            <span class="s2">"'MLFLOW_ALLOW_MODEL_CODE_EXECUTION' to 'true' to allow deserializing model "</span>
+            <span class="s2">"using pickle."</span> <span class="o">+</span> <span class="n">_deprecated_pickle_variable_hint</span><span class="p">()</span>
         <span class="p">)</span>
 
 
@@ -1097,8 +1089,8 @@
             <span class="s2">"Deserializing model using pickle is disallowed, and the installed `torch` "</span>
             <span class="sa">f</span><span class="s2">"version (</span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">__version__</span><span class="si">}</span><span class="s2">) cannot safely verify that a model saved with "</span>
             <span class="s2">"serialization_format='pt2' is free of pickle payloads. Upgrade to `torch` &gt;= 2.10, "</span>
-            <span class="s2">"or set environment variable 'MLFLOW_ALLOW_PICKLE_DESERIALIZATION' to 'true' to "</span>
-            <span class="s2">"allow deserializing the model using pickle."</span>
+            <span class="s2">"or set environment variable 'MLFLOW_ALLOW_MODEL_CODE_EXECUTION' to 'true' to "</span>
+            <span class="s2">"allow deserializing the model using pickle."</span> <span class="o">+</span> <span class="n">_deprecated_pickle_variable_hint</span><span class="p">()</span>
         <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_violation</span><span class="p">(</span><span class="n">record</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MlflowException</span><span class="p">:</span>
@@ -1108,8 +1100,8 @@
             <span class="s2">"models saved by `mlflow.pytorch.save_model(..., serialization_format='pt2')` "</span>
             <span class="s2">"whose weights, constants and example inputs are tensors or primitive containers "</span>
             <span class="s2">"can be loaded. You can set environment variable "</span>
-            <span class="s2">"'MLFLOW_ALLOW_PICKLE_DESERIALIZATION' to 'true' to allow deserializing the model "</span>
-            <span class="s2">"using pickle."</span>
+            <span class="s2">"'MLFLOW_ALLOW_MODEL_CODE_EXECUTION' to 'true' to allow deserializing the model "</span>
+            <span class="s2">"using pickle."</span> <span class="o">+</span> <span class="n">_deprecated_pickle_variable_hint</span><span class="p">()</span>
         <span class="p">)</span>
 
     <span class="n">user_safe_globals</span> <span class="o">=</span> <span class="n">_user_registered_safe_globals</span><span class="p">(</span><span class="n">torch</span><span class="p">)</span>
@@ -1184,6 +1176,10 @@
         <span class="n">model_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">"model.pth"</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">model_path</span><span class="p">):</span>
             <span class="n">is_exported_model</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="c1"># The pickle module name below is read from the model artifact and imported, so it</span>
+            <span class="c1"># must stay behind the pickle-deserialization guard: a crafted artifact could otherwise</span>
+            <span class="c1"># name a module shipped in its own `code` directory and run it before `torch.load`.</span>
+            <span class="n">_load_by_pickle_check</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
             <span class="n">pickle_module_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">_PICKLE_MODULE_INFO_FILE_NAME</span><span class="p">)</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">pickle_module_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                 <span class="n">pickle_module_name</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
@@ -1220,7 +1216,7 @@
                     <span class="s2">"The model is exported by `torch.export` API. To load the model, "</span>
                     <span class="s2">"`torch` package version must be &gt;= 2.4"</span>
                 <span class="p">)</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">_is_pickle_deserialization_allowed</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">_is_pickle_loading_allowed</span><span class="p">():</span>
                 <span class="n">_validate_pt2_archive_is_pickle_free</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span>
             <span class="n">pytorch_model</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">export</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">model_path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">module</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
@@ -1318,6 +1314,11 @@
 
     <span class="n">local_model_path</span> <span class="o">=</span> <span class="n">_download_artifact_from_uri</span><span class="p">(</span><span class="n">artifact_uri</span><span class="o">=</span><span class="n">model_uri</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="n">dst_path</span><span class="p">)</span>
     <span class="n">pytorch_conf</span> <span class="o">=</span> <span class="n">_get_flavor_configuration</span><span class="p">(</span><span class="n">model_path</span><span class="o">=</span><span class="n">local_model_path</span><span class="p">,</span> <span class="n">flavor_name</span><span class="o">=</span><span class="n">FLAVOR_NAME</span><span class="p">)</span>
+    <span class="n">torch_model_artifacts_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">local_model_path</span><span class="p">,</span> <span class="n">pytorch_conf</span><span class="p">[</span><span class="s2">"model_data"</span><span class="p">])</span>
+    <span class="c1"># Refuse a pickle-format model before its `code` directory is prepended to `sys.path`, so a</span>
+    <span class="c1"># rejected load leaves nothing from the artifact importable for the rest of the process.</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">torch_model_artifacts_path</span><span class="p">,</span> <span class="s2">"model.pth"</span><span class="p">)):</span>
+        <span class="n">_load_by_pickle_check</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">_add_code_from_conf_to_system_path</span><span class="p">(</span><span class="n">local_model_path</span><span class="p">,</span> <span class="n">pytorch_conf</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">__version__</span> <span class="o">!=</span> <span class="n">pytorch_conf</span><span class="p">[</span><span class="s2">"pytorch_version"</span><span class="p">]:</span>
@@ -1326,7 +1327,6 @@
             <span class="n">pytorch_conf</span><span class="p">[</span><span class="s2">"pytorch_version"</span><span class="p">],</span>
             <span class="n">torch</span><span class="o">.</span><span class="n">__version__</span><span class="p">,</span>
         <span class="p">)</span>
-    <span class="n">torch_model_artifacts_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">local_model_path</span><span class="p">,</span> <span class="n">pytorch_conf</span><span class="p">[</span><span class="s2">"model_data"</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">_load_model</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">torch_model_artifacts_path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
@@ -1895,7 +1895,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../',
-      VERSION:'3.17.2',
+      VERSION:'3.18.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

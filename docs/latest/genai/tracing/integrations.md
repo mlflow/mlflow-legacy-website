@@ -141,6 +141,14 @@ Click any integration below to get started with detailed setup instructions.
 
 [Claude Agent SDK (TS)](/docs/latest/genai/tracing/integrations/listing/claude_agent_sdk_typescript.md)
 
+[![Cloudflare Agents Logo](/docs/latest/images/logos/cloudflare-logo.svg)](/docs/latest/genai/tracing/integrations/listing/cloudflare-agents.md)
+
+[Cloudflare Agents](/docs/latest/genai/tracing/integrations/listing/cloudflare-agents.md)
+
+[![Flue Logo](/docs/latest/images/logos/flue-logo.svg)](/docs/latest/genai/tracing/integrations/listing/flue.md)
+
+[Flue](/docs/latest/genai/tracing/integrations/listing/flue.md)
+
 ## Agent Frameworks (Java)[​](#agent-frameworks-java "Direct link to Agent Frameworks (Java)")
 
 [![Spring AI Logo](/docs/latest/images/logos/spring-ai-logo.png)](/docs/latest/genai/tracing/integrations/listing/spring-ai.md)

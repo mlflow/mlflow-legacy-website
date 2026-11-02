@@ -226,7 +226,7 @@ def filter_retrieval_output(span: Span):
 
     """Filter out the document contents from the retriever span output and only keep the document ids."""
 
-    if span.span_type == SpanType.RETRIEVAL:
+    if span.span_type == SpanType.RETRIEVER:
 
         documents = span.outputs.get("documents")
 

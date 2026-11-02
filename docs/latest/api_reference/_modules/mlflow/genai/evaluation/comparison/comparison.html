@@ -1,0 +1,571 @@
+
+
+<!DOCTYPE html>
+<!-- source: docs/source/_modules/mlflow/genai/evaluation/comparison/comparison -->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mlflow.genai.evaluation.comparison.comparison</title>
+  
+   
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="canonical" href="https://mlflow.org/docs/latest/_modules/mlflow/genai/evaluation/comparison/comparison.html">
+  
+  
+    <link rel="shortcut icon" href="../../../../../_static/favicon.ico"/>
+  
+
+  
+
+  
+    
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer',"GTM-N6WMTTJ");</script>
+        <!-- End Google Tag Manager -->
+    
+  
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16857946923"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-16857946923');
+  </script>
+  <!-- Eng gtag -->
+
+  
+
+  
+  <meta name="docsearch:docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_tag" content="default" data-rh="true">
+  <meta name="docusaurus_version" content="current" data-rh="true">
+  <meta name="docsearch:version" content="current" data-rh="true">
+  <meta name="docusaurus_locale" content="en" data-rh="true">
+  <meta name="docsearch:language" content="en" data-rh="true">
+
+  
+  
+    
+
+  
+
+  
+  
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600" rel="stylesheet">
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/css/custom.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/css/cards.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/css/grids.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/css/mobile.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/css/simple-cards.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/css/tabs.css" type="text/css" />
+    
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="MLflow 3.18.0 documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+<script type="text/javascript" src="../../../../../_static/documentation_options.js"></script>
+<script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+<script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+<script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+<script type="text/javascript" src="../../../../../_static/tabs.js"></script>
+<script type="text/javascript" src="../../../../../_static/languagesections.js"></script>
+<script type="text/javascript" src="../../../../../_static/runllm.js"></script>
+
+<body class="wy-body-for-nav" role="document">
+  
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6WMTTJ"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  
+  <nav class="wy-nav-top header" role="navigation" aria-label="top navigation">
+    <div class="header-container">
+  <style scoped>
+    .header-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 #0000001a;
+    }
+
+    .logo-container {
+      display: flex;
+      gap: 12px;
+      flex-direction: row;
+      white-space: nowrap;
+      align-items: center;
+      justify-content: center;
+    }
+
+    a:hover {
+      text-decoration: none;
+      color: #0194e2;
+    }
+  </style>
+  <div class="logo-container">
+    <i
+      data-toggle="wy-nav-top"
+      class="wy-nav-top-menu-button db-icon db-icon-menu pull-left"
+    ></i>
+    <a href="../../../../../index.html" class="wy-nav-top-logo">
+      <img
+        src="../../../../../_static/MLflow-logo-final-black.png"
+        alt="MLflow"
+      />
+    </a>
+    <a
+      style="overflow: hidden; text-overflow: ellipsis"
+      class="header-link"
+      href="/docs/latest"
+      >Main Docs</a
+    >
+    <span style="overflow: hidden; text-overflow: ellipsis" class="header-link"
+      >API Documentation</span
+    >
+  </div>
+  <span class="header-link version">3.18.0</span>
+</div>
+  </nav>
+  <page>
+    
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side relative">
+      <div class="wy-side-scroll">
+  <div class="wy-side-nav-search">
+    
+
+    
+
+    
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+    
+  </div>
+
+  <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+    
+      <a href="../../../../../index.html">Home</a>
+    
+
+    
+      
+
+      
+        <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../python_api/index.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../typescript_api/index.html">TypeScript API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../cli.html">Command-Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../auth/python-api.html">MLflow Authentication Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../auth/rest-api.html">MLflow Authentication REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../R-api.html">R API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../java_api/index.html">Java API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../rest-api.html">REST API</a></li>
+</ul>
+
+      
+    
+  </div>
+
+  <div role="contentinfo">
+    
+
+    <p>
+      <a id='feedbacklink' href="https://github.com/mlflow/mlflow/blob/master/CONTRIBUTING.md" target="_blank">Contribute</a>
+    </p>
+  </div>
+</div>
+    </nav>
+
+    <main class="wy-grid-for-nav">
+      <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+        <div class="wy-nav-content">
+          <div class="rst-content">
+            
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Documentation</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+        <li><a href="../../../../index.html">Module code</a> <span class="db-icon db-icon-chevron-right"></span></li>
+    
+    
+      <li>mlflow.genai.evaluation.comparison.comparison</li>
+    
+    
+    <!-- <li class="wy-breadcrumbs-aside">
+      <a href="https://github.com/mlflow/mlflow/blob/master/docs/source/_modules/mlflow/genai/evaluation/comparison/comparison" class="fa fa-github"> Edit on GitHub</a>
+    </li> -->
+    
+  </ul>
+</div>
+            <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+              <div itemprop="articleBody">
+                
+  <h1>Source code for mlflow.genai.evaluation.comparison.comparison</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""Public API of the paired comparison of two GenAI evaluation runs."""</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.evaluation.comparison.entities</span><span class="w"> </span><span class="kn">import</span> <span class="n">ComparisonResult</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.evaluation.comparison.paired_comparison</span><span class="w"> </span><span class="kn">import</span> <span class="n">_compare_paired_values</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.genai.evaluation.comparison.utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">_EvalRow</span><span class="p">,</span>
+    <span class="n">_is_pass_fail</span><span class="p">,</span>
+    <span class="n">_load_eval_rows</span><span class="p">,</span>
+    <span class="n">_log_comparison</span><span class="p">,</span>
+    <span class="n">_mean_feedback_value</span><span class="p">,</span>
+    <span class="n">_pair_rows</span><span class="p">,</span>
+    <span class="n">_warn_unpaired_rows</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.telemetry.events</span><span class="w"> </span><span class="kn">import</span> <span class="n">CompareEvaluationsEvent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.telemetry.track</span><span class="w"> </span><span class="kn">import</span> <span class="n">record_usage_event</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">experimental</span>
+
+<span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="compare_evaluations"><a class="viewcode-back" href="../../../../../python_api/mlflow.genai.html#mlflow.genai.compare_evaluations">[docs]</a><span class="nd">@experimental</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">"3.18.0"</span><span class="p">)</span>
+<span class="nd">@record_usage_event</span><span class="p">(</span><span class="n">CompareEvaluationsEvent</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">compare_evaluations</span><span class="p">(</span>
+    <span class="n">candidate_run_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">baseline_run_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">greater_is_better</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">confidence_level</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.95</span><span class="p">,</span>
+    <span class="n">log_results</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ComparisonResult</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Compare two :py:func:`mlflow.genai.evaluate` runs with paired statistical tests.</span>
+
+<span class="sd">    Rows of the two runs are paired on the evaluation request ID of their traces, falling</span>
+<span class="sd">    back to a stable hash of the row inputs. Rows that cannot be paired are reported in the</span>
+<span class="sd">    result and excluded from the statistics. Several feedbacks of one name on a trace (e.g.</span>
+<span class="sd">    from a scorer returning a list of feedbacks) are averaged per trace, as</span>
+<span class="sd">    :py:func:`mlflow.genai.evaluate` averages them into ``&lt;scorer&gt;/mean``. Each scorer that</span>
+<span class="sd">    produced feedback in both runs is then compared over the paired rows, with the test</span>
+<span class="sd">    chosen from the paired values rather than from the type the scorer returned:</span>
+
+<span class="sd">    - **Every paired value is 0 or 1** (booleans, yes/no ratings, but also ``int(x &gt; 0.5)``</span>
+<span class="sd">      or ``1.0``/``0.0`` scorers): McNemar's test, exact when there are fewer than 25</span>
+<span class="sd">      discordant pairs and chi-square with continuity correction otherwise.</span>
+<span class="sd">    - **Otherwise** (including pass/fail scorers whose per-trace averages are fractional):</span>
+<span class="sd">      Wilcoxon signed-rank test, exact up to 50 non-zero differences and with the normal</span>
+<span class="sd">      approximation above, with the paired t-test reported alongside as ``t_test_p_value``.</span>
+
+<span class="sd">    Every scorer also gets the mean paired difference (candidate - baseline), a bias-corrected</span>
+<span class="sd">    and accelerated (BCa) bootstrap confidence interval of that difference (fixed seed, so</span>
+<span class="sd">    results are reproducible), Cohen's d_z effect size and the numbers of tied and non-zero</span>
+<span class="sd">    differences. A scorer with</span>
+<span class="sd">    fewer than six paired values, the smallest sample at which a result can be significant at</span>
+<span class="sd">    0.05, is reported with status ``"insufficient_pairs"``, and a warning is logged for</span>
+<span class="sd">    scorers with fewer than ten. If no scorer produced valid feedback in both runs, a warning</span>
+<span class="sd">    is logged and the result has no scorers.</span>
+
+<span class="sd">    No correction for multiple comparisons is applied across scorers.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        candidate_run_id: ID of the evaluation run being assessed.</span>
+<span class="sd">        baseline_run_id: ID of the evaluation run to compare against.</span>
+<span class="sd">        greater_is_better: Per-scorer direction overrides, keyed by scorer name. Scorers not</span>
+<span class="sd">            listed are assumed to be better when higher. Only affects</span>
+<span class="sd">            ``ComparisonResult.assert_improved()``; ``diff`` is always</span>
+<span class="sd">            candidate - baseline.</span>
+<span class="sd">        confidence_level: Confidence level of the bootstrap confidence interval.</span>
+<span class="sd">        log_results: If True, log the comparison to the candidate run: metrics</span>
+<span class="sd">            ``compare/&lt;baseline_short_id&gt;/&lt;scorer&gt;/{diff,ci_low,ci_high,p_value,effect_size,</span>
+<span class="sd">            n_paired}`` and one ``compare/&lt;baseline_short_id&gt;.json`` artifact containing the</span>
+<span class="sd">            full baseline run ID. ``&lt;baseline_short_id&gt;`` is the first 8 characters of the</span>
+<span class="sd">            baseline run ID. Off by default, since every compared scorer adds six metrics to</span>
+<span class="sd">            the run.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A :py:class:`ComparisonResult &lt;mlflow.genai.evaluation.comparison.ComparisonResult&gt;`.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        import mlflow</span>
+
+<span class="sd">        baseline = mlflow.genai.evaluate(data=data, predict_fn=agent_v1, scorers=scorers)</span>
+<span class="sd">        candidate = mlflow.genai.evaluate(data=data, predict_fn=agent_v2, scorers=scorers)</span>
+
+<span class="sd">        result = mlflow.genai.compare_evaluations(</span>
+<span class="sd">            candidate_run_id=candidate.run_id,</span>
+<span class="sd">            baseline_run_id=baseline.run_id,</span>
+<span class="sd">        )</span>
+<span class="sd">        print(result.summary())</span>
+<span class="sd">        result.assert_improved(scorers=["correctness"], alpha=0.05)</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">candidate_run_id</span> <span class="o">==</span> <span class="n">baseline_run_id</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+            <span class="s2">"`candidate_run_id` and `baseline_run_id` must be different runs."</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">confidence_level</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">MlflowException</span><span class="o">.</span><span class="n">invalid_parameter_value</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"`confidence_level` must be between 0 and 1, got </span><span class="si">{</span><span class="n">confidence_level</span><span class="si">}</span><span class="s2">."</span>
+        <span class="p">)</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+    <span class="n">greater_is_better</span> <span class="o">=</span> <span class="n">greater_is_better</span> <span class="ow">or</span> <span class="p">{}</span>
+
+    <span class="n">pairing</span> <span class="o">=</span> <span class="n">_pair_rows</span><span class="p">(</span><span class="n">_load_eval_rows</span><span class="p">(</span><span class="n">baseline_run_id</span><span class="p">),</span> <span class="n">_load_eval_rows</span><span class="p">(</span><span class="n">candidate_run_id</span><span class="p">))</span>
+    <span class="n">_warn_unpaired_rows</span><span class="p">(</span><span class="n">pairing</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">scorer_names</span><span class="p">(</span><span class="n">rows</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">_EvalRow</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">name</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">row</span><span class="o">.</span><span class="n">feedbacks</span><span class="p">}</span>
+
+    <span class="n">baseline_scorers</span> <span class="o">=</span> <span class="n">scorer_names</span><span class="p">([</span>
+        <span class="o">*</span><span class="n">pairing</span><span class="o">.</span><span class="n">unpaired_baseline</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">baseline</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pairing</span><span class="o">.</span><span class="n">pairs</span><span class="p">),</span>
+    <span class="p">])</span>
+    <span class="n">candidate_scorers</span> <span class="o">=</span> <span class="n">scorer_names</span><span class="p">([</span>
+        <span class="o">*</span><span class="n">pairing</span><span class="o">.</span><span class="n">unpaired_candidate</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">candidate</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pairing</span><span class="o">.</span><span class="n">pairs</span><span class="p">),</span>
+    <span class="p">])</span>
+    <span class="n">common_scorers</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">baseline_scorers</span> <span class="o">&amp;</span> <span class="n">candidate_scorers</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">common_scorers</span><span class="p">:</span>
+        <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+            <span class="s2">"No scorers were compared because the baseline and candidate runs have no scorer "</span>
+            <span class="s2">"with valid feedback in common. Scorers with valid feedback in the baseline run: "</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="n">baseline_scorers</span><span class="p">)</span><span class="si">}</span><span class="s2">. Scorers with valid feedback in the candidate run: "</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="n">candidate_scorers</span><span class="p">)</span><span class="si">}</span><span class="s2">."</span>
+        <span class="p">)</span>
+
+    <span class="n">paired_rows</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">"baseline_trace_id"</span><span class="p">:</span> <span class="n">pair</span><span class="o">.</span><span class="n">baseline</span><span class="o">.</span><span class="n">trace_id</span><span class="p">,</span>
+            <span class="s2">"candidate_trace_id"</span><span class="p">:</span> <span class="n">pair</span><span class="o">.</span><span class="n">candidate</span><span class="o">.</span><span class="n">trace_id</span><span class="p">,</span>
+            <span class="s2">"paired_on"</span><span class="p">:</span> <span class="n">pair</span><span class="o">.</span><span class="n">paired_on</span><span class="p">,</span>
+            <span class="s2">"scores"</span><span class="p">:</span> <span class="p">{},</span>
+        <span class="p">}</span>
+        <span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="n">pairing</span><span class="o">.</span><span class="n">pairs</span>
+    <span class="p">]</span>
+    <span class="n">comparisons</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">common_scorers</span><span class="p">:</span>
+        <span class="n">baseline_values</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">candidate_values</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">pass_fail</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">for</span> <span class="n">pair</span><span class="p">,</span> <span class="n">paired_row</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">pairing</span><span class="o">.</span><span class="n">pairs</span><span class="p">,</span> <span class="n">paired_rows</span><span class="p">):</span>
+            <span class="n">baseline_feedbacks</span> <span class="o">=</span> <span class="n">pair</span><span class="o">.</span><span class="n">baseline</span><span class="o">.</span><span class="n">feedbacks</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="p">[])</span>
+            <span class="n">candidate_feedbacks</span> <span class="o">=</span> <span class="n">pair</span><span class="o">.</span><span class="n">candidate</span><span class="o">.</span><span class="n">feedbacks</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="p">[])</span>
+            <span class="n">baseline_value</span> <span class="o">=</span> <span class="n">_mean_feedback_value</span><span class="p">(</span><span class="n">baseline_feedbacks</span><span class="p">)</span>
+            <span class="n">candidate_value</span> <span class="o">=</span> <span class="n">_mean_feedback_value</span><span class="p">(</span><span class="n">candidate_feedbacks</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">baseline_value</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">candidate_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">pass_fail</span> <span class="o">=</span> <span class="n">pass_fail</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span>
+                <span class="n">_is_pass_fail</span><span class="p">(</span><span class="n">feedback</span><span class="p">)</span> <span class="k">for</span> <span class="n">feedback</span> <span class="ow">in</span> <span class="p">(</span><span class="o">*</span><span class="n">baseline_feedbacks</span><span class="p">,</span> <span class="o">*</span><span class="n">candidate_feedbacks</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">baseline_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">baseline_value</span><span class="p">)</span>
+            <span class="n">candidate_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">candidate_value</span><span class="p">)</span>
+            <span class="n">paired_row</span><span class="p">[</span><span class="s2">"scores"</span><span class="p">][</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">"baseline"</span><span class="p">:</span> <span class="n">baseline_value</span><span class="p">,</span>
+                <span class="s2">"candidate"</span><span class="p">:</span> <span class="n">candidate_value</span><span class="p">,</span>
+                <span class="s2">"delta"</span><span class="p">:</span> <span class="n">candidate_value</span> <span class="o">-</span> <span class="n">baseline_value</span><span class="p">,</span>
+            <span class="p">}</span>
+
+        <span class="n">comparisons</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">_compare_paired_values</span><span class="p">(</span>
+            <span class="n">name</span><span class="p">,</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">baseline_values</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">candidate_values</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span>
+            <span class="n">value_type</span><span class="o">=</span><span class="s2">"binary"</span> <span class="k">if</span> <span class="n">pass_fail</span> <span class="k">else</span> <span class="s2">"numeric"</span><span class="p">,</span>
+            <span class="n">greater_is_better</span><span class="o">=</span><span class="n">greater_is_better</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span>
+            <span class="n">confidence_level</span><span class="o">=</span><span class="n">confidence_level</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">ComparisonResult</span><span class="p">(</span>
+        <span class="n">candidate_run_id</span><span class="o">=</span><span class="n">candidate_run_id</span><span class="p">,</span>
+        <span class="n">baseline_run_id</span><span class="o">=</span><span class="n">baseline_run_id</span><span class="p">,</span>
+        <span class="n">scorers</span><span class="o">=</span><span class="n">comparisons</span><span class="p">,</span>
+        <span class="n">paired_rows</span><span class="o">=</span><span class="n">paired_rows</span><span class="p">,</span>
+        <span class="n">unpaired_baseline_trace_ids</span><span class="o">=</span><span class="p">[</span><span class="n">row</span><span class="o">.</span><span class="n">trace_id</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">pairing</span><span class="o">.</span><span class="n">unpaired_baseline</span><span class="p">],</span>
+        <span class="n">unpaired_candidate_trace_ids</span><span class="o">=</span><span class="p">[</span><span class="n">row</span><span class="o">.</span><span class="n">trace_id</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">pairing</span><span class="o">.</span><span class="n">unpaired_candidate</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">log_results</span><span class="p">:</span>
+        <span class="n">_log_comparison</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+</pre></div>
+
+              </div>
+            </div>
+            <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+      <p class="copyright">
+          &copy; MLflow Project, a Series of LF Projects, LLC. All rights reserved.
+      </p>
+
+  </div> 
+
+</footer>
+          </div>
+        </div>
+      </section>
+    </main>
+  </page>
+
+  
+
+
+  
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:'../../../../../',
+      VERSION:'3.18.0',
+      COLLAPSE_INDEX:false,
+      FILE_SUFFIX:'.html',
+      LINK_SUFFIX: '.html',
+      HAS_SOURCE:  true
+    };
+  </script>
+
+  
+
+  <script type="text/javascript" src="../../../../../_static/js/clipboard.min.js"></script>
+  <script type="text/javascript" src="../../../../../_static/js/jquery.waypoints.min.js"></script>
+
+  
+  
+  
+  <script type="text/javascript">var CLIPPY_SVG_PATH = "../../../../../_static/clippy.svg";</script>
+  <script type="text/javascript" src="../../../../../_static/js/custom.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+    jQuery(function () {
+      SphinxRtdTheme.StickyNav.enable();
+    });
+
+  </script>
+  
+
+  
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
+        // Get the code block designator class entries
+        const allHighlights = document.querySelectorAll('.highlight');
+        // Disable copyable links for notebook cell numbering and for cell outputs
+        const highlights = Array.from(allHighlights).filter(highlight => !highlight.closest('.highlight-none') && 
+            !highlight.closest('.nboutput'));
+    
+        highlights.forEach(function(highlight) {
+            const copyIcon = document.createElement('span');
+            copyIcon.classList.add('copy-icon');
+            copyIcon.innerHTML = '&#xf0ea;';
+
+            copyIcon.addEventListener('click', function() {
+                const code = highlight.querySelector('pre').textContent;
+                copyToClipboard(code);
+
+                // Flash effect on click
+                this.style.color = '#0194E2';
+                setTimeout(() => {
+                    this.style.color = ''; 
+                }, 100);
+
+                // Display "Code copied to clipboard" near the clicked icon
+                const message = document.createElement('span');
+                message.textContent = "Copied!";
+                message.classList.add('copy-message'); 
+
+                // Append the message to the icon
+                this.appendChild(message);
+
+                setTimeout(() => {
+                    this.removeChild(message);
+                }, 500);
+            });
+
+            highlight.appendChild(copyIcon);
+        });
+    });
+  </script>
+
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        // Force download for notebook-download-btn
+        const downloadButtons = document.querySelectorAll('.notebook-download-btn');
+        downloadButtons.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default behavior
+
+                // Fetch the raw content of the notebook from GitHub
+                fetch(button.href)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const url = window.URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.style.display = 'none';
+                        link.href = url;
+                        const filename = button.href.split('/').pop();
+                        link.download = filename; 
+
+                        document.body.appendChild(link);
+                        link.click();
+
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(link);
+                    })
+                    .catch(err => console.error('Error fetching the notebook:', err));
+            });
+        });
+    });
+</script> 
+</body>
+</html>

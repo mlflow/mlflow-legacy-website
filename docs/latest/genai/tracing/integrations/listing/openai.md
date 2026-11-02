@@ -78,6 +78,7 @@ Refer to the [instruction](https://github.com/mlflow/mlflow/tree/master/docker-c
 
 * Chat Completion API
 * Responses API
+* Decisions API (Python)
 * JS / TS
 
 Enable tracing with `mlflow.openai.autolog()` and make API calls as usual.
@@ -158,6 +159,52 @@ openai_client = openai.OpenAI()
 response = client.responses.create(model="o4-mini", input="What is the capital of France?")
 ```
 
+Enable tracing with `mlflow.openai.autolog()` and call the Decisions API with the Python SDK.
+
+python
+
+```
+import mlflow
+
+from openai import OpenAI
+
+
+
+mlflow.openai.autolog()
+
+mlflow.set_tracking_uri("http://localhost:5000")
+
+mlflow.set_experiment("OpenAI Decisions")
+
+
+
+client = OpenAI()
+
+decision = client.decisions.create(
+
+    model="gpt-6-luna",
+
+    input="Question: What is 2 + 2? Proposed answer: 4.",
+
+    questions=[
+
+        {
+
+            "type": "predicate",
+
+            "name": "answer_is_correct",
+
+            "instructions": "Is the proposed answer mathematically correct?",
+
+        }
+
+    ],
+
+)
+
+print(decision.answers[0].probability)
+```
+
 Wrap the OpenAI client with the `tracedOpenAI` function and make API calls as usual.
 
 typescript
@@ -219,6 +266,10 @@ MLflow supports automatic tracing for the following OpenAI APIs. To request supp
 | ✅     | ✅               | ✅                 | ✅         | ✅          | ✅           | ✅        | ✅        | ✅    | -     |
 
 Responses API is supported since MLflow 2.22.0.
+
+#### Decisions API (Python)[​](#decisions-api-python "Direct link to Decisions API (Python)")
+
+`mlflow.openai.autolog()` traces synchronous and asynchronous `client.decisions.create()` calls with the Decisions resource (`openai>=3.26.0`). The trace records the request, the returned answers and probabilities, the response model, and token usage.
 
 #### Agents SDK[​](#agents-sdk "Direct link to Agents SDK")
 

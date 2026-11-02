@@ -134,7 +134,7 @@ You may set some MLflow environment variables to troubleshoot GCS read-timeouts 
 
 * `MLFLOW_ARTIFACT_UPLOAD_DOWNLOAD_TIMEOUT` - (Experimental, may be changed or removed) Sets the standard timeout for transfer operations in seconds (Default: 60 for GCS). Use -1 for indefinite timeout.
 * `MLFLOW_GCS_UPLOAD_CHUNK_SIZE` - Sets the standard upload chunk size for bigger files in bytes (Default: 104857600 ≙ 100MiB), must be multiple of 256 KB.
-* `MLFLOW_GCS_DOWNLOAD_CHUNK_SIZE` - Sets the standard download chunk size for bigger files in bytes (Default: 104857600 ≙ 100MiB), must be multiple of 256 KB
+* `MLFLOW_GCS_DOWNLOAD_CHUNK_SIZE` - Sets the standard download chunk size for bigger files in bytes (Default: not set; the file is downloaded in a single request), must be multiple of 256 KB.
 
 ### Backblaze B2[​](#backblaze-b2 "Direct link to Backblaze B2")
 
@@ -150,6 +150,34 @@ export AWS_ACCESS_KEY_ID="your_b2_application_key_id"
 export AWS_SECRET_ACCESS_KEY="your_b2_application_key"
 
 export AWS_DEFAULT_REGION="us-east-005"
+```
+
+### Hugging Face Storage Buckets[​](#hugging-face-storage-buckets "Direct link to Hugging Face Storage Buckets")
+
+[Hugging Face Storage Buckets](https://huggingface.co/docs/hub/storage-buckets) can be used as an artifact store through their [S3-compatible API](https://huggingface.co/docs/hub/storage-buckets-s3). Specify a URI of the form `s3://<bucket>/<path>` and set `MLFLOW_S3_ENDPOINT_URL` to `https://s3.hf.co/<namespace>`, where `<namespace>` is the user or organization that owns the bucket.
+
+To get credentials, open your [Access Tokens settings](https://huggingface.co/settings/tokens), and choose **Generate S3 credentials** from a token's menu. The credentials have the same permissions as the token, so use a token with write access.
+
+You must also run `pip install boto3` on the server (and on any client that accesses the bucket directly).
+
+bash
+
+```
+export MLFLOW_S3_ENDPOINT_URL="https://s3.hf.co/<namespace>"
+
+export AWS_ACCESS_KEY_ID="HFAK..."
+
+export AWS_SECRET_ACCESS_KEY="your_secret_access_key"
+
+export AWS_DEFAULT_REGION="us-east-1"
+
+
+
+mlflow server \
+
+    --backend-store-uri sqlite:///mlflow.db \
+
+    --artifacts-destination s3://<bucket>/mlflow
 ```
 
 ### FTP server[​](#ftp-server "Direct link to FTP server")
@@ -191,9 +219,9 @@ The HDFS artifact store is accessed using the `pyarrow.fs` module, refer to the 
 
 In order to allow MLflow Runs to be restored, Run metadata and artifacts are not automatically removed from the backend store or artifact store when a Run is deleted. The [mlflow gc](/docs/latest/api_reference/cli.html#mlflow-gc) CLI is provided for permanently removing Run metadata and artifacts for deleted runs.
 
-## Multipart upload for proxied artifact access[​](#multipart-upload-for-proxied-artifact-access "Direct link to Multipart upload for proxied artifact access")
+## Presigned transfers for proxied artifact access[​](#presigned-transfers-for-proxied-artifact-access "Direct link to Presigned transfers for proxied artifact access")
 
-The Tracking Server supports uploading large artifacts using multipart upload for proxied artifact access. To enable this feature, set `MLFLOW_ENABLE_PROXY_MULTIPART_UPLOAD` to `true`.
+The Tracking Server supports uploading large artifacts using multipart upload for proxied artifact access. Recent clients automatically use this flow when the server advertises that the configured artifact store supports it. You can also explicitly enable it on the client:
 
 bash
 
@@ -203,7 +231,7 @@ export MLFLOW_ENABLE_PROXY_MULTIPART_UPLOAD=true
 
 Under the hood, the Tracking Server will create a multipart upload request with the underlying storage, generate presigned urls for each part, and let the client upload the parts directly to the storage. Once all parts are uploaded, the Tracking Server will complete the multipart upload. None of the data will pass through the Tracking Server.
 
-If the underlying storage does not support multipart upload, the Tracking Server will fallback to a single part upload. If multipart upload is supported but fails for any reason, an exception will be thrown.
+If multipart upload is unavailable at runtime, the client falls back to the proxied upload unless the server advertises that presigned-only mode is enabled.
 
 MLflow supports multipart upload for the following storage for proxied artifact access:
 
@@ -212,8 +240,30 @@ MLflow supports multipart upload for the following storage for proxied artifact 
 
 You can configure the following environment variables:
 
-* `MLFLOW_MULTIPART_UPLOAD_MINIMUM_FILE_SIZE` - Specifies the minimum file size in bytes to use multipart upload when logging artifacts (Default: 500 MB)
+* `MLFLOW_MULTIPART_UPLOAD_MINIMUM_FILE_SIZE` - Specifies the minimum file size in bytes to use multipart upload when logging artifacts (Default: 500 MB). Presigned-only servers bypass this threshold.
 * `MLFLOW_MULTIPART_UPLOAD_CHUNK_SIZE` - Specifies the chunk size in bytes to use when performing multipart upload (Default: 100 MB)
+
+### Presigned-only server mode[​](#presigned-only-server-mode "Direct link to Presigned-only server mode")
+
+To require presigned transfers for run and model artifacts served by the artifact endpoints, start the Tracking Server with `--artifacts-presigned-only` and a supported artifact destination:
+
+bash
+
+```
+mlflow server \
+
+  --artifacts-destination s3://my-bucket \
+
+  --artifacts-presigned-only
+```
+
+You can also set `MLFLOW_ARTIFACTS_PRESIGNED_ONLY=true`. In this mode, the proxied upload and download byte-stream endpoints return HTTP 403 with instructions to install a compatible MLflow client matching the server version or newer. Listing and deleting artifacts remain available through the Tracking Server. The server validates at startup that the artifact destination supports both presigned multipart uploads and downloads. Currently, only S3 compatible storage is supported. S3 presigned transfers cannot be used with `SSECustomerKey` in `MLFLOW_S3_UPLOAD_EXTRA_ARGS` because they would expose the customer key to clients. The server rejects this combination at startup; this also applies when `MLFLOW_ENABLE_PROXY_MULTIPART_UPLOAD` or `MLFLOW_ENABLE_PROXY_MULTIPART_DOWNLOAD` is enabled. Remove `SSECustomerKey` to use presigned transfers.
+
+Compatible clients use presigned transfers for artifacts of every size in this mode, even when the optional `MLFLOW_ENABLE_PROXY_MULTIPART_UPLOAD` and `MLFLOW_ENABLE_PROXY_MULTIPART_DOWNLOAD` client settings are disabled.
+
+This mode applies to run and model artifacts served by the artifact endpoints. Trace attachments and artifact-backed trace data are not yet covered and can still pass through the Tracking Server.
+
+After changing this setting, reload open MLflow UI tabs to refresh the server's artifact-transfer capabilities.
 
 ## Presigned URLs for direct artifact downloads[​](#presigned-download-urls "Direct link to Presigned URLs for direct artifact downloads")
 
@@ -225,7 +275,13 @@ When run artifacts are stored directly on supported storage (for example, an `s3
 
 Under the hood, when you download an artifact from the artifact viewer, the UI requests a short-lived presigned URL from the Tracking Server and navigates the browser to it, letting the storage serve the artifact data. None of the data will pass through the Tracking Server. The URL is generated with a `Content-Disposition: attachment` response header so that browsers save the artifact as a file instead of rendering it.
 
-If the artifacts are not stored directly on supported storage (for example, with [proxied artifact access](/docs/latest/self-hosting/architecture/tracking-server.md#tracking-server-artifact-store), the default configuration), the UI falls back to downloading the artifact through the Tracking Server.
+Artifact previews and supported UI uploads fetch presigned storage URLs from browser code. Configure the object store's CORS policy to allow the MLflow UI origin, the required `GET` and `PUT` methods, and any headers included in the signed credentials. For S3 multipart uploads, expose the `ETag` response header so the browser can complete the upload. When the server still permits proxy transfers, the UI falls back to the proxy if a browser network or CORS error prevents the direct request. If an S3 upload succeeds but its `ETag` is hidden, the UI aborts the multipart upload before retrying through that artifact service's proxy. Compatibility transfers preserve the artifact service's deployment prefix and full artifact path, including when the Tracking Server and artifact service use separate prefixes under the same origin.
+
+The UI also uses presigned URLs with [proxied artifact access](/docs/latest/self-hosting/architecture/tracking-server.md#tracking-server-artifact-store) when the artifact service supports multipart downloads. If presigned downloads are unavailable, the UI downloads through the original artifact service when proxied transfers are allowed.
+
+The UI requires the artifact service's signing and multipart-upload endpoints to share the UI's origin (scheme, host, and port). For a separately deployed artifact server, configure a reverse proxy under the UI's origin. The UI rejects artifact-service requests to another origin rather than forwarding tracking credentials or dropping authentication and workspace context. The signed object-storage URLs can still use another origin when the storage CORS policy permits it.
+
+Artifact previews stop after receiving 50 MiB, even when the listed file size or response length is unavailable. Downloads can exceed this preview limit.
 
 MLflow supports presigned URL downloads for the following storage:
 

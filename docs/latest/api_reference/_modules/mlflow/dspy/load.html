@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 3.17.2 documentation" href="../../../index.html"/>
+    <link rel="top" title="MLflow 3.18.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -148,7 +148,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.2</span>
+  <span class="header-link version">3.18.0</span>
 </div>
   </nav>
   <page>
@@ -256,20 +256,17 @@
     <span class="n">_MODEL_DATA_PATH</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.dspy.wrapper</span><span class="w"> </span><span class="kn">import</span> <span class="n">DspyChatModelWrapper</span><span class="p">,</span> <span class="n">DspyModelWrapper</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.environment_variables</span><span class="w"> </span><span class="kn">import</span> <span class="n">MLFLOW_ALLOW_PICKLE_DESERIALIZATION</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MlflowException</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Model</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.models.dependencies_schemas</span><span class="w"> </span><span class="kn">import</span> <span class="n">_get_dependencies_schema_from_model</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.models.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">_update_active_model_id_based_on_mlflow_model</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracing.provider</span><span class="w"> </span><span class="kn">import</span> <span class="n">trace_disabled</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.tracking.artifact_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">_download_artifact_from_uri</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.databricks_utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">is_in_databricks_model_serving_environment</span><span class="p">,</span>
-    <span class="n">is_in_databricks_runtime</span><span class="p">,</span>
-<span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.model_utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">_add_code_from_conf_to_system_path</span><span class="p">,</span>
+    <span class="n">_deprecated_pickle_variable_hint</span><span class="p">,</span>
     <span class="n">_get_flavor_configuration</span><span class="p">,</span>
+    <span class="n">_is_pickle_loading_allowed</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="n">_DEFAULT_MODEL_PATH</span> <span class="o">=</span> <span class="s2">"data/model.pkl"</span>
@@ -301,20 +298,17 @@
     <span class="n">model_path</span> <span class="o">=</span> <span class="n">flavor_conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"model_path"</span><span class="p">,</span> <span class="n">_DEFAULT_MODEL_PATH</span><span class="p">)</span>
     <span class="n">task</span> <span class="o">=</span> <span class="n">flavor_conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"inference_task"</span><span class="p">)</span>
 
-    <span class="n">allow_pickle</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">MLFLOW_ALLOW_PICKLE_DESERIALIZATION</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-        <span class="ow">or</span> <span class="n">is_in_databricks_runtime</span><span class="p">()</span>
-        <span class="ow">or</span> <span class="n">is_in_databricks_model_serving_environment</span><span class="p">()</span>
-    <span class="p">)</span>
+    <span class="n">allow_pickle</span> <span class="o">=</span> <span class="n">_is_pickle_loading_allowed</span><span class="p">()</span>
 
     <span class="c1"># Raise BEFORE mutating sys.path so a denied load has no global side effects.</span>
     <span class="k">if</span> <span class="n">model_path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">".pkl"</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">allow_pickle</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
             <span class="s2">"Deserializing model using pickle is disallowed, but this model is saved "</span>
             <span class="s2">"in pickle format. To address this issue, you need to set environment variable "</span>
-            <span class="s2">"'MLFLOW_ALLOW_PICKLE_DESERIALIZATION' to 'true', or save the model with "</span>
+            <span class="s2">"'MLFLOW_ALLOW_MODEL_CODE_EXECUTION' to 'true', or save the model with "</span>
             <span class="s2">"'use_dspy_model_save=True' like "</span>
             <span class="s2">"`mlflow.dspy.save_model(model, path, use_dspy_model_save=True)`."</span>
+            <span class="o">+</span> <span class="n">_deprecated_pickle_variable_hint</span><span class="p">()</span>
         <span class="p">)</span>
 
     <span class="n">_add_code_from_conf_to_system_path</span><span class="p">(</span><span class="n">local_model_path</span><span class="p">,</span> <span class="n">flavor_conf</span><span class="p">)</span>
@@ -328,12 +322,11 @@
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">allow_pickle</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">"Failed to load DSPy model: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">. Note: the environment variable "</span>
-                    <span class="s2">"'MLFLOW_ALLOW_PICKLE_DESERIALIZATION' is currently set to 'false', "</span>
-                    <span class="s2">"which disables pickle-based deserialization. If the failure above "</span>
+                    <span class="sa">f</span><span class="s2">"Failed to load DSPy model: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">. Note: pickle-based deserialization "</span>
+                    <span class="s2">"is disallowed. If the failure above "</span>
                     <span class="s2">"is due to disabled pickle deserialization, set "</span>
-                    <span class="s2">"'MLFLOW_ALLOW_PICKLE_DESERIALIZATION' to 'true' to allow loading "</span>
-                    <span class="s2">"pickle-based models."</span>
+                    <span class="s2">"'MLFLOW_ALLOW_MODEL_CODE_EXECUTION' to 'true' to allow loading "</span>
+                    <span class="s2">"pickle-based models."</span> <span class="o">+</span> <span class="n">_deprecated_pickle_variable_hint</span><span class="p">()</span>
                 <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
             <span class="k">raise</span>
 
@@ -434,7 +427,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'3.17.2',
+      VERSION:'3.18.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

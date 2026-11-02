@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 3.17.2 documentation" href="../../../index.html"/>
+    <link rel="top" title="MLflow 3.18.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -148,7 +148,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.2</span>
+  <span class="header-link version">3.18.0</span>
 </div>
   </nav>
   <page>
@@ -247,9 +247,11 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pathlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Literal</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">urllib.parse</span><span class="w"> </span><span class="kn">import</span> <span class="n">urlparse</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">pydantic</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
@@ -471,10 +473,25 @@
 
 <div class="viewcode-block" id="GeminiConfig"><a class="viewcode-back" href="../../../python_api/mlflow.gateway.html#mlflow.gateway.config.GeminiConfig">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">GeminiConfig</span><span class="p">(</span><span class="n">ConfigModel</span><span class="p">):</span>
     <span class="n">gemini_api_key</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">gemini_api_base</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"https://generativelanguage.googleapis.com/v1beta/models"</span>
 
 <div class="viewcode-block" id="GeminiConfig.validate_gemini_api_key"><a class="viewcode-back" href="../../../python_api/mlflow.gateway.html#mlflow.gateway.config.GeminiConfig.validate_gemini_api_key">[docs]</a>    <span class="nd">@field_validator</span><span class="p">(</span><span class="s2">"gemini_api_key"</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">"before"</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">validate_gemini_api_key</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">_resolve_api_key_from_input</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">_resolve_api_key_from_input</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GeminiConfig.validate_gemini_api_base"><a class="viewcode-back" href="../../../python_api/mlflow.gateway.html#mlflow.gateway.config.GeminiConfig.validate_gemini_api_base">[docs]</a>    <span class="nd">@field_validator</span><span class="p">(</span><span class="s2">"gemini_api_base"</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate_gemini_api_base</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">"/"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">"/models"</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span>
+            <span class="s2">"/v1/models"</span><span class="p">,</span>
+            <span class="s2">"/v1beta/models"</span><span class="p">,</span>
+            <span class="s2">"/v1alpha/models"</span><span class="p">,</span>
+        <span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">"gemini_api_base ending in /models must include a supported API version "</span>
+                <span class="s2">"(/v1, /v1beta, or /v1alpha) immediately before /models."</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span></div></div>
 
 
 <div class="viewcode-block" id="MlflowModelServingConfig"><a class="viewcode-back" href="../../../python_api/mlflow.gateway.html#mlflow.gateway.config.MlflowModelServingConfig">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">MlflowModelServingConfig</span><span class="p">(</span><span class="n">ConfigModel</span><span class="p">):</span>
@@ -583,6 +600,17 @@
     <span class="c1"># Client-supplied `anthropic-beta` values to forward to Claude models. None forwards the</span>
     <span class="c1"># header unchanged, an empty list drops it, and a non-empty list keeps only those values.</span>
     <span class="n">vertex_anthropic_betas</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="VertexAIConfig.validate_vertex_location"><a class="viewcode-back" href="../../../python_api/mlflow.gateway.html#mlflow.gateway.config.VertexAIConfig.validate_vertex_location">[docs]</a>    <span class="nd">@field_validator</span><span class="p">(</span><span class="s2">"vertex_location"</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate_vertex_location</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="c1"># The location becomes part of the request host, so it must be a bare region name.</span>
+        <span class="c1"># An empty value falls back to the default location, like None.</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="sa">r</span><span class="s2">"[a-z0-9-]+"</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">"vertex_location must contain only lowercase letters, digits, and hyphens; "</span>
+                <span class="sa">f</span><span class="s2">"got </span><span class="si">{</span><span class="n">value</span><span class="si">!r}</span><span class="s2">"</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span></div>
 
 <div class="viewcode-block" id="VertexAIConfig.validate_vertex_anthropic_betas"><a class="viewcode-back" href="../../../python_api/mlflow.gateway.html#mlflow.gateway.config.VertexAIConfig.validate_vertex_anthropic_betas">[docs]</a>    <span class="nd">@field_validator</span><span class="p">(</span><span class="s2">"vertex_anthropic_betas"</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">"before"</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">validate_vertex_anthropic_betas</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
@@ -957,7 +985,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'3.17.2',
+      VERSION:'3.18.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

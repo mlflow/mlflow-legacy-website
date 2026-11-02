@@ -194,7 +194,7 @@ Versions](/docs/latest/assets/images/compare-prompt-versions-cfb444eca59dc0c2e14
 
 ### 4. Load and Use the Prompt[​](#4-load-and-use-the-prompt "Direct link to 4. Load and Use the Prompt")
 
-To use a prompt in your LLM application or AI agent, you can load it with the [`mlflow.genai.load_prompt()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.load_prompt) API and fill in the variables using the [`mlflow.entities.Prompt.format()`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.Prompt.format) method of the prompt object.
+To use a prompt in your LLM application or AI agent, you can load it with the [`mlflow.genai.load_prompt()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.load_prompt) API and fill in the variables using the [`mlflow.entities.model_registry.PromptVersion.format()`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.model_registry.PromptVersion.format) method of the prompt object.
 
 python
 
@@ -308,11 +308,11 @@ tip
 
 Any registered prompt can be loaded directly into the [**LLM Playground**](/docs/latest/genai/prompt-registry/playground.md) for interactive testing against an [AI Gateway](/docs/latest/genai/governance/ai-gateway.md) endpoint. Chat-typed prompts preserve their full message structure, and any stored **model config** is applied automatically.
 
-## Prompt Object[​](#prompt-object "Direct link to Prompt Object")
+## PromptVersion Object[​](#promptversion-object "Direct link to PromptVersion Object")
 
-The `Prompt` object is the core entity in MLflow Prompt Registry. It represents a versioned template text that can contain variables for dynamic content.
+The [`PromptVersion`](/docs/latest/api_reference/python_api/mlflow.entities.html#mlflow.entities.model_registry.PromptVersion) object is what [`mlflow.genai.register_prompt()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.register_prompt) and [`mlflow.genai.load_prompt()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.load_prompt) return. It represents one version of a registered prompt: a template text that can contain variables for dynamic content. The `Prompt` entity, returned by [`mlflow.genai.search_prompts()`](/docs/latest/api_reference/python_api/mlflow.genai.html#mlflow.genai.search_prompts), is the prompt itself (name, description, and prompt-level tags) and groups its versions.
 
-Key attributes of a Prompt object:
+Key attributes of a `PromptVersion` object:
 
 * `Name`: A unique identifier for the prompt.
 

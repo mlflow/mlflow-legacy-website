@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="MLflow 3.17.2 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="MLflow 3.18.0 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -148,7 +148,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.2</span>
+  <span class="header-link version">3.18.0</span>
 </div>
   </nav>
   <page>
@@ -464,10 +464,12 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        The created :py:class:`ReviewQueue`.</span>
 <span class="sd">    """</span>
-    <span class="n">body</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">"display_name"</span><span class="p">:</span> <span class="n">display_name</span><span class="p">,</span>
-        <span class="s2">"queue_type"</span><span class="p">:</span> <span class="n">ReviewQueueType</span><span class="p">(</span><span class="n">queue_type</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
-    <span class="p">}</span>
+    <span class="n">queue_type</span> <span class="o">=</span> <span class="n">ReviewQueueType</span><span class="p">(</span><span class="n">queue_type</span><span class="p">)</span>
+    <span class="n">body</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"display_name"</span><span class="p">:</span> <span class="n">display_name</span><span class="p">,</span> <span class="s2">"queue_type"</span><span class="p">:</span> <span class="n">queue_type</span><span class="o">.</span><span class="n">value</span><span class="p">}</span>
+    <span class="k">if</span> <span class="n">queue_type</span> <span class="o">==</span> <span class="n">ReviewQueueType</span><span class="o">.</span><span class="n">USER</span><span class="p">:</span>
+        <span class="c1"># The server takes a USER queue's reviewer from `owner` and ignores</span>
+        <span class="c1"># `display_name`; without `owner` it creates the caller's own queue.</span>
+        <span class="n">body</span><span class="p">[</span><span class="s2">"owner"</span><span class="p">]</span> <span class="o">=</span> <span class="n">display_name</span>
     <span class="k">if</span> <span class="n">question_ids</span><span class="p">:</span>
         <span class="n">body</span><span class="p">[</span><span class="s2">"question_names"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">_question</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">question_ids</span><span class="p">]</span>
     <span class="n">resp</span> <span class="o">=</span> <span class="n">_client</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"POST"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">_experiment</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">)</span><span class="si">}</span><span class="s2">/reviewQueues"</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">body</span><span class="p">)</span>
@@ -846,7 +848,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../../../',
-      VERSION:'3.17.2',
+      VERSION:'3.18.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',

@@ -75,7 +75,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MLflow 3.17.2 documentation" href="../../../index.html"/>
+    <link rel="top" title="MLflow 3.18.0 documentation" href="../../../index.html"/>
         <link rel="up" title="mlflow.pyfunc" href="../pyfunc.html"/> 
 
   
@@ -148,7 +148,7 @@
       >API Documentation</span
     >
   </div>
-  <span class="header-link version">3.17.2</span>
+  <span class="header-link version">3.18.0</span>
 </div>
   </nav>
   <page>
@@ -270,7 +270,6 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">mlflow.pyfunc</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.entities.span</span><span class="w"> </span><span class="kn">import</span> <span class="n">SpanType</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.environment_variables</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">MLFLOW_ALLOW_PICKLE_DESERIALIZATION</span><span class="p">,</span>
     <span class="n">MLFLOW_LOG_MODEL_COMPRESSION</span><span class="p">,</span>
     <span class="n">MLFLOW_UV_AUTO_DETECT</span><span class="p">,</span>
 <span class="p">)</span>
@@ -328,8 +327,6 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">deprecated</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.databricks_utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">_get_databricks_serverless_env_vars</span><span class="p">,</span>
-    <span class="n">is_in_databricks_model_serving_environment</span><span class="p">,</span>
-    <span class="n">is_in_databricks_runtime</span><span class="p">,</span>
     <span class="n">is_in_databricks_serverless_runtime</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.environment</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
@@ -343,7 +340,13 @@
     <span class="n">_PythonEnv</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.file_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">TempDir</span><span class="p">,</span> <span class="n">get_total_file_size</span><span class="p">,</span> <span class="n">write_to</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.model_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">_get_flavor_configuration</span><span class="p">,</span> <span class="n">_validate_infer_and_copy_code_paths</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.model_utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">_check_model_code_loading_allowed</span><span class="p">,</span>
+    <span class="n">_deprecated_pickle_variable_hint</span><span class="p">,</span>
+    <span class="n">_get_flavor_configuration</span><span class="p">,</span>
+    <span class="n">_is_pickle_loading_allowed</span><span class="p">,</span>
+    <span class="n">_validate_infer_and_copy_code_paths</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.requirements_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">_get_pinned_requirement</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.uri</span><span class="w"> </span><span class="kn">import</span> <span class="n">validate_path_within_directory</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mlflow.utils.uv_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">copy_uv_project_files</span>
@@ -1638,6 +1641,8 @@
     <span class="n">signature</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span><span class="o">.</span><span class="n">signature</span>
 
     <span class="k">if</span> <span class="n">MODEL_CODE_PATH</span> <span class="ow">in</span> <span class="n">pyfunc_config</span><span class="p">:</span>
+        <span class="c1"># Pip requirement inference skips the PyFunc load check, so check model code here too.</span>
+        <span class="n">_check_model_code_loading_allowed</span><span class="p">(</span><span class="s2">"a model from code"</span><span class="p">)</span>
         <span class="n">conf_model_code_path</span> <span class="o">=</span> <span class="n">pyfunc_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">MODEL_CODE_PATH</span><span class="p">)</span>
         <span class="n">model_code_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_path</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">conf_model_code_path</span><span class="p">))</span>
         <span class="n">python_model</span> <span class="o">=</span> <span class="n">_load_model_code_path</span><span class="p">(</span><span class="n">model_code_path</span><span class="p">,</span> <span class="n">model_config</span><span class="p">)</span>
@@ -1645,19 +1650,15 @@
         <span class="k">if</span> <span class="nb">callable</span><span class="p">(</span><span class="n">python_model</span><span class="p">):</span>
             <span class="n">python_model</span> <span class="o">=</span> <span class="n">_FunctionPythonModel</span><span class="p">(</span><span class="n">python_model</span><span class="p">,</span> <span class="n">signature</span><span class="o">=</span><span class="n">signature</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">if</span> <span class="p">(</span>
-            <span class="ow">not</span> <span class="n">MLFLOW_ALLOW_PICKLE_DESERIALIZATION</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-            <span class="ow">and</span> <span class="ow">not</span> <span class="n">is_in_databricks_runtime</span><span class="p">()</span>
-            <span class="ow">and</span> <span class="ow">not</span> <span class="n">is_in_databricks_model_serving_environment</span><span class="p">()</span>
-        <span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">_is_pickle_loading_allowed</span><span class="p">():</span>
             <span class="k">raise</span> <span class="n">MlflowException</span><span class="p">(</span>
                 <span class="s2">"Deserializing model using pickle is disallowed, but this model is saved "</span>
                 <span class="s2">"in cloudpickle format. The recommended way is to save the model as "</span>
                 <span class="s2">"models-from-code artifacts, see "</span>
                 <span class="s2">"https://mlflow.org/docs/latest/ml/model/models-from-code/ for details. "</span>
                 <span class="s2">"Another workaround is to set environment "</span>
-                <span class="s2">"variable 'MLFLOW_ALLOW_PICKLE_DESERIALIZATION' to 'true' to allow "</span>
-                <span class="s2">"deserializing model using pickle."</span>
+                <span class="s2">"variable 'MLFLOW_ALLOW_MODEL_CODE_EXECUTION' to 'true' to allow "</span>
+                <span class="s2">"deserializing model using pickle."</span> <span class="o">+</span> <span class="n">_deprecated_pickle_variable_hint</span><span class="p">()</span>
             <span class="p">)</span>
         <span class="n">python_model_cloudpickle_version</span> <span class="o">=</span> <span class="n">pyfunc_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">CONFIG_KEY_CLOUDPICKLE_VERSION</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">python_model_cloudpickle_version</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -1941,7 +1942,7 @@
   <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
       URL_ROOT:'../../../',
-      VERSION:'3.17.2',
+      VERSION:'3.18.0',
       COLLAPSE_INDEX:false,
       FILE_SUFFIX:'.html',
       LINK_SUFFIX: '.html',
